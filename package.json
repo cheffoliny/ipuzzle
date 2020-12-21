@@ -1,0 +1,43 @@
+{
+  "name": "telenet-new-sale-docs",
+  "version": "1.0.0",
+  "description": "приходни и разходни документи",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.telepol.net/borislav/elos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "axios": "^0.19.2",
+    "cross-env": "^6.0.3",
+    "laravel-mix": "^5.0.7",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.27.0",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.12",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.4.4",
+    "lodash": "^4.17.19",
+    "moment": "^2.29.1",
+    "tailwindcss": "^1.9.4",
+    "v-click-outside": "^3.1.2",
+    "vue-currency-input": "^1.22.3",
+    "vue-tippy": "4.5.1"
+  }
+}

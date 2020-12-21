@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app:FrameworkApplication
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:local="*"
+	xmlns:app="net.telepol.app.*"
+	xmlns:tc="telenet.components.*"
+	xmlns:ui="net.telepol.ui.*"
+	xmlns:telenet="net.telepol.telenet.*" 
+	layout="absolute"
+	borderColor="#F2F2F2" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#F2F2F2, #F2F2F2]"
+	backgroundColor="#F2F2F2"
+	width="100%" height="100%"
+	initialize="init()"
+	creationComplete="load()"
+>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.TextInput;
+		]]>
+	</mx:Script>
+	<!-- Styles -->
+	<mx:Style source="main.css" />
+	<mx:Style>
+		Alert
+		{
+			cornerRadius: 5;
+			headerHeight: 22;
+	   		headerColors: #8FAECB, #7998B6;
+	   		creationCompleteEffect: alertCreationCompleteEffect;
+		}
+	</mx:Style>
+	<!-- End Styles -->
+	
+	<mx:Script>
+	<![CDATA[
+		import mx.utils.ArrayUtil;
+		import net.telepol.rpc.FlexVar;
+		import mx.collections.Sort;
+		import mx.events.DataGridEventReason;
+		import mx.events.DataGridEvent;
+		import mx.controls.dataGridClasses.DataGridListData;
+		import mx.events.CloseEvent;
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		
+ 		//Globals
+		[Embed ( source="assets/bullet_delete.png" )] [Bindable] public var imgDelClass:Class;
+ 		[Bindable] public var aData : ArrayCollection;
+ 		//End Globals
+ 		
+		private function init() : void
+		{
+			amfService.addEventListener( "onResponse", onResponse );
+		}
+		
+		private function load() : void
+		{
+			amfService.init();
+		}
+		
+		private function onResponse( e : Event ) : void
+		{
+			for( var i : int = 0; i < aData.length; i++ )
+			{
+				aData[i]._id = i + 1;
+				aData[i].isEditted = false;
+			}
+			
+			sDelIDs.text = "";
+		}
+		
+		private function onSave() : void
+		{
+			Alert.yesLabel = "Да";
+			Alert.noLabel = "Не";
+			Alert.show
+			(
+				"Сигурни ли сте, че искате да запазите промените ?",
+				"Въпрос",
+				Alert.YES | Alert.NO,
+				null,
+				function ( e : CloseEvent ) : void
+				{
+					if( e.detail == Alert.YES )
+					{
+						amfService.save();
+					}
+				},
+				null,
+				Alert.YES
+			);
+		}
+		
+		private function onRestore() : void
+		{
+			Alert.yesLabel = "Да";
+			Alert.noLabel = "Не";
+			Alert.show
+			(
+				"Сигурни ли сте, че искате да отмените промените ?",
+				"Въпрос",
+				Alert.YES | Alert.NO,
+				null,
+				function ( e : CloseEvent ) : void
+				{
+					if( e.detail == Alert.YES )
+					{
+						amfService.init();
+					}
+				},
+				null,
+				Alert.YES
+			);
+		}
+		
+		private function onAdd() : void
+		{
+			aData.sort = null;
+			//aData.sort.fields = [ new SortField( "_id", true, false ) ];
+			aData.refresh();
+			
+			if( aData.length > 0 )
+			{
+				if( aData[aData.length - 1].name == "" || aData[aData.length - 1].clause_paragraph == "" )
+				{
+					callLater
+					(
+						function() : void
+						{
+							result_data.editedItemPosition = { columnIndex : 1, rowIndex : aData.length - 1 };
+							result_data.setFocus();
+						}
+					);
+					return;
+				}
+			}
+			
+			var myNewRow : Object = new Object;
+			
+			myNewRow = 
+			{
+				"_id" 				: aData.length + 1,
+				"id"				: 0,
+				"name" 				: "Наименование",
+				"clause_paragraph"	: "Чл. и Ал.",
+				"leave_type" 		: "paid",
+				"is_due_leave" 		: 1,
+				"updated_user" 		: ""
+			};
+			
+			aData.addItem( myNewRow );
+			
+			callLater
+			(
+				function() : void
+				{
+					result_data.editedItemPosition = { columnIndex : 1, rowIndex : aData.length - 1 };
+					result_data.setFocus();
+				}
+			);
+			
+			return;
+		}
+		
+		public function itemDeleteClick( oRow : Object ) : void
+		{
+			Alert.yesLabel = "Да";
+			Alert.noLabel = "Не";
+			Alert.show
+			(
+				"Сигурни ли сте, че искате да изтриете реда ?",
+				"Въпрос",
+				Alert.YES | Alert.NO,
+				null,
+				function ( e : CloseEvent ) : void
+				{
+					if( e.detail == Alert.YES )
+					{
+						var nToDel : int;
+						var nIsDel : Boolean = false;
+						
+						for( var i : int = 0; i < aData.length; i++ )
+						{
+							//if( nIsDel )aData[i]._id = i;
+							
+							if( aData[i]._id == oRow._id )
+							{
+								if( sDelIDs.text == "" )sDelIDs.text = aData[i].id;
+								else sDelIDs.text += "," + aData[i].id;
+								aData.removeItemAt( i );
+								aData.refresh();
+								nIsDel = true;
+							}
+							
+							if( i < aData.length )aData[i]._id = i + 1;
+							
+							//if( nIsDel && i != aData.length  )aData[i]._id--;
+						}
+					}
+				},
+				null,
+				Alert.YES
+			);
+		}
+		
+		public function onItemEdit( eMyEvent : DataGridEvent ) : void
+		{
+			// Стринговите валидации са само за определени две колони.
+			if( eMyEvent.columnIndex == 1 || eMyEvent.columnIndex == 2 )
+			{
+				var newData : String = TextInput( eMyEvent.currentTarget.itemEditorInstance ).text;
+				
+				if( newData == "" )
+				{
+					eMyEvent.preventDefault();
+					TextInput( eMyEvent.currentTarget.itemEditorInstance ).errorString = "Въведете валидна стойност!";
+				}
+			}
+			
+			// Маркираме реда, като редактиран.
+			aData[eMyEvent.rowIndex].isEditted = true;
+			
+			return;
+		}
+	
+	]]>
+	</mx:Script>
+	
+	<mx:Canvas x="0" y="0" width="100%" height="30" cornerRadius="6" backgroundColor="#617cb3" borderStyle="solid">
+		<mx:Label id="window_title" text="Кодекс Отпуски" fontSize="15" verticalCenter="0" left="5" color="#FFFFFF" fontWeight="bold" />
+		
+		<mx:Button label="Запази" right="5" click="onSave()" verticalCenter="0" id="btnSave" width="70" height="20"  fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#B1FFAD, #72FF6B]"/>
+		<mx:Button label="Добави" right="155" click="onAdd()" verticalCenter="0" id="btnNew" width="70" height="20" />
+		<mx:Button label="Отмени" right="77" verticalCenter="0" width="70" height="20" fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#A8DDFF, #77CAFF]" id="btnRestore" click="onRestore()"/>
+		
+		<mx:TextInput x="337" y="3" visible="false" id="sDelIDs" />
+	</mx:Canvas>
+	
+	<mx:DataGrid
+		editable="true"
+		width="100%"
+		id="result_data"
+		dataProvider="{aData}"
+		x="0"
+		top="35"
+		height="100%"
+		selectionColor="#EFEFC7"
+		rollOverColor="#F5F5DC"
+		itemEditEnd="onItemEdit( event );"
+	>
+		<mx:columns>
+			<mx:DataGridColumn
+				dataField="_id"
+				editable="false"
+				headerText="#"
+				resizable="false"
+				textAlign="left"
+				width="35"
+			/>
+			
+			<mx:DataGridColumn
+				dataField="name"
+				editable="true"
+				headerText="Наименование"
+				textAlign="left"
+			>
+				<mx:itemEditor>
+					<mx:Component>
+						<mx:TextInput maxChars="80" />
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn
+				dataField="clause_paragraph"
+				headerText="Чл. и Ал."
+				textAlign="left"
+				width="100"
+			>
+				<mx:itemEditor>
+					<mx:Component>
+						<mx:TextInput maxChars="20" />
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn
+				dataField="leave_type"
+				editable="false"
+				headerText="Вид"
+				paddingLeft="5"
+				rendererIsEditor="true"
+				resizable="false"
+				textAlign="left"
+				width="100"
+			>
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox x="0" label="{selected ? 'Платен' : 'Неплатен'}" selected="{data.leave_type == 'paid'}" click="{updateLeaveCheck()}">
+							<mx:Script>
+								<![CDATA[
+	            					private function updateLeaveCheck() : void
+	            					{
+	            						data.leave_type = this.selected ? 'paid' : 'unpaid';
+	            						outerDocument.aData[data._id - 1].isEditted = true;
+	            					}
+	        					]]>
+							</mx:Script>
+						</mx:CheckBox>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn
+				dataField="is_due_leave"
+				editable="false"
+				editorDataField="selected"
+				headerText="От год. полагаем отпуск"
+				paddingLeft="5"
+				rendererIsEditor="true"
+				resizable="false"
+				textAlign="left"
+				width="165"
+			>
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox x="0" label="{selected ? 'Да' : 'Не'}" selected="{data.is_due_leave == 1}" click="{updateCheck()}">
+							<mx:Script>
+								<![CDATA[
+	            					private function updateCheck() : void
+	            					{
+	            						data.is_due_leave = this.selected ? 1 : 0;
+	            						outerDocument.aData[data._id - 1].isEditted = true;
+	            						//this.outerDocument.aData.itemUpdated(data);
+	            						//this.outerDocument.aData.refresh();
+	            					}
+	        					]]>
+							</mx:Script>
+						</mx:CheckBox>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn
+				dataField="updated_user"
+				editable="false"
+				headerText="Последно редактирал"
+				textAlign="center"
+				width="350"
+			/>
+			
+			<mx:DataGridColumn
+				editable="false"
+				headerText=""
+				resizable="false"
+				width="20"
+			>
+				<mx:itemRenderer>
+					<mx:Component className="imgDelRenderer">
+						<mx:Canvas width="100%" height="100%">
+							<mx:Image
+								id="imgBtn"
+								width="16"
+								height="16"
+								scaleContent="false"
+								horizontalCenter="0"
+								verticalCenter="0"
+							 	source="{outerDocument.imgDelClass}"
+							 	click="outerDocument.itemDeleteClick( data )"
+							 	buttonMode="true"
+							 />
+						</mx:Canvas>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+	
+</app:FrameworkApplication>

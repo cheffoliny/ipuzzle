@@ -1,0 +1,227 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		
+		<script>
+			function isLeapYear( datea )
+			{
+				datea = parseInt( datea );
+				if( datea % 4 == 0 )
+				{
+					if( datea % 100 != 0 )
+					{
+						return true;
+					}
+					else
+					{
+						if( datea % 400 == 0 )
+							return true;
+						else
+							return false;
+					}
+				}
+				
+				return false;
+			}
+			
+			function markResult()
+			{
+				var aData = new Array();
+				var aElement = new Array();
+				
+				var sData = parent.document.getElementById( "sInfo" ).value;
+				aData = sData.split( "|" );
+				
+				for( var Element in aData )
+				{
+					aElement = aData[Element].split( "," );
+					
+					var sID = aElement[0] + "-" + aElement[1];
+					oTD = document.getElementById( sID );
+					if( oTD )
+					{
+						switch( aElement[3] )
+						{
+							case "holiday":
+								oTD.className = "clickable_holiday";
+								break;
+							
+							case "workday":
+								if( aElement[2] == year ) oTD.className = "clickable";
+								break;
+							
+							case "restday":
+								if( aElement[2] == year ) oTD.className = "clickable_weekend";
+								break;
+						}
+						
+						oTD.title = aElement[4];
+					}
+				}
+			}
+			
+			function addWorkdays()
+			{
+				sWorkdays = parent.document.getElementById( "sWorkdays" ).value;
+				aWorkdays = sWorkdays.split( "|" );
+				
+				for( var i = 1; i <= 12; i++ )
+				{
+					if( document.getElementById( "m" + i ) )
+					{
+						document.getElementById( "m" + i ).innerHTML += "<b> : " + aWorkdays[i - 1] + "</b>";
+					}
+				}
+			}
+			
+			function onDayClick( nDay, nMonth, nYear, nWeekday )
+			{
+				parent.save( nDay, nMonth, nYear, nWeekday );
+			}
+		</script>
+		
+		<style>
+			table.calendar
+			{
+				background: #FFFFDD;
+			}
+			
+			td.unclickable_caption
+			{
+				background: #FFFFAA;
+				text-align: center;
+				font-style: italic;
+			}
+			
+			td.unclickable_weekend
+			{
+				background: #FFAAAA;
+				text-align: center;
+				font-style: italic;
+			}
+			
+			td.clickable_holiday
+			{
+				cursor: pointer;
+				background: FF6677;
+				text-align: center;
+			}
+			
+			td.clickable_weekend
+			{
+				cursor: pointer;
+				background: FFDDDD;
+				text-align: center;
+			}
+			td.clickable
+			{
+				cursor: pointer;
+				text-align: center;
+			}
+		</style>
+	</head>
+	
+	<body bgcolor="#F5F5F5">
+		<script language="javascript">
+			function day_title( day_name, is_weekend )
+			{
+				var sClass = is_weekend ? "unclickable_weekend" : "unclickable_caption";
+				
+				document.write( "<TD class=\"" + sClass + "\" WIDTH=\"35\">" + day_name + "</TD>"  );
+			}
+			
+			function fill_table( month, month_int, month_length )
+			{
+				day = 1;
+				
+				document.write( "<TABLE BORDER=\"3\" CELLSPACING=\"3\" CELLPADDING=\"%3\" class=\"calendar\">" );
+				document.write( "<TR><TD COLSPAN=\"7\" ALIGN=\"center\" style=\"background: #FFEE00;\" id=\"m" + month_int + "\"><B>" + month + "&nbsp;" + year + "</B></TD></TR>" );
+				
+				document.write( "<TR>" );
+				day_title( "Пн", false );
+				day_title( "Вт", false );
+				day_title( "Ср", false );
+				day_title( "Чт", false );
+				day_title( "Пт", false );
+				day_title( "Сб", true );
+				day_title( "Нд", true );
+				document.write( "</TR>" );
+				
+				document.write( "<TR>" );
+				
+				for( var i = 0; i < start_day; i++ )
+				{
+					document.write( "<TD></TD>" );
+				}
+				
+				for( var i = start_day; i < 7; i++ )
+				{
+					var sClass = ( i > 4 ) ? "clickable_weekend" : "clickable";
+					
+					document.write( "<TD class=\"" + sClass + "\" onclick=\"onDayClick( " + day + ", " + month_int + ", " + year + ", " + i + " );\" id=\"" + day + "-" + month_int + "\" >" + day );
+					document.write( "</TD>" );
+					day++;
+				}
+				document.write( "</TR>" );
+				
+				while( day <= month_length )
+				{
+					document.write( "<TR>" );
+					for( var i = 0; i <= 6 && day <= month_length; i++ )
+					{
+						var sClass = ( i > 4 ) ? "clickable_weekend" : "clickable";
+						
+						document.write( "<TD class=\"" + sClass + "\" onclick=\"onDayClick( " + day + ", " + month_int + ", " + year + ", " + i + " );\" id=\"" + day + "-" + month_int + "\">" + day );
+						document.write( "</TD>" );
+						day++;
+					}
+					document.write( "</TR>" );
+					
+					start_day = i;
+				}
+				
+				if( start_day > 6 )start_day = 0;
+				
+				document.write( "</TABLE>" );
+			}
+		</script>
+		
+		<script language="javascript">
+			year = parent.document.getElementById( "nYear" ).value;
+			
+			today = new Date( "January 1, " + year );
+			start_day = today.getDay();
+			start_day--; if( start_day < 0 )start_day = 6;
+		</script>
+		
+		<center>
+			<form id="form1" onsubmit="return false;">
+				<table>
+					<tr valign="top">
+						<td><script>fill_table( "Януари", 1, 31 );</script></td>
+						<td><script>fill_table( "Февруари", 2, ( isLeapYear( year ) ? 29 : 28 ) );</script></td>
+						<td><script>fill_table( "Март", 3, 31 );</script></td>
+						<td><script>fill_table( "Април", 4, 30 );</script></td>
+					</tr>
+					<tr valign="top">
+						<td><script>fill_table( "Май", 5, 31 );</script></td>
+						<td><script>fill_table( "Юни", 6, 30 );</script></td>
+						<td><script>fill_table( "Юли", 7, 31 );</script></td>
+						<td><script>fill_table( "Август", 8, 31 );</script></td>
+					</tr>
+					<tr valign="top">
+						<td><script>fill_table( "Септември", 9, 30 );</script></td>
+						<td><script>fill_table( "Октомври", 10, 31 );</script></td>
+						<td><script>fill_table( "Ноември", 11, 30 );</script></td>
+						<td><script>fill_table( "Декември", 12, 31 );</script></td>
+					</tr>
+				</table>
+			</form>
+		</center>
+		
+		<script language="javascript">
+			markResult();
+			addWorkdays();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="22">
+<mx:Script>
+	<![CDATA[
+		import mx.utils.ObjectUtil;
+		import flash.text.engine.EastAsianJustifier;
+		import mx.controls.Tree;
+		import mx.events.DropdownEvent;
+		import mx.collections.ArrayCollection;
+		[Bindable] internal var arr_tree:ArrayCollection = new ArrayCollection([
+			{name:"", id:0}
+		]);
+		[Bindable] public var item_selected:Boolean = false;
+		
+		public function get getSelectedItem():Object {
+			if (! item_selected)
+				return null;
+			return ObjectUtil.copy(arr_tree[0].data);
+		}
+		
+		[Bindable] public var arr_tree_nomenklatures:ArrayCollection;
+		[Bindable] public var dropdown_height:int = 100;
+		
+		public var labelFunction:Function = null;
+		
+		private function onOpen(e:Event):void {
+			//for (var i:int = 0; i < arr_tree_nomenklatures.length; i++)
+			//	(itemComboBox.itemRenderer as Tree).expandChildrenOf(arr_tree_nomenklatures[i], false);
+			
+			//tree.openItems = [];
+		}
+	]]>
+</mx:Script>
+    
+	<mx:ComboBox id="itemComboBox" x="0" y="0" enabled="true" width="100%" labelField="name"
+		dataProvider="{arr_tree}" selectedIndex="0" selectionColor="white" rollOverColor="white"
+		open="onOpen(event)">
+		<mx:itemRenderer>
+			<mx:Component>
+				<mx:Tree labelField="name" dataProvider="{outerDocument.arr_tree_nomenklatures}"
+					width="100%" height="{outerDocument.dropdown_height}" 
+					selectable="true" rollOverColor="0xAADEFF"
+					change="onSelectItem(event)" click="onClick(event)" >
+				<mx:Script>
+					<![CDATA[
+						import mx.controls.Tree;
+						import mx.events.ListEvent;						
+
+						private function onSelectItem(e:ListEvent):void {
+							if(!e.target.dataDescriptor.isBranch(e.target.selectedItem)) {
+								outerDocument.item_selected = true;
+								outerDocument.arr_tree[0].data = e.itemRenderer.data;
+
+								var par:Object = (this as Tree).getParentItem(e.itemRenderer.data);
+								if (par != null)
+									e.itemRenderer.data['parent_info'] = par['name'];
+									
+								if (outerDocument.labelFunction != null)
+									outerDocument.arr_tree[0].name = outerDocument.labelFunction(e.itemRenderer.data);
+								else
+									outerDocument.arr_tree[0].name = e.itemRenderer.data.name;
+								outerDocument.arr_tree.itemUpdated(outerDocument.arr_tree[0]);
+							} else {
+								e.stopImmediatePropagation();
+								var isopen:Boolean = (this as Tree).isItemOpen(e.itemRenderer.data);
+								//(this as Tree).expandChildrenOf(e.itemRenderer.data, ! isopen);
+								(this as Tree).expandItem(e.itemRenderer.data, ! isopen, true);
+								(this as Tree).selectedItem = null;
+							}
+						}
+						private function onClick(e:Event):void {
+							e.stopImmediatePropagation();
+						}
+					]]>
+				</mx:Script>
+				</mx:Tree>
+			</mx:Component>
+		</mx:itemRenderer>
+	</mx:ComboBox>
+</mx:Canvas>

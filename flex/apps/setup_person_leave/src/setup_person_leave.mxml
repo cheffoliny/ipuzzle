@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app:FrameworkApplication
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:local="*"
+	xmlns:tc="telenet.components.*"
+	xmlns:app="net.telepol.app.*"
+	xmlns:ui="net.telepol.ui.*"
+	xmlns:telenet="net.telepol.telenet.*" 
+	layout="absolute"
+	borderColor="#F2F2F2" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#F2F2F2, #F2F2F2]"
+	backgroundColor="#F2F2F2"
+	width="500" height="300"
+	initialize="init()"
+	applicationComplete="load()"
+>
+	
+	<!-- Styles -->
+	<mx:Style source="main.css" />
+	<mx:Style>
+		Alert
+		{
+			cornerRadius: 5;
+			headerHeight: 22;
+	   		headerColors: #8FAECB, #7998B6;
+	   		creationCompleteEffect: alertCreationCompleteEffect;
+		}
+	</mx:Style>
+	<!-- End Styles -->
+	
+	<mx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.events.CloseEvent;
+		import net.telepol.rpc.FlexVar;
+		import mx.collections.ArrayCollection;
+		import mx.core.Application;
+		
+ 		//Globals
+		[Embed(source="assets/print.gif")] [Bindable] private var imgPrintClass:Class;
+		[Embed(source="assets/confirm.gif")] [Bindable] private var imgConfirmClass:Class;
+		[Embed(source="assets/exit.gif")] [Bindable] private var imgExitClass:Class;
+ 		//[Bindable] public var aData : ArrayCollection;
+		[Bindable] public var aData : Object;
+		[Bindable] public var aPersonSameOffice : ArrayCollection;
+		[Bindable] public var aCodesLeave : ArrayCollection;
+		
+		[Bindable] private var mnameslong : Array = ['Януари','Февруари','Март','Април','Май','Юни','Юли','Август','Септември','Октомври','Ноември','Декември'];
+		[Bindable] private var dnamesshort : Array = ['Нд.','Пн.','Вт.','Ср.','Чт.','Пт.','Сб.'];
+		
+ 		public var aLeaveType : Array = [ { "id" : "due", "label" : "Платен" }, { "id" : "unpaid", "label" : "Неплатен" } ];
+ 		//End Globals
+ 		
+		private function init() : void
+		{
+			amfService.addEventListener( "onResponse", onResponse );
+		}
+		
+		private function load() : void
+		{
+			if( aData != null && aData.hasOwnProperty( 'id' ) && aData.hasOwnProperty( 'id_person' ) )
+			{
+				amfService.init( new FlexVar( 'id', aData.id ), new FlexVar( 'id_person', aData.id_person ) );
+			}
+			else if( HTML_params.hasOwnProperty( 'id' ) && HTML_params.hasOwnProperty( 'id_person' ) )
+			{
+				amfService.init( new FlexVar( 'id', HTML_params['id'] ), new FlexVar( 'id_person', HTML_params['id_person'] ) );
+			}
+			else amfService.init( new FlexVar( 'id', "0" ), new FlexVar( 'id_person', "0" ) );
+		}
+		
+		private function onResponse( e : Event ) : void
+		{
+			//Set Controls from PHP
+			if( aData.hasOwnProperty( 'sPersonName' ) )sPersonName.text = aData.sPersonName;
+			if( aData.hasOwnProperty( 'nApplicationDaysOffer' ) )nApplicationDaysOffer.text = aData.nApplicationDaysOffer;
+			if( aData.hasOwnProperty( 'sLeaveFromOffer') )sLeaveFromOffer.selectedDate = getDate( aData.sLeaveFromOffer );
+			if( aData.hasOwnProperty( 'nIsAllowed' ) ){ nIsAllowed.selected = aData.nIsAllowed; onAllow(); }
+			if( aData.hasOwnProperty( 'nApplicationDays' ) )nApplicationDays.text = aData.nApplicationDays;
+			if( aData.hasOwnProperty( 'sLeaveFrom') )sLeaveFrom.selectedDate = getDate( aData.sLeaveFrom );
+			//End Set Controls from PHP
+			
+			if( aData.hasOwnProperty( 'id' ) )if( aData.id != 0 )
+			{
+				//Check Rights
+				nApplicationDaysOffer.enabled = false;
+				sLeaveType.enabled = false;
+				sLeaveFromOffer.enabled = false;
+				nIDPersonSubstitute.enabled = false;
+				nIDCodeLeave.enabled = false;
+				btnSave.enabled = false;
+				
+				if( aData.hasOwnProperty( "bRightChange" ) )if( aData.bRightChange )
+				{
+					nApplicationDaysOffer.enabled = true;
+					sLeaveType.enabled = true;
+					sLeaveFromOffer.enabled = true;
+					nIDPersonSubstitute.enabled = true;
+					nIDCodeLeave.enabled = true;
+					btnSave.enabled = true;
+				}
+				//End Check Rights
+				
+				//Put Number
+				//--Get Dates
+				var sDateYear : String = aData.sApplicationDate.substr( 0, 4 );
+				var sDateMonth : String = aData.sApplicationDate.substr( 5, 2 );
+				var sDateDay : String = aData.sApplicationDate.substr( 8, 2 );
+				var sConDateYear : String = aData.sApplicationConDate.substr( 0, 4 );
+				var sConDateMonth : String = aData.sApplicationConDate.substr( 5, 2 );
+				var sConDateDay : String = aData.sApplicationConDate.substr( 8, 2 );
+				//--End Get Dates
+				
+				oCanvasLeave.width = 205;
+				oLabelLeaveNumDate.text = aData.nLeaveNum + " / " + sDateDay + "." + sDateMonth + "." + sDateYear;
+				
+				if( aData.hasOwnProperty( 'nIsConfirm' ) )if( aData.nIsConfirm == 1 )
+				{
+					oCanvasRes.width = 235;
+					oLabelResNumDate.text = aData.nLeaveNum + " / " + sConDateDay + "." + sConDateMonth + "." + sConDateYear;
+				}
+				//End Put Number
+				
+				//Enable Print
+				btnPrint.enabled = true;
+				//End Enable Print
+			}
+			
+			//Check Resolution Rights
+			canvasResolution.visible = false;
+			if( aData.hasOwnProperty( 'bRightResolute' ) )if( aData.bRightResolute )canvasResolution.visible = true;
+			//End Check Resolution Rights
+			
+			//Check Confirmation
+			if( aData.hasOwnProperty( 'nIsConfirm' ) )if( aData.nIsConfirm == 1 )
+			{
+				nApplicationDaysOffer.enabled = false;
+				sLeaveType.enabled = false;
+				sLeaveFromOffer.enabled = false;
+				nIDPersonSubstitute.enabled = false;
+				nIDCodeLeave.enabled = false;
+				
+				nIsAllowed.enabled = false;
+				nApplicationDays.enabled = false;
+				sLeaveFrom.enabled = false;
+				btnConfirm.enabled = false;
+				
+				if( aData.hasOwnProperty( "bRightResolute" ) )
+				{
+					if( aData.bRightResolute )
+					{
+						nIsAllowed.enabled = true;
+						nApplicationDays.enabled = true;
+						sLeaveFrom.enabled = true;
+						btnConfirm.enabled = true;
+					}
+				}
+				
+				canvasResolution.visible = true;
+				
+				btnSave.enabled = false;
+			}
+			//End Check Confirmation
+			
+			ExternalInterface.call( 'window.opener.rpcEnd( window )', '' );
+		}
+		
+		private function onSave() : void
+		{
+			Alert.yesLabel = "Да";
+			Alert.noLabel = "Не";
+			Alert.show
+			(
+				"Сигурни ли сте, че искате да запазите промените ?",
+				"Въпрос",
+				Alert.YES | Alert.NO,
+				null,
+				function ( e : CloseEvent ) : void
+				{
+					if( e.detail == Alert.YES )
+					{
+						amfService.save();
+					}
+				},
+				null,
+				Alert.YES
+			);
+		}
+		
+		private function onConfirm() : void
+		{
+			Alert.yesLabel = "Да";
+			Alert.noLabel = "Не";
+			Alert.show
+			(
+				"Сигурни ли сте, че искате да потвърдите резолюцията към молбата ?",
+				"Въпрос",
+				Alert.YES | Alert.NO,
+				null,
+				function ( e : CloseEvent ) : void
+				{
+					if( e.detail == Alert.YES )
+					{
+						amfService.confirm();
+					}
+				},
+				null,
+				Alert.YES
+			);
+		}
+		
+		private function onPrint() : void
+		{
+			var sWhatToCall : String;
+			
+			if( aData.hasOwnProperty( "id" ) )
+			{
+				sWhatToCall = "" + 
+						"window.open( 'api/api_general.php?" + 
+						"action_script=api/api_setup_person_leave.php" + 
+						"&api_action=export_to_pdf" + 
+						"&id=" + aData.id + 
+						"&rpc_version=2', 'mywindow' )";
+				
+				ExternalInterface.call( sWhatToCall, '' );
+			}
+		}
+		
+		public function onAllow() : void
+		{
+			nApplicationDays.visible = nIsAllowed.selected;
+			textApplicationDays.visible = nIsAllowed.selected;
+			sLeaveFrom.visible = nIsAllowed.selected;
+			
+			if( nIsAllowed.selected )
+			{
+				nApplicationDays.text = nApplicationDaysOffer.text;
+				sLeaveFrom.selectedDate = sLeaveFromOffer.selectedDate;
+			}
+		}
+		
+		private function getDate( d : String ) : Date
+		{
+			return new Date(
+				int( d.substr( 0, 4 ) ), 		// year
+				int( d.substr( 5, 2 ) ) - 1,	// month
+				int( d.substr( 8, 2 ) )			// day
+			);
+		}
+	]]>
+	</mx:Script>
+	<mx:Canvas x="0" y="0" width="100%" height="30" cornerRadius="6" backgroundColor="#617cb3" borderStyle="solid">
+		<mx:Label id="window_title" text="Молба за Отпуск" fontSize="15" verticalCenter="0" left="5" color="#FFFFFF" fontWeight="bold"/>
+	</mx:Canvas>
+	
+	<mx:Button label="Печат" right="126" id="btnPrint" width="100" height="20"  fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#B1FFAD, #72FF6B]" bottom="10" enabled="false" themeColor="#068100" icon="{imgPrintClass}" click="{onPrint();}"/>
+	<mx:Button label="Затвори" right="22" width="100" height="20" fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#A8DDFF, #77CAFF]" id="btnClose" bottom="10" click="{ExternalInterface.call( 'window.close', '' )}" icon="{imgExitClass}"/>
+	
+	<mx:Canvas x="10" y="48" width="480" height="145" clipContent="false" styleName="holder">
+		<mx:Canvas y="-10" width="55" height="22" left="10" backgroundColor="#F2F2F2" id="oCanvasLeave" horizontalScrollPolicy="off">
+			<mx:Label text="Молба" fontSize="12" verticalCenter="0" width="46" left="5"/>
+			<mx:Label fontSize="12" verticalCenter="0" width="150" left="55" id="oLabelLeaveNumDate" fontWeight="bold"/>
+		</mx:Canvas>
+		<mx:Label x="10" y="22" text="От"/>
+		<mx:Label x="37" y="22" id="sPersonName" fontWeight="bold"/>
+		<mx:Label x="10" y="50" text="За"/>
+		<mx:TextInput x="36" y="46" width="26" id="nApplicationDaysOffer"/>
+		<mx:Label x="63" y="50" text="работни дни"/>
+		<mx:ComboBox x="141" y="46" width="120" editable="false" dataProvider="{aLeaveType}" id="sLeaveType" styleName="comboBoxDropdownUP"></mx:ComboBox>
+		<mx:Label x="265" y="50" text="отпуск, считано от"/>
+		<mx:DateField x="380" y="46" showToday="true" formatString="DD.MM.YYYY" styleName="picker" id="sLeaveFromOffer" dayNames="{dnamesshort}" monthNames="{mnameslong}" firstDayOfWeek="1"/>
+		<mx:Label x="10" y="90" text="Заместник :"/>
+		<mx:ComboBox x="90" y="86" width="272" id="nIDPersonSubstitute" dataProvider="{aPersonSameOffice}"></mx:ComboBox>
+		<mx:Label x="10" y="116" text="Чл. от КТ :"/>
+		<mx:ComboBox x="90" y="112" width="272" id="nIDCodeLeave" dataProvider="{aCodesLeave}"></mx:ComboBox>
+		
+		<mx:Button label="Запази" right="10" id="btnSave" width="100" height="20"  fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#B1FFAD, #72FF6B]" bottom="10" themeColor="#068100" icon="{imgConfirmClass}" click="{onSave();}"/>
+	</mx:Canvas>
+	<mx:Canvas id="canvasResolution" x="10" y="210" width="480" height="50" clipContent="false" styleName="holder" visible="false">
+		<mx:Canvas y="-10" width="85" height="22" left="10" backgroundColor="#F2F2F2" id="oCanvasRes" horizontalScrollPolicy="off">
+			<mx:Label text="Резолюция" fontSize="12" verticalCenter="0" left="5"/>
+			<mx:Label fontSize="12" verticalCenter="0" left="85" id="oLabelResNumDate" width="150" fontWeight="bold"/>
+		</mx:Canvas>
+		<mx:CheckBox x="10" y="20" label="{nIsAllowed.selected ? 'Разрешава' : 'Не Разрешава'}" id="nIsAllowed" click="{onAllow();}"/>
+		<mx:Label id="textApplicationDays" x="126" y="22" text="работни дни, считани от" visible="false"/>
+		<mx:TextInput x="98" y="18" width="26" id="nApplicationDays" visible="false"/>
+		<mx:DateField x="273" y="18" showToday="true" formatString="DD.MM.YYYY" styleName="picker" id="sLeaveFrom" visible="false" dayNames="{dnamesshort}" monthNames="{mnameslong}" firstDayOfWeek="1"/>
+		
+		<mx:Button label="Потвърди" right="10" id="btnConfirm" width="100" height="20"  fillAlphas="[0.6, 0.6, 0.75, 0.75]" fillColors="[#B1FFAD, #72FF6B]" bottom="10" themeColor="#068100" icon="{imgConfirmClass}" click="{onConfirm();}"/>
+	</mx:Canvas>
+	
+</app:FrameworkApplication>

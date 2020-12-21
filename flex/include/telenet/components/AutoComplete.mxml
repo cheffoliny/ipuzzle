@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:hc="telenet.components.autoComplete.classes.*"
+	clipContent="false" width="250"
+	initialize="init()"
+	verticalScrollPolicy="off" horizontalScrollPolicy="off"
+	implements="mx.controls.listClasses.IDropInListItemRenderer,mx.managers.IFocusManagerComponent">
+	
+	<mx:Metadata>
+		/**
+		 * Dispatched when an item is selected or de-selelcted
+		 */
+		[Event(name="change")]
+		/**
+		 * Dispatched when the text in the search field is changed
+		 */
+		[Event(name="searchChange")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.CollectionEventKind;
+			import mx.events.MoveEvent;
+			import mx.controls.listClasses.BaseListData;
+			import mx.controls.dataGridClasses.DataGridListData;
+			import telenet.utils.StringUtils;
+			import mx.events.CollectionEvent;
+			import mx.collections.ArrayCollection;
+			
+			private var _prompt:String;
+			private var _promptChanged:Boolean;
+			
+			private var _rowCount:int;
+			private var _rowCountChanged:Boolean;
+			
+			private var _isStrict:Boolean;
+			private var _isStrictChanged:Boolean;
+			
+			private var _style:String;
+			private var _styleChanged:Boolean;
+			
+			private var _enableRemoveIcon:Boolean;
+			private var _enableRemoveIconChanged:Boolean;
+			
+			[Bindable]			
+			private var _dataProvider:ArrayCollection;
+			private var _dataProviderChanged:Boolean;
+			
+			private var _text:String;
+			private var _textChanged:Boolean;
+									
+			[Bindable]
+			private var _selectedItems:ArrayCollection = new ArrayCollection();
+			private var _selectedItemsChanged:Boolean;
+			
+			private var _selectedItem:Object;
+			private var _selectedItemChanged:Boolean;
+			
+			protected var _selectedItemId:Number;
+			private var _selectedItemIdChanged:Boolean;
+								
+			private var _filterFunction:Function;
+			private var _filterFunctionChanged:Boolean;
+			private var _matchType:String = MATCH_BEGINNING;
+			
+			private var _isEqualFunction:Function;
+			
+			private var _labelField:String;
+			private var _labelFieldChange:Boolean;
+			
+			private var _labelFunction:Function;
+			private var _labelFunctionChanged:Boolean;
+			
+			private var _dropDownLabelFunction:Function;
+			private var _dropDownLabelFunctionChanged:Boolean;
+			
+			private var _dropDownItemRenderer:IFactory;
+			private var _dropDownItemRendererChanged:Boolean;
+			
+			private var _allowDuplicates:Boolean;
+			private var _allowDuplicatesChanged:Boolean;
+			
+			private var _areNewItemsEditable:Boolean;
+			private var _areNewItemsEditableChanged:Boolean;
+			
+			private var _browserItemRenderer:IFactory;
+			
+			private var _keyField:String = "id";
+			private var _listData:DataGridListData;
+			
+			public static const STYLE_UNDERLINE:String 	= "underline";
+			public static const STYLE_MAC_MAIL:String 	= "macMail";
+			public static const STYLE_FACEBOOK:String 	= "facebook";
+			
+			public static const MATCH_BEGINNING:String 	= "beginning";
+			public static const MATCH_WORD:String		= "word";
+			public static const MATCH_ANY_PART:String	= "anyPart";
+			
+			public static const LAYOUT_VERTICAL:String 		= "vertical";
+			public static const LAYOUT_HORIZONTAL:String 	= "horizontal";
+			
+			public static const BACKSPACE_FOCUS:String 	= "focus";
+			public static const BACKSPACE_REMOVE:String = "remove";
+			
+			private function init():void
+			{
+				addEventListener( FocusEvent.MOUSE_FOCUS_CHANGE, handleMouseFocusChange );
+				addEventListener( MoveEvent.MOVE, handleMove );
+				
+				combo.selectedItems = _selectedItems;
+				combo.addEventListener( Event.CHANGE, handleComboChange );
+				combo.addEventListener( Combo.SEARCH_CHANGE, handleComboSearchChange );
+				
+				if (_dataProvider == null)
+				{
+					_dataProvider = new ArrayCollection();
+				}
+				
+				if (_filterFunction == null)
+				{
+					filterFunction = defaultFilterFunction;
+				}
+				
+				if (_labelFunction == null)
+				{
+					labelFunction = defaultLabelFunction;
+				}
+				
+				if (_dropDownLabelFunction == null)
+				{			
+					dropDownLabelFunction = defaultDropDownLabelFunction;
+				}								
+			}
+			
+			// check if the focus has moved to the dropdown (otherwise, if we use the 
+			// component as an editor in the datagrid the focus out event will destroy
+			// the editorInstance before the value gets set 
+			private function handleMouseFocusChange( event:FocusEvent ):void
+			{
+				if (combo.isDropDownVisible())
+				{
+					if (event.relatedObject && combo.dropDown.contains( event.relatedObject ))
+					{
+						event.preventDefault();
+					}
+				}				
+			}
+			
+			private function handleMove( event:MoveEvent ):void
+			{
+				combo.positionDropDown();
+			}
+									
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				
+				var item:Object;
+				
+				if (_textChanged)
+				{
+					_textChanged = false;
+					
+					combo.setSelectedItem( null );
+					combo.text = _text;
+				}	
+				
+				if (_promptChanged) {
+					_promptChanged = false;				
+					combo.prompt = _prompt;
+				}
+				
+				if (_rowCountChanged){
+					_rowCountChanged = false;
+					combo.rowCount = _rowCount;
+				}
+				
+				if (_isStrictChanged)
+				{
+					_isStrictChanged = false;
+					combo.isStrict = _isStrict;
+				}
+				
+				if (_styleChanged)
+				{
+					_styleChanged = false;
+					combo.style = _style;
+				}
+				
+				if (_allowDuplicatesChanged)
+				{
+					_allowDuplicatesChanged = false;
+					combo.allowDuplicates = _allowDuplicates;
+				}
+				
+				if (_areNewItemsEditableChanged)
+				{
+					_areNewItemsEditableChanged = false;
+					combo.areNewItemsEditable = _areNewItemsEditable;
+				}
+				
+				if (_dropDownLabelFunctionChanged)
+				{
+					_dropDownLabelFunctionChanged = false;					
+					combo.dropDownLabelFunction = _dropDownLabelFunction;
+				}
+				
+				if (_dropDownItemRendererChanged)
+				{
+					_dropDownItemRendererChanged = false;
+					combo.dropDownItemRenderer = _dropDownItemRenderer;
+				}
+				
+				if (_labelFunctionChanged)
+				{
+					_labelFunctionChanged = false;				
+					combo.labelFunction = labelFunction;
+				}
+				
+				if (_filterFunctionChanged)
+				{
+					_filterFunctionChanged = false;					
+					combo.filterFunction = _filterFunction;
+				}
+				
+				if (_dataProviderChanged && _dataProvider)
+				{
+					_dataProviderChanged = false;
+					
+					_dataProvider.addEventListener( CollectionEvent.COLLECTION_CHANGE, handleDataProviderChange, false, 0, true );
+					_dataProvider.refresh();
+					
+					combo.dataProvider = _dataProvider;
+					combo.dataProvider.refresh();
+				}		
+				
+				if (_selectedItemChanged && _dataProvider)
+				{
+					_selectedItemChanged = false;
+					
+					combo.setSelectedItem( _selectedItem, true );					
+				}
+				
+				if (_selectedItemIdChanged && _dataProvider)
+				{
+					_selectedItemIdChanged = false;
+					
+					for each (item in _dataProvider.source)
+					{
+						if (item.hasOwnProperty( _keyField ) && item[ _keyField ] == _selectedItemId)
+						{
+							combo.setSelectedItem( item, true );
+							_selectedItemId = 0;
+							break;
+						}
+					}
+				}
+								
+				if (_selectedItemsChanged && _dataProvider)
+				{
+					_selectedItemsChanged = false;
+					
+					_selectedItems.removeAll();
+				}
+			}
+			
+			public function get listData():BaseListData
+            {
+            	return _listData;
+            }
+			
+            public function set listData( value:BaseListData ):void
+            {
+            	_listData = DataGridListData( value );            	
+            } 
+            
+            override public function set data( value:Object ):void
+            {
+                super.data = value;
+				
+				if (!data || !data[ _listData.dataField ])
+				{
+					return;
+				}
+				
+				callLater( _setData );
+            }
+            
+            private function _setData():void
+            {
+            	selectedItem = data[ _listData.dataField ];
+            }
+			
+			private function handleDataProviderChange( event:CollectionEvent ):void
+			{
+				if (event.kind == CollectionEventKind.REMOVE)
+				{
+					var itemsRemoved:ArrayCollection = new ArrayCollection( event.items );
+
+					if (itemsRemoved.contains( selectedItem )) {
+						combo.setSelectedItem( null );
+					}
+
+				}
+			}
+						
+			private function handleComboChange( event:Event ):void
+			{
+				dispatchEvent( new Event( Event.CHANGE ) );
+			}
+			
+			private function handleComboSearchChange( event:Event ):void
+			{
+				var changeEvent:Event = new Event( Combo.SEARCH_CHANGE );
+				dispatchEvent( changeEvent );
+			}
+			
+			public function set dataProvider( value:ArrayCollection ):void
+			{
+				if (_dataProvider != null)
+				{
+					_dataProvider.removeEventListener( CollectionEvent.COLLECTION_CHANGE, handleDataProviderChange );
+				}
+					
+				_dataProvider = value;
+				_dataProviderChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			public function get dataProvider():ArrayCollection
+			{
+				return _dataProvider;	
+			}
+			
+			/**
+			 * A function that the view will use to eliminate items that do not match the function's criteria.
+			 */ 
+			public function set filterFunction( value:Function ):void
+			{
+				_filterFunction = value;
+				_filterFunctionChanged = true;
+				
+				invalidateProperties();
+			}	
+			
+			[Inspectable(enumeration="beginning,word,anyPart")]
+			/**
+			 * Specifies the how to compare the item to the search string when checking for a match.
+			 * Note, setting a value for the filterFunction property will override this property.
+			 * @default beginning
+			 */
+			public function set matchType( value:String ):void
+			{
+				_matchType = value;
+			}
+			
+			/**
+			 * The id of the initially selected item.
+			 */
+			public function set selectedItemId( value:Number ):void
+			{
+				_selectedItemId = value;
+				_selectedItemIdChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			/**
+			 * Checks if the component is in the process of resolving the selecteItemId to it's respective object.
+			 */
+			public function isSettingValue():Boolean
+			{
+				return _selectedItemId > 0;
+			}
+			
+			/**
+			 * A reference to the selected item in the data provider.
+			 */
+			public function set selectedItem( value:Object ):void
+			{
+				_selectedItem = value;
+				_selectedItemChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			[Bindable(event="change")]
+			public function get selectedItem():*
+			{
+				if (_selectedItems.length > 0)
+				{
+						return _selectedItems.getItemAt( 0 );
+						//return _selectedItems.getItemAt( _selectedItems.length - 1 );
+				}
+				else
+				{
+					return null;
+				}
+			}
+			
+			/**
+			 * Checks if an item is selected
+			 */
+			public function isItemSelected( item:Object ):Boolean
+			{
+				return _selectedItems.getItemIndex( item ) >= 0;
+			}
+			
+			[Inspectable(enumeration="true,false")]
+			/**
+			 * A flag that indicates whether or not you can select values which aren't in the dataProvider
+			 * @default true
+			 */
+			public function set isStrict( value:Boolean ):void
+			{
+				_isStrict = value;
+				_isStrictChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			[Bindable(event="change")]
+			public function get text():String
+			{
+				var str:String = "";
+				
+				for each (var item:Object in _selectedItems)
+				{
+					str += _labelFunction( item ) + ", ";
+				}
+				
+				str = str.substring( 0, str.length - 2);
+				
+				return str; 
+			}
+			
+			/**
+			 * The value of the text in the search field
+			 */
+			public function set text( value:String ):void
+			{
+				_text = value;
+				_textChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			/**
+			 * The prompt to display before the component receives focus
+			 */
+			public function set prompt( value:String ):void {
+				_prompt = value;
+				_promptChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			/**
+			 * Count of rows in combo box
+			*/
+			public function set rowCount(value: int): void {
+				_rowCount = value;
+				_rowCountChanged = true;
+				
+				invalidateProperties();
+			}
+
+			[Inspectable(enumeration="macMail,facebook,underline")]
+			/**
+			 * Specifies which style to use when displaying the selected items.
+			 * @default macMail
+			 */
+			public function set style( value:String ):void
+			{
+				_style = value;
+				_styleChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			[Inspectable(enumeration="true,false")]
+			/**
+			 * A flag that indicates whether or not to display the remove icon in the selected items.
+			 * @default false
+			 */
+			public function set enableRemoveIcon( value:Boolean ):void
+			{
+				_enableRemoveIcon = value;
+				_enableRemoveIconChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			[Inspectable(enumeration="true,false")]
+			/**
+			 * A flag that indicates whether or not you can select duplicate items when multiselect mode is enabled
+			 * @default false
+			 */
+			public function set allowDuplicates( value:Boolean ):void
+			{
+				_allowDuplicates = value;
+				_allowDuplicatesChanged = true;
+				 
+				 invalidateProperties();
+			}
+			
+			/**
+			 * A flag that indicates whether or not you can edit a new item which has been added. This only affects
+			 * the component when isStrict is set to false
+			 */
+			public function set areNewItemsEditable( value:Boolean ):void
+			{
+				_areNewItemsEditable = value;
+				_areNewItemsEditableChanged = true;
+				 
+				 invalidateProperties();
+			}
+			
+			override public function setFocus():void
+			{
+				combo.setFocus();
+			}
+			
+			public function get labelField():String {
+				return _labelField;
+			}
+
+			/**
+			 * The name of the field in the data provider items to display as the label.
+			 */
+			public function set labelField( value:String ):void {
+				_labelField = value;
+				_labelFieldChange = true;
+				
+				invalidateProperties();
+			}
+			
+			/**
+			 * A user-supplied function to run on each item to determine its label.
+			 */
+			public function set labelFunction( value:Function ):void
+			{
+				_labelFunction = value;
+				_labelFunctionChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			public function set dropDownLabelFunction( value:Function ):void
+			{
+				_dropDownLabelFunction = value;
+				_dropDownLabelFunctionChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			/**
+			 * The custom item renderer for the dropdown displayed when searching.
+			 */
+			public function set dropDownItemRenderer( value:IFactory ):void
+			{
+				_dropDownItemRenderer = value;
+				_dropDownItemRendererChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			[Bindable(event="searchChange")]
+			/**
+			 * Returns the search string.
+			 */
+			public function get searchText():String
+			{
+				return combo.searchText;
+			}
+			
+			private function defaultFilterFunction( item:Object, searchStr:String ):Boolean {
+				return true;
+				var str:String = labelFunction( item );
+				
+				switch (_matchType)
+				{
+					case MATCH_ANY_PART:
+						//Rumen
+						return (new RegExp(searchStr.toLowerCase(), "gi")).test( str.toLowerCase() );
+					case MATCH_BEGINNING:
+						return StringUtils.beginsWith( str, searchStr );
+					case MATCH_WORD:
+						return StringUtils.anyWordBeginsWIth( str, searchStr );
+				}
+				
+				return false;
+			}
+			
+			private function defaultLabelFunction( item:Object ):String {
+				if (_labelField && item.hasOwnProperty( _labelField )) {
+					return item[ _labelField ];
+				} else {
+					return item.toString();
+				}
+			}
+			
+			/**
+			 * The default function used to determine the text to display in the dropdown when searching.
+			 * It will try to find the part of the item which matched the search string and highlight
+			 * it by making bold and underlined
+			 */
+			public function defaultDropDownLabelFunction( item:Object ):String {
+				var label:String = _labelFunction( item );
+				
+				var str:String = "";
+				var searchStr:String = combo.searchText;
+				
+				//Rumen
+				var start:int = label.toLowerCase().search(new RegExp(searchStr.toLowerCase(), "gi"));
+				
+				if (start < 0)
+					return label;
+
+				// we need to make sure if we're matching whole words that we don't 
+				// highlight a part of a word which matches. ie, if the string is
+				// "Test String" and the user searches for "st" we need to highlight
+				// the "st" in "String" (not "Test")
+				if (_matchType == MATCH_WORD && start > 0)
+				{
+					if (label.charAt( start - 1 ) != " ")
+					{
+						start = label.search(new RegExp(" " + searchStr, "gi")) + 1;
+					}
+				}
+				
+				str = label.substring(0, start);
+				str = str + "<b><u>" + label.substr(start, searchStr.length) + "</u></b>";
+				str = str + label.substr(start + searchStr.length, label.length);
+				
+				if (isItemSelected( item )) {
+    				str = "<font color='" + Consts.COLOR_TEXT_DISABLED + "'>" + str + "</font>";
+    			}
+    			
+    			return str;
+			}
+						
+			public function get labelFunction():Function
+			{
+				return _labelFunction;
+			}
+			
+			/**
+			 * This field is used in conjuction with the selectedItems or selectedItemId property to 
+			 * determine if the item matches.
+			 * @default id
+			 */
+			public function set keyField( value:String ):void
+			{
+				_keyField = value;
+			}
+			
+			/**
+			 * A function which controls whether or not to automatically select the item if it's the
+			 * only match. By default, it's just a case-insensitive string comparison. 
+			 */
+			public function set isEqualFunction( value:Function ):void
+			{
+				_isEqualFunction = value;
+				combo.isEqualFunction = value;
+			}
+			
+			/**
+			 * Returns the next available (un-selected) item in the data provider
+			 */ 
+			public function getNextItem():* {
+				combo.filterData();
+
+				if (combo.dataProvider.length > 0) {
+					return combo.dataProvider.getItemAt( 0 );
+				}
+				else {
+					return null;
+				}
+			}
+			
+			public function get currentText():String {
+				return combo.textInput.text;
+			}
+		]]>
+	</mx:Script>
+	
+	<hc:Combo id="combo" width="100%" x="10"/>
+	
+</mx:Box>

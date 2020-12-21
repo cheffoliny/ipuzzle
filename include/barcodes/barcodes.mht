@@ -1,0 +1,2384 @@
+From: <Saved by Microsoft Internet Explorer 5>
+Subject: Working with the Barcode Symbologies
+Date: Tue, 24 Jan 2006 23:07:57 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01C6213B.03A7E640"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: text/html;
+	charset="windows-1251"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/working_barcode_symbologies.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML><HEAD><TITLE>Working with the Barcode Symbologies</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1251"><LINK=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/styl=
+es.css"=20
+type=3Dtext/css rel=3Dstylesheet><LINK=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/layo=
+ut.css"=20
+type=3Dtext/css rel=3Dstylesheet><xml>
+<MSHelp:Attr Name=3D"BCWeb25" =
+Value=3D"BarcodeProfessionalWebControl25"/>
+<MSHelp:Attr Name=3D"TopicType" Value=3D"kbHowTo"/>
+<MSHelp:Attr Name=3D"Locale" Value=3D"kbEnglish"/>
+</xml>
+<META content=3D"MSHTML 7.00.5112.0" name=3DGENERATOR></HEAD>
+<BODY>
+<DIV><IMG alt=3D"Neodynamic Barcode Professional for ASP.NET"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/about=
+BarcodeProfessionalWebControl.jpg">=20
+</DIV>
+<DIV class=3Dmain>
+<DIV class=3Dtitle>Working with the Barcode Symbologies</DIV>
+<DIV class=3Dtext>In the following sections you will learn how to use=20
+<B>Neodynamic Barcode Professional</B> to generate barcode images for =
+each=20
+<B>Barcode Symbology</B>.<BR><BR><B>Click on a Barcode =
+Symbology:</B><BR><BR>
+<DIV class=3Dpanel>
+<DIV class=3DpanelColumnText><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Codabar">Codabar</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Code11">Code=20
+11</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Code16k">Code=20
+16k</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Code39">Code=20
+39</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Code93">Code=20
+93</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Code128">Code=20
+128</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#DataMatrix">DataMatrix=20
+ECC200</A><BR></DIV>
+<DIV class=3DpanelColumnText><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Ean8">EAN=20
+8</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Ean13">EAN=20
+13</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Ind25">Industrial=20
+2 of 5</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Int25">Interleaved=20
+2 of 5</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Isbn">ISBN=20
+- Bookland EAN</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Msi">MSI</A><BR></DIV>
+<DIV class=3DpanelColumnText><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Pdf417">PDF417</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Planet">Planet</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#Postnet">Postnet</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#UccEan128">UCC/EAN-128</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#UpcA">UPC-A</A><BR><A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/work=
+ing_barcode_symbologies.htm#UpcE">UPC-E</A><BR></DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCodabar>Codabar a.k.a. Ames Code | USD-4 =
+| NW-7 | 2=20
+of 7 Code | Code 2 of 7.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Codabar"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Codabar.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Codabar</B> image =
+shown on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Codabar</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.CodabarStartCh=
+ar.html">CodabarStartChar</A>=20
+  property to <B>A</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.CodabarStopCha=
+r.html">CodabarStopChar</A>=20
+  property to <B>B</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>2</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>You can hide the <B>Start &amp; Stop =
+Characters</B>=20
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DisplayStartSt=
+opChar.html">DisplayStartStopChar</A>=20
+property to <B>False</B> </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Codabar codes:<BR><BR><B>^[A-D][0-9\+$:\-/.]*[A-D]$</B> =
+</DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCode11>Code 11 a.k.a. USD-8.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code 11"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Code11.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Code 11</B> image =
+shown on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code11</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>0</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Code 11 codes:<BR><BR><B>^[0-9\-]*$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCode16k>Code 16k</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code 16k"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Code16k.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the three <B>Code 16k</B> =
+images shown=20
+on the left... <BR><BR><B>=95 Code 16k - Mode 0: </B>This mode only =
+supports ASCII=20
+values from 0 to 95=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code16k</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.Code16kMode.ht=
+ml">Code16kMode</A>=20
+  property to <B>Mode0</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.BarHeight.html=
+">BarHeight</A>=20
+  property to <B>10</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>THIS IS A CODE16K MODE 0</B> </LI></UL><B>=95 Code 16k =
+- Mode 1:=20
+</B>This mode only supports ASCII values from 32 to 127=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code16k</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.Code16kMode.ht=
+ml">Code16kMode</A>=20
+  property to <B>Mode1</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.BarHeight.html=
+">BarHeight</A>=20
+  property to <B>10</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>This is a Code16k MODE 1</B> </LI></UL><B>=95 Code 16k =
+- Mode 2:=20
+</B>This mode only supports pairs of numeric digits=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code16k</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.Code16kMode.ht=
+ml">Code16kMode</A>=20
+  property to <B>Mode2</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WinControls.BarcodeProfessional.BarcodeProfessional.BarHeight.html=
+">BarHeight</A>=20
+  property to <B>10</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>0123456789</B> </LI></UL><B>Note: </B>This symbology =
+has six=20
+modes from 0 to 5, but Barcode Professional only supports the Modes 0, =
+1, and 2.=20
+<BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>This symbology doesn't show the Value To =
+Encode in=20
+the human readable text. If you can display it use the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Text.html">Tex=
+t</A>=20
+property. </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses these Regular =
+Expression to=20
+valid Code 16k codes:<BR><BR>Mode 0: <B>^[\000-\137]*$</B><BR>Mode 1:=20
+<B>^[\040-\177]*$</B><BR>Mode 2: <B>^(([0-9]{2})+?)*$</B> =
+</DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCode39>Code 39 a.k.a. LOGMARS | 3 of 9 | =
+USD-3 |=20
+Code 3 of 9.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code 39"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Code39.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Code 39</B> images =
+shown on the=20
+left... <BR><BR><B>=95 Code 39:</B>=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code39</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>2</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR><B>=95 Code 39 Extended =
+Version:</B>=20
+Supports all ASCII values.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code39</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Extended.html"=
+>Extended</A>=20
+  property to <B>True</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>Hello 39</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>A</B>) at the end of the value to encode. <BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>You can hide the <B>Start &amp; Stop =
+Characters</B>=20
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DisplayStartSt=
+opChar.html">DisplayStartStopChar</A>=20
+property to <B>False</B> </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses these Regular =
+Expression to=20
+valid Code 39 codes:<BR><BR>No Extended Version:=20
+<B>^[0-9A-Z\-.$/\+%\*\s]*$</B><BR>Extended Version: =
+<B>^[\000-\177]*$</B>=20
+</DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCode93>Code 93 a.k.a. USS-93 | =
+USD-3.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code 93"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Code93.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Code 93</B> images =
+shown on the=20
+left... <BR><BR><B>=95 Code 93:</B>=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code93</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>O_</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR><B>=95 Code 93 Extended =
+Version:</B>=20
+Supports all ASCII values.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code93</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Extended.html"=
+>Extended</A>=20
+  property to <B>True</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>Hello 93</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>&lt;space&gt;V</B>) at the end of the value to encode. <BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>You can hide the <B>Start &amp; Stop =
+Characters</B>=20
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DisplayStartSt=
+opChar.html">DisplayStartStopChar</A>=20
+property to <B>False</B> </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses these Regular =
+Expression to=20
+valid Code 93 codes:<BR><BR>No Extended Version:=20
+<B>^[0-9A-Z\-.$/\+%\*\s]*$</B><BR>Extended Version: =
+<B>^[\000-\177]*$</B>=20
+</DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DCode128>Code 128</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code 128"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Code128.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Code 128</B> images =
+shown on=20
+the left... <BR><BR><B>=95 Code 128 Auto: </B>Barcode Professional will=20
+automatically switch between code sets to encode the ASCII values.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code128CharSet=
+.html">Code128CharSet</A>=20
+  property to <B>Auto</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456 Code 128</B> </LI></UL><B>=95 Code 128 A: =
+</B>Only supports=20
+ASCII values from 0 to 95=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code128CharSet=
+.html">Code128CharSet</A>=20
+  property to <B>A</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>CODE 128 A</B> </LI></UL><B>=95 Code 128 B: </B>Only =
+supports ASCII=20
+values from 32 to 127=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code128CharSet=
+.html">Code128CharSet</A>=20
+  property to <B>B</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>Code 128 B</B> </LI></UL><B>=95 Code 128 C: </B>Only =
+supports pairs=20
+of numeric digits=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Code128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code128CharSet=
+.html">Code128CharSet</A>=20
+  property to <B>C</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>0123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value at the end of the value to =
+encode=20
+but in this symbology the checksum doesn't appear in the human readable =
+text.=20
+See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses these Regular =
+Expression to=20
+valid Code 128 codes:<BR><BR>Code 128 Auto: =
+<B>^[\000-\177]*$</B><BR>Code 128 A:=20
+<B>^[\000-\137]*$</B><BR>Code 128 B: <B>^[\040-\177]*$</B><BR>Code 128 =
+C:=20
+<B>^(([0-9]{2})+?)*$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DDataMatrix>DataMatrix ECC200</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET DataMatrix =
+ECC200"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_DataMatrix.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>DataMatrix</B> image =
+shown on=20
+the left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>DataMatrix</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DataMatrixForm=
+at.html">DataMatrixFormat</A>=20
+  property to <B>Auto</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DataMatrixEnco=
+ding.html">DataMatrixEncoding</A>=20
+  property to <B>Auto</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DataMatrixModu=
+leSize.html">DataMatrixModuleSize</A>=20
+  property to <B>4</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>DataMatrix 12345</B> </LI></UL>When you set the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.DataMatrixProc=
+essTilde.html">DataMatrixProcessTilde</A>=20
+to true keep in mind the following rules: <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_blue.gif)">
+  <LI>~1: is used to represent the FNC1 code.=20
+  <LI>~2: is used to represent the Structured Append and must be =
+followed by a=20
+  3-digit number between 1 and 255.=20
+  <LI>~3: is used only at the very beginning of the symbol for the =
+reader=20
+  programming purpose.=20
+  <LI>~5: is used only at the very beginning of the symbol, the header =
+[)&gt; +=20
+  ASCII 30 + ASCII 05 + ASCII 29 will be transmitted by the barcode =
+reader=20
+  before the data in the message and the trailer ASCII 30 + ASCII 4 will =
+be=20
+  transmitted afterwards.=20
+  <LI>~6: is used only at the very beginning of the symbol, the header =
+[)&gt; +=20
+  ASCII 30 + ASCII 06 + ASCII 29 will be transmitted by the barcode =
+reader=20
+  before the data in the message and the trailer ASCII 30 + ASCII 4 will =
+be=20
+  transmitted afterwards.=20
+  <LI>~7NNNNNN: is used to specify the Extended Channel and NNNNNN is a =
+value=20
+  between 000000 and 999999.=20
+  <LI>~dNNN: is used to represent the ASCII character with the value of =
+NNN.=20
+  </LI></UL>
+<DIV id=3DtipBox><B>Tip: </B>This symbology doesn't show the Value To =
+Encode in=20
+the human readable text. If you can display it use the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Text.html">Tex=
+t</A>=20
+property. </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+DataMatrix codes:<BR><BR><B>^[\x00-\xff]*$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DEan8>EAN-8</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET EAN 8"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Ean8.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>EAN 8</B> images =
+shown on the=20
+left... <BR><BR><B>=95 EAN 8: </B>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Ean8</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>12345670</B> </LI></UL><B>=95 EAN 8 With Supplement 5: =
+</B>You can=20
+use Supplement 2 too.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Ean8</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>12345670</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+nt.html">EanUpcSupplement</A>=20
+  property to <B>Digits5</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+ntCode.html">EanUpcSupplementCode</A>=20
+  property to <B>00123</B> </LI></UL>
+<DIV id=3DtipBox><B>Tip 1: </B>You can hide the <B>Guard Bars</B> =
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBar.html"=
+>GuardBar</A>=20
+property to <B>False</B> <BR><B>Tip 2: </B>You can change the <B>Guard =
+Bars=20
+Height</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBarHeight=
+.html">GuardBarHeight</A>=20
+property </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+EAN-8 codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DEan13>EAN-13</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET EAN 13"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Ean13.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>EAN 13</B> images =
+shown on the=20
+left... <BR><BR><B>=95 EAN 13: </B>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Ean13</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789012</B> </LI></UL><B>=95 EAN 13 With =
+Supplement 2: </B>You=20
+can use Supplement 5 too.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Ean13</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789012</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+nt.html">EanUpcSupplement</A>=20
+  property to <B>Digits2</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+ntCode.html">EanUpcSupplementCode</A>=20
+  property to <B>12</B> </LI></UL>
+<DIV id=3DtipBox><B>Tip 1: </B>You can hide the <B>Guard Bars</B> =
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBar.html"=
+>GuardBar</A>=20
+property to <B>False</B> <BR><B>Tip 2: </B>You can change the <B>Guard =
+Bars=20
+Height</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBarHeight=
+.html">GuardBarHeight</A>=20
+property </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+EAN-13 codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DInd25>Industrial 2 of 5 a.k.a. Standard =
+2 of 5 |=20
+Code 2 of 5.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code =
+Industrial 2 of 5"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Ind25.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Industrial 2 of 5</B> =
+image=20
+shown on the left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Industrial2of5</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>12345678</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>4</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Industrial 2 of 5 codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DInt25>Interleaved 2 of 5 a.k.a. ITF | =
+USS ITF 2/5 |=20
+I-2/5.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Code =
+Interleaved 2 of 5"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Int25.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Interleaved 2 of =
+5</B> image=20
+shown on the left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Interleaved2of5</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>5</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Interleaved 2 of 5 codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DIsbn>ISBN a.k.a. Bookland EAN</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET ISBN EAN =
+Bookland"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Isbn.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>ISBN</B> images shown =
+on the=20
+left... <BR><BR><B>=95 ISBN: </B>With retail suggested price.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Isbn</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>0-330-28987-X</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.IsbnSupplement=
+Code.html">IsbnSupplementCode</A>=20
+  property to <B>00856</B> (Reatil Suggested Price)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Text.html">Tex=
+t</A>=20
+  property to <B>ISBN 0-330-28987-X</B> </LI></UL><B>=95 ISBN: =
+</B>Without retail=20
+suggested price.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Isbn</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>0 571 08989 5</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.IsbnSupplement=
+Code.html">IsbnSupplementCode</A>=20
+  property to <B>90000</B> (Whitout Reatil Suggested Price)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Text.html">Tex=
+t</A>=20
+  property to <B>ISBN 0 571 08989 5</B> </LI></UL>
+<DIV id=3DtipBox><B>Tip: </B>You can hide the ISBN Supplement Code =
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.IsbnSupplement=
+Code.html">IsbnSupplementCode</A>=20
+property to <B>an Empty String</B> </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+ISBN codes:<BR><BR><B>^\d{9}[\d|X]$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DMsi>MSI a.k.a. Modified Plessey</A> =
+</DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG=20
+alt=3D"Neodynamic Barcode .NET Code MSI Modified Plessey"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Msi.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>MSI</B> image shown =
+on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Msi</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>7</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+MSI codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DPdf417>PDF417 a.k.a. Portable Data File =
+417.</A>=20
+</DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG=20
+alt=3D"Neodynamic Barcode .NET PDF417 Portable Data File 417"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Pdf417.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>PDF417</B> image =
+shown on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Pdf417</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Pdf417Compacti=
+onType.html">Pdf417CompactionType</A>=20
+  property to <B>Binary</B> (You can choose Text too.)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Pdf417ErrorCor=
+rectionLevel.html">Pdf417ErrorCorrectionLevel</A>=20
+  property to <B>Level2</B> (This symbology specify Level 2 as less.)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Pdf417Columns.=
+html">Pdf417Columns</A>=20
+  property to <B>5</B> (Default value)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Pdf417Rows.htm=
+l">Pdf417Rows</A>=20
+  property to <B>0</B> (Barcode Professional automatically calculates =
+the=20
+  correct number of rows.)=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>PDF417 123456789</B> </LI></UL>For PDF417 Symbology, =
+the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.BarHeight.html=
+">BarHeight</A>=20
+is calculated based on this formula: BarHeight =3D BarWidth * BarRatio =
+<BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>This symbology doesn't show the Value To =
+Encode in=20
+the human readable text. If you can display it use the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Text.html">Tex=
+t</A>=20
+property. </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses these Regular =
+Expression to=20
+valid PDF417 codes:<BR><BR>Text Compaction Type:=20
+<B>^[\011\012\015\040-\177]*$</B><BR>Binary Compaction Type:=20
+<B>^[\x00-\xff]*$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DPlanet>Planet</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Planet"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Planet.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Planet</B> image =
+shown on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Planet</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>5</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>You can change the height of the <B>Tall =
+Bars &amp;=20
+Short Bars</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.PlanetHeightTa=
+llBar.html">PlanetHeightTallBar</A>=20
+and <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.PlanetHeightTa=
+llBar.html">PlanetHeightShortBar</A>=20
+properties. </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Planet codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DPostnet>Postnet</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET Postnet"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_Postnet.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>Postnet</B> image =
+shown on the=20
+left... <BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>Postnet</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>123456789</B> </LI></UL><B>Note: </B>Barcode =
+Professional=20
+automatically adds the <B>Checksum</B> value (in this case the checksum =
+is=20
+<B>5</B>) at the end of the value to encode. See <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.AddChecksum.ht=
+ml">AddChecksum</A>=20
+property for more information. <BR><BR>
+<DIV id=3DtipBox><B>Tip: </B>You can change the height of the <B>Tall =
+Bars &amp;=20
+Short Bars</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.PostnetHeightT=
+allBar.html">PostnetHeightTallBar</A>=20
+and <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.PostnetHeightT=
+allBar.html">PostnetHeightShortBar</A>=20
+properties. </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+Postnet codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DUccEan128>UCC/EAN-128</A> </DIV>
+<DIV class=3Dtext>
+<DIV id=3DtipBox><B>UCC/EAN 128</B> encodes the so called <B>Application =
+
+Identifiers (AIs)</B> that define the data fields to encode. Each =
+<B>AI</B>=20
+identifies the meaning and format of the data following it. <I>The AI =
+has=20
+parentheses around it in the human readable text, but the parentheses =
+are not=20
+encoded in the barcode.</I><BR><B>Barcode Professional is capable of =
+determining=20
+the length of the AI automatically.</B> However, if the <B>AI</B> cannot =
+be=20
+determined you can indicate the length prefixing it with one of the =
+following=20
+special characters:<BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_blue.gif)">
+  <LI><B>=CA</B> (Alt+0202) - The AI is <B>2 digits long</B>=20
+  <LI><B>=CB</B> (Alt+0203) - The AI is <B>3 digits long</B>=20
+  <LI><B>=CC</B> (Alt+0204) - The AI is <B>4 digits long</B>=20
+  <LI><B>=CD</B> (Alt+0205) - The AI is <B>5 digits long</B> =
+</LI></UL>The code=20
+<B>FNC1 (Function 1 Character)</B> is used to concatenate two or more =
+data=20
+fields in a unique barcode image. <B>FNC1 does not have an ASCII =
+representation,=20
+but Barcode Professional uses the following character to encode the code =
+
+FNC1.</B><BR>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_blue.gif)">
+  <LI><B>=C8</B> (Alt+0200) - The code <B>FNC1</B> =
+</LI></UL><B>Resume:</B>=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>If you want to encode a single <B>AI</B>, specify the value to =
+encode=20
+  without any special character (mentioned above). If the parentheses =
+are not in=20
+  the correct order, then use those special characters to fix them.=20
+  <LI>If you want to encode two or more <B>AIs</B> in a unique barcode =
+image,=20
+  specify the value to encode adding the <B>code FNC1 (Alt+0200)</B> =
+between=20
+  these <B>AIs</B>. If the parentheses are not in the correct order, =
+then use=20
+  those special characters to fix them. </LI></UL>See the following =
+examples which=20
+show how to encode UCC/EAN 128 codes. </DIV></DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET UCC EAN 128" =
+
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_UccEan128.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>UCC/EAN 128</B> =
+images shown on=20
+the left... <BR><BR><B>=95 Single AI: 8005</B> - Price per Unit of =
+Measure=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UccEan128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>8005000365</B> </LI></UL><B>=95 Single AI: 10</B> - =
+Batch Numbers=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UccEan128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>10123456</B> </LI></UL><B>=95 Concatenate AIs in a =
+unique barcode=20
+image:</B>=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UccEan128</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>8005000365=C810123456</B> (The =C8 character has been =
+added between=20
+  the two AIs) </LI></UL>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+UCC/EAN-128 codes:<BR><BR><B>^[\000-\177\xC8\xCA-\xCD]*$</B>=20
+</DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DUpcA>UPC-A a.k.a. UCC-12 | UPC Barcode | =
+UPC=20
+Symbol.</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET UPC A =
+UCC-12"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_UpcA.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>UPC-A</B> images =
+shown on the=20
+left... <BR><BR><B>=95 UPC-A: </B>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UpcA</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>742709311352</B> </LI></UL><B>=95 UPC-A With Supplement =
+5: </B>You=20
+can use Supplement 2 too.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UpcA</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>742709311352</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+nt.html">EanUpcSupplement</A>=20
+  property to <B>Digits5</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+ntCode.html">EanUpcSupplementCode</A>=20
+  property to <B>02550</B> </LI></UL>
+<DIV id=3DtipBox><B>Tip 1: </B>You can hide the <B>Guard Bars</B> =
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBar.html"=
+>GuardBar</A>=20
+property to <B>False</B> <BR><B>Tip 2: </B>You can change the <B>Guard =
+Bars=20
+Height</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBarHeight=
+.html">GuardBarHeight</A>=20
+property </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+UPC-A codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dsubtitle><A name=3DUpcE>UPC-E</A> </DIV>
+<DIV class=3Dpanel>
+<DIV class=3DpanelImage><IMG alt=3D"Neodynamic Barcode .NET UPC E"=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sampl=
+e_UpcE.gif">=20
+</DIV>
+<DIV class=3DpanelImageText><BR>To generate the <B>UPC-E</B> images =
+shown on the=20
+left... <BR><BR>
+<DIV id=3DtipBox>Barcode Professional can convert a UPC-A code in a =
+UPC-E code. In=20
+the following example we'll convert the previous UPC-A code. =
+</DIV><BR><B>=95=20
+UPC-E: </B>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UpcE</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>742709311352</B> </LI></UL><B>=95 UPC-E With Supplement =
+2: </B>You=20
+can use Supplement 5 too.=20
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_green.gif)">
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Symbology.html=
+">Symbology</A>=20
+  property to <B>UpcE</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.Code.html">Cod=
+e</A>=20
+  property to <B>742709311352</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+nt.html">EanUpcSupplement</A>=20
+  property to <B>Digits2</B>=20
+  <LI>Set the <A=20
+  =
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.EanUpcSuppleme=
+ntCode.html">EanUpcSupplementCode</A>=20
+  property to <B>12</B> </LI></UL>
+<DIV id=3DtipBox><B>Tip 1: </B>You can hide the <B>Guard Bars</B> =
+setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBar.html"=
+>GuardBar</A>=20
+property to <B>False</B> <BR><B>Tip 2: </B>You can change the <B>Guard =
+Bars=20
+Height</B> setting the <A=20
+href=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Neod=
+ynamic.WebControls.BarcodeProfessional.BarcodeProfessional.GuardBarHeight=
+.html">GuardBarHeight</A>=20
+property </DIV><BR><BR>
+<DIV class=3DwarningBox>Barcode Professional uses this Regular =
+Expression to valid=20
+UPC-E codes:<BR><BR><B>^\d{1,}$</B> </DIV></DIV></DIV><BR>
+<DIV class=3Dtitle>Information Resources </DIV>
+<DIV class=3Dtext>
+<UL style=3D"LIST-STYLE-IMAGE: url(bullet_blue.gif)">
+  <LI><A title=3D"Barcode USA" =
+href=3D"http://www.barcodeusa.com/">Barcode USA</A>=20
+  web site.=20
+  <LI>A lot of Barcode Symbologies information can be found at <A=20
+  title=3D"Barcode Island" =
+href=3D"http://www.barcodeisland.com/">Barcode=20
+  Island</A>.=20
+  <LI><A title=3D"Barcode 1" href=3D"http://www.barcode-1.com/">Barcode =
+1</A> - A=20
+  Web of information about Barcode.=20
+  <LI><A title=3D"AIM, Inc" href=3D"http://www.aimglobal.org/">AIM =
+International,=20
+  Inc</A>.=20
+  <LI><A title=3DISO href=3D"http://www.iso.ch/">International =
+Organization for=20
+  Standardization (ISO)</A>.=20
+  <LI><A title=3DISBN href=3D"http://www.isbn.org/">International =
+Standard Book=20
+  Number</A> web site.=20
+  <LI><A title=3D"Acuity CiMatrix"=20
+  href=3D"http://www.rvsi.com/acuitycimatrix/index.htm">Acuity =
+CiMatrix</A> web=20
+  site.=20
+  <LI><A title=3DPDF417 href=3D"http://www.pdf417.com/">PDF417</A> web =
+site.=20
+</LI></UL></DIV><BR><BR>
+<DIV class=3Dfooter><A=20
+href=3D"mailto:support@neodynamic.com?subject=3DDocumentation Feedback: =
+Working with Barcode Symbologies"><IMG=20
+height=3D16=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/mail.=
+gif"=20
+width=3D24 align=3DabsMiddle border=3D0>Send comments on this topic.</A> =
+<A=20
+href=3D"http://www.neodynamic.com/"><IMG height=3D16=20
+src=3D"http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/globe=
+.gif"=20
+width=3D32 align=3DabsMiddle border=3D0>Visit Neodynamic's website.</A>=20
+</DIV><BR></DIV>
+<DIV class=3Dcopyright>Neodynamic Barcode Professional for ASP.NET=20
+Documentation<BR>Copyright =A9 2003 - 2005 <B>Neodynamic</B> - All =
+rights=20
+reserved. </DIV></BODY></HTML>
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/aboutBarcodeProfessionalWebControl.jpg
+
+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
+8UdkR5KSLnn051fRrm2NXY6CxyHhQE3ZTdk/m6VuVbJfGbPRbFL+DHPjW+lI2UpEPWHZ+upr9Cur
+JR4z0e0XW2jcFDMtl+cLQxnmV2/4OHV9dFTdy6rW2LNkWczZuwyaTsJLtAsbFpauUCVLsEJHHIRt
+wYEuMTyi60CG++7KbU0IcbQ5kS9Zlh3PaRoe56uh2y0RZjNus7LxP3BVaF4z2NKDDQsuCTShuPcW
+7oojj2Ac412c69WVYnDetzEu3RWoV0vseRKSVOYYRwOC/H4Qsui6KiWTXLZZ25oC47O+ziVo6FZB
+ExnXFIEeBfpsqVIeVtqKwuxq3iY7RZ9IX1VQO7z6oiUBxDX/AI8XeJbUGBOjMypNju1tuUTe56IU
+6fHVhmW38HlFUdovLt5oKLhV6gdXH0Bqdzs4laWdiW22vK9Fci+jzpk1skakNPOk45JZBwVXhrtF
+EVPdQHplAKAUAoBQCgFAKAUAoBQCgFAKAUAoBQCgFAKAUAoBQH5pcnb0PId4/HNfkyjg/P8AxCNI
+XjMttdBBcl7f+qsjLDyccyQkz+8svKGRZTCBn+eKr0+Vr1GsxmSfSZCOqm1ETCDnNdprSsBSIzzC
+OzEkKuNuO57E8KujPEcDOSwWUuwxFNqkmEXPSqVTLPENb2XfRQ9VqP6wdd/z+FWRjjPqyL3z3JyT
++6ooGExhOfTwqnhu5LJD4A8Btn4onvP5X/VaNG+SWrfJX3LTxTpTkhZOzemBHZnH1krVRnojgqcM
+mljSCNoieldPkez9qrXWyWNE6Jp5GTQlf348NmP51VPzCMCX+CUKS28rndD4mPH35qHh7YJ4JAwe
+Rd/mWeeOmfnqHD9yeA3akQWA4mQZLco49Zf41J2/PfmMEtyNxHuKpYx0THlUI2WFjI0lYul0IjIp
+GVMty9z+qtapEtBKTTcXYiIWFRMZRPvq6lqj1LYvBYRLeLHLfuHyxWqNbBfGrg6CBNVnGB6e2t9K
++x0NMLnsdFE1EoD+Rz+991bY/EOxrjd9ieGqsf5f6/3Vb+odi1XnY2pqxP8Aa/X/AKal+odjvG9j
+L8a0/wBt9f8Appx/Y7xnY+/jUn+2+v8AdXeP7DjOx9/GhP8AbfX+6u8d2O8X2C6nT/bfX+6nHdhx
+fYwLViJ/lfr/ANNRfxDt+SPGdjX+OP6p/wAn9NR/Uv6fz/g5x3Y+prD9U/5P6afqP9P5/wADjuxk
+mrf1X/k/prv6h2/J3jex9TVf6r9f+mu/qHb8neM7GSap/Vvr/wBNd4/t+RxfYy/Gb9W+v/TXeO7H
+eL7H38ZP1f6/9Nd43sd4rsZfjF+r/X+6u8Z2O8T2Mkv/AOg+t91d4vsOJ7GSX39B9b7q7xXY7xHY
++pe/0P1vurvE9jvj9jJLx+h+t91OJ7DxzL8LfovrfdXeI7HfGPqXT9H9P3V3xzvimSXH9H9P3V3x
+jvimXp/yPp+6u+KPEMkm/I+mu+Id1n1JXyfprviHdZl6R8mu6zuoy43sruoajJD9ldydyfUWunT/
+2Q==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Codabar.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zr+AAPgBDb8iUGhEHpfD5FIZbBKH0ijU+Wwaq9Ti9trT
+eKfcKFfLdI7B3y6a3VW3sWvyOIy5Q9Hn9T45R+dW9xZXNSdVOCiEZ6E3BQi5mFYWmIhoBUknN3iZ
+NdnoSFkpyfanWLd3OPnFeQoHGkrxSNr39PqZKrkKh+RaymrHJDtBy2lrhZtZqBrZS/RbpunGRyxh
+vIr8GK3rSdid+a1NfWcdgR05bqaWm9WM6g7NCwwLZn4+eiyYTN8evutsWqt50uBVu+cAHZ992wiC
+67QMHDd1wswgTJgvG0NK/xP/efO3ySHFWBcZKGxoql/EeB9Xevzn0lubgyUVnOTISpklRCJfdpRJ
+blhNmxnTbVxH6lnLnYYCFhRHc+iBm0h36gz2TpzPnkCVRJW6kN6pN1eVYmLqiytTkmCnQcSZUprL
+faXQynPKzmC5tm5fjfWj0u5SrHfhHa3IiG/YWkfLCuzUMyTekfYUL9bX1TEzgIYlG+6K2HJfscDI
+BiY82OzPtZUVU/1767RZiIJhYgrGtu3r0oDl1qaN2vbbem4t71an+eGf2qtxt+Z7vLHsx1lBXmpO
+/KvU6Jmnb05NvbBW0LnBcrfqXXnd4Ngfl99eNCx638GBq1brvLjr+CgFJv9neRZ7+GW3F3T8weVf
+egDaF148MbGmn4FIMdYdfbMtJ+Bkh7031Hk5KfgSg98Jh4teQknoFWbzsTPXR5FdN6B7z+l2YFUf
+WthggPdpSN6M5tUIGz84jiiiRDGaaNF+E6p4I4u/YbjjZxBq1yGQvMU2pHovDsTjlAXSuKRGFTpZ
+H5Q5todkYihWJF+TSeVYJIBoQvWlaHbeiWeeeu7JZ59+/glooAwEEEAChR5A6KECJGqoAYkSiuih
+j0oKqaOVLlrpo4KycCmmiH6qaKiSKqBoo6EuCmqqjm6awqifktooqq6+Ciuqq56KQKG4smrCrLbm
+mqurlGbKKLCWzlrqsKWS8kqCr8sue6umwO5K7bHVrspss5PS+mus2E5L67WvJstttiCQ++2z3CL7
+q7PrfpuuuSOgW+y2mKp7bKS75mupvpBKK2/AAg9McMEGH4xwwgovzHDDDj8MccQST0xxxRZfjHHG
+Gm/McccefwxyyCKPTHLJJp+Mcsoqr8xyyy6/DHPMMs9Mc80234xzzjrvzPMOBQAAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Code11.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvOAAPgBgb9i0WAkIofJoNJ5fDKRzSV0akwOezZt9cr0
+YptfKtYMLh+DYm5NfE0/heu5PRrfQvHSOlu55TYDt8a3ZxV2V9enV5XoR9QmKEP4aAX3SDbFSOeo
+FiY5CVPpaXd2iNp4dnd5GgkoJDoK22eIqZnauZpq6XcYKOtCKpWJiFvGiWbr+ucEHMwyLPfrq7iZ
+pzsNmUULLUwbt+xcjbqIrayXzD3u/c0enk49Zo0Hydo7FtqeIi1ON1/umj1en9b927eiX7xb9MwN
+LHXO4BKEKhT+k1eIniqH/8QKvmJHkR+4jBcZBsyT7J7HZgdDnrDY6l2xXGgEdlT3saXLEjCLnTpm
+k6M2ZvJ2muip6afGbEHF/dRnNARSU+RwbWy6kCjUqB+mYpyJ7JxKnCwnchXh1STQersgbstp9iyI
+tODAMkpJkGxRuXNHWvJZlRVTtkO37eXrga7MtUKxltTaDXFiv27rMg7qOObTyJI5KL5oF6XYvBHh
+Puuc4bOxhpgJO/W1FbUF1UpPXnWd1XBs2RRoB6aJt7Juzrwv+AZodfDG1/mIF69wnGTymrgfDwf5
+3Djlm18vE86Mr9Du7A+ih25cXTNs5+QjmPd+e3nuzdjbT3jP+nv68KDY2/93gN9J6MlnHX06/QdB
+gGvFlw1z4vmH4AIKLkUdgeo1V1+EAG5XGGjwKdfgfOtlqCEDE9oGIjoFjnhgiS6+CGOMMs5IY402
+3oijjQEgEECPB/S4I48GAOnjkEESeWSRAgD5o5I5kqBkkEtOOWSTVSYgJZZUTinljl0+aUKWP2rJ
+5ZVjLnDkmF9+CSaUCmRZZJpLMjmnk1vSueaZbYogpphVIqklm3eeSeSge/IpJJqJCiloo4HqeegH
+gpoJJ6WGVmomlZNGygGehdZJJqhGbkrnnDzayWmqqq7KaquuvgprrLLOSmuttt6Ka6667sprr77+
+Cmywwg5LbLHGHotsssobLstss84+C2200k5LbbXWXottttpuy223HhQAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Code16k.gif
+
+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
+wx8u7AIAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Code39.gif
+
+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
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Code93.gif
+
+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
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Code128.gif
+
+R0lGODlhyAAOAZEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAA4BAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zlcAIAAGfwYgcSgUBoeHn9JoREKhzOqzGS06l8olk+rV
+WpPaJHjLJZqLUmTVDcaoy+wj+np016PO6Xcd9pTVNug1Z4egBmi2Zoe4tUioiMXXZTGnd4a4R9n0
+JUnlyDb6WcaXKHaWqDl6p0kGKZamGBebd4F5N0bGScc55Tdp5ZlKeUp8yJsamfm6l/UIKQz3hgsd
+7YsnqD0bzBqIFWiL+rm5LMt4nkk93Ae3naaRi73eqxcP/D5GKih+SJ6M1B902ZzNMgRLWq2AGeYl
+zOYpDxp8oAYO4zfIXaFG/xfVbXK16xnCZ946xbGG8GG9eL4oapwkClwxU1wAVhIo7KMoRwmvkdRH
+5+Slayp12ZsYqmJOZf22HWt1M4xFnY3SHYz0cmFUOUR7GWV5L2nWqUzDOa2JLGqXpVCrQozVTuEb
+W5Z8dGX5VWvESrTI8jNrDC1UvKv2pfQYzWc3oNRuDT2M15zeX0q/XZlJSCpHc34hL+05crE0k9Ue
+WzXIraVYuWxllsq8thjn1qdRs0tcMmhpu55DgpMosRxry8Rea9QsW1nn2r6DERwLfCvK0833dqIM
+nThGf09HqjLLDCRPkViHk3bMm/r43/Cwm4952fi4tITBE2xWHS5uxnTl3f+1fVRwyfRFW3GYwGZT
+fYi1hRho5REIj1DpvUVdgNzkMxp8BmY032DfLeiZbfr1lFtjdVHgkFeSzSUgXyVpuN1ZGyWHk3bi
+qTfPT6Pphh6K/1VnoXUYwsSMONwJ5l1HyxWUX46iTdNfQz+ul1pYwkFoWHwHHhebcDVmySSVt5HI
+H0Nc9SZmkO5hCaORMiLnpWY27oSjYkPqJaGPaFYIFlJXvlhkU4HNGOdac7q1zog6QmnmdBRCpKZL
+7wUKGE2EMmQomPiJqeiTeO6mJ46Q9tmip0vGOCicmBYG440U2lnZeSdOkGJkZUUnZKxtCmqpqmqx
+Gh6dr4Z2J4vSmfboSpP/ScompZhxmeCHp7qaqJPF4ponrVPyuexqzd7nZqpdrmrfRdTq0um1EYKq
+7Z6jdvunPrtWiiB90ha4aZ3ExsrjrBLUCiCpF+rqrHz/2Kskvucmtm92svrnrrLG5urwvM92mORs
+hzZI3nPm9QuxqBLjuiag4PJar4cJb0yWgx5jCbKUEec1ccnyFrwlxpspp7Cw1cLqcMxnikwzycya
+3BHK0CKssaYLuxwXzCaGnGzR7R1988n0Lq1y0636jK61/E4tM9ErGu0t0itefHDXPLP8WcdRlxjl
+0FWffXXaWSe9tc40yuk02Aw/SHejyFb7bs1YZ4gzh21n/HbgiIYN9Mdk/9uN+Mh5x8u41mx3t/OX
+X08++MuFHzth5lZftziRnhsM+t+Zjs7xVaaXiXoPuu/Oe+++/w588MIPT3zxxh+PfPLKL89AAAgE
+AP0B0Dv/vAHTR2899Qlc/4D2DXg/vfTYM8/C+No7f7741ivgffUStM9++uvLT/4K8AvQPvXor+8+
++wuEnz3sAXB7/8Of9OpXPv+pz4AM5B7+Bsi//u1vfgckoAUfeD8EliB/BbweB+nHQAmGEH0O7F8E
+QahBE4CveSakYARDWEEDpi+DL1zhC1O4wRie0H0z1CEMRwhEFAJRhDhUoQAdCMERmm98zwPgAJHI
+xAAG8Ig0LKIVr4jFLP9qcYtc7KIXvwjGMIpxjGQsoxnPiMY0qrFsANmQP+LkmpxJrnbO2YeG+oEO
+RF0OBwcyhBsjtBUtcWiOLZOb4OoQjjyqY4836GNZ2AZHQbopWKSD2iEFAxxFYotdM3DkXyBpJkk2
+hZJ0HBOIBqlIizDSBp6Mo+Mi+cdyUaWU6SIOHrP0qR7RoJWiNEkgY3nKMOlrEbZMJC4nlq1OXgqY
+8poLM3tWSUOSDpGyOOYmdalMVT0TJs5EVTDzNSxigumW8Mmlv2TAy22uxkB9I2TcbGdHrBiznMjk
+JDqX6c1mBief0KSltYpZTXpe85wxSCc/ubnPcH3zadIMJjnFOdAdGFT/ofrUUjtpV0h4XhKV1lwX
+Nu+pzYOu85PycaeI/jnOeULUowSFwUSVhlCLXsykTbITQFmkSZZKFJ8UzVA3ewq3k9o0pQFd6cN0
+8NK+jdSVk7wPQzU6TUzi0WerrEFSQfnLg9KUUyi9o0pzetQcXNVgsNQqRt9Zx40aKZWMyt0ueQrT
+pfZyoYKzZFQ5KlCdIhWuSi0rULc6TLC246vxDCsf+YrVPm0TsOEU7CMIS9W6HTakQJXrYs8qVGLd
+NJOFFdpkx6VOv8KUsT/TLFFx2tmqvpWycRXtRUmZ0bTeda0dNWwjEUvWUF4Wtmg15ZIeKljVZhO0
+InXtTDFbU9N6tajB/5XsbVnbV92albeZNepgmZta57IStzmz7HSdWteG/hayetSuVbn7Sun+Fblc
+HepyURtZw20XuomtxW7BG02oOpS8izTvaolbWeOWlL2B7exjsRtftw63jcVV72gJ3FgDw4K/qvTv
+gpERWge/Fr/+dK88EVxe+Z6XvrnN6nqpm1zrHhi+IVYwSAHcWg0fF8XtVe6HWdxfEf+XwQGW8YBp
+XGC1Aje7Or5wKzJs4gcDOcJCpnBbwfJZHsc4yRs2V3j1O14Q59jFBUXvG30sRwiXVsUT1nKFi/xi
+KUeXyjPmcGx9W6AhJxjKa6yzne+M5zzrec987vMUxXe+J5ZQh4K+X/8U/dwB+Mlv0d+j3wR/+EBE
+g0DRBFxhFQ09xApWUdIUoHT1LJ3EGyrR05vm9PsUeEBLO4CDO+ShqTng6VR/etUmBKEHS/3q7qFa
+f5qm9Q1t3cJcW6CEhQ50Ep0IRVaLWtjMbraznw3taEt72tSutrWvje1sa3vbOMwFOSobu0IBy829
+raWmFHuconLZpdD4dlzDTS665le230Q3XOr50S77kZ2fQ1LoACdmytlYay2So2efyzN1wvtXsuTF
+U+l9KnsbXLhphhO4/S27cVt53nDWjsTximZ9J1ykC1fQtK4McXx9nLYWrniXLn4phsu7wwPnW8FB
+vu4XeJvfsMO4uBv/zqA3m3teN2d5yNm9b5J2t+T3CmqKHXsrbUy85SLHicJ9Hu+Tc3zolCr6Q3Pu
+gp0r3XFMXxlpBU7mv3hdpWBvgdiZ+qZxyVzrNE87e/Yy9aPrvN08XzrW595PoXe161LHOZ3nO3KY
++8rkgS/34AleeKO3nQVvn2vKICe6JY8Z6mqP/NcPP+LEv/vvjHd6je1eJQyxHfQ7tvjoY176s5dO
+wp3Hu+GT6XJ3K7XsXtM82jl/dx2tHvdVd/3uSd902du13vZNN75buvekw11c0TJ7wGev1qNkRt2s
+v/DLX7/45F9/+RFv/r0julfpW55rmAe477E/W+07H/1i5fvYjwR7//G/n/wqN3/eJ78ClXd1+Wd9
++yde/edM86dX9ad+Axh+BUhu1QV8qbd9z7dTDUhyyAeBG1d3E2gdwsd9xId0ond8BNh7Efh0tBd8
+ojF89lR831eCD3iCHCh4HgZ5tid53Zd7fUd2GjiDs1SDNYc3OPh5Ihh9JNhvJhg543eAHud/t+eC
+I2h1GaiEmYeCp+eB8nd+CxhlxpeEMriEBohlCLh2IRiFRziFiid3sceEY+iECbiFtoV4aQh+a6h/
+Vxhk8bdyRXiGYWd/09crdriBQOh4NmhznteC+SaFXthzVeh+eMhkeviEOWiEfoiBalh9P+hwKNdx
+5zaJfKiIaMiIfv/niLMjhin3hmVogemHhI0IhlZIg4UohFFHhIkIfZbYiqT4io8YixKoghSogHLI
+bcNIjMVojMeIjMmojIm2jCgwaAWka4AmjU10aMWIa8vWRDH0aDYEacNoaEtERdBYaYTmQ8QYa9uY
+aeVobNsTaua4a0H0jD/kaER0jOcYRL5WQ+SIjdymbOgoRCgEbPvIj8hmbPpzaAQZjtR4jc3IkA3p
+kA8JkREpkRNJkRVpkbwDMNFEIPyBCsLifKVAf3aWkRyzkTuCHB55byDJhXU2koVUklDSkW7xkU5C
+cWbUknHzkvb1gUTiSIpRk2V0k86Qkz8VGX/Qk6Hxk2QUlCExlAn/VZS0sBE+SXVA+R8a6RwmGRso
+eZSAkJRjtJTj0ZTx8ZSqVykhyZJVSZJXCZM7GQopSZNTqZRo6ZJqqZMqYpRRiZRw6ZVyiZN0SZSs
+AJUAZ4ahuJchkpYmUpdjWYEqKYxp9JXpEJbFoZgzKZV6V5jMMZeI+ZeFRZl5aZli9JhB4ZdOCZhk
+ORNmuUaheTN8sZlaiZdcqZegyZdCOZpiWZqL+ZafGUaqyTisSZqc6ZaVCYBfxJs8eRW2CZxbOZi3
+KJuGmZl0kZi32ZmwqZtgVJxt6ZvI6ZqCuYp3dp1GeZySKZ3B6ZnD6UXfGZlWt52zs5x5hp61KZ7J
++ZrtiWfvqZm//7merEKf3jmbTAmf6imT5Emd5tlF9gmdrRmgytmdItmfYPmfJ5mg87mgZ+mcfXmf
+2hmh3ImaamSgA4Kg5zCd+8mgFUqbFxqf+VmWK5maDQqZD5qVGcqeE7qiJOqfJgqgICqgIkqhmGmh
+B4qfMKqfMsqhLCqaNgqhOKqgG+qYRLqa4XmjAxGiQrqkNOqgRvqiSCqhSopGHZqdJwqkKdqYW8qk
+vemkRwqlOSqlYkqlLWqlMYmlGqqiFymnc0qndWqnd4qneaqnwgNB4AOOFuRBCxSoGDSN3qhp8+ho
+vHZB4+hC3Xht84hq/DNBygaosiaQ1AaptaaoBklF/ShA5YhtmUm6bCR0bJkGqfEYqtoYbPnIqKbq
+Qwv5bJnaj67WqIraapdabYU2RZx6Qbr6a0u0p8EqrMNKrMVqrMeKrMmqrMvKrM3qrM9aAQUAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_DataMatrix.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvcNAAQggsIDcRhEApVFw9GYhC59VMnTGcVOtU3B1ZsF
+b8Xdb/W8+KrD63G7zA6j51K4O37P2/dMur/O9GYGWDfoYPi3I4hH1NVXKPeAmJizqIdo6SgZSamT
+GchJBjoGMdlp0xj6yLWakEpKeFr1qqnw1jpaKyo7+1rKiAsJy8pLRfurF8yFqVqMCryZqrxLvNzs
+DHMb3TitbT2MLeP94xvrCv2tG56NTi5t3vq5/gxOa5oefz1/w2yvLswH3j4e/ewh42bu3sAaBY9t
+G6dw4Qx/4Bg4tNIuosQS/xT/2SqHMZnAjSs6UrgYAaI+kiRMTkB5MF9FliZQjosJECbNGDbb4Uyn
+c+eLniJD7nEpVBxIakx/kkGalN27j/UYFbS4NGrNrCOZBm0KUGuKr1fDpgn1VSwIsmittq06VW1L
+t/6wwtV1Uy5HugbP3rUbUO+JTGz/+g0seO8lioAbH56W+EPeamCNyvQY+cJkrysfJ+yc+aXPzzMP
+ZQQdOuVoyhqpIm6d+qBKw6aLVo69gShiyKR34+agu5u+2Zh/n1y6WSFx45JPx82VSzds5q4vN+Qr
+HTX1c7YLIwSKnOt2y72vL65rdnwF89+fvn0tXr3ou9lpc34u/zj98PhZ8//NjwF78lRXnnYA4pOe
+arbJZqB69RXXm37tHVhbe2l5RhmDpVGIYIcK+lbhdPJ551R0/3E434RdCYeehyg+9F6JOZ34ooZ4
+DffegzV+WFaGCUL3445B+rdfkUc1OB6JXXk3oJBAEuijiwle+KKOGLpj4WpOThmfcvyBuKWHSobo
+HIRVftkjlsuFeVhHbr4J55tszhhnnXYyNqd7d+7JZ39C9glooEjmSWihhh6KaKKKLspoo44+CmkJ
+AUwaQAOVMjDpAZkqcGkCnVqKAKWabqqpAZSSml+nn4ZqqaqrmnoBqaoKMKupl74K4Ke3bioqrbzS
+CuyuwgZLLKyeLrDqrcBqLouirsfiWmm0xZbqqrHScortqNbaimqqrPqaqa6iKrvsqczWyuyx3z5r
+7rreUguvscUqOyu66KorL77p5itfrfWWCmuy5w68LbQAH+wswbn2yu2uDe8rrMP/8tvrqcOuy3Ck
+Gm/M8U4FAAA7
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Ean8.gif
+
+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
+pz0BVQAAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Ean13.gif
+
+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
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Ind25.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjT4AAAPVaq0KtNwsdtvd
+esHjsLlcNp/F5PZanf5y32g33HN11+9zeVzP9sbH52dXKPhHGLjXF6jVkRe5J6fYGEm3CHhJeZjY
+6egJmmkZmgdJqskpOjg5yvjqahjLmlqLuil6Cou4qoqLeRv8+TucyHtc+shBbLvreztMC70K/Nwq
+OSo9pqsJXGlc3Cs7bVlNfe1tnbssPPs9bt6OPa8eX36Yfr6+wUwv7v8r3q5392bVQ5at3jZ2zhL+
+A2fwnzx81yiO82WxYCNu//PykdMYrmNDbREDZjx5sQ1HgiMh2lPYLKXHj9FgmmLYreZDeCEHYnQI
+MCNNdzaV8ZsIFF0pnSBj9mM6FGE/oxqmMlUq86rMmT15Jv1qFQ/SSsfIoQxbtqtJsD/DrmzbNq3T
+uC31vczqlOTNo3XHugypl2vJvzvl3XlbuG9Tj8mgql1cMadkxGYlSxNomSVeuQAZb/2A9ixnzCIt
+C328NG9R0H4lnp7r2jRQ0pBV213IVzbZ10HBtq49+izdyThLSw0+ODPc2yWBe3ZbXLPxg6iZ935K
+dPPzdpQjT7dLe3X269TZxi7d3XbUyrt123Rsazus9NcJAhfdNzVy6YFZ5/9379VdiwkmYFT4EZfb
+d+1dVt2A8BWI1XHzRbfcb/f59h92+1Xo0z5V/aaYfgcq+N54BmKI4IcZ2iciiiRa96BUw6FHYWIA
+riVgYyY2eOKCh9XIHoubjcifd+UVaR1VGYTm4pGAicfZk9ppBV2CSK5n5HlXhjfleDrSJ99sWRrG
+4ZBixkcld0B6J6SGRJbp5pmdpTmhlXC2yd6MW/IY4ZseSgFooIIOSmihhh6KaKKKEhoAAgE8esCj
+jTpqgKSQVjqppZleGumiP3A6qQCNhkpqpgqEmsConWLq6acLoCpqpbHOuuqpst6qaqs9wEqrqKbO
+aimmnN7q66+86noDrMd3jhospaTW+qymyO6A6rG98porrc8S2+u0ydZKbLXhasvtttx6W4Okwl6q
+LqXCRgpqqsN2i2699t6Lb7767stvv/7+C3DAAg9McMEGH4xwwgovzHDDDj8MccQST0xxxRZfjHHG
+Gm/McccefwxyyCKPTHLJJp+MbgEAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Int25.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvP5AAikAKrBWr1SrdPulJvt
+gsXSrzdbRpvLUBh2vNWur2dwWkyPz/dqddtNdha4BieXdlcY5rf45vXn0ohoRih4WJdXOcl4Gcf2
+yBKJqdiJySd5aplquPcJGohqWGgqKqo6S9rqittIKTmLB3u76perEgqcKrsJXLsqTFyMcsyLpmxH
+i+y8iRst/drcW7qMBb49zNV9Mj1YnflLni08B51Osq7X7juOF28+j17P3rd+uzjJYUbQ4D9HAUfc
+01TQliJ+1K6potcQxMNR/3wUTkwk0SKrjCE2JnO3D6Q2kRhJdjAZC+U1hBU9HnOpcWDNRTax7Vw5
+EOcHmOEozoT38xlAoRyI5hN3lCI7kQs9Md3gNCJQmlN7cruKVWdXniF9jgX6FWyGrB3LcsVHtc9S
+tRfYkt2K9KxShnTrioXbFq9UwGXT9q1g19qltxC9jjyM+G/ju+8GT0b7GPKExDIX5yWMuaVmCJz1
+RVUpTy7f0RFKQ/VsmWPhzKyjSJat2BJj2aHn1nbg2ihs1P5UW/0N/PZJ08Mz8d57HDmD4HFPlase
+VHpyrbg76/58Gbp20spjMv8ee3bV8ba5L3+Nnjh2w+wRUO+5W73x+g3uu90F/5w5ovHnn2DyOTYg
+fwouyGCDDj4IYYQSTkhBAAgEgOEBGFp4oQEbZughhx+KCKIAG4Z4IoUVcmiihi16qKGICrCYgIUs
+2ugijSpWoCOMHbYo448z+ghkjjti0CONIAb5IYo63rhkjikeKcGTC9jYZIc3ukgkiSUSSeUDSjIw
+Zo0vnrklmGeqGSaZXL5Z5pZplrlmkGu2eeWSWU7ZZYlTPumnkl/iSWihhh6KaKKKLspoo44+Cmmk
+kk5KaaWWXopppppuymmnnn4Kaqiijkpqqaaeimqqqq7KqhAFAAA7
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Isbn.gif
+
+R0lGODlhyADIAJEAAAAAAP///0Fp4QAAACH5BAUUAAEALAAAAADIAMgAAAL/jI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+D+wIhoYh0SgoJosJ48KpXAagTWL0QIUipcxusLXk
+TrFTKdfcJKPRiLX67Y2P5d9UOM1M3sl0Pnz+BKj3dxYoVmeHZYWUF8dW1bYHiFcmGWblR4m4cjjY
+OFaYhynnCYr5eHnkZ3a6CaZQ6lkq2CAWC9uWCbrKMOt60knLmktKSEvMy8d26MX8G+LEWGlpO6rI
+ig0rnXXWGtj3HC4+Tl5ufo6err7O3u7+Dh8vP0/CnT09TP/u9rmrqd+On7+B4GoACHAQgEKEBw00
+TOhwoUKJCBE0ZFgRosSH/w4PTKwI8qLIiBwhahCYKkoqZzI0bvTY8eFGihdBYtR4k6PNjzpHdmRY
+0iYGlMeM4XCZ0KdJnjyFisSZFGNIjxSn/gy5MKPQC0Qf9WMJA6nUqTKT0rRIVWvUrDqBWvWJNWhN
+rsa66qIhNitZkkBxwoyoNufPp0uvKmWrdYO9a4yv5MirNG7fxIahCrbqtudfyYEBSoD8d+lMv5UD
+v8TcFHVoxCY9QwA9WPJE0jstn26bGvdqua4jwN6buWnNp6ajoq6qezDrrb0X/A4a/Ozms2s187W+
+k2/n5g2ex7wuHC1gqMZxIze8+/tcB8ZvJhZuNuNys+tTeH8/mnLt4lLNF//Orhxvn41F3XU5iVWc
+XizcJxp9+hFHXn+V/QdXWepN0F6BmR0oH2+zvcCgbOFNZ1t5E741nXa0PZChZRvO1OGFH7oQooUf
+trZfhIjVRmGKbm33GoEuwvfifJPRGKNe0DElXWk6YpcbegFeOKCSQ9IUX3wJ1odCjeA1maNaJvKI
+opQfAcmikJ0RCZ+HZ7bgZXS0QSimhGRCmR6a7KnpF5tYuqngCnEyOWdaT8ZmoGpT6tkdn/i5VCSg
+XJ4waH440gnpjoSVCeCZK+5p5ZpYRirjmwsmGZmNIzpZp6ZU9WimkVViKhuHWpIXqAqVOnipoa1C
+eR6AnH3aaKh9jtpmqbn/2odqaCKCSWt1iG6o6LD6pWnso/KRuiWIzcamKrS+ZgosrJ3K6pujDW6b
+bLdIZpnql4WO9+u0UQprIaMMtCgquQjiOqkJu07WK73k2htshSpeC2q0BsJ4q5jLdvktcIQ+OC67
+5XJ6mIDpZrtudf9KHHAJA9/oVMbSHmdux1R+7HCR3ALsLbzOhjuvewezzHGexO6rbq0Q/0jzu8Hd
+LC/GBmuMcMs+M1xszH6OjFTJJJy8apg7+9fzoj87F7SNthJNcs1Hg5t0wTozzTOeXkMNNMhCZ0l2
+1WYzhbScSq+9MtduW4sjtlIj+6eyVo+AtbhL933i3/l+rQC/x/obo7tw/1a8pKUpL36Z3/Y+HXjD
+Kj9Mt6dlG4032nqrXeBtjX/+duhRjy5zu0VfbrPqF7Neop2bOr6w7HEPTnnEdqN+msWaDze663fC
+Djhzs3Nee+GWn5q78rxuznfnr1f7ONxgyy320KYfj/vZ2hPMfetj/g59+MKPT7zGVHd4uAjzCyw9
+xflvS72pVe52JaACZbbgmEo0RoEJhMlcFpNALWzDGvtLgOS0JbIBnq6AfpDdLezyFQsKBYQDsUVR
+xBe5sJFuZhusRweZY4kTTqKEIuTSB43SBa9UEC3kW6HtWjiCR4TuHqjoRjNq+A0GLsMaMXQghlRY
+vfs5CBgGTCJRkBHCCP+gQiVF2WIGLhiysZ0Pf5x4wBa9MsNbQCAUaexiMjAAxrmxEH3AMCMybhhC
+NCbxiMro4xsvEMfylc5IMzKBNfbIwERCMJEOQKAiu4HGKlogkD60HgG5owNKRlGDdMSkJz8JylCK
+cpSkLKUpT4nKVKpylaxspStfCctYynKWtKylLW+Jy1zqcpe87KUvfwnMYApzmMQspjGPicxkKjMD
+EjyCBHVRRQQ6coYRPIU173GNQ4pSEkf0Bh8Lcglc5LEumQDLNovRCG56xRls5AUJ1ViQURJRC3Ng
+IyRNeJclNpGejpCkPHHBj1no8Zt0uCIj9MlOVAYjoJMYqAyDkUUcgsP/nJhcKCHseceCipOGfmwo
+JSjanGg0kxpV6IQ3G1jNfFTzCdpcpktfCtOYynSmNK2pTW25yJy29KZrJOc448nTXviUhg6NAdac
+pRxlfed5bZvSDu34U6LeZQZHhR0hl8NUzwmNAwcdKjxtUFVFXXVJr+JYwsCkGGF49TGYW2rqxAoo
+t5Z1Yz1BKzO7udajtBWDkUlqguSaKK2Wj6uQXOAibxDW5IwVsNQS7MNMmdhYKfU9c23aW+wKysie
+a7L/aez3BltKzR6Gs00tLWhJKdrVkNaxWX1saPcasr5iZbWfre2LnqiktVGre7utSvremrkMSfav
+lA2sbbMmOAdOTmu1/6IX8oTLV6TOlridvRf8tjor5WKQdqlxz3MJ5NbkKTauxfVsa2+b3Zgst350
++m5uo2tV8lY3YZXFLsy0G8YA+ta32FNfcMG7Weqa9riYHR5+m8vb7vJXULAVkXRlQtvzXve0Qcqt
+dBR8pdYsWFcNVtWDASNg1k7YtfdV73b1q+Gn6q/D4PmwhO4n4fpSOLkmzm+C96viEKTWr7hirHVl
+TOIKj+TCOO5XmNwbL/8Ot8fl/bFx0VtidiFYQxjuH6VYrOQAM3m+LTsr5Go45PVyt8j/A8GOp7vl
+AUu4wPQ7sNhQfOTfije80B1tiI8LZCgL2c2JunGKrcy/7P33vXZOs/+I84xc0dV4yhmOc3+BS2cA
+F1piPqbvkxM9PSm/2c+OZrCgI01o1d45xpdmcwotLGY4t1fOdXZwfCM84jV/mYdhPjGnV/3oOcMX
+rrBGNKJNDWY+97bRuPZ0lmPr4sU22dLmxbSBF71pKpP5brpG9qtHHetsA5vWwq5yqr3Lakm7mtfY
+9nWpZ61daPdZ2n8u8wfODOFyX/rX6Daxuodt5GJz+NO7Hm+v531uFAb73t629YaZxW9rk9vQeA54
+joVL5HYbPMdmxjKktUzpZXeZQttOt6bXTWxfITlvF580jLNNb4Fzm+DTtvHB/Xfscftb3s1O+cPB
+G3HmRpvi77Z4tUX/zXBSN7vj9v44vr/98isnXOZLzjiXzcrxegPQ6AV3Oc89cPUOZJ0DN0f1xPMt
+ckOOojWOhKA0pUHNa+kUmyPlQtdrbXWwO5eDXvCgWvshTm3i6J13JwgPcQt3Rssd3C6sOwzxincs
+MmPvayUhEtNL9ZYL3t0WEOLhHbOGaGLRicngZz0XoYYqvr3bkt85oD2AdqEivo3o7GkWu5pDzX8R
+50gP+dxRYM4zQnP3WpQoR3kPR9p/vfan/0DuM2rQjUL19/UsJ0EnKfy4E5/yladoNdh+UkY28pqK
+iIRKtQ99r0t/+DyF+PTJH9T0q3/97G+/+98P//jLf/70r7/974//Gvzrf//877///w+AASiAA0iA
+BWiAB4iADlAAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Msi.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKhxgAQHBEGpJGpbPJXC6P0OlTiqRamVTts5sN
+R79X8bY7JjKqZTa3fSaP3/T4HAz13tt6fNOptuCGNWjGZ1hYh4hH6IfYeEiHhhWokLgFOWeHGcmZ
+F+mo+bgo9pdUmXA5qvqpuOfKKBdK6Onpl4Z6wKpXKytHSyoJWgq32leKm7vauxsM7HacGMr7W91q
+qozQ/Pocu21rTPxtfUuZPe6aGd1NHn5dLO1rlJyLzry57Cyuvt/ZnkcPlb18re7pKyjPW6aF4rBl
+MxhPFEJ00ai9GwgNmTll/xgt4qMoj99EhrA0Ajrn0R27jBLX9RM20ho4gBvrpYy40iW3YBanweuZ
+MGCljj8Pkqw4LGY6nlmEBiLa0ui/j3YUymQ6r6bAm0Cjslw5s+ssfyVpnuTIlaxIiDqtXky785pT
+NVBzXi1LtSHBrlXnEqmblO0/sS9Jhm2qdShcwyH3Dk7qlhnSrGdtFo271nFZwkolB038dPHdj6JZ
+co6ssqHfIYBf6TzaGCZqnKpB0y0t+CvZySJn861deetlxjBzH3Zd+O5khw9bZwZZPKFm2GZPoRw+
++mVp3tJblwuuGPvS6NDzvhV/nPl1r8RJi+cue/pjytbRotf8emry8+znq/+339947gUIX1XybYYY
+eKHdt01+eO3nU4DprSaEc7FtF5uB3plUn2US4pedbkpFCJZ/FAZhIXkYkqchblj952GJAmr3XoZ6
+bVjdQ8aF6M2K5pGo1osnApHigDIWeKOLpiXYoY5OPglllFJOSWWVVl6JZZZabslll15+CaYOASAQ
+QJkHlDkmmQagaeaaabL5ZpsCoOkmnWHSIGeac+655plvKqBnAmPqOeiZgt5ZQ6CGqrnnn4wC2mef
+hD6KqAyK8ulmpHG2yeahdUaKaaiVwqDopY12quakoKqKqqijvhCoqaFeWuiqi4qq6qsx5GrropOy
++mist+oKK6eo2nkrsspKCpqnsMQ+C2200k5LbbXWXottttpuy2233n4Lbrjijktuueaei2666q7L
+brvuvgtvvPLOS2+99t6Lb7767stvv/7+C3DAAg/sQgEAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Pdf417.gif
+
+R0lGODlhyABkAJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIAGQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8SiUQJIKpMCQPNpWD6d0oOU6mxeE9modcoN
+Q8dURdeL7m6zVe2y7GXL3kqwul5uu/PsLeKsBvYnFhhnJgZ1xwTXRgcneObimEeGN1VnZcm094jm
+STkYWigY+pWWuZiIyZlqOPYyaYdKqbfWZ1lKRup5+vnKq1uZeqvoBznnKBulufenSdz5GhgdKecb
++VtYDLmaPA3cEgvazLe5PAydXToObK2LXW26zdhN9w7OIk661jx7ed7K1DV1ogRGI5jIHz1z3r64
+g9XwEb9azwBSW7eL4KiD//F6kVPF0N63X+EiCqO16uOmNwjvdZRnkORLd/z6sZKYMIY+icwoorPY
+8ttLjyNzBZsHshiuYzpNKh2HZyW5lRujarlkbllSrIq0ouI6zM2spYyQidzHkicWOVeoGrSKLutV
+Yly/Xv26tmfItA7xrdh5Muw5sXUxMVSIpa6zrXntZn02ca+xsk3PqmU22PDUPm8XJW68mC5owo/j
+6n2K86Ekp2OhemYblfMnuOWqLaztGJDpsPX4usKWj7VF12vjxPZ6ci7u0AAVk9Zdm7dksjlhAH6K
+tnhht7M9z7WpVbRNw9DBokR9j2Rwy4GJk96MfN5n8N9V9kYuNq909COB//8Vzkp277UlW3LejRZe
+c6OR50x057WWml8qXNeagJoRGB9i3+lRny174QfZaRCm59+EAGJmz1TmbRUeW93pVh1LTDWXWXs3
+kWgWX2pxU0VbK9LV4m/+ZBJjj9WNJ1iADQlZmY7C8EjegUrSqByT4LWilJVIEhfbZEeuxl5Xt1El
+5VlI3kXZlWnKmOaW2XVJnWolhYlXUmTOZ2Yjic1IUZEX8qInl695Ked6Toppp2gOslglnylhOZaW
+gb45aJwSpkBhjdAo+iOV3jlamp9SPTTpZZUG1CaYh9a5qYKLAtnomo/K+qc095mqH6pfzrmqpsO5
+2umZo77IXGCS3mrjkjP/QkSnrwGqmCujn9IKI01GkoosdsqmyutEffWI7F0fEekVZ3sSNhiaxb5G
+Liedbrurod4aAu6HBRojrlQbdpUboPSgO927Zi6r6rx2RIlovkspnAYfdqWrb4LK3RFptLlGqN5/
+zR58Z50KB8SwKv+kCzG2ItdT8ZTwFqpxrxzDiotktpJr7scNlruudh/v5iDGJWJ6omKlxrdwSA2P
+jO5z/p5sNFAW39hfjgYvN/TOM+O878NKz2xu0+4+vfKlKGT6sqdYItWuvj+RvHW1LVLstMoDcytv
+T98i7LHMMGK9dtIMcv122h6GaGnGJm5Mdbh6L8a3w2z/7fbEghPeM45N/04dF+OvBiwxbKgyqB/A
+gNSoKXfD+Sy13aXvvXmWnRv3uVuhoyxP7FiBOHe8LWNejuY/ct4h7JclmJbXID2pXWm+Edyt6vn5
+7aJIwENa2JC7iS6K7clDR6jYJ5ANme8WT09ZY9vsexyIpD//9+mWW3di5jT/7nrw1dN4Pe0N77h9
+g90bDjTEyQ9n46sf9cxnvehgr3b825r7onY554VvfgWM1Ovu14/8Ge8WyHMg1PoCwLHFr3cUVBL5
+coJA/ClQf8dDVPs+qKWCSXCA6qogUC6YwgyucIPrm6Dy/vezIwhxiEQsohGPiMQkKnGJTGyiE58I
+xShKcYpUrOINAoDFAP8YIIta3CIXEdDFLR6Ai2EcIxixOEY0gtGLWUwjG9XYRjZaEQNh1GIdxagA
+NQpAj2s8oxnFeEcv4rGPedyjGQM5RwrcsYx2LCQjCwnJBJTRkIbs4iQn+cdF/jGRE9DkIb9oSUJu
+UpSD3GMoKflFU/KRkqocJCY56YBUPvKSqWRlKUn5SjvWEpCbRKQl4wjLCFxyja+05TAX8EhkkrKS
+vWzmMoPJgGOiMpqiLCYrpZlMT07TmbeEZgNoqcdi1jGc0YSjLFc5znSOspWC9KY73wnPeMpznvSs
+pz3vic986nOf/OynP/8J0IAKdKAELahBD4rQhCp0oQxtqEMfCtGISnQGohQtYgEAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Planet.gif
+
+R0lGODlhyABkAJEAAAAAAP///0Fp4QAAACH5BAUUAAEALAAAAADIAGQAAAL/jI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqnQoDBGsBiFdrE9gpe
+dBHjwzfrDXPV4XIaTX6b23J6bOyOw+f6M/+cB/jmZ/fH1le3ZyeIeLfIEDgIeRipZyhGWShpmQnH
+eAmDdwjaSei5yZeq2XhpWql6qiib1yIqSzo7uvpaOpkbu/YLazusu2Lr2omLy/ub7GzczChtrILs
++7nKrNyLCX27m0jcHfronQ2MGs6ZzmoejD7N3V77rv4Nfx8f3f283/jPlDV77vDpmyfv3CZ/4hY2
+BHfM3LVYEytKvEgRo8WM/xw30mLhUaPIjiNDkjxpMqUMlShLumwJk6VMgvVivpxpMyfOndpA3vyp
+EyjPoETLER2KVKjSo9VSJGUK9anUkUanRl1qNetKrFyvetXKsWpXsGTHvqSCNq3atWzbun0LN67c
+uXTXCkAgIO+BvHfxGuCr929fwIMDB+ArGHHdGYb7Hn78d+9gBY4T3HV8eS/kxTYqa/b7eDJoypEj
+Y97MmYZn1IFFA07sGXNrza9Ty4i94HJt2p83nz6suLdtF5VXlz7O+/hv1MyND0+xXDno07+LCxfN
+/Dn01rWDK2/c2DJ4vIa1mz+PPr369ezbu38PP778+fTr27+PP7/+/fz7+z7/D2CAAg5IYIEGHohg
+ggouyGCDDj4IYYQSTkhhhRZeiGGGGm7IYYcefghiiCKOSGKJJp6IYooqrshii0cUAAA7
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_Postnet.gif
+
+R0lGODlhyABkAJEAAAAAAP///0Fp4QAAACH5BAUUAAEALAAAAADIAGQAAAL/jI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqnQ8DDGsAqtAYuAus9
+hLsJ7zhLXpzF6W357TDDYev0Wa5uz/foLwP8d6XnR8gWx1eHkgiYVwh3F+jY5zbJRwkpuYgoo1mZ
+GYlJaTj6GNnAKDrYSerZ0hk6aAj7KSlrCnrruarKKdjK2zjLineZW9w47Jsc85qLKQzMaouMS62r
+HP3SbP1snP3bB004S+xsybKdCo56fl1r5z1u/k4rje5LXq2+bB8eP62uHLd2KhgZhOcv4UGFCBc6
+bAiRocSHEyMupGMxY8WN/xQ7avTI8aPIhBhDmgSJcmTKkypbgivocqXMmDRZ2lxZcubNmjp78qyZ
+8+fOoT6JCqUY1KjSokyPCk3adKlTqVRBQp0aNSvWrS9TaK3K9avYWFTKmj2LNq3atWzbun0LN67c
+uW4FIBCA9wBeu3cN7M3rl+9fwYAD7A18mG6MwnwNO/arV7CCxgnsNras97FiGpQz93Us+fNkyJAv
+a94so/NpwKH/Iu58mXVm16hhwF5gmfZsz5pNG07MuzYLyqpJG99t3Pfp5cWFn1Ce/LNp38SDh17u
+/Dlr2sCTM2Zc+fvdwtnLmz+PPr369ezbu38PP778+fTr27+PP7/+/fz7+zr/D2CAAg5IYIEGHohg
+ggouyGCDDj4IYYQSTkhhhRZeiGGGGm7IYYcefghiiCKOSGKJJp6IYooqKlEAADs=
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_UccEan128.gif
+
+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
+wkNrJ1/bOxfINqVC/0LUcO3I2qy6NrSwfcFyMcup2m6WuCz16V2pm9wWXHdJkdJpQaBb3NYeF7zR
+YysQ24JS7Kp0SAi67SjV+1P2dlWovr0pcKlqW+6aT7rrLQ5lTTDe05a3T1bt7CJb810D89a6/SVq
+gXLK4MDel8D5lXB1lVvht9KWvhUScA4Hq9XCCmS/UA1xX7NL4ue6NL0cjjBBDrxXFysWrtqtr4mx
+iuLpeji8LEgwToObpZ2it7vG7fCNJwzirxJqxyN2rmqXPOAgF/jJHxavjmcLYysrecZMxq+NMUvk
+mn6Zuag1bxmwfOLcpni3XS7ymuXbXOFemcxZlrOQuZxm99aRb/ElL/+GyWrfnjb5zENicWWlrCk8
+tznDiY6ulp2M5vbyF9KFVvChG/vjs5qZbMjVdIs5fVlDIzm1Y06kpf285Uw7GsF3VjWAtwtnIMMa
+040+LK1Rbdoj39rHuRZ1jUmtX1/nGNi/LepfA1xsyNoV2UM29aPbGiYRh1nPrVblq6cN2mrPetnY
+btOL5yvm8/I5zuBuqriVTVpm+9fZmiX2unXd7q2uGN4jMPJ/GQvtexv70ozezLjjXW6wUnnbSVa3
+q2lMcGoD2tq/TviUwYxubjvc2xDfdcEN68OSinzkJC+5yU++AolKQOUnYDnLR4WyhaqTXdWMOckW
+WqxkEeud56xnzw3pqi+F0ksN2NRYu+D5sH/xvAHSdCdArclQhHqTCFBnmDeRmbGso6ud2SSn14sp
+LrA3jOtEH5e9kv4usBs96vVK586/6U5zhp1e6Jz5y3dQdY2pHesbQ6jW1Q53fPp9AfJs5t+NkPfD
+f73veudnPvf+z7lPfZ9WP0LiGS9Qqytd6Uj/OkA7r62iK74INmdmQ815etOX/u0KS33Nde72bKpe
+E3eHQO1DcPfb+0f3hJ+By1EO/OALf/jEL77xj4/85Ct/+cxvvvOfD/3oS3/61K++9a+P/exrf/vc
+7773vw/+8It//OQvv/kjUAAAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_UpcA.gif
+
+R0lGODlhyAC0AJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIALQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjcoAAirgWrUesFUD9mql
+erXebJdc5n7FXwQZbFZ3pR4tvD0ux9dbdPg8l8b2F+c2d0eIRrdhxydmdhhGWCgI+Hg2CImXNvYn
+d7mY0ejZp7c2uUmqmMgaCJjlyeYaijFKqZmHWPqo6tqqthoZy0mrYZsqu4fqVxgMrOncuUdcXItJ
+mhcJC3nbe/mb+S08/Vp9ceyXfMqd2uwLDS8+OFxuXoEeKKfMztzmHB7O0DxyiuxNwMdLnSR++dzJ
+A5hLoDQ+9QxKQFhKm66I/5XsCIR465WuTxbvXeumcBuXbg4/5gq4ZRzFgiUfYMwGcFlDf++e+ZSo
+MtGsmg5u4tq3sh3Phy85EhspCxTRBkb1rUvazyNTgtGC4pI6dUHVlBtZLnXJtedEoWDDJhhraiHW
+nVrRzuwKlZpbBnA1UjRbN6ZPmE8dRd1b9CSyuF6derP7C2jeiogljsyYkyGvloJBbhJpWG9ly44w
+v9S5+WznpiHfhKY82lJpnKc1r/a4Oq28tV9jK+ibeW7qwJV0S35NMzbw2sJv1wPnFDS95KOXI01I
+1xLkeMenD1WuOB3jskqJY2L92bX3tpWtX8U+XHvuu2q9kvRNGtvR97uc//9Djxdy31UXXj5k/VWe
+fMXRt5t9h+EnmH2mXddfR8/FQ5h0BA3YXoHY+YWafz15FuB6EEZ4GW0UOsbZgpFF6KBovrknF3wi
+bsVgdxuyhxiNjQGm4HnGwTgZdR3WaOB4CGYVJHStycTWiZykuB+SLKrmIndECsjjXj6SxyRuWf60
+pYlSfrlkdmIKmWOZO0opm35WWQnkmk6mB2VvZ3o4IX9XmndniW/u2SUJRppwqEEBLLoojAsEcACj
+BjDaqACSTlqpWANeOmkCkEZaKaWfvhUIp1ONSl2okXpq6aqjjkoqWK9iikCms8KqqRizngoUq7i2
+uiqwre76G4edHhusrzb/DfWror0Gi2u0yEJKbKwNZCossrRaauqz2ZbU7KOUJjsttN1WUO232qrL
+QLj2uNsuueWuCy8E6TYrrb1u1fvoutlWy2+/8yZ7q7wChxUwq9xeGq2tCYv7qsMRTxyBqHBejHHG
+Gm/McccefwxyyCKPTHLJJp+Mcsoqr8xyyy6/DHPMMs9Mc80234xzzjrvHBunDI9r8cI8h1Bwp/kS
+PPQH93579MNJPwAwpqEybPAMaIZo4X9DFmZmBsTiq6y/VvOpop91XjhYdOoN6jW08dYqrNMpXG1b
+1iMCWF+RxlbsqsLD9i32FGRX+WOCdmKodp73afBz46BSnAPdzdmN44tc/7MNoeQ2Ur4dmZfPtLdb
+mld43uFpPzkQ6IWGNfqfTSKOOm+LZz74nIWHiTaJeXMJZ+tna93m51ESKmHZdBqeO94N6r16ce5M
+g4qQ8sHhgu/IA2+5hqofZBtE0X8/TvW1H4h16clvrf3wEYToPTvS40Z9C9bjjr2Wwuu5fvdNgZ+U
+huIj+aHgbM589fNc+vAHAfbtz338k8b/ikc4MKnpfME74OyW1Zz29a+B23gglWwnwfiYTnfL491F
+9Ac9BqpwIB6cTQTTJEIKZm9t2zthBhe4wRU6UH7jU1L5HjOfGSruQfm7YQpziMQdsmB+Eyxghmio
+vgSisDRITE34eAjAPv8dj353Qx8UEYhBG2nQiknsIBYhCEIY3qhzTxyijKgyRVWQkYxKXAETY+jE
+xKUuimHszxhRREczLrGHIKobAbtYwS9eMDFGpOIcUVRHFdxxjUG0nwWJKMVGyhGQkBSkHQkpQNIB
+cUxt3CMYGSlGHD5ySpGcGyiZM8BRskmIplwkHDXZjFVObyWDzKLxbtdERNJSdpjsY0T+OKVAxq+X
+aCSfIWUZqN11LZOpPKIu4cfLT/ryhT9s0SwtqchiotKPquQkKz0pyVeu6HfCBKcbYcOXOObSnLts
+XggmyblKGjCcb4wnLv1xTf+d8YPOnNwhK+fOWorzltV0JD2xaU8Q4PP/oGzUIzH7mauGbjKZnVym
+Npvpw2d6M5olnKYxn+dQjp7To+ncZhq7iaVv7vOdiUILSjcqm45ms6UgLaRBoQk7PCkUo8X6ZyMe
+KlBmEjSkPx1pUAVVwyJqdJ4qrecLJgrU0wn1ovDMKDmtidS1tVBOBY2lU7UKVT6O85jlrCpErxq6
+EdRUrnF1Hk/A6takjiBoXYVc0HyGLWtBDG6ElZrUAkuNc+XmplTN6Up3WgJUbepTSysau2CzK2zZ
+CnC3HFispgrQsF7xBLBKDrUUACvKcjZciVoaai/rqKq9D5uNPepjI8o4bwHraMeyLGs5pFm/bWtc
+uRLuZ7+aUsdaFQUJoONr08yFWAq41rjNXStjQ5tXsZIWXQb7mnG5S6+DBe67x2UrXpX71u2C91ep
+JZfcBvZco8m2sAxFLk5tu1wTvJeyxG1YxLwmsccJ2LD2Im5RQYvfBOv1aXalLXbRu2AGS3jCFK6w
+hS+M4QxreMMc7rCHPwziEIt4xCQusYlPjOIUq3jFLG6xi18M4xjLeMY0rrGNb4zjHOt4xzzusY8p
+UAAAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/Sample_UpcE.gif
+
+R0lGODlhyAC0AJEAAAAAAEFp4f///wAAACH5BAUUAAIALAAAAADIALQAAAL/lI+py+0Po5y02ouz
+3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kp1CRBktYDstsvl
+erfhrzhs8GrX16L6/B3DyWBzV55ev9vD951dN4ZXlvcHVqjHR+RXlyZnSOc3d6C2pwjEyFgWSCkJ
+SZlIdvmTCfjI6Qg4iWg52lMatznYqIcayubqA5saOOtpW4mby7O7uUpYO3s7/Gqq2YuGLBgdLMqc
+U8z5yVsIvHytk33qq7p9aw1uIy5L/ascnI7tbMp+KH1cHS8f9zxtT+uPzjd9NdZB++eO2kCCMwwG
+7FTOGzyGNBziS/hvIUUY/xbNAcSncaOLjsAwCpwokuO8WAcjRXyXKGUMkuTsSIwp8wXNdi8VoszJ
+YifCnhl/AlUh1KVNmK2OpkgKcalPnE6RruT1kFuyqU2rmoCqNes5ryvA3vMYkuwIsx/RGlW79qox
+jyZBvYUbgm1dVsLwxuVHr2XUbkz7+s0rV1tJoiepHkYMmKXYtje7Pu6gl7Fdx5c9ZJZalHNnDp8J
+czU8ekPpraEtp8awenLa1xdcfxVN+0GA3bs3JwhwgLcB3r0FCB9enDhwBBOP546w3HHy4L+NU48O
+PLoCeNifQ9BuKbsC7cu7m29gVLv3BeBxla+O4P1w6/OJb5e+3oH68fbnx/+n7l9/AH6Xn34SdAcf
+fQr6N6CBBTKwXwPy/TcgeQxGmOCD401QXn/qOVccchj+JqCGJp6IYooqrshiiy6+CGOMMs5IY402
+3ohjjjruyGOPPv4IZJBCikBeiEN+ECKCRyLJXmexgXQXdBs6mdg4PIHWmG26ZfjYk27hJmWDl3lZ
+GWoHijlmlfUoZVprZn6XXIl+kVkYOjHSeZqdMOLppp4v8pnlmy4CupmWLBLKl5/3HcKoKtGQhehY
+EuDRqBmPehVpPpOiUWkel1aV6WyLxhITqWqFGuWoqZS66qlqChYWlGCqyqmj9kD66mR7SRoBpXZ4
+eiumuV6kWaIT+IoIPXD/oTprAsiy+qlTzBpqF6mSRHvUtII6y+mvyroaGVbEYlnotsx1m6ypuIY7
+12LkGrspo96qKyy7itXUZqCKcitvuq2u60g/4+Zb7r7n9gttsKAOS1exvELw7LUKS8uwuwTD2yu6
+CRsskrYcd7OqxB9T5PGxGouMV8nxWmvryAypnDHCKC9bMb6s6WuyzC2nXPOVFz/8QMQ702yvlUO9
+C7QDQls6cbY9H/2zpjGzzLTLBMEM8clDgxtwYLo6LHXWOlfNc9FrDnZzwTlTDazV+mAdtNZkE921
+ZAOnjbHYbH8L8EjNHrw3vRsp5xuFxsV5HIiIG/mNc7R2yjdQ0bUyHYP1pV2HOQPcoQlyrXMf1Z4o
+4mU44ejWjZie5nK3XVXoAH4I33n1Oc6X4Y/P+69MI4qYZIIIyrm77bf7iy1FwVc4pYKwCw9h3GOz
+LjmHlluuJH3VN+984LmLdPzrHpKIXZHdE77A0tAvuXbIW6PPfvvuvw9//PLPT3/99t+Pf/76789/
+//7/D8AACnCABCygAQ+IwAQqcIEMbKADHwjBCEpwghSsIEEKAAA7
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/mail.gif
+
+R0lGODlhGAAQAPcAABu3C8XY/6ysrOi4VqSAUX58edzWtFnWObGij4a/RMXFxdm/ffz690V/Qq69
+XoiWyebm5jidK4eHh93KYvPXeqv7ge/v74/raVKiQuDg4MTT6nK4W6enp8yxhKu90ZyMdkHIJvLZ
+e62xtye7E82lY4y5hNWsZ//MZoPjVKXUmKe13uLj763XrJ2QOtzHpcLZvpnMmWKxTDi8I/L4rVHW
+MSCMCffMZriQS/z+5sO1ibq/VO729ffmiMzMZpmZmY55XdbW1m3RW9fKu/Pq3x6tC0aLPdfi/9m7
+dLSSWeHFh4+i38vf+G/LP9u6ZVaXH+XNdrivoeTYjb6+vtLVrPbSb////8zMzP3YdWXiQeDx/7q0
+r9be/4V4Z7arn1V0QPLp3NC3U3fQZ+K7Xti7aYL0VNzCkvzjhPb29vzbfzLEG9TW4OLGdUHMJaKI
+XujWvLDJVOPKZ7jYtPXyr7qPSdPg7+rCY+3cjP/ujPfv7/b4/6qnovnWdP/MZvnefbW1tei6WRy3
+EIyEhM/U6YLuU9/o9+DPo/vNb9fPyPTs4dvn/7eZXtzCiu7NcG7fRenx/z/NKAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAQUAP8ALAAAAAAYABAA
+AAj4AKsIFPhlkQsLDAYqXMiQwYIZU6BoWELHAsOLAsvI8UBooAggZzAudGNnhwqLArsggCByIKI1
+OLIoUTOwkCIrIUUyIGEggIoHQPI4OhRijB6WIoc0yaFFjREjiQQd6cPoA5CWVY7coZBEyAogHWzs
+odJGQc6LLByg6XPlhIkoT8SIsYHED0qGcYI4MQQnwZsePMxQqDNgDgekDGGEqQFGh4xHB5hMsPHn
+xg8BiBemqHABRSMQIwAQaUGAiwQOVu4ufDFoEBYabNIA8lLAhwArGVQvPFNiQwwMRSI0kOAHCISz
+IiEoEMChOQcpEBJiHWgBgnXrCKcLDAgAOw==
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/globe.gif
+
+R0lGODlhIAAQAOYAACpO2e3t7Yqi12uDw7CwsExw4KHH+Vp+4YCFkWJwqJymvXOY7z1g3czMzJa8
+/jBV23aQ3UNYq5O592aL57TY/X6j+tzc3P///5K38nZ6i76+vkplzVyB5ZKZr4mv/mmK8H6j8D5a
+wzZTxVF14ri7w73i/HWZ+p3F/5u11qrR/5rA+oGZ2Uxu2UVr3jlc2Yas+4er7YF4fGaZ//b29sXF
+xXec7qjO+0ZXnWuO6FR44jRUykNj1Yuk5GKG6OTk5FR45jpd3I2z9Wp4n7fd/sPo/Fl+5ZW7+Jm9
+8LTDunmf/oqv8Uhr32uR6py9/1B04FV57pnM/4Wq/ajO/kBk3I61/63W/3qd7W6T653C+C5R2KLI
+/nOY6pigt4Ck7zZVy7/k/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5
+BAQUAP8ALAAAAAAgABAAAAfogBeCg4SFhoeIiB0bSwcsSImRhThLlUsjBUUGkpIHLTlXE0ocHExa
+DjGciFM5RUVbSlsTHBI5DySqhSgtRT1dQVZfQzZOBUAJM7mDJ04cV11dRyUUKU5TLiEWyoInTDk4
+NTBEQ0MGSy4uXg3bFw5SE81bGENYPQXXOjTsVCdSSrMTKEho0cLFAxH6tglwoCUFiBwQDRjp4SJL
+hHXbFHhwcEJFAWNGTjj4ASBDAHYXeEShoiKHiwUOPFR4ckMDygs+ViSJAgTIiwomTAghkOxmAC4Q
+dnz4gGMAggZFbwry0UCDBhoNTnIKBAA7
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: application/x-css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/styles.css
+
+.listItem {
+	FONT-SIZE: 70%; MARGIN-BOTTOM: 7px; FONT-FAMILY: Tahoma, Verdana, =
+Arial, sans-serif
+}
+.listItemIndent {
+	MARGIN-BOTTOM: 7px; FONT-FAMILY: Tahoma, Verdana, Arial, sans-serif
+}
+.anchor {
+	COLOR: #0560a6
+}
+.textColorNeoBlue {
+	COLOR: #0560a6
+}
+.textBelowFigure {
+	FONT-SIZE: 70%; COLOR: #0560a6; FONT-FAMILY: Tahoma, Verdana, Arial, =
+sans-serif
+}
+.foot {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Tahoma, Verdana, Arial, =
+sans-serif
+}
+.panelTable {
+	BACKGROUND-COLOR: #fafafa
+}
+.sourcecode {
+	FONT-SIZE: x-small; COLOR: #0000ff; FONT-FAMILY: "Courier New", =
+Courier, mono
+}
+
+------=_NextPart_000_0000_01C6213B.03A7E640
+Content-Type: application/x-css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.neodynamic.com/Products/Help/BarcodeWebControl2.5/layout.css
+
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #fff; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; FONT: 11px/16px Tahoma, Verdana, =
+Arial, sans-serif; COLOR: #000; PADDING-TOP: 0px
+}
+LI {
+	MARGIN-BOTTOM: 7px
+}
+A {
+	COLOR: #0560a6; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #0560a6; TEXT-DECORATION: underline
+}
+.main {
+	MARGIN: 10px 10px 0px
+}
+.title {
+	CLEAR: both; BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 0px; =
+BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; =
+PADDING-BOTTOM: 1px; MARGIN: 8px 0px 5px; BORDER-LEFT: #ffffff 1px =
+solid; COLOR: #0560a6; PADDING-TOP: 2px; BORDER-BOTTOM: #cccccc 1px =
+solid; HEIGHT: 15px; BACKGROUND-COLOR: #fafafa
+}
+.titleIndent {
+	BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: =
+#cccccc 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; PADDING-BOTTOM: =
+1px; BORDER-LEFT: #ffffff 1px solid; COLOR: #0560a6; PADDING-TOP: 2px; =
+BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 15px; BACKGROUND-COLOR: =
+#fafafa
+}
+.text {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 10px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 5px
+}
+.subtitle {
+	CLEAR: both; BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 0px; =
+BORDER-TOP: #ff9900 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; =
+PADDING-BOTTOM: 1px; MARGIN: 8px 0px 5px; BORDER-LEFT: #ffffff 1px =
+solid; COLOR: #666666; PADDING-TOP: 2px; BORDER-BOTTOM: #cccccc 1px =
+dotted; HEIGHT: 15px; BACKGROUND-COLOR: #fafafa
+}
+.panel {
+	CLEAR: both; FLOAT: left; MARGIN: 10px; WIDTH: 100%; HEIGHT: 100%
+}
+.panelImage {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 5px; FLOAT: left; PADDING-BOTTOM: =
+5px; WIDTH: 220px; PADDING-TOP: 5px
+}
+.panelImageText {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+5px; WIDTH: 520px; PADDING-TOP: 5px
+}
+.panelImageSmall {
+	FLOAT: left
+}
+.panelColumnText {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 20px; FLOAT: left; PADDING-BOTTOM: =
+20px; WIDTH: 30%; PADDING-TOP: 5px
+}
+.footer {
+	CLEAR: both; BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 0px; =
+BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; =
+BORDER-LEFT: #ffffff 1px solid; PADDING-TOP: 2px; BORDER-BOTTOM: #ffffff =
+1px solid; HEIGHT: 30px
+}
+.copyright {
+	CLEAR: both; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; =
+PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; COLOR: #333333; PADDING-TOP: =
+5px; BACKGROUND-COLOR: #fafafa
+}
+.panelTable {
+	MARGIN: 5px 0px 20px; BACKGROUND-COLOR: #fafafa
+}
+.panelTableItemTitle {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 5px
+}
+.panelTableItemDescription {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; =
+PADDING-TOP: 5px
+}
+.panelTableItemSeparator {
+	PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px dotted; PADDING-LEFT: 5px; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.panelTableStart {
+	PADDING-RIGHT: 5px; BORDER-TOP: #ff9900 1px solid; PADDING-LEFT: 5px; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.panelTableEnd {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px; BORDER-BOTTOM: #ff9900 1px solid
+}
+.sourceCodeBox {
+	CLEAR: both; BORDER-RIGHT: #cccc00 1px dotted; PADDING-RIGHT: 5px; =
+BORDER-TOP: #cccc00 1px dotted; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; =
+BORDER-LEFT: #cccc00 1px dotted; PADDING-TOP: 0px; BORDER-BOTTOM: =
+#cccc00 1px dotted; FONT-FAMILY: "Courier New", Courier, mono; =
+BACKGROUND-COLOR: #fffff2
+}
+.warningBox {
+	CLEAR: both; PADDING-RIGHT: 5px; BORDER-TOP: #eeeee6 1px solid; =
+PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN: 5px 0px; COLOR: #ff0000; =
+PADDING-TOP: 5px; BORDER-BOTTOM: #eeeee6 1px solid; BACKGROUND-COLOR: =
+#fefefe
+}
+
+------=_NextPart_000_0000_01C6213B.03A7E640--

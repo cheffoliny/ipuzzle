@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center" verticalAlign="middle">
+	<mx:Script>
+		<![CDATA[
+			import mx.logging.LogEventLevel;
+			import net.telepol.res.Resources;
+			
+			override public function set data( value:Object ):void {
+			
+				img.source = value.nCode == 0 ? Resources.instance.ImgLevelInfo : Resources.instance.ImgLevelError; 
+			}
+		]]>
+	</mx:Script>
+	<mx:Image id="img"/>
+</mx:Box>

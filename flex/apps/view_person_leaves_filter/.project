@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>view_person_leaves_filter</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>C:/Program Files/Apache Group/Apache2/htdocs/telenet/flex/bin</location>
+		</link>
+		<link>
+			<name>[source path] telepol</name>
+			<type>2</type>
+			<location>C:/Program Files/Apache Group/Apache2/htdocs/telenet/flex/libs/framework/src/net/telepol</location>
+		</link>
+		<link>
+			<name>bin-release</name>
+			<type>2</type>
+			<location>C:/Program Files/Apache Group/Apache2/htdocs/telenet/flex/bin</location>
+		</link>
+		<link>
+			<name>[source path] include</name>
+			<type>2</type>
+			<location>C:/Program Files/Apache Group/Apache2/htdocs/telenet/flex/include</location>
+		</link>
+	</linkedResources>
+</projectDescription>

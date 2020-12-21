@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="238" height="336" backgroundColor="#F2F2F2" borderStyle="solid" cornerRadius="7"
+	creationComplete="init()" clipContent="true" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.listClasses.ListBase;
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			public var cancel_operation:Boolean = true;
+			public var res_fcode:int;
+			public var res_firm:String = '';
+			public var res_rcode:int;
+			public var res_region:String = '';
+			[Bindable] public var firm_regions:ArrayCollection = new ArrayCollection();
+
+			private var wantScrollToIndex:int = -1;
+			private var lb:ListBase = null;
+
+			private function init():void {
+				firm_regionGroupByFirm.refresh();
+				if (firm_regions != null){
+					if ((res_fcode > 0) && (res_rcode > 0)){
+						var groups:ArrayCollection = (firm_regionGroupByFirm.getRoot() as ArrayCollection);
+						for (var i:int=0; i < groups.length; i++){
+							var grpchlds:ArrayCollection = firm_regionGroupByFirm.getRoot().getItemAt(i).children;
+							if (grpchlds.length > 0){
+								if (grpchlds[0].fcode == res_fcode){
+									accFirmRegion.selectedIndex = i;
+									
+									for (var j:int=0; j < grpchlds.length; j++){
+										if (grpchlds[j].rcode == res_rcode){
+											((accFirmRegion.getChildAt(i) as Canvas).getChildByName('lst') as ListBase).selectedIndex = j;
+											lb = ((accFirmRegion.getChildAt(i) as Canvas).getChildByName('lst') as ListBase);
+											wantScrollToIndex = j;
+											/*
+											callLater(function setF():void {
+												((accFirmRegion.getChildAt(i) as Canvas).getChildByName('lst') as ListBase).scrollToIndex(j);
+											});
+											*/
+											break;
+										}
+									}
+									break;
+								}
+							}
+						}
+					}
+
+/*
+					for (var i:int=0; i < firm_regions.length; i++){
+						if (firm_regions[i].fcode == res_fcode){
+							accFirmRegion.selectedIndex = i;
+							
+							var ch:Array = accFirmRegion.getChildren();
+							(ch[i].getChildByName('lst') as ListBase).selectedIndex = 1;
+							break;
+						}
+					}
+*/
+				}
+			}
+			
+			private function closeMe():void {
+				PopUpManager.removePopUp(this);
+				if (!cancel_operation){
+					var lst:Object = accFirmRegion.selectedChild.getChildByName('lst');
+					res_fcode = lst.selectedItem.fcode;
+					res_firm = lst.selectedItem.firm;
+					res_rcode = lst.selectedItem.rcode;
+					res_region = lst.selectedItem.region;
+				}
+				dispatchEvent(new Event(Event.CLOSE));
+			}
+			
+			private function firmregionCompare(a:Object, b:Object, fields:Array=null):int {
+				if (a.fcode == b.fcode)
+					return 0;
+				return (a.fcode > b.fcode) ? 1 : -1;
+			}
+			private var accIndex:int = -1;
+			private function changeAccordion(e:IndexChangedEvent):void {
+				var ch:Array = accFirmRegion.getChildren();
+				(ch[e.oldIndex].getChildByName('lst') as ListBase).selectedIndex = -1;
+				(ch[e.newIndex].getChildByName('lst') as ListBase).selectedIndex = -1;
+				btnAdd.enabled = false;
+				/*
+				for (var i:int = 0; i < ch.length; i++){
+					(ch[i].getChildByName('lst') as ListBase).selectedIndex = -1;
+				}
+				*/
+				accIndex = e.newIndex;
+			}
+			public function addFirmData(event:FlexEvent):void {
+				var selindx:int = lst.length-1;//accFirmRegion.selectedIndex;//event.target.owner.owner.owner.selectedIndex;
+				if (selindx >= 0)
+					event.target.dataProvider = firm_regionGroupByFirm.getRoot().getItemAt(selindx).children;
+			}
+			
+			private function doOfficeClick():void {
+				btnAdd.enabled = true;
+			}
+			private function doCreationComplete(e:Event):void {
+				if (lb && (wantScrollToIndex > 0)){
+					lb.scrollToIndex(wantScrollToIndex);
+					wantScrollToIndex = -1;
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:GroupingCollection id="firm_regionGroupByFirm" source="{firm_regions}">
+    	<mx:grouping>
+    		<mx:Grouping compareFunction="firmregionCompare">
+    			<mx:GroupingField name="firm"/> 
+    		</mx:Grouping>
+    	</mx:grouping>
+    </mx:GroupingCollection>
+
+	<mx:Label x="10" y="10" text="Фирма - Регион"/>
+	<mx:Accordion styleName="edAcc" id="accFirmRegion"
+		change="{changeAccordion(event)}" left="10" right="10" bottom="42" top="30">
+		<mx:Repeater id="accRepeater" dataProvider="{firm_regionGroupByFirm.getRoot()}">
+			<mx:Canvas id="canv" label="{accRepeater.currentItem.GroupLabel}" width="100%" height="100%" backgroundAlpha="100"
+				horizontalScrollPolicy="off" verticalScrollPolicy="off">
+				<mx:List id="lst" x="0" y="0" width="100%" height="99%" textAlign="left"
+					showDataTips="true" dataTipField="region"
+					borderThickness="0"
+					verticalScrollPolicy="{lst.length > 1 ? 'auto' : 'off'}"
+					labelField="region"
+					initialize="{addFirmData(event)}"
+					creationComplete="{doCreationComplete(event)}"
+					click="doOfficeClick()"
+					/>
+			</mx:Canvas>
+		</mx:Repeater>
+	</mx:Accordion>
+	<mx:HBox x="10" y="302" width="216" height="24" horizontalAlign="right">
+		<mx:Button id="btnAdd" label="Добави" enabled="false" fillAlphas="[0.3, 0.3, 1.0, 1.0]" fillColors="[#CBEACB, #77D877]" width="85" click="{cancel_operation=false;closeMe()}"/>
+		<mx:Button label="1" width="28" visible="false"/>
+		<mx:Button label="Затвори" click="{cancel_operation=true;closeMe()}" fillAlphas="[0.3, 0.3, 1.0, 1.0]" fillColors="[#FBD2D2, #F59393]" width="85"/>
+	</mx:HBox>
+</mx:Canvas>

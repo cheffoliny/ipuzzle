@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:ns1="it.sephiroth.controls.*"
+	layout="absolute" width="646" height="538"
+	title="Добавяне/Редактиране" showCloseButton="true"
+	borderThicknessLeft="5" borderThicknessRight="5" borderThicknessBottom="0"
+	roundedBottomCorners="true" clipContent="false" borderAlpha="80"
+	close="titleWindow_close(event)" creationComplete="init()">
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.core.Application;
+        	import net.telepol.rpc.FlexVar;
+        	import mx.utils.StringUtil;
+        	import mx.controls.Alert;
+        	import it.sephiroth.renderers.TreecheckboxItemRenderer;
+        	import mx.events.TreeEvent;
+        	import mx.collections.ArrayCollection;
+            import mx.events.CloseEvent;
+            import mx.managers.PopUpManager;
+
+			[Bindable] public var arr_ear:ArrayCollection;
+			
+			public var filter_id:String = "0";
+			public var filter_name:String = "";
+
+            private function titleWindow_close(evt:CloseEvent):void {
+                PopUpManager.removePopUp(this)
+            }
+            
+            private function init(): void {
+            	btns.x = 5;
+            	btns.y = 30;
+            	eFilterName.text = (filter_id != "0") ? filter_name : "";
+            }
+            
+            private function onItemCheck( event: TreeEvent ): void {
+				updateParents((event.target as TreeCheckBox), event.item, ( event.itemRenderer as TreecheckboxItemRenderer ).checkBox.checkState );
+				updateChilds((event.target as TreeCheckBox), event.item, ( event.itemRenderer as TreecheckboxItemRenderer ).checkBox.checkState );
+			}
+
+            private function findParent(node:Object, arr:ArrayCollection): Object {
+            	if ((! node) || (! arr) || (! node.hasOwnProperty('id_parent')))
+            		return null;
+
+            	if (node.hasOwnProperty('id_parent')){
+            		for (var i:int = 0; i < arr.length; i++){
+            			if ((arr[i].hasOwnProperty('children')) && (arr[i].id == node.id_parent)){
+            				return arr[i];
+            			}
+            		}
+            		return null;
+            	}
+            	
+            	return null;
+            }
+
+			private function updateChilds(tree:TreeCheckBox, item:Object, value: uint ):void {
+		        var middle: Boolean = ( value & 2 << 1 ) == ( 2 << 1 );
+		        var selected: Boolean = ( value & 1 << 1 ) == ( 1 << 1 );
+	        
+                if ( item.children && (item.children.length > 0) && !middle ) {
+                    for each(var x:Object in item.children ) {
+                        x.checkState = value == ( 1 << 1 | 2 << 1 ) ? "2" : value == ( 1 << 1 ) ? "1" : "0";
+                        tree.dataProvider.itemUpdated(x);
+                        //updateChilds( x, value );
+                    }
+                    tree.invalidateList();
+                }
+            }
+
+            private function updateParents(tree:TreeCheckBox, item:Object, value: uint ): void {
+            	var checkValue: String = ( value == ( 1 << 1 | 2 << 1 ) ? "2" : value == ( 1 << 1 ) ? "1" : "0" );
+                var parentNode: Object = findParent(item, (tree.dataProvider as ArrayCollection));
+                
+                if( parentNode ) {
+                	for each(var x:Object in parentNode.children ) {
+                		if( x.checkState != checkValue ) {
+							checkValue = "2"
+						}
+                	}
+                    parentNode.checkState = checkValue;
+                    tree.dataProvider.itemUpdated(parentNode);
+                    tree.invalidateList();
+                    //updateParents( parentNode, value );
+                }
+            }
+            
+            private function doSave():void {
+            	var result_arr:Array = new Array;
+            	if (arr_ear){
+            		for each (var x:Object in arr_ear){
+            			for each(var ch:Object in x.children){
+            				if ((ch.checkState == 1) || (ch.checkState == "1"))
+            					result_arr.push(ch.id);
+            			}
+            		}
+            	}
+
+            	Application.application.want_save_filter = true;
+            	Application.application.amfService.save_filter(
+            		new FlexVar("is_default", chbDefault.selected ? 1 : 0),
+            		new FlexVar("id_filter", filter_id),
+            		new FlexVar("filter_name", StringUtil.trim(eFilterName.text)),
+            		new FlexVar("arr_data", result_arr),
+            		false
+            	);
+            	//titleWindow_close(null);
+            }
+        ]]>
+    </mx:Script>
+
+	<mx:Canvas id="btns" height="471" clipContent="false" y="0" width="636" x="0">
+		<ns1:TreeCheckBox id="treeEarn" dataProvider="{arr_ear}"
+			itemCheck="onItemCheck( event )" checkField="checkState" useRollOver="false" top="31" left="5" bottom="5" right="5"/>
+		<mx:Label x="5" y="5" text="Приходни номенклатури" fontWeight="bold"/>
+	</mx:Canvas>
+
+	<mx:ControlBar height="37" y="403" horizontalAlign="right" verticalAlign="middle" verticalGap="0" horizontalGap="5" paddingTop="0" paddingBottom="0">
+		<mx:Label text="Име на филтъра:"/>
+		<mx:TextInput width="201" id="eFilterName" maxChars="60"/>
+		<mx:CheckBox label="по подразбиране" id="chbDefault" horizontalGap="1"/>
+		<mx:Spacer width="100%" height="15"/>
+		<mx:Button label="Запиши" right="88" width="80" top="412" 
+			enabled="{StringUtil.trim(eFilterName.text).length > 0}" click="doSave()"/>
+		<mx:Button label="Затвори" right="0" width="80" click="titleWindow_close(null)" top="412"
+			fillAlphas="[0.3, 0.3, 1.0, 1.0]" fillColors="[#FBD2D2, #F59393]"/>
+	</mx:ControlBar>
+
+</mx:TitleWindow>

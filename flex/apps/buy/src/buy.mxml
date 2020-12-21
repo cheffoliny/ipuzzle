@@ -1,0 +1,1395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app:FrameworkApplication
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:local="*"
+	xmlns:app="net.telepol.app.*"
+	xmlns:tc="telenet.components.*"
+	xmlns:ui="net.telepol.ui.*"
+	xmlns:telenet="net.telepol.telenet.*"
+	layout="absolute" verticalScrollPolicy="off"
+	borderColor="#F2F2F2" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#F2F2F2, #F2F2F2]"
+	backgroundColor="#F2F2F2"
+	width="725" height="566"
+	initialize="init()"
+	applicationComplete="load()"
+	currentState="AllowRead">
+	<app:states>
+		<mx:State name="AllowRead">
+			<mx:SetProperty target="{btnSave}" name="enabled" value="false"/>
+			<mx:SetProperty target="{btnSave}" name="visible" value="true"/>
+			<mx:SetProperty target="{btnOpenOrder}" name="visible" value="false"/>
+			<mx:SetProperty target="{datagrid1}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{doc_num}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{doc_date}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{kvitanciq}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{faktura}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{oprostena}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{cbPoluchatel}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{cash}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{bank}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{dds_for_payment}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{eTotal}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{cbAccount}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{button1}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{button1}" name="enabled" value="false"/>
+			
+			<mx:SetProperty target="{cnvReadOnly}" name="visible" value="true"/>
+			<mx:SetProperty target="{cnvReadOnly1}" name="visible" value="true"/>
+			
+			<mx:SetProperty target="{deliverer_name}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{deliverer_address}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{deliverer_ein}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{deliverer_ein_dds}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{deliverer_mol}" name="focusEnabled" value="false"/>
+			<mx:SetProperty target="{cnvReadOnly}" name="height" value="161"/>
+			<mx:SetProperty target="{cnvReadOnly1}" name="height" value="81"/>
+		</mx:State>
+		<mx:State name="AllowEdit" basedOn="AllowRead">
+			<mx:SetProperty target="{btnSave}" name="enabled" value="true"/>
+			<mx:SetProperty target="{doc_num}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{doc_date}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{kvitanciq}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{faktura}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{oprostena}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{cbPoluchatel}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{cash}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{bank}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{dds_for_payment}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{eTotal}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{btnOpenOrder}" name="visible" value="true"/>
+
+			<mx:SetProperty target="{deliverer_name}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{deliverer_address}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{deliverer_ein}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{deliverer_ein_dds}" name="focusEnabled" value="true"/>
+			<mx:SetProperty target="{deliverer_mol}" name="focusEnabled" value="true"/>
+		</mx:State>
+		<mx:State name="AllowEditValidated" basedOn="AllowEdit">
+			<mx:SetProperty target="{cnvReadOnly1}" name="visible" value="false"/>
+			<mx:SetProperty target="{cnvReadOnly}" name="visible" value="false"/>
+		</mx:State>
+	</app:states>
+
+<mx:Style source="../../../libs/framework/src/net/telepol/telenet/main.css" />
+
+<mx:Style>
+	Alert {
+		cornerRadius: 5;
+		headerHeight: 22;
+   		headerColors: #8faecb, #7998B6;
+   		creationCompleteEffect: alertCreationCompleteEffect;
+	}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+	import mx.events.ListEvent;
+	import mx.charts.CategoryAxis;
+	import mx.utils.ObjectUtil;
+	import mx.utils.StringUtil;
+	import net.telepol.rpc.FlexVar;
+	import mx.logging.Log;
+	import mx.logging.ILogger;
+	import mx.core.Application;
+	import net.telepol.telenet.InvoiceRows;
+	import net.telepol.telenet.InvoiceRow;
+	import mx.effects.effectClasses.PropertyChanges;
+	import mx.events.PropertyChangeEvent;
+	import mx.binding.utils.BindingUtils;
+	import mx.controls.DataGrid;
+	import mx.utils.URLUtil;
+	import flash.net.getClassByAlias;
+	import mx.controls.CheckBox;
+	import mx.events.CloseEvent;
+	import mx.events.ItemClickEvent;
+	import mx.controls.Alert;
+	import mx.formatters.DateBase;
+	import mx.events.FlexEvent;
+	import mx.events.DataGridEventReason;
+	import mx.formatters.SwitchSymbolFormatter;
+	import mx.controls.dataGridClasses.DataGridColumn;
+	import mx.controls.listClasses.IDropInListItemRenderer;
+	import mx.events.DataGridEvent;
+	import mx.collections.ArrayCollection;
+	import mx.events.DropdownEvent;
+	import mx.effects.easing.Elastic;
+
+	[Bindable] public var aData:Object;
+ 	// firmi i regioni za akordiona
+ 	[Bindable] public var firm_regions:ArrayCollection;
+ 	// nomenklaturi za akordiona
+ 	[Bindable] public var nomenklatures:ArrayCollection;
+ 	// firmite za combobox-a
+ 	[Bindable] public var arr_poluchateli:Array;
+ 	// napravlenia za akordeona
+ 	[Bindable] public var arr_directions:Array;
+ 	// za combo-to sys smetki v Order-a
+ 	[Bindable] public var arr_smetki:Array;
+
+	// redovete na opisa
+	[Bindable] public var arr_rows:InvoiceRows = new InvoiceRows();
+ 	
+ 	// redovete na orderite
+ 	[Bindable] public var arr_orders:Array;
+
+	private const diff:Number = 0xFFbaba;
+	private const equal:Number = 0xbaFFba;
+	private var order_canvas_y:int = 385;
+	
+	// create it on initialize or creationComplete event !
+	//private var api_serv:API_buy;
+	
+	[Embed(source="add.png")] [Bindable] private var imgAddBigClass:Class;
+	[Embed(source="Arrow_Up_32.png")] [Bindable] private var imgArrowUpClass:Class;
+	[Embed(source="Arrow_Down_32.png")] [Bindable] private var imgArrowDownClass:Class;
+	[Embed(source="confirm.gif")] [Bindable] private var imgConfirmClass:Class;
+	[Embed(source="exit.gif")] [Bindable] private var imgExitClass:Class;
+	
+	[Bindable] private var mnameslong:Array = ['Януари','Февруари','Март','Април','Май','Юни','Юли','Август','Септември','Октомври','Ноември','Декември'];
+	[Bindable] private var dnamesshort:Array = ['Нд.','Пн.','Вт.','Ср.','Чт.','Пт.','Сб.'];
+
+	private var doSuggest:Boolean = false;
+	[Bindable] private var doSave:Boolean = false;
+	[Bindable] private var waitForResponse:Boolean = false;
+	protected var logger:ILogger = Log.getLogger("buy");
+
+	private var timer:Timer;
+	
+	private function init():void {
+		amfService.addEventListener("onResponse", onResponse);
+		amfService.addEventListener("onFault", onFault);
+		grid.addEventListener("needClose", onItemEditorNeedClose );
+
+		DateBase.monthNamesShort = ['Яну','Фев','Март','Апр','Май','Юни','Юли','Авг','Септ','Окт','Ноем','Дек'];
+	
+		//populateGrid();
+		timer = new Timer(300);
+		timer.addEventListener(TimerEvent.TIMER, onTimer);
+	}
+	
+	private var want_init:Boolean = true;
+
+	private function load():void {
+		if (aData != null && aData.hasOwnProperty('id'))
+			amfService.init(new FlexVar('id', aData.id));
+		else if (HTML_params.hasOwnProperty('id')) {
+				amfService.init(new FlexVar('id', HTML_params['id']));
+			} else
+				amfService.init(new FlexVar('id', "0"));
+	}
+
+	private function onNumberKeyDown(e:Event):void {
+		var edit:TextInput = (e.currentTarget as TextInput);
+		var num:int = int(edit.text);
+	}
+	
+	private function onFault(e:Event):void {
+		doSave = false;
+		waitForResponse = false;
+	}
+	
+	private function onResponse(e:Event):void {
+		if (doSuggest){
+			doSuggest = false;
+			return;
+		}
+
+		waitForResponse = false;
+
+		bBuy_doc_grantRight = getBuy_doc_grantRight();
+		bBuy_doc_editRight = getBuy_doc_editRight();
+		isHaveOrders = haveOrders();
+		
+		if (!doSave){
+			firm_regionGroupByFirm.refresh();
+			nomenklaturesGroupByCode.refresh();
+			filterArr_smetki.refresh();
+			hideShowDDS();
+		} else {
+			doSave = false;
+		}
+		
+		gridRight = getGridRight();
+		
+		setDefaultCash();
+
+		doc_num.setStyle('color', isDocCanceled() ? diff : 0);
+		canvas1.setStyle('backgroundColor', isDocCanceled() ? diff : '');
+
+		if (getBuyRight() == 0)
+			currentState = 'AllowRead';
+		else {
+			if (getBuyRight() == 1)
+				currentState = 'AllowEdit';
+			else if (getBuyRight() == 2)
+				currentState = 'AllowEditValidated';
+			if (arr_rows.length == 0 || !(arr_rows[arr_rows.length-1] as InvoiceRow).addRow){
+				arr_rows.addItem(new InvoiceRow(true));
+			}
+		}
+
+		//TODO:
+		if (getOrderRight() == 0){
+			btnOpenOrder.visible = false;
+		} else if (getOrderRight() == 1){
+			//btnOpenOrder.visible = true;
+			lblSmetka.visible = false;
+			cbAccount.visible = false;
+			button1.visible = false;
+			lblSuma1.visible = false;
+			lblSuma2.visible = false;
+			lblSuma3.visible = false;
+			order_canvas_y = 385 + 30;
+			if (aData != null)
+				btnOpenOrder.visible = (aData.hasOwnProperty('client_recipient')) && (aData.client_recipient != '');
+		} else if (getOrderRight() == 2){
+			//btnOpenOrder.visible = true;
+			lblSmetka.visible = true;
+			cbAccount.visible = true;
+			button1.visible = true;
+			button1.enabled = true;
+			lblSuma1.visible = true;
+			lblSuma2.visible = true;
+			lblSuma3.visible = true;
+			order_canvas_y = 385;
+			btnOpenOrder.visible = (aData.hasOwnProperty('client_recipient')) && (aData.client_recipient != '');
+		}
+
+		if (want_init){
+			want_init = false;
+			deliverer_name.text = aData.deliverer_name;
+			deliverer_address.text = aData.deliverer_address;
+			deliverer_ein.text = aData.deliverer_ein;
+			deliverer_ein_dds.text = aData.deliverer_ein_dds;
+			deliverer_mol.text = aData.deliverer_mol;
+		}
+	}
+	
+	private function isDocCanceled():Boolean {
+		if (
+			(aData != null) && (aData.hasOwnProperty('doc_status')) && (aData.doc_status == 'canceled')
+		)	return true
+		else
+			return false;
+	}
+
+	private function setDefaultCash():void {
+		if ((aData != null) && (aData.hasOwnProperty('id_cash_default'))){
+			if ((filterArr_smetki != null) && (filterArr_smetki.length > 0)){
+				var id_cash_default:int = aData.id_cash_default;
+				for (var i:int=0; i < filterArr_smetki.length; i++){
+					if (filterArr_smetki[i].id == id_cash_default){
+						cbAccount.selectedIndex = i;
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	private function onItemEditorNeedClose(e:ItemClickEvent):void {
+		var ir:InvoiceRow = arr_rows[e.index];
+		if (e.label == "frEditor"){
+			ir.firm_region = e.item;
+			ir.direction = null;
+			//ir.nomenclature = null;
+			
+			if(e.index == arr_rows.length - 1) {
+				ir.addRow = false;
+				if (arr_rows.length > 1){
+					ir.month = new Date(
+						(arr_rows[arr_rows.length - 2] as InvoiceRow).month.fullYear,
+						(arr_rows[arr_rows.length - 2] as InvoiceRow).month.month
+					);
+					ir.nomenclature = ObjectUtil.copy((arr_rows[arr_rows.length - 2] as InvoiceRow).nomenclature);
+					ir.note = (arr_rows[arr_rows.length - 2] as InvoiceRow).note;
+					/* 
+					{
+						id:(arr_rows[0] as InvoiceRow).nomenklature.id,
+						code:(arr_rows[0] as InvoiceRow).nomenklature.code,
+						name:(arr_rows[0] as InvoiceRow).nomenklature.name
+					};
+					*/
+				}
+				arr_rows.addItem(new InvoiceRow(true));
+			}
+		} else
+		if (e.label == "nEditor"){
+			ir.nomenclature = e.item;
+		} else if (e.label == "dEditor"){
+			ir.direction = e.item;
+		}
+		arr_rows.itemUpdated(ir);
+		arr_rows.refresh();
+		grid.destroyItemEditor();
+		panel_user.setFocus();
+		//grid.editedItemPosition = {columnIndex:1, rowIndex:arr_rows.length + 1};
+		//*
+		callLater(function ():void{
+				grid.scrollToIndex(arr_rows.length);
+			}
+		);
+		//*/
+	}
+	private function onDateKeyDown(e:KeyboardEvent):void {
+		/*
+		trace('key>');
+		var dp:DateField = (e.currentTarget as DateField);
+		trace(dp.data);
+		if ((e.charCode == 0x20) || (e.charCode == 0x0D) ){
+			if ((dp.data == null) || (dp.data != "open")){
+				dp.open();
+			}
+		}
+		trace('key<');
+		*/
+	}
+	private function dateField_openClose(evt:DropdownEvent):void {
+		doc_date.data = evt.type;
+	}
+
+	private function populateGrid():void {
+   		grid.addEventListener(KeyboardEvent.KEY_DOWN, onGridKeyDown, true);
+	}
+	private function onGridKeyDown(e:KeyboardEvent):void {
+		if (e.charCode == 0x0D){
+			//e.stopImmediatePropagation();
+			/*
+			var focusedCell:Object = {columnIndex:e.currentTarget.editedItemPosition.columnIndex,
+				rowIndex:e.currentTarget.editedItemPosition.rowIndex};
+			focusedCell.columnIndex++;
+			if (focusedCell.columnIndex > grid.columnCount-1){
+				focusedCell.columnIndex = 1;
+				focusedCell.rowIndex++;
+			}
+			grid.editedItemPosition = focusedCell;
+			//*/
+			grid.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN,true,false,9,9));
+		}
+	}
+	private function onItemEditBeginning(e:DataGridEvent):void {
+		//trace("itemEditBeginning=" + e.rowIndex + ", inv_rows.length="+inv_rows.length);
+		if ((gridRight == 0) || ((gridRight == 1) && (e.columnIndex != 0))){
+			e.preventDefault();
+			return;
+		}
+
+  		// Do not allow editing of Add Task row except for "Click to Add" column
+  		if((e.rowIndex == arr_rows.length - 1) && (e.columnIndex != 2)) {
+    		e.preventDefault();
+    		//var focusedCell:Object = {columnIndex:1, rowIndex:e.rowIndex};
+    		//grid.editedItemPosition = focusedCell;
+    		return;
+    	}
+    	if (e.columnIndex == 8){
+    		e.preventDefault();
+    		return;
+    	}
+    	if ((e.columnIndex == 4) && (arr_rows[e.rowIndex].firm_region.rcode <= 0)){
+    		// Direction without Firm/Region
+    		e.preventDefault();
+    		return;
+    	}
+	}
+	private function onItemEditBegin(e:DataGridEvent):void {
+		//trace("edit begin=" + e.rowIndex + ", inv_rows.length="+inv_rows.length);
+		if((e.rowIndex == arr_rows.length - 1) && (e.columnIndex != 2)) {
+    		e.preventDefault();
+    		return;
+    	}
+		/*
+		switch (e.columnIndex){
+			case 1: {
+				e.preventDefault();
+				grid.createItemEditor(e.columnIndex, e.rowIndex);
+				edAccordion(grid.itemEditorInstance).src_nomenclature = nomenklaturesGroupByCode;
+				edAccordion(grid.itemEditorInstance).src_firmregion = null;
+			
+				IDropInListItemRenderer(grid.itemEditorInstance).listData =
+					IDropInListItemRenderer(grid.editedItemRenderer).listData;
+				grid.itemEditorInstance.data = grid.editedItemRenderer.data;
+			}
+			case 2:{
+				e.preventDefault();
+				grid.createItemEditor(e.columnIndex, e.rowIndex);
+				edAccordion(grid.itemEditorInstance).src_nomenclature = null;
+				edAccordion(grid.itemEditorInstance).src_firmregion = firm_regionGroupByFirm;
+				IDropInListItemRenderer(grid.itemEditorInstance).listData =
+					IDropInListItemRenderer(grid.editedItemRenderer).listData;
+				grid.itemEditorInstance.data = grid.editedItemRenderer.data;
+			}
+		}
+		//*/
+	}
+	private function onItemEditEnd(e:DataGridEvent):void {
+		if (e.currentTarget.itemEditorInstance.hasOwnProperty("ret"))
+			if (e.currentTarget.itemEditorInstance.ret == null){
+				e.preventDefault();
+				grid.destroyItemEditor();
+				return;
+			}
+		/*
+		if (e.reason == DataGridEventReason.NEW_COLUMN){
+			e.preventDefault();
+			grid.destroyItemEditor();
+			return;
+		}
+		if (e.reason == DataGridEventReason.NEW_ROW){
+			e.preventDefault();
+			grid.destroyItemEditor();
+			return;
+		}
+		//*/
+		if (e.reason != DataGridEventReason.CANCELLED){
+			var row:InvoiceRow = InvoiceRow(arr_rows[e.rowIndex]);
+			if(e.rowIndex == arr_rows.length - 1){
+				row.addRow = false;
+				arr_rows.itemUpdated(row);
+				arr_rows.addItem(new InvoiceRow(true));
+			} else {
+				if (e.dataField == 'sum'){
+					if (isNaN(((e.target as DataGrid).itemEditorInstance as sumEditor).value)){
+						row.sum = 0;
+						arr_rows.itemUpdated(row);
+						
+						e.preventDefault();
+						grid.destroyItemEditor();
+						return;
+					}
+				}
+			}
+		}
+		//grid.editedItemPosition = {columnIndex:0, rowIndex:e.rowIndex};
+		/*
+		// Stop default behavior 
+    	e.preventDefault();
+
+		if (e.reason == DataGridEventReason.CANCELLED){
+			// Destroy item editor
+    		grid.destroyItemEditor();
+			// Do not update cell.
+			return;
+		}
+		if (e.reason == 'close'){
+			grid.destroyItemEditor();
+			
+			var last_row:InvoiceRow = InvoiceRow(inv_rows[inv_rows.length - 1]);
+			if (! last_row.addRow){
+				inv_rows.addItem(new InvoiceRow(true));
+				grid.editedItemPosition = {columnIndex:2, rowIndex:e.rowIndex};
+			}
+
+			return;
+		}
+    	
+		if (e.columnIndex == 1){
+			if(e.rowIndex == inv_rows.length - 1) {
+				//var ed:edAccordion = edAccordion(e.currentTarget.itemEditorInstance);
+    		
+				var row:InvoiceRow = InvoiceRow(e.itemRenderer.data);
+				if (! row.addRow){
+					inv_rows.addItem(new InvoiceRow(true));
+					grid.editedItemPosition = {columnIndex:2, rowIndex:e.rowIndex};
+				}
+				// Destroy item editor
+    			grid.destroyItemEditor();
+			} else {
+				// Destroy item editor
+    			grid.destroyItemEditor();
+			}
+		}
+		//*/
+	}
+	private function getColumnLabel(ir:InvoiceRow, gridcolumn:DataGridColumn):String {
+		try{
+		switch(gridcolumn.dataField){
+			case "row" : return (ir.addRow) ? '' : ir.row.toString();
+			case "nomenclature" : return ir.nomenclature ? ir.nomenclature.name : '';
+			case "firm_region" : return (ir.addRow) ? ir.firm_region.firm : ir.firm_region ? ir.firm_region.firm == '' ? '' : ir.firm_region.firm+' - '+ir.firm_region.region : '';
+			case "direction" : return (ir.addRow) ? '' : ir.direction ? ir.direction.name : '';
+			case "sum" : return (ir.addRow) ? '' : currencyFormater.format(ir.sum);//ir.sum.toString();
+			case "note" : return (ir.addRow) ? '' : ir.note;
+		}
+		}catch(e:Error){}
+		return '';
+	}
+	public function getFirmToolTip(ir:InvoiceRow):String {
+		return (ir.addRow) ? '' : ir.firm_region ? ir.firm_region.firm == '' ? '' : ir.firm_region.firm+' - '+ir.firm_region.region : '';
+	}
+	public function getNomToolTip(ir:InvoiceRow):String {
+		return ir.nomenclature ? ir.nomenclature.name : '';
+	}
+	public function getDirToolTip(ir:InvoiceRow):String {
+		return (ir.addRow) ? '' : ir.direction ? ir.direction.name : '';
+	}
+	public function getNoteToolTip(ir:InvoiceRow):String {
+		return (ir.addRow) ? '' : ir.note;
+	}
+
+	private function nomenclatureCompare(a:Object, b:Object, fields:Array=null):int {
+		if (a.code == b.code)
+			return 0;
+		else
+			if (a.code.substr(0,1) == b.code.substr(0,1))
+				return ObjectUtil.stringCompare(a.name, b.name);
+			else
+				return (a.code.substr(0,1) > b.code.substr(0,1)) ? 1 : -1;
+
+		/*
+		if (a.code == b.code)
+			return 0;
+		return (a.code > b.code) ? 1 : -1;
+		//*/
+	}
+
+	private var arr_nomgroup:Array = ['Кредити, данъци и такси', 'Заплати', 'Материални запаси - СОТ',
+		'Разходи по дейността', 'Автомобили', 'Свързаност и връзки', 'Други', 'Разходи ЦУ - извън баланса'];
+	private function nomenclatureGroup(item:Object, field:GroupingField):String {
+		return arr_nomgroup[item.code.substr(0,1) - 1];//arr 'Група ' + item.code.substr(0,1);
+	}
+	
+	private function firmregionCompare(a:Object, b:Object, fields:Array=null):int {
+		if (a.fcode == b.fcode)
+			return ObjectUtil.stringCompare(a.region, b.region);
+		return (a.fcode > b.fcode) ? 1 : -1;
+	}
+
+	private function filterDirection(item:Object):Boolean {
+		if(item.id_office == current_region) {
+			return true;
+		}               
+		return false;               
+	}
+	private function filterDirectionsByRegionId(e:Object):void {
+		direcrionFilterByRegionId.filterFunction = filterDirection;
+		direcrionFilterByRegionId.refresh();
+	}
+	private function filterSmetki(item:Object):Boolean {
+		/*
+		var selType:String = cash.selected ? 'cash' : bank.selected ? 'bank' : '';
+		return item.type == selType;
+		*/
+		return true;
+	}
+	
+	public function addFirmData(event:FlexEvent):void {
+		var selindx:int = event.target.owner.owner.owner.selectedIndex;
+		try {
+			var ac:ArrayCollection = (firm_regionGroupByFirm.getRoot() as ArrayCollection);
+			if ((selindx >= 0) && (selindx < ac.length)){
+				event.target.dataProvider = firm_regionGroupByFirm.getRoot().getItemAt(selindx).children;
+			}
+		} catch (e:Error){
+			//trace('shit happens:'+e.message);
+		}
+	}
+	public function addNomData(event:FlexEvent):void {
+		var selindx:int = event.target.owner.owner.owner.selectedIndex;
+		if (selindx >= 0)
+			event.target.dataProvider = nomenklaturesGroupByCode.getRoot().getItemAt(selindx).children;
+	}
+	private var current_region:int = 0;
+	public function addDirData(event:FlexEvent):void {
+		if (event.currentTarget.firm_region && event.currentTarget.firm_region.rcode > 0){
+			current_region = int(event.currentTarget.firm_region.rcode);
+			direcrionFilterByRegionId.filterFunction = filterDirection;
+		} else {
+			direcrionFilterByRegionId.filterFunction = null;
+		}
+		direcrionFilterByRegionId.refresh();
+		event.target.dataProvider = direcrionFilterByRegionId;
+	}
+
+	public function itemDeleteClick(row:Object):void {
+		Alert.yesLabel = "Да";
+		Alert.noLabel = "Не";
+		Alert.show("Сигурни ли сте, че искате да изтриете реда ?", "Въпрос", Alert.YES | Alert.NO, null,
+			function (e:CloseEvent):void {
+				if (e.detail == Alert.YES){
+					if (arr_rows.length >= row.row){
+						arr_rows.removeItemAt(row.row-1);
+						arr_rows.refresh();
+					}
+					//grid.editedItemPosition = {columnIndex:1, rowIndex:arr_rows.length + 1};
+					/*
+					callLater(function ():void{
+							grid.destroyItemEditor();
+						}
+					);
+					*/
+				}
+			},
+			null, Alert.NO);
+	}
+	
+	private function hidePanel(): void {
+		if (myMove.isPlaying)
+			return;
+		myMove.stop();
+		myMove.yFrom = myMove.target.y;
+        myMove.yTo = (myMove.target.y < 550) ? 550 : order_canvas_y;
+
+        //if (myMove.target.y <= 610){
+        	myMove.startDelay = 0;
+        //} else {
+        //	myMove.startDelay = 0;
+        //}
+        
+        myMove.play();
+	}
+	private function moveEnd():void {
+		if (order_holder.y == 550){
+			btnOpenOrder.source = imgArrowUpClass;
+			btnOpenOrder.toolTip = "Отвори информация за ордер";
+			
+		} else {
+			btnOpenOrder.source = imgArrowDownClass;
+			btnOpenOrder.toolTip = "Затвори информация за ордер"
+		}
+	}
+	private function getDate(d:String):Date {
+		return new Date(
+			int(d.substr(0,4)), 	// year
+			int(d.substr(5,2))-1,	// month
+			int(d.substr(8,2))		// day
+		);
+	}
+
+	private function hideShowDDS():void {
+		dds_for_payment.visible = faktura.selected;
+		lblDDS.visible = faktura.selected;
+		lblDDSlv.visible = faktura.selected;
+		dds_for_payment.selected = faktura.selected && !aData.dds_payed;
+		arr_rows.refresh(); // causes recheck DDS (color validation)
+	}
+	private function checkSumIsOK(irs:Number):Number {
+		try {
+			if (dds_for_payment.visible){
+				var regEx:RegExp = /[,$]/g;
+				var edno:String = numberFormatter.format(arr_rows.Total + parseFloat(lblDDS.text.replace(regEx,"")));
+				var dve:String = numberFormatter.format(eTotal.text);
+				if (edno == dve)
+					return equal;
+				else {
+					var edno_num:Number = parseFloat(edno);
+					var dve_num:Number = parseFloat(dve);
+					if (Math.abs(edno_num - dve_num) < 0.03)
+						return diff;//return 0xfffaa3; //return 0xebfba0;
+					else
+						return diff
+				}
+			}
+			else
+				return (numberFormatter.format(arr_rows.Total) != numberFormatter.format(eTotal.text)) ? diff : equal;
+		} catch(e:Error) {}
+		return 0;
+	}
+	private function calculateSumForPayment(total:Number):String {
+		if (dds_for_payment.selected && dds_for_payment.visible && dds_for_payment.enabled)
+			return numberFormatter.format(total + (arr_rows.Total * 0.2));
+		return numberFormatter.format(total);
+	}
+	private function calculatePayedSum(total:Number):String {
+		if (dds_for_payment.visible && !dds_for_payment.enabled)
+			return numberFormatter.format(total + (arr_rows.Total * 0.2));
+		return numberFormatter.format(total);
+	}
+	private function calculateSumPayment(total:Number):String {
+		if (dds_for_payment.visible){
+			if (!dds_for_payment.enabled){
+				// plateno dds
+				return numberFormatter.format(total - arr_rows.uncheckedTotal);
+			} else {
+				// neplateno dds
+				return numberFormatter.format(total + (arr_rows.Total * 0.2) - arr_rows.uncheckedTotal);
+			}
+		} else {
+			return numberFormatter.format(total - arr_rows.uncheckedTotal);
+		}
+	}
+	
+	[Bindable]
+	public var gridRight:int = 0;
+	private function getGridRight():int {
+		return 2;
+		//0 - read only
+		//1 - edit check boxes
+		//2 - edit all
+		if (aData == null)
+			return 0;
+		if (aData.hasOwnProperty('buy_doc_order_edit') && aData.buy_doc_order_edit){
+			if (aData.hasOwnProperty('buy_doc_grant') && aData.buy_doc_grant ||
+				(aData.hasOwnProperty('buy_doc_edit') && aData.buy_doc_edit))
+				return 2;
+			else
+				return 1;
+		} else if (aData.hasOwnProperty('buy_doc_order_view') && aData.buy_doc_order_view)
+			return 0
+		else
+			return 0;
+	}
+	public function getBuyRight():int {
+		return 2;
+		//0 - read only
+		//1 - edit
+		//2 - edit after order
+		if (aData == null)
+			return 0;
+		if (aData.hasOwnProperty('buy_doc_grant') && aData.buy_doc_grant)
+			return 2
+		else if (aData.hasOwnProperty('buy_doc_edit') && aData.buy_doc_edit)
+			return 1;
+		else if (aData.hasOwnProperty('buy_doc_view') && aData.buy_doc_view)
+			return 0
+		else
+			return 0;
+	}
+	public function getOrderRight():int {
+		return 2;
+		//0 - none
+		//1 - read only
+		//2 - edit (make order)
+		if (aData == null)
+			return 0;
+		if (aData.hasOwnProperty('buy_doc_order_edit') && aData.buy_doc_order_edit)
+			return 2;
+		else if (aData.hasOwnProperty('buy_doc_order_view') && aData.buy_doc_order_view)
+			return 1
+		else
+			return 0;
+	}
+
+	[Bindable] public var arr_clients:ArrayCollection;
+
+	private var suggest_field:String = "";
+	private var suggest_value:String = "";
+	private function getData(e:KeyboardEvent):void {
+		if (e.currentTarget.currentText.length > 1)
+			if (e.charCode > 0){
+				//api_serv.suggest(e.currentTarget.labelField, e.currentTarget.currentText);
+				suggest_field = e.currentTarget.labelField;
+				suggest_value = e.currentTarget.currentText;
+				if (timer.running) {
+                    timer.stop();
+                }
+                if (!timer.running) {
+                    timer.start();
+                }
+			}
+	}
+	private function onTimer(evt:TimerEvent):void {
+		timer.stop();
+		doSuggest = true;
+		amfService.suggest(new FlexVar('field', suggest_field), new FlexVar('info', suggest_value));
+	}
+	
+	private function handleAutoCompleteChange(e:Event):void {
+		var client:Object = e.currentTarget.selectedItem;
+		if (client.hasOwnProperty('name')){
+			deliverer_name.text = client.name;
+			deliverer_address.text = client.address;
+			deliverer_ein.text = client.invoice_ein;
+			deliverer_ein_dds.text = client.invoice_ein_dds;
+			deliverer_mol.text = client.invoice_mol;
+		}
+	}
+	private function saveDoc():void {
+		if (checkSumIsOK(0) == equal){
+			if (isHaveActiveOrder()){
+				Alert.yesLabel = "Да";
+				Alert.noLabel = "Не";
+				Alert.show("По документа има плащания и ще бъдат пуснати насрещни ордери. Искате ли да продължите ?", "Въпрос", Alert.YES | Alert.NO, null,
+					function (e:CloseEvent):void {
+						if (e.detail == Alert.YES){
+							doSave = true;
+							amfService.save();
+						}
+					},
+					null, Alert.NO);
+			} else {
+				doSave = true;
+				amfService.save();
+			}
+		}else{
+			Alert.show('Сумата на документа не отговаря на сумата от описа !','Грешка',4,null,
+				function ():void {
+					eTotal.setFocus();
+				}
+			);
+		}
+	}
+	private function doAnnulment(): void {
+		amfService.annulment(new FlexVar('nId', aData.id), false);
+	}
+	
+	[Bindable] public var bBuy_doc_grantRight:Boolean = false;
+	private function getBuy_doc_grantRight():Boolean {
+		if ((aData != null) && (aData.hasOwnProperty('buy_doc_grant')))
+			return aData.buy_doc_grant;
+		else
+			return false;
+	}
+	[Bindable] public var bBuy_doc_editRight:Boolean = false;
+	private function getBuy_doc_editRight():Boolean {
+		if ((aData != null) && (aData.hasOwnProperty('buy_doc_edit')))
+			return aData.buy_doc_edit;
+		else
+			return false;
+	}
+	[Bindable] private var isHaveOrders:Boolean = false;
+	private function haveOrders():Boolean {
+		return (arr_orders != null) && (arr_orders.length > 0);
+	}
+	
+	private function isHaveActiveOrder():Boolean {
+		if (arr_orders && (arr_orders.length > 0)){
+			for (var i:int=0; i < arr_orders.length; i++){
+				if (arr_orders[i].order_status == 'active')
+					return true;
+			}
+		}
+		return false;
+	}
+
+]]>
+</mx:Script>
+	
+	<mx:Canvas x="10" y="11" width="252" height="151" styleName="holder" clipContent="false">
+		<mx:Label x="6" y="13" text="За сметка на:"/>
+		<mx:ComboBox x="90" y="11" width="150" id="cbPoluchatel" dataProvider="{arr_poluchateli}" labelField="title"
+			fontWeight="normal" alternatingItemColors="[#ffffff, #eff1f2]" dropdownStyleName="comboBoxDropdownDOWN"/>
+		<mx:Label x="6" y="42" text="Име:"/>
+		<mx:Label y="42" width="198" textAlign="right" text="{cbPoluchatel.selectedItem.name}" right="6"/>
+		<mx:Label y="62" text="Адрес:" left="6"/>
+		<mx:Label y="82" text="ИН:" left="6"/>
+		<mx:Label y="102" text="ИН " left="6"/>
+		<mx:Label y="103" text="по ДДС:" left="25"
+			fontSize="9" fontAntiAliasType="advanced" fontSharpness="0" fontThickness="0" fontGridFitType="pixel" fontFamily="Arial"/>
+		
+		<mx:Label y="121" text="МОЛ:" left="6"/>
+		<mx:Label y="62" width="199" textAlign="right" text="{cbPoluchatel.selectedItem.address}" right="6"/>
+		<mx:Label y="82" width="177" textAlign="right" text="{cbPoluchatel.selectedItem.idn}" right="6"/>
+		<mx:Label y="102" width="177" textAlign="right" text="{cbPoluchatel.selectedItem.idn_dds}" right="6"/>
+		<mx:Label y="122" width="195" textAlign="right" text="{cbPoluchatel.selectedItem.jur_mol}" right="6"/>
+		
+		<mx:Canvas x="10" y="-9" width="73" height="17" backgroundColor="#F2F2F2">
+			<mx:Label y="0" text="Получател" width="100%" height="100%" fontWeight="bold" x="0" textAlign="center"/>
+		</mx:Canvas>
+	</mx:Canvas>
+
+	<mx:Canvas x="270" y="10" width="144" height="68" styleName="holder" clipContent="false">
+		<mx:RadioButtonGroup id="doc_type" itemClick="{hideShowDDS()}"/>
+		<mx:RadioButton id="kvitanciq" x="6" y="8" label="Квитанция" groupName="doc_type" height="18" horizontalGap="1"
+			selected="{aData.doc_type == 'kvitanciq'}" useHandCursor="true"/>
+		<mx:RadioButton id="faktura" x="6" y="27" label="Данъчна фактура" groupName="doc_type" height="18" horizontalGap="1"
+			selected="{aData.doc_type == 'faktura'}" useHandCursor="true"/>
+		<mx:RadioButton id="oprostena" x="6" y="46" label="Опростена фактура" groupName="doc_type" height="18" horizontalGap="1"
+			selected="{aData.doc_type == 'oprostena'}" useHandCursor="true"/>
+			
+		<mx:Canvas x="10" y="-9" width="110" height="17" backgroundColor="#F2F2F2">
+			<mx:Label y="0" text="Вид на документа" width="100%" height="100%" fontWeight="bold" x="0" textAlign="center"/>
+		</mx:Canvas>
+	</mx:Canvas>
+	
+	<mx:GroupingCollection id="nomenklaturesGroupByCode" source="{nomenklatures}">
+        <mx:grouping>
+            <mx:Grouping compareFunction="nomenclatureCompare">
+                <mx:GroupingField name="code" groupingFunction="nomenclatureGroup"/>
+            </mx:Grouping>
+        </mx:grouping>
+    </mx:GroupingCollection>
+    
+    <mx:GroupingCollection id="firm_regionGroupByFirm" source="{firm_regions}">
+    	<mx:grouping>
+    		<mx:Grouping compareFunction="firmregionCompare">
+    			<mx:GroupingField name="firm"/> 
+    		</mx:Grouping>
+    	</mx:grouping>
+    </mx:GroupingCollection>
+
+	<mx:ArrayCollection id="direcrionFilterByRegionId" source="{arr_directions}" filterFunction="filterDirection"/>
+
+	<mx:Canvas x="270" y="86" width="144" height="75" styleName="holder" id="canvas1">
+		<mx:Label x="7.5" y="11" text="N:"/>
+		<mx:TextInput x="26.5" y="8" textAlign="center" restrict="0-9" fontWeight="bold" fontSize="12" width="108" maxChars="10" toolTip="номер на документа"
+			keyDown="onNumberKeyDown(event)" text="{aData.doc_num}" id="doc_num"/>
+		<mx:Label x="7.5" y="42" text="Дата:"/>
+		<mx:DateField id="doc_date" x="44.5" y="40" width="90" showToday="true" formatString="DD.MM.YYYY" styleName="picker" yearSymbol=" г." firstDayOfWeek="1" 
+			yearNavigationEnabled="true" 
+			dayNames="{dnamesshort}" monthNames="{mnameslong}"
+			selectedDate="{getDate(aData.doc_date)}" keyDown="onDateKeyDown(event)"
+			open="dateField_openClose(event)" close="dateField_openClose(event)"
+			toolTip="дата на документа"/>
+			<!-- minYear="2000" maxYear="2010" -->
+			<!-- selectableRange="{{rangeStart:new Date(2007, 11, 3), rangeEnd:new Date(2007,11,28)}}" -->
+			<!-- disabledDays="{[0,6]}" -->
+	</mx:Canvas>
+	
+	<mx:Canvas id="holder_deliverer" x="422" y="10" width="293" height="151" styleName="holder" clipContent="false">
+		<mx:Label y="16" text="Име:" left="7"/>
+		<mx:Label y="42" text="Адрес:" left="7"/>
+		<mx:Label y="69" text="ИН:" left="7"/>
+		<mx:Label y="95" text="ИН " left="7"/>
+		<mx:Label y="96" text="по ДДС:" left="26"
+			fontSize="9" fontAntiAliasType="advanced" fontSharpness="0" fontThickness="0" fontGridFitType="pixel" fontFamily="Arial"/>
+		<mx:Label y="121" text="МОЛ:" left="7"/>
+		
+		<ui:AutoComplete id="deliverer_name" dataProvider="{ arr_clients }" labelField="name" matchType="anyPart"
+			y="14" left="66"
+			prompt="Въведи име на клиент" width="214"
+			dropDownItemRenderer="ClientRenderer"
+			isStrict="false" style="{ AutoComplete.STYLE_MAC_MAIL }"
+			allowDuplicates="false"
+			change="handleAutoCompleteChange(event)"
+			keyUp="getData(event)"
+			areNewItemsEditable="false" height="27"/>
+			<!--  dropDownItemRenderer="ColorItemRenderer" -->
+		<ui:AutoComplete id="deliverer_address" dataProvider="{ arr_clients }" labelField="address" matchType="anyPart"
+			y="40" left="66"
+			prompt="Въведи адрес" width="214"
+			dropDownItemRenderer="ClientRenderer"
+			isStrict="false" style="{ AutoComplete.STYLE_MAC_MAIL }"
+			allowDuplicates="false"
+			change="handleAutoCompleteChange(event)"
+			keyUp="getData(event)"
+			areNewItemsEditable="false" height="27"/>
+			<!--  dropDownItemRenderer="ColorItemRenderer" -->
+		
+		<ui:AutoComplete id="deliverer_ein" dataProvider="{ arr_clients }" labelField="invoice_ein" matchType="anyPart"
+			y="67" left="66"
+			prompt="Въведи ЕИН" width="214"
+			dropDownItemRenderer="ClientRenderer"
+			isStrict="false" style="{ AutoComplete.STYLE_MAC_MAIL }"
+			allowDuplicates="false"
+			change="handleAutoCompleteChange(event)"
+			keyUp="getData(event)"
+			areNewItemsEditable="false" height="27"/>
+			<!--  dropDownItemRenderer="ColorItemRenderer" -->
+		<ui:AutoComplete id="deliverer_ein_dds" dataProvider="{ arr_clients }" labelField="invoice_ein_dds" matchType="anyPart"
+			y="93" left="66"
+			prompt="Въведи ЕИН по ДДС" width="214"
+			dropDownItemRenderer="ClientRenderer"
+			isStrict="false" style="{ AutoComplete.STYLE_MAC_MAIL }"
+			allowDuplicates="false"
+			change="handleAutoCompleteChange(event)"
+			keyUp="getData(event)"
+			areNewItemsEditable="false" height="27"/>
+			<!--  dropDownItemRenderer="ColorItemRenderer" -->
+		<ui:AutoComplete id="deliverer_mol" dataProvider="{ arr_clients }" labelField="invoice_mol" matchType="anyPart"
+			y="119" left="66"
+			prompt="Въведи МОЛ" width="214"
+			dropDownItemRenderer="ClientRenderer"
+			isStrict="false" style="{ AutoComplete.STYLE_MAC_MAIL }"
+			allowDuplicates="false"
+			change="handleAutoCompleteChange(event)"
+			keyUp="getData(event)"
+			areNewItemsEditable="false" height="27"/>
+			<!--  dropDownItemRenderer="ColorItemRenderer" -->
+		
+		<mx:Canvas x="10" y="-9" width="73" height="17" backgroundColor="#F2F2F2">
+			<mx:Label y="0" text="Доставчик" width="100%" height="100%" fontWeight="bold" x="0" textAlign="center"/>
+		</mx:Canvas>
+	</mx:Canvas>
+
+	<mx:NumberFormatter id="numberFormatter" precision="2" rounding="nearest" />
+	<mx:CurrencyFormatter id="currencyFormater" alignSymbol="right" currencySymbol=" лв." rounding="nearest" precision="2" />
+	<mx:DateFormatter id="monthFormatter" formatString="MMM YYYY" />
+	<mx:DateFormatter id="bgDateFormatter" formatString="DD.MM.YYYY г." />
+
+	<mx:Canvas x="10" y="169" width="705" height="248" styleName="holder"  clipContent="true" id="grid_holder">
+		<telenet:customDataGrid id="grid" x="2" y="2" width="700" height="243" styleName="grid"
+			sortableColumns="false" editable="true" selectable="false" draggableColumns="false"
+			itemEditBeginning="onItemEditBeginning(event)"
+			itemEditBegin="onItemEditBegin(event)"
+			itemEditEnd="onItemEditEnd(event)"
+			dataProvider="{arr_rows}">
+			<telenet:columns>
+				<mx:DataGridColumn headerText="" dataField="for_payment" width="16" editable="true" resizable="false" 
+					editorDataField="selected" rendererIsEditor="true" visible="{gridRight > 0}">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:CheckBox x="0" label="" buttonMode="true"
+								click="{updateCheck()}"
+								currentState="{data.addRow || data.payed ? 'blank' : ''}">
+							<mx:Script>
+							<![CDATA[
+            					private function updateCheck():void {
+            						data.for_payment = this.selected;
+            						this.outerDocument.arr_rows.itemUpdated(data);
+            						this.outerDocument.arr_rows.refresh();
+            					}
+        					]]>
+							</mx:Script>
+							<mx:states>
+								<mx:State name="blank">
+									<mx:SetProperty target="{this}" name="alpha" value="0" />
+									<mx:SetProperty target="{this}" name="enabled" value="false" />
+									<mx:SetProperty target="{this}" name="buttonMode" value="false" />
+								</mx:State>
+							</mx:states>
+							</mx:CheckBox>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="№" dataField="row" width="24" editable="false" resizable="false" 
+					textAlign="center" labelFunction="getColumnLabel" paddingLeft="0"/>
+				<mx:DataGridColumn headerText="Фирма / Регион" dataField="firm_region" textAlign="center" width="175"
+					labelFunction="getColumnLabel" dataTipFunction="getFirmToolTip" showDataTips="true" 
+					editorHeightOffset="220" editorDataField="ret" paddingLeft="1">
+					<mx:itemEditor>
+						<mx:Component className="frEditor">
+							<mx:Accordion headerHeight="18">
+							<mx:Script>
+							<![CDATA[
+								import mx.utils.ObjectUtil;
+								//import mx.managers.PopUpManager;
+								import mx.controls.DataGrid;
+								import mx.events.ItemClickEvent;
+								import mx.events.ListEvent;
+            					// Define a property for returning the new value to the cell.
+            					public var ret:Object;
+            					public function itemClicked(e:ListEvent):void {
+            						//PopUpManager.addPopUp(this, this, false);
+            						ret = ObjectUtil.copy(e.currentTarget.selectedItem);
+            						var rowIndex:int = (this.owner as DataGrid).editedItemPosition.rowIndex;
+            						this.owner.dispatchEvent(
+            							new ItemClickEvent("needClose", false, false, this.className, rowIndex, null, ret)
+            						);
+            					}
+        					]]>
+							</mx:Script>
+								<mx:Repeater id="accRepeater" dataProvider="{outerDocument.firm_regionGroupByFirm.getRoot()}">
+									<mx:Canvas id="canv" label="{accRepeater.currentItem.GroupLabel}" width="100%" height="100%" backgroundAlpha="100"
+										horizontalScrollPolicy="off" verticalScrollPolicy="off">
+										<mx:List id="lst" x="0" y="0" width="100%" height="99%" textAlign="left"
+											showDataTips="true" dataTipField="region"
+											borderThickness="0"
+											verticalScrollPolicy="{lst.length > 1 ? 'auto' : 'off'}"
+											labelField="region"
+											initialize="outerDocument.addFirmData(event)"
+											itemClick="itemClicked(event)"/>
+									</mx:Canvas>
+								</mx:Repeater>
+							</mx:Accordion>
+						</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Направление" dataField="direction" textAlign="center" width="100"
+					labelFunction="getColumnLabel" dataTipFunction="getDirToolTip" showDataTips="true"
+					editorHeightOffset="220" editorDataField="ret" paddingLeft="1">
+					<mx:itemEditor>
+						<mx:Component className="dEditor">
+							<mx:List labelField="name"
+								creationComplete="firm_region=data.firm_region;outerDocument.addDirData(event)"
+								itemClick="itemClicked(event)">
+							<mx:Script>
+								<![CDATA[
+									import mx.utils.ObjectUtil;
+									import mx.events.ItemClickEvent;
+									import mx.controls.DataGrid;
+									import mx.events.ListEvent;
+									// Define a property for returning the new value to the cell.
+            						public var ret:Object;
+            						public var firm_region:Object;
+
+									public function itemClicked(e:ListEvent):void {
+										ret = ObjectUtil.copy(e.currentTarget.selectedItem);
+            							var rowIndex:int = (this.owner as DataGrid).editedItemPosition.rowIndex;
+            							this.owner.dispatchEvent(
+            								new ItemClickEvent("needClose", false, false, this.className, rowIndex, null, ret)
+            							);
+									}
+								]]>
+							</mx:Script>
+							</mx:List>
+						</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Номенклатура" dataField="nomenclature" textAlign="center" width="175"
+					labelFunction="getColumnLabel" dataTipFunction="getNomToolTip" showDataTips="true"
+					editorHeightOffset="220" editorDataField="ret">
+					<mx:itemEditor>
+						<mx:Component className="nEditor">
+							<mx:Accordion headerHeight="18" styleName="edAcc">
+							<mx:Script>
+							<![CDATA[
+								import mx.utils.ObjectUtil;
+								import mx.controls.DataGrid;
+								import mx.events.ItemClickEvent;
+								import mx.events.ListEvent;
+            					// Define a property for returning the new value to the cell.
+            					public var ret:Object;
+            					public function itemClicked(e:ListEvent):void {
+            						ret = ObjectUtil.copy(e.currentTarget.selectedItem);
+            						var rowIndex:int = (this.owner as DataGrid).editedItemPosition.rowIndex;
+            						this.owner.dispatchEvent(
+            							new ItemClickEvent("needClose", false, false, this.className, rowIndex, null, ret)
+            						);
+            					}
+            					private function getListLabel(n:Object):String {
+            						return /*'['+n.code+'] '+*/ n.name;
+            					}
+        					]]>
+							</mx:Script>
+							<mx:Repeater id="accRepeater" dataProvider="{outerDocument.nomenklaturesGroupByCode.getRoot()}">
+								<mx:Canvas id="canv" label="{accRepeater.currentItem.GroupLabel}" width="100%" height="100%" backgroundAlpha="100"
+									horizontalScrollPolicy="off" verticalScrollPolicy="off">
+									<mx:List id="lst" x="0" y="0" width="100%" height="99%" textAlign="left"
+										showDataTips="true" dataTipFunction="getListLabel"
+										borderThickness="0"
+										initialize="{outerDocument.addNomData(event);
+											callLater(function ():void{
+												lst.verticalScrollPolicy = lst.length > 1 ? 'auto' : 'off';
+											}
+										)}"
+										itemClick="itemClicked(event)">
+										<mx:itemRenderer>
+											<mx:Component>
+											<mx:Canvas horizontalScrollPolicy="off">
+												<mx:Label left="2" right="2" text="{data.name}"
+												toolTip="{data.name}"
+												fontWeight="{(data.id &lt; 0) ? 'bold' : 'normal'}"
+												color="{(data.id &lt; 0) ? 0xFF5555 : 0}"/>
+											</mx:Canvas>
+											</mx:Component>
+										</mx:itemRenderer>
+									</mx:List>
+								</mx:Canvas>
+							</mx:Repeater>
+							</mx:Accordion>
+						</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="За месец" dataField="month" rendererIsEditor="true"
+					editorDataField="ret" width="90" resizable="false">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:Canvas x="10" y="50" width="221" horizontalScrollPolicy="off"
+								currentState="{data.addRow ? 'blank' : ''}">
+							<mx:Script>
+							<![CDATA[
+								import flash.sampler.getGetterInvocationCount;
+								import mx.events.CalendarLayoutChangeEvent;
+            					public function get ret():Date {
+            						return data.month;
+            					}
+            					private function updateDate(delta:int):void {
+            						data.month['month'] = data.month['month'] + delta;
+            						this.outerDocument.arr_rows.itemUpdated(data);
+            						this.outerDocument.arr_rows.refresh();
+            					}
+            					private function getVisible():Boolean {
+            						return this.outerDocument.gridRight > 1;
+            					}
+        					]]>
+							</mx:Script>
+							<mx:states>
+								<mx:State name="blank">
+									<mx:SetProperty target="{lblDate}" name="visible" value="false" />
+									<mx:SetProperty target="{imgDel}" name="visible" value="false" />
+									<mx:SetProperty target="{imgAdd}" name="visible" value="false" />
+								</mx:State>
+							</mx:states>
+								<mx:Label id="lblDate" text="{outerDocument.monthFormatter.format(data.month)}"
+									verticalCenter="0" horizontalCenter="0" textAlign="center"/>
+								<mx:Image id="imgDel" width="16" height="16" verticalCenter="0" left="0"
+									source="{outerDocument.resources.imgBulletDelClass}"
+									click="{updateDate(-1)}" buttonMode="true"
+									visible="{getVisible()}"/>
+								<mx:Image id="imgAdd" width="16" height="16" verticalCenter="0" right="0"
+									source="{outerDocument.resources.imgBulletAddClass}"
+									click="{updateDate(+1)}" buttonMode="true"
+									visible="{getVisible()}"/>
+							</mx:Canvas>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Сума" dataField="sum" labelFunction="getColumnLabel" textAlign="right"
+					editorDataField="value" width="100">
+					<mx:itemEditor>
+						<mx:Component className="sumEditor">
+						<mx:Canvas width="100%" horizontalScrollPolicy="off">
+							<mx:Script>
+                            	<![CDATA[
+                            		public function get value():Number {
+                            			return parseFloat(edSum.text);
+                            		}
+                            		override public function set data(value:Object):void {
+                            			super.data = value;
+                            			edSum.text = data.sum.toString();
+                            			edSum.setFocus();
+                            			edSum.setSelection(0,100);
+                            		}
+                            	]]>
+                            </mx:Script>
+							<mx:TextInput id="edSum" width="100%" restrict="0-9.\-" maxChars="15"/>
+						</mx:Canvas>
+						</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Бележка" dataField="note" editable="true" 
+					labelFunction="getColumnLabel"
+					editorDataField="value" dataTipFunction="getNoteToolTip" showDataTips="true">
+					<mx:itemEditor>
+					<mx:Component>
+					<mx:Canvas width="100%" horizontalScrollPolicy="off">
+						<mx:Script>
+                            <![CDATA[
+                            	public function get value():String {
+									return edNote.text;
+                            	}
+                            	override public function set data(value:Object):void {
+                            		super.data = value;
+                            		edNote.text = data.note;
+                            		edNote.setFocus();
+                            		edNote.setSelection(0,100);
+                            	}
+                            ]]>
+						</mx:Script>
+						<mx:TextInput id="edNote" width="100%" maxChars="150"/>
+					</mx:Canvas>
+					</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="" width="20" resizable="false" visible="{gridRight > 1}">
+					<mx:itemRenderer>
+						<mx:Component className="imgDelRenderer">
+							<mx:Canvas width="100%" height="100%"
+								currentState="{data.addRow ? 'blank' : ''}">
+							<mx:states>
+								<mx:State name="blank">
+									<mx:SetProperty target="{imgBtn}" name="visible" value="false" />
+								</mx:State>
+							</mx:states>
+							<mx:Image id="imgBtn" width="16" height="16" scaleContent="false" horizontalCenter="0" verticalCenter="0"
+								 source="{outerDocument.resources.imgBulletDelClass}" click="outerDocument.itemDeleteClick(data)" buttonMode="true"/>
+							</mx:Canvas>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+			</telenet:columns>
+		</telenet:customDataGrid>
+	</mx:Canvas>
+	<!-- keyDown="onGridKeyDown(event)" -->
+	<!-- <mx:DataGridColumn headerText="Фирма" dataField="firm_region" textAlign="center" labelFunction="getColumnLabel"
+					itemEditor="editors.edAccordion" editorHeightOffset="100" editorDataField="selFirmRegion"/> -->
+							
+	<mx:Canvas x="10" y="430" width="252" height="78" styleName="holder"  id="panel_user" cornerRadius="7">
+		<mx:Label x="10" y="10" text="Стоката получена от:"/>
+		<mx:Label x="10" y="27" text="{aData.client_recipient}" fontWeight="bold"/>
+	</mx:Canvas>
+
+	<mx:Canvas x="270" y="430" width="200" height="57" styleName="holder" clipContent="false">
+		<mx:RadioButtonGroup id="paid_type"/>
+		<mx:RadioButton id="cash" x="23" y="10" label="в брой" groupName="paid_type" labelPlacement="right" width="81"
+			selected="{aData.paid_type == 'cash'}" click="{filterArr_smetki.refresh()}" useHandCursor="true"/>
+		<mx:RadioButton id="bank" x="23" y="30" label="по сметка" groupName="paid_type" labelPlacement="right"
+			selected="{aData.paid_type == 'bank'}" click="{filterArr_smetki.refresh()}" useHandCursor="true"/>
+		
+		<mx:Canvas x="10" y="-9" width="65" height="17" backgroundColor="#F2F2F2">
+			<mx:Label y="0" text="Плащане" width="100%" height="100%" fontWeight="bold" x="0" textAlign="center"/>
+		</mx:Canvas>
+	</mx:Canvas>
+
+	<mx:Canvas x="478" y="430" width="237" height="78" styleName="holder"
+		backgroundColor="{checkSumIsOK(arr_rows.Total)}"
+		 verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:Label y="3" text="{numberFormatter.format(arr_rows.Total)}" width="106" textAlign="right" x="110" fontWeight="bold"/>
+		<mx:Label x="10" y="53" text="Обща стойност:"/>
+		<mx:TextInput id="eTotal" x="110" y="51" textAlign="right" restrict="0-9.\-" width="106" text="{aData.total_sum}"
+			change="hideShowDDS()"/>
+		<mx:Label x="217" y="53" text="лв."/>
+		<mx:Label y="26" text="{numberFormatter.format(arr_rows.Total * 0.2)}" width="106" textAlign="right" x="110" id="lblDDS" fontWeight="bold"/>
+		<mx:Label x="10" y="3" text="Данъчна основа:"/>
+		<mx:Label x="217" y="3" text="лв."/>
+		<mx:Label x="217" y="26" text="лв." id="lblDDSlv"/>
+		<mx:CheckBox x="10" y="24" label="ДДС 20%:" width="101" selected="{!aData.dds_payed}" id="dds_for_payment" visible="true"
+			horizontalGap="2" disabledColor="#000000"
+			click="arr_rows.refresh()" enabled="{!aData.dds_payed}" buttonMode="true"/>
+	</mx:Canvas>
+
+	<mx:Button y="519" label="Анулирай" fillAlphas="[0.5, 0.5, 1.0, 1.0]"
+		cornerRadius="7" height="22" width="82" left="478" click="{doAnnulment()}" id="btnAnn"
+		visible="{(!isHaveOrders &amp;&amp; (bBuy_doc_editRight)) || (bBuy_doc_grantRight)}"
+		toolTip="Анулирай неплатен документ"/>
+	<mx:Button y="519" label="Запиши" fillAlphas="[0.5, 0.5, 1.0, 1.0]" fillColors="[#CBEACB, #77D877]"
+		cornerRadius="7" height="22" width="70" right="90" click="{saveDoc()}" id="btnSave" enabled="{!doSave}"/>
+	<mx:Button y="519" label="Затвори" fillAlphas="[0.5, 0.5, 1.0, 1.0]" fillColors="[#FBD2D2, #F59393]"
+		cornerRadius="7" height="22" width="75" right="10" click="{ExternalInterface.call('window.close', '')}" id="button2"/>
+
+	<mx:Canvas id="cnvReadOnly1" width="100%" height="6" backgroundColor="black" backgroundAlpha="0" y="430"/>
+
+	<!-- ====================================================================================================== -->
+
+	<mx:ArrayCollection id="filterArr_smetki" source="{arr_smetki}" filterFunction="filterSmetki"/>
+			
+	<mx:Move id="myMove" target="{order_holder}" duration="1500" easingFunction="Elastic.easeOut" effectEnd="moveEnd()"/>
+	<mx:Canvas id="order_holder" x="5" y="550" width="715" height="362" styleName="holder" backgroundColor="#EFEAEA" cornerRadius="7" borderStyle="solid" clipContent="false">
+		<mx:DataGrid x="10" y="16" width="693" height="125" dataProvider="{arr_orders}" styleName="grid" borderStyle="solid"
+			sortableColumns="false" editable="false" selectable="false" draggableColumns="false" id="datagrid1">
+			<mx:Script>
+				<![CDATA[
+            	public function getLabel(o:Object, gridcolumn:DataGridColumn):String {
+            		switch(gridcolumn.dataField){
+						case "date" : return bgDateFormatter.format(o.date);
+						case "sum" : return currencyFormater.format(o.sum);
+					}
+					return "";
+            	}
+        		]]>
+			</mx:Script>
+			<mx:columns>
+				<mx:DataGridColumn headerText="Номер" dataField="num" textAlign="right" width="100"
+					itemRenderer="OrderLink"/>
+				<mx:DataGridColumn headerText="Дата" dataField="date" labelFunction="getLabel" textAlign="center" 
+					width="90"/>
+				<mx:DataGridColumn headerText="Сметка" dataField="smetka" textAlign="center"/>
+				<mx:DataGridColumn headerText="Сума" dataField="sum" labelFunction="getLabel" textAlign="right"
+					width="150" itemRenderer="OrderRenderer"/>
+				<mx:DataGridColumn headerText="Служител" dataField="user" textAlign="center"/>
+			</mx:columns>
+		</mx:DataGrid>
+
+		<mx:Label id="lblSmetka" x="10" y="150" text="Сметка:"/>
+		<mx:ComboBox id="cbAccount" x="63" y="148" width="215" dataProvider="{filterArr_smetki}" labelField="name"
+			fontWeight="normal" alternatingItemColors="[#ffffff, #eff1f2]" dropdownStyleName="comboBoxDropdownUP"/>
+		<mx:Label id="lblSuma1" x="330" y="150" text="Сума:"/>
+		<mx:Label id="lblSuma3" x="369" y="150" text="{calculateSumForPayment(arr_rows.checkedTotal)}" width="110" textAlign="right" fontWeight="bold"/>
+		<mx:Label id="lblSuma2" x="480" y="150" text="лв."/>
+		<mx:Button id="button1" x="616" y="148" label="Добави" icon="{imgAddBigClass}" cornerRadius="7" height="22" width="87"
+			click="{waitForResponse = true; amfService.makeOrder()}" enabled="{! waitForResponse}"/>
+
+		<mx:Canvas x="0" y="-35" width="257" height="50" styleName="extension" backgroundColor="#EFEAEA" clipContent="false">
+			<mx:Label x="10" y="5" text="Платена сума:"/>
+			<mx:Label x="95" y="6" text="{calculatePayedSum(arr_rows.uncheckedTotal)}" width="130" textAlign="right" fontWeight="bold" id="lblPayedSum"/>
+			<mx:Label x="10" y="24" text="Дължима сума:"/>
+			<mx:Label x="95" y="25" width="130" textAlign="right" fontWeight="bold" color="#CA2824"
+				text="{calculateSumPayment(arr_rows.Total)}"/>
+			<mx:Label x="225" y="25" textAlign="left" fontWeight="normal" text="лв."/>
+			<mx:Label x="225" y="6" textAlign="left" fontWeight="normal" text="лв."/>
+		</mx:Canvas>
+		
+		<mx:Canvas x="265" y="-31" width="200" height="46" styleName="extension" backgroundColor="#EFEAEA" clipContent="false" cornerRadius="7">
+			<mx:HRule y="2" left="3" right="2" strokeColor="#D3C4B0"/>
+			<mx:HRule y="4" left="2" right="1" strokeColor="#D3C4B0"/>
+			<mx:HRule y="6" left="1" right="0" strokeColor="#D3C4B0"/>
+			<mx:HRule y="8" left="1" right="0" strokeColor="#D3C4B0"/>
+			<mx:HRule y="10" left="1" right="0" strokeColor="#D3C4B0"/>
+			<mx:HRule y="12" left="1" right="0" strokeColor="#D3C4B0"/>
+			<mx:Image id="btnOpenOrder" y="-17" width="32" height="32" click="hidePanel()" horizontalCenter="0" 
+			source="{imgArrowUpClass}" toolTip="Отвори информация за ордер" buttonMode="true"/>
+			<mx:Label y="20" text="{aData.user_name}" textAlign="center" left="0" right="0"/>
+		</mx:Canvas>
+		
+		<mx:Canvas x="252" y="1" width="19" height="14" backgroundColor="#EFEAEA"/>
+		<mx:Canvas x="464" y="1" width="22" height="14" backgroundColor="#EFEAEA"/>		
+	</mx:Canvas>
+
+	<mx:Parallel id="alertCreationCompleteEffect">
+        <mx:Fade duration="500" />
+        <mx:Move yFrom="0"
+                easingFunction="Elastic.easeOut"
+                duration="1000" />
+    </mx:Parallel>
+    
+    <mx:Canvas width="100%" height="14" backgroundColor="#000000" backgroundAlpha="0" id="cnvReadOnly"/>
+</app:FrameworkApplication>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:LinkButton
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	fontWeight="normal" cornerRadius="0" paddingRight="3"
+	color="{data.order_status == 'canceled' ? 0xFF0000 : data.order_status == 'opposite' ? 0x0000FF : 0x000000}"
+	textRollOverColor="{data.order_status == 'canceled' ? 0xFF0000 : data.order_status == 'opposite' ? 0x0000FF : 0x000000}"
+	toolTip="{data.order_status == 'canceled' ? 'анулиран' : data.order_status == 'opposite' ? 'насрещен' : ''}"
+	rollOverColor="#F5F5DC" selectionColor="#F5F5DC"
+	label="{data.num}"
+    click="ExternalInterface.call('dialogOrderInventory', 'id='+data.id);"
+/>

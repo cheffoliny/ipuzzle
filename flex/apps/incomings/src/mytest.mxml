@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300"
+	implements="mx.controls.listClasses.IDropInListItemRenderer">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			import mx.controls.listClasses.BaseListData;
+			// Internal variable for the property value.
+    		private var _listData:BaseListData;
+    		// Define the getter method.
+    		public function get listData():BaseListData {
+      			return _listData;
+    		}
+    		// Define the setter method,
+    		public function set listData(value:BaseListData):void {
+      			_listData = value;
+      			column_name = (_listData as AdvancedDataGridListData).dataField;
+    		}
+    		[Bindable] private var column_name:String = "";
+    		
+    		public var prefix:String = "";
+		]]>
+	</mx:Script>
+
+<mx:LinkButton
+	label="{data[column_name]}" textAlign="right" fontWeight="normal"
+	color="0x000000" disabledColor="0x0000FF"
+	buttonMode="{!data.hasOwnProperty('children')}"
+	textDecoration="none"
+	enabled="{!data.hasOwnProperty('children')}"
+	right="0" paddingRight="0" paddingLeft="0" paddingBottom="0" paddingTop="0" cornerRadius="1"
+	click="Application.application.showMoneyNomenclaturesDetailsForMonth(data, prefix, column_name)"
+/>
+</mx:Canvas>

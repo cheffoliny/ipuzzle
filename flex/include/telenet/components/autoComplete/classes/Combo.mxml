@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	clipContent="false" 
+	height="{ flowBox.height + 2 }" width="100%"
+	verticalAlign="middle" horizontalAlign="center"
+	initialize="init()" backgroundColor="#FFFFFF"
+	creationComplete="setMaxWidth()"
+	borderStyle="inset" borderThickness="1"
+	verticalScrollPolicy="off" horizontalScrollPolicy="auto"
+	xmlns:components="telenet.components.*" 
+	xmlns:classes="telenet.components.autoComplete.classes.*">
+	
+	<mx:Metadata>
+		[Event("change")]
+		[Event("searchChange")]		
+	</mx:Metadata>
+		
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ResizeEvent;
+			import telenet.components.AutoComplete;
+			import telenet.components.autoComplete.interfaces.iComboItem;
+			import telenet.utils.StringUtils;
+			import mx.events.ListEvent;
+			import mx.events.CollectionEvent;
+			import mx.managers.PopUpManager;
+			import mx.core.UIComponent;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+			import mx.controls.List;
+			
+			private var _searchStr:String;
+			private var _dropDown:List;
+			
+			[Bindable]
+			private var _dataProvider:ArrayCollection;
+			private var _dataProviderChanged:Boolean;
+			
+			private var _filterFunction:Function;
+			private var _labelFunction:Function;
+			private var _dropDownLabelFunction:Function;
+			private var _dropDownItemRenderer:IFactory;
+			private var _isEqualFunction:Function;
+			
+			private var _isStrict:Boolean = true;
+					
+			private var _prompt:String;
+			private var _promptChanged:Boolean;
+			
+			private var _rowCount:int = 6;
+			private var _rowCountChanged:Boolean;
+			
+			private var _selectedItems:ArrayCollection;
+			
+			private var _style:String = AutoComplete.STYLE_MAC_MAIL;
+			private var _styleChanged:Boolean;
+			
+			private var _allowDuplicates:Boolean;
+			private var _areNewItemsEditable:Boolean;
+			
+			public static const SEARCH_CHANGE:String = "searchChange";
+			
+			private function init():void
+			{
+				textInput.textInput.setStyle( "borderStyle", "none" ); 
+				textInput.textInput.setStyle( "focusThickness", 0 );
+				
+				addEventListener( KeyboardEvent.KEY_DOWN, handleKeyDown );
+				addEventListener( ResizeEvent.RESIZE, handleResize );
+				addEventListener( FocusEvent.FOCUS_IN, handleFocusIn );		
+				addEventListener( FocusEvent.FOCUS_OUT, handleFocusOut );														
+			}
+			
+			public function setMaxWidth():void
+			{
+				if (width)
+				{
+					maxWidth = width;
+				}				
+			}
+			
+			private function handleFocusIn( event:Event ):void
+			{
+				drawFocus( true );				
+			}
+			
+			private function handleFocusOut( event:Event ):void
+			{
+				drawFocus( false );
+				
+				if (searchText.length > 0)
+				{
+					setSelectedItem( searchText, false, true, false );
+				}	
+			}
+			
+			private function handleResize( event:Event ):void
+			{
+				sizeTextInput();
+			}
+			
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+			
+				if (_dataProviderChanged)
+				{
+					_dataProviderChanged = false;
+					
+					if (_dropDown)
+					{
+						_dropDown.dataProvider = _dataProvider;
+					}
+				}
+				
+				if (_promptChanged) {
+					_promptChanged = false;
+					textInput.prompt = _prompt;
+				}
+				
+				if (_rowCountChanged) {
+					_rowCountChanged = false;
+					//
+				}
+				
+				if (_styleChanged)
+				{
+					_styleChanged = false;
+				}			
+			}
+			
+			private function createDropDown():void
+			{
+				_dropDown = new List();
+				_dropDown.rowCount		= _rowCount;
+				_dropDown.focusEnabled 	= false;
+				_dropDown.dataProvider 	= _dataProvider;
+				_dropDown.labelFunction = _dropDownLabelFunction;
+				_dropDown.itemRenderer  = _dropDownItemRenderer ? _dropDownItemRenderer : new ClassFactory( DropDownItemRenderer );
+				_dropDown.addEventListener( ListEvent.ITEM_CLICK, handleItemClick );
+
+				systemManager.addEventListener( MouseEvent.CLICK, handleMouseClick );
+			}
+			
+			private function handleKeyDown( event:KeyboardEvent ):void {
+				if (isDropDownVisible()) {
+					if (event.keyCode == Keyboard.DOWN) {
+						if (_dropDown.selectedIndex == _dataProvider.length - 1) {
+							_dropDown.selectedIndex = 0;
+						}
+						else {
+							_dropDown.selectedIndex++;
+						}
+						
+						_dropDown.scrollToIndex( _dropDown.selectedIndex );
+						textInput.setCursorPosition( textInput.selectionBeginIndex );						
+					}
+					else if (event.keyCode == Keyboard.UP) {
+						if (_dropDown.selectedIndex == 0) {
+							_dropDown.selectedIndex = _dataProvider.length - 1;
+						}
+						else {
+							_dropDown.selectedIndex--;						
+						}
+						
+						_dropDown.scrollToIndex( _dropDown.selectedIndex );
+						textInput.setCursorPosition( textInput.selectionBeginIndex );							
+					}
+					else if (event.keyCode == Keyboard.ESCAPE) {
+						hideDropDown();
+					}
+					else if (event.keyCode == Keyboard.ENTER || event.keyCode == Keyboard.TAB || event.charCode == 44)
+					{
+						setSelectedItem( _dropDown.selectedItem );
+						return;											
+					}
+				}
+				else {
+					var target:iComboItem = determineFocus();
+					
+					if (event.keyCode == Keyboard.BACKSPACE) {
+						if (_selectedItems.length == 0) {
+							return;
+						}
+						
+						if (!target.isCursorAtBeginning()) {
+							return;
+						}					
+					}
+					else if (event.keyCode == Keyboard.ENTER || event.charCode == 44) {
+						if (!_isStrict && target.isEditable()) {
+							setSelectedItem( target.text, false, true );
+							return;
+						}
+						else if (event.keyCode == Keyboard.ENTER) {
+							textInput.setFocus();
+						}
+					}
+				}
+			}
+			
+			private function determineFocus():iComboItem {
+				var comp:UIComponent = focusManager.getFocus() as UIComponent;
+				
+				for each (var item:iComboItem in flowBox.getChildren()) {
+					if (item.contains( comp )) {
+						return item;
+					}	
+				}
+				
+				return null;
+			}
+			
+			public function setSelectedItem( value:Object, isSilent:Boolean = false, isNew:Boolean = false, setFocus:Boolean = true ):void {
+
+				_selectedItems.removeAll();
+				
+				var validItem:Boolean = true;
+				
+				if (isNew) {
+					value = StringUtils.trimCommas( value as String );
+				}
+				
+				var canBeAdded:Boolean = true;
+				
+				if (!_allowDuplicates && _selectedItems.getItemIndex( value ) >= 0) {
+					canBeAdded = false;
+				} 
+				
+				if (canBeAdded && value)
+				{
+						_selectedItems.addItem( value );
+						//_selectedItems.addItemAt( value, 0 );
+					
+					/*
+					// we set the width so the flowBox doesn't temporarily 
+					// add a new row to fit the items
+					textInput.width = 0;
+					
+					if (isNew && _areNewItemsEditable)
+					{
+						var comboTextInput:ComboTextInput = new ComboTextInput();
+						comboTextInput.text = value + "";
+						comboTextInput.width = measureText( value as String ).width + 10;
+						comboTextInput.height = textInput.height;
+						comboTextInput.item = value;
+						comboTextInput.addEventListener( Event.CHANGE, handleComboItemChange, false, 0, true );
+						flowBox.addChildAt( comboTextInput, flowBox.numChildren - 1 );									
+					}
+					else
+					{
+						var selectedItem:SelectedItem = new SelectedItem();
+						selectedItem.text = _labelFunction( value );
+						selectedItem.item = value;
+						selectedItem.style = _style;
+						selectedItem.height = textInput.height;
+						selectedItem.addEventListener( SelectedItem.REMOVE_ITEM, handleItemRemove, false, 0, true );
+						selectedItem.addEventListener( TextEvent.TEXT_INPUT, handleItemTextInput );
+						//flowBox.addChildAt( selectedItem, flowBox.numChildren - 1 );
+					}				
+					*/
+					textInput.text = _labelFunction( value );
+					setComboItemsVisible(true);						
+				}
+				// this means the user entered a comma after a value which has already
+				// been added, in this case we just need to readd the comma
+				else if (_selectedItems.getItemIndex( value ) >= 0 && isNew)
+				{
+					var index:int = _selectedItems.getItemIndex( value );
+					var comboItem:iComboItem = flowBox.getChildAt( index + 1 ) as iComboItem;
+					
+					comboItem.setTextFocus();																		
+				}
+				else {
+					validItem = false;
+				}
+				
+				// TODO			
+				//updateComoText();
+				sizeTextInput();
+				textInput.setCursorPosition(1000);
+
+				if (validItem) {
+					if (setFocus) {
+						textInput.setFocus();
+					}
+					
+					if (!isSilent) {
+						dispatchEvent( new Event( Event.CHANGE ) );
+					}
+				}
+				
+				if (isDropDownVisible()) {
+					// we're using a callLater here as a workaround for not being
+					// able to prevent the enter keyboard event from bubbling. Delaying
+					// the selection gives the UI a chance to check if the enter key
+					// was clicked while the drop down was visible 
+					callLater( hideDropDown );
+				}
+			}
+			
+			private function handleItemTextInput( event:TextEvent ):void {
+				if (event.text != ",") {
+					textInput.text = event.text;
+				}
+				
+				textInput.setFocus();
+				textInput.setTextSelected(false);
+				handleChange( null ); 
+			}
+			
+			private function _updateComoText():void {
+				var event:Event = new Event( SEARCH_CHANGE );
+				dispatchEvent( event );
+				
+				sizeTextInput();				
+			}
+			
+			private function sizeTextInput( event:Event = null ):void {
+				// hmmm
+				textInput.width = width - 5;
+				/*
+				if (textInput.text.length == 0 && _selectedItems.length == 0) {
+					textInput.width = width - 10;	
+				}
+				else {
+					textInput.prompt = null;
+					textInput.width = measureText( textInput.text ).width + 40;
+				}
+				//*/
+				
+				// this is needed so the focus border will be drawn correctly
+				textInput.validateNow();
+				
+				var comp:UIComponent = focusManager.getFocus() as UIComponent;
+				
+				if (focusManager.getFocus() == this || (comp && this.contains(comp))) {
+					drawFocus( true );
+				}
+			}
+			
+			private function handleItemClick( event:ListEvent ):void
+			{
+				setSelectedItem( _dropDown.selectedItem );
+			}
+			
+			/**
+			 * If the list is visible and we click somewhere else
+			 * we're going to close it
+			 */
+			private function handleMouseClick( event:MouseEvent ):void
+			{
+				if (!isDropDownVisible())
+				{
+					return;
+				}
+				
+				if (!_dropDown.hitTestPoint( event.stageX, event.stageY ))
+				{
+					hideDropDown();
+				}
+			}
+			
+			public function setComboItemsVisible( visible:Boolean ):void
+			{
+				for (var x:int=0; x<flowBox.numChildren; x++)
+				{
+					var item:UIComponent = flowBox.getChildAt( x ) as UIComponent;
+					
+					if (item is PromptTextInput)
+					{
+						continue;
+					}
+					
+					item.visible = visible;
+					item.includeInLayout = visible;
+				}
+			}
+			
+			public function handleChange( event:Event ):void {
+				if (selectedItem) {
+					_selectedItems.removeAll();
+				}
+				
+				sizeTextInput();
+				
+				if (!_dataProvider) {
+					return;
+				}
+				
+				var regExp:RegExp = new RegExp(",", "gi")
+				textInput.text = textInput.text.replace( regExp, "" );
+				
+				_searchStr = textInput.text;
+				
+				//var start:Date = new Date();
+				filterData();
+				//var end:Date = new Date();
+				//trace(">> search took: " + (end.getTime() - start.getTime()) + " msecs" );
+				
+				var event:Event = new Event( SEARCH_CHANGE );
+				dispatchEvent( event );
+				
+				if (_dataProvider.length == 0)
+				{
+					hideDropDown();
+					return;
+				}
+				else if (isPerfectMatch())
+				{
+					return;
+				}
+				
+				if (isDropDownVisible())
+				{
+					if (_searchStr.length == 0)
+					{
+						hideDropDown();
+					}
+				}
+				else
+				{
+					if (_searchStr.length > 0 && _dataProvider.length > 0)
+					{
+						showDropDown();	
+					}
+				}
+				
+				if (isDropDownVisible())
+				{
+					callLater( positionDropDown );
+					callLater( highlightFirstItem );
+					_dropDown.rowCount = (_dataProvider.length < _rowCount ? _dataProvider.length : _rowCount);
+				}				
+			}
+			
+			private function highlightFirstItem():void {
+				if (_dropDown)
+					_dropDown.selectedIndex = 0;
+			}
+			
+			private function isPerfectMatch():Boolean
+			{
+				if (_dataProvider.length == 1)
+				{
+					var item:Object = _dataProvider.getItemAt( 0 );
+					
+					if (_isEqualFunction != null)
+					{
+						if (_isEqualFunction( item, searchText ))
+						{
+							setSelectedItem( item );
+							return true;
+						}
+					}
+					else
+					{
+						var str:String = _labelFunction( item );
+						
+						if (str.toLowerCase() == searchText.toLowerCase())
+						{
+							setSelectedItem( item );
+							return true;
+						}
+					}
+				}
+				
+				return false;
+			}
+						
+			public function get searchText():String
+			{
+				return textInput.text;
+			}
+			
+			public function filterData():void
+			{
+				_dataProvider.filterFunction = filterFunctionWrapper;
+				_dataProvider.refresh();
+			}
+			
+			private function showDropDown():void
+			{
+				if (_dropDown == null)
+				{
+					createDropDown();
+				}
+				
+				_dropDown.width = width;
+				_dropDown.owner = this;
+				_dropDown.scrollToIndex(0);
+				
+				PopUpManager.addPopUp( _dropDown, this );				
+			}
+			
+			public function positionDropDown():void
+			{
+				if (!isDropDownVisible())
+				{
+					return;
+				}
+				
+				var localPoint:Point = new Point( 0, height );
+				var globalPoint:Point = localToGlobal( localPoint );
+								
+				_dropDown.x = globalPoint.x;
+				
+				// check if it will fit below the textInput 
+				if (Application.application.height - globalPoint.y > dropDown.height)	
+				{
+					_dropDown.y = globalPoint.y;
+				}
+				else
+				{
+					_dropDown.y = globalPoint.y - height - dropDown.height;
+				}				
+			}
+			
+			private function hideDropDown():void {
+				PopUpManager.removePopUp( _dropDown );
+			}
+			
+			public function get dropDown():List {
+				return _dropDown;
+			}
+			
+			public function set labelFunction( value:Function ):void {
+				_labelFunction = value;
+			}
+			
+			public function set dropDownLabelFunction( value:Function ):void
+			{
+				_dropDownLabelFunction = value;
+			}
+			
+			public function set dropDownItemRenderer( value:IFactory ):void
+			{
+				_dropDownItemRenderer = value;
+			}
+			
+			public function set filterFunction( value:Function ):void {
+				_filterFunction = value;
+			}
+			
+			public function set isStrict( value:Boolean ):void
+			{
+				_isStrict = value;
+			}
+			
+			public function set selectedItems( value:ArrayCollection ):void
+			{
+				_selectedItems = value;
+			}
+			
+			private function filterFunctionWrapper( item:Object ):Boolean
+			{
+				return _filterFunction( item, _searchStr );
+			}
+			
+			public function set isEqualFunction( value:Function ):void
+			{
+				_isEqualFunction = value;
+			}
+			
+			public function set style( value:String ):void
+			{
+				_style = value;
+				_styleChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			public function set dataProvider( value:ArrayCollection ):void
+			{
+				_dataProvider = value;
+				_dataProviderChanged = true;
+				_dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, dpchanged);
+				
+				invalidateProperties();
+			}
+			private function dpchanged(e:CollectionEvent):void {
+				if (_dropDown){
+					_dropDown.rowCount = (_dataProvider.length < _rowCount ? _dataProvider.length : _rowCount);
+					callLater(highlightFirstItem);
+				}
+			}
+			
+			public function get dataProvider():ArrayCollection {
+				return _dataProvider;
+			}
+			
+			public function set text( value:String ):void {
+				textInput.text = value;
+			}
+			
+			public function isDropDownVisible():Boolean {
+				return _dropDown && _dropDown.parent;
+			}
+			
+			public function set prompt( value:String ):void {
+				_prompt = value;
+				_promptChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			public function set rowCount(value:int):void {
+				_rowCount = value;
+				_rowCountChanged = true;
+				
+				invalidateProperties();
+			}
+			
+			public function get selectedItem():Object {
+				return isItemSelected ? _selectedItems.getItemAt(0) : null;
+			}
+			
+			public function get isItemSelected():Boolean {
+				return _selectedItems.length > 0;
+			}
+			
+			override public function setFocus():void {
+				textInput.setFocus();
+			}
+			
+			public function set allowDuplicates( value:Boolean ):void {
+				_allowDuplicates = value;
+			}
+			
+			public function set areNewItemsEditable( value:Boolean ):void {
+				_areNewItemsEditable = value;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<!--<classes:FlowBox id="flowBox" horizontalGap="0" verticalGap="0" width="99%" height="99%">-->
+	<mx:Canvas id="flowBox" width="100%" height="20">
+		<components:PromptTextInput id="textInput" change="handleChange(event)" width="100%" height="100%" left="1" top="1"/>
+	</mx:Canvas>		
+
+	<!--</classes:FlowBox>-->
+	 
+</mx:Box>

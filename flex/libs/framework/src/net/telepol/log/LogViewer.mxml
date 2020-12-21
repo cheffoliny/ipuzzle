@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" cornerRadius="0" backgroundAlpha="1" 
+	paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="0" verticalGap="10">
+	<mx:Script>
+		<![CDATA[
+		import mx.controls.Alert;
+		import mx.logging.LogEventLevel;
+		import mx.formatters.DateFormatter;
+		import mx.controls.dataGridClasses.DataGridColumn;
+		import mx.events.ResizeEvent;
+		import mx.core.UIComponent;
+		import mx.core.Container;
+		import mx.core.IFlexDisplayObject;
+		import mx.core.Application;
+		import mx.managers.PopUpManager;
+		import mx.collections.ArrayCollection;
+		import mx.logging.ILogger;
+		import mx.logging.LogEvent;
+		import net.telepol.res.Resources;
+		import net.telepol.rpc.event.LocalLogEvent;
+		import net.telepol.rpc.event.RemoteLogEvent;
+		
+		
+		protected static const MAX_LOG_RECORDS:int 		= 450;
+		protected static const MAX_LOG_RECORDS_STEP:int =  50;
+		
+		protected static const DBAPI_ERR_CODES:Array = [
+			'DBAPI_ERR_SUCCESS',
+			'DBAPI_ERR_FILE_NOT_FOUND',
+			'DBAPI_ERR_FUNC_NOT_FOUND',
+			'DBAPI_ERR_INVALID_PARAM',
+			'DBAPI_ERR_SQL_QUERY',
+			'DBAPI_ERR_SQL_DATA',
+			'DBAPI_ERR_WRONG_FILE',
+			'DBAPI_ERR_PASSWORD_INCORRECT',
+			'DBAPI_ERR_FAILED_TRANS',
+			'DBAPI_ERR_ASSERT',
+			'DBAPI_ERR_ACCESS_DENIED',
+			'DBAPI_ERR_SESSION_DATA',
+			'DBAPI_ERR_FTP_UPLOAD',
+			'DBAPI_ERR_UNKNOWN',
+    		'DBAPI_ERR_PHP_INTERNAL'
+    		];
+	
+		[Bindable]
+		public var localLogs:ArrayCollection = new ArrayCollection();
+		
+		[Bindable]
+		public var remoteLogs:ArrayCollection = new ArrayCollection();
+		
+		protected static var formatDate:Date = new Date();
+		protected static var formatterDate:DateFormatter = new DateFormatter();
+		
+		protected var oldModalTransparency:Number;
+		
+		protected var openLogFileRef:FileReference = null;
+		
+		[Bindable]
+		protected var resources:Resources = Resources.instance;
+		
+		protected var logFileNameDateFormatter:DateFormatter = new DateFormatter();
+		
+		protected var ctxShowLogsItem:ContextMenuItem = null;
+		
+		
+		public function initializeHandler( event:Event ) : void {
+			
+			LocalLogDispacher.instance.addEventListener( LocalLogEvent.LOCAL_LOG, localLogHandler );
+			RemoteLogDispacher.instance.addEventListener( RemoteLogEvent.REMOTE_LOG, remoteLogHandler );
+			
+			Application( Application.application ).addEventListener( ResizeEvent.RESIZE, applicationResizeHandler );
+			
+			ctxShowLogsItem = new ContextMenuItem("Show Logs");
+			ctxShowLogsItem.addEventListener( ContextMenuEvent.MENU_ITEM_SELECT, showLogsHandler );
+			var ctxMenuItems:ArrayCollection = new ArrayCollection( Application.application.contextMenu.customItems );
+			ctxMenuItems.addItem( ctxShowLogsItem );
+			Application.application.contextMenu.customItems = ctxMenuItems.toArray();
+			
+			formatterDate.formatString = "YYYY-MM-DD JJ:NN:SS";
+			logFileNameDateFormatter.formatString = "YYYYMMDDJJNNSS";
+			
+			localLogs.filterFunction = localLogsFilterFunction;
+			remoteLogs.filterFunction = remoteLogsFilterFunction;
+			
+			oldModalTransparency = Application.application.getStyle('modalTransparency');
+		}
+		
+		public function closeHandler( event:Event ) : void {
+			
+			ctxShowLogsItem.enabled = true;
+			Application.application.setStyle('modalTransparency', oldModalTransparency);
+			PopUpManager.removePopUp( this );
+		}
+		
+		public function saveAsHandler( event:Event ) : void {
+			var fileRefference:FileReference = new FileReference();
+			var ba:ByteArray = new ByteArray();
+			ba.writeInt( 1 ); //version
+			ba.writeObject( localLogs );
+			ba.writeObject( remoteLogs ); 
+			fileRefference.save( ba, logFileNameDateFormatter.format( new Date() ) + ".log");
+		}
+		
+		public function applicationResizeHandler( event:Event ) : void {
+			
+			this.width = Application( Application.application ).width;
+			this.height = Application( Application.application ).height;
+		}
+		
+		public function showLogsHandler( event:Event ) : void {
+			ctxShowLogsItem.enabled = false;
+			applicationResizeHandler( null );
+			Application.application.setStyle('modalTransparency', 1.0);
+			PopUpManager.addPopUp( this, DisplayObject( Application.application ), true );
+		}
+		
+		public function localLogHandler( event:LocalLogEvent ) : void {
+			
+			localLogs.addItem( {
+				level: 		event.level,
+				message: 	event.message,
+				category: 	event.category,
+				time: 		event.time
+				});
+			
+			if( localLogs.length >= ( MAX_LOG_RECORDS + MAX_LOG_RECORDS_STEP ) ) {
+				while( localLogs.length >= MAX_LOG_RECORDS ) {
+					localLogs.removeItemAt( 0 );
+				}
+			}
+		}
+		
+		public function remoteLogHandler( event:RemoteLogEvent ) : void {
+			
+			for each( var log:Object in event.remoteLog ) {
+				remoteLogs.addItem( log );
+			}
+			
+			if( remoteLogs.length >= ( MAX_LOG_RECORDS + MAX_LOG_RECORDS_STEP ) ) {
+				while( remoteLogs.length >= MAX_LOG_RECORDS ) {
+					remoteLogs.removeItemAt( 0 );
+				}
+			}
+			
+		}
+		
+		public function labelFunctionNumberToDateString( item:Object, column:DataGridColumn ) : String {
+			formatDate.setTime( item.time );
+			return formatterDate.format( formatDate );
+		}
+		
+		public function labelFunctionLevelToString( item:Object, column:DataGridColumn ) : String {
+			
+			return LogEvent.getLevelString( item.level );
+		}
+		
+		public function labelFunctionDbCodeToString( item:Object, column:DataGridColumn ) : String {
+			
+			if( typeof DBAPI_ERR_CODES[ item.nCode ] != undefined ) {
+				return DBAPI_ERR_CODES[ item.nCode ];
+			}
+			
+			return null;
+		}
+		
+		public function clearLogHandler( event:Event ) : void {
+			localLogs.removeAll();
+			remoteLogs.removeAll();
+		}
+		
+		public function openLogFileHandler( event:Event ) : void {
+			openLogFileRef = new FileReference();	
+			openLogFileRef.addEventListener( Event.SELECT, selectLogFileCompleteHandler );
+			openLogFileRef.addEventListener( Event.COMPLETE, completeLogFileCompleteHandler );
+			openLogFileRef.addEventListener( IOErrorEvent.IO_ERROR, errorLogFileHandler );
+			openLogFileRef.addEventListener( SecurityErrorEvent.SECURITY_ERROR, errorLogFileHandler );
+			openLogFileRef.browse();
+		}
+		
+		public function selectLogFileCompleteHandler( event:Event ) : void {
+			var fileRefference:FileReference = event.target as FileReference;
+			fileRefference.load();
+		}
+		
+		public function completeLogFileCompleteHandler( event:Event ) : void {
+			
+			var fileRefference:FileReference = event.target as FileReference;
+			
+			localLogs.removeAll();
+			remoteLogs.removeAll();
+			
+			var version:int = fileRefference.data.readInt();
+			
+			switch( version ) {
+				case 1:
+					localLogs.source = ArrayCollection( fileRefference.data.readObject() ).toArray();
+					remoteLogs.source = ArrayCollection( fileRefference.data.readObject() ).toArray();
+					break;
+				default:
+					Alert.show("Cannot open log file. Version missmatch!", "Error", 4, null, null, resources.ImgLevelError);
+			}
+		}
+		
+		public function errorLogFileHandler( event:ErrorEvent ) : void {
+			
+			Alert.show( event.text, "Error", 4, null, null, resources.ImgLevelError);
+		}
+		
+		public function localLogsFilterFunction( item:Object ) : Boolean {
+			if( searchField.text.length > 0 ) {
+				return Boolean( String( item["message"] + item["category"] ).toLowerCase().indexOf( searchField.text.toLowerCase() ) != -1 );
+			}
+			return true; 
+		}
+		
+		public function remoteLogsFilterFunction( item:Object ) : Boolean {
+			if( searchField.text.length > 0 ) {
+				return Boolean( String( item["sFile"] + item["sMsg"] ).toLowerCase().indexOf( searchField.text.toLowerCase() ) != -1 );
+			}
+			return true;
+		}
+		
+		public function filterHandler( event:Event ) : void {
+			localLogs.refresh();
+			remoteLogs.refresh();
+		}
+		
+		]]>
+	</mx:Script>
+	
+	<mx:ApplicationControlBar width="100%" shadowDirection="center" shadowDistance="1" dropShadowEnabled="true" cornerRadius="0" verticalAlign="middle">
+		<mx:Button toolTip="Close" icon="{resources.ImgFileClose}" click="closeHandler( event )" cornerRadius="0" height="30"/>
+		<mx:HBox horizontalGap="-1">
+			<mx:Button toolTip="Save As" icon="{resources.ImgFileSave}" click="saveAsHandler( event )" cornerRadius="0" height="30"/>
+			<mx:Button toolTip="Open File" icon="{resources.ImgFileOpen}" click="openLogFileHandler( event )" cornerRadius="0" height="30"/>
+			<mx:Button toolTip="Clear" icon="{resources.ImgFileDelete}" click="clearLogHandler( event )" cornerRadius="0" height="30"/>
+		</mx:HBox>
+		<mx:HBox height="100%" verticalAlign="middle" borderStyle="solid" borderThickness="1" paddingLeft="5" paddingRight="5">
+			<mx:Label text="Search:"/>
+			<mx:TextInput id="searchField" width="200" keyUp="filterHandler( event )"/>
+		</mx:HBox>
+	</mx:ApplicationControlBar>
+	
+	<mx:TabNavigator width="100%" height="100%" tabOffset="10" cornerRadius="3" paddingLeft="10" paddingRight="10" paddingBottom="10">
+		<mx:VDividedBox width="100%" height="100%" label="Local Logs">
+			<mx:DataGrid id="dataGridLocalLogs" width="100%" height="50%" horizontalScrollPolicy="auto" dataProvider="{localLogs}" allowMultipleSelection="false" useRollOver="false" rowHeight="20">
+				<mx:columns>
+					<mx:DataGridColumn width="30" headerText="#" dataField="level" itemRenderer="net.telepol.log.LevelImageIconRenderer"/>
+					<mx:DataGridColumn width="60" headerText="Severity" dataField="level" labelFunction="labelFunctionLevelToString"/>
+					<mx:DataGridColumn width="150" headerText="Time" dataField="time" labelFunction="labelFunctionNumberToDateString"/>
+					<mx:DataGridColumn width="200" headerText="Category" dataField="category"/>
+					<mx:DataGridColumn width="300" headerText="Message" dataField="message"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:TextArea width="100%" height="50%" text="{dataGridLocalLogs.selectedItem.message}"/>
+		</mx:VDividedBox>
+		<mx:VDividedBox width="100%" height="100%" label="Remote Logs">
+			<mx:DataGrid id="dataGridRemoteLogs" width="100%" height="50%" horizontalScrollPolicy="auto" dataProvider="{remoteLogs}" allowMultipleSelection="false" useRollOver="false" rowHeight="20">
+				<mx:columns>
+					<mx:DataGridColumn width="30" headerText="#" dataField="nCode" itemRenderer="net.telepol.log.DbCodeImageIconRenderer"/>
+					<mx:DataGridColumn width="200" headerText="Code" dataField="nCode" labelFunction="labelFunctionDbCodeToString"/>
+					<mx:DataGridColumn width="300" headerText="File" dataField="sFile"/>
+					<mx:DataGridColumn width="50" headerText="Line" dataField="nLine" textAlign="right"/>
+					<mx:DataGridColumn width="300" headerText="Message" dataField="sMsg"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:TextArea width="100%" height="50%" text="{dataGridRemoteLogs.selectedItem.sMsg}"/>
+		</mx:VDividedBox>
+	</mx:TabNavigator>
+	
+</mx:VBox>

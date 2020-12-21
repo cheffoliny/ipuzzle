@@ -1,0 +1,11 @@
+.idea
+/templates_c/
+/doc/
+/del/
+/config/connect.inc.php
+/config/config.inc.php
+/exported_sale_docs/
+/person_images/
+/tmp/
+css/custom.css
+node_modules

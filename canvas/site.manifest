@@ -1,0 +1,9 @@
+CACHE MANIFEST 
+# version 0.1 
+
+CACHE:
+sounds/connect.mp3
+sounds/disconnect.mp3
+
+NETWORK:
+*

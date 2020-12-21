@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="254" height="144" backgroundAlpha="1.0" backgroundColor="#F2F2F2" borderStyle="solid" cornerRadius="5"
+	creationComplete="{eClientSum.setFocus()}">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			public var cancel_operation:Boolean = false;
+
+			[Bindable] private var price:Number = 0;
+			public function set Price(p:String):void {
+				this.price = getNumber(p);
+			}
+			public function get Price():String {
+				return this.price.toString();
+			}
+			
+			private function getNumber(str:String):Number {
+				var regEx:RegExp = /[,$]/g;
+				var r:Number = parseFloat(str.replace(regEx,""));
+				if (isNaN(r))
+					r = 0;
+				return r;
+			}
+
+			private function calculate(): void {
+				var resto:String = currencyFormater.format(getNumber(eClientSum.text) - price) + ' лв.';
+				if (resto.substr(0,1) == '-'){
+					lblReturn.text =  'недостатъчна сума';
+					lblReturn.setStyle('color' , 0xD43E2F);
+					lblReturn.setStyle('fontWeight' , 'bold');
+				} else {
+					lblReturn.text = resto;
+					lblReturn.setStyle('color', 0x329328);
+					lblReturn.setStyle('fontWeight' , 'normal');
+				}
+			}
+			
+			private function closeMe():void {
+				PopUpManager.removePopUp(this);
+				//var lst:Object = accFirmRegion.selectedChild.getChildByName('lst');
+				//office_id = lst.selectedItem.rcode;
+				//service_id = cbService.selectedItem.id_service;
+				//service_name = edService.text;
+				dispatchEvent(new Event(Event.CLOSE));
+			}
+			protected function handleKeyboardEnter(e:KeyboardEvent):void {
+				if (e.keyCode == 13){
+					cancel_operation = false;
+					closeMe();
+				}
+				if (e.keyCode == 27){
+					cancel_operation = true;
+					closeMe();
+				}
+			}
+			private function cancelOperation():void {
+				cancel_operation = true;
+				closeMe();
+			}
+		]]>
+	</mx:Script>
+
+	<mx:CurrencyFormatter id="currencyFormater" alignSymbol="right" currencySymbol="" rounding="nearest" precision="2" />
+
+	<mx:Label text="Дължима сума:" left="24" top="19"/>
+	<mx:Label text="{currencyFormater.format(price)} лв." width="109" textAlign="right" left="119" top="19"/>
+	
+	<mx:Label text="Платено:" left="24" top="47"/>
+	<mx:TextInput width="100" left="128" top="45" textAlign="right" id="eClientSum" restrict="0-9."
+		change="{calculate()}" keyUp="{handleKeyboardEnter(event)}" maxChars="13"/>
+	
+	<mx:Label text="Ресто:" left="24" top="81"/>
+	<mx:Label text="0.00 лв." width="161" textAlign="right" left="71" top="79" id="lblReturn" fontWeight="normal" fontSize="13"/>
+	<mx:Button x="24" y="112" label="Откажи ордера" width="204" fillAlphas="[0.3, 0.3, 1.0, 1.0]" fillColors="[#FBD2D2, #F59393]"
+		click="cancelOperation()"/>
+	
+</mx:Canvas>

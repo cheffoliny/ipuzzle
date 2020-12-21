@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="594" height="35" cornerRadius="0" backgroundAlpha="0.0">
+
+
+	<mx:Metadata>
+   		[ Event( name="changePage", type="flash.events.Event") ]
+	</mx:Metadata>
+
+	<mx:Script>
+	<![CDATA[
+		import mx.collections.XMLListCollection;
+		import mx.events.CollectionEvent;
+		import mx.collections.ArrayCollection;
+		[Bindable]public var currentPage:uint = 1;
+		[Bindable]public var pageSize:uint = 10;
+		[Bindable]public var maxPage:uint = 0;
+		[Bindable]public var maxRows:uint = 0;
+		
+		private function fireChangePageEvent():void {
+			var myEventObj:Event = new Event("changePage");
+			dispatchEvent( myEventObj );	
+		}
+		private function btnFirstClick():void {
+			if (currentPage > 1){
+				currentPage = 1;
+				fireChangePageEvent();
+			}
+		}
+		private function btnPrevClick():void {
+			if (currentPage > 1){
+				currentPage--;
+				fireChangePageEvent();
+			}
+		}
+		private function btnNextClick(): void {
+			if (currentPage < maxPage){
+				currentPage++;
+				fireChangePageEvent();
+			}
+		}
+		private function btnLastClick(): void {
+			if (currentPage < maxPage){
+				currentPage = maxPage;
+				fireChangePageEvent();
+			}
+		}
+		]]>
+	</mx:Script>
+	<mx:HBox id="hbControls" y="0" height="100%" verticalAlign="middle" left="0" horizontalGap="2" horizontalAlign="left" width="319">
+		<mx:LinkButton cornerRadius="7" icon="@Embed(source='/assets/page-first.gif')" width="28" enabled="{currentPage &gt; 1}" disabledIcon="@Embed(source='/assets/page-first-disabled.gif')" height="23" disabledColor="#EDEAEA" themeColor="#8DA1AC" styleName="pagingButton" click="btnFirstClick()" toolTip="Първа Страница" id="btnPageFirst"/>
+		<mx:LinkButton cornerRadius="7" icon="@Embed(source='/assets/page-prev.gif')" width="28" enabled="{currentPage &gt; 1}" disabledIcon="@Embed(source='/assets/page-prev-disabled.gif')" height="23" disabledColor="#EDEAEA" themeColor="#8DA1AC" styleName="pagingButton" click="btnPrevClick()" toolTip="Предишна Страница" id="btnPagePrev"/>
+		<mx:Label text="Страница {currentPage} от {maxPage}" color="#000000"/>
+		<mx:LinkButton cornerRadius="7" icon="@Embed(source='/assets/page-next.gif')" width="28" enabled="{currentPage &lt; maxPage}" disabledIcon="@Embed(source='/assets/page-next-disabled.gif')" height="23" disabledColor="#EDEAEA" themeColor="#8DA1AC" styleName="pagingButton" click="btnNextClick()" toolTip="Следваща Страница" id="btnPageNext"/>
+		<mx:LinkButton cornerRadius="7" icon="@Embed(source='/assets/page-last.gif')" width="28" enabled="{currentPage &lt; maxPage}" disabledIcon="@Embed(source='/assets/page-last-disabled.gif')" height="23" disabledColor="#EDEAEA" themeColor="#8DA1AC" styleName="pagingButton" click="btnLastClick()" toolTip="Последна Страница" id="btnPageLast"/>
+	</mx:HBox>
+	<mx:Label text="Резултати {((currentPage-1) * pageSize)+1} - {Math.min(((currentPage-1) * pageSize) + pageSize, maxRows)} от {maxRows}" color="#000000" right="0" verticalCenter="0" id="lblContacts"/>
+</mx:Canvas>
