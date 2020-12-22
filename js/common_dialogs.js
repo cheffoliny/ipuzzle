@@ -177,25 +177,32 @@ function dialogBuyDocsFilter(id) {
 }
 
 function dialogBuy() {
-	//dialog_win('buy',1000,600,'buy');
-	vPopUp({ url: `page.php?page=buy_new`, name: `buy_new`, width: 980, height: 660 })
+//	dialog_win('buy',1000,600,'buy');
+//	vPopUp({ url: `page.php?page=buy_new&id=${id}`, name: `buy_new${id}`, width: 960, height: 660 })
+	vPopUp({ url: `page.php?page=buy_new`, name: `buy_new`, width: 960, height: 660 })
 }
 
+function dialogBuy2(id) {
+	//dialog_win('buy&id='+id,800,550,'buy');
+	vPopUp({ url: `page.php?page=buy_new&id=${id}`, name: `buy_new${id}`, width: 960, height: 660 })
+}
 function dialogSale() {
-	//dialog_win('sale',800,550,'sale');
-	vPopUp({ url: `page.php?page=sale_new`, name: `sale_new`, width: 980, height: 660 })
+//	dialog_win('sale',800,550,'sale');
+	vPopUp({ url: `page.php?page=sale_new`, name: `sale_new`, width: 960, height: 660 })
 }
 function dialogSale2(id) {
 	//dialog_win('sale&id='+id,800,550,'sale');
-	vPopUp({ url: `page.php?page=sale_new&id=${id}`, name: `sale_new${id}`, width: 980, height: 660 })
+	vPopUp({ url: `page.php?page=sale_new&id=${id}`, name: `sale_new${id}`, width: 960, height: 660 })
 }
+
 function dialogSaleForObject(id) {
 	//dialog_win('sale&id_object='+id,800,550,'sale');
-	vPopUp({ url: `page.php?page=sale_new&id_object=${id}`, name: `sale_new_object${id}`, width: 980, height: 660 })
+	vPopUp({ url: `page.php?page=sale_new&id_object=${id}`, name: `sale_new_object${id}`, width: 960, height: 660 })
 }
+
 function dialogSaleFromBook() {
 	//dialog_win('sale&from_book=true',800,550,'sale');
-	vPopUp({ url: `page.php?page=sale_new&is_book=1`, name: 'sale_new_from_book', width: 980, height: 660 })
+	vPopUp({ url: `page.php?page=sale_new&is_book=1`, name: 'sale_new_from_book', width: 960, height: 660 })
 }
 
 function dialogReceipt(id) {

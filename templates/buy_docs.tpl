@@ -126,9 +126,10 @@
 		function openBuy() {
 			dialogBuy();
 		}
-		
+
 		function openBuyDoc(id) {
-			dialogBuy('id='+id, 'buy_'+id);
+			//dialogBuy('id='+id, 'buy_'+id);
+			dialogBuy2(id);
 		}
 		
 		function enterConfirm() {

@@ -105,7 +105,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
         $oFirms		    = new DBFirms();
         $oSales		    = new DBSalesDocsRows();
         $oBuys		    = new DBBuyDocsRows();
-        $oFunds         = new DBFunds();
+        //$oFunds         = new DBFunds();
 
         $nIDUser	    = $this->currentUser;
         $aOrder 	    = [];
@@ -326,77 +326,77 @@ class NEWDBFinanceOperations extends DBMonthTable {
                     $tRow       = PREFIX_SALES_DOCS_ROWS . substr($nIDRow, 0, 6);
 
                     // Фондове
-                    if ( empty($nIDTran) && empty($isDDS) && !empty($nSumRow) ) {
-                        $nCheckObject       = $oFunds->checkFormulaForObject($val['id_object']);
-                        $nCheckFirm         = $oFunds->checkFormulaForFirm($nIDFirm);
-
-                        if ($nCheckFirm == 1) {
-                            throw new Exception("Некоректна схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
-                        } elseif ($nCheckFirm === 0) {
-                            throw new Exception("Липсва схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
-                        }
-
-                        if ( $nCheckObject == 2 ) {
-                            $nFirmFormula = $oFunds->getFirmByFormulaForObject($val['id_office']);
-                            //ob_toFile($nFirmFormula, "formula.txt");
-                            if ( $nFirmFormula == $nIDFirm ) {
-                                $aFundsData = $oFunds->getFundFormulaForObject($val['id_office']);
-                            } else {
-                                $aFundsData = $oFunds->getFundFormulaForFirm($nIDFirm);
-                            }
-                        } else {
-                            $aFundsData = $oFunds->getFundFormulaForFirm($nIDFirm);
-                        }
-
-                        $nTotalPercent = array_sum($aFundsData);
-
-                        if ($nTotalPercent != 100) {
-                            throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
-                        }
-
-                        foreach ( $aFundsData as $nIDDirectionType => $nSumPercent ) {
-                            if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
-                                $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
-                                $aStartBalance[$nIDDirectionType] = $aFundsBalance[$nIDDirectionType];
-                            }
-
-                            $nSumAmount = $nSumRow * $nSumPercent / 100;
-                            $aFundsBalance[$nIDDirectionType] -= $nSumAmount;
-
-                            list($y, $m) = explode("-", $val['month']);
-
-                            if ( date("Y-m-01") > $y . "-" . $m . "-01" ) {
-                                list($y, $m) = explode("-", date("Y-m"));
-                            }
-
-                            $month = $y . "-" . $m . "-01";
-
-                            // Фондове - месечни - НОВО!!!
-                            if ( !isset($aMonthFundBalance[$nIDDirectionType][$month]) ) {
-                                $fundSaldo = $oFunds->getSaldoByMonthType($month, $nIDDirectionType);
-
-                                $aMonthFundBalance[$nIDDirectionType][$month] = ['id' => $fundSaldo['id'] ?? 0, 'sum' => $nSumAmount];
-                            } else {
-                                $aMonthFundBalance[$nIDDirectionType][$month]['sum'] += $nSumAmount;
-                            }
-
-                            // Фондове - тотали - НОВО!!!
-                            if ( !isset($aTotalFundBalance[$nIDDirectionType]) ) {
-                                $aTotalFundBalance[$nIDDirectionType] = $nSumAmount;
-                            } else {
-                                $aTotalFundBalance[$nIDDirectionType] += $nSumAmount;
-                            }
-                        }
-                    }
+//                    if ( empty($nIDTran) && empty($isDDS) && !empty($nSumRow) ) {
+//                        $nCheckObject       = $oFunds->checkFormulaForObject($val['id_object']);
+//                        $nCheckFirm         = $oFunds->checkFormulaForFirm($nIDFirm);
+//
+//                        if ($nCheckFirm == 1) {
+//                            throw new Exception("Некоректна схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
+//                        } elseif ($nCheckFirm === 0) {
+//                            throw new Exception("Липсва схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
+//                        }
+//
+//                        if ( $nCheckObject == 2 ) {
+//                            $nFirmFormula = $oFunds->getFirmByFormulaForObject($val['id_office']);
+//                            //ob_toFile($nFirmFormula, "formula.txt");
+//                            if ( $nFirmFormula == $nIDFirm ) {
+//                                $aFundsData = $oFunds->getFundFormulaForObject($val['id_office']);
+//                            } else {
+//                                $aFundsData = $oFunds->getFundFormulaForFirm($nIDFirm);
+//                            }
+//                        } else {
+//                            $aFundsData = $oFunds->getFundFormulaForFirm($nIDFirm);
+//                        }
+//
+//                        $nTotalPercent = array_sum($aFundsData);
+//
+//                        if ($nTotalPercent != 100) {
+//                            throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
+//                        }
+//
+//                        foreach ( $aFundsData as $nIDDirectionType => $nSumPercent ) {
+//                            if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
+//                                $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
+//                                $aStartBalance[$nIDDirectionType] = $aFundsBalance[$nIDDirectionType];
+//                            }
+//
+//                            $nSumAmount = $nSumRow * $nSumPercent / 100;
+//                            $aFundsBalance[$nIDDirectionType] -= $nSumAmount;
+//
+//                            list($y, $m) = explode("-", $val['month']);
+//
+//                            if ( date("Y-m-01") > $y . "-" . $m . "-01" ) {
+//                                list($y, $m) = explode("-", date("Y-m"));
+//                            }
+//
+//                            $month = $y . "-" . $m . "-01";
+//
+//                            // Фондове - месечни - НОВО!!!
+//                            if ( !isset($aMonthFundBalance[$nIDDirectionType][$month]) ) {
+//                                $fundSaldo = $oFunds->getSaldoByMonthType($month, $nIDDirectionType);
+//
+//                                $aMonthFundBalance[$nIDDirectionType][$month] = ['id' => $fundSaldo['id'] ?? 0, 'sum' => $nSumAmount];
+//                            } else {
+//                                $aMonthFundBalance[$nIDDirectionType][$month]['sum'] += $nSumAmount;
+//                            }
+//
+//                            // Фондове - тотали - НОВО!!!
+//                            if ( !isset($aTotalFundBalance[$nIDDirectionType]) ) {
+//                                $aTotalFundBalance[$nIDDirectionType] = $nSumAmount;
+//                            } else {
+//                                $aTotalFundBalance[$nIDDirectionType] += $nSumAmount;
+//                            }
+//                        }
+//                    }
                 } else {
                     $tRow       = PREFIX_BUY_DOCS_ROWS . substr($nIDRow, 0, 6);
 
                     // Фондове
                     if ( !empty($nIDDirection) && empty($nIDTran) && empty($isDDS) && !empty($nSumRow) ) {
-                        if ( !isset($aFundsBalance[$nIDDirection]) ) {
-                            //$oFunds->moveCurrentFunds($nIDDirection);
-                            $aFundsBalance[$nIDDirection] = $oFunds->getFundSaldoById($nIDDirection);
-                        }
+//                        if ( !isset($aFundsBalance[$nIDDirection]) ) {
+//                            //$oFunds->moveCurrentFunds($nIDDirection);
+//                            $aFundsBalance[$nIDDirection] = $oFunds->getFundSaldoById($nIDDirection);
+//                        }
 
                         $y = date("Y");
                         $m = date("m");
@@ -427,7 +427,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                         $oFundsDaily->update($aDailyFunds);
                         */
                         // Фондове - Totals
-                        $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo + '{$nSumRow}' WHERE id = {$nIDDirection} LIMIT 1");
+                        //$db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo + '{$nSumRow}' WHERE id = {$nIDDirection} LIMIT 1");
                     }
                 }
 
@@ -1246,14 +1246,14 @@ class NEWDBFinanceOperations extends DBMonthTable {
 //                                $aFundsData = $oFunds->getFundFormulaForFirm($idfrm);
 //                            }
 
-//                            $aFirmOffices[$row['id_office']] = [
-//                                'id_firm' => $idfrm,
-//                                'firm_name' => $oOffices->getFirmNameByIDOffice($row['id_office']),
-//                                'id_saldo' => $oBalance->getSaldoByFirm($idfrm, 0),
+                            $aFirmOffices[$row['id_office']] = [
+                                'id_firm' => $idfrm,
+                                'firm_name' => $oOffices->getFirmNameByIDOffice($row['id_office']),
+                                'id_saldo' => $oBalance->getSaldoByFirm($idfrm, 0)
 //                                'nCheckObject' => $nCheckObject,
 //                                'nCheckFirm' => $nCheckFirm,
 //                                'aFundsData' => $aFundsData
-//                            ];
+                            ];
                         }
 
                         // услуги
@@ -1287,7 +1287,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                             $oRes           = $db_finance->Execute("SELECT sum FROM {$db_name_finance}.saldo WHERE id = {$nIDSaldo} LIMIT 1 FOR UPDATE");
                             $nCurrentSaldo  = !empty($oRes->fields['sum']) ? $oRes->fields['sum'] : 0;
                         } else {
-                            throw new Exception("Неизвестно салдо по фирма...!", DBAPI_ERR_FAILED_TRANS);
+                            throw new Exception("Неизвестно салдо по фирма...!".$oRes." / ".$nIDSaldo." [ ".$nCurrentSaldo, DBAPI_ERR_FAILED_TRANS);
                         }
 
                         // Наличност по сметка
@@ -1392,51 +1392,51 @@ class NEWDBFinanceOperations extends DBMonthTable {
 
                         // Фондове
                         if (empty($row['is_dds']) && empty($nIDTran) && $currentRowSum != 0) {   // Трансфери?
-                            $nCheckFirm         = $aFirmOffices[$row['id_office']]['nCheckFirm'];
-                            $aFundsData         = $aFirmOffices[$row['id_office']]['aFundsData'];
-                            $real_sum           = $currentRowSum;
-
-                            if ($nCheckFirm == 1) {
-                                throw new Exception("Некоректна схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
-                            } elseif ($nCheckFirm === 0) {
-                                throw new Exception("Липсва схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
-                            }
-
-                            $nTotalPercent = array_sum($aFundsData);
-
-                            if ($nTotalPercent != 100) {
-                                throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
-                            }
-
-                            foreach ($aFundsData as $nIDDirectionType => $nSumPercent) {
-                                if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
-                                    $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
-                                    $aStartBalance[$nIDDirectionType] = $aFundsBalance[$nIDDirectionType];
-                                }
-
-                                $nSumAmount = $real_sum * $nSumPercent / 100;
-                                $aFundsBalance[$nIDDirectionType] += $nSumAmount;
-
-                                list($y, $m) = explode("-", $aDataRows['month']);
-
-                                $month = $y . "-" . $m . "-01";
-
-                                // Фондове - месечни - НОВО!!!
-                                if ( !isset($aMonthFundBalance[$nIDDirectionType][$month]) ) {
-                                    $fundSaldo = $oFunds->getSaldoByMonthType($month, $nIDDirectionType);
-
-                                    $aMonthFundBalance[$nIDDirectionType][$month] = ['id' => $fundSaldo['id'] ?? 0, 'sum' => $nSumAmount];
-                                } else {
-                                    $aMonthFundBalance[$nIDDirectionType][$month]['sum'] += $nSumAmount;
-                                }
-
-                                // Фондове - тотали - НОВО!!!
-                                if ( !isset($aTotalFundBalance[$nIDDirectionType]) ) {
-                                    $aTotalFundBalance[$nIDDirectionType] = $nSumAmount;
-                                } else {
-                                    $aTotalFundBalance[$nIDDirectionType] += $nSumAmount;
-                                }
-                            }
+//                            $nCheckFirm         = $aFirmOffices[$row['id_office']]['nCheckFirm'];
+//                            $aFundsData         = $aFirmOffices[$row['id_office']]['aFundsData'];
+//                            $real_sum           = $currentRowSum;
+//
+//                            if ($nCheckFirm == 1) {
+//                                throw new Exception("Некоректна схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
+//                            } elseif ($nCheckFirm === 0) {
+//                                throw new Exception("Липсва схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
+//                            }
+//
+//                            $nTotalPercent = array_sum($aFundsData);
+//
+//                            if ($nTotalPercent != 100) {
+//                                throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
+//                            }
+//
+//                            foreach ($aFundsData as $nIDDirectionType => $nSumPercent) {
+//                                if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
+//                                    $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
+//                                    $aStartBalance[$nIDDirectionType] = $aFundsBalance[$nIDDirectionType];
+//                                }
+//
+//                                $nSumAmount = $real_sum * $nSumPercent / 100;
+//                                $aFundsBalance[$nIDDirectionType] += $nSumAmount;
+//
+//                                list($y, $m) = explode("-", $aDataRows['month']);
+//
+//                                $month = $y . "-" . $m . "-01";
+//
+//                                // Фондове - месечни - НОВО!!!
+//                                if ( !isset($aMonthFundBalance[$nIDDirectionType][$month]) ) {
+//                                    $fundSaldo = $oFunds->getSaldoByMonthType($month, $nIDDirectionType);
+//
+//                                    $aMonthFundBalance[$nIDDirectionType][$month] = ['id' => $fundSaldo['id'] ?? 0, 'sum' => $nSumAmount];
+//                                } else {
+//                                    $aMonthFundBalance[$nIDDirectionType][$month]['sum'] += $nSumAmount;
+//                                }
+//
+//                                // Фондове - тотали - НОВО!!!
+//                                if ( !isset($aTotalFundBalance[$nIDDirectionType]) ) {
+//                                    $aTotalFundBalance[$nIDDirectionType] = $nSumAmount;
+//                                } else {
+//                                    $aTotalFundBalance[$nIDDirectionType] += $nSumAmount;
+//                                }
+//                            }
                         }
 
                     }
@@ -1514,9 +1514,9 @@ class NEWDBFinanceOperations extends DBMonthTable {
                 }
                 */
                 // Фондове - тотали
-                foreach ( $aTotalFundBalance as $nIDDirection => $nSumAmount ) {
-                    $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo + '{$nSumAmount}' WHERE id = {$nIDDirection} LIMIT 1");
-                }
+//                foreach ( $aTotalFundBalance as $nIDDirection => $nSumAmount ) {
+//                    $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo + '{$nSumAmount}' WHERE id = {$nIDDirection} LIMIT 1");
+//                }
 
                 // TODO:
                 // СМС известяване за нова фактура

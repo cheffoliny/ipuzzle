@@ -5,7 +5,16 @@
 /config/connect.inc.php
 /config/config.inc.php
 /exported_sale_docs/
+/dashboard/include/
 /person_images/
+/isu/config/config.inc.php
+/isu/config/connect.inc.php
 /tmp/
+/dashboard/include/config.inc.php
+/dashboard/include/connect.inc.php
+/dashboard/templates_c/
+tech_display/include/config.inc.php
+admin_display/include/config.inc.php
+patrol_display/include/config.inc.php
 css/custom.css
 node_modules

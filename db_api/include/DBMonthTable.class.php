@@ -85,9 +85,9 @@
 		
 		function checkTriggers()
 		{
-			global $db_system, $db_name_eol;
+			global $db_system, $db_name_system;
 			
-			if( !$db_system->Execute("UPDATE system SET last_date_check_triggers = NOW()") )
+			if( !$db_system->Execute("UPDATE {$db_name_system}.system s SET s.last_date_check_triggers = NOW()") )
 			{
 				$db_system->FailTrans();
 				APILog::Log(DBAPI_ERR_SQL_QUERY, NULL, __FILE__, __LINE__);
@@ -107,12 +107,12 @@
 		*	@return int статус на операцията (пример: DBAPI_ERR_...)
 		*/
 		
-		function getTables(&$aTables, $nTimeFrom = 0, $nTimeTo = 0) 
+		function getTables(&$aTables, $nTimeFrom = 0, $nTimeTo = 0)
 		{
 			$sPrefix = str_replace('_', '\_', $this->_sTablePrefix);
 
 			$aTables = $this->_oDB->GetCol("SHOW TABLES FROM {$this->_sDB} LIKE '{$sPrefix}______'");
-			
+			APILog::Log("DbMonth", "SHOW TABLES FROM {$this->_sDB} LIKE '{$sPrefix}______'");
 			if( $aTables === false )
 			{
 				APILog::Log(DBAPI_ERR_SQL_QUERY, NULL, __FILE__, __LINE__);
@@ -178,7 +178,7 @@
 		*	@return int статус на операцията (пример: DBAPI_ERR_...)
 		*/
 		
-		function makeUnionSelect(&$sQuery, $nTimeFrom = 0, $nTimeTo = 0, $nForceStopLimit = false)
+		function makeUnionSelect(&$sQuery, $nTimeFrom = 0, $nTimeTo = 0)
 		{	
 			if( empty( $sQuery ) )
 				return DBAPI_ERR_INVALID_PARAM;
@@ -213,16 +213,14 @@
 					$sOrder = $aMatches[0];
 					$sQuery = preg_replace(PATERN_QUERY_ORDER, '', $sQuery);
 				}
-
-                if(!$nForceStopLimit) {
-                    if( preg_match(PATERN_QUERY_LIMIT, $sQuery, $aMatches) )
-                        {
-                            $sLimit = $aMatches[0];
-                            $sQuery = preg_replace(PATERN_QUERY_LIMIT, '', $sQuery);
-                        }
-                }
-
-                $sQuery = '('.$sQuery.')';
+			
+				if( preg_match(PATERN_QUERY_LIMIT, $sQuery, $aMatches) )
+				{
+					$sLimit = $aMatches[0];
+					$sQuery = preg_replace(PATERN_QUERY_LIMIT, '', $sQuery);
+				}
+				 
+				$sQuery = '('.$sQuery.')';
 			}
 				
 			$aQueries = array();
@@ -251,91 +249,6 @@
 			
 			return DBAPI_ERR_SUCCESS;
 		}
-
-        /**
-         *	Функцията генерира заявка тип UNION SELECT от заявката подадена му като параметър.
-         *	На мястото на месечната таблица трябва да се изписва стринга "<table>";
-         *
-         *	@name makeUniqueUnionSelect
-         *	@param string sQuery заявката, на базата на която ще се генерира UNION SELECT-а с уникални стойности
-         *	@param timestamp nTimeFrom време "От", ако е нула се игнорира
-         *	@param timestamp nTimeTo време "До", ако е нула се игнорира
-         *	@return int статус на операцията (пример: DBAPI_ERR_...)
-         *
-         *  Метода се използва в set_setup_road_list
-         */
-
-        function makeUniqueUnionSelect(&$sQuery, $nTimeFrom = 0, $nTimeTo = 0)
-        {
-            if( empty( $sQuery ) )
-                return DBAPI_ERR_INVALID_PARAM;
-
-            $aTables = array();
-
-            if( ($nResult = $this->getTables($aTables, $nTimeFrom, $nTimeTo) ) != DBAPI_ERR_SUCCESS )
-            {
-                APILog::Log($nResult, NULL, __FILE__, __LINE__);
-                return $nResult;
-            }
-
-            if( empty( $aTables ) )
-            {
-                $sTable = $this->_sTablePrefix.'origin';
-
-                $sQuery = str_ireplace('<table>', $this->_sDB.".".$sTable, $sQuery);
-                $sQuery = str_ireplace('<yearmonth>', 'origin', $sQuery);
-
-                return DBAPI_ERR_SUCCESS;
-            }
-
-            $sLimit = "";
-            $sOrder = "";
-
-            if( count( $aTables ) > 1 )
-            {
-                $aMatches = array();
-
-                if( preg_match(PATERN_QUERY_ORDER, $sQuery, $aMatches) )
-                {
-                    $sOrder = $aMatches[0];
-                    $sQuery = preg_replace(PATERN_QUERY_ORDER, '', $sQuery);
-                }
-
-                if( preg_match(PATERN_QUERY_LIMIT, $sQuery, $aMatches) )
-                {
-                    $sLimit = $aMatches[0];
-                    $sQuery = preg_replace(PATERN_QUERY_LIMIT, '', $sQuery);
-                }
-
-                $sQuery = '('.$sQuery.')';
-            }
-
-            $aQueries = array();
-
-            foreach($aTables as $sTable)
-            {
-                if( count( $aQueries ) )
-                    $sQueryTemp = str_ireplace( array('<table>', 'SQL_CALC_FOUND_ROWS'), array($this->_sDB.".".$sTable), $sQuery);
-                else
-                    $sQueryTemp = str_ireplace('<table>', $this->_sDB.".".$sTable, $sQuery);
-
-                $sYearMonth = str_ireplace($this->_sTablePrefix, '', $sTable);
-
-                $sQueryTemp = str_ireplace('<yearmonth>', $sYearMonth, $sQueryTemp);
-
-                $aQueries[] = $sQueryTemp;
-            }
-
-            $sQuery = implode("\nUNION \n", $aQueries);
-
-            if( !empty( $sOrder ) )
-                $sQuery .= $sOrder;
-
-            if( !empty( $sLimit ) )
-                $sQuery .= $sLimit;
-
-            return DBAPI_ERR_SUCCESS;
-        }
 		
 		
 		/**
@@ -985,6 +898,13 @@
 			
 			return !empty( $aData )? current( $aData ) : NULL;
 		}
+
+        public function selectOne( $sQuery )
+        {
+            $oRs = $this->_oDB->Execute( $sQuery );
+
+            return $oRs && !$oRs->EOF ? $oRs->fields : array();
+        }
 		
 	}
 
