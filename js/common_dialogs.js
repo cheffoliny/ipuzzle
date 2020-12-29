@@ -788,11 +788,11 @@ function dialogClientsFilter( id ) {
 }
 
 function dialogClientInfo( id ) {
-	dialog_win('client_info&id='+id,640,480,1,'client_info');
+	dialog_win('client_info&id='+id,840,600,1,'client_info');
 }
 
 function dialogClientPayments( id ) {
-	dialog_win('client_payments&id='+id,800,590,1,'client_payments');
+	dialog_win('client_payments&id='+id,840,600,1,'client_payments');
 }
 
 function dialogViewFiles(id) {

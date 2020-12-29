@@ -20,7 +20,7 @@
 
 <div class="row navbar-dark bg-faded">
     <div class="col-sm-12 col-lg-12">
-        <span id="head_window" class="text-white text-truncate text-uppercase ml-4 mt-4"><i class="fas fa-tag"></i> {$client}</span>
+        <p id="head_window" class="text-white text-truncate text-uppercase pt-2"><i class="fas fa-tag mx-4 "></i> {$client}</p>
     </div>
 </div>
 

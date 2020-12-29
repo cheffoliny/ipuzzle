@@ -20,7 +20,7 @@
     {include file='client_tabs.tpl'}
 
     <div class="container-fluid mb-4">
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -78,10 +78,10 @@
         </div>
 
         <nav id="navbar-example" class="navbar navbar-light bg-primary text-white my-3">
-            <p>Информация за фактура</p>
+            <h6 class="py-2">Информация за фактура</h6>
         </nav>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     &nbsp;
@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="row clearfix mt-2">
+        <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3">
                 <div class="custom-control custom-checkbox ">
                     <input class="custom-control-input" type="checkbox" id="nInvoiceBringToObject" name="nInvoiceBringToObject" />
@@ -149,9 +149,10 @@
                     </div>
                     <select class="form-control" id="sInvoiceLayout" name="sInvoiceLayout">
                         <option value="single">Едноредов печат</option>
-                        <option value="by_services">Печат по услуги</option>
-                        <option value="by_objects">Печат по обекти</option>
-                        <option selected value="total">Подробен печат</option>
+                        <option value="by_services">Изглед услуги</option>
+                        <option value="by_objects">Изглед обекти</option>
+                        <option value="detail">Изглед месеци</option>
+                        <option selected value="extended">Подробен изглед</option>
                     </select>
                 </div>
             </div>
