@@ -1319,7 +1319,7 @@ export default {
     justify-self: center;
     background-color: #fff;
     border: 1px solid #c5cbd4;
-    color: #8da2fb;
+    color: #0d79bb;
     font-size: 10px;
     border-radius: 999px;
     user-select: none;
@@ -1328,7 +1328,7 @@ export default {
 
 .custom-label {
   font-size: 12px;
-  color: #5c6bc0;
+  color: #2d3e52;
   user-select: none;
   //font-weight: 500;
 }
@@ -1354,13 +1354,13 @@ export default {
   }
   &:focus {
     outline: none;
-    border-color: #8da2fb;
-    box-shadow: 0 0 0 1px #8da2fb inset;
+    border-color: #0d79bb;
+    box-shadow: 0 0 0 1px #0d79bb inset;
   }
   &:focus-within {
     outline: none;
-    border-color: #8da2fb;
-    box-shadow: 0 0 0 1px #8da2fb inset;
+    border-color: #0d79bb;
+    box-shadow: 0 0 0 1px #0d79bb inset;
   }
 }
 
@@ -1388,12 +1388,12 @@ input::-webkit-inner-spin-button {
   //color: #78909c;
   //color: #A2AAB4;
   //color: #8b95a2;
-  color: #5c6bc0;
+  color: #2d3e52;
   font-size: 11px;
   text-transform: lowercase;
 }
 .month {
-  background: #5c6bc0;
+  background: #2d3e52;
   color: #ffffff;
   border-radius: 4px;
   padding: 4px 6px;
