@@ -9,8 +9,8 @@
         function __construct($orientation='P') {
             parent::__construct($orientation);
 
-			$this->AddFont('FreeSans', '', 'FreeSans.php');
-			$this->AddFont('FreeSans', 'B', 'FreeSansB.php');
+			$this->AddFont('FreeSans', '', 'Roboto-Regular.php');
+			$this->AddFont('FreeSans', 'B', 'Roboto-Bold.php');
 			$this->SetMargins( $this->aMargin['left'], $this->aMargin['top'], $this->aMargin['right'] );
 			$this->_PageWidth  = $orientation == 'P' ? 210 : 297;
 			$this->_PageHeight = $orientation == 'P' ? 297 : 210;

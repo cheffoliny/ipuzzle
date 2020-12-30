@@ -4,36 +4,34 @@ include_once('include/bg_slovom.inc.php');
 
 class InvoicePDF extends PDFC
 {
-    //'CaptionBackground'	=> array('r'=>31,'g'=>28,'b'=>119),
-    //'Background'	=>array('title'=>233,'body'=>233),
-    //'Widths' => array('title' => 18, 'body' => 48),
     public $aMargin = array("left" => 20, "top" => 15, "right" => 10, "bottom" => 18);
     private $aOptions = array(
         'TextColor' => array('r' => 0, 'g' => 0, 'b' => 0),
         'Background' => array('title' => 254, 'body' => 254), // 245, 245
         'BorderColor' => 255,
-        'BorderWidth' => 0.55,
+        'BorderWidth' => 0.05,
         'FontSize' => 7.2,
         'RowHeight' => 5,
         'Widths' => array('title' => 10, 'body' => 56),
 
-        'CaptionHeight' => 4,
+        'CaptionHeight' => 5.5,
         'CaptionFontSize' => 8.5,
-        'CaptionTextColor' => 255,
-        'CaptionBackground' => array('r' => 100, 'g' => 100, 'b' => 100),
+        'CaptionTextColor' => 10,
+        'CaptionBackground' => array('r' => 220, 'g' => 220, 'b' => 220),
+        'CaptionBackgroundW' => array('r' => 255, 'g' => 255, 'b' => 255),
 
-        'TitleFontSize' => 18,
+        'TitleFontSize' => 16,
         'TitleWidth' => 48,
 
         'BarcodeWidth' => 30,
         'BarcodeHeight' => 8,
 
-        'NumFontSize' => 14,
+        'NumFontSize' => 11,
 
         'LogoWidth' => 12,
 
         'WaterStampTextSize' => 40,
-        'WaterStampColor' => 220,  // 200
+        'WaterStampColor' => 240,  // 200
 
         'Fields' => array(    // колони на таблицата с услугите/стоките
             'num' => array(
@@ -90,9 +88,9 @@ class InvoicePDF extends PDFC
     private function printLogo()
     {
         if ( !empty($this->ein) && file_exists($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png") ) {
-            $this->Image($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png", 6, 10, 189); //185  //162
+            $this->Image($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png", 0, 10, 162); //185  //162
         } else {
-            $this->Image(dirname(dirname(__FILE__)) . '/images/title.png', 6, 10, 189); //185  //162
+            $this->Image(dirname(dirname(__FILE__)) . '/images/title.png', 0, 10, 162); //185  //162
         }
     }
 
@@ -119,7 +117,7 @@ class InvoicePDF extends PDFC
 //							$this->aOptions['BarcodeWidth'], 
 //							$this->aOptions['BarcodeHeight'], 
 //							'jpg' );		
-        $this->Ln(19);
+        $this->Ln(12);
 
     }
 
@@ -135,11 +133,11 @@ class InvoicePDF extends PDFC
 
         // заглавие на панела
         $this->SetTextColor($this->aOptions['CaptionTextColor']);
-        $this->SetDrawColor($this->aOptions['BorderColor']);
+        $this->SetDrawColor($this->aOptions['Background']['body']);
         $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
-        $this->Cell($this->aOptions['Widths']['title'] + $this->aOptions['Widths']['body'], $this->aOptions['CaptionHeight'], ' получател', 1, 0, 'L', 1);
+        $this->Cell($this->aOptions['Widths']['title'] + $this->aOptions['Widths']['body'], $this->aOptions['CaptionHeight']*1.3, ' ПОЛУЧАТЕЛ', 1, 0, 'L', 1);
 
         // съдържания на панела
         $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
@@ -194,7 +192,7 @@ class InvoicePDF extends PDFC
 
         // заглавие на панела
         $this->SetTextColor($this->aOptions['CaptionTextColor']);
-        $this->SetDrawColor($this->aOptions['BorderColor']);
+        $this->SetDrawColor($this->aOptions['Background']['body']);
         $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
 
@@ -204,27 +202,28 @@ class InvoicePDF extends PDFC
             $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
         }
 
-        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['CaptionHeight'] + $this->aOptions['RowHeight'], $this->sDocument, 1, 0, 'C', 1);
+        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['CaptionHeight'] + $this->aOptions['RowHeight']/3.4, $this->sDocument, 1, 0, 'C', 1);
         $this->Ln();
 
         $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
-        $this->SetDrawColor($this->aOptions['BorderColor']);
-        $this->SetFillColor($this->aOptions['BorderColor']);
+        $this->SetDrawColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+        $this->SetFillColor($this->aOptions['CaptionBackgroundW']['r'], $this->aOptions['CaptionBackgroundW']['g'], $this->aOptions['CaptionBackgroundW']['b']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
 
         $this->SetX($x);
         $this->SetFont('FreeSans', 'B', $this->aOptions['NumFontSize']);
-        $this->Cell($this->aOptions['TitleWidth'], 2 * $this->aOptions['RowHeight'], "№ " . $document_num, 1, 0, 'C', 1);
+        $this->Cell($this->aOptions['TitleWidth'], 1.8 * $this->aOptions['RowHeight'], "№ " . $document_num, 1, 0, 'C', 1);
         $this->Ln();
 
         $this->SetX($x);
-        $this->SetFillColor($this->aOptions['Background']['body']);
-        $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
-        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight'], isset($aTmp[2]) ? "дата: " . $aTmp[2] . "." . $aTmp[1] . "." . $aTmp[0] : "дата: " . $created_time, 1, 0, 'C', 1);
+        $this->SetDrawColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+        $this->SetFillColor($this->aOptions['CaptionBackgroundW']['r'], $this->aOptions['CaptionBackgroundW']['g'], $this->aOptions['CaptionBackgroundW']['b']);
+        $this->SetFont('FreeSans', '', $this->aOptions['CaptionFontSize']);
+        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight']*1.3, isset($aTmp[2]) ? "дата: " . $aTmp[2] . "." . $aTmp[1] . "." . $aTmp[0] : "дата: " . $created_time, 1, 0, 'C', 1);
         $this->Ln();
 
         $this->SetX($x);
-        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight'], "място: " . $document_city, 1, 0, 'C', 1);
+        $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight']*1.3, "място: " . $document_city, 1, 0, 'C', 1);
         $this->Ln();
 
         if ($this->sInvoceType != '') {
@@ -238,7 +237,8 @@ class InvoicePDF extends PDFC
             */
 
             $this->SetX($x);
-            $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+            $this->SetDrawColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+            $this->SetFillColor($this->aOptions['CaptionBackgroundW']['r'], $this->aOptions['CaptionBackgroundW']['g'], $this->aOptions['CaptionBackgroundW']['b']);
             $this->SetTextColor($this->aOptions['CaptionTextColor']);
             $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize'] - 2);
             $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight'], $this->sInvoceType . " " . $this->advice, 1, 0, 'C', 1);
@@ -254,10 +254,11 @@ class InvoicePDF extends PDFC
             */
 
             $this->SetX($x);
-            $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+            $this->SetDrawColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
+            $this->SetFillColor($this->aOptions['CaptionBackgroundW']['r'], $this->aOptions['CaptionBackgroundW']['g'], $this->aOptions['CaptionBackgroundW']['b']);
             $this->SetTextColor($this->aOptions['CaptionTextColor']);
-            $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
-            $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight'], "клиентски номер: " . $this->sClientID, 1, 0, 'C', 1);
+            $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']*1.1);
+            $this->Cell($this->aOptions['TitleWidth'], $this->aOptions['RowHeight']*1.6, "КИН: " . $this->sClientID, 1, 0, 'C', 1);
             $this->SetXY($x, $y);
         }
 
@@ -288,11 +289,11 @@ class InvoicePDF extends PDFC
 
         // заглавие на панела
         $this->SetTextColor($this->aOptions['CaptionTextColor']);
-        $this->SetDrawColor($this->aOptions['BorderColor']);
+        $this->SetDrawColor($this->aOptions['Background']['body']);
         $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
-        $this->Cell($this->aOptions['Widths']['title'] + $this->aOptions['Widths']['body'], $this->aOptions['CaptionHeight'], ' доставчик', 1, 0, 'L', 1);
+        $this->Cell($this->aOptions['Widths']['title'] + $this->aOptions['Widths']['body'], $this->aOptions['CaptionHeight']*1.3, ' ДОСТАВЧИК', 1, 0, 'L', 1);
 
         // съдържания на панела
         $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
@@ -606,7 +607,7 @@ class InvoicePDF extends PDFC
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
         $this->Cell(2 * $this->aOptions['Widths']['title'] + 2 * $this->aOptions['Widths']['body'] + $this->aOptions['TitleWidth'],
-            $this->aOptions['CaptionHeight'], ' обща стойност (словом): ', 1, 0, 'L', 1);
+            $this->aOptions['CaptionHeight'], ' Словом: ', 1, 0, 'L', 1);
         $this->Ln();
 
         $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
@@ -616,10 +617,13 @@ class InvoicePDF extends PDFC
         $this->SetFillColor($this->aOptions['Background']['body']);
         $this->Cell($width, $this->aOptions['RowHeight'], slovom($this->document['total_sum'], $_currency, $_currency_100), 1, 0, 'L', 1);
         $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize'] + 2);
+        $this->SetFillColor($this->aOptions['Background']['body']);
         $this->PrintRow($x, "Дан. основа", sprintf('%0.2f', $nTaxSum) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
+        $this->SetFillColor($this->aOptions['Background']['body']);
 
         $this->Cell($width, $this->aOptions['RowHeight'], '', 1, 0, 'L', 1);
-        $this->PrintRow($x, "ДДС ", sprintf('%0.2f', $nSumDDS) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
+        $this->SetFillColor($this->aOptions['Background']['body']);
+        $this->PrintRow($x, "Начислен ДДС ", sprintf('%0.2f', $nSumDDS) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
 
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] + 2);
 
@@ -634,6 +638,7 @@ class InvoicePDF extends PDFC
         );
 
         $this->Cell($width, $this->aOptions['RowHeight'], $sNote, 1, 0, 'L', 1);
+        $this->SetFillColor($this->aOptions['CaptionBackgroundW']['r'], $this->aOptions['CaptionBackgroundW']['g'], $this->aOptions['CaptionBackgroundW']['b']);
         $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize'] + 2);
         $this->PrintRow($x, "Обща стойност", sprintf('%0.2f', $nTotalSum) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
 
@@ -651,48 +656,22 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetFillColor($this->aOptions['CaptionBackground']['r'], $this->aOptions['CaptionBackground']['g'], $this->aOptions['CaptionBackground']['b']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
-        $this->Cell(2 * $this->aOptions['Widths']['title'] + 2 * $this->aOptions['Widths']['body'] + $this->aOptions['TitleWidth'], $this->aOptions['RowHeight'], "", 1, 0, 'L', 1);
-
-
-        /*
-
-        $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
-        $this->SetFillColor($this->aOptions['Background']['body']);
-        $this->SetDrawColor($this->aOptions['BorderColor']);
-
-        $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] - 1);
-        $this->SetLineWidth($this->aOptions['BorderWidth'] / 2);
-        $y = $this->GetY();
-
-        //$this->SetXY( $this->aMargin['left']+$width, $y );
-
-        $this->SetXY(154, $y);
-        $this->Cell($width_num, $this->aOptions['RowHeight'], "№", 1, 0, 'C', 1);
-        $this->Cell($width_account * 2, $this->aOptions['RowHeight'] / 2, "ДЕБИТ", 1, 0, 'C', 1);
-
-        //$this->SetXY($this->aMargin['left']+$width+$width_num, $y + $this->aOptions['RowHeight'] / 2 );
-        $this->SetXY(158, $y + $this->aOptions['RowHeight'] / 2);
-        $this->Cell($width_account, $this->aOptions['RowHeight'] / 2, "c/ka", 1, 0, 'C', 1);
-        $this->Cell($width_account, $this->aOptions['RowHeight'] / 2, "ан.c/ka", 1, 0, 'C', 1);
-
-        //$this->SetXY( $this->aMargin['left']+$width+$this->aOptions['Fields']['single_price']['width'] + 5, $y );
-        $this->SetXY(177, $y);
-        $this->Cell($width_credit * 2, $this->aOptions['RowHeight'] / 2, "КРЕДИТ", 1, 0, 'C', 1);
-
-        //$this->SetXY( $this->aMargin['left']+$width+$this->aOptions['Fields']['single_price']['width']+ 5, $y+$this->aOptions['RowHeight'] / 2 );
-        $this->SetXY(176, $y + $this->aOptions['RowHeight'] / 2);
-        $this->Cell($width_credit - 1, $this->aOptions['RowHeight'] / 2, "c/ka", 1, 0, 'C', 1);
-        $this->Cell($width_credit + 5, $this->aOptions['RowHeight'] / 2, "ан.c/ka", 1, 0, 'C', 1);
-
-        //$this->SetXY( $this->aMargin['left']+$width+$this->aOptions['Fields']['single_price']['width']+$width_credit*2+10, $y );
-        $this->SetXY(190, $y);
-        $this->Cell($width_credit * 2, $this->aOptions['RowHeight'], "СУМА", 1, 0, 'C', 1);
-
-       */
+        $this->Cell(2 * $this->aOptions['Widths']['title'] + 2 * $this->aOptions['Widths']['body'] + $this->aOptions['TitleWidth'], 0.5, "", 1, 0, 'L', 1);
 
         $width_num = $this->aOptions['Fields']['single_price']['width'] / 4;
         $width_account = 3 * $this->aOptions['Fields']['single_price']['width'] / 8;
         $width_credit = $this->aOptions['Fields']['total_sum']['width'] / 4;
+
+        $this->Ln();
+        $this->Ln();
+        $this->Ln();
+
+        $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
+        $this->SetFillColor($this->aOptions['Background']['body']);
+        $this->SetDrawColor($this->aOptions['BorderColor']);
+        $this->SetLineWidth($this->aOptions['BorderWidth']);
+        $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
+        $this->Cell($width, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
 
         $this->Ln();
 
@@ -701,8 +680,7 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "Дата на данъчното събитие : " . $this->sDocDate, 1, 0, 'L', 1);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "Форма на плащане : по банка", 1, 0, 'L', 1);
+        $this->Cell($width * 4 / 5, $this->aOptions['RowHeight'], "Метод на плащане: по банка", 1, 0, 'L', 1);
 
         $this->SetLineWidth($this->aOptions['BorderWidth'] / 2);
         $this->SetDrawColor($this->aOptions['Background']['body']);
@@ -719,9 +697,9 @@ class InvoicePDF extends PDFC
         $this->SetFillColor($this->aOptions['Background']['body']);
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
-        $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "Получател (име, фамилия) : ", 1, 0, 'L', 1);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "Съставил: " . $sCodeCreated, 1, 0, 'L', 1);
+        $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize']);
+        $this->Cell($width * 4 / 5, $this->aOptions['RowHeight'], "Получател: ", 1, 0, 'L', 1);
+        $this->Cell($width / 1, $this->aOptions['RowHeight'], "Съставил: " . $sCodeCreated, 1, 0, 'L', 1);
 
         //$this->Cell(0, $this->aOptions['RowHeight'], "Разпечатан: " . $printed->format('d.m.Y H:i:s'), 1, 0, 'L', 1);
         //$this->Cell( $width / 2,  $this->aOptions['RowHeight'], $s, 1, 0, 'L', 1);
@@ -742,8 +720,8 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], $sClientRecipient, 1, 0, 'L', 1);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "\t\t\t\t\t\t" . $sCreatedUser, 1, 0, 'L', 1);
+        $this->Cell($width * 4 / 5, $this->aOptions['RowHeight'], $sClientRecipient, 1, 0, 'L', 1);
+        $this->Cell($width / 2, $this->aOptions['RowHeight'], "" . $sCreatedUser, 1, 0, 'L', 1);
 
         $this->SetLineWidth($this->aOptions['BorderWidth'] / 2);
         $this->SetDrawColor($this->aOptions['Background']['body']);
@@ -753,7 +731,7 @@ class InvoicePDF extends PDFC
         $this->Cell($width_account, $this->aOptions['RowHeight'], "", "LR", 0, 'C', 1);
         $this->Cell($width_credit, $this->aOptions['RowHeight'], "", "LR", 0, 'C', 1);
         $this->Cell($width_credit, $this->aOptions['RowHeight'], "", "LR", 0, 'C', 1);
-        $this->Cell($width_credit * 2, $this->aOptions['RowHeight'], "", "LR", 0, 'C', 1);
+        $this->Cell($width * 2, $this->aOptions['RowHeight'], "", "LR", 0, 'C', 1);
         $this->Ln();
 
         //--------
@@ -762,9 +740,9 @@ class InvoicePDF extends PDFC
         $this->SetFillColor($this->aOptions['Background']['body']);
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
-        $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "                        Подпис : ", 1, 0, 'L', 1);
-        $this->Cell($width / 2, $this->aOptions['RowHeight'], "                        Подпис : ", 1, 0, 'L', 1);
+        $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize']);
+        $this->Cell($width  * 4 / 5, $this->aOptions['RowHeight'], "                     Подпис : ", 1, 0, 'L', 1);
+        $this->Cell($width / 2, $this->aOptions['RowHeight'], "                               Подпис : ", 1, 0, 'L', 1);
 
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] - 3);
         $this->SetLineWidth($this->aOptions['BorderWidth'] / 2);
