@@ -4,7 +4,7 @@ include_once('include/bg_slovom.inc.php');
 
 class InvoicePDF extends PDFC
 {
-    public $aMargin = array("left" => 20, "top" => 15, "right" => 10, "bottom" => 18);
+    public $aMargin = array("left" => 16, "top" => 15, "right" => 10, "bottom" => 18);
     private $aOptions = array(
         'TextColor' => array('r' => 0, 'g' => 0, 'b' => 0),
         'Background' => array('title' => 254, 'body' => 254), // 245, 245
@@ -12,7 +12,7 @@ class InvoicePDF extends PDFC
         'BorderWidth' => 0.05,
         'FontSize' => 7.2,
         'RowHeight' => 5,
-        'Widths' => array('title' => 10, 'body' => 56),
+        'Widths' => array('title' => 11.2, 'body' => 56),
 
         'CaptionHeight' => 5.5,
         'CaptionFontSize' => 8.5,
@@ -88,9 +88,9 @@ class InvoicePDF extends PDFC
     private function printLogo()
     {
         if ( !empty($this->ein) && file_exists($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png") ) {
-            $this->Image($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png", 0, 10, 162); //185  //162
+            $this->Image($_SESSION['BASE_DIR'] . "/images/title_{$this->ein}.png", -4, 10, 162); //185  //162
         } else {
-            $this->Image(dirname(dirname(__FILE__)) . '/images/title.png', 0, 10, 162); //185  //162
+            $this->Image(dirname(dirname(__FILE__)) . '/images/title.png', -4, 10, 162); //185  //162
         }
     }
 
@@ -152,15 +152,15 @@ class InvoicePDF extends PDFC
         $this->PorccessText($client_name, $sClient1, $sClient2, $nClientFontSize);
 
         $this->SetFont('FreeSans', '', $nClientFontSize);
-        $this->PrintRow($x, 'име:', $sClient1, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'Име:', $sClient1, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->PrintRow($x, '', $sClient2, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->SetFont('FreeSans', '', $nAddressFontSize);
-        $this->PrintRow($x, 'адрес:', $sAddress1, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'Адрес:', $sAddress1, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->PrintRow($x, '', $sAddress2, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
         //$this->PrintRow($x, '', '', $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
-        $this->PrintRow($x, 'ин/егн:', $client_EIN, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
-        $this->PrintRow($x, 'ин ддс:', $client_EINDDS, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'ИН/ЕГН:', $client_EIN, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'ИН ДДС:', $client_EINDDS, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         //$this->PrintRow($x, '', "", $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         //$this->PrintRow($x, 'МОЛ', $client_mol, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
 
@@ -302,12 +302,12 @@ class InvoicePDF extends PDFC
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
         $this->Ln();
 
-        $this->PrintRow($x, 'име:', $deliver_name, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'Име:', $deliver_name, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->PrintRow($x, '', '', $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body'] );
-        $this->PrintRow($x, 'адрес:', $deliver_address, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'Адрес:', $deliver_address, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
         $this->PrintRow($x, '', '', $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
-        $this->PrintRow($x, 'ин:', $deliver_EIN, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
-        $this->PrintRow($x, 'ин ддс:', $deliver_EINDDS, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'ИН:', $deliver_EIN, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
+        $this->PrintRow($x, 'ИН ДДС:', $deliver_EINDDS, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
 
         //$this->PrintRow($x, 'МОЛ', $deliver_mol, $this->aOptions['Widths']['title'], $this->aOptions['Widths']['body']);
 
