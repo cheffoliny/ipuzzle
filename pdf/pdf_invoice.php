@@ -607,7 +607,7 @@ class InvoicePDF extends PDFC
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', 'B', $this->aOptions['CaptionFontSize']);
         $this->Cell(2 * $this->aOptions['Widths']['title'] + 2 * $this->aOptions['Widths']['body'] + $this->aOptions['TitleWidth'],
-            $this->aOptions['CaptionHeight'], ' Словом: ', 1, 0, 'L', 1);
+            $this->aOptions['CaptionHeight'], ' ', 1, 0, 'L', 1); // Словом
         $this->Ln();
 
         $this->SetTextColor($this->aOptions['TextColor']['r'], $this->aOptions['TextColor']['g'], $this->aOptions['TextColor']['b']);
@@ -615,25 +615,27 @@ class InvoicePDF extends PDFC
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] + 2);
         $this->SetFillColor($this->aOptions['Background']['body']);
-        $this->Cell($width, $this->aOptions['RowHeight'], slovom($this->document['total_sum'], $_currency, $_currency_100), 1, 0, 'L', 1);
-        $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize'] + 2);
-        $this->SetFillColor($this->aOptions['Background']['body']);
-        $this->PrintRow($x, "Дан. основа", sprintf('%0.2f', $nTaxSum) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
-        $this->SetFillColor($this->aOptions['Background']['body']);
 
-        $this->Cell($width, $this->aOptions['RowHeight'], '', 1, 0, 'L', 1);
-        $this->SetFillColor($this->aOptions['Background']['body']);
-        $this->PrintRow($x, "Начислен ДДС ", sprintf('%0.2f', $nSumDDS) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
+        if( $this->document['doc_type'] != "oprostena") {
+            //$this->Cell($width, $this->aOptions['RowHeight'], slovom($this->document['total_sum'], $_currency, $_currency_100), 1, 0, 'L', 1);
+            $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize'] + 2);
+            $this->SetFillColor($this->aOptions['Background']['body']);
+            $this->PrintRow($x, "Дан. основа", sprintf('%0.2f', $nTaxSum) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
+            $this->SetFillColor($this->aOptions['Background']['body']);
 
+            $this->Cell($width, $this->aOptions['RowHeight'], '', 1, 0, 'L', 1);
+            $this->SetFillColor($this->aOptions['Background']['body']);
+            $this->PrintRow($x, "Начислен ДДС ", sprintf('%0.2f', $nSumDDS) . ' ' . $_currency, $this->aOptions['Fields']['price']['width'] ?? 0, $this->aOptions['Fields']['sum']['width'] ?? 0, 'R');
+        }
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] + 2);
 
-        $sNote = sprintf("Основание за прилагане на нулева ставка - чл.%s от ЗДДС",
+        $sNote = sprintf("",
             $_dds > 0 ?
-                "..." :
+                "" :
                 (
                 $is_post == 1 ?
-                    "49 ал.2" :
-                    "30"
+                    "Основание за прилагане на нулева ставка - чл.49 ал.2 от ЗДДС" :
+                    "Основание за прилагане на нулева ставка - чл.30 от ЗДДС"
                 )
         );
 
@@ -671,7 +673,10 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
+        $this->Cell($width / 3, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
+
+        $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize']);
+        $this->Cell($width, $this->aOptions['RowHeight'],  'Словом: '. slovom($this->document['total_sum'], $_currency, $_currency_100."          " ), 1, 0, 'R', 1);
 
         $this->Ln();
 
@@ -680,7 +685,7 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width * 4 / 5, $this->aOptions['RowHeight'], "Метод на плащане: по банка", 1, 0, 'L', 1);
+        $this->Cell($width * 4 / 5, $this->aOptions['RowHeight'], " ", 1, 0, 'L', 1);
 
         $this->SetLineWidth($this->aOptions['BorderWidth'] / 2);
         $this->SetDrawColor($this->aOptions['Background']['body']);
