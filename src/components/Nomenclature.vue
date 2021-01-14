@@ -32,16 +32,11 @@
           <div class="custom-input">{{service.vat}} %</div>
         </div>
 
-        <div :class="{'mb-2': service.for_smartsot}" class="flex items-center justify-between">
+        <div class="flex items-center justify-between">
           <div class="custom-label w-24 flex-shrink-0">мерна единица:</div>
           <div class="custom-input">{{service.measure}}</div>
         </div>
 
-        <div v-if="service.for_smartsot" class="flex items-center justify-between">
-          <div class="custom-label w-24 flex-shrink-0">смарт сот:</div>
-          <div class="custom-input">да</div>
-        </div>
-        
       </div>
     </template>
 

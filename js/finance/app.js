@@ -5633,6 +5633,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5711,12 +5724,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       serviceForEdit: {},
       firms: [],
       regions: [],
+      directions: [],
       doc_type: "faktura",
       loaded: false,
       loading: false,
       doc_rows_dds: [],
       orders: [],
-      funds: [],
       nomenclatures: [],
       nomenclature_groups: [],
       annulment: false,
@@ -5725,6 +5738,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    toggleIsHide: function toggleIsHide() {
+      if (this.document_data.doc_status === 'canceled') return;
+      this.document_data.is_hide = this.document_data.is_hide == 1 ? 0 : 1;
+    },
     cloneService: function cloneService(row) {
       var clone = JSON.parse(JSON.stringify(row));
       clone.uuid = this.genUuid();
@@ -5845,7 +5862,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.document_data = data.document_data;
         _this2.firms = _this2.arrSortByPropName(data.firms, "name");
         _this2.regions = _this2.arrSortByPropName(data.regions, "region");
-        _this2.funds = _this2.arrSortByPropName(data.funds, "name");
+        _this2.directions = _this2.arrSortByPropName(data.directions, "name");
         _this2.nomenclatures = _this2.arrSortByPropName(data.nomenclatures, "name");
         _this2.nomenclature_groups = _this2.arrSortByPropName(data.nomenclature_groups, "name");
         _this2.doc_date = data.document_data.doc_date;
@@ -5940,12 +5957,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.orders_sum = 0;
       this.document_data.last_order_id = 0;
       this.document_data.last_order_time = "0000-00-00 00:00:00";
-      this.document_data.note = "";
       this.document_data.view_type = "extended";
       this.document_data.is_advice = 0;
       this.document_data.id_advice = 0;
-      this.document_data.exported = 0;
-      this.document_data.is_hide = 0;
       this.document_data.created = "";
       this.document_data.created_time = "";
       this.document_data.created_user = 0;
@@ -6095,8 +6109,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (this.document_data.doc_type === "kvitanciq") {
           return {
-            name: "Проформа фактура",
-            abbr: "\u041F\u0440\u043E\u0444\u043E\u0440\u043C\u0430 ".concat(suffix)
+            name: "Квитанция",
+            abbr: "\u041A\u0432. ".concat(suffix)
           };
         }
 
@@ -6109,8 +6123,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (this.document_data.doc_type === "oprostena") {
           return {
-            name: "Квитанция",
-            abbr: "\u041A\u0432. ".concat(suffix)
+            name: "Опростена ф-ра",
+            abbr: "\u041E\u043F\u0440. \u0444-\u0440\u0430 ".concat(suffix)
           };
         }
 
@@ -7072,11 +7086,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseDialog.vue */ "./src/components/BaseDialog.vue");
-//
-//
-//
-//
-//
 //
 //
 //
@@ -8493,14 +8502,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Datepicker_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Datepicker.vue */ "./src/components/Datepicker.vue");
 /* harmony import */ var _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BaseDialog.vue */ "./src/components/BaseDialog.vue");
 /* harmony import */ var _freeSaleComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./freeSaleComponent.vue */ "./src/components/freeSaleComponent.vue");
-/* harmony import */ var _Nomenclature_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Nomenclature.vue */ "./src/components/Nomenclature.vue");
-/* harmony import */ var _PaymentForm_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PaymentForm.vue */ "./src/components/PaymentForm.vue");
-/* harmony import */ var _RelativeDocumentsList_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RelativeDocumentsList.vue */ "./src/components/RelativeDocumentsList.vue");
-/* harmony import */ var _uuidMixin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./uuidMixin */ "./src/components/uuidMixin.js");
-/* harmony import */ var _dateMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dateMixin */ "./src/components/dateMixin.js");
-/* harmony import */ var _utilityMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utilityMixin */ "./src/components/utilityMixin.js");
-/* harmony import */ var _openRelDocMixin__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./openRelDocMixin */ "./src/components/openRelDocMixin.js");
-/* harmony import */ var _mixins__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./mixins */ "./src/components/mixins.js");
+/* harmony import */ var _freeSaleComponentWithoutVat_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./freeSaleComponentWithoutVat.vue */ "./src/components/freeSaleComponentWithoutVat.vue");
+/* harmony import */ var _Nomenclature_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Nomenclature.vue */ "./src/components/Nomenclature.vue");
+/* harmony import */ var _PaymentForm_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PaymentForm.vue */ "./src/components/PaymentForm.vue");
+/* harmony import */ var _RelativeDocumentsList_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./RelativeDocumentsList.vue */ "./src/components/RelativeDocumentsList.vue");
+/* harmony import */ var _uuidMixin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./uuidMixin */ "./src/components/uuidMixin.js");
+/* harmony import */ var _dateMixin__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./dateMixin */ "./src/components/dateMixin.js");
+/* harmony import */ var _utilityMixin__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utilityMixin */ "./src/components/utilityMixin.js");
+/* harmony import */ var _openRelDocMixin__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./openRelDocMixin */ "./src/components/openRelDocMixin.js");
+/* harmony import */ var _mixins__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./mixins */ "./src/components/mixins.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -10559,6 +10569,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -10580,11 +10631,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     BaseDialog: _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     freeSaleComponent: _freeSaleComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    PaymentForm: _PaymentForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    Nomenclature: _Nomenclature_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    RelativeDocumentsList: _RelativeDocumentsList_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    freeSaleComponentWithoutVat: _freeSaleComponentWithoutVat_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    PaymentForm: _PaymentForm_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    Nomenclature: _Nomenclature_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    RelativeDocumentsList: _RelativeDocumentsList_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
-  mixins: [_uuidMixin__WEBPACK_IMPORTED_MODULE_8__["uuidMixin"], _dateMixin__WEBPACK_IMPORTED_MODULE_9__["dateMixin"], _utilityMixin__WEBPACK_IMPORTED_MODULE_10__["utilityMixin"], _openRelDocMixin__WEBPACK_IMPORTED_MODULE_11__["openRelDocMixin"], _mixins__WEBPACK_IMPORTED_MODULE_12__["default"]],
+  mixins: [_uuidMixin__WEBPACK_IMPORTED_MODULE_9__["uuidMixin"], _dateMixin__WEBPACK_IMPORTED_MODULE_10__["dateMixin"], _utilityMixin__WEBPACK_IMPORTED_MODULE_11__["utilityMixin"], _openRelDocMixin__WEBPACK_IMPORTED_MODULE_12__["openRelDocMixin"], _mixins__WEBPACK_IMPORTED_MODULE_13__["default"]],
   data: function data() {
     return {
       searchtwo: "",
@@ -10619,7 +10671,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         invoice_single_view_name: "",
         invoice_last_paid_caption: 0,
         phone: "",
-        note: ""
+        note: "",
+        id_city: 0
       },
       default_client: {
         id: null,
@@ -10634,7 +10687,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         invoice_single_view_name: "услуга",
         invoice_last_paid_caption: 0,
         phone: "",
-        note: ""
+        note: "",
+        id_city: 0
       },
       prefferedInvoicePayment: "",
       duty_date: "",
@@ -10644,7 +10698,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document_data: [],
       deliverer: "изберете",
       deliverers: [],
-      concessions: [],
       selectedFirm: null,
       serviceForEdit: {},
       firms: [],
@@ -10668,6 +10721,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirm_request: 0,
       request_monthlySuffix: '',
       relative_credit_maxValue: 0,
+      cities: [],
+      default_id_city: 0,
+      current_id_city: 0,
       current_view_type: ''
     };
   },
@@ -10675,6 +10731,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.initSaleDoc();
   },
   methods: {
+    assingDocType: function assingDocType() {
+      this.document_data.doc_type = this.doc_type;
+    },
     adjustMonthlySuffix: function adjustMonthlySuffix() {
       var _this = this;
 
@@ -10703,10 +10762,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.firms = _this2.arrSortByPropName(data.firms, "name");
         _this2.services = _this2.arrSortByPropName(data.services, "name");
         _this2.regions = _this2.arrSortByPropName(data.regions, "region");
+        _this2.cities = data.cities;
+        _this2.default_id_city = data.default_id_city;
         _this2.doc_date = data.document_data.doc_date;
         _this2.doc_date_create = data.document_data.doc_date_create;
         _this2.duty_date = data.document_data.doc_date;
-        _this2.concessions = data.concessions;
 
         if (_this2.urlParams.id_object) {
           _this2.getClientObligations();
@@ -10945,6 +11005,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.document_data.client_recipient = data.client.invoice_recipient;
         _this3.document_data.view_type = data.client.invoice_layout;
 
+        if (_this3.current_id_city == 0) {
+          _this3.current_id_city = data.client.id_city;
+        } else {
+          _this3.$nextTick(function () {
+            return _this3.client.id_city = _this3.current_id_city;
+          });
+        }
+
         if (data.client.invoice_last_paid_caption) {
           _this3.$nextTick(function () {
             return _this3.document_data.single_view_name = "".concat(data.client.invoice_single_view_name).concat(_this3.monthlySuffix);
@@ -10973,8 +11041,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             uuid: _this3.genUuid()
           });
         });
-
-        _this3.createObjectsDiscountsTemplates();
 
         if (data.alerts.length > 0) {
           alert(data.alerts[0]);
@@ -11025,6 +11091,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.id_client = this.client.id;
       this.document_data.client_recipient = this.client.invoice_recipient;
       this.document_data.note = this.client.note;
+      this.document_data.id_city = this.client.id_city;
 
       if (this.urlParams.is_book) {
         if (parseInt(this.isBookDocNum) <= 0) {
@@ -11118,28 +11185,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.orders_sum = 0;
       this.document_data.last_order_id = 0;
       this.document_data.last_order_time = "0000-00-00 00:00:00";
-      this.document_data.id_bank_account = 0;
-      this.document_data.id_bank_epayment = 0;
-      this.document_data.epay_provider = 0;
-      this.document_data.easypay_date = "0000-00-00 00:00:00";
-      this.document_data.invoice_payment = 'bank';
       this.document_data.view_type = "extended";
       this.document_data.single_view_name = "услуга";
       this.document_data.is_book = 0;
       this.document_data.from_book = false, this.document_data.is_advice = 0;
       this.document_data.id_advice = 0;
-      this.document_data.id_protocol = 0;
       this.document_data.is_user_print = 0;
       this.document_data.user_print_date = "0000-00-00 00:00:00";
-      this.document_data.gen_pdf_date = "0000-00-00 00:00:00";
-      this.document_data.note = '';
-      this.document_data.exported = 0;
       this.document_data.created = "";
       this.document_data.created_time = "";
       this.document_data.created_user = 0;
       this.document_data.updated = "";
       this.document_data.updated_time = "";
       this.document_data.updated_user = 0;
+      this.document_data.id_bank_account = 0;
+      this.document_data.id_bank_epayment = 0;
+      this.document_data.epay_provider = 0;
+      this.document_data.easypay_date = "0000-00-00 00:00:00";
+      this.document_data.invoice_payment = 'bank';
+      this.document_data.is_auto = 0;
+      this.document_data.exported = 0;
+      this.document_data.gen_pdf_date = "0000-00-00 00:00:00";
+      this.document_data.note = '';
+      this.document_data.id_protocol = 0;
     },
     prepareDebitSaleDoc: function prepareDebitSaleDoc() {
       this.doc_type = "debitno izvestie";
@@ -11190,6 +11258,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.client.invoice_recipient = data.document_data.client_recipient;
         _this5.client.note = data.document_data.note;
         _this5.client.invoice_layout = data.document_data.view_type;
+        _this5.client.id_city = data.document_data.id_city;
         _this5.origin_document = data.origin_document;
         _this5.doc_rows = data.document_rows.filter(function (row) {
           return row.is_dds !== 1;
@@ -11225,6 +11294,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setClient: function setClient($event) {
       if (!$event.id) return;
       this.client = $event;
+
+      if ($event.id_city == 0) {
+        this.client.id_city = this.default_id_city;
+      }
+
       this.document_data.single_view_name = $event.invoice_single_view_name;
       this.prefferedInvoicePayment = $event.invoice_payment;
     },
@@ -11241,7 +11315,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           client_mol: $event.invoice_mol,
           client_name: $event.name,
           client_recipient: $event.invoice_recipient,
-          client_address: $event.invoice_address
+          client_address: $event.invoice_address,
+          id_city: $event.id_city != 0 ? $event.id_city : this.default_id_city
         }).then(function (response) {
           _this6.getDocumentByID();
 
@@ -11268,6 +11343,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.client_name = "";
       this.document_data.client_recipient = "";
       this.document_data.single_view_name = 'услуга';
+      this.document_data.single_view_name = this.default_id_city;
       this.document_data.view_type = "extended";
       this.doc_rows = [];
     },
@@ -11277,13 +11353,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.document_data.doc_status === "canceled" || !this.document_data.sale_doc_grant) return;
       this.showChangeClientDialog = true;
     },
-
-    /* getTotalVatSumbByVat(vat) {
-      return this.servicesForPayment
-        .filter(service => service.vat === vat)
-        .map(service => ((service.single_price * service.quantity) / 100) * vat)
-        .reduce((sum, vatsum) => sum + vatsum, 0);
-    }, */
     getForPaymentStateFromArray: function getForPaymentStateFromArray(arr) {
       var serviceState = _toConsumableArray(new Set(arr.map(function (service) {
         return service.for_payment;
@@ -11321,7 +11390,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var current_obj = this.objectsTreeView.find(function (obj) {
         return obj.id_object === id;
       });
-      var discounts = current_obj.discounts;
       var monthlys = current_obj.monthly.months;
       monthlys.find(function (monthly) {
         return monthly.month === month;
@@ -11352,113 +11420,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
 
-      var obj = this.objectsTreeView.find(function (obj) {
-        return obj.id_object === id;
-      });
-      var objMonthsForPayment = obj.monthly.months.filter(function (month) {
-        return month.for_payment.checked === true;
-      });
-      var objMonthsForPaymentCount = objMonthsForPayment.map(function (el) {
-        return el.month;
-      }).filter(function (el) {
-        return el >= moment().startOf("month").format("YYYY-MM-DD");
-      }).length;
-
-      if (discounts) {
-        var discountMonthsCount = discounts.services[0].concession_month_count;
-
-        if (discountMonthsCount > objMonthsForPaymentCount) {
-          this.deleteObjectDiscounts(id);
-        }
-
-        if (discountMonthsCount < objMonthsForPaymentCount) {
-          this.checkForNewDiscount(id, objMonthsForPaymentCount);
-          return;
-        }
-      }
-
-      this.checkForNewDiscount(id, objMonthsForPaymentCount);
       if (this.urlParams.id) return;
       if (this.request_monthlySuffix === this.monthlySuffix) return;
     },
-    toggleObjectDiscount: function toggleObjectDiscount(id, state) {
-      this.doc_rows.filter(function (service) {
-        return service.id_object === id && service.type === "free";
-      }).map(function (service) {
-        return service.for_payment = state;
-      });
-    },
-    addObjectDiscounts: function addObjectDiscounts(discounts) {
+    reorderDocRowsByMonthlyAndSingles: function reorderDocRowsByMonthlyAndSingles() {
       var _this7 = this;
-
-      discounts.map(function (service) {
-        service.single_price = _this7.getDiscountServiceSum(discounts[0].id_object, service.reference_service_id, service.percent);
-        service.total_sum = service.single_price;
-        service.total_sum_with_dds = service.single_price * (service.vat / 100 + 1);
-        service.uuid = _this7.genUuid();
-      });
-      discounts.forEach(function (service) {
-        return _this7.doc_rows.push(service);
-      });
-      this.reorderDocRowsByMonthlyDiscountsAndSingles();
-    },
-    deleteObjectDiscounts: function deleteObjectDiscounts(id_object) {
-      var _this8 = this;
-
-      this.doc_rows.filter(function (discounts) {
-        return discounts.id_object === id_object && discounts.type === "free";
-      }).forEach(function (service) {
-        return Vue["delete"](_this8.doc_rows, _this8.doc_rows.indexOf(service));
-      });
-    },
-    checkForNewDiscount: function checkForNewDiscount(id, objMonthsForPaymentCount) {
-      var availableDiscounts = Object.values(this.concessions).filter(function (concession) {
-        return concession.months_count <= objMonthsForPaymentCount;
-      });
-
-      if (availableDiscounts.length) {
-        availableDiscounts.sort(function (a, b) {
-          return a.months_count - b.months_count;
-        });
-        var newDiscount = this.objectDiscountTemplates.filter(function (template) {
-          return template.some(function (obj) {
-            return obj.id_object === id && obj.concession_month_count === availableDiscounts[availableDiscounts.length - 1].months_count;
-          });
-        })[0];
-        var clonedDiscount = JSON.parse(JSON.stringify(newDiscount));
-        this.objectsTreeView.find(function (obj) {
-          return obj.id_object === id;
-        }).discounts ? (this.deleteObjectDiscounts(id), this.addObjectDiscounts(clonedDiscount)) : this.addObjectDiscounts(clonedDiscount);
-      }
-    },
-    getDiscountServiceSum: function getDiscountServiceSum(id_object, originalServiceId, discountPercent) {
-      var currentStartOfMonth = this.document_data.doc_date_create.slice(0, -2);
-      currentStartOfMonth += "01";
-      var services = this.doc_rows.filter(function (service) {
-        return service.id_object === id_object && service.type === "month" && service.month >= currentStartOfMonth && service.for_payment === true && service.id_service === originalServiceId;
-      });
-      var discountSum = this.getTotalSumFromArr(services) * -1 * discountPercent / 100; // na pavkata formulata jhuehueheuhehu (0.83333333334 * ((20 / 100) +1)).toFixed(2)
-
-      /* if (discountSum > 0) {
-        return -Math.abs(discountSum);
-      } */
-
-      /* console.log(
-        `gen discount for id_object => ${id_object}, for serivce_id => ${originalServiceId}, found elements => ${services.length}, discount sum => ${discountSum}`
-      ); */
-
-      return discountSum;
-    },
-    reorderDocRowsByMonthlyDiscountsAndSingles: function reorderDocRowsByMonthlyDiscountsAndSingles() {
-      var _this9 = this;
 
       var reordered = [];
       this.idObjects.forEach(function (id) {
         var objectMonthly = [];
-        var objectDiscounts = [];
         var objectSingles = [];
 
-        var objectsServices = _this9.doc_rows.filter(function (obj) {
+        var objectsServices = _this7.doc_rows.filter(function (obj) {
           return obj.id_object === id;
         });
 
@@ -11466,10 +11439,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           objectsServices.forEach(function (service) {
             if (service.type === "month") {
               objectMonthly.push(service);
-            }
-
-            if (service.type === "free") {
-              objectDiscounts.push(service);
             }
 
             if (service.type === "single") {
@@ -11481,10 +11450,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             reordered = reordered.concat(objectMonthly);
           }
 
-          if (objectDiscounts.length) {
-            reordered = reordered.concat(objectDiscounts);
-          }
-
           if (objectSingles.length) {
             reordered = reordered.concat(objectSingles);
           }
@@ -11494,16 +11459,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.doc_rows = reordered;
     },
     createObjectTree: function createObjectTree(id_object) {
-      var _monthly$totalForPaym, _discounts$totalForPa, _singles$totalForPaym, _monthly$totalForPaym2, _discounts$totalForPa2, _singles$totalForPaym2, _monthly$totalForPaym3, _discounts$totalForPa3, _singles$totalForPaym3;
+      var _monthly$totalForPaym, _singles$totalForPaym, _monthly$totalForPaym2, _singles$totalForPaym2, _monthly$totalForPaym3, _singles$totalForPaym3;
 
       var objectTaxes = this.doc_rows.filter(function (object) {
         return object.id_object === id_object;
       });
       var monthly = this.createObjectMonthlyTaxes(objectTaxes.filter(function (service) {
         return service.type === "month";
-      }));
-      var discounts = this.createObjectDiscounts(objectTaxes.filter(function (service) {
-        return service.type === "free";
       }));
       var singles = this.createObjectSingleTaxes(objectTaxes.filter(function (service) {
         return service.type === "single";
@@ -11513,22 +11475,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id_object: id_object,
         for_payment: this.getForPaymentStateFromArray(objectTaxes),
         monthly: monthly,
-        discounts: discounts,
         singles: singles,
         quantity: 1,
         measure: "бр.",
-        //for_smartsot: monthly ? monthly.months[0].services.some(service => service.for_smartsot == 1) : undefined,
-        totalForPayment: ((_monthly$totalForPaym = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym !== void 0 ? _monthly$totalForPaym : 0) + ((_discounts$totalForPa = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa !== void 0 ? _discounts$totalForPa : 0) + ((_singles$totalForPaym = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym !== void 0 ? _singles$totalForPaym : 0),
-        totalSum: ((_monthly$totalForPaym2 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym2 !== void 0 ? _monthly$totalForPaym2 : 0) + ((_discounts$totalForPa2 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa2 !== void 0 ? _discounts$totalForPa2 : 0) + ((_singles$totalForPaym2 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym2 !== void 0 ? _singles$totalForPaym2 : 0) > 0 ? ((_monthly$totalForPaym3 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym3 !== void 0 ? _monthly$totalForPaym3 : 0) + ((_discounts$totalForPa3 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa3 !== void 0 ? _discounts$totalForPa3 : 0) + ((_singles$totalForPaym3 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym3 !== void 0 ? _singles$totalForPaym3 : 0) : this.getTotalSumFromArr(objectTaxes)
+        totalForPayment: ((_monthly$totalForPaym = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym !== void 0 ? _monthly$totalForPaym : 0) + ((_singles$totalForPaym = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym !== void 0 ? _singles$totalForPaym : 0),
+        totalSum: ((_monthly$totalForPaym2 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym2 !== void 0 ? _monthly$totalForPaym2 : 0) + ((_singles$totalForPaym2 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym2 !== void 0 ? _singles$totalForPaym2 : 0) > 0 ? ((_monthly$totalForPaym3 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym3 !== void 0 ? _monthly$totalForPaym3 : 0) + ((_singles$totalForPaym3 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym3 !== void 0 ? _singles$totalForPaym3 : 0) : this.getTotalSumFromArr(objectTaxes)
       };
       return objectTree;
     },
     createObjectMonthlyTaxes: function createObjectMonthlyTaxes(monthlys) {
-      var _this10 = this;
+      var _this8 = this;
 
       if (monthlys.length > 0) {
         var idObject = monthlys[0].id_object;
-        var forSmartSot = monthlys[0].for_smartsot;
         var forPaymentState = this.getForPaymentStateFromArray(monthlys);
         var view_type_by_object_services = monthlys[0].view_type_by_object_services;
         var months = [];
@@ -11541,9 +11500,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             name: services[0].view_type_detail,
             month: month,
             services: services,
-            for_payment: _this10.getForPaymentStateFromArray(services),
-            totalSum: _this10.getTotalSumFromArr(services),
-            totalForPayment: _this10.getTotalSumFromArr(services.filter(function (service) {
+            for_payment: _this8.getForPaymentStateFromArray(services),
+            totalSum: _this8.getTotalSumFromArr(services),
+            totalForPayment: _this8.getTotalSumFromArr(services.filter(function (service) {
               return service.for_payment === true;
             }))
           });
@@ -11555,32 +11514,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           totalForPayment: this.getTotalSumFromArr(monthlys.filter(function (month) {
             return month.for_payment === true;
           })),
-          for_smartsot: forSmartSot,
           months: months,
           showTree: false
         };
         return monthlyTree;
-      }
-
-      return null;
-    },
-    createObjectDiscounts: function createObjectDiscounts(discounts) {
-      // за доработка разделно групиране за отстъпките по месеци и услуги ?
-      if (discounts.length > 0) {
-        var discountName = Object.values(this.concessions).find(function (discount) {
-          return discount.id_service === discounts[0].id_service;
-        }).name;
-        var discountTree = {
-          name: discounts[0].for_smartsot ? "".concat(discountName, " [ \u0421\u043C\u0430\u0440\u0442 \u0421\u041E\u0422 ]") : "".concat(discountName),
-          month: discounts[0].month,
-          for_payment: this.getForPaymentStateFromArray(discounts),
-          totalSum: this.getTotalSumFromArr(discounts),
-          totalForPayment: this.getTotalSumFromArr(discounts.filter(function (discount) {
-            return discount.for_payment === true;
-          })),
-          services: discounts
-        };
-        return discountTree;
       }
 
       return null;
@@ -11600,74 +11537,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return null;
     },
-    createObjectsDiscountsTemplates: function createObjectsDiscountsTemplates() {
-      var _this11 = this;
-
-      var discountTemplates = [];
-
-      if (this.idObjects) {
-        this.idObjects.forEach(function (id) {
-          var objdiscounts = _this11.doc_rows.filter(function (service) {
-            return service.id_object === id && service.type === "free";
-          });
-
-          if (objdiscounts.length) {
-            Object.values(_this11.concessions).forEach(function (concession) {
-              var discountsClone = JSON.parse(JSON.stringify(objdiscounts));
-              discountsClone.forEach(function (service) {
-                service.service_name = service.single_price > 0 ? "\u041A\u043E\u0440\u0435\u043A\u0446\u0438\u044F: [ ".concat(service.reference_service_name, " ]") : "".concat(concession.name, " [ ").concat(service.reference_service_name, " ]");
-                service.view_type_detail = service.for_smartsot ? "".concat(concession.name, " [ \u0421\u043C\u0430\u0440\u0442 \u0421\u041E\u0422 ]") : "".concat(concession.name, " [ ").concat(_this11.services.find(function (el) {
-                  return el.id_service === service.reference_service_id;
-                }).name, " ]");
-                service.id_service = concession.id_service;
-                service.concession_month_count = concession.months_count;
-                service.percent = concession.percent;
-                service.single_price = 1;
-                service.total_sum = 1;
-              });
-              discountTemplates.push(discountsClone);
-            });
-          }
-        });
-      }
-
-      this.objectDiscountTemplates = discountTemplates;
-    },
     genByMonthServiceArray: function genByMonthServiceArray(month) {
-      var _this12 = this;
+      var _this9 = this;
 
       var byMonth = [];
-      var smartServices = month.services.filter(function (service) {
-        return service.for_smartsot;
-      });
-      var regularServices = month.services.filter(function (service) {
-        return !service.for_smartsot;
-      });
 
-      if (smartServices.length) {
-        byMonth.push({
-          name: smartServices[0].view_type_detail,
-          month: month.month,
-          services: smartServices,
-          for_payment: this.getForPaymentStateFromArray(smartServices),
-          totalSum: this.getTotalSumFromArr(smartServices),
-          totalForPayment: this.getTotalSumFromArr(smartServices.filter(function (service) {
-            return service.for_payment;
-          }))
-        });
-      }
-
-      if (regularServices.length) {
-        var servicesGroups = this.groupBy(regularServices, "id_service");
+      if (month.services.length) {
+        var servicesGroups = this.groupBy(month.services, "id_service");
         Object.values(servicesGroups).forEach(function (group) {
           group.forEach(function (service) {
             byMonth.push({
               name: service.view_type_detail,
               month: service.month,
               services: group,
-              for_payment: _this12.getForPaymentStateFromArray(group),
-              totalSum: _this12.getTotalSumFromArr(group),
-              totalForPayment: _this12.getTotalSumFromArr(group.filter(function (service) {
+              for_payment: _this9.getForPaymentStateFromArray(group),
+              totalSum: _this9.getTotalSumFromArr(group),
+              totalForPayment: _this9.getTotalSumFromArr(group.filter(function (service) {
                 return service.for_payment;
               }))
             });
@@ -11676,46 +11561,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return byMonth.length ? byMonth : null;
-    },
-    genDiscountServiceArray: function genDiscountServiceArray(discounts) {
-      var _this13 = this;
-
-      var discountsByServiceGroups = [];
-      var smartDiscounts = discounts.filter(function (service) {
-        return service.for_smartsot;
-      });
-      var regularDiscounts = discounts.filter(function (service) {
-        return !service.for_smartsot;
-      });
-
-      if (smartDiscounts.length) {
-        discountsByServiceGroups.push({
-          name: smartDiscounts[0].view_type_detail,
-          month: smartDiscounts[0].month,
-          services: smartDiscounts,
-          for_payment: this.getForPaymentStateFromArray(smartDiscounts),
-          totalSum: this.getTotalSumFromArr(smartDiscounts),
-          totalForPayment: this.getTotalSumFromArr(smartDiscounts.filter(function (service) {
-            return service.for_payment;
-          }))
-        });
-      }
-
-      if (regularDiscounts.length) {
-        var discountGroups = this.groupBy(regularDiscounts, "id_service");
-        regularDiscounts.forEach(function (discount) {
-          discountsByServiceGroups.push({
-            name: discount.view_type_detail,
-            month: discount.month,
-            services: [discount],
-            for_payment: _this13.getForPaymentStateFromArray([discount]),
-            totalSum: discount.total_sum,
-            totalForPayment: discount.for_payment
-          });
-        });
-      }
-
-      return discountsByServiceGroups.length ? discountsByServiceGroups : null;
     }
   },
   watch: {
@@ -11753,10 +11598,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     idCashDefault: function idCashDefault() {
       var _this$bank_orders$fin,
-          _this14 = this;
+          _this10 = this;
 
       return !this.loaded ? null : (_this$bank_orders$fin = this.bank_orders.find(function (el) {
-        return el.id === _this14.document_data.id_cash_default;
+        return el.id === _this10.document_data.id_cash_default;
       })) !== null && _this$bank_orders$fin !== void 0 ? _this$bank_orders$fin : null;
     },
     showToolbar: function showToolbar() {
@@ -11864,13 +11709,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else return null;
     },
     objectsTreeView: function objectsTreeView() {
-      var _this15 = this;
+      var _this11 = this;
 
       if (this.loaded && this.doc_rows.length) {
         var _ret = function () {
           var tree = [];
 
-          var _iterator = _createForOfIteratorHelper(_this15.idObjects),
+          var _iterator = _createForOfIteratorHelper(_this11.idObjects),
               _step;
 
           try {
@@ -11878,9 +11723,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               var idObject = _step.value;
 
               if (idObject !== 0) {
-                tree.push(_this15.createObjectTree(idObject));
+                tree.push(_this11.createObjectTree(idObject));
               } else {
-                _this15.doc_rows.filter(function (service) {
+                _this11.doc_rows.filter(function (service) {
                   return service.id_object === 0 && service.type === "free";
                 }).forEach(function (service) {
                   return tree.push(service);
@@ -11902,19 +11747,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else return null;
     },
     byMonths: function byMonths() {
-      var _this16 = this;
+      var _this12 = this;
 
       if (this.objectsTreeView) {
         var objectsByMonths = [];
         this.objectsTreeView.forEach(function (obj) {
           if (obj.monthly) {
             obj.monthly.months.forEach(function (month) {
-              objectsByMonths = [].concat(_toConsumableArray(objectsByMonths), _toConsumableArray(_this16.genByMonthServiceArray(month)));
+              objectsByMonths = [].concat(_toConsumableArray(objectsByMonths), _toConsumableArray(_this12.genByMonthServiceArray(month)));
             });
-          }
-
-          if (obj.discounts) {
-            objectsByMonths = [].concat(_toConsumableArray(objectsByMonths), _toConsumableArray(_this16.genDiscountServiceArray(obj.discounts.services)));
           }
 
           if (obj.singles && obj.singles.services.length) {
@@ -11933,15 +11774,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     byServices: function byServices() {
-      var _this17 = this;
+      var _this13 = this;
 
       if (this.doc_rows.length) {
         var byServices = [];
-        var smartMonthlyServices = [];
-        var regularMonthlyServices = [];
-        var discounts = [];
+        var monthly = [];
         var singles = [];
-        var freeSales = [];
+        var free = [];
 
         var _iterator2 = _createForOfIteratorHelper(this.doc_rows),
             _step2;
@@ -11950,16 +11789,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
             var service = _step2.value;
 
-            if (service.for_smartsot && service.id_object && service.type === "month") {
-              smartMonthlyServices.push(service);
-            }
-
-            if (!service.for_smartsot && service.id_object && service.type === "month") {
-              regularMonthlyServices.push(service);
-            }
-
-            if (service.id_object && service.type === "free") {
-              discounts.push(service);
+            if (service.id_object && service.type === "month") {
+              monthly.push(service);
             }
 
             if (service.id_object && service.type === "single") {
@@ -11967,7 +11798,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             if (!service.id_object && service.type === "free") {
-              freeSales.push(service);
+              free.push(service);
             }
           }
         } catch (err) {
@@ -11976,45 +11807,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _iterator2.f();
         }
 
-        if (smartMonthlyServices.length) {
-          byServices.push({
-            for_payment: this.getForPaymentStateFromArray(smartMonthlyServices),
-            measure: "бр.",
-            name: smartMonthlyServices[0].view_type_by_services,
-            quantity: 1,
-            services: smartMonthlyServices,
-            single_price: this.getTotalSumFromArr(smartMonthlyServices),
-            totalSum: this.getTotalSumFromArr(smartMonthlyServices),
-            type: "month"
-          });
-        }
-
-        if (regularMonthlyServices.length) {
-          var regularMonthlyGroups = this.groupBy(regularMonthlyServices, "id_service");
-          Object.values(regularMonthlyGroups).forEach(function (group) {
+        if (monthly.length) {
+          var monthlyGroups = this.groupBy(monthly, "id_service");
+          Object.values(monthlyGroups).forEach(function (group) {
             byServices.push({
-              for_payment: _this17.getForPaymentStateFromArray(group),
+              for_payment: _this13.getForPaymentStateFromArray(group),
               name: group[0].view_type_by_services,
               services: group,
               measure: "бр.",
               quantity: 1,
-              single_price: _this17.getTotalSumFromArr(group),
-              totalSum: _this17.getTotalSumFromArr(group),
+              single_price: _this13.getTotalSumFromArr(group),
+              totalSum: _this13.getTotalSumFromArr(group),
               type: "month"
             });
-          });
-        }
-
-        if (discounts.length) {
-          byServices.push({
-            for_payment: this.getForPaymentStateFromArray(discounts),
-            measure: "бр.",
-            name: discounts[0].view_type_by_services,
-            quantity: 1,
-            services: discounts,
-            single_price: this.getTotalSumFromArr(discounts),
-            totalSum: this.getTotalSumFromArr(discounts),
-            type: "free"
           });
         }
 
@@ -12022,8 +11827,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           byServices = [].concat(_toConsumableArray(byServices), singles);
         }
 
-        if (freeSales.length) {
-          byServices = [].concat(_toConsumableArray(byServices), freeSales);
+        if (free.length) {
+          byServices = [].concat(_toConsumableArray(byServices), free);
         }
 
         return byServices;
@@ -12059,12 +11864,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).indexOf(this.deliverer) : this.deliverer;
     },
     selectedFirms: function selectedFirms() {
-      var _this18 = this;
+      var _this14 = this;
 
       if (!this.loaded || this.deliverer === "изберете") return null;
       return this.firms.filter(function (firm) {
-        return firm.idn === _this18.deliverers.filter(function (el) {
-          return el.name === _this18.deliverer;
+        return firm.idn === _this14.deliverers.filter(function (el) {
+          return el.name === _this14.deliverer;
         })[0].idn;
       });
     },
@@ -12095,7 +11900,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     allRowsTotal: function allRowsTotal() {
       if (!this.urlParams.id || this.is_new_relative_doc) {
-        return this.doc_rows.reduce(function (total, service) {
+        return this.servicesForPayment.reduce(function (total, service) {
           return total + service.total_sum;
         }, 0);
       }
@@ -12123,7 +11928,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 0);
     },
     vatTypesTotal: function vatTypesTotal() {
-      var _this19 = this;
+      var _this15 = this;
 
       var vatTypes = _toConsumableArray(new Set(this.servicesForPayment.map(function (service) {
         return service.vat;
@@ -12138,7 +11943,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop = function _loop() {
           var vat = _step3.value;
 
-          var servicesTotalsWithVat = _this19.servicesForPayment.filter(function (service) {
+          var servicesTotalsWithVat = _this15.servicesForPayment.filter(function (service) {
             return service.vat === vat;
           }).reduce(function (acc, service) {
             return acc + service.total_sum_with_dds;
@@ -12483,6 +12288,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       obj.id = parseInt(obj.id);
       obj.invoice_last_paid_caption = parseInt(obj.invoice_last_paid_caption);
       obj.is_company = parseInt(obj.is_company);
+      obj.id_city = parseInt(obj.id_city);
     }
   },
   computed: {
@@ -13104,7 +12910,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       type: Array,
       required: true
     },
-    funds: {
+    directions: {
       type: Array,
       required: true
     },
@@ -13134,7 +12940,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       enableVatTransfer: false,
       defaultServiceTemplate: {
         firm: "",
-        fund: "",
+        direction: "",
         id: 0,
         id_buy_doc: 0,
         id_direction: 0,
@@ -13163,7 +12969,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       serviceTemplate: {
         firm: "",
-        fund: "",
+        direction: "",
         id: 0,
         id_buy_doc: 0,
         id_direction: 0,
@@ -13197,7 +13003,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.prepareTemplate();
   },
   mounted: function mounted() {
-    if (this.edit && !this.fundGroupNomenclatures) {
+    if (this.edit && !this.directionGroupNomenclatures) {
       if (this.service.id_nomenclature_expense !== this.vat_transfer_nomenclature.id) {
         this.closeServiceComponent();
         alert("ГРЕШКА: избрания ред не подлежи на редакция!");
@@ -13301,9 +13107,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.serviceTemplate.region = this.selectedRegion.region;
       }
     },
-    changeFund: function changeFund() {
+    changeDirection: function changeDirection() {
       this.id_nomenclature_group = null;
-      this.serviceTemplate.fund = this.selectedFund.name;
+      this.serviceTemplate.direction = this.selectedDirection.name;
       if (!this.serviceTemplate.id_nomenclature_expense) return;
       this.serviceTemplate.id_nomenclature_expense = null;
       this.serviceTemplate.nomenclature = "";
@@ -13328,22 +13134,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         return null;
       }
     },
-    firmFunds: function firmFunds() {
+    regionDirections: function regionDirections() {
       var _this2 = this;
 
-      if (this.serviceTemplate.id_firm) {
-        var tmp = this.funds.filter(function (fund) {
-          return fund.id_firm === _this2.serviceTemplate.id_firm;
+      if (this.serviceTemplate.id_office) {
+        var tmp = this.directions.filter(function (direction) {
+          return direction.id_office === _this2.serviceTemplate.id_office;
         });
         return tmp.length ? this.arrSortByPropName(tmp, "name") : null;
       } else {
         return null;
       }
     },
-    // налични групи за номенклатурите на фонда
     nomenclatureGroups: function nomenclatureGroups() {
       if (this.serviceTemplate.id_direction) {
-        var nomenclatureGroupsIds = _toConsumableArray(new Set(this.fundNomenclatures.map(function (_ref) {
+        var nomenclatureGroupsIds = _toConsumableArray(new Set(this.directionNomenclatures.map(function (_ref) {
           var id_group = _ref.id_group;
           return id_group;
         })));
@@ -13356,12 +13161,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       return null;
     },
-    // номенклатури към избраната група на фонда
-    fundGroupNomenclatures: function fundGroupNomenclatures() {
+    directionGroupNomenclatures: function directionGroupNomenclatures() {
       var _this3 = this;
 
       if (this.serviceTemplate.id_direction && this.id_nomenclature_group != null) {
-        var tmp = this.fundNomenclatures.filter(function (el) {
+        var tmp = this.directionNomenclatures.filter(function (el) {
           return el.id_group === _this3.id_nomenclature_group;
         });
         return tmp.length ? tmp : null;
@@ -13369,13 +13173,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       return null;
     },
-    // номенклатури към избрания фонд
-    fundNomenclatures: function fundNomenclatures() {
-      var _this4 = this;
-
+    directionNomenclatures: function directionNomenclatures() {
       if (this.serviceTemplate.id_direction) {
         var tmp = this.nomenclatures.filter(function (nomenclature) {
-          return _this4.selectedFund.nomenclatures_expenses.includes(nomenclature.id);
+          return nomenclature.vat_transfer != 1;
         });
         return tmp.length ? this.arrSortByPropName(tmp, "name") : null;
       }
@@ -13383,39 +13184,39 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       return null;
     },
     selectedFirm: function selectedFirm() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.serviceTemplate.id_firm) {
         return this.firms.find(function (firm) {
-          return firm.id_firm === _this5.serviceTemplate.id_firm;
+          return firm.id_firm === _this4.serviceTemplate.id_firm;
         });
       } else {
         return null;
       }
     },
     selectedRegion: function selectedRegion() {
-      var _this6 = this;
+      var _this5 = this;
 
       return this.serviceTemplate.id_office ? this.regions.find(function (region) {
-        return region.id_office === _this6.serviceTemplate.id_office;
+        return region.id_office === _this5.serviceTemplate.id_office;
       }) : null;
     },
-    selectedFund: function selectedFund() {
-      var _this7 = this;
+    selectedDirection: function selectedDirection() {
+      var _this6 = this;
 
-      if (this.firmFunds && this.serviceTemplate.id_direction) {
-        return this.firmFunds.find(function (fund) {
-          return fund.id === _this7.serviceTemplate.id_direction;
+      if (this.regionDirections && this.serviceTemplate.id_direction) {
+        return this.regionDirections.find(function (direction) {
+          return direction.id === _this6.serviceTemplate.id_direction;
         });
       }
 
       return null;
     },
     selectedNomenclature: function selectedNomenclature() {
-      var _this8 = this;
+      var _this7 = this;
 
       return this.serviceTemplate.id_nomenclature_expense ? this.nomenclatures.find(function (nomenclature) {
-        return nomenclature.id === _this8.serviceTemplate.id_nomenclature_expense;
+        return nomenclature.id === _this7.serviceTemplate.id_nomenclature_expense;
       }) : null;
     }
   }
@@ -13613,6 +13414,495 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "freeSale",
+  components: {
+    BaseDialog: _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Datepicker: _Datepicker_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VueCurrencyInput: vue_currency_input__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  mixins: [_uuidMixin__WEBPACK_IMPORTED_MODULE_3__["uuidMixin"], _dateMixin__WEBPACK_IMPORTED_MODULE_4__["dateMixin"], _utilityMixin__WEBPACK_IMPORTED_MODULE_5__["utilityMixin"]],
+  props: {
+    edit: false,
+    regions: {
+      type: Array,
+      required: true
+    },
+    firms: {
+      type: Array,
+      required: true
+    },
+    services: {
+      type: Array,
+      required: true
+    },
+    date: "",
+    user_office_id: {
+      type: Number,
+      required: true
+    },
+    service: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    },
+    current_document: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    },
+    relative_document: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    },
+    relative_credit_maxValue: {
+      type: Number,
+      "default": 0,
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      serviceTemplate: {},
+      userDefaults: {
+        init: false,
+        firm: "",
+        id_firm: null,
+        region: "",
+        id_office: null,
+        service_name: "",
+        id_service: null
+      }
+    };
+  },
+  created: function created() {
+    this.setUserDefaults();
+  },
+  methods: {
+    prepareTemplate: function prepareTemplate() {
+      if (Object.keys(this.service).length === 0 && this.service.constructor === Object) {
+        this.serviceTemplate = {
+          uuid: this.genUuid(),
+          firm: this.userDefaults.firm,
+          for_payment: true,
+          id_duty: 0,
+          id_firm: this.userDefaults.id_firm,
+          id_object: 0,
+          id_office: this.userDefaults.id_office,
+          id_service: null,
+          measure: "",
+          month: JSON.parse(JSON.stringify(this.date)),
+          object_name: "Свободна продажба",
+          payed: 0,
+          quantity: 0,
+          region: this.userDefaults.region,
+          service_name: "",
+          single_price: 0,
+          total_sum: 0,
+          total_sum_with_dds: 0,
+          type: "free",
+          vat: 0
+        };
+      } else {
+        this.serviceTemplate = JSON.parse(JSON.stringify(this.service));
+      }
+    },
+    setUserDefaults: function setUserDefaults() {
+      var _this = this;
+
+      if (!this.firms.length || !this.regions.length) return;
+      var region = this.regions.find(function (region) {
+        return region.id_office === _this.user_office_id;
+      });
+      this.userDefaults.id_firm = region ? region.id_firm : null;
+      this.userDefaults.firm = region ? region.firm : "";
+      this.userDefaults.id_office = region ? region.id_office : null;
+      this.userDefaults.region = region ? region.region : "";
+      this.prepareTemplate();
+    },
+    addService: function addService() {
+      this.fixTotals();
+
+      if (this.validateService()) {
+        this.$emit("addService", JSON.parse(JSON.stringify(this.serviceTemplate)));
+      } else {
+        alert("Грешка: Некоректни данни за услуга");
+      }
+    },
+    updateService: function updateService() {
+      this.fixTotals();
+
+      if (this.validateService()) {
+        this.$emit("updateService", JSON.parse(JSON.stringify(this.serviceTemplate)));
+      } else {
+        alert("Грешка: Некоректни данни за услуга");
+      }
+    },
+    deleteService: function deleteService() {
+      if (confirm("сигурни ли сте че искате да изтриете услугата ?")) {
+        this.$emit("deleteService", JSON.parse(JSON.stringify(this.serviceTemplate)));
+      }
+    },
+    validateService: function validateService() {
+      var isValid = [];
+
+      if (this.serviceTemplate.firm == "") {
+        isValid.push(false);
+      } else if (this.serviceTemplate.id_firm == null) {
+        isValid.push(false);
+      } else if (this.serviceTemplate.id_office == null) {
+        isValid.push(false);
+      } else if (this.serviceTemplate.id_service == null) {
+        isValid.push(false);
+      } else if (this.serviceTemplate.measure == "") {
+        isValid.push(false);
+      } else if (this.serviceTemplate.month == "") {
+        isValid.push(false);
+      } else if (this.serviceTemplate.object_name == "") {
+        isValid.push(false);
+      } else if (this.serviceTemplate.quantity <= 0) {
+        isValid.push(false);
+      } else if (this.serviceTemplate.service_name == "") {
+        isValid.push(false);
+      } else if (this.serviceTemplate.vat == 0) {
+        isValid.push(false);
+      } else if (this.current_document.doc_type == 'kreditno izvestie') {
+        if (this.currentSum.total_sum > this.sumMinMax.max || this.currentSum.total_sum > this.relative_document.total_sum) {
+          isValid.push(false);
+        }
+      }
+
+      return isValid.includes(false) ? false : true;
+    },
+    fixNullValue: function fixNullValue() {
+      if (this.serviceTemplate.single_price !== null) return;
+      this.serviceTemplate.single_price = 0;
+    },
+    fixQuantity: function fixQuantity() {
+      if (this.serviceTemplate.quantity !== null) return;
+      this.serviceTemplate.quantity = 1;
+    },
+    fixTotals: function fixTotals() {
+      var vat = this.serviceTemplate.vat / 100 + 1;
+      this.serviceTemplate.total_sum = this.serviceTemplate.single_price * this.serviceTemplate.quantity;
+      this.serviceTemplate.total_sum_with_dds = parseFloat((this.serviceTemplate.total_sum * vat).toFixed(2));
+    },
+    closeServiceComponent: function closeServiceComponent() {
+      this.$emit("closeFreeSale");
+    },
+    resetRegionsAndServices: function resetRegionsAndServices() {
+      this.serviceTemplate.id_office = null;
+      this.serviceTemplate.id_service = null;
+      this.serviceTemplate.measure = "", this.serviceTemplate.month = JSON.parse(JSON.stringify(this.date)), this.serviceTemplate.object_name = "Свободна продажба", this.serviceTemplate.quantity = 0, this.serviceTemplate.region = "", this.serviceTemplate.service_name = "", this.serviceTemplate.single_price = 0, this.serviceTemplate.total_sum = 0, this.serviceTemplate.total_sum_with_dds = 0, this.serviceTemplate.vat = 0;
+    },
+    changeFirm: function changeFirm(e) {
+      if (!this.edit) return;
+      this.serviceTemplate.id_firm = parseInt(e.target.value);
+      this.resetRegionsAndServices();
+    },
+    changeRegion: function changeRegion(e) {//console.log(e.target.value);
+    },
+    changeService: function changeService() {}
+  },
+  computed: {
+    allowNegativeServiceSum: function allowNegativeServiceSum() {
+      if (this.current_document.doc_type === 'debitno izvestie') return false;
+      return true;
+    },
+    sumMinMax: function sumMinMax() {
+      if (this.current_document.doc_type === 'kreditno izvestie') {
+        var cMax = this.edit ? this.relative_credit_maxValue + this.service.total_sum : this.relative_credit_maxValue;
+        return {
+          min: 0,
+          max: cMax
+        };
+      }
+    },
+    selectedRegions: function selectedRegions() {
+      var _this2 = this;
+
+      return !this.serviceTemplate.id_firm ? null : this.regions.filter(function (region) {
+        return region.id_firm === _this2.serviceTemplate.id_firm;
+      });
+    },
+    selectedServices: function selectedServices() {
+      var _this3 = this;
+
+      var temp = !this.serviceTemplate.id_firm ? null : this.services.filter(function (service) {
+        return service.id_firm === _this3.serviceTemplate.id_firm;
+      });
+
+      if (temp) {
+        this.arrSortByPropName(temp, 'name');
+      }
+
+      return temp;
+    },
+    selectedFirm: function selectedFirm() {
+      var _this4 = this;
+
+      return this.serviceTemplate.id_firm ? this.firms.find(function (firm) {
+        return firm.id_firm === _this4.serviceTemplate.id_firm;
+      }) : null;
+    },
+    selectedRegion: function selectedRegion() {
+      var _this5 = this;
+
+      return this.serviceTemplate.id_office ? this.regions.find(function (region) {
+        return region.id_office === _this5.serviceTemplate.id_office;
+      }) : null;
+    },
+    selectedService: function selectedService() {
+      var _this6 = this;
+
+      return this.serviceTemplate.id_service ? this.services.find(function (service) {
+        return service.id_service === _this6.serviceTemplate.id_service;
+      }) : null;
+    },
+    currentSum: function currentSum() {
+      var vat = this.serviceTemplate.vat / 100 + 1;
+      var total_sum = 0;
+      var total_sum_with_dds = 0;
+      total_sum = this.serviceTemplate.single_price * this.serviceTemplate.quantity;
+      total_sum_with_dds = total_sum * vat;
+      return {
+        total_sum: total_sum,
+        total_sum_with_dds: total_sum_with_dds
+      };
+    }
+  },
+  watch: {
+    selectedFirm: function selectedFirm() {
+      if (!this.selectedFirm && !this.edit) return;
+      this.serviceTemplate.firm = this.selectedFirm.name;
+
+      if (!this.edit) {
+        if (this.userDefaults.init) {
+          this.resetRegionsAndServices();
+        }
+      }
+
+      this.userDefaults.init = true;
+    },
+    selectedRegion: function selectedRegion() {
+      if (!this.selectedFirm && !this.edit) return;
+      if (!this.selectedRegion) return;
+      this.serviceTemplate.region = this.selectedRegion.region;
+    },
+    selectedService: function selectedService() {
+      if (!this.selectedService) return;
+      this.serviceTemplate.service_name = this.selectedService.name;
+
+      if (this.edit) {
+        this.serviceTemplate.object_name = this.service.object_name;
+        this.serviceTemplate.service_name = this.service.service_name;
+        this.serviceTemplate.single_price = this.service.single_price;
+        this.serviceTemplate.quantity = this.service.quantity;
+      } //this.serviceTemplate.region = this.selectedRegion.region;
+
+
+      if (!this.edit) {
+        this.serviceTemplate.single_price = this.selectedService.price;
+      }
+
+      if (!this.edit) {
+        this.serviceTemplate.quantity = this.selectedService.quantity;
+      }
+
+      this.serviceTemplate.measure = this.selectedService.measure;
+      this.serviceTemplate.vat = this.selectedService.vat;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseDialog.vue */ "./src/components/BaseDialog.vue");
+/* harmony import */ var _Datepicker_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Datepicker.vue */ "./src/components/Datepicker.vue");
+/* harmony import */ var vue_currency_input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-currency-input */ "./node_modules/vue-currency-input/dist/vue-currency-input.esm.js");
+/* harmony import */ var _uuidMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uuidMixin */ "./src/components/uuidMixin.js");
+/* harmony import */ var _dateMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dateMixin */ "./src/components/dateMixin.js");
+/* harmony import */ var _utilityMixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utilityMixin */ "./src/components/utilityMixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "freeSaleWithoutVat",
   components: {
     BaseDialog: _BaseDialog_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Datepicker: _Datepicker_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -13950,7 +14240,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".header-collapse[data-v-1e05566a] {\n  min-height: 32px;\n}\n.header-full[data-v-1e05566a] {\n  min-height: 152px;\n}\n.justify-self-center[data-v-1e05566a] {\n  justify-self: center;\n}\n[data-v-1e05566a]::-moz-selection {\n  background-color: #338fff;\n  color: #fff;\n}\n[data-v-1e05566a]::selection {\n  background-color: #338fff;\n  color: #fff;\n}\n.header[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 12px;\n  overflow-x: auto;\n}\n.header .client[data-v-1e05566a],\n.header .deliverer[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 62px 113px 42px 113px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  align-items: center;\n}\n.header .client[data-v-1e05566a] {\n  justify-self: start;\n}\n.header .doc[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  justify-self: center;\n  align-items: center;\n}\n.header .deliverer[data-v-1e05566a] {\n  justify-self: end;\n}\n.footer[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 8px;\n  min-height: -webkit-min-content;\n  min-height: -moz-min-content;\n  min-height: min-content;\n  min-height: 112px;\n  overflow-x: auto;\n  align-items: start;\n}\n.footer .f-left[data-v-1e05566a],\n.footer .f-middle[data-v-1e05566a],\n.footer .f-right[data-v-1e05566a] {\n  display: grid;\n  grid-gap: 8px;\n  align-items: center;\n}\n.footer .f-left[data-v-1e05566a] {\n  grid-template-columns: 62px 284px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n}\n.footer .f-middle[data-v-1e05566a] {\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  justify-self: center;\n}\n.footer .f-right[data-v-1e05566a] {\n  grid-template-columns: 62px 113px 42px 113px;\n  justify-self: end;\n}\n.footer-buy[data-v-1e05566a] {\n  min-height: 72px;\n}\n.buy-doc-note[data-v-1e05566a] {\n  min-height: 72px !important;\n}\n.grid-data[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  min-height: 81px;\n  border-radius: 2px;\n  border: 1px solid #ebf1fa;\n  overflow: auto;\n}\n.grid-data .grid-row[data-v-1e05566a] {\n  display: grid;\n  grid-column-gap: 8px;\n  padding: 5px 8px;\n  width: 100%;\n  grid-template-columns: minmax(14px, 14px) minmax(14px, 14px) minmax(150px, 100%) minmax(150px, 100%) minmax(70px, 70px) minmax(80px, 80px) minmax(62px, 62px);\n  grid-auto-rows: -webkit-min-content;\n  grid-auto-rows: min-content;\n  align-items: center;\n  border: 1px solid transparent;\n  border-bottom-color: #ebf1fa;\n  background-color: #fff;\n}\n.grid-data .grid-row[data-v-1e05566a]:focus-within {\n  background: #f5f5f5;\n}\n.grid-data .grid-row[data-v-1e05566a]:first-child {\n  height: auto;\n}\n.grid-data .grid-row[data-v-1e05566a]:not(:first-child):hover {\n  background: #f9fafb;\n  border-color: #858585;\n  border-radius: 0.125rem;\n}\n.grid-data .grid-row:not(:first-child):hover .obj-link[data-v-1e05566a] {\n  visibility: visible;\n}\n.grid-data .grid-row[data-v-1e05566a]:last-child {\n  border-bottom: 1px solid transparent;\n}\n.grid-data .grid-row .check[data-v-1e05566a] {\n  justify-self: center;\n}\n.grid-data .grid-row .rownum[data-v-1e05566a] {\n  justify-self: center;\n}\n.grid-data .grid-row .period[data-v-1e05566a] {\n  text-align: center;\n}\n.grid-data .grid-row .total[data-v-1e05566a] {\n  justify-self: end;\n}\n.grid-data .grid-row .total > div[data-v-1e05566a] {\n  text-align: right;\n}\n.grid-data .headers-buy[data-v-1e05566a] {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  font-size: 10px;\n  align-items: center;\n  padding: 8px;\n  z-index: 20;\n  color: #fff;\n  background: #ff5a1f;\n  box-shadow: rgba(0, 0, 0, 0.255) 0px 1.6px 3.6px, rgba(0, 0, 0, 0.216) 0px 0px 2.9px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  border: unset;\n}\n.grid-data .row-num[data-v-1e05566a] {\n  width: 35px;\n  height: 35px;\n  align-self: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  justify-self: center;\n  background-color: #fff;\n  border: 1px solid #c5cbd4;\n  color: #0d79bb;\n  font-size: 10px;\n  border-radius: 999px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-label[data-v-1e05566a] {\n  font-size: 12px;\n  color: #2d3e52;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-input[data-v-1e05566a] {\n  font-size: 0.75rem;\n  padding: 6px 8px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  color: #37474f;\n  width: 100%;\n  background-color: inherit;\n  border: 1px solid #a2aab4;\n  border-radius: 0.125rem;\n  min-height: 2rem;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 1px #a2aab4 inset;\n}\n.custom-input[data-v-1e05566a]:hover {\n  border-color: #4b5563;\n  box-shadow: 0 0 0 1px #4b5563 inset;\n}\n.custom-input[data-v-1e05566a]:focus {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\n.custom-input[data-v-1e05566a]:focus-within {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\ninput[data-v-1e05566a]::-webkit-outer-spin-button,\ninput[data-v-1e05566a]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.last-paid[data-v-1e05566a] {\n  width: 62px;\n}\n.last-paid-picker[data-v-1e05566a] {\n  width: 113px;\n}\n.primary-info[data-v-1e05566a] {\n  font-size: 13px;\n  color: #37474f;\n  line-height: 1.25rem;\n}\n.secondary-info[data-v-1e05566a] {\n  color: #5c6bc0;\n  font-size: 11px;\n  text-transform: lowercase;\n}\n.month[data-v-1e05566a] {\n  background: #5c6bc0;\n  color: #ffffff;\n  border-radius: 4px;\n  padding: 4px 6px;\n}\n.soft-shadow[data-v-1e05566a] {\n  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.row-checkbox[data-v-1e05566a] {\n  z-index: 0;\n  position: relative;\n}\n\n/* Input */\n.row-checkbox > input[data-v-1e05566a] {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  z-index: -1;\n  position: absolute;\n  box-shadow: none;\n  outline: none;\n  opacity: 0;\n  pointer-events: none;\n}\n\n/* Span */\n.row-checkbox > span[data-v-1e05566a] {\n  display: flex;\n  width: 24px;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n}\n\n/* Box */\n.row-checkbox > span[data-v-1e05566a]::before {\n  content: \"\";\n  display: inline-block;\n  box-sizing: border-box;\n  margin: 3px 1px;\n  border: solid 2px;\n  border-color: #c5cbd4;\n  border-radius: 2px;\n  width: 18px;\n  height: 18px;\n  vertical-align: top;\n  transition: border-color 0.2s, background-color 0.2s;\n}\n\n/* Checkmark */\n.row-checkbox > span[data-v-1e05566a]::after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 4px;\n  left: 3px;\n  width: 12px;\n  height: 5px;\n  border: solid 2px transparent;\n  border-right: none;\n  border-top: none;\n  transform: translate(3px, 4px) rotate(-45deg);\n}\n\n/* Checked, Indeterminate */\n.row-checkbox > input[data-v-1e05566a]:checked,\n.row-checkbox > input[data-v-1e05566a]:indeterminate {\n  background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));\n}\n.row-checkbox > input:checked + span[data-v-1e05566a]::before,\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::before {\n  border-color: #c5cbd4;\n}\n.row-checkbox > input:checked + span[data-v-1e05566a]::after,\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::after {\n  border-color: #718096;\n}\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px);\n}\n.check-indeterminate + span[data-v-1e05566a]::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px) !important;\n}\n\n/* Hover, Focus */\n.row-checkbox:hover > input[data-v-1e05566a] {\n  opacity: 0.04;\n}\n.row-checkbox > input[data-v-1e05566a]:focus {\n  opacity: 0.12;\n}\n.row-checkbox:hover > input[data-v-1e05566a]:focus {\n  opacity: 0.16;\n}\n\n/* Disabled */\n.row-checkbox > input[data-v-1e05566a]:disabled {\n  opacity: 0;\n  background-color: transparent;\n}\n.row-checkbox > input:disabled + span[data-v-1e05566a] {\n  color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);\n  cursor: initial;\n}\n.row-checkbox > input:disabled + span[data-v-1e05566a]::before {\n  border-color: currentColor;\n}\n.row-checkbox > input:checked:disabled + span[data-v-1e05566a]::before,\n.row-checkbox > input:indeterminate:disabled + span[data-v-1e05566a]::before {\n  border-color: #f5f5f5;\n  background-color: #f5f5f5;\n}\n.row-checkbox > input:checked:disabled + span[data-v-1e05566a]::after,\n.row-checkbox > input:indeterminate:disabled + span[data-v-1e05566a]::after {\n  border-color: #f5f5f5;\n}\n.col-end-end[data-v-1e05566a] {\n  grid-column-end: -1;\n}\n.min-h-18px[data-v-1e05566a] {\n  min-height: 18px;\n}\n\n/*\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n::-webkit-scrollbar-corner {\n  background: #2196f3;\n}\n::-webkit-scrollbar-thumb {\n  background: #2196f3;\n  border-radius: 15px;\n  border: 2px solid transparent;\n  cursor: grab;\n  background-clip: padding-box;\n}\n::-webkit-scrollbar-track {\n  background: #3e4251;\n  border-color: #585858;\n  border-style: solid;\n}  */\n\n/*\n::-webkit-scrollbar {\n    width: 16px\n}\n\n::-webkit-scrollbar-thumb {\n    background: #dadce0;\n    background-clip: padding-box;\n    border: 4px solid transparent;\n    border-radius: 8px;\n    box-shadow: none;\n    min-height: 50px\n}\n::-webkit-scrollbar-track {\n    background: none;\n    border: none\n}\n\n::-webkit-scrollbar-track:hover {\n    background: none;\n    border: none\n}  */", ""]);
+exports.push([module.i, ".header-collapse[data-v-1e05566a] {\n  min-height: 32px;\n}\n.header-full[data-v-1e05566a] {\n  min-height: 152px;\n}\n.justify-self-center[data-v-1e05566a] {\n  justify-self: center;\n}\n[data-v-1e05566a]::-moz-selection {\n  background-color: #338fff;\n  color: #fff;\n}\n[data-v-1e05566a]::selection {\n  background-color: #338fff;\n  color: #fff;\n}\n.header[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 12px;\n  overflow-x: auto;\n}\n.header .client[data-v-1e05566a],\n.header .deliverer[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 62px 113px 42px 113px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  align-items: center;\n}\n.header .client[data-v-1e05566a] {\n  justify-self: start;\n}\n.header .doc[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  justify-self: center;\n  align-items: center;\n}\n.header .deliverer[data-v-1e05566a] {\n  justify-self: end;\n}\n.footer[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 8px;\n  min-height: -webkit-min-content;\n  min-height: -moz-min-content;\n  min-height: min-content;\n  min-height: 112px;\n  overflow-x: auto;\n  align-items: start;\n}\n.footer .f-left[data-v-1e05566a],\n.footer .f-middle[data-v-1e05566a],\n.footer .f-right[data-v-1e05566a] {\n  display: grid;\n  grid-gap: 8px;\n  align-items: center;\n}\n.footer .f-left[data-v-1e05566a] {\n  grid-template-columns: 62px 284px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n}\n.footer .f-middle[data-v-1e05566a] {\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  justify-self: center;\n}\n.footer .f-right[data-v-1e05566a] {\n  grid-template-columns: 62px 113px 42px 113px;\n  justify-self: end;\n}\n.footer-buy[data-v-1e05566a] {\n  min-height: 72px;\n}\n.buy-doc-note[data-v-1e05566a] {\n  min-height: 72px !important;\n}\n.grid-data[data-v-1e05566a] {\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  min-height: 81px;\n  border-radius: 2px;\n  border: 1px solid #ebf1fa;\n  overflow: auto;\n}\n.grid-data .grid-row[data-v-1e05566a] {\n  display: grid;\n  grid-column-gap: 8px;\n  padding: 5px 8px;\n  width: 100%;\n  grid-template-columns: minmax(14px, 14px) minmax(14px, 14px) minmax(150px, 100%) minmax(150px, 100%) minmax(70px, 70px) minmax(80px, 80px) minmax(62px, 62px);\n  grid-auto-rows: -webkit-min-content;\n  grid-auto-rows: min-content;\n  align-items: center;\n  border: 1px solid transparent;\n  border-bottom-color: #ebf1fa;\n  background-color: #fff;\n}\n.grid-data .grid-row[data-v-1e05566a]:focus-within {\n  background: #f5f5f5;\n}\n.grid-data .grid-row[data-v-1e05566a]:first-child {\n  height: auto;\n}\n.grid-data .grid-row[data-v-1e05566a]:not(:first-child):hover {\n  background: #f9fafb;\n  border-color: #858585;\n  border-radius: 0.125rem;\n}\n.grid-data .grid-row:not(:first-child):hover .obj-link[data-v-1e05566a] {\n  visibility: visible;\n}\n.grid-data .grid-row[data-v-1e05566a]:last-child {\n  border-bottom: 1px solid transparent;\n}\n.grid-data .grid-row .check[data-v-1e05566a] {\n  justify-self: center;\n}\n.grid-data .grid-row .rownum[data-v-1e05566a] {\n  justify-self: center;\n}\n.grid-data .grid-row .period[data-v-1e05566a] {\n  text-align: center;\n}\n.grid-data .grid-row .total[data-v-1e05566a] {\n  justify-self: end;\n}\n.grid-data .grid-row .total > div[data-v-1e05566a] {\n  text-align: right;\n}\n.grid-data .headers-buy[data-v-1e05566a] {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  font-size: 10px;\n  align-items: center;\n  padding: 8px;\n  z-index: 20;\n  color: #fff;\n  background: #ff5a1f;\n  box-shadow: rgba(0, 0, 0, 0.255) 0px 1.6px 3.6px, rgba(0, 0, 0, 0.216) 0px 0px 2.9px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  border: unset;\n}\n.grid-data .row-num[data-v-1e05566a] {\n  width: 35px;\n  height: 35px;\n  align-self: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  justify-self: center;\n  background-color: #fff;\n  border: 1px solid #c5cbd4;\n  color: #8da2fb;\n  font-size: 10px;\n  border-radius: 999px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-label[data-v-1e05566a] {\n  font-size: 12px;\n  color: #5c6bc0;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-input[data-v-1e05566a] {\n  font-size: 0.75rem;\n  padding: 6px 8px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  color: #37474f;\n  width: 100%;\n  background-color: inherit;\n  border: 1px solid #a2aab4;\n  border-radius: 0.125rem;\n  min-height: 2rem;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 1px #a2aab4 inset;\n}\n.custom-input[data-v-1e05566a]:hover {\n  border-color: #4b5563;\n  box-shadow: 0 0 0 1px #4b5563 inset;\n}\n.custom-input[data-v-1e05566a]:focus {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\n.custom-input[data-v-1e05566a]:focus-within {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\ninput[data-v-1e05566a]::-webkit-outer-spin-button,\ninput[data-v-1e05566a]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.last-paid[data-v-1e05566a] {\n  width: 62px;\n}\n.last-paid-picker[data-v-1e05566a] {\n  width: 113px;\n}\n.primary-info[data-v-1e05566a] {\n  font-size: 13px;\n  color: #37474f;\n  line-height: 1.25rem;\n}\n.secondary-info[data-v-1e05566a] {\n  color: #5c6bc0;\n  font-size: 11px;\n  text-transform: lowercase;\n}\n.month[data-v-1e05566a] {\n  background: #5c6bc0;\n  color: #ffffff;\n  border-radius: 4px;\n  padding: 4px 6px;\n}\n.soft-shadow[data-v-1e05566a] {\n  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.row-checkbox[data-v-1e05566a] {\n  z-index: 0;\n  position: relative;\n}\n\n/* Input */\n.row-checkbox > input[data-v-1e05566a] {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  z-index: -1;\n  position: absolute;\n  box-shadow: none;\n  outline: none;\n  opacity: 0;\n  pointer-events: none;\n}\n\n/* Span */\n.row-checkbox > span[data-v-1e05566a] {\n  display: flex;\n  width: 24px;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n}\n\n/* Box */\n.row-checkbox > span[data-v-1e05566a]::before {\n  content: \"\";\n  display: inline-block;\n  box-sizing: border-box;\n  margin: 3px 1px;\n  border: solid 2px;\n  border-color: #c5cbd4;\n  border-radius: 2px;\n  width: 18px;\n  height: 18px;\n  vertical-align: top;\n  transition: border-color 0.2s, background-color 0.2s;\n}\n\n/* Checkmark */\n.row-checkbox > span[data-v-1e05566a]::after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 4px;\n  left: 3px;\n  width: 12px;\n  height: 5px;\n  border: solid 2px transparent;\n  border-right: none;\n  border-top: none;\n  transform: translate(3px, 4px) rotate(-45deg);\n}\n\n/* Checked, Indeterminate */\n.row-checkbox > input[data-v-1e05566a]:checked,\n.row-checkbox > input[data-v-1e05566a]:indeterminate {\n  background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));\n}\n.row-checkbox > input:checked + span[data-v-1e05566a]::before,\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::before {\n  border-color: #c5cbd4;\n}\n.row-checkbox > input:checked + span[data-v-1e05566a]::after,\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::after {\n  border-color: #718096;\n}\n.row-checkbox > input:indeterminate + span[data-v-1e05566a]::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px);\n}\n.check-indeterminate + span[data-v-1e05566a]::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px) !important;\n}\n\n/* Hover, Focus */\n.row-checkbox:hover > input[data-v-1e05566a] {\n  opacity: 0.04;\n}\n.row-checkbox > input[data-v-1e05566a]:focus {\n  opacity: 0.12;\n}\n.row-checkbox:hover > input[data-v-1e05566a]:focus {\n  opacity: 0.16;\n}\n\n/* Disabled */\n.row-checkbox > input[data-v-1e05566a]:disabled {\n  opacity: 0;\n  background-color: transparent;\n}\n.row-checkbox > input:disabled + span[data-v-1e05566a] {\n  color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);\n  cursor: initial;\n}\n.row-checkbox > input:disabled + span[data-v-1e05566a]::before {\n  border-color: currentColor;\n}\n.row-checkbox > input:checked:disabled + span[data-v-1e05566a]::before,\n.row-checkbox > input:indeterminate:disabled + span[data-v-1e05566a]::before {\n  border-color: #f5f5f5;\n  background-color: #f5f5f5;\n}\n.row-checkbox > input:checked:disabled + span[data-v-1e05566a]::after,\n.row-checkbox > input:indeterminate:disabled + span[data-v-1e05566a]::after {\n  border-color: #f5f5f5;\n}\n.col-end-end[data-v-1e05566a] {\n  grid-column-end: -1;\n}\n.min-h-18px[data-v-1e05566a] {\n  min-height: 18px;\n}\n\n/*\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n::-webkit-scrollbar-corner {\n  background: #2196f3;\n}\n::-webkit-scrollbar-thumb {\n  background: #2196f3;\n  border-radius: 15px;\n  border: 2px solid transparent;\n  cursor: grab;\n  background-clip: padding-box;\n}\n::-webkit-scrollbar-track {\n  background: #3e4251;\n  border-color: #585858;\n  border-style: solid;\n}  */\n\n/*\n::-webkit-scrollbar {\n    width: 16px\n}\n\n::-webkit-scrollbar-thumb {\n    background: #dadce0;\n    background-clip: padding-box;\n    border: 4px solid transparent;\n    border-radius: 8px;\n    box-shadow: none;\n    min-height: 50px\n}\n::-webkit-scrollbar-track {\n    background: none;\n    border: none\n}\n\n::-webkit-scrollbar-track:hover {\n    background: none;\n    border: none\n}  */", ""]);
 
 // exports
 
@@ -13988,7 +14278,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".header-collapse {\n  min-height: 32px;\n}\n.header-full {\n  min-height: 152px;\n}\n.justify-self-center {\n  justify-self: center;\n}\n::-moz-selection {\n  background-color: #338fff;\n  color: #fff;\n}\n::selection {\n  background-color: #338fff;\n  color: #fff;\n}\n.header {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 12px;\n  overflow-x: auto;\n}\n.header .client,\n.header .deliverer {\n  display: grid;\n  grid-template-columns: 62px 113px 42px 113px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  align-items: center;\n}\n.header .client {\n  justify-self: start;\n}\n.header .doc {\n  display: grid;\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  justify-self: center;\n  align-items: center;\n}\n.header .deliverer {\n  justify-self: end;\n}\n.footer {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 8px;\n  min-height: -webkit-min-content;\n  min-height: -moz-min-content;\n  min-height: min-content;\n  min-height: 112px;\n  overflow-x: auto;\n  align-items: start;\n}\n.footer .f-left,\n.footer .f-middle,\n.footer .f-right {\n  display: grid;\n  grid-gap: 8px;\n  align-items: center;\n}\n.footer .f-left {\n  grid-template-columns: 62px 284px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n}\n.footer .f-middle {\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  justify-self: center;\n}\n.footer .f-right {\n  grid-template-columns: 62px 113px 42px 113px;\n  justify-self: end;\n}\n.grid-data {\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  min-height: 81px;\n  border-radius: 2px;\n  border: 1px solid #ebf1fa;\n  overflow: auto;\n}\n.grid-data .grid-row {\n  display: grid;\n  grid-column-gap: 8px;\n  padding: 5px 8px;\n  width: 100%;\n  grid-template-columns: minmax(24px, 24px) minmax(35px, 35px) minmax(150px, 100%) minmax(150px, 100%) minmax(68px, 68px) minmax(68px, 68px) minmax(68px, 68px);\n  grid-auto-rows: -webkit-min-content;\n  grid-auto-rows: min-content;\n  align-items: center;\n  border: 1px solid transparent;\n  border-bottom-color: #ebf1fa;\n  background-color: #fff;\n}\n.grid-data .grid-row:focus-within {\n  background: #f5f5f5;\n}\n.grid-data .grid-row:first-child {\n  height: auto;\n}\n.grid-data .grid-row:not(:first-child):hover {\n  background: #f9fafb;\n  border-color: #858585;\n  border-radius: 0.125rem;\n}\n.grid-data .grid-row:not(:first-child):hover .obj-link {\n  visibility: visible;\n}\n.grid-data .grid-row:last-child {\n  border-bottom: 1px solid transparent;\n}\n.grid-data .grid-row .check {\n  justify-self: center;\n}\n.grid-data .grid-row .rownum {\n  justify-self: center;\n}\n.grid-data .grid-row .quantity,\n.grid-data .grid-row .single,\n.grid-data .grid-row .total {\n  justify-self: end;\n}\n.grid-data .grid-row .quantity > div,\n.grid-data .grid-row .single > div,\n.grid-data .grid-row .total > div {\n  text-align: right;\n}\n.grid-data .headers {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  font-size: 10px;\n  align-items: center;\n  padding: 8px;\n  z-index: 20;\n  color: #fff;\n  background: #0d79bb;\n  box-shadow: rgba(0, 0, 0, 0.255) 0px 1.6px 3.6px, rgba(0, 0, 0, 0.216) 0px 0px 2.9px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  border: unset;\n}\n.grid-data .row-num {\n  width: 35px;\n  height: 35px;\n  align-self: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  justify-self: center;\n  background-color: #fff;\n  border: 1px solid #c5cbd4;\n  color: #8da2fb;\n  font-size: 10px;\n  border-radius: 999px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-label {\n  font-size: 12px;\n  color: #2d3e52;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-input {\n  font-size: 0.75rem;\n  padding: 6px 8px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  color: #37474f;\n  width: 100%;\n  background-color: inherit;\n  border: 1px solid #a2aab4;\n  border-radius: 0.125rem;\n  min-height: 2rem;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 1px #a2aab4 inset;\n}\n.custom-input:hover {\n  border-color: #4b5563;\n  box-shadow: 0 0 0 1px #4b5563 inset;\n}\n.custom-input:focus {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\n.custom-input:focus-within {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.last-paid {\n  width: 62px;\n}\n.last-paid-picker {\n  width: 113px;\n}\n.primary-info {\n  font-size: 13px;\n  color: #37474f;\n  line-height: 1.25rem;\n}\n.secondary-info {\n  color: #5c6bc0;\n  font-size: 11px;\n  text-transform: lowercase;\n}\n.soft-shadow {\n  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.row-checkbox {\n  z-index: 0;\n  position: relative;\n}\n\n/* Input */\n.row-checkbox > input {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  z-index: -1;\n  position: absolute;\n  box-shadow: none;\n  outline: none;\n  opacity: 0;\n  pointer-events: none;\n}\n\n/* Span */\n.row-checkbox > span {\n  display: flex;\n  width: 24px;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n}\n\n/* Box */\n.row-checkbox > span::before {\n  content: \"\";\n  display: inline-block;\n  box-sizing: border-box;\n  margin: 3px 1px;\n  border: solid 2px;\n  border-color: #c5cbd4;\n  border-radius: 2px;\n  width: 18px;\n  height: 18px;\n  vertical-align: top;\n  transition: border-color 0.2s, background-color 0.2s;\n}\n\n/* Checkmark */\n.row-checkbox > span::after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 4px;\n  left: 3px;\n  width: 12px;\n  height: 5px;\n  border: solid 2px transparent;\n  border-right: none;\n  border-top: none;\n  transform: translate(3px, 4px) rotate(-45deg);\n}\n\n/* Checked, Indeterminate */\n.row-checkbox > input:checked,\n.row-checkbox > input:indeterminate {\n  background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));\n}\n.row-checkbox > input:checked + span::before,\n.row-checkbox > input:indeterminate + span::before {\n  border-color: #c5cbd4;\n}\n.row-checkbox > input:checked + span::after,\n.row-checkbox > input:indeterminate + span::after {\n  border-color: #718096;\n}\n.row-checkbox > input:indeterminate + span::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px);\n}\n.check-indeterminate + span::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px) !important;\n}\n\n/* Hover, Focus */\n.row-checkbox:hover > input {\n  opacity: 0.04;\n}\n.row-checkbox > input:focus {\n  opacity: 0.12;\n}\n.row-checkbox:hover > input:focus {\n  opacity: 0.16;\n}\n\n/* Disabled */\n.row-checkbox > input:disabled {\n  opacity: 0;\n  background-color: transparent;\n}\n.row-checkbox > input:disabled + span {\n  color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);\n  cursor: initial;\n}\n.row-checkbox > input:disabled + span::before {\n  border-color: currentColor;\n}\n.row-checkbox > input:checked:disabled + span::before,\n.row-checkbox > input:indeterminate:disabled + span::before {\n  border-color: #f5f5f5;\n  background-color: #f5f5f5;\n}\n.row-checkbox > input:checked:disabled + span::after,\n.row-checkbox > input:indeterminate:disabled + span::after {\n  border-color: #f5f5f5;\n}\n.col-end-end {\n  grid-column-end: -1;\n}\n\n/*\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n::-webkit-scrollbar-corner {\n  background: #2196f3;\n}\n::-webkit-scrollbar-thumb {\n  background: #2196f3;\n  border-radius: 15px;\n  border: 2px solid transparent;\n  cursor: grab;\n  background-clip: padding-box;\n}\n::-webkit-scrollbar-track {\n  background: #3e4251;\n  border-color: #585858;\n  border-style: solid;\n}  */\n\n/*\n::-webkit-scrollbar {\n    width: 16px\n}\n\n::-webkit-scrollbar-thumb {\n    background: #dadce0;\n    background-clip: padding-box;\n    border: 4px solid transparent;\n    border-radius: 8px;\n    box-shadow: none;\n    min-height: 50px\n}\n::-webkit-scrollbar-track {\n    background: none;\n    border: none\n}\n\n::-webkit-scrollbar-track:hover {\n    background: none;\n    border: none\n}  */", ""]);
+exports.push([module.i, ".header-collapse {\n  min-height: 32px;\n}\n.header-full {\n  min-height: 152px;\n}\n.justify-self-center {\n  justify-self: center;\n}\n::-moz-selection {\n  background-color: #338fff;\n  color: #fff;\n}\n::selection {\n  background-color: #338fff;\n  color: #fff;\n}\n.header {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 12px;\n  overflow-x: auto;\n}\n.header .client,\n.header .deliverer {\n  display: grid;\n  grid-template-columns: 62px 113px 42px 113px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  align-items: center;\n}\n.header .client {\n  justify-self: start;\n}\n.header .doc {\n  display: grid;\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-gap: 8px;\n  justify-self: center;\n  align-items: center;\n}\n.header .deliverer {\n  justify-self: end;\n}\n.footer {\n  display: grid;\n  grid-template-columns: 2fr 1fr 2fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  grid-column-gap: 8px;\n  min-height: -webkit-min-content;\n  min-height: -moz-min-content;\n  min-height: min-content;\n  min-height: 112px;\n  overflow-x: auto;\n  align-items: start;\n}\n.footer .f-left,\n.footer .f-middle,\n.footer .f-right {\n  display: grid;\n  grid-gap: 8px;\n  align-items: center;\n}\n.footer .f-left {\n  grid-template-columns: 62px 284px;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n}\n.footer .f-middle {\n  grid-template-columns: 54px minmax(126px, auto);\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  justify-self: center;\n}\n.footer .f-right {\n  grid-template-columns: 62px 113px 42px 113px;\n  justify-self: end;\n}\n.grid-data {\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: -webkit-min-content;\n  grid-template-rows: min-content;\n  min-height: 81px;\n  border-radius: 2px;\n  border: 1px solid #ebf1fa;\n  overflow: auto;\n}\n.grid-data .grid-row {\n  display: grid;\n  grid-column-gap: 8px;\n  padding: 5px 8px;\n  width: 100%;\n  grid-template-columns: minmax(24px, 24px) minmax(35px, 35px) minmax(150px, 100%) minmax(150px, 100%) minmax(68px, 68px) minmax(68px, 68px) minmax(68px, 68px);\n  grid-auto-rows: -webkit-min-content;\n  grid-auto-rows: min-content;\n  align-items: center;\n  border: 1px solid transparent;\n  border-bottom-color: #ebf1fa;\n  background-color: #fff;\n}\n.grid-data .grid-row:focus-within {\n  background: #f5f5f5;\n}\n.grid-data .grid-row:first-child {\n  height: auto;\n}\n.grid-data .grid-row:not(:first-child):hover {\n  background: #f9fafb;\n  border-color: #858585;\n  border-radius: 0.125rem;\n}\n.grid-data .grid-row:not(:first-child):hover .obj-link {\n  visibility: visible;\n}\n.grid-data .grid-row:last-child {\n  border-bottom: 1px solid transparent;\n}\n.grid-data .grid-row .check {\n  justify-self: center;\n}\n.grid-data .grid-row .rownum {\n  justify-self: center;\n}\n.grid-data .grid-row .quantity,\n.grid-data .grid-row .single,\n.grid-data .grid-row .total {\n  justify-self: end;\n}\n.grid-data .grid-row .quantity > div,\n.grid-data .grid-row .single > div,\n.grid-data .grid-row .total > div {\n  text-align: right;\n}\n.grid-data .headers {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  font-size: 10px;\n  align-items: center;\n  padding: 8px;\n  z-index: 20;\n  color: #fff;\n  background: #8da2fb;\n  box-shadow: rgba(0, 0, 0, 0.255) 0px 1.6px 3.6px, rgba(0, 0, 0, 0.216) 0px 0px 2.9px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  border: unset;\n}\n.grid-data .row-num {\n  width: 35px;\n  height: 35px;\n  align-self: center;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  justify-self: center;\n  background-color: #fff;\n  border: 1px solid #c5cbd4;\n  color: #8da2fb;\n  font-size: 10px;\n  border-radius: 999px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-label {\n  font-size: 12px;\n  color: #5c6bc0;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.custom-input {\n  font-size: 0.75rem;\n  padding: 6px 8px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  color: #37474f;\n  width: 100%;\n  background-color: inherit;\n  border: 1px solid #a2aab4;\n  border-radius: 0.125rem;\n  min-height: 2rem;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 1px #a2aab4 inset;\n}\n.custom-input:hover {\n  border-color: #4b5563;\n  box-shadow: 0 0 0 1px #4b5563 inset;\n}\n.custom-input:focus {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\n.custom-input:focus-within {\n  outline: none;\n  border-color: #8da2fb;\n  box-shadow: 0 0 0 1px #8da2fb inset;\n}\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.last-paid {\n  width: 62px;\n}\n.transaction-place-label {\n  width: 42px;\n}\n.last-paid-picker, .transaction-place {\n  width: 113px;\n}\n.primary-info {\n  font-size: 13px;\n  color: #37474f;\n  line-height: 1.25rem;\n}\n.secondary-info {\n  color: #5c6bc0;\n  font-size: 11px;\n  text-transform: lowercase;\n}\n.soft-shadow {\n  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.row-checkbox {\n  z-index: 0;\n  position: relative;\n}\n\n/* Input */\n.row-checkbox > input {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  z-index: -1;\n  position: absolute;\n  box-shadow: none;\n  outline: none;\n  opacity: 0;\n  pointer-events: none;\n}\n\n/* Span */\n.row-checkbox > span {\n  display: flex;\n  width: 24px;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n}\n\n/* Box */\n.row-checkbox > span::before {\n  content: \"\";\n  display: inline-block;\n  box-sizing: border-box;\n  margin: 3px 1px;\n  border: solid 2px;\n  border-color: #c5cbd4;\n  border-radius: 2px;\n  width: 18px;\n  height: 18px;\n  vertical-align: top;\n  transition: border-color 0.2s, background-color 0.2s;\n}\n\n/* Checkmark */\n.row-checkbox > span::after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 4px;\n  left: 3px;\n  width: 12px;\n  height: 5px;\n  border: solid 2px transparent;\n  border-right: none;\n  border-top: none;\n  transform: translate(3px, 4px) rotate(-45deg);\n}\n\n/* Checked, Indeterminate */\n.row-checkbox > input:checked,\n.row-checkbox > input:indeterminate {\n  background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));\n}\n.row-checkbox > input:checked + span::before,\n.row-checkbox > input:indeterminate + span::before {\n  border-color: #c5cbd4;\n}\n.row-checkbox > input:checked + span::after,\n.row-checkbox > input:indeterminate + span::after {\n  border-color: #718096;\n}\n.row-checkbox > input:indeterminate + span::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px);\n}\n.check-indeterminate + span::after {\n  border-left: none !important;\n  border-color: #718096;\n  transform: translate(3px, 4px) !important;\n}\n\n/* Hover, Focus */\n.row-checkbox:hover > input {\n  opacity: 0.04;\n}\n.row-checkbox > input:focus {\n  opacity: 0.12;\n}\n.row-checkbox:hover > input:focus {\n  opacity: 0.16;\n}\n\n/* Disabled */\n.row-checkbox > input:disabled {\n  opacity: 0;\n  background-color: transparent;\n}\n.row-checkbox > input:disabled + span {\n  color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);\n  cursor: initial;\n}\n.row-checkbox > input:disabled + span::before {\n  border-color: currentColor;\n}\n.row-checkbox > input:checked:disabled + span::before,\n.row-checkbox > input:indeterminate:disabled + span::before {\n  border-color: #f5f5f5;\n  background-color: #f5f5f5;\n}\n.row-checkbox > input:checked:disabled + span::after,\n.row-checkbox > input:indeterminate:disabled + span::after {\n  border-color: #f5f5f5;\n}\n.col-end-end {\n  grid-column-end: -1;\n}\n\n/*\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n::-webkit-scrollbar-corner {\n  background: #2196f3;\n}\n::-webkit-scrollbar-thumb {\n  background: #2196f3;\n  border-radius: 15px;\n  border: 2px solid transparent;\n  cursor: grab;\n  background-clip: padding-box;\n}\n::-webkit-scrollbar-track {\n  background: #3e4251;\n  border-color: #585858;\n  border-style: solid;\n}  */\n\n/*\n::-webkit-scrollbar {\n    width: 16px\n}\n\n::-webkit-scrollbar-thumb {\n    background: #dadce0;\n    background-clip: padding-box;\n    border: 4px solid transparent;\n    border-radius: 8px;\n    box-shadow: none;\n    min-height: 50px\n}\n::-webkit-scrollbar-track {\n    background: none;\n    border: none\n}\n\n::-webkit-scrollbar-track:hover {\n    background: none;\n    border: none\n}  */", ""]);
 
 // exports
 
@@ -38571,11 +38861,11 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "kvitanciq" } }, [
-                              _vm._v("Проформа фактура")
+                              _vm._v("Квитанция")
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "oprostena" } }, [
-                              _vm._v("Квитанция")
+                              _vm._v("Опростена ф-ра")
                             ])
                           ]
                         )
@@ -39208,6 +39498,43 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
+                      _vm.doc_rows.length
+                        ? _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "tippy",
+                                  rawName: "v-tippy",
+                                  value: {
+                                    trigger: "mouseenter",
+                                    placement: "bottom",
+                                    arrow: true
+                                  },
+                                  expression:
+                                    "{ trigger: 'mouseenter', placement: 'bottom', arrow: true }"
+                                }
+                              ],
+                              staticClass:
+                                "flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                              attrs: {
+                                title: !_vm.document_data.is_hide
+                                  ? "Документа е видим натисни за промяна"
+                                  : "Документа е скрит натисни за промяна"
+                              },
+                              on: { click: _vm.toggleIsHide }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fad fa-eye fa-lg fa-fw",
+                                class: _vm.document_data.is_hide
+                                  ? "fa-low-vision"
+                                  : "fa-eye"
+                              })
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "button",
                         {
@@ -39281,7 +39608,7 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "grid-cell service-nomenclature" },
-                      [_vm._v("фонд / номенклатура")]
+                      [_vm._v("направление / номенклатура")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "grid-cell period" }, [
@@ -39344,9 +39671,9 @@ var render = function() {
                                         {
                                           staticClass:
                                             "primary-info font-medium w-full truncate focus:outline-none",
-                                          attrs: { title: row.fund }
+                                          attrs: { title: row.direction }
                                         },
-                                        [_vm._v(_vm._s(row.fund))]
+                                        [_vm._v(_vm._s(row.direction))]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -39547,7 +39874,7 @@ var render = function() {
                     _vm.clients[_vm.selectedClient].id_office_dds,
                   firms: _vm.selectedFirms,
                   regions: _vm.regions,
-                  funds: _vm.funds,
+                  directions: _vm.directions,
                   nomenclatures: _vm.nomenclatures,
                   nomenclature_groups: _vm.nomenclature_groups,
                   date: _vm.document_data.doc_date_create,
@@ -39812,7 +40139,9 @@ var render = function() {
                         "div",
                         { staticClass: "flex flex-wrap w-auto ml-auto" },
                         [
-                          _vm.urlParams.id && !_vm.is_new_relative_doc
+                          _vm.urlParams.id &&
+                          !_vm.is_new_relative_doc &&
+                          _vm.document_data.doc_status !== "canceled"
                             ? _c(
                                 "button",
                                 {
@@ -39830,7 +40159,6 @@ var render = function() {
                             : _vm._e(),
                           _vm._v(" "),
                           _vm.urlParams.id &&
-                          !_vm.is_new_relative_doc &&
                           _vm.document_data.doc_status !== "canceled"
                             ? _c(
                                 "button",
@@ -40385,10 +40713,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass: "flex items-center justify-between",
-                    class: { "mb-2": _vm.service.for_smartsot }
-                  },
+                  { staticClass: "flex items-center justify-between" },
                   [
                     _c(
                       "div",
@@ -40400,25 +40725,7 @@ var render = function() {
                       _vm._v(_vm._s(_vm.service.measure))
                     ])
                   ]
-                ),
-                _vm._v(" "),
-                _vm.service.for_smartsot
-                  ? _c(
-                      "div",
-                      { staticClass: "flex items-center justify-between" },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "custom-label w-24 flex-shrink-0" },
-                          [_vm._v("смарт сот:")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "custom-input" }, [
-                          _vm._v("да")
-                        ])
-                      ]
-                    )
-                  : _vm._e()
+                )
               ]
             )
           ]
@@ -40588,8 +40895,15 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "div",
-                                { staticClass: "w-24 ml-auto text-right" },
-                                [_vm._v(_vm._s(order.order_sum) + " лв.")]
+                                {
+                                  staticClass: "w-24 ml-auto text-right",
+                                  attrs: { title: order.order_sum }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(order.order_sum.toFixed(2)) + " лв."
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c("i", {
@@ -41749,19 +42063,23 @@ var render = function() {
                               disabled: _vm.urlParams.id
                             },
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.doc_type = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.doc_type = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                _vm.assingDocType
+                              ]
                             }
                           },
                           [
@@ -42257,7 +42575,7 @@ var render = function() {
                     ? _c("datepicker", {
                         attrs: {
                           title: "падеж...",
-                          wrapperClass: "last-paid-picker",
+                          wrapperClass: "last-paid-picker mr-2",
                           autocomplete: "off",
                           placeholder: "xx.xxxx",
                           inputClass: "custom-input",
@@ -42276,6 +42594,71 @@ var render = function() {
                         }
                       })
                     : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-label  mr-2",
+                      class: _vm.urlParams.id
+                        ? "last-paid"
+                        : "transaction-place-label",
+                      attrs: { for: "transaction_place" }
+                    },
+                    [_vm._v("място:")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.client.id_city,
+                          expression: "client.id_city"
+                        }
+                      ],
+                      staticClass: "custom-input transaction-place mr-2",
+                      attrs: {
+                        title: "място на сделката",
+                        id: "transaction_place"
+                      },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.client,
+                              "id_city",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            _vm.current_id_city = _vm.client.id_city
+                          }
+                        ]
+                      }
+                    },
+                    _vm._l(_vm.cities, function(city) {
+                      return _c("option", {
+                        key: city.id,
+                        domProps: {
+                          value: city.id,
+                          textContent: _vm._s(city.name)
+                        }
+                      })
+                    }),
+                    0
+                  ),
                   _vm._v(" "),
                   _vm.document_data.is_advice ||
                   _vm.document_data.id_advice ||
@@ -44432,11 +44815,7 @@ var render = function() {
                                   ? _c("div", {
                                       staticClass: "secondary-info truncate",
                                       domProps: {
-                                        textContent: _vm._s(
-                                          object.services[0].for_smartsot
-                                            ? "месечни такси [ смарт сот ]"
-                                            : "месечни такси"
-                                        )
+                                        textContent: _vm._s("месечни такси")
                                       }
                                     })
                                   : object.services && object.type === "free"
@@ -47143,8 +47522,31 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm.showFreeSaleComponent
+          _vm.showFreeSaleComponent && _vm.doc_type !== "oprostena"
             ? _c("freeSaleComponent", {
+                attrs: {
+                  user_office_id: _vm.document_data.user_office_id,
+                  regions: _vm.regions,
+                  firms: _vm.selectedFirms,
+                  service: _vm.serviceForEdit,
+                  services: _vm.services,
+                  edit: _vm.serviceForEditType.edit,
+                  date: _vm.document_data.doc_date_create,
+                  current_document: _vm.document_data,
+                  relative_document: _vm.relative_document,
+                  relative_credit_maxValue: _vm.relative_credit_maxValue
+                },
+                on: {
+                  closeFreeSale: _vm.closeService,
+                  addService: _vm.addService,
+                  updateService: _vm.updateService,
+                  deleteService: _vm.deleteService
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showFreeSaleComponent && _vm.doc_type === "oprostena"
+            ? _c("freeSaleComponentWithoutVat", {
                 attrs: {
                   user_office_id: _vm.document_data.user_office_id,
                   regions: _vm.regions,
@@ -48581,9 +48983,9 @@ var render = function() {
                           "label",
                           {
                             staticClass: "custom-label w-24 flex-shrink-0",
-                            attrs: { for: "selectfund" }
+                            attrs: { for: "selectDirection" }
                           },
-                          [_vm._v("фонд :")]
+                          [_vm._v("направление :")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -48598,7 +49000,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "custom-input",
-                            attrs: { id: "selectfund" },
+                            attrs: { id: "selectDirection" },
                             on: {
                               change: [
                                 function($event) {
@@ -48619,15 +49021,18 @@ var render = function() {
                                       : $$selectedVal[0]
                                   )
                                 },
-                                _vm.changeFund
+                                _vm.changeDirection
                               ]
                             }
                           },
-                          _vm._l(_vm.firmFunds, function(fund) {
+                          _vm._l(_vm.regionDirections, function(direction) {
                             return _c(
                               "option",
-                              { key: fund.id, domProps: { value: fund.id } },
-                              [_vm._v(_vm._s(fund.name))]
+                              {
+                                key: direction.id,
+                                domProps: { value: direction.id }
+                              },
+                              [_vm._v(_vm._s(direction.name))]
                             )
                           }),
                           0
@@ -48750,7 +49155,7 @@ var render = function() {
                               ]
                             }
                           },
-                          _vm._l(_vm.fundGroupNomenclatures, function(
+                          _vm._l(_vm.directionGroupNomenclatures, function(
                             nomenclature
                           ) {
                             return _c(
@@ -49482,6 +49887,574 @@ var render = function() {
                                   "w-full text-right text-orange-500 text-xssplus"
                               },
                               [_vm._v("с ддс")]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]
+            )
+          ]
+        },
+        proxy: true
+      },
+      {
+        key: "footer",
+        fn: function() {
+          return [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "flex items-center justify-end bg-white px-3 py-2 flex-shrink-0"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "w-24 h-8 p-2 shadow-custom rounded-sm bg-white text-gray-700 text-xss uppercase font-medium tracking-wide hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.closeServiceComponent()
+                      }
+                    }
+                  },
+                  [_vm._v("затвори")]
+                ),
+                _vm._v(" "),
+                _vm.edit
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "w-24 h-8 p-2 shadow-custom rounded-sm bg-gray-500 text-white text-xss uppercase font-medium tracking-wide hover:bg-gray-600 hover:text-white focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteService()
+                          }
+                        }
+                      },
+                      [_vm._v("изтрий")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.edit
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "w-24 h-8 p-2 shadow-custom rounded-sm bg-indigo-400 text-white text-xss uppercase font-medium tracking-wide hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                        on: {
+                          click: function($event) {
+                            return _vm.addService()
+                          }
+                        }
+                      },
+                      [_vm._v("добави")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.edit
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "w-24 h-8 p-2 shadow-custom rounded-sm bg-indigo-400 text-white text-xss uppercase font-medium tracking-wide hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                        on: {
+                          click: function($event) {
+                            return _vm.updateService()
+                          }
+                        }
+                      },
+                      [_vm._v("потвърди")]
+                    )
+                  : _vm._e()
+              ]
+            )
+          ]
+        },
+        proxy: true
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("baseDialog", {
+    attrs: { static: "" },
+    scopedSlots: _vm._u([
+      {
+        key: "header",
+        fn: function() {
+          return [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "flex items-center  p-3 rounded-t-sm bg-indigo-500 flex-shrink-0"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-xs tracking-wide text-white font-medium truncate uppercase"
+                  },
+                  [_vm._v("свободна продажба")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "ml-auto text-sm focus:outline-none focus:shadow-outline",
+                    on: { click: _vm.closeServiceComponent }
+                  },
+                  [_c("i", { staticClass: "fal fa-times fa-fw" })]
+                )
+              ]
+            )
+          ]
+        },
+        proxy: true
+      },
+      {
+        key: "body",
+        fn: function() {
+          return [
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-col bg-white overflow-y-auto p-3 pb-0"
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "flex items-center justify-between mb-2" },
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "custom-label w-24 flex-shrink-0",
+                        attrs: { for: "selectfirm" }
+                      },
+                      [_vm._v("фирма:")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.serviceTemplate.id_firm,
+                            expression: "serviceTemplate.id_firm"
+                          }
+                        ],
+                        staticClass: "custom-input",
+                        attrs: { id: "selectfirm" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.serviceTemplate,
+                                "id_firm",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            _vm.changeFirm
+                          ]
+                        }
+                      },
+                      _vm._l(_vm.firms, function(firm) {
+                        return _c(
+                          "option",
+                          {
+                            key: firm.id_firm,
+                            domProps: { value: firm.id_firm }
+                          },
+                          [_vm._v(_vm._s(firm.name))]
+                        )
+                      }),
+                      0
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.serviceTemplate.id_firm
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between mb-2" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "selectregion" }
+                          },
+                          [_vm._v("регион:")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.serviceTemplate.id_office,
+                                expression: "serviceTemplate.id_office"
+                              }
+                            ],
+                            staticClass: "custom-input",
+                            attrs: { id: "selectregion" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.serviceTemplate,
+                                    "id_office",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                _vm.changeRegion
+                              ]
+                            }
+                          },
+                          _vm._l(_vm.selectedRegions, function(region) {
+                            return _c(
+                              "option",
+                              {
+                                key: region.id_office,
+                                domProps: { value: region.id_office }
+                              },
+                              [_vm._v(_vm._s(region.region))]
+                            )
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.serviceTemplate.id_firm
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between mb-2" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "selectservice" }
+                          },
+                          [_vm._v("услуга:")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.serviceTemplate.id_service,
+                                expression: "serviceTemplate.id_service"
+                              }
+                            ],
+                            staticClass: "custom-input",
+                            attrs: { id: "selectservice" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.serviceTemplate,
+                                    "id_service",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                _vm.changeService
+                              ]
+                            }
+                          },
+                          _vm._l(_vm.selectedServices, function(service) {
+                            return _c(
+                              "option",
+                              {
+                                key: service.id_service,
+                                domProps: { value: service.id_service }
+                              },
+                              [_vm._v(_vm._s(service.name))]
+                            )
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.serviceTemplate.id_service
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between mb-2" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "service_name" }
+                          },
+                          [_vm._v("наименование:")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.serviceTemplate.object_name,
+                              expression: "serviceTemplate.object_name"
+                            }
+                          ],
+                          staticClass: "custom-input",
+                          attrs: {
+                            type: "text",
+                            name: "service_name",
+                            id: "service_name"
+                          },
+                          domProps: { value: _vm.serviceTemplate.object_name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.serviceTemplate,
+                                "object_name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.selectedService
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between mb-2" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "single_price" }
+                          },
+                          [_vm._v("ед. цена:")]
+                        ),
+                        _vm._v(" "),
+                        _c("currency-input", {
+                          staticClass: "custom-input",
+                          attrs: {
+                            autocomplete: "off",
+                            name: "single_price",
+                            id: "single_price",
+                            currency: null,
+                            "value-range": _vm.sumMinMax,
+                            "allow-negative": _vm.allowNegativeServiceSum,
+                            precision: 4
+                          },
+                          on: {
+                            blur: function($event) {
+                              return _vm.fixNullValue()
+                            }
+                          },
+                          model: {
+                            value: _vm.serviceTemplate.single_price,
+                            callback: function($$v) {
+                              _vm.$set(_vm.serviceTemplate, "single_price", $$v)
+                            },
+                            expression: "serviceTemplate.single_price"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.selectedService
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between mb-2" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "quantity" }
+                          },
+                          [_vm._v(_vm._s(_vm.serviceTemplate.measure) + ":")]
+                        ),
+                        _vm._v(" "),
+                        _c("currency-input", {
+                          staticClass: "custom-input",
+                          attrs: {
+                            autocomplete: "off",
+                            name: "quantity",
+                            id: "quantity",
+                            currency: null,
+                            "allow-negative": false
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.fixQuantity()
+                            }
+                          },
+                          model: {
+                            value: _vm.serviceTemplate.quantity,
+                            callback: function($$v) {
+                              _vm.$set(_vm.serviceTemplate, "quantity", $$v)
+                            },
+                            expression: "serviceTemplate.quantity"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.selectedService
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-between" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-label w-24 flex-shrink-0",
+                            attrs: { for: "from_date" }
+                          },
+                          [_vm._v("дата:")]
+                        ),
+                        _vm._v(" "),
+                        _c("datepicker", {
+                          attrs: {
+                            id: "from_date",
+                            autocomplete: "off",
+                            spellcheck: "false",
+                            placeholder: "xx.xx.xxxx",
+                            wrapperClass: "w-full",
+                            inputClass: "custom-input",
+                            mondayFirst: true,
+                            fullMonthName: true,
+                            highlighted: _vm.highlighted,
+                            format: "DD.MM.YYYY"
+                          },
+                          model: {
+                            value: _vm.serviceTemplate.month,
+                            callback: function($$v) {
+                              _vm.$set(_vm.serviceTemplate, "month", $$v)
+                            },
+                            expression: "serviceTemplate.month"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("hr", { staticClass: "my-3" }),
+                _vm._v(" "),
+                _vm.selectedService
+                  ? _c(
+                      "div",
+                      { staticClass: "flex items-center justify-end gap-2" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex flex-col items-end border p-1 px-2"
+                          },
+                          [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "w-full text-right text-black text-smplus font-medium"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm._f("price")(_vm.currentSum.total_sum)
+                                  ) + " лв."
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "w-full text-right text-orange-500 text-xssplus"
+                              },
+                              [_vm._v("без ддс")]
                             )
                           ]
                         )
@@ -68291,6 +69264,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/components/freeSaleComponentWithoutVat.vue":
+/*!********************************************************!*\
+  !*** ./src/components/freeSaleComponentWithoutVat.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a& */ "./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a&");
+/* harmony import */ var _freeSaleComponentWithoutVat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./freeSaleComponentWithoutVat.vue?vue&type=script&lang=js& */ "./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _freeSaleComponentWithoutVat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/components/freeSaleComponentWithoutVat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_freeSaleComponentWithoutVat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib??ref--4-0!../../node_modules/vue-loader/lib??vue-loader-options!./freeSaleComponentWithoutVat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/components/freeSaleComponentWithoutVat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_freeSaleComponentWithoutVat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a&":
+/*!***************************************************************************************!*\
+  !*** ./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/components/freeSaleComponentWithoutVat.vue?vue&type=template&id=ac68122a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_freeSaleComponentWithoutVat_vue_vue_type_template_id_ac68122a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./src/components/mixins.js":
 /*!**********************************!*\
   !*** ./src/components/mixins.js ***!
@@ -68769,8 +69811,8 @@ var langYearSuffix = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\elos\src\app.js */"./src/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\elos\src\app.scss */"./src/app.scss");
+__webpack_require__(/*! C:\laragon\www\liftkom\src\app.js */"./src/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\liftkom\src\app.scss */"./src/app.scss");
 
 
 /***/ })

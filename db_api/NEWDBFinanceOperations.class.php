@@ -326,16 +326,16 @@ class NEWDBFinanceOperations extends DBMonthTable {
                     $tRow       = PREFIX_SALES_DOCS_ROWS . substr($nIDRow, 0, 6);
 
                     // Фондове
-//                    if ( empty($nIDTran) && empty($isDDS) && !empty($nSumRow) ) {
-//                        $nCheckObject       = $oFunds->checkFormulaForObject($val['id_object']);
-//                        $nCheckFirm         = $oFunds->checkFormulaForFirm($nIDFirm);
-//
+                    //if ( empty($nIDTran) && empty($isDDS) && !empty($nSumRow) ) {
+                        //$nCheckObject       = $oFunds->checkFormulaForObject($val['id_object']);
+                        //$nCheckFirm         = $oFunds->checkFormulaForFirm($nIDFirm);
+
 //                        if ($nCheckFirm == 1) {
 //                            throw new Exception("Некоректна схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
 //                        } elseif ($nCheckFirm === 0) {
 //                            throw new Exception("Липсва схема за фондовете към фирма [{$nIDFirm}]!", DBAPI_ERR_FAILED_TRANS);
 //                        }
-//
+
 //                        if ( $nCheckObject == 2 ) {
 //                            $nFirmFormula = $oFunds->getFirmByFormulaForObject($val['id_office']);
 //                            //ob_toFile($nFirmFormula, "formula.txt");
@@ -347,13 +347,13 @@ class NEWDBFinanceOperations extends DBMonthTable {
 //                        } else {
 //                            $aFundsData = $oFunds->getFundFormulaForFirm($nIDFirm);
 //                        }
-//
+
 //                        $nTotalPercent = array_sum($aFundsData);
 //
 //                        if ($nTotalPercent != 100) {
 //                            throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
 //                        }
-//
+
 //                        foreach ( $aFundsData as $nIDDirectionType => $nSumPercent ) {
 //                            if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
 //                                $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
@@ -387,7 +387,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
 //                                $aTotalFundBalance[$nIDDirectionType] += $nSumAmount;
 //                            }
 //                        }
-//                    }
+                    //}
                 } else {
                     $tRow       = PREFIX_BUY_DOCS_ROWS . substr($nIDRow, 0, 6);
 
@@ -441,7 +441,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                     $oRes = $db_finance->Execute("SELECT sum FROM {$db_name_finance}.saldo WHERE id = {$nIDBalance} LIMIT 1 FOR UPDATE");
                     $nCurrentBalance = !empty($oRes->fields['sum']) ? $oRes->fields['sum'] : 0;
                 } else {
-                    throw new Exception("Неизвестно салдо по фирма!", DBAPI_ERR_FAILED_TRANS);
+                    throw new Exception("Неизвестно салдо по фирма [".$nIDBalance."] !", DBAPI_ERR_FAILED_TRANS);
                 }
 
                 // Наличност по сметка
@@ -539,9 +539,9 @@ class NEWDBFinanceOperations extends DBMonthTable {
                 }
                 */
                 // Фондове - тотали
-                foreach ( $aTotalFundBalance as $nIDDirection => $nSumAmount ) {
-                    $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo - '{$nSumAmount}' WHERE id = {$nIDDirection} LIMIT 1");
-                }
+//                foreach ( $aTotalFundBalance as $nIDDirection => $nSumAmount ) {
+//                    $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo - '{$nSumAmount}' WHERE id = {$nIDDirection} LIMIT 1");
+//                }
             }
 
             $db_finance->CompleteTrans();
@@ -672,7 +672,6 @@ class NEWDBFinanceOperations extends DBMonthTable {
                     return $this->setError("Не може да се издаде ордер с отрицателен знак към този вид документ");
                 }
             } else {
-                
                 if ( $unpaidTotalSum == 0 ) {
                     $orderSum = $unpaidTotalSum;
                 } elseif ( $orderSum < $unpaidTotalSum ) {
@@ -707,7 +706,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
         $sRowsName	    = PREFIX_BUY_DOCS_ROWS.substr($nIDDocument, 0, 6);
 
         // Фондове - проверка за таблици
-       // $oFunds->checkMonthTableByDoc($nIDDocument);
+        //$oFunds->checkMonthTableByDoc($nIDDocument);
 
         $db_finance->StartTrans();
         $db_system->StartTrans();
@@ -738,7 +737,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
             $aDataOrder['id_contragent']	= $nIDClient;
             $aDataOrder['id_doc_firm']		= $nIDFirm;
             $aDataOrder['order_date']		= time();
-            $aDataOrder['order_sum']		= $orderSum;
+            $aDataOrder['order_sum']		= $orderSum; // Тотала в ордера да е със знак +
             $aDataOrder['account_type']		= $sTypeBank;
             $aDataOrder['id_person']	    = $this->currentUser;
             $aDataOrder['bank_account_id']	= $nIDAccount;	//isset($aParams['cbAccount']) ? $aParams['cbAccount'] : 0;
@@ -793,7 +792,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                         $oRes           = $db_finance->Execute("SELECT sum FROM {$db_name_finance}.saldo WHERE id = {$nIDBalance} LIMIT 1 FOR UPDATE");
                         $nCurrentBalance  = !empty($oRes->fields['sum']) ? $oRes->fields['sum'] : 0;
                     } else {
-                        throw new Exception("Неизвестно салдо по фирма.!", DBAPI_ERR_INVALID_PARAM);
+                        throw new Exception("Неизвестно салдо по фирма {".$nIDBalance."} !", DBAPI_ERR_INVALID_PARAM);
                     }
 
                     if ( $nAccState < $currentRowSum ) {
@@ -885,7 +884,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                         $oFundsDaily->update($aDailyFunds); */
 
                         // Totals
-                        $db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo - '{$currentRowSum}' WHERE id = {$nIDDirect} LIMIT 1");
+                        //$db_sod->Execute("UPDATE {$db_name_sod}.directions_type SET saldo = saldo - '{$currentRowSum}' WHERE id = {$nIDDirect} LIMIT 1");
                     }
                 }
             }
@@ -894,7 +893,9 @@ class NEWDBFinanceOperations extends DBMonthTable {
                 throw new Exception("Документа е с нулева сума!", DBAPI_ERR_FAILED_TRANS);
             }
 
+            //$db_finance->Execute("UPDATE {$db_name_finance}.{$sBuyName} SET last_order_id = '{$nIDOrder}', last_order_time = NOW(), orders_sum = orders_sum + '{$nPaidSum}', updated_user = {$this->currentUser}, updated_time = NOW() WHERE id = '{$nIDDocument}'");
             $db_finance->Execute("UPDATE {$db_name_finance}.{$sBuyName} SET last_order_id = '{$nIDOrder}', last_order_time = NOW(), orders_sum = orders_sum + '{$nPaidSum}', updated_user = {$this->currentUser}, updated_time = NOW(), paid_type = '{$sTypeBank}' WHERE id = '{$nIDDocument}'");
+
 
             $db_finance->CompleteTrans();
             $db_system->CompleteTrans();
@@ -956,11 +957,11 @@ class NEWDBFinanceOperations extends DBMonthTable {
             return $this->setError("Невалиден документ!");
         }
 
-        $is_credit = $oSaleDocRows->checkForCredit($nIDDocument);
-
-        if ( $is_credit && $this->massPay ) {
-            return;
-        }
+//        $is_credit = $oSaleDocRows->checkForCredit($nIDDocument);
+//
+//        if ( $is_credit && $this->massPay ) {
+//            return;
+//        }
 
         if ( empty($nIDAccount) || !is_numeric($nIDAccount) ) {
             return $this->setError("Изберете валидна сметка!");
@@ -1135,7 +1136,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                         $oRes           = $db_finance->Execute("SELECT sum FROM {$db_name_finance}.saldo WHERE id = {$nIDSaldo} LIMIT 1 FOR UPDATE");
                         $nCurrentSaldo  = !empty($oRes->fields['sum']) ? $oRes->fields['sum'] : 0;
                     } else {
-                        throw new Exception("Неизвестно салдо по фирма..!", DBAPI_ERR_FAILED_TRANS);
+                        throw new Exception("Неизвестно салдо по фирма (".$nIDSaldo.") !", DBAPI_ERR_FAILED_TRANS);
                     }
 
                     // Наличност по сметка
@@ -1231,8 +1232,8 @@ class NEWDBFinanceOperations extends DBMonthTable {
                         // Фирма
                         if ( !isset($aFirmOffices[$row['id_office']]) ) {
                             $idfrm          = $oFirms->getFirmByOffice($row['id_office']);
-                           // $nCheckObject   = $oFunds->checkFormulaForObject($row['id_office']);
-                           // $nCheckFirm     = $oFunds->checkFormulaForFirm($idfrm);
+//                            $nCheckObject   = $oFunds->checkFormulaForObject($row['id_office']);
+//                            $nCheckFirm     = $oFunds->checkFormulaForFirm($idfrm);
 
 //                            if ($nCheckObject == 2) {
 //                                $nFirmFormula = $oFunds->getFirmByFormulaForObject($nIDObject);
@@ -1245,7 +1246,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
 //                            } else {
 //                                $aFundsData = $oFunds->getFundFormulaForFirm($idfrm);
 //                            }
-
+//
                             $aFirmOffices[$row['id_office']] = [
                                 'id_firm' => $idfrm,
                                 'firm_name' => $oOffices->getFirmNameByIDOffice($row['id_office']),
@@ -1287,7 +1288,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                             $oRes           = $db_finance->Execute("SELECT sum FROM {$db_name_finance}.saldo WHERE id = {$nIDSaldo} LIMIT 1 FOR UPDATE");
                             $nCurrentSaldo  = !empty($oRes->fields['sum']) ? $oRes->fields['sum'] : 0;
                         } else {
-                            throw new Exception("Неизвестно салдо по фирма...!".$oRes." / ".$nIDSaldo." [ ".$nCurrentSaldo, DBAPI_ERR_FAILED_TRANS);
+                            throw new Exception("Неизвестно салдо по фирма ".$nIDSaldo." !", DBAPI_ERR_FAILED_TRANS);
                         }
 
                         // Наличност по сметка
@@ -1407,7 +1408,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
 //                            if ($nTotalPercent != 100) {
 //                                throw new Exception("Некоректна схема за фондовете към фирма или обект!", DBAPI_ERR_FAILED_TRANS);
 //                            }
-//
+
 //                            foreach ($aFundsData as $nIDDirectionType => $nSumPercent) {
 //                                if ( !isset($aFundsBalance[$nIDDirectionType]) ) {
 //                                    $aFundsBalance[$nIDDirectionType] = $oFunds->getFundSaldoById($nIDDirectionType);
@@ -1458,6 +1459,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
 
                 // Слагаме стойностите в описа че са платени
                 $nState = $nAccState + $nRealPayedSum;
+                //$db_finance->Execute("UPDATE {$db_name_finance}.{$sSaleName} SET orders_sum = orders_sum + '{$nRealPayedSum}', last_order_id = '{$nIDOrder}', last_order_time = NOW() WHERE id = '{$nIDDocument}'");
                 $db_finance->Execute("UPDATE {$db_name_finance}.{$sSaleName} SET orders_sum = orders_sum + '{$nRealPayedSum}', last_order_id = '{$nIDOrder}', last_order_time = NOW(), paid_type = '{$sTypeBank}', id_bank_account = '{$nIDAccount}'  WHERE id = '{$nIDDocument}'");
 
                 // Оправяме тоталите
@@ -1521,7 +1523,7 @@ class NEWDBFinanceOperations extends DBMonthTable {
                 // TODO:
                 // СМС известяване за нова фактура
                 // if ( !$nIDTran && ($nIDSMSFirm == 2 && $nIDSMSOffice != 72) && $aDocument['doc_type'] == "faktura" && ($aDocument['epay_provider'] == 0 && $aDocument['id_bank_epayment'] == 0) ) {
-                if ( !$nIDTran && defined('SMS_FOR_PAYMENT') &&  SMS_FOR_PAYMENT == 1 && $aDocument['doc_type'] == "faktura" && ($aDocument['epay_provider'] == 0 && $aDocument['id_bank_epayment'] == 0) ) {
+                if ( !$nIDTran && SMS_FOR_PAYMENT == 1 && $aDocument['doc_type'] == "faktura" && ($aDocument['epay_provider'] == 0 && $aDocument['id_bank_epayment'] == 0) ) {
                         if ( abs($nRealPayedSum - $nUnpaidSum) < 0.02 ) {
                         $aTarget = $oClients->getByID($aDocument['id_client']);
                         $ntarget = isset($aTarget['sms_phone']) ? $aTarget['sms_phone'] : 0;

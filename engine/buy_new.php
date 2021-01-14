@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
-    <link href="./css/fa5/css/all.min.css" rel="stylesheet">
+    <link href="css/fa5/fa/all.min.css" rel="stylesheet">
     <link href="<?php echo $manifest['/css/finance/app.css']; ?>" rel="stylesheet">
     <title>Продажба разход</title>
 </head>

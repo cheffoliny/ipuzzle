@@ -135,7 +135,7 @@
             <span class="w-full text-right text-orange-500 text-xssplus">с ддс</span>
           </div>
         </div>
-        
+
       </div>
     </template>
 
@@ -245,7 +245,6 @@ export default {
           uuid: this.genUuid(),
           firm: this.userDefaults.firm,
           for_payment: true,
-          for_smartsot: 0,
           id_duty: 0,
           id_firm: this.userDefaults.id_firm,
           id_object: 0,
@@ -347,7 +346,7 @@ export default {
     fixTotals() {
       const vat = (this.serviceTemplate.vat / 100 + 1)
       this.serviceTemplate.total_sum = this.serviceTemplate.single_price * this.serviceTemplate.quantity
-      this.serviceTemplate.total_sum_with_dds = parseFloat((this.serviceTemplate.total_sum *  vat).toFixed(2))
+      this.serviceTemplate.total_sum_with_dds = parseFloat((this.serviceTemplate.total_sum *  vat).toFixed(2))  
     },
     closeServiceComponent() {
       this.$emit("closeFreeSale");

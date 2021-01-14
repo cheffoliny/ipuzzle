@@ -78,22 +78,22 @@
           </div>
         </template>
 
-        <!-- фирмени фондове -->
+        <!-- направления -->
         <div
           v-if="serviceTemplate.id_office && !vat_mode && !enableVatTransfer"
           class="flex items-center justify-between mb-2"
         >
-          <label class="custom-label w-24 flex-shrink-0" for="selectfund">фонд :</label>
+          <label class="custom-label w-24 flex-shrink-0" for="selectDirection">направление :</label>
           <select
-            id="selectfund"
+            id="selectDirection"
             class="custom-input"
             v-model="serviceTemplate.id_direction"
-            @change="changeFund"
+            @change="changeDirection"
           >
-            <option v-for="fund in firmFunds" :key="fund.id" :value="fund.id">{{fund.name}}</option>
+            <option v-for="direction in regionDirections" :key="direction.id" :value="direction.id">{{direction.name}}</option>
           </select>
         </div>
-        <!-- групи разходни номенклатури към фонда-->
+        <!-- групи разходни номенклатури към направление-->
         <div v-if="serviceTemplate.id_direction" class="flex items-center justify-between mb-2">
           <label class="custom-label w-24 flex-shrink-0" for="selectfundservicegroup">група :</label>
           <select
@@ -109,7 +109,7 @@
             >{{group.name}}</option>
           </select>
         </div>
-        <!-- разходни номенклатури към фирмата и фонда-->
+        <!-- разходни номенклатури -->
         <div v-if="id_nomenclature_group != null" class="flex items-center justify-between mb-2">
           <label class="custom-label w-24 flex-shrink-0" for="selectservice">номенклатура :</label>
           <select
@@ -119,7 +119,7 @@
             @change="changeNomenclature"
           >
             <option
-              v-for="nomenclature in fundGroupNomenclatures"
+              v-for="nomenclature in directionGroupNomenclatures"
               :key="nomenclature.id"
               :value="nomenclature.id"
             >{{nomenclature.name}}</option>
@@ -216,7 +216,7 @@ export default {
       type: Array,
       required: true,
     },
-    funds: {
+    directions: {
       type: Array,
       required: true,
     },
@@ -244,7 +244,7 @@ export default {
       enableVatTransfer: false,
       defaultServiceTemplate: {
         firm: "",
-        fund: "",
+        direction: "",
         id: 0,
         id_buy_doc: 0,
         id_direction: 0,
@@ -273,7 +273,7 @@ export default {
       },
       serviceTemplate: {
         firm: "",
-        fund: "",
+        direction: "",
         id: 0,
         id_buy_doc: 0,
         id_direction: 0,
@@ -307,7 +307,7 @@ export default {
     this.prepareTemplate();
   },
   mounted() {
-    if (this.edit && !this.fundGroupNomenclatures) {
+    if (this.edit && !this.directionGroupNomenclatures) {
       if (
         this.service.id_nomenclature_expense !==
         this.vat_transfer_nomenclature.id
@@ -430,9 +430,9 @@ export default {
         this.serviceTemplate.region = this.selectedRegion.region;
       }
     },
-    changeFund() {
+    changeDirection() {
       this.id_nomenclature_group = null;
-      this.serviceTemplate.fund = this.selectedFund.name
+      this.serviceTemplate.direction = this.selectedDirection.name
       if (!this.serviceTemplate.id_nomenclature_expense) return;
       this.serviceTemplate.id_nomenclature_expense = null;
       this.serviceTemplate.nomenclature = "";
@@ -456,21 +456,20 @@ export default {
         return null;
       }
     },
-    firmFunds() {
-      if (this.serviceTemplate.id_firm) {
-        let tmp = this.funds.filter(
-          (fund) => fund.id_firm === this.serviceTemplate.id_firm
+    regionDirections() {
+      if (this.serviceTemplate.id_office) {
+        let tmp = this.directions.filter(
+          (direction) => direction.id_office === this.serviceTemplate.id_office
         );
         return tmp.length ? this.arrSortByPropName(tmp, "name") : null;
       } else {
         return null;
       }
     },
-    // налични групи за номенклатурите на фонда
     nomenclatureGroups() {
       if (this.serviceTemplate.id_direction) {
         let nomenclatureGroupsIds = [
-          ...new Set(this.fundNomenclatures.map(({ id_group }) => id_group)),
+          ...new Set(this.directionNomenclatures.map(({ id_group }) => id_group)),
         ];
         let tmp = this.nomenclature_groups.filter((group) =>
           nomenclatureGroupsIds.includes(group.id)
@@ -479,21 +478,19 @@ export default {
       }
       return null;
     },
-    // номенклатури към избраната група на фонда
-    fundGroupNomenclatures() {
+    directionGroupNomenclatures() {
       if (this.serviceTemplate.id_direction && this.id_nomenclature_group != null) {
-        let tmp = this.fundNomenclatures.filter(
+        let tmp = this.directionNomenclatures.filter(
           (el) => el.id_group === this.id_nomenclature_group
         );
         return tmp.length ? tmp : null;
       }
       return null;
     },
-    // номенклатури към избрания фонд
-    fundNomenclatures() {
+    directionNomenclatures() {
       if (this.serviceTemplate.id_direction) {
         let tmp = this.nomenclatures.filter((nomenclature) =>
-          this.selectedFund.nomenclatures_expenses.includes(nomenclature.id)
+          nomenclature.vat_transfer != 1
         );
         return tmp.length ? this.arrSortByPropName(tmp, "name") : null;
       }
@@ -515,10 +512,10 @@ export default {
           )
         : null;
     },
-    selectedFund() {
-      if (this.firmFunds && this.serviceTemplate.id_direction) {
-        return this.firmFunds.find(
-          (fund) => fund.id === this.serviceTemplate.id_direction
+    selectedDirection() {
+      if (this.regionDirections && this.serviceTemplate.id_direction) {
+        return this.regionDirections.find(
+          (direction) => direction.id === this.serviceTemplate.id_direction
         );
       }
       return null;

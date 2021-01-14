@@ -269,6 +269,7 @@ export default {
       obj.id = parseInt(obj.id)
       obj.invoice_last_paid_caption = parseInt(obj.invoice_last_paid_caption)
       obj.is_company = parseInt(obj.is_company)
+      obj.id_city = parseInt(obj.id_city)
     }
   },
   computed: {

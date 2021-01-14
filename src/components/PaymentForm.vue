@@ -34,7 +34,7 @@
                 class="truncate mr-2 text-left"
               >{{order.bank_account}}</div>
 
-              <div class="w-24 ml-auto text-right">{{order.order_sum}} лв.</div>
+              <div :title="order.order_sum" class="w-24 ml-auto text-right">{{order.order_sum.toFixed(2)}} лв.</div>
 
               <i :title="order.user" 
               v-tippy="{ trigger : 'mouseenter', placement : 'bottom',arrow : true}"

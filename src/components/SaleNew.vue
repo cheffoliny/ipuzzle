@@ -105,6 +105,7 @@
             id="doc_type"
             class="custom-input"
             v-model="doc_type"
+            @change="assingDocType"
             :disabled="urlParams.id"
           >
             <option value="faktura">Фактура</option>
@@ -289,7 +290,7 @@
       <datepicker
         v-if="showLastPaid"
         title="падеж..."
-        wrapperClass="last-paid-picker"
+        wrapperClass="last-paid-picker mr-2"
         autocomplete="off"
         placeholder="xx.xxxx"
         inputClass="custom-input"
@@ -300,6 +301,23 @@
         v-model="duty_date"
         @input="getClientObligations"
       />
+
+      <label
+        :class="urlParams.id ? 'last-paid' : 'transaction-place-label'"
+        class="custom-label  mr-2"
+        for="transaction_place"
+        >място:</label
+      >
+
+      <select
+        title="място на сделката"
+        class="custom-input transaction-place mr-2"
+        id="transaction_place"
+        v-model="client.id_city"
+        @change="current_id_city = client.id_city"
+      >
+        <option v-for="city in cities" :key="city.id" :value="city.id" v-text="city.name"></option>
+      </select>
 
       <div
         v-if="
@@ -362,17 +380,7 @@
       >
         АНУЛИРАН
       </div>
-
-      <!--
-      <button
-        v-if="!urlParams.id"
-        title="ценообразуване"
-        @click="objectsPricingModal = true"
-        class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2 ml-auto"
-      >
-        <i class="fad fa-calculator-alt"></i>
-      </button>-->
-
+      
       <button
         v-if="urlParams.id && allowRelativeDocuments"
         title="Дебитно известие"
@@ -517,7 +525,7 @@
             <div class="primary-info">1</div>
             <div class="secondary-info">бр.</div>
           </div>
-          <!-- single price -->
+           <!-- single price -->
           <div :title="(baseSum ? baseSum : allRowsTotal)" class="grid-cell text-right">
             <div class="primary-info">{{ (baseSum ? baseSum : allRowsTotal) | price }}</div>
             <div class="secondary-info">лв.</div>
@@ -1089,11 +1097,7 @@
             <div
               v-if="object.services && object.type === 'month'"
               class="secondary-info truncate"
-              v-text="
-                object.services[0].for_smartsot
-                  ? 'месечни такси [ смарт сот ]'
-                  : 'месечни такси'
-              "
+              v-text="'месечни такси'"
             ></div>
             <div
               v-else-if="object.services && object.type === 'free'"
@@ -1803,8 +1807,44 @@
       </template>
     </baseDialog>
 
-    <freeSaleComponent
+   <!--  <freeSaleComponent
       v-if="showFreeSaleComponent"
+      :user_office_id="document_data.user_office_id"
+      :regions="regions"
+      :firms="selectedFirms"
+      :service="serviceForEdit"
+      :services="services"
+      :edit="serviceForEditType.edit"
+      :date="document_data.doc_date_create"
+      :current_document="document_data"
+      :relative_document="relative_document"
+      :relative_credit_maxValue="relative_credit_maxValue"
+      @closeFreeSale="closeService"
+      @addService="addService"
+      @updateService="updateService"
+      @deleteService="deleteService"
+    />
+     -->
+    <freeSaleComponent
+      v-if="showFreeSaleComponent && doc_type !== 'oprostena'"
+      :user_office_id="document_data.user_office_id"
+      :regions="regions"
+      :firms="selectedFirms"
+      :service="serviceForEdit"
+      :services="services"
+      :edit="serviceForEditType.edit"
+      :date="document_data.doc_date_create"
+      :current_document="document_data"
+      :relative_document="relative_document"
+      :relative_credit_maxValue="relative_credit_maxValue"
+      @closeFreeSale="closeService"
+      @addService="addService"
+      @updateService="updateService"
+      @deleteService="deleteService"
+    />
+
+    <freeSaleComponentWithoutVat
+      v-if="showFreeSaleComponent && doc_type === 'oprostena'"
       :user_office_id="document_data.user_office_id"
       :regions="regions"
       :firms="selectedFirms"
@@ -2032,6 +2072,7 @@ import Suggest from "./Suggest.vue";
 import Datepicker from "./Datepicker.vue";
 import BaseDialog from "./BaseDialog.vue";
 import freeSaleComponent from "./freeSaleComponent.vue";
+import freeSaleComponentWithoutVat from "./freeSaleComponentWithoutVat.vue";
 import Nomenclature from "./Nomenclature.vue";
 import PaymentForm from "./PaymentForm.vue";
 import RelativeDocumentsList from "./RelativeDocumentsList.vue";
@@ -2049,6 +2090,7 @@ export default {
     Loader,
     BaseDialog,
     freeSaleComponent,
+    freeSaleComponentWithoutVat,
     PaymentForm,
     Nomenclature,
     RelativeDocumentsList,
@@ -2094,7 +2136,8 @@ export default {
         invoice_single_view_name: "",
         invoice_last_paid_caption: 0,
         phone: "",
-        note: ""
+        note: "",
+        id_city: 0
       },
       default_client: {
         id: null,
@@ -2109,7 +2152,8 @@ export default {
         invoice_single_view_name: "услуга",
         invoice_last_paid_caption: 0,
         phone: "",
-        note: ""
+        note: "",
+        id_city: 0
       },
       prefferedInvoicePayment: "",
       duty_date: "",
@@ -2119,7 +2163,6 @@ export default {
       document_data: [],
       deliverer: "изберете",
       deliverers: [],
-      concessions: [],
       selectedFirm: null,
       serviceForEdit: {},
       firms: [],
@@ -2143,6 +2186,9 @@ export default {
       confirm_request: 0,
       request_monthlySuffix: '',
       relative_credit_maxValue: 0,
+      cities: [],
+      default_id_city: 0,
+      current_id_city: 0,
       current_view_type: '',
     };
   },
@@ -2150,6 +2196,9 @@ export default {
     this.initSaleDoc();
   },
   methods: {
+    assingDocType() {
+      this.document_data.doc_type = this.doc_type
+    },
     adjustMonthlySuffix(){
       
       if(this.monthlySuffix == this.request_monthlySuffix) return;
@@ -2178,10 +2227,11 @@ export default {
           this.firms = this.arrSortByPropName(data.firms, "name");
           this.services = this.arrSortByPropName(data.services, "name");
           this.regions = this.arrSortByPropName(data.regions, "region");
+          this.cities = data.cities;
+          this.default_id_city = data.default_id_city;
           this.doc_date = data.document_data.doc_date;
           this.doc_date_create = data.document_data.doc_date_create;
           this.duty_date = data.document_data.doc_date;
-          this.concessions = data.concessions;
 
           if (this.urlParams.id_object) {
             this.getClientObligations();
@@ -2422,6 +2472,13 @@ export default {
           this.document_data.client_mol = data.client.invoice_mol;
           this.document_data.client_recipient = data.client.invoice_recipient;
           this.document_data.view_type = data.client.invoice_layout;
+
+          
+          if(this.current_id_city == 0) {
+            this.current_id_city = data.client.id_city
+          } else {
+            this.$nextTick(() => this.client.id_city = this.current_id_city)
+          }
           
           if(data.client.invoice_last_paid_caption) {
             this.$nextTick(() => this.document_data.single_view_name = `${data.client.invoice_single_view_name}${this.monthlySuffix}`)
@@ -2447,8 +2504,6 @@ export default {
             ...obj,
             uuid: this.genUuid(),
           }));
-
-          this.createObjectsDiscountsTemplates();
 
           if (data.alerts.length > 0) {
             alert(data.alerts[0]);
@@ -2496,6 +2551,7 @@ export default {
       this.document_data.id_client = this.client.id;
       this.document_data.client_recipient = this.client.invoice_recipient;
       this.document_data.note = this.client.note;
+      this.document_data.id_city = this.client.id_city;
 
       if (this.urlParams.is_book) {
         if (parseInt(this.isBookDocNum) <= 0) {
@@ -2584,29 +2640,33 @@ export default {
       this.document_data.orders_sum = 0;
       this.document_data.last_order_id = 0;
       this.document_data.last_order_time = "0000-00-00 00:00:00";
-      this.document_data.id_bank_account = 0;
-      this.document_data.id_bank_epayment = 0;
-      this.document_data.epay_provider = 0;
-      this.document_data.easypay_date = "0000-00-00 00:00:00";
-      this.document_data.invoice_payment = 'bank'
       this.document_data.view_type = "extended";
       this.document_data.single_view_name = "услуга";
       this.document_data.is_book = 0;
       this.document_data.from_book = false,
       this.document_data.is_advice = 0;
       this.document_data.id_advice = 0;
-      this.document_data.id_protocol = 0;
       this.document_data.is_user_print = 0;
       this.document_data.user_print_date = "0000-00-00 00:00:00";
-      this.document_data.gen_pdf_date = "0000-00-00 00:00:00";
-      this.document_data.note = '';
-      this.document_data.exported = 0;
       this.document_data.created = "";
       this.document_data.created_time = "";
       this.document_data.created_user = 0;
       this.document_data.updated = "";
       this.document_data.updated_time = "";
       this.document_data.updated_user = 0;
+
+      this.document_data.id_bank_account = 0;
+      this.document_data.id_bank_epayment = 0;
+      this.document_data.epay_provider = 0;
+      this.document_data.easypay_date = "0000-00-00 00:00:00";
+      this.document_data.invoice_payment = 'bank'
+      this.document_data.is_auto = 0;
+      this.document_data.exported = 0;
+      this.document_data.gen_pdf_date = "0000-00-00 00:00:00";
+      this.document_data.note = '';
+      this.document_data.id_protocol = 0;
+
+
     },
     prepareDebitSaleDoc() {
       this.doc_type = "debitno izvestie";
@@ -2661,8 +2721,10 @@ export default {
           this.client.invoice_recipient = data.document_data.client_recipient;
           this.client.note = data.document_data.note;
           this.client.invoice_layout = data.document_data.view_type;
+          this.client.id_city = data.document_data.id_city;
 
           this.origin_document = data.origin_document;
+          
 
           this.doc_rows = data.document_rows
             .filter((row) => row.is_dds !== 1)
@@ -2695,6 +2757,9 @@ export default {
     setClient($event) {
       if (!$event.id) return;
       this.client = $event;
+      if($event.id_city == 0) {
+        this.client.id_city = this.default_id_city;
+      }
       this.document_data.single_view_name = $event.invoice_single_view_name;
       this.prefferedInvoicePayment = $event.invoice_payment;
     },
@@ -2715,6 +2780,7 @@ export default {
             client_name: $event.name,
             client_recipient: $event.invoice_recipient,
             client_address: $event.invoice_address,
+            id_city: $event.id_city != 0 ? $event.id_city : this.default_id_city
           })
           .then((response) => {
             this.getDocumentByID();
@@ -2742,6 +2808,7 @@ export default {
       this.document_data.client_name = ""
       this.document_data.client_recipient =""
       this.document_data.single_view_name = 'услуга'
+      this.document_data.single_view_name = this.default_id_city
       this.document_data.view_type = "extended"
       this.doc_rows = [];
     },
@@ -2755,12 +2822,6 @@ export default {
         return;
       this.showChangeClientDialog = true;
     },
-    /* getTotalVatSumbByVat(vat) {
-      return this.servicesForPayment
-        .filter(service => service.vat === vat)
-        .map(service => ((service.single_price * service.quantity) / 100) * vat)
-        .reduce((sum, vatsum) => sum + vatsum, 0);
-    }, */
     getForPaymentStateFromArray(arr) {
       const serviceState = [
         ...new Set(arr.map((service) => service.for_payment)),
@@ -2798,7 +2859,7 @@ export default {
       let current_obj = this.objectsTreeView.find(
         (obj) => obj.id_object === id
       );
-      let discounts = current_obj.discounts;
+
       let monthlys = current_obj.monthly.months;
 
       monthlys
@@ -2824,116 +2885,15 @@ export default {
         );
       }
 
-      let obj = this.objectsTreeView.find((obj) => obj.id_object === id);
-      let objMonthsForPayment = obj.monthly.months.filter(
-        (month) => month.for_payment.checked === true
-      );
-
-      let objMonthsForPaymentCount = objMonthsForPayment
-        .map((el) => el.month)
-        .filter((el) => el >= moment().startOf("month").format("YYYY-MM-DD"))
-        .length;
-
-      if (discounts) {
-        let discountMonthsCount = discounts.services[0].concession_month_count;
-
-        if (discountMonthsCount > objMonthsForPaymentCount) {
-          this.deleteObjectDiscounts(id);
-        }
-
-        if (discountMonthsCount < objMonthsForPaymentCount) {
-          this.checkForNewDiscount(id, objMonthsForPaymentCount);
-          return;
-        }
-      }
-      this.checkForNewDiscount(id, objMonthsForPaymentCount);
-
       if(this.urlParams.id) return
+
       if(this.request_monthlySuffix === this.monthlySuffix) return
     },
-    toggleObjectDiscount(id, state) {
-      this.doc_rows
-        .filter(
-          (service) => service.id_object === id && service.type === "free"
-        )
-        .map((service) => (service.for_payment = state));
-    },
-    addObjectDiscounts(discounts) {
-      discounts.map((service) => {
-        service.single_price = this.getDiscountServiceSum(
-          discounts[0].id_object,
-          service.reference_service_id,
-          service.percent
-        );
-        service.total_sum = service.single_price;
-        service.total_sum_with_dds =
-          service.single_price * (service.vat / 100 + 1);
-        service.uuid = this.genUuid();
-      });
-      discounts.forEach((service) => this.doc_rows.push(service));
-      this.reorderDocRowsByMonthlyDiscountsAndSingles();
-    },
-    deleteObjectDiscounts(id_object) {
-      this.doc_rows
-        .filter(
-          (discounts) =>
-            discounts.id_object === id_object && discounts.type === "free"
-        )
-        .forEach((service) =>
-          Vue.delete(this.doc_rows, this.doc_rows.indexOf(service))
-        );
-    },
-    checkForNewDiscount(id, objMonthsForPaymentCount) {
-      let availableDiscounts = Object.values(this.concessions).filter(
-        (concession) => concession.months_count <= objMonthsForPaymentCount
-      );
-
-      if (availableDiscounts.length) {
-        availableDiscounts.sort((a, b) => a.months_count - b.months_count);
-        let newDiscount = this.objectDiscountTemplates.filter((template) =>
-          template.some(
-            (obj) =>
-              obj.id_object === id &&
-              obj.concession_month_count ===
-                availableDiscounts[availableDiscounts.length - 1].months_count
-          )
-        )[0];
-
-        let clonedDiscount = JSON.parse(JSON.stringify(newDiscount));
-        this.objectsTreeView.find((obj) => obj.id_object === id).discounts
-          ? (this.deleteObjectDiscounts(id),
-            this.addObjectDiscounts(clonedDiscount))
-          : this.addObjectDiscounts(clonedDiscount);
-      }
-    },
-    getDiscountServiceSum(id_object, originalServiceId, discountPercent) {
-      let currentStartOfMonth = this.document_data.doc_date_create.slice(0, -2);
-      currentStartOfMonth += "01";
-      let services = this.doc_rows.filter(
-        (service) =>
-          service.id_object === id_object &&
-          service.type === "month" &&
-          service.month >= currentStartOfMonth &&
-          service.for_payment === true &&
-          service.id_service === originalServiceId
-      );
-      let discountSum =
-        (this.getTotalSumFromArr(services) * -1 * discountPercent) / 100;
-      // na pavkata formulata jhuehueheuhehu (0.83333333334 * ((20 / 100) +1)).toFixed(2)
-      /* if (discountSum > 0) {
-        return -Math.abs(discountSum);
-      } */
-      /* console.log(
-        `gen discount for id_object => ${id_object}, for serivce_id => ${originalServiceId}, found elements => ${services.length}, discount sum => ${discountSum}`
-      ); */
-      return discountSum;
-    },
-    reorderDocRowsByMonthlyDiscountsAndSingles() {
+    reorderDocRowsByMonthlyAndSingles() {
       let reordered = [];
 
       this.idObjects.forEach((id) => {
         const objectMonthly = [];
-        const objectDiscounts = [];
         const objectSingles = [];
         const objectsServices = this.doc_rows.filter(
           (obj) => obj.id_object === id
@@ -2944,9 +2904,7 @@ export default {
             if (service.type === "month") {
               objectMonthly.push(service);
             }
-            if (service.type === "free") {
-              objectDiscounts.push(service);
-            }
+
             if (service.type === "single") {
               objectSingles.push(service);
             }
@@ -2955,9 +2913,7 @@ export default {
           if (objectMonthly.length) {
             reordered = reordered.concat(objectMonthly);
           }
-          if (objectDiscounts.length) {
-            reordered = reordered.concat(objectDiscounts);
-          }
+
           if (objectSingles.length) {
             reordered = reordered.concat(objectSingles);
           }
@@ -2967,15 +2923,15 @@ export default {
       this.doc_rows = reordered;
     },
     createObjectTree(id_object) {
+      
       let objectTaxes = this.doc_rows.filter(
         (object) => object.id_object === id_object
       );
+
       let monthly = this.createObjectMonthlyTaxes(
         objectTaxes.filter((service) => service.type === "month")
       );
-      let discounts = this.createObjectDiscounts(
-        objectTaxes.filter((service) => service.type === "free")
-      );
+      
       let singles = this.createObjectSingleTaxes(
         objectTaxes.filter((service) => service.type === "single")
       );
@@ -2985,23 +2941,15 @@ export default {
         id_object: id_object,
         for_payment: this.getForPaymentStateFromArray(objectTaxes),
         monthly: monthly,
-        discounts: discounts,
         singles: singles,
         quantity: 1,
         measure: "бр.",
-        //for_smartsot: monthly ? monthly.months[0].services.some(service => service.for_smartsot == 1) : undefined,
+
         totalForPayment:
-          (monthly?.totalForPayment ?? 0) +
-          (discounts?.totalForPayment ?? 0) +
-          (singles?.totalForPayment ?? 0),
+          (monthly?.totalForPayment ?? 0) + (singles?.totalForPayment ?? 0),
         totalSum:
-          (monthly?.totalForPayment ?? 0) +
-            (discounts?.totalForPayment ?? 0) +
-            (singles?.totalForPayment ?? 0) >
-          0
-            ? (monthly?.totalForPayment ?? 0) +
-              (discounts?.totalForPayment ?? 0) +
-              (singles?.totalForPayment ?? 0)
+          (monthly?.totalForPayment ?? 0) + (singles?.totalForPayment ?? 0) > 0
+            ? (monthly?.totalForPayment ?? 0) + (singles?.totalForPayment ?? 0)
             : this.getTotalSumFromArr(objectTaxes),
       };
       return objectTree;
@@ -3009,10 +2957,8 @@ export default {
     createObjectMonthlyTaxes(monthlys) {
       if (monthlys.length > 0) {
         const idObject = monthlys[0].id_object;
-        let forSmartSot = monthlys[0].for_smartsot;
         let forPaymentState = this.getForPaymentStateFromArray(monthlys);
-        let view_type_by_object_services =
-          monthlys[0].view_type_by_object_services;
+        let view_type_by_object_services = monthlys[0].view_type_by_object_services;
         let months = [];
 
         Object.entries(this.groupBy(monthlys, "month")).forEach(
@@ -3036,34 +2982,10 @@ export default {
           totalForPayment: this.getTotalSumFromArr(
             monthlys.filter((month) => month.for_payment === true)
           ),
-          for_smartsot: forSmartSot,
           months: months,
           showTree: false,
         };
         return monthlyTree;
-      }
-      return null;
-    },
-    createObjectDiscounts(discounts) {
-      // за доработка разделно групиране за отстъпките по месеци и услуги ?
-      if (discounts.length > 0) {
-        let discountName = Object.values(this.concessions).find(
-          (discount) => discount.id_service === discounts[0].id_service
-        ).name;
-
-        let discountTree = {
-          name: discounts[0].for_smartsot
-            ? `${discountName} [ Смарт СОТ ]`
-            : `${discountName}`,
-          month: discounts[0].month,
-          for_payment: this.getForPaymentStateFromArray(discounts),
-          totalSum: this.getTotalSumFromArr(discounts),
-          totalForPayment: this.getTotalSumFromArr(
-            discounts.filter((discount) => discount.for_payment === true)
-          ),
-          services: discounts,
-        };
-        return discountTree;
       }
       return null;
     },
@@ -3081,67 +3003,11 @@ export default {
       }
       return null;
     },
-    createObjectsDiscountsTemplates() {
-      let discountTemplates = [];
-      if (this.idObjects) {
-        this.idObjects.forEach((id) => {
-          let objdiscounts = this.doc_rows.filter(
-            (service) => service.id_object === id && service.type === "free"
-          );
-
-          if (objdiscounts.length) {
-            Object.values(this.concessions).forEach((concession) => {
-              let discountsClone = JSON.parse(JSON.stringify(objdiscounts));
-
-              discountsClone.forEach((service) => {
-                service.service_name =
-                  service.single_price > 0
-                    ? `Корекция: [ ${service.reference_service_name} ]`
-                    : `${concession.name} [ ${service.reference_service_name} ]`;
-                service.view_type_detail = service.for_smartsot
-                  ? `${concession.name} [ Смарт СОТ ]`
-                  : `${concession.name} [ ${
-                      this.services.find(
-                        (el) => el.id_service === service.reference_service_id
-                      ).name
-                    } ]`;
-                service.id_service = concession.id_service;
-                service.concession_month_count = concession.months_count;
-                service.percent = concession.percent;
-                service.single_price = 1;
-                service.total_sum = 1;
-              });
-              discountTemplates.push(discountsClone);
-            });
-          }
-        });
-      }
-      this.objectDiscountTemplates = discountTemplates;
-    },
     genByMonthServiceArray(month) {
       const byMonth = [];
-      const smartServices = month.services.filter(
-        (service) => service.for_smartsot
-      );
-      const regularServices = month.services.filter(
-        (service) => !service.for_smartsot
-      );
-
-      if (smartServices.length) {
-        byMonth.push({
-          name: smartServices[0].view_type_detail,
-          month: month.month,
-          services: smartServices,
-          for_payment: this.getForPaymentStateFromArray(smartServices),
-          totalSum: this.getTotalSumFromArr(smartServices),
-          totalForPayment: this.getTotalSumFromArr(
-            smartServices.filter((service) => service.for_payment)
-          ),
-        });
-      }
-
-      if (regularServices.length) {
-        const servicesGroups = this.groupBy(regularServices, "id_service");
+      
+      if (month.services.length) {
+        const servicesGroups = this.groupBy(month.services, "id_service");
 
         Object.values(servicesGroups).forEach((group) => {
           group.forEach((service) => {
@@ -3159,44 +3025,7 @@ export default {
         });
       }
       return byMonth.length ? byMonth : null;
-    },
-    genDiscountServiceArray(discounts) {
-      const discountsByServiceGroups = [];
-      const smartDiscounts = discounts.filter(
-        (service) => service.for_smartsot
-      );
-      const regularDiscounts = discounts.filter(
-        (service) => !service.for_smartsot
-      );
-
-      if (smartDiscounts.length) {
-        discountsByServiceGroups.push({
-          name: smartDiscounts[0].view_type_detail,
-          month: smartDiscounts[0].month,
-          services: smartDiscounts,
-          for_payment: this.getForPaymentStateFromArray(smartDiscounts),
-          totalSum: this.getTotalSumFromArr(smartDiscounts),
-          totalForPayment: this.getTotalSumFromArr(
-            smartDiscounts.filter((service) => service.for_payment)
-          ),
-        });
-      }
-
-      if (regularDiscounts.length) {
-        const discountGroups = this.groupBy(regularDiscounts, "id_service");
-        regularDiscounts.forEach((discount) => {
-          discountsByServiceGroups.push({
-            name: discount.view_type_detail,
-            month: discount.month,
-            services: [discount],
-            for_payment: this.getForPaymentStateFromArray([discount]),
-            totalSum: discount.total_sum,
-            totalForPayment: discount.for_payment,
-          });
-        });
-      }
-      return discountsByServiceGroups.length ? discountsByServiceGroups : null;
-    },
+    }
   },
   watch: {
     monthlySuffix(newValue,oldValue) {
@@ -3368,21 +3197,19 @@ export default {
               ];
             });
           }
-          if (obj.discounts) {
-            objectsByMonths = [
-              ...objectsByMonths,
-              ...this.genDiscountServiceArray(obj.discounts.services),
-            ];
-          }
+
           if (obj.singles && obj.singles.services.length) {
             obj.singles.services.forEach((single) =>
               objectsByMonths.push(single)
             );
           }
+
           if (obj.id_object === 0 && obj.type === "free") {
             objectsByMonths.push(obj);
           }
+
         });
+        
         return objectsByMonths;
       } else {
         return null;
@@ -3391,58 +3218,33 @@ export default {
     byServices() {
       if (this.doc_rows.length) {
         let byServices = [];
-        let smartMonthlyServices = [];
-        let regularMonthlyServices = [];
-        let discounts = [];
+        let monthly = [];
         let singles = [];
-        let freeSales = [];
+        let free = [];
 
         for (let service of this.doc_rows) {
           if (
-            service.for_smartsot &&
             service.id_object &&
             service.type === "month"
           ) {
-            smartMonthlyServices.push(service);
+            monthly.push(service);
           }
-          if (
-            !service.for_smartsot &&
-            service.id_object &&
-            service.type === "month"
-          ) {
-            regularMonthlyServices.push(service);
-          }
-          if (service.id_object && service.type === "free") {
-            discounts.push(service);
-          }
+          
           if (service.id_object && service.type === "single") {
             singles.push(service);
           }
           if (!service.id_object && service.type === "free") {
-            freeSales.push(service);
+            free.push(service);
           }
         }
-
-        if (smartMonthlyServices.length) {
-          byServices.push({
-            for_payment: this.getForPaymentStateFromArray(smartMonthlyServices),
-            measure: "бр.",
-            name: smartMonthlyServices[0].view_type_by_services,
-            quantity: 1,
-            services: smartMonthlyServices,
-            single_price: this.getTotalSumFromArr(smartMonthlyServices),
-            totalSum: this.getTotalSumFromArr(smartMonthlyServices),
-            type: "month",
-          });
-        }
-
-        if (regularMonthlyServices.length) {
-          const regularMonthlyGroups = this.groupBy(
-            regularMonthlyServices,
+        
+        if (monthly.length) {
+          const monthlyGroups = this.groupBy(
+            monthly,
             "id_service"
           );
 
-          Object.values(regularMonthlyGroups).forEach((group) => {
+          Object.values(monthlyGroups).forEach((group) => {
             byServices.push({
               for_payment: this.getForPaymentStateFromArray(group),
               name: group[0].view_type_by_services,
@@ -3456,25 +3258,12 @@ export default {
           });
         }
 
-        if (discounts.length) {
-          byServices.push({
-            for_payment: this.getForPaymentStateFromArray(discounts),
-            measure: "бр.",
-            name: discounts[0].view_type_by_services,
-            quantity: 1,
-            services: discounts,
-            single_price: this.getTotalSumFromArr(discounts),
-            totalSum: this.getTotalSumFromArr(discounts),
-            type: "free",
-          });
-        }
-
         if (singles.length) {
           byServices = [...byServices, ...singles];
         }
 
-        if (freeSales.length) {
-          byServices = [...byServices, ...freeSales];
+        if (free.length) {
+          byServices = [...byServices, ...free];
         }
 
         return byServices;
@@ -3559,7 +3348,7 @@ export default {
     },
     allRowsTotal(){
       if(!this.urlParams.id || this.is_new_relative_doc) {
-        return   this.doc_rows.reduce((total,service) => total + service.total_sum, 0)
+        return  this.servicesForPayment.reduce((total,service) => total + service.total_sum, 0)
       }
       return this.document_data.total_sum - this.vatSum;
     },
@@ -3568,12 +3357,14 @@ export default {
         return (this.servicesForPayment.reduce((total, service) => total + service.total_sum_with_dds, 0) - this.vatSum)
       }
       return parseFloat(this.document_data.total_sum - this.vatSum);
+
     },
     vatSum() {
-      if(!this.urlParams.id || this.is_new_relative_doc) { 
+       if(!this.urlParams.id || this.is_new_relative_doc) { 
         return this.vatTypesTotal.reduce((acc, vat) => acc + vat.sum, 0);
       }
       return this.doc_rows_dds.reduce((acc, vat) => acc + vat.total_sum, 0);
+
     },
     vatTypesTotal() {
       
@@ -3612,7 +3403,6 @@ export default {
       } 
       
       return this.document_data.total_sum
-      
     },
     relativeId() {
       return this.document_data.doc_type === "debitno izvestie" ||
@@ -3766,7 +3556,7 @@ export default {
     padding: 8px;
     z-index: 20;
     color: #fff;
-    background: #0d79bb;
+    background: #8da2fb;
     box-shadow: rgba(0, 0, 0, 0.255) 0px 1.6px 3.6px,
       rgba(0, 0, 0, 0.216) 0px 0px 2.9px;
     user-select: none;
@@ -3782,7 +3572,7 @@ export default {
     justify-self: center;
     background-color: #fff;
     border: 1px solid #c5cbd4;
-    color: #0d79bb;
+    color: #8da2fb;
     font-size: 10px;
     border-radius: 999px;
     user-select: none;
@@ -3791,7 +3581,7 @@ export default {
 
 .custom-label {
   font-size: 12px;
-  color: #2d3e52;
+  color: #5c6bc0;
   user-select: none;
   //font-weight: 500;
 }
@@ -3817,13 +3607,13 @@ export default {
   }
   &:focus {
     outline: none;
-    border-color: #0d79bb;
-    box-shadow: 0 0 0 1px #0d79bb inset;
+    border-color: #8da2fb;
+    box-shadow: 0 0 0 1px #8da2fb inset;
   }
   &:focus-within {
     outline: none;
-    border-color: #0d79bb;
-    box-shadow: 0 0 0 1px #0d79bb inset;
+    border-color: #8da2fb;
+    box-shadow: 0 0 0 1px #8da2fb inset;
   }
 }
 
@@ -3836,7 +3626,11 @@ input::-webkit-inner-spin-button {
 .last-paid {
   width: 62px;
 }
-.last-paid-picker {
+.transaction-place-label {
+  width: 42px;  
+}
+
+.last-paid-picker, .transaction-place {
   width: 113px;
 }
 
@@ -3851,7 +3645,7 @@ input::-webkit-inner-spin-button {
   //color: #78909c;
   //color: #A2AAB4;
   //color: #8b95a2;
-  color: #2d3e52;
+  color: #5c6bc0;
   font-size: 11px;
   text-transform: lowercase;
 }

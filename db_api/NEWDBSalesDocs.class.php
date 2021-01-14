@@ -40,6 +40,57 @@ class NEWDBSalesDocs extends DBBase2 {
         return isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] : 0;
     }
 
+    public function getOfficesCityByIdFrim($nIDFirm) {
+        global $db_name_sod;
+
+        if ( !is_numeric($nIDFirm) || empty($nIDFirm) ) {
+            return array();
+        }
+
+        $sQuery = "
+            SELECT
+                c.id,
+                c.name
+            FROM {$db_name_sod}.cities c
+            JOIN {$db_name_sod}.offices o ON c.id_reaction_office = o.id
+            WHERE c.to_arc = 0
+                AND c.id_reaction_office != 0
+                AND o.id_firm = {$nIDFirm}
+            ORDER BY c.name
+        ";
+
+        return $this->select($sQuery);
+    }
+
+    public function getDefaultCityNameByIdPerson($id) {
+        global $db_name_sod, $db_name_personnel;
+
+        if ( !is_numeric($id) || empty($id) ) {
+            return 0;
+        }
+
+        $sQuery = "
+            (
+                SELECT
+                    c.name
+                FROM {$db_name_personnel}.personnel p
+                JOIN {$db_name_sod}.offices o ON p.id_office = o.id
+                JOIN {$db_name_sod}.cities c ON o.address_city = c.id
+                WHERE p.id = {$id}
+            ) UNION (
+                SELECT 'София'
+            )
+            LIMIT 1
+        ";
+
+        return $this->selectOne($sQuery);
+    }
+        
+    public function getDefaultIdCityForPerson() {
+        $cities = $this->getOfficesCityByIdFrim($this->getDelivererByPerson()['id']);
+        return $cities[array_search($this->getDefaultCityNameByIdPerson($this->getPerson()), array_column($cities, 'name'))]['id'];
+    }
+
     public function getFirmsAsClient() {
         global $db_name_sod;
 
@@ -69,14 +120,12 @@ class NEWDBSalesDocs extends DBBase2 {
                 ba.id,
                 IF ( ba.cash, CONCAT(ba.name_account, ' [каса]'), CONCAT(ba.name_account, ' [банка]') ) as name,
                 ba.iban as iban,
-                IF ( ba.cash, 'cash', 'bank' ) as type,
-                ba.is_paid,
-                ba.tax
+                IF ( ba.cash, 'cash', 'bank' ) as type
+
             FROM {$db_name_finance}.bank_accounts ba
             LEFT JOIN {$db_name_finance}.cashier c ON (FIND_IN_SET(ba.id, c.bank_accounts_operate) AND c.to_arc = 0)
             WHERE ba.to_arc = 0
                 AND c.id_person = '{$nIDUser}'
-                #AND ba.id = 30 
             ORDER BY ba.name_account
         ";
 
@@ -91,9 +140,7 @@ class NEWDBSalesDocs extends DBBase2 {
 					ba.id,
 					ba.name_account as name,
 					ba.iban as iban,
-					IF ( ba.cash, 'cash', 'bank' ) as type,
-					ba.is_paid,
-					ba.tax
+					IF ( ba.cash, 'cash', 'bank' ) as type
 				FROM {$db_name_finance}.bank_accounts ba
 				WHERE ba.to_arc = 0
 					AND ba.cash = 0
@@ -197,15 +244,16 @@ class NEWDBSalesDocs extends DBBase2 {
         if ( empty($nIDPerson) || !is_numeric($nIDPerson) ) {
             return [];
         }
-
+        
         $sQuery = "
-				SELECT 
+                SELECT 
+                    f.id,
 					f.jur_name,
 					f.idn,
 					f.idn_dds,
 					f.jur_mol,
 					f.address,
-					f.mol_egn,
+					
 					f.short_jur_mol,
 					f.jur_pos
 				FROM {$db_name_personnel}.personnel p
@@ -214,7 +262,7 @@ class NEWDBSalesDocs extends DBBase2 {
 				WHERE p.id = {$nIDPerson}
 				LIMIT 1
 			";
-
+        // f.mol_egn,
         return $this->selectOnce($sQuery);
     }
 
@@ -318,9 +366,7 @@ class NEWDBSalesDocs extends DBBase2 {
     private function getBlankDoc() {
         $aDeliverer		= $this->getDelivererByPerson();
         $aCashier       = $this->getCashierByIDPerson();
-
         $aData      = [];
-
         $aData['id'] 				= 0;
         $aData['doc_date'] 			= date("Y-m-d");
         $aData['doc_type'] 			= "faktura";
@@ -339,6 +385,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $aData['locked']			= false;
         $aData['from_book']			= false;
         $aData['is_book']			= 0;
+        $aData['id_city']			= $this->getDefaultIdCityForPerson();
         $aData['doc_date_create']	= date("Y-m-d");
         $aData['created_user']		= "";
         $aData['created_time']		= date("Y-m-d");
@@ -370,10 +417,10 @@ class NEWDBSalesDocs extends DBBase2 {
         $aData['deliverer_ein_dds']	= isset($aDeliverer['idn_dds']) 			? $aDeliverer['idn_dds'] 				: "";
         $aData['deliverer_mol']	    = isset($aDeliverer['jur_mol']) 			? $aDeliverer['jur_mol'] 				: "";
 
-        $aData['sale_doc_view'] 	= in_array('sale_doc_view', $_SESSION['userdata']['access_right_levels'] ?? []);
+        $aData['sale_doc_view'] 	= in_array('sale_doc_view', $_SESSION['userdata']['access_right_levels']);
 
         // При право за редакция - добавяме и право за преглед
-        if ( in_array('sale_doc_edit', $_SESSION['userdata']['access_right_levels'] ?? []) ) {
+        if ( in_array('sale_doc_edit', $_SESSION['userdata']['access_right_levels']) ) {
             $aData['sale_doc_view']	= true;
             $aData['sale_doc_edit'] = true;
         } else {
@@ -381,7 +428,7 @@ class NEWDBSalesDocs extends DBBase2 {
         }
 
         // При пълно право за редакция - добавяме и право за преглед и редакция
-        if ( in_array('sale_doc_grant', $_SESSION['userdata']['access_right_levels'] ?? [])) {
+        if ( in_array('sale_doc_grant', $_SESSION['userdata']['access_right_levels']) ) {
             $aData['sale_doc_view']	= true;
             $aData['sale_doc_edit'] = true;
             $aData['sale_doc_grant'] = true;
@@ -391,10 +438,10 @@ class NEWDBSalesDocs extends DBBase2 {
             $aData['locked']		= false;
         }
 
-        $aData['sale_doc_order_view'] = in_array('sale_doc_order_view', $_SESSION['userdata']['access_right_levels'] ?? []) && $aData['sale_doc_view'];
+        $aData['sale_doc_order_view'] = in_array('sale_doc_order_view', $_SESSION['userdata']['access_right_levels']) && $aData['sale_doc_view'];
 
         // При право за редакция - добавяме и право за преглед
-        if ( in_array('sale_doc_order_edit', $_SESSION['userdata']['access_right_levels'] ?? []) && $aData['sale_doc_view'] ) {
+        if ( in_array('sale_doc_order_edit', $_SESSION['userdata']['access_right_levels']) && $aData['sale_doc_view'] ) {
             $aData['sale_doc_order_view'] = true;
             $aData['sale_doc_order_edit'] = true;
         } else {
@@ -407,7 +454,7 @@ class NEWDBSalesDocs extends DBBase2 {
     }
 
     public function getDocData($nID) {
-        global $db_name_finance, $db_name_personnel;
+        global $db_name_finance, $db_name_personnel , $db_name_sod;
 
         $docData = $this->getBlankDoc();
         $client = $this->getClient();
@@ -423,10 +470,12 @@ class NEWDBSalesDocs extends DBBase2 {
         $sQuery = "
             SELECT
                 sd.*,
+                ci.name as city_name,
                 CONCAT(CONCAT_WS(' ',p_cr.fname,p_cr.mname,p_cr.lname),' [',DATE_FORMAT(sd.created_time,'%d.%m.%Y %H:%i.%s'),']') AS created,	
                 CONCAT(CONCAT_WS(' ',p_up.fname,p_up.mname,p_up.lname),' [',DATE_FORMAT(sd.updated_time,'%d.%m.%Y %H:%i.%s'),']') AS updated				
             FROM {$db_name_finance}.{$sTable} sd
             LEFT JOIN {$db_name_personnel}.personnel p_cr ON p_cr.id = sd.created_user
+            LEFT JOIN {$db_name_sod}.cities ci ON ci.id = sd.id_city
             LEFT JOIN {$db_name_personnel}.personnel p_up ON p_up.id = sd.updated_user
             WHERE sd.id = {$nID}
         
@@ -518,10 +567,10 @@ class NEWDBSalesDocs extends DBBase2 {
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
                 case
-                    when for_smartsot = 1 AND `type` = 'month' then 1
-                    when for_smartsot = 0 AND `type` = 'free' AND id_object != 0 then id_duty_row
-                    when for_smartsot = 1 AND `type` = 'free' AND id_object != 0 then 2
-                    when for_smartsot = 0 AND `type` = 'month' then id_service
+                    #when for_smartsot = 1 AND `type` = 'month' then 1
+                    #when for_smartsot = 0 AND `type` = 'free' AND id_object != 0 then id_duty_row
+                    #when for_smartsot = 1 AND `type` = 'free' AND id_object != 0 then 2
+                    #when for_smartsot = 0 AND `type` = 'month' then id_service
                     when `type` = 'single' or `type` = 'free' then id
                 END AS view_type
                 
@@ -563,9 +612,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
                 case
-                    when for_smartsot = 1 AND `type` = 'month' then 1
                     when id_object AND `type` = 'free' then 2
-                    when for_smartsot = 0 AND `type` = 'month' then id_service
                     when `type` = 'single' then id
                     WHEN `type` = 'free' AND id_object=0 THEN id
                 END AS view_type
@@ -728,7 +775,6 @@ class NEWDBSalesDocs extends DBBase2 {
 					os.total_sum AS payment_sum,
 					ns.vat_tax as vat,
                     m.code as measure,
-                    0 as for_smartsot,
 					IF ( MIN(oser.last_paid) IS NULL, '0000-00-00', MIN(oser.last_paid) ) as last_paid
 				FROM {$db_name_sod}.objects_singles os
 				LEFT JOIN {$db_name_sod}.objects o ON o.id = os.id_object
@@ -742,7 +788,6 @@ class NEWDBSalesDocs extends DBBase2 {
 					AND os.not_payable = 0
 					AND UNIX_TIMESTAMP(paid_date) = 0 
 					AND id_sale_doc = 0
-					AND id_contract = 0 
 				GROUP BY os.id
 			";
 
@@ -784,7 +829,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 $aTmp['for_payment']			        = true;
                 $aTmp['vat']                            = $val['vat'];
                 $aTmp['measure']                        = $val['measure'];
-                $aTmp['for_smartsot']			        = $val['for_smartsot'];
+                //$aTmp['for_smartsot']			        = $val['for_smartsot'];
                 $aTmp['last_paid']				        = $val['last_paid'];
 
                 $aDuty[] 						        = $aTmp;
@@ -794,7 +839,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $array_map1 = array_map('strtotime', array_column($aDuty, 'month'));
         array_multisort($array_map1, SORT_ASC, array_column($aDuty, 'total_sum'), SORT_DESC, $aDuty);
         unset($array_map1);
-
+         
         return $aDuty;
     }
 
@@ -846,7 +891,6 @@ class NEWDBSalesDocs extends DBBase2 {
                 os.total_sum AS payment_sum,
                 ns.vat_tax as vat,
                 m.code as measure,
-                ns.for_smartsot,
                 ns.name AS original_nomenclature_name
             FROM {$db_name_sod}.objects_services os
             LEFT JOIN {$db_name_sod}.objects o ON o.id = os.id_object
@@ -955,8 +999,8 @@ class NEWDBSalesDocs extends DBBase2 {
                     $aTmp['month'] 					= $val['payment_date'];
                     $aTmp['service_name'] 			= $val['name'];
                     $aTmp['object_name'] 			= $val['object_name'];
-                    $aTmp['view_type_detail']       = $val['for_smartsot'] ? "Смарт СОТ: за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г." : $val['original_nomenclature_name'] . ": за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г.";
-                    $aTmp['view_type_by_services']  = $val['for_smartsot'] ? 'Смарт СОТ' : $val['original_nomenclature_name'];
+                    $aTmp['view_type_detail']       = $val['original_nomenclature_name'] . ": за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г.";
+                    $aTmp['view_type_by_services']  = $val['original_nomenclature_name'];
                     $aTmp['single_price'] 			= floatval((($pay_days * $val['single_price']) / $lastday) / $this->getVatCoefficient($val['vat']));
                     $aTmp['quantity'] 				= floatval($val['quantity']);
                     $aTmp['total_sum'] 				= floatval((($pay_days * $val['payment_sum']) / $lastday) / $this->getVatCoefficient($val['vat']));
@@ -966,7 +1010,6 @@ class NEWDBSalesDocs extends DBBase2 {
                     $aTmp['for_payment']			= true;
                     $aTmp['vat']                    = $val['vat'];
                     $aTmp['measure']                 = $val['measure'];
-                    $aTmp['for_smartsot']			= $val['for_smartsot'];
                     //die(print("<pre>" . print_r($aTmp, true) . "</pre>"));
 
                 } else {
@@ -982,8 +1025,8 @@ class NEWDBSalesDocs extends DBBase2 {
                     $aTmp['month'] 					= date("Y-m-d", mktime(0, 0, 0, $month + $i, 1, $year));
                     $aTmp['service_name'] 			= $val['name'];
                     $aTmp['object_name'] 			= $val['object_name'];
-                    $aTmp['view_type_detail']       = $val['for_smartsot'] ? "Смарт СОТ: за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г." : $val['original_nomenclature_name'] . ": за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г.";
-                    $aTmp['view_type_by_services']  = $val['for_smartsot'] ? 'Смарт СОТ' : $val['original_nomenclature_name'];
+                    $aTmp['view_type_detail']       = $val['original_nomenclature_name'] . ": за м. " . join('.', array_reverse(explode('-', substr($aTmp['month'], 0, -3)))) . " г.";
+                    $aTmp['view_type_by_services']  = $val['original_nomenclature_name'];
                     $aTmp['single_price'] 			= floatval((($cLast * $val['single_price']) / $lastday) / $this->getVatCoefficient($val['vat']));
                     $aTmp['quantity'] 				= floatval($val['quantity']);
                     $aTmp['total_sum'] 				= floatval((($cLast * $val['payment_sum']) / $lastday) / $this->getVatCoefficient($val['vat']));
@@ -993,7 +1036,6 @@ class NEWDBSalesDocs extends DBBase2 {
                     $aTmp['for_payment']			= true;
                     $aTmp['vat']                    = $val['vat'];
                     $aTmp['measure']                = $val['measure'];
-                    $aTmp['for_smartsot']			= $val['for_smartsot'];
                     //die(print("<pre>" . print_r($aTmp, true) . "</pre>"));
 
                 }
@@ -1014,7 +1056,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $array_map = array_map('strtotime', array_column($aDuty, 'month'));
         array_multisort($array_map, SORT_ASC, array_column($aDuty, 'total_sum'), SORT_DESC, $aDuty);
         unset($array_map);
-
+        //die(print("<pre>" . print_r($aDuty, true) . "</pre>"));
         return $aDuty;
     }
 
@@ -1151,14 +1193,10 @@ class NEWDBSalesDocs extends DBBase2 {
         $aMonthDuty = $this->serviceMonthCaption($aMonthDuty);
 
         //die(print("<pre>".print_r($aMonthDuty,true)."</pre>"));
-
+        
         foreach ($aMonthDuty as $service) {
-
-            //view_type_by_object_services за изглед по обекти и услуги за триене ?
-            //$service['view_type_by_object_services'] = $service['view_type_by_object_services'] . $monthlyPeriodText;
-
             $aServices[] = $service;
-
+             /*
             // Отстъпки
             $time = strtotime($service['month']);
 
@@ -1169,11 +1207,11 @@ class NEWDBSalesDocs extends DBBase2 {
             if ($dCon >= $dNow) {
                 $aConcession[$service['id_duty']][] = $service['month'];
 
-            }
+            }*/
         }
 
         unset($service);
-
+        /*
         foreach ($aConcession as $key => $val) {
             $cnt = count($val);
 
@@ -1245,15 +1283,15 @@ class NEWDBSalesDocs extends DBBase2 {
                 //die(print("<pre>".print_r($aTmp,true)."</pre>"));
                 $aServices[] = $aTmp;
             }
-        }
+        }*/
 
         foreach ($aSingleDuty as $service) {
             $aServices[] = $service;
         }
 
-        if ($isConcession) {
+        /* if ($isConcession) {
             $this->setAlert("Има предложени отстъпки!!!");
-        }
+        } */
 
         unset($service);
 
@@ -1334,15 +1372,15 @@ class NEWDBSalesDocs extends DBBase2 {
 
                         $dCon = mktime(0, 0, 0, date("m", $time), 1, date("Y", $time));
 
-                        if ($dCon >= $dNow) {
+                        /* if ($dCon >= $dNow) {
                             $aConcession[$service['id_duty']][] = $service['month'];
 
-                        }
+                        } */
                     }
                 }
 
                 unset($service);
-
+                /*
                 foreach ($aConcession as $key => $val) {
                     $cnt = count($val);
 
@@ -1417,7 +1455,8 @@ class NEWDBSalesDocs extends DBBase2 {
                 }
 
                 $aConcession = [];
-
+                */
+                
                 foreach ($aSingleDuty as $service) {
                     $aServices[] = $service;
                 }
@@ -1431,16 +1470,16 @@ class NEWDBSalesDocs extends DBBase2 {
         }
 
         // Отстъпки
-        if ( !$isCredit ) {
+        /*if ( !$isCredit ) {
             if ($isConcession) {
                 $this->setAlert("Има предложени отстъпки!!!");
             }
-        }
+        }*/
 
         // valkata bre =>  темп шитс докато се върне павката... и го доизмисли
         $aServices = $this->serviceMonthCaption($aServices);
 
-        //die(print("<pre>".print_r($aServices,true)."</pre>"));
+        
         return $aServices;
     }
 
@@ -1488,7 +1527,7 @@ class NEWDBSalesDocs extends DBBase2 {
 
     public function makeAdvice() {
         $post = json_decode(file_get_contents('php://input'), true);
-
+        //die(print("<pre>".print_r($post,true)."</pre>"));
         if (!isset($post['document_data']) || !isset($post['document_rows'])) {
             return $this->setError("Невалиден документ!");
         }
@@ -1567,6 +1606,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $document['client_name']        = $post['client_name'] ?? '';
         $document['client_recipient']   = $post['client_recipient'] ?? '';
         $document['client_address']     = $post['client_address'] ?? '';
+        $document['id_city']            = $post['id_city'] ?? 0;
 
         $oDocument->update($document);
 
@@ -1602,6 +1642,7 @@ class NEWDBSalesDocs extends DBBase2 {
     }
 
     public function store( $post = null ) {
+        
         global $db_sod, $db_system, $db_finance, $db_name_finance, $db_name_sod, $db_name_system;
 
         if ( $post == null ) {
@@ -1787,7 +1828,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 foreach ( $docRows as $key => $row ) {
                     if ( $row['for_payment'] ) {
                         $is_dds 	= 0;
-                        $nTotal     += $row['total_sum_with_dds'];
+                        $nTotal     += $row['total_sum'];
 
                         // Номенклатура ДДС
                         if ( $row['id_service'] == -1 ) {
@@ -1870,32 +1911,6 @@ class NEWDBSalesDocs extends DBBase2 {
 
                 if ( isset($setDDS['error']) && !empty($setDDS['error']) ) {
                     throw new Exception($setDDS['error'], DBAPI_ERR_FAILED_TRANS);
-                }
-
-                if ( $document['doc_type'] == "faktura" && defined('SMS_FOR_HAND_INVOICE') &&  SMS_FOR_HAND_INVOICE == 1 ) {
-                    $nIDClient  = $document['id_client'] ?? 0;
-                    $aTarget    = $this->getClientByID($nIDClient);
-                    $nTarget    = isset($aTarget['sms_phone']) ? $aTarget['sms_phone'] : 0;
-
-                    if ( !empty($nTarget) ) {
-                        $oSMS = new DBBase2($db_system, "notifications");
-
-                        $aPar               = array();
-                        $aPar['month']      = date("m");
-                        $aPar['id_client']  = $nIDClient;
-                        $aPar['id_invoice'] = $nLastInvoiceNum;
-                        $aPar['pay_sum']    = sprintf("%01.2f", $nTotal);
-
-                        $aSMS                       = array();
-                        $aSMS['id_event']           = 8;
-                        $aSMS['channel']            = "sms";
-                        $aSMS['send_after']         = date("H") < 9 ? mktime(9, 0, 0, date("m"), date("d"), date("Y")) : time();
-                        $aSMS['target']             = $nTarget;
-                        $aSMS['id_client']          = $nIDClient;
-                        $aSMS['additional_params']  = json_encode($aPar);
-
-                        $oSMS->update($aSMS);
-                    }
                 }
             }
 
@@ -2198,6 +2213,7 @@ class NEWDBSalesDocs extends DBBase2 {
             $aData['note'] = $document['note'] ?: $docOrigin['note'];
             $aData['view_type'] = $document['view_type'] ?: $docOrigin['view_type'];
             $aData['advice_reason'] = $document['advice_reason'] ?: $docOrigin['advice_reason'];
+            $aData['id_city'] = $document['id_city'] ?: $docOrigin['id_city'];
             $aData['version'] = 2;
 
             $oDocument->update($aData);

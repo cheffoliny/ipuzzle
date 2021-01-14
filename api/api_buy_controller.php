@@ -201,6 +201,25 @@ class BuyController extends DBBase2 {
         return $this->selectOne($sQuery);
     }
 
+    public function getDirections()
+    {
+        global $db_name_sod;
+
+        $query = "
+            SELECT
+                id,
+                id_direction_type,
+                id_office,
+                name
+            FROM {$db_name_sod}.directions
+            WHERE to_arc = 0
+        ";
+                
+
+        $result = $this->select($query);
+        return $result;
+    }
+
     public function getNomenclatures($nIDDirection = 0) {
         global $db_name_finance;
 
@@ -211,8 +230,9 @@ class BuyController extends DBBase2 {
         */
 
         $nIDPerson  = $this->getPerson();
-        $sDirection = $this->getExpenses($nIDDirection);
-
+        
+        //$sDirection = $this->getExpenses($nIDDirection);
+        
         /*
         if ( empty($sDirection) ) {
             return [];
@@ -231,9 +251,9 @@ class BuyController extends DBBase2 {
               AND FIND_IN_SET(ne.id, c.nomenclatures_expenses_create)
         ";
 
-        if ( !empty($sDirection) ) {
+        /* if ( !empty($sDirection) ) {
             $sQuery .= " AND ne.id IN ({$sDirection}) ";
-        }
+        } */
 
         $aData = $this->select($sQuery);
 
@@ -254,7 +274,7 @@ class BuyController extends DBBase2 {
         if ( isset($_SESSION['userdata']['access_right_regions']) ) {
             $sAccessRegions = implode(',', $_SESSION['userdata']['access_right_regions']);
         } else {
-            return $this->setError("Нямате достъп до нто един регион!");
+            return $this->setError("Нямате достъп до нито един регион!");
         }
 
         $sQuery = "
@@ -293,9 +313,9 @@ class BuyController extends DBBase2 {
 					ba.id,
 					IF ( ba.cash, CONCAT(ba.name_account, ' [каса]'), CONCAT(ba.name_account, ' [банка]') ) as name,
 					ba.iban as iban,
-					IF ( ba.cash, 'cash', 'bank' ) as type,
-					ba.is_paid,
-					ba.tax
+					IF ( ba.cash, 'cash', 'bank' ) as type
+					#ba.is_paid,
+					#ba.tax
 				FROM {$db_name_finance}.bank_accounts ba
 				LEFT JOIN {$db_name_finance}.cashier c ON (FIND_IN_SET(ba.id, c.bank_accounts_operate) AND c.to_arc = 0)
 				WHERE ba.to_arc = 0
@@ -303,7 +323,6 @@ class BuyController extends DBBase2 {
 					#AND ba.id = 30 
 				ORDER BY ba.name_account
 			";
-
         return $this->select( $sQuery );
     }
     
@@ -378,9 +397,12 @@ class BuyController extends DBBase2 {
 
         $aData['total_sum'] 		= 0;
         $aData['orders_sum'] 		= 0;
-        $aData['last_order_id'] 		= 0;
+        $aData['last_order_id'] 	= 0;
         $aData['paid_type'] 	    = "cash";
         $aData['view_type']			= "extended";
+        $aData['is_advice'] 	    = 0;
+        $aData['id_advice'] 	    = 0;
+        $aData['is_hide'] 	        = 0;
         $aData['note']				= "";
         $aData['doc_date_create']	= date("Y-m-d");
         $aData['created_user']		= $this->getPerson();
@@ -494,13 +516,13 @@ class BuyController extends DBBase2 {
                     ofc.name as region,
 				    frm.name as firm,
 				    o.name as object,
-				    fnd.name as fund,
+				    d.name as direction,
 				    ne.name as nomenclature
 				FROM {$db_name_finance}.{$sTable} sd
 				LEFT JOIN {$db_name_sod}.offices ofc ON ofc.id = sd.id_office
                 LEFT JOIN {$db_name_sod}.firms frm ON frm.id = ofc.id_firm
                 LEFT JOIN {$db_name_sod}.objects o ON o.id = sd.id_object
-                LEFT JOIN {$db_name_sod}.directions_type fnd ON fnd.id = sd.id_direction
+                LEFT JOIN {$db_name_sod}.directions d ON d.id = sd.id_direction
                 LEFT JOIN {$db_name_finance}.nomenclatures_expenses ne ON ne.id = sd.id_nomenclature_expense
 				WHERE sd.id_buy_doc = {$nID}
 		  
@@ -579,6 +601,7 @@ class BuyController extends DBBase2 {
         if ( !isset($post['document_data']) || !isset($post['document_rows']) ) {
             return $this->setError("Грешка при опит за създаване на документ!");
         }
+        
 
         $document = $post['document_data'] ?? [];
         $docRows = $post['document_rows'] ?? [];
@@ -632,7 +655,7 @@ class BuyController extends DBBase2 {
         $oBuyDocRows = new DBMonthTable($db_name_finance,PREFIX_BUY_DOCS_ROWS,$db_finance);
         $oService = new DBNomenclaturesExpenses();
         $oFirms = new DBFirms();
-
+        
         $db_finance->StartTrans();
         $db_system->StartTrans();
         $db_sod->StartTrans();
@@ -831,6 +854,7 @@ class BuyController extends DBBase2 {
         $document = $post['document_data'] ?? [];
         $docRows = $post['document_rows'] ?? [];
 
+
         $nID = $document['id'] ?? 0;
         $nIDUser = $this->getPerson();
         $totalSum = $document['doc_type'] == "kreditno izvestie" ? ($post['totalSum'] *= -1 ?? 0) : $post['totalSum'] ?? 0;
@@ -912,6 +936,7 @@ class BuyController extends DBBase2 {
             $aData['deliverer_mol'] = $document['deliverer_mol'] ?: $docOrigin['deliverer_mol'];
             $aData['orders_sum'] = 0;
             $aData['total_sum'] = $totalSum;
+            $aData['is_hide'] = $document['is_hide'] ?? $docOrigin['is_hide'];
             $aData['note'] = $document['note'] ?? "";
             $aData['created_time'] = $document['doc_date_create'] ?: $docOrigin['created_time'];
             $aData['updated_user'] = $nIDUser;
@@ -1313,6 +1338,7 @@ function castDocumentData($data) {
     $data['user_office_id'] = intval($data['user_office_id']);
     $data['exported'] = intval($data['exported']);
 
+
     return $data;
 }
 function castClients($data) {
@@ -1335,12 +1361,13 @@ function castRegions($data) {
 
     return $data;
 }
-function castFunds($data) {
+function castDirections($data) {
     if(empty($data)) return $data;
 
     foreach ($data as $key => $value) {
         $data[$key]['id'] = intval($data[$key]['id']);
-        $data[$key]['id_firm'] = intval($data[$key]['id_firm']);
+        $data[$key]['id_direction_type'] = intval($data[$key]['id_direction_type']);
+        $data[$key]['id_office'] = intval($data[$key]['id_office']);
     }
 
     return $data;
@@ -1395,6 +1422,7 @@ function castDocumentRows($data) {
         $data[$key]['total_sum'] = floatval($data[$key]['total_sum']);
         $data[$key]['paid_sum'] = floatval($data[$key]['paid_sum']);
         $data[$key]['is_dds'] = intval($data[$key]['is_dds']);
+        $data[$key]['id_person'] = intval($data[$key]['id_person']);
     }
 
     return $data;
@@ -1417,23 +1445,14 @@ function castRelations($data) {
     foreach ($data as $key => $value) {
         $data[$key]['id'] = intval($data[$key]['id']);
         $data[$key]['id_deliverer'] = intval($data[$key]['id_deliverer']);
-        $data[$key]['id_client'] = intval($data[$key]['id_client']);
         $data[$key]['total_sum'] = floatval($data[$key]['total_sum']);
         $data[$key]['orders_sum'] = floatval($data[$key]['orders_sum']);
         $data[$key]['last_order_id'] = intval($data[$key]['last_order_id']);
-        $data[$key]['id_bank_epayment'] = intval($data[$key]['id_bank_epayment']);
-        $data[$key]['id_bank_account'] = intval($data[$key]['id_bank_account']);
-        $data[$key]['is_book'] = intval($data[$key]['is_book']);
         $data[$key]['id_advice'] = intval($data[$key]['id_advice']);
         $data[$key]['is_advice'] = intval($data[$key]['is_advice']);
-        $data[$key]['id_credit_master'] = intval($data[$key]['id_credit_master']);
-        $data[$key]['is_auto'] = intval($data[$key]['is_auto']);
-        $data[$key]['exported'] = intval($data[$key]['exported']);
-        $data[$key]['version'] = intval($data[$key]['version']);
-        $data[$key]['gen_pdf'] = intval($data[$key]['gen_pdf']);
-        $data[$key]['is_user_print'] = intval($data[$key]['is_user_print']);
         $data[$key]['for_fuel'] = intval($data[$key]['for_fuel']);
         $data[$key]['for_gsm'] = intval($data[$key]['for_gsm']);
+        $data[$key]['exported'] = intval($data[$key]['exported']);
         $data[$key]['is_hide'] = intval($data[$key]['is_hide']);
     }
 
@@ -1459,18 +1478,17 @@ switch ($request) {
 
         $data = [];
         $data['document_data'] = castDocumentData($buy->getBlankDoc());
-
         $data['clients'] = castClients($buy->getFirmsAsClient());
         $data['regions'] = castRegions($buy->getFirmsByOffice());
         $data['firms'] = $buy->getFirmNames($data['regions']);
-        $data['funds'] = castFunds($buy->getFunds());
+        $data['directions'] = castDirections($buy->getDirections());
         $data['nomenclature_groups'] = castNomenclatureGroups($buy->getNomenclatureGroups());
         $data['nomenclatures'] = castNomenclatures($buy->getNomenclatures());
         $data['bank_accounts'] = castBankAccounts($buy->getBankAccountsForOrders());
 
         // Todo: клиент по касиер!
-        $key = array_search("837037876", array_column($data['clients'], 'ein'));
-        $data['default_client'] = isset($data['clients'][$key]['name']) && !empty($data['clients'][$key]['name']) ? $data['clients'][$key]['name'] : "ТЕЛЕПОЛ ЕООД";
+        $key = array_search("201189890", array_column($data['clients'], 'ein'));
+        $data['default_client'] = isset($data['clients'][$key]['name']) && !empty($data['clients'][$key]['name']) ? $data['clients'][$key]['name'] : "ЛИФТКОМ СЕРВИЗ ЕООД";
 
         $data['alerts'] = $buy->getAlerts();
 
@@ -1488,7 +1506,6 @@ switch ($request) {
         $data['document_rows'] = castDocumentRows($buy->getDocRows($nID));
         $data['orders'] = castOrders($buy->getOrdersByDoc($nID));
         $data['alerts'] = $buy->getAlerts();
-        
 
         if(!empty($data) && $data['document_data']['doc_type'] == 'kreditno izvestie') {
             
@@ -1509,8 +1526,8 @@ switch ($request) {
             $data['origin_document'] = [];
         }
 
-        echo json_encode($data);
         //echo json_encode($data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
+        echo json_encode($data);
         $flag = true;
 
         break;
@@ -1591,9 +1608,9 @@ switch ($request) {
     case "get_relations":
         try {
             $nID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
+
             $data['alerts'] = $buy->getAlerts();
             $data['relations'] = castRelations($buy->getRelations($nID));
-
         } catch (NoticeException $nex) {
             // Nothing
         } catch (Exception $ex) {
@@ -1605,7 +1622,7 @@ switch ($request) {
             echo json_encode(["error" => $e->getMessage()]);
             die();
         }
-
+        
         echo json_encode($data);
         $flag = true;
         break;

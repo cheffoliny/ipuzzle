@@ -105,8 +105,8 @@
           <label v-show="!headerCollapse" class="custom-label" for="doc_type">вид:</label>
           <select v-show="!headerCollapse" id="doc_type" class="custom-input" v-model="doc_type">
             <option value="faktura">Фактура</option>
-            <option value="kvitanciq">Проформа фактура</option>
-            <option value="oprostena">Квитанция</option>
+            <option value="kvitanciq">Квитанция</option>
+            <option value="oprostena">Опростена ф-ра</option>
           </select>
         </template>
         <template v-else>
@@ -247,6 +247,8 @@
      <div v-if="showToolbar" 
      :class="document_data.is_advice || document_data.id_advice || is_new_relative_doc ? 'justify-between' : 'justify-end'"
      class="flex w-full items-center my-2">
+      
+
       <div
         v-if="
           document_data.is_advice ||
@@ -334,6 +336,17 @@
         </button>
         
         <button
+          v-if="doc_rows.length"
+          :title="!document_data.is_hide ? 'Документа е видим натисни за промяна' : 'Документа е скрит натисни за промяна'"
+          v-tippy="{ trigger: 'mouseenter', placement: 'bottom', arrow: true }"
+          @click="toggleIsHide"
+          
+          class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
+        >
+          <i :class="document_data.is_hide ? 'fa-low-vision' : 'fa-eye'" class="fad fa-eye fa-lg fa-fw"></i>
+       </button>
+
+        <button
           :title="headerCollapse ? 'Разшири' : 'Смали'"
           v-tippy="{ trigger: 'mouseenter', placement: 'bottom', arrow: true }"
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 text-sm"
@@ -358,7 +371,7 @@
         </div>
         <div :class="urlParams.id ? 'col-span-2' : '' " class="grid-cell text-center">№</div>
         <div class="grid-cell firm-region">фирма / регион</div>
-        <div class="grid-cell service-nomenclature">фонд / номенклатура</div>
+        <div class="grid-cell service-nomenclature">направление / номенклатура</div>
         <div class="grid-cell period">за месец</div>
         <div class="grid-cell total">сума</div>
         <div class="grid-cell action text-center">...</div>
@@ -383,13 +396,13 @@
               class="secondary-info uppercase truncate tracking-wide focus:outline-none"
             >{{row.region}}</div>
           </div>
-          <!-- fund / nomenclature -->
+          <!-- direction / nomenclature -->
           <div class="grid-cell">
             <template v-if="row.id_direction !== 0">
               <div
                 class="primary-info font-medium w-full truncate focus:outline-none"
-                :title="row.fund"
-              >{{row.fund}}</div>
+                :title="row.direction"
+              >{{row.direction}}</div>
               <div
                 :title="row.nomenclature"
                 v-tippy="{ trigger : 'mouseenter', placement : 'bottom',arrow : true}"
@@ -458,7 +471,7 @@
       :client_id_office_dds="clients[selectedClient].id_office_dds"
       :firms="selectedFirms"
       :regions="regions"
-      :funds="funds"
+      :directions="directions"
       :nomenclatures="nomenclatures"
       :nomenclature_groups="nomenclature_groups"
       :date="document_data.doc_date_create"
@@ -560,13 +573,13 @@
       </div>
       <div v-if="doc_rows.length" class="flex flex-wrap w-auto ml-auto">
         <button
-          v-if="urlParams.id && !is_new_relative_doc"
+          v-if="urlParams.id && !is_new_relative_doc && document_data.doc_status !== 'canceled'"
           :disable="loading"
           @click="showPaymentForm = true"
           class="w-28 h-8 p-2 shadow-custom rounded-sm bg-white text-gray-700 text-xss uppercase font-medium tracking-wide hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2"
         >плащане</button>
         <button
-          v-if="urlParams.id && !is_new_relative_doc && document_data.doc_status !== 'canceled'"
+          v-if="urlParams.id && document_data.doc_status !== 'canceled'"
           :disable="loading"
           @click="cancelDoc"
           class="w-28 h-8 p-2 shadow-custom rounded-sm bg-gray-500 text-white text-xss uppercase font-medium tracking-wide hover:bg-gray-600 hover:text-white focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2"
@@ -676,12 +689,12 @@ export default {
       serviceForEdit: {},
       firms: [],
       regions: [],
+      directions: [],
       doc_type: "faktura",
       loaded: false,
       loading: false,
       doc_rows_dds: [],
       orders: [],
-      funds: [],
       nomenclatures: [],
       nomenclature_groups: [],
       annulment: false,
@@ -690,6 +703,10 @@ export default {
     };
   },
   methods: {
+    toggleIsHide(){
+      if(this.document_data.doc_status === 'canceled') return
+      this.document_data.is_hide = this.document_data.is_hide == 1 ? 0 : 1
+    },
     cloneService(row) {
       let clone = JSON.parse(JSON.stringify(row))
       clone.uuid = this.genUuid()
@@ -814,7 +831,7 @@ export default {
           this.document_data = data.document_data;
           this.firms = this.arrSortByPropName(data.firms, "name");
           this.regions = this.arrSortByPropName(data.regions, "region");
-          this.funds = this.arrSortByPropName(data.funds, "name");
+          this.directions = this.arrSortByPropName(data.directions, "name");
           this.nomenclatures = this.arrSortByPropName(
             data.nomenclatures,
             "name"
@@ -910,12 +927,9 @@ export default {
       this.document_data.orders_sum = 0;
       this.document_data.last_order_id = 0;
       this.document_data.last_order_time = "0000-00-00 00:00:00";
-      this.document_data.note = "";
       this.document_data.view_type = "extended";
       this.document_data.is_advice = 0;
       this.document_data.id_advice = 0;
-      this.document_data.exported = 0;
-      this.document_data.is_hide = 0;
       this.document_data.created = "";
       this.document_data.created_time = "";
       this.document_data.created_user = 0;
@@ -1065,8 +1079,8 @@ export default {
         const suffix = this.document_data.doc_num ?? "";
         if (this.document_data.doc_type === "kvitanciq") {
           return {
-            name: "Проформа фактура",
-            abbr: `Проформа ${suffix}`,
+            name: "Квитанция",
+            abbr: `Кв. ${suffix}`,
           };
         }
         if (this.document_data.doc_type === "faktura") {
@@ -1077,8 +1091,8 @@ export default {
         }
         if (this.document_data.doc_type === "oprostena") {
           return {
-            name: "Квитанция",
-            abbr: `Кв. ${suffix}`,
+            name: "Опростена ф-ра",
+            abbr: `Опр. ф-ра ${suffix}`,
           };
         }
         if (this.document_data.doc_type === "kreditno izvestie") {
@@ -1319,7 +1333,7 @@ export default {
     justify-self: center;
     background-color: #fff;
     border: 1px solid #c5cbd4;
-    color: #0d79bb;
+    color: #8da2fb;
     font-size: 10px;
     border-radius: 999px;
     user-select: none;
@@ -1328,7 +1342,7 @@ export default {
 
 .custom-label {
   font-size: 12px;
-  color: #2d3e52;
+  color: #5c6bc0;
   user-select: none;
   //font-weight: 500;
 }
@@ -1354,13 +1368,13 @@ export default {
   }
   &:focus {
     outline: none;
-    border-color: #0d79bb;
-    box-shadow: 0 0 0 1px #0d79bb inset;
+    border-color: #8da2fb;
+    box-shadow: 0 0 0 1px #8da2fb inset;
   }
   &:focus-within {
     outline: none;
-    border-color: #0d79bb;
-    box-shadow: 0 0 0 1px #0d79bb inset;
+    border-color: #8da2fb;
+    box-shadow: 0 0 0 1px #8da2fb inset;
   }
 }
 
@@ -1388,12 +1402,12 @@ input::-webkit-inner-spin-button {
   //color: #78909c;
   //color: #A2AAB4;
   //color: #8b95a2;
-  color: #2d3e52;
+  color: #5c6bc0;
   font-size: 11px;
   text-transform: lowercase;
 }
 .month {
-  background: #2d3e52;
+  background: #5c6bc0;
   color: #ffffff;
   border-radius: 4px;
   padding: 4px 6px;
