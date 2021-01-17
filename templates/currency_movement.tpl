@@ -36,7 +36,7 @@
 			
 			loadXMLDoc2( 'result' );
 		}
-		
+
 		function openOrder( id )
 		{
 			if( id )
@@ -57,7 +57,7 @@
 		{
 			dialogSaleFromBook();
 		}
-		
+
 		function openDoc( id, doc_type )
 		{
 			if( id )
@@ -65,9 +65,9 @@
 				switch( doc_type )
 				{
 					case 'buy':
-						dialogBuy( 'id=' + id, 'buy_' + id );
+						dialogBuy2( id );
 						break;
-					
+
 					case 'sale':
 						dialogSale2( id );
 						break;

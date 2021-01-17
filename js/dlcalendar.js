@@ -76,7 +76,7 @@ var dlcalendar_aCalendarStyles =
 
         [ '#dlcalendar_bodyTable',         'table-layout: fixed; cursor: default; width:100%; border: 0px solid #000000; margin: 0px; border-collapse: separate' ],
 
-        [ '#dlcalendar_headerRow',         'text-align: center; vertical-align:middle; color: #555555; background-color: #ffffff; cursor:default;' ],
+        [ '#dlcalendar_headerRow',         'text-align: center; vertical-align:middle; color: #555555; background-color: #aaaaaa; cursor:default;' ],
         [ 'th.dlcalendar_headerRowCell',   'padding: 3px 3px; font-size: 13px; text-align:center; color: #367fa9;' ],
 
         [ 'tr.dlcalendar_dateRow',         'padding: 3px 3px; text-align:center; vertical-align: middle;' ],
