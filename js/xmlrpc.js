@@ -358,12 +358,12 @@ function form2POST()
                 _rpc_obj_loader = document.createElement("i");
                 _rpc_obj_loader.appendChild(document.createTextNode(''));
                 _rpc_obj_loader.id = 'loading';
-                _rpc_obj_loader.className = 'fa fa-spinner fa-pulse';
-                _rpc_obj_loader.style.fontSize = 96;
+                _rpc_obj_loader.className = 'fas fa-puzzle-piece fa-pulse';
+                _rpc_obj_loader.style.fontSize = '200px !important';
                 _rpc_obj_loader.style.right = '50%';
                 _rpc_obj_loader.style.bottom = '50%';
                 _rpc_obj_loader.style.color = '#2e8cb8';
-                _rpc_obj_loader.style.textShadow = '2px 2px 2px #cccccc';
+                _rpc_obj_loader.style.textShadow = '1px 1px 1px #eeeeee';
                 _rpc_obj_loader.style.position = 'absolute';
                 _rpc_obj_loader.style.zIndex = 1000;
 				document.body.appendChild(_rpc_obj_loader);				

@@ -761,7 +761,7 @@ export default {
       }
 
       if (
-        this.doc_type !== "oprostena" &&
+        this.doc_type !== "kvitanciq" &&
         !parseInt(this.document_data.doc_num)
       ) {
         alert(
@@ -770,7 +770,7 @@ export default {
         return;
       }
 
-      if (this.doc_type !== "oprostena" && !this.deliverer.id) {
+      if (this.doc_type !== "kvitanciq" && !this.deliverer.id) {
         alert(
           `ГРЕШКА: не може да се издаде документ различен от квитанция без клиент!`
         );
@@ -1038,7 +1038,7 @@ export default {
         return false;
       }
       if (!this.deliverer.id) {
-        return this.doc_type === "oprostena" ? true : false;
+        return this.doc_type === "kvitanciq" ? true : false;
       }
       return true;
     },
@@ -1049,7 +1049,7 @@ export default {
       return true;
     },
     allowVatTransfer() {
-      if (this.doc_type !== "oprostena") {
+      if (this.doc_type !== "kvitanciq") {
         return false;
       } else if (this.doc_type === "oprostena" && this.doc_rows_dds.length) {
         return false;
@@ -1141,9 +1141,9 @@ export default {
     },
     showVat() {
      if(!this.urlParams.id) {
-        return this.doc_type !== "oprostena" ? true : false
+        return this.doc_type !== "kvitanciq" ? true : false
       }
-      return this.doc_type !== "oprostena" || this.document_data.doc_type !== "oprostena"
+      return this.doc_type !== "kvitanciq" || this.document_data.doc_type !== "kvitanciq"
         ? true
         : false;
     },

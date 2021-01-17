@@ -200,9 +200,9 @@ function tab_href( page ) {
 
         <li class="nav-item dropdown ml-auto mr-5">
             {if $isService}
-                <a class="nav-link dropdown-toggle text-warning text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog fa-lg ml-2 mr-2"></i></a>
+                <a class="nav-link dropdown-toggle text-warning text-center h-100" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog fa-lg ml-2 mr-2"></i></a>
             {else}
-                <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog fa-lg ml-2 mr-2"></i></a>
+                <a class="nav-link dropdown-toggle text-center h-100" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog fa-lg ml-2 mr-2"></i></a>
             {/if}
             <div class="dropdown-menu">
                 {if $bEditStatuses}

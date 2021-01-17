@@ -5647,19 +5647,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BuyDoc",
   components: {
@@ -5804,12 +5791,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      if (this.doc_type !== "oprostena" && !parseInt(this.document_data.doc_num)) {
+      if (this.doc_type !== "kvitanciq" && !parseInt(this.document_data.doc_num)) {
         alert("\u0413\u0420\u0415\u0428\u041A\u0410: \u043D\u0435 \u043C\u043E\u0436\u0435 \u0434\u0430 \u0441\u0435 \u0438\u0437\u0434\u0430\u0434\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0440\u0430\u0437\u043B\u0438\u0447\u0435\u043D \u043E\u0442 \u043A\u0432\u0438\u0442\u0430\u043D\u0446\u0438\u044F \u0441 \u043D\u0443\u043B\u0435\u0432 \u043D\u043E\u043C\u0435\u0440!");
         return;
       }
 
-      if (this.doc_type !== "oprostena" && !this.deliverer.id) {
+      if (this.doc_type !== "kvitanciq" && !this.deliverer.id) {
         alert("\u0413\u0420\u0415\u0428\u041A\u0410: \u043D\u0435 \u043C\u043E\u0436\u0435 \u0434\u0430 \u0441\u0435 \u0438\u0437\u0434\u0430\u0434\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0440\u0430\u0437\u043B\u0438\u0447\u0435\u043D \u043E\u0442 \u043A\u0432\u0438\u0442\u0430\u043D\u0446\u0438\u044F \u0431\u0435\u0437 \u043A\u043B\u0438\u0435\u043D\u0442!");
         return;
       }
@@ -6066,7 +6053,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (!this.deliverer.id) {
-        return this.doc_type === "oprostena" ? true : false;
+        return this.doc_type === "kvitanciq" ? true : false;
       }
 
       return true;
@@ -6080,7 +6067,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     allowVatTransfer: function allowVatTransfer() {
       var _this5 = this;
 
-      if (this.doc_type !== "oprostena") {
+      if (this.doc_type !== "kvitanciq") {
         return false;
       } else if (this.doc_type === "oprostena" && this.doc_rows_dds.length) {
         return false;
@@ -6181,10 +6168,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     showVat: function showVat() {
       if (!this.urlParams.id) {
-        return this.doc_type !== "oprostena" ? true : false;
+        return this.doc_type !== "kvitanciq" ? true : false;
       }
 
-      return this.doc_type !== "oprostena" || this.document_data.doc_type !== "oprostena" ? true : false;
+      return this.doc_type !== "kvitanciq" || this.document_data.doc_type !== "kvitanciq" ? true : false;
     },
     vatTransferNomenclature: function vatTransferNomenclature() {
       if (this.nomenclatures.length) {
@@ -7031,7 +7018,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "loader",
   props: {
@@ -7052,11 +7038,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     preloaderIcon: {
       type: String,
-      "default": "fas fa-cog"
+      "default": "fas fa-puzzle-piece"
     },
     loaderIcon: {
       type: String,
-      "default": "fad fa-cog"
+      "default": "fad fa-puzzle-piece"
     }
   },
   data: function data() {
@@ -7318,6 +7304,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -7349,7 +7340,7 @@ __webpack_require__.r(__webpack_exports__);
       order_sum: 0,
       loading: false
     };
-  },
+  },	
   created: function created() {
     this.initPaymentForm();
   },
@@ -10555,60 +10546,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -10698,6 +10635,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document_data: [],
       deliverer: "изберете",
       deliverers: [],
+      concessions: [],
       selectedFirm: null,
       serviceForEdit: {},
       firms: [],
@@ -10767,20 +10705,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.doc_date = data.document_data.doc_date;
         _this2.doc_date_create = data.document_data.doc_date_create;
         _this2.duty_date = data.document_data.doc_date;
+        _this2.concessions = data.concessions;
 
-        if (_this2.urlParams.id_object) {
-          _this2.getClientObligations();
-        }
+		if (_this2.urlParams.id_object) {
+		  _this2.getClientObligations();
+		}
 
-        if (_this2.urlParams.id) {
-          _this2.getDocumentByID();
-        }
+		if (_this2.urlParams.id) {
+		  _this2.getDocumentByID();
+		}
 
-        if (!_this2.urlParams.id) {
-          _this2.loaded = true;
+		if (!_this2.urlParams.id) {
+		  _this2.loaded = true;
 
-          _this2.setWindowTitle();
-        }
+		  _this2.setWindowTitle();
+		}
       })["catch"](function (error) {
         var _error$response, _error$response$data;
 
@@ -11041,6 +10980,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             uuid: _this3.genUuid()
           });
         });
+		
+		_this3.createObjectsDiscountsTemplates();
 
         if (data.alerts.length > 0) {
           alert(data.alerts[0]);
@@ -11185,6 +11126,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.orders_sum = 0;
       this.document_data.last_order_id = 0;
       this.document_data.last_order_time = "0000-00-00 00:00:00";
+      this.document_data.id_bank_account = 0;
+      this.document_data.id_bank_epayment = 0;
+      this.document_data.epay_provider = 0;
+      this.document_data.easypay_date = "0000-00-00 00:00:00";
+      this.document_data.invoice_payment = 'bank';
       this.document_data.view_type = "extended";
       this.document_data.single_view_name = "услуга";
       this.document_data.is_book = 0;
@@ -11192,22 +11138,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.document_data.id_advice = 0;
       this.document_data.is_user_print = 0;
       this.document_data.user_print_date = "0000-00-00 00:00:00";
-      this.document_data.created = "";
-      this.document_data.created_time = "";
-      this.document_data.created_user = 0;
-      this.document_data.updated = "";
-      this.document_data.updated_time = "";
-      this.document_data.updated_user = 0;
-      this.document_data.id_bank_account = 0;
-      this.document_data.id_bank_epayment = 0;
-      this.document_data.epay_provider = 0;
-      this.document_data.easypay_date = "0000-00-00 00:00:00";
-      this.document_data.invoice_payment = 'bank';
-      this.document_data.is_auto = 0;
-      this.document_data.exported = 0;
       this.document_data.gen_pdf_date = "0000-00-00 00:00:00";
       this.document_data.note = '';
+      this.document_data.exported = 0;
+	  this.document_data.created = "";
+      this.document_data.created_time = "";
+      this.document_data.created_user = 0;
+	  this.document_data.updated = "";
+      this.document_data.updated_time = "";
+      this.document_data.updated_user = 0;
       this.document_data.id_protocol = 0;
+      this.document_data.is_auto = 0;
     },
     prepareDebitSaleDoc: function prepareDebitSaleDoc() {
       this.doc_type = "debitno izvestie";
@@ -11390,6 +11331,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var current_obj = this.objectsTreeView.find(function (obj) {
         return obj.id_object === id;
       });
+	  var discounts = current_obj.discounts;
       var monthlys = current_obj.monthly.months;
       monthlys.find(function (monthly) {
         return monthly.month === month;
@@ -11420,18 +11362,114 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
 
+	  var obj = this.objectsTreeView.find(function (obj) {
+        return obj.id_object === id;
+      });
+      var objMonthsForPayment = obj.monthly.months.filter(function (month) {
+        return month.for_payment.checked === true;
+      });
+      var objMonthsForPaymentCount = objMonthsForPayment.map(function (el) {
+        return el.month;
+      }).filter(function (el) {
+        return el >= moment().startOf("month").format("YYYY-MM-DD");
+      }).length;
+
+      if (discounts) {
+        var discountMonthsCount = discounts.services[0].concession_month_count;
+
+        if (discountMonthsCount > objMonthsForPaymentCount) {
+          this.deleteObjectDiscounts(id);
+        }
+
+        if (discountMonthsCount < objMonthsForPaymentCount) {
+          this.checkForNewDiscount(id, objMonthsForPaymentCount);
+          return;
+        }
+      }
+
+      this.checkForNewDiscount(id, objMonthsForPaymentCount);
       if (this.urlParams.id) return;
       if (this.request_monthlySuffix === this.monthlySuffix) return;
     },
-    reorderDocRowsByMonthlyAndSingles: function reorderDocRowsByMonthlyAndSingles() {
-      var _this7 = this;
+	toggleObjectDiscount: function toggleObjectDiscount(id, state) {
+      this.doc_rows.filter(function (service) {
+        return service.id_object === id && service.type === "free";
+      }).map(function (service) {
+        return service.for_payment = state;
+      });
+    },
+    addObjectDiscounts: function addObjectDiscounts(discounts) {
+      var _this6 = this;
+
+      discounts.map(function (service) {
+        service.single_price = _this6.getDiscountServiceSum(discounts[0].id_object, service.reference_service_id, service.percent);
+        service.total_sum = service.single_price;
+        service.total_sum_with_dds = service.single_price * (service.vat / 100 + 1);
+        service.uuid = _this6.genUuid();
+      });
+      discounts.forEach(function (service) {
+        return _this6.doc_rows.push(service);
+      });
+      this.reorderDocRowsByMonthlyDiscountsAndSingles();
+    },
+    deleteObjectDiscounts: function deleteObjectDiscounts(id_object) {
+      var _this8 = this;
+
+      this.doc_rows.filter(function (discounts) {
+        return discounts.id_object === id_object && discounts.type === "free";
+      }).forEach(function (service) {
+        return Vue["delete"](_this8.doc_rows, _this8.doc_rows.indexOf(service));
+      });
+    },
+    checkForNewDiscount: function checkForNewDiscount(id, objMonthsForPaymentCount) {
+      var availableDiscounts = Object.values(this.concessions).filter(function (concession) {
+        return concession.months_count <= objMonthsForPaymentCount;
+      });
+
+      if (availableDiscounts.length) {
+        availableDiscounts.sort(function (a, b) {
+          return a.months_count - b.months_count;
+        });
+        var newDiscount = this.objectDiscountTemplates.filter(function (template) {
+          return template.some(function (obj) {
+            return obj.id_object === id && obj.concession_month_count === availableDiscounts[availableDiscounts.length - 1].months_count;
+          });
+        })[0];
+        var clonedDiscount = JSON.parse(JSON.stringify(newDiscount));
+        this.objectsTreeView.find(function (obj) {
+          return obj.id_object === id;
+        }).discounts ? (this.deleteObjectDiscounts(id), this.addObjectDiscounts(clonedDiscount)) : this.addObjectDiscounts(clonedDiscount);
+      }
+    },
+    getDiscountServiceSum: function getDiscountServiceSum(id_object, originalServiceId, discountPercent) {
+      var currentStartOfMonth = this.document_data.doc_date_create.slice(0, -2);
+      currentStartOfMonth += "01";
+      var services = this.doc_rows.filter(function (service) {
+        return service.id_object === id_object && service.type === "month" && service.month >= currentStartOfMonth && service.for_payment === true && service.id_service === originalServiceId;
+      });
+      var discountSum = this.getTotalSumFromArr(services) * -1 * discountPercent / 100; // na pavkata formulata jhuehueheuhehu (0.83333333334 * ((20 / 100) +1)).toFixed(2)
+
+      /* if (discountSum > 0) {
+        return -Math.abs(discountSum);
+      } */
+
+      /* console.log(
+        `gen discount for id_object => ${id_object}, for serivce_id => ${originalServiceId}, found elements => ${services.length}, discount sum => ${discountSum}`
+      ); */
+
+      return discountSum;
+    },
+	reorderDocRowsByMonthlyDiscountsAndSingles: function reorderDocRowsByMonthlyDiscountsAndSingles() {
+    //reorderDocRowsByMonthlyAndSingles: function reorderDocRowsByMonthlyAndSingles() {
+      var _this91 = this;
 
       var reordered = [];
       this.idObjects.forEach(function (id) {
         var objectMonthly = [];
+        var objectDiscounts = [];
         var objectSingles = [];
 
-        var objectsServices = _this7.doc_rows.filter(function (obj) {
+        var objectsServices = _this91.doc_rows.filter(function (obj) {
           return obj.id_object === id;
         });
 
@@ -11439,6 +11477,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           objectsServices.forEach(function (service) {
             if (service.type === "month") {
               objectMonthly.push(service);
+            }
+
+            if (service.type === "free") {
+              objectDiscounts.push(service);
             }
 
             if (service.type === "single") {
@@ -11450,6 +11492,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             reordered = reordered.concat(objectMonthly);
           }
 
+          if (objectDiscounts.length) {
+            reordered = reordered.concat(objectDiscounts);
+          }
+
           if (objectSingles.length) {
             reordered = reordered.concat(objectSingles);
           }
@@ -11459,13 +11505,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.doc_rows = reordered;
     },
     createObjectTree: function createObjectTree(id_object) {
-      var _monthly$totalForPaym, _singles$totalForPaym, _monthly$totalForPaym2, _singles$totalForPaym2, _monthly$totalForPaym3, _singles$totalForPaym3;
+      var _monthly$totalForPaym, _discounts$totalForPa, _singles$totalForPaym, _monthly$totalForPaym2, _discounts$totalForPa2, _singles$totalForPaym2, _monthly$totalForPaym3, _discounts$totalForPa3, _singles$totalForPaym3;
 
       var objectTaxes = this.doc_rows.filter(function (object) {
         return object.id_object === id_object;
       });
       var monthly = this.createObjectMonthlyTaxes(objectTaxes.filter(function (service) {
         return service.type === "month";
+      }));
+	  var discounts = this.createObjectDiscounts(objectTaxes.filter(function (service) {
+        return service.type === "free";
       }));
       var singles = this.createObjectSingleTaxes(objectTaxes.filter(function (service) {
         return service.type === "single";
@@ -11475,16 +11524,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id_object: id_object,
         for_payment: this.getForPaymentStateFromArray(objectTaxes),
         monthly: monthly,
+        discounts: discounts,
         singles: singles,
         quantity: 1,
         measure: "бр.",
-        totalForPayment: ((_monthly$totalForPaym = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym !== void 0 ? _monthly$totalForPaym : 0) + ((_singles$totalForPaym = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym !== void 0 ? _singles$totalForPaym : 0),
-        totalSum: ((_monthly$totalForPaym2 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym2 !== void 0 ? _monthly$totalForPaym2 : 0) + ((_singles$totalForPaym2 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym2 !== void 0 ? _singles$totalForPaym2 : 0) > 0 ? ((_monthly$totalForPaym3 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym3 !== void 0 ? _monthly$totalForPaym3 : 0) + ((_singles$totalForPaym3 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym3 !== void 0 ? _singles$totalForPaym3 : 0) : this.getTotalSumFromArr(objectTaxes)
+        totalForPayment: ((_monthly$totalForPaym = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym !== void 0 ? _monthly$totalForPaym : 0) + ((_discounts$totalForPa = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa !== void 0 ? _discounts$totalForPa : 0) + ((_singles$totalForPaym = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym !== void 0 ? _singles$totalForPaym : 0),
+        totalSum: ((_monthly$totalForPaym2 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym2 !== void 0 ? _monthly$totalForPaym2 : 0) + ((_discounts$totalForPa2 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa2 !== void 0 ? _discounts$totalForPa2 : 0) + ((_singles$totalForPaym2 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym2 !== void 0 ? _singles$totalForPaym2 : 0) > 0 ? ((_monthly$totalForPaym3 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym3 !== void 0 ? _monthly$totalForPaym3 : 0) + ((_discounts$totalForPa3 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa3 !== void 0 ? _discounts$totalForPa3 : 0) + ((_singles$totalForPaym3 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym3 !== void 0 ? _singles$totalForPaym3 : 0) : this.getTotalSumFromArr(objectTaxes)
       };
       return objectTree;
     },
     createObjectMonthlyTaxes: function createObjectMonthlyTaxes(monthlys) {
-      var _this8 = this;
+      var _this88 = this;
 
       if (monthlys.length > 0) {
         var idObject = monthlys[0].id_object;
@@ -11500,9 +11550,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             name: services[0].view_type_detail,
             month: month,
             services: services,
-            for_payment: _this8.getForPaymentStateFromArray(services),
-            totalSum: _this8.getTotalSumFromArr(services),
-            totalForPayment: _this8.getTotalSumFromArr(services.filter(function (service) {
+            for_payment: _this88.getForPaymentStateFromArray(services),
+            totalSum: _this88.getTotalSumFromArr(services),
+            totalForPayment: _this88.getTotalSumFromArr(services.filter(function (service) {
               return service.for_payment === true;
             }))
           });
@@ -11522,6 +11572,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return null;
     },
+	createObjectDiscounts: function createObjectDiscounts(discounts) {
+      // за доработка разделно групиране за отстъпките по месеци и услуги ?
+      if (discounts.length > 0) {
+        var discountName = Object.values(this.concessions).find(function (discount) {
+          return discount.id_service === discounts[0].id_service;
+        }).name;
+        var discountTree = {
+          name: discounts[0].for_smartsot ? "".concat(discountName, " [ \u0421\u043C\u0430\u0440\u0442 \u0421\u041E\u0422 ]") : "".concat(discountName),
+          month: discounts[0].month,
+          for_payment: this.getForPaymentStateFromArray(discounts),
+          totalSum: this.getTotalSumFromArr(discounts),
+          totalForPayment: this.getTotalSumFromArr(discounts.filter(function (discount) {
+            return discount.for_payment === true;
+          })),
+          services: discounts
+        };
+        return discountTree;
+      }
+
+      return null;
+    },
     createObjectSingleTaxes: function createObjectSingleTaxes(singles) {
       if (singles.length > 0) {
         var singlesTree = {
@@ -11536,6 +11607,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return null;
+    },
+	createObjectsDiscountsTemplates: function createObjectsDiscountsTemplates() {
+      var _this11 = this;
+
+      var discountTemplates = [];
+
+      if (this.idObjects) {
+        this.idObjects.forEach(function (id) {
+          var objdiscounts = _this11.doc_rows.filter(function (service) {
+            return service.id_object === id && service.type === "free";
+          });
+
+          if (objdiscounts.length) {
+            Object.values(_this11.concessions).forEach(function (concession) {
+              var discountsClone = JSON.parse(JSON.stringify(objdiscounts));
+              discountsClone.forEach(function (service) {
+                service.service_name = service.single_price > 0 ? "\u041A\u043E\u0440\u0435\u043A\u0446\u0438\u044F: [ ".concat(service.reference_service_name, " ]") : "".concat(concession.name, " [ ").concat(service.reference_service_name, " ]");
+                service.view_type_detail = service.for_smartsot ? "".concat(concession.name, " [ \u0421\u043C\u0430\u0440\u0442 \u0421\u041E\u0422 ]") : "".concat(concession.name, " [ ").concat(_this11.services.find(function (el) {
+                  return el.id_service === service.reference_service_id;
+                }).name, " ]");
+                service.id_service = concession.id_service;
+                service.concession_month_count = concession.months_count;
+                service.percent = concession.percent;
+                service.single_price = 1;
+                service.total_sum = 1;
+              });
+              discountTemplates.push(discountsClone);
+            });
+          }
+        });
+      }
+
+      this.objectDiscountTemplates = discountTemplates;
     },
     genByMonthServiceArray: function genByMonthServiceArray(month) {
       var _this9 = this;
@@ -11561,6 +11665,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return byMonth.length ? byMonth : null;
+    },
+	genDiscountServiceArray: function genDiscountServiceArray(discounts) {
+      var _this131 = this;
+
+      var discountsByServiceGroups = [];
+      var smartDiscounts = discounts.filter(function (service) {
+        return service.for_smartsot;
+      });
+      var regularDiscounts = discounts.filter(function (service) {
+        return !service.for_smartsot;
+      });
+
+      if (smartDiscounts.length) {
+        discountsByServiceGroups.push({
+          name: smartDiscounts[0].view_type_detail,
+          month: smartDiscounts[0].month,
+          services: smartDiscounts,
+          for_payment: this.getForPaymentStateFromArray(smartDiscounts),
+          totalSum: this.getTotalSumFromArr(smartDiscounts),
+          totalForPayment: this.getTotalSumFromArr(smartDiscounts.filter(function (service) {
+            return service.for_payment;
+          }))
+        });
+      }
+
+      if (regularDiscounts.length) {
+        var discountGroups = this.groupBy(regularDiscounts, "id_service");
+        regularDiscounts.forEach(function (discount) {
+          discountsByServiceGroups.push({
+            name: discount.view_type_detail,
+            month: discount.month,
+            services: [discount],
+            for_payment: _this131.getForPaymentStateFromArray([discount]),
+            totalSum: discount.total_sum,
+            totalForPayment: discount.for_payment
+          });
+        });
+      }
+
+      return discountsByServiceGroups.length ? discountsByServiceGroups : null;
     }
   },
   watch: {
@@ -11758,6 +11902,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           }
 
+          if (obj.discounts) {
+            objectsByMonths = [].concat(_toConsumableArray(objectsByMonths), _toConsumableArray(_this12.genDiscountServiceArray(obj.discounts.services)));
+          }
+		  
           if (obj.singles && obj.singles.services.length) {
             obj.singles.services.forEach(function (single) {
               return objectsByMonths.push(single);
@@ -11778,7 +11926,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.doc_rows.length) {
         var byServices = [];
+        var smartMonthlyServices = [];
         var monthly = [];
+		var discounts = [];
         var singles = [];
         var free = [];
 
@@ -11789,10 +11939,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
             var service = _step2.value;
 
-            if (service.id_object && service.type === "month") {
-              monthly.push(service);
+            if (service.for_smartsot && service.id_object && service.type === "month") {
+              smartMonthlyServices.push(service);
+            }
+            
+            if (!service.for_smartsot && service.id_object && service.type === "month") {
+                monthly.push(service);
             }
 
+            if (service.id_object && service.type === "free") {
+              discounts.push(service);
+            }
+			
             if (service.id_object && service.type === "single") {
               singles.push(service);
             }
@@ -11805,6 +11963,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _iterator2.e(err);
         } finally {
           _iterator2.f();
+        }
+
+        if (smartMonthlyServices.length) {
+          byServices.push({
+              for_payment: this.getForPaymentStateFromArray(smartMonthlyServices),
+              measure: "бр.",
+              name: smartMonthlyServices[0].view_type_by_services,
+              quantity: 1,
+              services: smartMonthlyServices,
+              single_price: this.getTotalSumFromArr(smartMonthlyServices),
+              totalSum: this.getTotalSumFromArr(smartMonthlyServices),
+              type: "month"
+          });
         }
 
         if (monthly.length) {
@@ -11822,6 +11993,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           });
         }
+		
+		if (discounts.length) {
+          byServices.push({
+            for_payment: this.getForPaymentStateFromArray(discounts),
+            measure: "бр.",
+            name: discounts[0].view_type_by_services,
+            quantity: 1,
+            services: discounts,
+            single_price: this.getTotalSumFromArr(discounts),
+            totalSum: this.getTotalSumFromArr(discounts),
+            type: "free"
+          });
+        }	
 
         if (singles.length) {
           byServices = [].concat(_toConsumableArray(byServices), singles);
@@ -12179,7 +12363,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         //console.log('sr empty clear')
         !this.results.length ? (this.updateValue(""), this.$emit("hide")) : false;
         this.old_query_term ? this.old_query_term = "" : false;
-        this.inputFocus = false;
+        this.inputFocus = false;	
       }
     },
     updateValue: function updateValue(value) {
@@ -44603,6 +44787,1025 @@ var render = function() {
                           ]
                         )
                       })
+                    : _vm.client.invoice_layout === "by_objects"
+                    ? _vm._l(_vm.objectsTreeView, function(object, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: index,
+                            class:
+                              object.for_payment.checked ||
+                              object.for_payment === true
+                                ? "grid-row"
+                                : "grid-row opacity-50"
+                          },
+                          [
+                            !_vm.urlParams.id
+                              ? _c("div", { staticClass: "grid-cell" }, [
+                                  _c("label", { staticClass: "row-checkbox" }, [
+                                    object.hasOwnProperty("monthly")
+                                      ? _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: object.for_payment.checked,
+                                              expression:
+                                                "object.for_payment.checked"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              object.for_payment.checked
+                                            )
+                                              ? _vm._i(
+                                                  object.for_payment.checked,
+                                                  null
+                                                ) > -1
+                                              : object.for_payment.checked
+                                          },
+                                          on: {
+                                            change: [
+                                              function($event) {
+                                                var $$a =
+                                                    object.for_payment.checked,
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? true
+                                                    : false
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a.concat([$$v])
+                                                      )
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a
+                                                          .slice(0, $$i)
+                                                          .concat(
+                                                            $$a.slice($$i + 1)
+                                                          )
+                                                      )
+                                                  }
+                                                } else {
+                                                  _vm.$set(
+                                                    object.for_payment,
+                                                    "checked",
+                                                    $$c
+                                                  )
+                                                }
+                                              },
+                                              function($event) {
+                                                return _vm.toggleObjectServices(
+                                                  object.id_object,
+                                                  object.for_payment.checked
+                                                )
+                                              }
+                                            ]
+                                          }
+                                        })
+                                      : _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: object.for_payment,
+                                              expression: "object.for_payment"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              object.for_payment
+                                            )
+                                              ? _vm._i(
+                                                  object.for_payment,
+                                                  null
+                                                ) > -1
+                                              : object.for_payment
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              var $$a = object.for_payment,
+                                                $$el = $event.target,
+                                                $$c = $$el.checked
+                                                  ? true
+                                                  : false
+                                              if (Array.isArray($$a)) {
+                                                var $$v = null,
+                                                  $$i = _vm._i($$a, $$v)
+                                                if ($$el.checked) {
+                                                  $$i < 0 &&
+                                                    _vm.$set(
+                                                      object,
+                                                      "for_payment",
+                                                      $$a.concat([$$v])
+                                                    )
+                                                } else {
+                                                  $$i > -1 &&
+                                                    _vm.$set(
+                                                      object,
+                                                      "for_payment",
+                                                      $$a
+                                                        .slice(0, $$i)
+                                                        .concat(
+                                                          $$a.slice($$i + 1)
+                                                        )
+                                                    )
+                                                }
+                                              } else {
+                                                _vm.$set(
+                                                  object,
+                                                  "for_payment",
+                                                  $$c
+                                                )
+                                              }
+                                            }
+                                          }
+                                        }),
+                                    _vm._v(" "),
+                                    _c("span")
+                                  ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell row-num",
+                                class: _vm.urlParams.id ? "col-span-2" : ""
+                              },
+                              [
+                                _vm._v(
+                                  "\n          " +
+                                    _vm._s(index + 1) +
+                                    "\n        "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell col-start-3 col-end-5"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "flex primary-info" },
+                                  [
+                                    _c("div", {
+                                      staticClass:
+                                        "font-medium w-full truncate mr-2 focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                      attrs: {
+                                        contenteditable: "",
+                                        spellcheck: "false",
+                                        title: object.id_object
+                                          ? object.name
+                                          : object.object_name
+                                      },
+                                      domProps: {
+                                        innerHTML: _vm._s(
+                                          object.id_object
+                                            ? object.name
+                                            : object.object_name
+                                        )
+                                      },
+                                      on: {
+                                        focus: function($event) {
+                                          return _vm.beginTextEdit($event)
+                                        },
+                                        keydown: function($event) {
+                                          if (
+                                            !$event.type.indexOf("key") &&
+                                            _vm._k(
+                                              $event.keyCode,
+                                              "enter",
+                                              13,
+                                              $event.key,
+                                              "Enter"
+                                            )
+                                          ) {
+                                            return null
+                                          }
+                                          $event.preventDefault()
+                                          _vm.editTextRow(
+                                            $event,
+                                            object.hasOwnProperty("monthly")
+                                              ? object.monthly.months[0]
+                                                  .services[0]
+                                              : object,
+                                            "object_name"
+                                          )
+                                        },
+                                        blur: function($event) {
+                                          return _vm.restoreTextIfNotConfirmed(
+                                            $event
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.handleLinkAction(object)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          class: object.id_object
+                                            ? "fad fa-external-link fa-fw"
+                                            : !_vm.urlParams.id
+                                            ? "fad fa-edit fa-fw"
+                                            : "hidden"
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                object.id_object
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "flex secondary-info truncate"
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "focus:outline-none mr-2",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showObjectPricing(
+                                                  object
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fad fa-folder-tree fa-fw text-indigo-400"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        object.monthly
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "truncate" },
+                                              [
+                                                _vm._v(
+                                                  "[ месечни такси:\n              " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.monthly
+                                                          .totalForPayment
+                                                      )
+                                                    ) +
+                                                    " от\n              " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.monthly.totalSum
+                                                      )
+                                                    ) +
+                                                    " лв. ]"
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        object.discounts
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "truncate mx-1" },
+                                              [
+                                                _vm._v(
+                                                  "[ отстъпки: " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.discounts
+                                                          .totalForPayment
+                                                      )
+                                                    ) +
+                                                    " от\n              " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.discounts
+                                                          .totalSum
+                                                      )
+                                                    ) +
+                                                    " лв. ]"
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        object.singles
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "truncate" },
+                                              [
+                                                _vm._v(
+                                                  "[ еднократни: " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.singles
+                                                          .totalForPayment
+                                                      )
+                                                    ) +
+                                                    " от\n              " +
+                                                    _vm._s(
+                                                      _vm._f("price")(
+                                                        object.singles.totalSum
+                                                      )
+                                                    ) +
+                                                    " лв. ]"
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  : _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "flex secondary-info truncate"
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "focus:outline-none mr-2",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.handleLinkAction(
+                                                  object
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fad fa-folder-tree fa-fw text-indigo-400"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "truncate" },
+                                          [
+                                            _vm._v(
+                                              "[ " +
+                                                _vm._s(object.service_name) +
+                                                " " +
+                                                _vm._s(object.quantity) +
+                                                "\n              " +
+                                                _vm._s(object.measure) +
+                                                " x " +
+                                                _vm._s(
+                                                  _vm._f("price")(
+                                                    object.single_price
+                                                  )
+                                                ) +
+                                                " лв.\n              ]"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "grid-cell text-right" }, [
+                              _c("div", { staticClass: "primary-info" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0].quantity
+                                        : object.quantity
+                                    ) +
+                                    "\n          "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "secondary-info" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0].measure
+                                        : object.measure
+                                    ) +
+                                    "\n          "
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell text-right",
+                                attrs: {
+                                  title: object.hasOwnProperty("totalSum")
+                                    ? object.totalSum
+                                    : object.single_price
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "primary-info" }, [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(
+                                        _vm._f("price")(
+                                          object.hasOwnProperty("totalSum")
+                                            ? object.totalSum
+                                            : object.single_price
+                                        )
+                                      ) +
+                                      "\n          "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "secondary-info" }, [
+                                  _vm._v("лв.")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell text-right",
+                                attrs: {
+                                  title: object.hasOwnProperty("totalSum")
+                                    ? object.totalSum
+                                    : object.single_price * object.quantity
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "primary-info" }, [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(
+                                        _vm._f("price")(
+                                          object.hasOwnProperty("totalSum")
+                                            ? object.totalSum
+                                            : object.single_price *
+                                                object.quantity
+                                        )
+                                      ) +
+                                      "\n          "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "secondary-info" }, [
+                                  _vm._v("лв.")
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      })
+                    : _vm.client.invoice_layout === "detail"
+                    ? _vm._l(_vm.byMonths, function(object, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: index,
+                            class:
+                              object.for_payment.checked ||
+                              object.for_payment === true
+                                ? "grid-row"
+                                : "grid-row opacity-50"
+                          },
+                          [
+                            !_vm.urlParams.id
+                              ? _c("div", { staticClass: "grid-cell" }, [
+                                  _c("label", { staticClass: "row-checkbox" }, [
+                                    object.services &&
+                                    object.services.length &&
+                                    object.services[0].id_object !== 0 &&
+                                    object.services[0].type === "month"
+                                      ? _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: object.for_payment.checked,
+                                              expression:
+                                                "object.for_payment.checked"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              object.for_payment.checked
+                                            )
+                                              ? _vm._i(
+                                                  object.for_payment.checked,
+                                                  null
+                                                ) > -1
+                                              : object.for_payment.checked
+                                          },
+                                          on: {
+                                            change: [
+                                              function($event) {
+                                                var $$a =
+                                                    object.for_payment.checked,
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? true
+                                                    : false
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a.concat([$$v])
+                                                      )
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a
+                                                          .slice(0, $$i)
+                                                          .concat(
+                                                            $$a.slice($$i + 1)
+                                                          )
+                                                      )
+                                                  }
+                                                } else {
+                                                  _vm.$set(
+                                                    object.for_payment,
+                                                    "checked",
+                                                    $$c
+                                                  )
+                                                }
+                                              },
+                                              function($event) {
+                                                return _vm.toggleMonthlyServicesForObject(
+                                                  object.services[0].id_object,
+                                                  object.for_payment.checked,
+                                                  object.month
+                                                )
+                                              }
+                                            ]
+                                          }
+                                        })
+                                      : object.services &&
+                                        object.services.length &&
+                                        object.services[0].id_object !== 0 &&
+                                        object.services[0].type === "free"
+                                      ? _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: object.for_payment.checked,
+                                              expression:
+                                                "object.for_payment.checked"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              object.for_payment.checked
+                                            )
+                                              ? _vm._i(
+                                                  object.for_payment.checked,
+                                                  null
+                                                ) > -1
+                                              : object.for_payment.checked
+                                          },
+                                          on: {
+                                            change: [
+                                              function($event) {
+                                                var $$a =
+                                                    object.for_payment.checked,
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? true
+                                                    : false
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a.concat([$$v])
+                                                      )
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      _vm.$set(
+                                                        object.for_payment,
+                                                        "checked",
+                                                        $$a
+                                                          .slice(0, $$i)
+                                                          .concat(
+                                                            $$a.slice($$i + 1)
+                                                          )
+                                                      )
+                                                  }
+                                                } else {
+                                                  _vm.$set(
+                                                    object.for_payment,
+                                                    "checked",
+                                                    $$c
+                                                  )
+                                                }
+                                              },
+                                              function($event) {
+                                                return _vm.toggleObjectDiscount(
+                                                  object.services[0].id_object,
+                                                  object.for_payment.checked
+                                                )
+                                              }
+                                            ]
+                                          }
+                                        })
+                                      : _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: object.for_payment,
+                                              expression: "object.for_payment"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              object.for_payment
+                                            )
+                                              ? _vm._i(
+                                                  object.for_payment,
+                                                  null
+                                                ) > -1
+                                              : object.for_payment
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              var $$a = object.for_payment,
+                                                $$el = $event.target,
+                                                $$c = $$el.checked
+                                                  ? true
+                                                  : false
+                                              if (Array.isArray($$a)) {
+                                                var $$v = null,
+                                                  $$i = _vm._i($$a, $$v)
+                                                if ($$el.checked) {
+                                                  $$i < 0 &&
+                                                    _vm.$set(
+                                                      object,
+                                                      "for_payment",
+                                                      $$a.concat([$$v])
+                                                    )
+                                                } else {
+                                                  $$i > -1 &&
+                                                    _vm.$set(
+                                                      object,
+                                                      "for_payment",
+                                                      $$a
+                                                        .slice(0, $$i)
+                                                        .concat(
+                                                          $$a.slice($$i + 1)
+                                                        )
+                                                    )
+                                                }
+                                              } else {
+                                                _vm.$set(
+                                                  object,
+                                                  "for_payment",
+                                                  $$c
+                                                )
+                                              }
+                                            }
+                                          }
+                                        }),
+                                    _vm._v(" "),
+                                    _c("span")
+                                  ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell row-num",
+                                class: _vm.urlParams.id ? "col-span-2" : ""
+                              },
+                              [
+                                _vm._v(
+                                  "\n          " +
+                                    _vm._s(index + 1) +
+                                    "\n        "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "grid-cell" }, [
+                              _c("div", { staticClass: "flex primary-info" }, [
+                                _c("div", {
+                                  staticClass:
+                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
+                                  attrs: {
+                                    contenteditable: "",
+                                    spellcheck: "false",
+                                    title: object.hasOwnProperty("services")
+                                      ? object.services[0].object_name
+                                      : object.object_name
+                                  },
+                                  domProps: {
+                                    innerHTML: _vm._s(
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0].object_name
+                                        : object.object_name
+                                    )
+                                  },
+                                  on: {
+                                    focus: function($event) {
+                                      return _vm.beginTextEdit($event)
+                                    },
+                                    keydown: function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      $event.preventDefault()
+                                      _vm.editTextRow(
+                                        $event,
+                                        object.hasOwnProperty("services")
+                                          ? object.services[0]
+                                          : object,
+                                        "object_name"
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.restoreTextIfNotConfirmed(
+                                        $event
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.handleLinkAction(object)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      class:
+                                        object.id_object || object.services
+                                          ? "fad fa-external-link fa-fw"
+                                          : !_vm.urlParams.id
+                                          ? "fad fa-edit fa-fw"
+                                          : "hidden"
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "secondary-info truncate" },
+                                [
+                                  _vm._v(
+                                    "\n            за м. " +
+                                      _vm._s(_vm._f("date")(object.month)) +
+                                      "\n          "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "grid-cell" }, [
+                              _c("div", {
+                                staticClass:
+                                  "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                attrs: {
+                                  contenteditable: "",
+                                  spellcheck: "false",
+                                  title: object.hasOwnProperty("services")
+                                    ? object.name
+                                    : object.service_name
+                                },
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    object.hasOwnProperty("services")
+                                      ? object.name
+                                      : object.service_name
+                                  )
+                                },
+                                on: {
+                                  focus: function($event) {
+                                    return _vm.beginTextEdit($event)
+                                  },
+                                  keydown: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.preventDefault()
+                                    _vm.editTextRow(
+                                      $event,
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0]
+                                        : object,
+                                      object.hasOwnProperty("services")
+                                        ? "view_type_detail"
+                                        : "service_name"
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.restoreTextIfNotConfirmed($event)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              object.hasOwnProperty("services") &&
+                              object.services[0].type == "month"
+                                ? _c(
+                                    "div",
+                                    { staticClass: "secondary-info truncate" },
+                                    [
+                                      _vm._v(
+                                        "\n            месечна такса\n          "
+                                      )
+                                    ]
+                                  )
+                                : object.type == "single"
+                                ? _c(
+                                    "div",
+                                    { staticClass: "secondary-info truncate" },
+                                    [
+                                      _vm._v(
+                                        "\n            еднократно\n          "
+                                      )
+                                    ]
+                                  )
+                                : object.hasOwnProperty("services") &&
+                                  object.id_objecto !== 0 &&
+                                  object.services[0].type == "free"
+                                ? _c(
+                                    "div",
+                                    { staticClass: "secondary-info truncate" },
+                                    [
+                                      _vm._v(
+                                        "\n            отстъпка\n          "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "div",
+                                    { staticClass: "secondary-info truncate" },
+                                    [_vm._v("свободна продажба")]
+                                  )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "grid-cell text-right" }, [
+                              _c("div", { staticClass: "primary-info" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0].quantity
+                                        : object.quantity
+                                    ) +
+                                    "\n          "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "secondary-info" }, [
+                                _vm._v(
+                                  "\n            " +
+                                    _vm._s(
+                                      object.hasOwnProperty("services")
+                                        ? object.services[0].measure
+                                        : object.measure
+                                    ) +
+                                    "\n          "
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell text-right",
+                                attrs: {
+                                  title: object.hasOwnProperty("totalSum")
+                                    ? object.totalSum
+                                    : object.single_price
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "primary-info" }, [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(
+                                        _vm._f("price")(
+                                          object.hasOwnProperty("totalSum")
+                                            ? object.totalSum
+                                            : object.single_price
+                                        )
+                                      ) +
+                                      "\n          "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "secondary-info" }, [
+                                  _vm._v("лв.")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "grid-cell text-right",
+                                attrs: {
+                                  title: object.hasOwnProperty("totalSum")
+                                    ? object.totalSum
+                                    : object.single_price * object.quantity
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "primary-info" }, [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(
+                                        _vm._f("price")(
+                                          object.hasOwnProperty("totalSum")
+                                            ? object.totalSum
+                                            : object.single_price *
+                                                object.quantity
+                                        )
+                                      ) +
+                                      "\n          "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "secondary-info" }, [
+                                  _vm._v("лв.")
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      })
                     : _vm.client.invoice_layout === "by_services"
                     ? _vm._l(_vm.byServices, function(object, index) {
                         return _c(
@@ -44815,7 +46018,11 @@ var render = function() {
                                   ? _c("div", {
                                       staticClass: "secondary-info truncate",
                                       domProps: {
-                                        textContent: _vm._s("месечни такси")
+                                        textContent: _vm._s(
+                                          object.services[0].for_smartsot
+                                            ? "месечни такси [ смарт сот ]"
+                                            : "месечни такси"
+                                        )
                                       }
                                     })
                                   : object.services && object.type === "free"
@@ -46034,7 +47241,7 @@ var render = function() {
                       },
                       proxy: true
                     },
-                    {
+					{
                       key: "body",
                       fn: function() {
                         return [
@@ -46045,159 +47252,430 @@ var render = function() {
                                 "flex flex-col bg-white overflow-y-auto"
                             },
                             [
-                              _c("div", { staticClass: "p-3 w-full" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "soft-shadow" },
-                                  _vm._l(_vm.objectsTreeView, function(
-                                    object,
-                                    index
-                                  ) {
-                                    return _c(
+                              _vm.objectsTreeView[_vm.objectPricingTreeIndex]
+                                .monthly
+                                ? _c("div", { staticClass: "p-3 w-full" }, [
+                                    _c(
                                       "div",
                                       {
-                                        key: index,
                                         staticClass:
-                                          "flex flex-col w-full items-start text-xs border-b border-gray-100 last:border-transparent"
+                                          "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
                                       },
                                       [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "flex items-center justify-between w-full p-2"
-                                          },
-                                          [
-                                            _c(
-                                              "label",
-                                              { staticClass: "row-checkbox" },
-                                              [
-                                                object.hasOwnProperty("monthly")
-                                                  ? _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            object.for_payment
-                                                              .checked,
-                                                          expression:
-                                                            "object.for_payment.checked"
-                                                        }
-                                                      ],
-                                                      attrs: {
-                                                        type: "checkbox"
-                                                      },
-                                                      domProps: {
-                                                        checked: Array.isArray(
-                                                          object.for_payment
-                                                            .checked
-                                                        )
-                                                          ? _vm._i(
-                                                              object.for_payment
+                                        _c("span", { staticClass: "mr-2" }, [
+                                          _vm._v("месечни такси")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("price")(
+                                                _vm.objectsTreeView[
+                                                  _vm.objectPricingTreeIndex
+                                                ].monthly.totalForPayment
+                                              )
+                                            ) + "\n              лв."
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "soft-shadow" },
+                                      _vm._l(
+                                        _vm.objectsTreeView[
+                                          _vm.objectPricingTreeIndex
+                                        ].monthly.months,
+                                        function(month, index) {
+                                          return _c(
+                                            "div",
+                                            {
+                                              key: index,
+                                              staticClass:
+                                                "flex flex-col w-full items-start text-xs border-b border-gray-100 last:border-transparent",
+                                              class:
+                                                _vm.objectMonthlyDetailIndex ===
+                                                index
+                                                  ? "border-transparent"
+                                                  : ""
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "flex items-center justify-between w-full p-2",
+                                                  class:
+                                                    _vm.objectMonthlyDetailIndex ===
+                                                    index
+                                                      ? "rounded-sm bg-gray-100"
+                                                      : ""
+                                                },
+                                                [
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass:
+                                                        "row-checkbox"
+                                                    },
+                                                    [
+                                                      _c("input", {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              month.for_payment
                                                                 .checked,
-                                                              null
-                                                            ) > -1
-                                                          : object.for_payment
+                                                            expression:
+                                                              "month.for_payment.checked"
+                                                          }
+                                                        ],
+                                                        attrs: {
+                                                          type: "checkbox"
+                                                        },
+                                                        domProps: {
+                                                          checked: Array.isArray(
+                                                            month.for_payment
                                                               .checked
-                                                      },
-                                                      on: {
-                                                        change: [
-                                                          function($event) {
-                                                            var $$a =
-                                                                object
+                                                          )
+                                                            ? _vm._i(
+                                                                month
                                                                   .for_payment
                                                                   .checked,
-                                                              $$el =
-                                                                $event.target,
-                                                              $$c = $$el.checked
-                                                                ? true
-                                                                : false
-                                                            if (
-                                                              Array.isArray($$a)
-                                                            ) {
-                                                              var $$v = null,
-                                                                $$i = _vm._i(
-                                                                  $$a,
-                                                                  $$v
-                                                                )
+                                                                null
+                                                              ) > -1
+                                                            : month.for_payment
+                                                                .checked
+                                                        },
+                                                        on: {
+                                                          change: [
+                                                            function($event) {
+                                                              var $$a =
+                                                                  month
+                                                                    .for_payment
+                                                                    .checked,
+                                                                $$el =
+                                                                  $event.target,
+                                                                $$c = $$el.checked
+                                                                  ? true
+                                                                  : false
                                                               if (
-                                                                $$el.checked
+                                                                Array.isArray(
+                                                                  $$a
+                                                                )
                                                               ) {
-                                                                $$i < 0 &&
-                                                                  _vm.$set(
-                                                                    object.for_payment,
-                                                                    "checked",
-                                                                    $$a.concat([
-                                                                      $$v
-                                                                    ])
+                                                                var $$v = null,
+                                                                  $$i = _vm._i(
+                                                                    $$a,
+                                                                    $$v
                                                                   )
-                                                              } else {
-                                                                $$i > -1 &&
-                                                                  _vm.$set(
-                                                                    object.for_payment,
-                                                                    "checked",
-                                                                    $$a
-                                                                      .slice(
-                                                                        0,
-                                                                        $$i
+                                                                if (
+                                                                  $$el.checked
+                                                                ) {
+                                                                  $$i < 0 &&
+                                                                    _vm.$set(
+                                                                      month.for_payment,
+                                                                      "checked",
+                                                                      $$a.concat(
+                                                                        [$$v]
                                                                       )
-                                                                      .concat(
-                                                                        $$a.slice(
-                                                                          $$i +
-                                                                            1
+                                                                    )
+                                                                } else {
+                                                                  $$i > -1 &&
+                                                                    _vm.$set(
+                                                                      month.for_payment,
+                                                                      "checked",
+                                                                      $$a
+                                                                        .slice(
+                                                                          0,
+                                                                          $$i
                                                                         )
-                                                                      )
-                                                                  )
+                                                                        .concat(
+                                                                          $$a.slice(
+                                                                            $$i +
+                                                                              1
+                                                                          )
+                                                                        )
+                                                                    )
+                                                                }
+                                                              } else {
+                                                                _vm.$set(
+                                                                  month.for_payment,
+                                                                  "checked",
+                                                                  $$c
+                                                                )
                                                               }
-                                                            } else {
-                                                              _vm.$set(
-                                                                object.for_payment,
-                                                                "checked",
-                                                                $$c
+                                                            },
+                                                            function($event) {
+                                                              return _vm.toggleMonthlyServicesForObject(
+                                                                _vm
+                                                                  .objectsTreeView[
+                                                                  _vm
+                                                                    .objectPricingTreeIndex
+                                                                ].id_object,
+                                                                month
+                                                                  .for_payment
+                                                                  .checked,
+                                                                month.month,
+                                                                _vm
+                                                                  .objectsTreeView[
+                                                                  _vm
+                                                                    .objectPricingTreeIndex
+                                                                ].monthly
+                                                                  .months,
+                                                                _vm
+                                                                  .objectsTreeView[
+                                                                  _vm
+                                                                    .objectPricingTreeIndex
+                                                                ].discounts
                                                               )
                                                             }
-                                                          },
-                                                          function($event) {
-                                                            return _vm.toggleObjectServices(
-                                                              object.id_object,
-                                                              object.for_payment
-                                                                .checked
-                                                            )
-                                                          }
-                                                        ]
-                                                      }
-                                                    })
-                                                  : _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            object.for_payment,
-                                                          expression:
-                                                            "object.for_payment"
+                                                          ]
                                                         }
-                                                      ],
-                                                      attrs: {
-                                                        type: "checkbox"
-                                                      },
-                                                      domProps: {
-                                                        checked: Array.isArray(
-                                                          object.for_payment
-                                                        )
-                                                          ? _vm._i(
-                                                              object.for_payment,
-                                                              null
-                                                            ) > -1
-                                                          : object.for_payment
-                                                      },
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("span")
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "w-full flex items-center text-xs font-medium",
+                                                      class:
+                                                        _vm.objectMonthlyDetailIndex ===
+                                                        index
+                                                          ? "text-blue-500"
+                                                          : ""
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "span",
+                                                        { staticClass: "ml-2" },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(month.name)
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "ml-auto mr-2"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm._f("price")(
+                                                                month.totalSum
+                                                              )
+                                                            ) + " лв."
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500",
                                                       on: {
-                                                        change: function(
+                                                        click: function(
                                                           $event
                                                         ) {
+                                                          return _vm.toggleObjectDetailMonthlyPricing(
+                                                            index
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass: "fa fa-fw",
+                                                        class:
+                                                          _vm.objectMonthlyDetailIndex ===
+                                                          index
+                                                            ? "fa-chevron-up"
+                                                            : "fa-chevron-down"
+                                                      })
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm.showObjectMonthlyPricing &&
+                                              _vm.objectMonthlyDetailIndex ===
+                                                index
+                                                ? _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "px-2 w-full text-xs text-black"
+                                                    },
+                                                    _vm._l(
+                                                      month.services,
+                                                      function(tax, index) {
+                                                        return _c(
+                                                          "div",
+                                                          {
+                                                            key: index,
+                                                            staticClass:
+                                                              "flex items-center w-full my-1 justify-between"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "mr-2 truncate"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    tax.service_name
+                                                                  )
+                                                                )
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c("span", [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  _vm._f(
+                                                                    "price"
+                                                                  )(
+                                                                    tax.single_price *
+                                                                      tax.quantity
+                                                                  )
+                                                                ) + " лв."
+                                                              )
+                                                            ])
+                                                          ]
+                                                        )
+                                                      }
+                                                    ),
+                                                    0
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.objectsTreeView[_vm.objectPricingTreeIndex]
+                                .discounts
+                                ? _c(
+                                    "div",
+                                    { staticClass: "px-3 pb-3 w-full" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
+                                        },
+                                        [
+                                          _c("span", { staticClass: "mr-2" }, [
+                                            _vm._v("отстъпки")
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("price")(
+                                                  _vm.objectsTreeView[
+                                                    _vm.objectPricingTreeIndex
+                                                  ].discounts.totalForPayment
+                                                )
+                                              ) + "\n              лв."
+                                            )
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex flex-col w-full items-start text-xs soft-shadow"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "flex items-center justify-between w-full p-2",
+                                              class: _vm.objectDiscountDetail
+                                                ? "rounded-sm bg-gray-100 border-x border-transperant"
+                                                : ""
+                                            },
+                                            [
+                                              _c(
+                                                "label",
+                                                { staticClass: "row-checkbox" },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.objectsTreeView[
+                                                            _vm
+                                                              .objectPricingTreeIndex
+                                                          ].discounts
+                                                            .for_payment
+                                                            .checked,
+                                                        expression:
+                                                          "\n                    objectsTreeView[objectPricingTreeIndex].discounts\n                      .for_payment.checked\n                  "
+                                                      }
+                                                    ],
+                                                    attrs: { type: "checkbox" },
+                                                    domProps: {
+                                                      checked: Array.isArray(
+                                                        _vm.objectsTreeView[
+                                                          _vm
+                                                            .objectPricingTreeIndex
+                                                        ].discounts.for_payment
+                                                          .checked
+                                                      )
+                                                        ? _vm._i(
+                                                            _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].discounts
+                                                              .for_payment
+                                                              .checked,
+                                                            null
+                                                          ) > -1
+                                                        : _vm.objectsTreeView[
+                                                            _vm
+                                                              .objectPricingTreeIndex
+                                                          ].discounts
+                                                            .for_payment.checked
+                                                    },
+                                                    on: {
+                                                      change: [
+                                                        function($event) {
                                                           var $$a =
-                                                              object.for_payment,
+                                                              _vm
+                                                                .objectsTreeView[
+                                                                _vm
+                                                                  .objectPricingTreeIndex
+                                                              ].discounts
+                                                                .for_payment
+                                                                .checked,
                                                             $$el =
                                                               $event.target,
                                                             $$c = $$el.checked
@@ -46214,7 +47692,350 @@ var render = function() {
                                                             if ($$el.checked) {
                                                               $$i < 0 &&
                                                                 _vm.$set(
-                                                                  object,
+                                                                  _vm
+                                                                    .objectsTreeView[
+                                                                    _vm
+                                                                      .objectPricingTreeIndex
+                                                                  ].discounts
+                                                                    .for_payment,
+                                                                  "checked",
+                                                                  $$a.concat([
+                                                                    $$v
+                                                                  ])
+                                                                )
+                                                            } else {
+                                                              $$i > -1 &&
+                                                                _vm.$set(
+                                                                  _vm
+                                                                    .objectsTreeView[
+                                                                    _vm
+                                                                      .objectPricingTreeIndex
+                                                                  ].discounts
+                                                                    .for_payment,
+                                                                  "checked",
+                                                                  $$a
+                                                                    .slice(
+                                                                      0,
+                                                                      $$i
+                                                                    )
+                                                                    .concat(
+                                                                      $$a.slice(
+                                                                        $$i + 1
+                                                                      )
+                                                                    )
+                                                                )
+                                                            }
+                                                          } else {
+                                                            _vm.$set(
+                                                              _vm
+                                                                .objectsTreeView[
+                                                                _vm
+                                                                  .objectPricingTreeIndex
+                                                              ].discounts
+                                                                .for_payment,
+                                                              "checked",
+                                                              $$c
+                                                            )
+                                                          }
+                                                        },
+                                                        function($event) {
+                                                          return _vm.toggleObjectDiscount(
+                                                            _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].id_object,
+                                                            _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].discounts
+                                                              .for_payment
+                                                              .checked
+                                                          )
+                                                        }
+                                                      ]
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span")
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "w-full flex items-center text-xs font-medium"
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "ml-2",
+                                                      class: _vm.objectDiscountDetail
+                                                        ? "text-blue-500"
+                                                        : ""
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          _vm.objectsTreeView[
+                                                            _vm
+                                                              .objectPricingTreeIndex
+                                                          ].discounts.name
+                                                        )
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "ml-auto mr-2"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          _vm._f("price")(
+                                                            _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].discounts.totalSum
+                                                          )
+                                                        ) +
+                                                          "\n                  лв."
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm.objectsTreeView[
+                                                _vm.objectPricingTreeIndex
+                                              ].discounts.services.length > 1
+                                                ? _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.objectDiscountDetail = !_vm.objectDiscountDetail
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass: "fa fa-fw",
+                                                        class: _vm.objectDiscountDetail
+                                                          ? "fa-chevron-up"
+                                                          : "fa-chevron-down"
+                                                      })
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.objectDiscountDetail
+                                            ? [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "px-2 border border-gray-200 border-t-0 w-full"
+                                                  },
+                                                  _vm._l(
+                                                    _vm.objectsTreeView[
+                                                      _vm.objectPricingTreeIndex
+                                                    ].discounts.services,
+                                                    function(discount, index) {
+                                                      return _c(
+                                                        "div",
+                                                        {
+                                                          key: index,
+                                                          staticClass:
+                                                            "flex items-center w-full my-1 justify-between"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "mr-2 truncate"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  discount.reference_service_name
+                                                                )
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c("span", {}, [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm._f("price")(
+                                                                  discount.total_sum
+                                                                )
+                                                              ) + " лв."
+                                                            )
+                                                          ])
+                                                        ]
+                                                      )
+                                                    }
+                                                  ),
+                                                  0
+                                                )
+                                              ]
+                                            : _vm._e()
+                                        ],
+                                        2
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.objectsTreeView[_vm.objectPricingTreeIndex]
+                                .singles
+                                ? _c(
+                                    "div",
+                                    { staticClass: "px-3 pb-3 w-full" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
+                                        },
+                                        [
+                                          _c("span", { staticClass: "mr-2" }, [
+                                            _vm._v("еднократни задължения")
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("price")(
+                                                  _vm.objectsTreeView[
+                                                    _vm.objectPricingTreeIndex
+                                                  ].singles.totalForPayment
+                                                )
+                                              ) + "\n              лв."
+                                            )
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex flex-col w-full items-start text-xs border-b border-gray-100 last:border-transparent soft-shadow"
+                                        },
+                                        _vm._l(
+                                          _vm.objectsTreeView[
+                                            _vm.objectPricingTreeIndex
+                                          ].singles.services,
+                                          function(single, index) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                key: index,
+                                                staticClass:
+                                                  "flex items-center justify-between w-full p-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass: "row-checkbox"
+                                                  },
+                                                  [
+                                                    _c("input", {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value:
+                                                            _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].singles.services[
+                                                              index
+                                                            ].for_payment,
+                                                          expression:
+                                                            "\n                    objectsTreeView[objectPricingTreeIndex].singles.services[\n                      index\n                    ].for_payment\n                  "
+                                                        }
+                                                      ],
+                                                      attrs: {
+                                                        type: "checkbox"
+                                                      },
+                                                      domProps: {
+                                                        checked: Array.isArray(
+                                                          _vm.objectsTreeView[
+                                                            _vm
+                                                              .objectPricingTreeIndex
+                                                          ].singles.services[
+                                                            index
+                                                          ].for_payment
+                                                        )
+                                                          ? _vm._i(
+                                                              _vm
+                                                                .objectsTreeView[
+                                                                _vm
+                                                                  .objectPricingTreeIndex
+                                                              ].singles
+                                                                .services[index]
+                                                                .for_payment,
+                                                              null
+                                                            ) > -1
+                                                          : _vm.objectsTreeView[
+                                                              _vm
+                                                                .objectPricingTreeIndex
+                                                            ].singles.services[
+                                                              index
+                                                            ].for_payment
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$a =
+                                                              _vm
+                                                                .objectsTreeView[
+                                                                _vm
+                                                                  .objectPricingTreeIndex
+                                                              ].singles
+                                                                .services[index]
+                                                                .for_payment,
+                                                            $$el =
+                                                              $event.target,
+                                                            $$c = $$el.checked
+                                                              ? true
+                                                              : false
+                                                          if (
+                                                            Array.isArray($$a)
+                                                          ) {
+                                                            var $$v = null,
+                                                              $$i = _vm._i(
+                                                                $$a,
+                                                                $$v
+                                                              )
+                                                            if ($$el.checked) {
+                                                              $$i < 0 &&
+                                                                _vm.$set(
+                                                                  _vm
+                                                                    .objectsTreeView[
+                                                                    _vm
+                                                                      .objectPricingTreeIndex
+                                                                  ].singles
+                                                                    .services[
+                                                                    index
+                                                                  ],
                                                                   "for_payment",
                                                                   $$a.concat([
                                                                     $$v
@@ -46223,7 +48044,14 @@ var render = function() {
                                                             } else {
                                                               $$i > -1 &&
                                                                 _vm.$set(
-                                                                  object,
+                                                                  _vm
+                                                                    .objectsTreeView[
+                                                                    _vm
+                                                                      .objectPricingTreeIndex
+                                                                  ].singles
+                                                                    .services[
+                                                                    index
+                                                                  ],
                                                                   "for_payment",
                                                                   $$a
                                                                     .slice(
@@ -46239,7 +48067,14 @@ var render = function() {
                                                             }
                                                           } else {
                                                             _vm.$set(
-                                                              object,
+                                                              _vm
+                                                                .objectsTreeView[
+                                                                _vm
+                                                                  .objectPricingTreeIndex
+                                                              ].singles
+                                                                .services[
+                                                                index
+                                                              ],
                                                               "for_payment",
                                                               $$c
                                                             )
@@ -46247,1237 +48082,70 @@ var render = function() {
                                                         }
                                                       }
                                                     }),
-                                                _vm._v(" "),
-                                                _c("span")
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "w-full flex items-center text-xs font-medium truncate"
-                                              },
-                                              [
-                                                _c("span", {
-                                                  staticClass: "mx-2 truncate",
-                                                  domProps: {
-                                                    textContent: _vm._s(
-                                                      object.id_object
-                                                        ? object.name
-                                                        : object.object_name
-                                                    )
-                                                  }
-                                                }),
+                                                    _vm._v(" "),
+                                                    _c("span")
+                                                  ]
+                                                ),
                                                 _vm._v(" "),
                                                 _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "ml-auto mr-2"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm._f("price")(
-                                                          object.hasOwnProperty(
-                                                            "totalForPayment"
-                                                          )
-                                                            ? object.totalForPayment
-                                                            : object.single_price *
-                                                                object.quantity
-                                                        )
-                                                      ) +
-                                                        "\n                    лв."
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            object.id_object
-                                              ? _c(
-                                                  "button",
+                                                  "div",
                                                   {
                                                     staticClass:
-                                                      "w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500",
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.toggleObjectsPricingIndex(
-                                                          index
-                                                        )
-                                                      }
-                                                    }
+                                                      "w-full flex items-center text-xs font-medium"
                                                   },
                                                   [
-                                                    _c("i", {
-                                                      staticClass: "fa fa-fw",
-                                                      class:
-                                                        _vm.objectsPricingTreeIndex ===
-                                                        index
-                                                          ? "fa-chevron-up"
-                                                          : "fa-chevron-down"
-                                                    })
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "mr-2 truncate"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                  " +
+                                                            _vm._s(
+                                                              _vm.toDDMMYYYY(
+                                                                single.month
+                                                              )
+                                                            ) +
+                                                            "\n                  " +
+                                                            _vm._s(
+                                                              single.service_name
+                                                            ) +
+                                                            "\n                "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "ml-auto mr-2"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm._f("price")(
+                                                              single.single_price *
+                                                                single.quantity
+                                                            )
+                                                          ) +
+                                                            "\n                  лв."
+                                                        )
+                                                      ]
+                                                    )
                                                   ]
                                                 )
-                                              : _vm._e()
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _vm.objectPricingTreeIndex === index
-                                          ? _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "flex flex-col w-full"
-                                              },
-                                              [
-                                                _vm.objectsTreeView[
-                                                  _vm.objectPricingTreeIndex
-                                                ].monthly
-                                                  ? _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "p-3 w-full"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "span",
-                                                              {
-                                                                staticClass:
-                                                                  "mr-2"
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "месечни такси"
-                                                                )
-                                                              ]
-                                                            ),
-                                                            _vm._v(" "),
-                                                            _c("span", [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  _vm._f(
-                                                                    "price"
-                                                                  )(
-                                                                    _vm
-                                                                      .objectsTreeView[
-                                                                      _vm
-                                                                        .objectPricingTreeIndex
-                                                                    ].monthly
-                                                                      .totalForPayment
-                                                                  )
-                                                                ) +
-                                                                  "\n                      лв."
-                                                              )
-                                                            ])
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "soft-shadow"
-                                                          },
-                                                          _vm._l(
-                                                            _vm.objectsTreeView[
-                                                              _vm
-                                                                .objectPricingTreeIndex
-                                                            ].monthly.months,
-                                                            function(
-                                                              month,
-                                                              index
-                                                            ) {
-                                                              return _c(
-                                                                "div",
-                                                                {
-                                                                  key: index,
-                                                                  staticClass:
-                                                                    "flex flex-col w-full items-start text-xs border-b border-gray-100 last:border-transparent",
-                                                                  class:
-                                                                    _vm.objectMonthlyDetailIndex ===
-                                                                    index
-                                                                      ? "border-transparent"
-                                                                      : ""
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "div",
-                                                                    {
-                                                                      staticClass:
-                                                                        "flex items-center justify-between w-full p-2",
-                                                                      class:
-                                                                        _vm.objectMonthlyDetailIndex ===
-                                                                        index
-                                                                          ? "rounded-sm bg-gray-100"
-                                                                          : ""
-                                                                    },
-                                                                    [
-                                                                      _c(
-                                                                        "label",
-                                                                        {
-                                                                          staticClass:
-                                                                            "row-checkbox"
-                                                                        },
-                                                                        [
-                                                                          _c(
-                                                                            "input",
-                                                                            {
-                                                                              directives: [
-                                                                                {
-                                                                                  name:
-                                                                                    "model",
-                                                                                  rawName:
-                                                                                    "v-model",
-                                                                                  value:
-                                                                                    month
-                                                                                      .for_payment
-                                                                                      .checked,
-                                                                                  expression:
-                                                                                    "month.for_payment.checked"
-                                                                                }
-                                                                              ],
-                                                                              attrs: {
-                                                                                type:
-                                                                                  "checkbox"
-                                                                              },
-                                                                              domProps: {
-                                                                                checked: Array.isArray(
-                                                                                  month
-                                                                                    .for_payment
-                                                                                    .checked
-                                                                                )
-                                                                                  ? _vm._i(
-                                                                                      month
-                                                                                        .for_payment
-                                                                                        .checked,
-                                                                                      null
-                                                                                    ) >
-                                                                                    -1
-                                                                                  : month
-                                                                                      .for_payment
-                                                                                      .checked
-                                                                              },
-                                                                              on: {
-                                                                                change: [
-                                                                                  function(
-                                                                                    $event
-                                                                                  ) {
-                                                                                    var $$a =
-                                                                                        month
-                                                                                          .for_payment
-                                                                                          .checked,
-                                                                                      $$el =
-                                                                                        $event.target,
-                                                                                      $$c = $$el.checked
-                                                                                        ? true
-                                                                                        : false
-                                                                                    if (
-                                                                                      Array.isArray(
-                                                                                        $$a
-                                                                                      )
-                                                                                    ) {
-                                                                                      var $$v = null,
-                                                                                        $$i = _vm._i(
-                                                                                          $$a,
-                                                                                          $$v
-                                                                                        )
-                                                                                      if (
-                                                                                        $$el.checked
-                                                                                      ) {
-                                                                                        $$i <
-                                                                                          0 &&
-                                                                                          _vm.$set(
-                                                                                            month.for_payment,
-                                                                                            "checked",
-                                                                                            $$a.concat(
-                                                                                              [
-                                                                                                $$v
-                                                                                              ]
-                                                                                            )
-                                                                                          )
-                                                                                      } else {
-                                                                                        $$i >
-                                                                                          -1 &&
-                                                                                          _vm.$set(
-                                                                                            month.for_payment,
-                                                                                            "checked",
-                                                                                            $$a
-                                                                                              .slice(
-                                                                                                0,
-                                                                                                $$i
-                                                                                              )
-                                                                                              .concat(
-                                                                                                $$a.slice(
-                                                                                                  $$i +
-                                                                                                    1
-                                                                                                )
-                                                                                              )
-                                                                                          )
-                                                                                      }
-                                                                                    } else {
-                                                                                      _vm.$set(
-                                                                                        month.for_payment,
-                                                                                        "checked",
-                                                                                        $$c
-                                                                                      )
-                                                                                    }
-                                                                                  },
-                                                                                  function(
-                                                                                    $event
-                                                                                  ) {
-                                                                                    return _vm.toggleMonthlyServicesForObject(
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .id_object,
-                                                                                      month
-                                                                                        .for_payment
-                                                                                        .checked,
-                                                                                      month.month,
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .monthly
-                                                                                        .months,
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .discounts
-                                                                                    )
-                                                                                  }
-                                                                                ]
-                                                                              }
-                                                                            }
-                                                                          ),
-                                                                          _vm._v(
-                                                                            " "
-                                                                          ),
-                                                                          _c(
-                                                                            "span"
-                                                                          )
-                                                                        ]
-                                                                      ),
-                                                                      _vm._v(
-                                                                        " "
-                                                                      ),
-                                                                      _c(
-                                                                        "div",
-                                                                        {
-                                                                          staticClass:
-                                                                            "w-full flex items-center text-xs font-medium",
-                                                                          class:
-                                                                            _vm.objectMonthlyDetailIndex ===
-                                                                            index
-                                                                              ? "text-blue-500"
-                                                                              : ""
-                                                                        },
-                                                                        [
-                                                                          _c(
-                                                                            "span",
-                                                                            {
-                                                                              staticClass:
-                                                                                "ml-2"
-                                                                            },
-                                                                            [
-                                                                              _vm._v(
-                                                                                _vm._s(
-                                                                                  month.name
-                                                                                )
-                                                                              )
-                                                                            ]
-                                                                          ),
-                                                                          _vm._v(
-                                                                            " "
-                                                                          ),
-                                                                          _c(
-                                                                            "span",
-                                                                            {
-                                                                              staticClass:
-                                                                                "ml-auto mr-2"
-                                                                            },
-                                                                            [
-                                                                              _vm._v(
-                                                                                _vm._s(
-                                                                                  _vm._f(
-                                                                                    "price"
-                                                                                  )(
-                                                                                    month.totalSum
-                                                                                  )
-                                                                                ) +
-                                                                                  " лв."
-                                                                              )
-                                                                            ]
-                                                                          )
-                                                                        ]
-                                                                      ),
-                                                                      _vm._v(
-                                                                        " "
-                                                                      ),
-                                                                      _c(
-                                                                        "button",
-                                                                        {
-                                                                          staticClass:
-                                                                            "w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500",
-                                                                          on: {
-                                                                            click: function(
-                                                                              $event
-                                                                            ) {
-                                                                              return _vm.toggleObjectDetailMonthlyPricing(
-                                                                                index
-                                                                              )
-                                                                            }
-                                                                          }
-                                                                        },
-                                                                        [
-                                                                          _c(
-                                                                            "i",
-                                                                            {
-                                                                              staticClass:
-                                                                                "fa fa-fw",
-                                                                              class:
-                                                                                _vm.objectMonthlyDetailIndex ===
-                                                                                index
-                                                                                  ? "fa-chevron-up"
-                                                                                  : "fa-chevron-down"
-                                                                            }
-                                                                          )
-                                                                        ]
-                                                                      )
-                                                                    ]
-                                                                  ),
-                                                                  _vm._v(" "),
-                                                                  _vm.showObjectMonthlyPricing &&
-                                                                  _vm.objectMonthlyDetailIndex ===
-                                                                    index
-                                                                    ? _c(
-                                                                        "div",
-                                                                        {
-                                                                          staticClass:
-                                                                            "px-2 w-full text-xs text-black"
-                                                                        },
-                                                                        _vm._l(
-                                                                          month.services,
-                                                                          function(
-                                                                            tax,
-                                                                            index
-                                                                          ) {
-                                                                            return _c(
-                                                                              "div",
-                                                                              {
-                                                                                key: index,
-                                                                                staticClass:
-                                                                                  "flex items-center w-full my-1 justify-between"
-                                                                              },
-                                                                              [
-                                                                                _c(
-                                                                                  "span",
-                                                                                  {
-                                                                                    staticClass:
-                                                                                      "mr-2 truncate"
-                                                                                  },
-                                                                                  [
-                                                                                    _vm._v(
-                                                                                      _vm._s(
-                                                                                        tax.service_name
-                                                                                      )
-                                                                                    )
-                                                                                  ]
-                                                                                ),
-                                                                                _vm._v(
-                                                                                  " "
-                                                                                ),
-                                                                                _c(
-                                                                                  "span",
-                                                                                  [
-                                                                                    _vm._v(
-                                                                                      _vm._s(
-                                                                                        _vm._f(
-                                                                                          "price"
-                                                                                        )(
-                                                                                          tax.single_price *
-                                                                                            tax.quantity
-                                                                                        )
-                                                                                      ) +
-                                                                                        "\n                            лв."
-                                                                                    )
-                                                                                  ]
-                                                                                )
-                                                                              ]
-                                                                            )
-                                                                          }
-                                                                        ),
-                                                                        0
-                                                                      )
-                                                                    : _vm._e()
-                                                                ]
-                                                              )
-                                                            }
-                                                          ),
-                                                          0
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                _vm.objectsTreeView[
-                                                  _vm.objectPricingTreeIndex
-                                                ].discounts
-                                                  ? _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "px-3 pb-3 w-full"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "span",
-                                                              {
-                                                                staticClass:
-                                                                  "mr-2"
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "отстъпки"
-                                                                )
-                                                              ]
-                                                            ),
-                                                            _vm._v(" "),
-                                                            _c("span", [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  _vm._f(
-                                                                    "price"
-                                                                  )(
-                                                                    _vm
-                                                                      .objectsTreeView[
-                                                                      _vm
-                                                                        .objectPricingTreeIndex
-                                                                    ].discounts
-                                                                      .totalForPayment
-                                                                  )
-                                                                ) +
-                                                                  "\n                      лв."
-                                                              )
-                                                            ])
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "flex flex-col w-full items-start text-xs soft-shadow"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "div",
-                                                              {
-                                                                staticClass:
-                                                                  "flex items-center justify-between w-full p-2",
-                                                                class: _vm.objectDiscountDetail
-                                                                  ? "rounded-sm bg-gray-100 border-x border-transperant"
-                                                                  : ""
-                                                              },
-                                                              [
-                                                                _c(
-                                                                  "label",
-                                                                  {
-                                                                    staticClass:
-                                                                      "row-checkbox"
-                                                                  },
-                                                                  [
-                                                                    _c(
-                                                                      "input",
-                                                                      {
-                                                                        directives: [
-                                                                          {
-                                                                            name:
-                                                                              "model",
-                                                                            rawName:
-                                                                              "v-model",
-                                                                            value:
-                                                                              _vm
-                                                                                .objectsTreeView[
-                                                                                _vm
-                                                                                  .objectPricingTreeIndex
-                                                                              ]
-                                                                                .discounts
-                                                                                .for_payment
-                                                                                .checked,
-                                                                            expression:
-                                                                              "\n                            objectsTreeView[objectPricingTreeIndex].discounts\n                              .for_payment.checked\n                          "
-                                                                          }
-                                                                        ],
-                                                                        attrs: {
-                                                                          type:
-                                                                            "checkbox"
-                                                                        },
-                                                                        domProps: {
-                                                                          checked: Array.isArray(
-                                                                            _vm
-                                                                              .objectsTreeView[
-                                                                              _vm
-                                                                                .objectPricingTreeIndex
-                                                                            ]
-                                                                              .discounts
-                                                                              .for_payment
-                                                                              .checked
-                                                                          )
-                                                                            ? _vm._i(
-                                                                                _vm
-                                                                                  .objectsTreeView[
-                                                                                  _vm
-                                                                                    .objectPricingTreeIndex
-                                                                                ]
-                                                                                  .discounts
-                                                                                  .for_payment
-                                                                                  .checked,
-                                                                                null
-                                                                              ) >
-                                                                              -1
-                                                                            : _vm
-                                                                                .objectsTreeView[
-                                                                                _vm
-                                                                                  .objectPricingTreeIndex
-                                                                              ]
-                                                                                .discounts
-                                                                                .for_payment
-                                                                                .checked
-                                                                        },
-                                                                        on: {
-                                                                          change: [
-                                                                            function(
-                                                                              $event
-                                                                            ) {
-                                                                              var $$a =
-                                                                                  _vm
-                                                                                    .objectsTreeView[
-                                                                                    _vm
-                                                                                      .objectPricingTreeIndex
-                                                                                  ]
-                                                                                    .discounts
-                                                                                    .for_payment
-                                                                                    .checked,
-                                                                                $$el =
-                                                                                  $event.target,
-                                                                                $$c = $$el.checked
-                                                                                  ? true
-                                                                                  : false
-                                                                              if (
-                                                                                Array.isArray(
-                                                                                  $$a
-                                                                                )
-                                                                              ) {
-                                                                                var $$v = null,
-                                                                                  $$i = _vm._i(
-                                                                                    $$a,
-                                                                                    $$v
-                                                                                  )
-                                                                                if (
-                                                                                  $$el.checked
-                                                                                ) {
-                                                                                  $$i <
-                                                                                    0 &&
-                                                                                    _vm.$set(
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .discounts
-                                                                                        .for_payment,
-                                                                                      "checked",
-                                                                                      $$a.concat(
-                                                                                        [
-                                                                                          $$v
-                                                                                        ]
-                                                                                      )
-                                                                                    )
-                                                                                } else {
-                                                                                  $$i >
-                                                                                    -1 &&
-                                                                                    _vm.$set(
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .discounts
-                                                                                        .for_payment,
-                                                                                      "checked",
-                                                                                      $$a
-                                                                                        .slice(
-                                                                                          0,
-                                                                                          $$i
-                                                                                        )
-                                                                                        .concat(
-                                                                                          $$a.slice(
-                                                                                            $$i +
-                                                                                              1
-                                                                                          )
-                                                                                        )
-                                                                                    )
-                                                                                }
-                                                                              } else {
-                                                                                _vm.$set(
-                                                                                  _vm
-                                                                                    .objectsTreeView[
-                                                                                    _vm
-                                                                                      .objectPricingTreeIndex
-                                                                                  ]
-                                                                                    .discounts
-                                                                                    .for_payment,
-                                                                                  "checked",
-                                                                                  $$c
-                                                                                )
-                                                                              }
-                                                                            },
-                                                                            function(
-                                                                              $event
-                                                                            ) {
-                                                                              return _vm.toggleObjectDiscount(
-                                                                                _vm
-                                                                                  .objectsTreeView[
-                                                                                  _vm
-                                                                                    .objectPricingTreeIndex
-                                                                                ]
-                                                                                  .id_object,
-                                                                                _vm
-                                                                                  .objectsTreeView[
-                                                                                  _vm
-                                                                                    .objectPricingTreeIndex
-                                                                                ]
-                                                                                  .discounts
-                                                                                  .for_payment
-                                                                                  .checked
-                                                                              )
-                                                                            }
-                                                                          ]
-                                                                        }
-                                                                      }
-                                                                    ),
-                                                                    _vm._v(" "),
-                                                                    _c("span")
-                                                                  ]
-                                                                ),
-                                                                _vm._v(" "),
-                                                                _c(
-                                                                  "div",
-                                                                  {
-                                                                    staticClass:
-                                                                      "w-full flex items-center text-xs font-medium"
-                                                                  },
-                                                                  [
-                                                                    _c(
-                                                                      "span",
-                                                                      {
-                                                                        staticClass:
-                                                                          "ml-2",
-                                                                        class: _vm.objectDiscountDetail
-                                                                          ? "text-blue-500"
-                                                                          : ""
-                                                                      },
-                                                                      [
-                                                                        _vm._v(
-                                                                          _vm._s(
-                                                                            _vm
-                                                                              .objectsTreeView[
-                                                                              _vm
-                                                                                .objectPricingTreeIndex
-                                                                            ]
-                                                                              .discounts
-                                                                              .name
-                                                                          )
-                                                                        )
-                                                                      ]
-                                                                    ),
-                                                                    _vm._v(" "),
-                                                                    _c(
-                                                                      "span",
-                                                                      {
-                                                                        staticClass:
-                                                                          "ml-auto mr-2"
-                                                                      },
-                                                                      [
-                                                                        _vm._v(
-                                                                          _vm._s(
-                                                                            _vm._f(
-                                                                              "price"
-                                                                            )(
-                                                                              _vm
-                                                                                .objectsTreeView[
-                                                                                _vm
-                                                                                  .objectPricingTreeIndex
-                                                                              ]
-                                                                                .discounts
-                                                                                .totalSum
-                                                                            )
-                                                                          ) +
-                                                                            "\n                          лв."
-                                                                        )
-                                                                      ]
-                                                                    )
-                                                                  ]
-                                                                ),
-                                                                _vm._v(" "),
-                                                                _vm
-                                                                  .objectsTreeView[
-                                                                  _vm
-                                                                    .objectPricingTreeIndex
-                                                                ].discounts
-                                                                  .services
-                                                                  .length > 1
-                                                                  ? _c(
-                                                                      "button",
-                                                                      {
-                                                                        staticClass:
-                                                                          "w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500",
-                                                                        on: {
-                                                                          click: function(
-                                                                            $event
-                                                                          ) {
-                                                                            _vm.objectDiscountDetail = !_vm.objectDiscountDetail
-                                                                          }
-                                                                        }
-                                                                      },
-                                                                      [
-                                                                        _c(
-                                                                          "i",
-                                                                          {
-                                                                            staticClass:
-                                                                              "fa fa-fw",
-                                                                            class: _vm.objectDiscountDetail
-                                                                              ? "fa-chevron-up"
-                                                                              : "fa-chevron-down"
-                                                                          }
-                                                                        )
-                                                                      ]
-                                                                    )
-                                                                  : _vm._e()
-                                                              ]
-                                                            ),
-                                                            _vm._v(" "),
-                                                            _vm.objectDiscountDetail
-                                                              ? [
-                                                                  _c(
-                                                                    "div",
-                                                                    {
-                                                                      staticClass:
-                                                                        "px-2 border border-gray-200 border-t-0 w-full"
-                                                                    },
-                                                                    _vm._l(
-                                                                      _vm
-                                                                        .objectsTreeView[
-                                                                        _vm
-                                                                          .objectPricingTreeIndex
-                                                                      ]
-                                                                        .discounts
-                                                                        .services,
-                                                                      function(
-                                                                        discount,
-                                                                        index
-                                                                      ) {
-                                                                        return _c(
-                                                                          "div",
-                                                                          {
-                                                                            key: index,
-                                                                            staticClass:
-                                                                              "flex items-center w-full my-1 justify-between"
-                                                                          },
-                                                                          [
-                                                                            _c(
-                                                                              "span",
-                                                                              {
-                                                                                staticClass:
-                                                                                  "mr-2 truncate"
-                                                                              },
-                                                                              [
-                                                                                _vm._v(
-                                                                                  _vm._s(
-                                                                                    discount.reference_service_name
-                                                                                  )
-                                                                                )
-                                                                              ]
-                                                                            ),
-                                                                            _vm._v(
-                                                                              " "
-                                                                            ),
-                                                                            _c(
-                                                                              "span",
-                                                                              {},
-                                                                              [
-                                                                                _vm._v(
-                                                                                  _vm._s(
-                                                                                    _vm._f(
-                                                                                      "price"
-                                                                                    )(
-                                                                                      discount.total_sum
-                                                                                    )
-                                                                                  ) +
-                                                                                    " лв."
-                                                                                )
-                                                                              ]
-                                                                            )
-                                                                          ]
-                                                                        )
-                                                                      }
-                                                                    ),
-                                                                    0
-                                                                  )
-                                                                ]
-                                                              : _vm._e()
-                                                          ],
-                                                          2
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                _vm.objectsTreeView[
-                                                  _vm.objectPricingTreeIndex
-                                                ].singles
-                                                  ? _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "px-3 pb-3 w-full"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "flex items-center justify-between text-xs font-medium truncate max-w-full mb-3"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "span",
-                                                              {
-                                                                staticClass:
-                                                                  "mr-2"
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "еднократни задължения"
-                                                                )
-                                                              ]
-                                                            ),
-                                                            _vm._v(" "),
-                                                            _c("span", [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  _vm._f(
-                                                                    "price"
-                                                                  )(
-                                                                    _vm
-                                                                      .objectsTreeView[
-                                                                      _vm
-                                                                        .objectPricingTreeIndex
-                                                                    ].singles
-                                                                      .totalForPayment
-                                                                  )
-                                                                ) +
-                                                                  "\n                      лв."
-                                                              )
-                                                            ])
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "flex flex-col w-full items-start text-xs border-b border-gray-100 last:border-transparent soft-shadow"
-                                                          },
-                                                          _vm._l(
-                                                            _vm.objectsTreeView[
-                                                              _vm
-                                                                .objectPricingTreeIndex
-                                                            ].singles.services,
-                                                            function(
-                                                              single,
-                                                              index
-                                                            ) {
-                                                              return _c(
-                                                                "div",
-                                                                {
-                                                                  key: index,
-                                                                  staticClass:
-                                                                    "flex items-center justify-between w-full p-2"
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "label",
-                                                                    {
-                                                                      staticClass:
-                                                                        "row-checkbox"
-                                                                    },
-                                                                    [
-                                                                      _c(
-                                                                        "input",
-                                                                        {
-                                                                          directives: [
-                                                                            {
-                                                                              name:
-                                                                                "model",
-                                                                              rawName:
-                                                                                "v-model",
-                                                                              value:
-                                                                                _vm
-                                                                                  .objectsTreeView[
-                                                                                  _vm
-                                                                                    .objectPricingTreeIndex
-                                                                                ]
-                                                                                  .singles
-                                                                                  .services[
-                                                                                  index
-                                                                                ]
-                                                                                  .for_payment,
-                                                                              expression:
-                                                                                "\n                            objectsTreeView[objectPricingTreeIndex].singles\n                              .services[index].for_payment\n                          "
-                                                                            }
-                                                                          ],
-                                                                          attrs: {
-                                                                            type:
-                                                                              "checkbox"
-                                                                          },
-                                                                          domProps: {
-                                                                            checked: Array.isArray(
-                                                                              _vm
-                                                                                .objectsTreeView[
-                                                                                _vm
-                                                                                  .objectPricingTreeIndex
-                                                                              ]
-                                                                                .singles
-                                                                                .services[
-                                                                                index
-                                                                              ]
-                                                                                .for_payment
-                                                                            )
-                                                                              ? _vm._i(
-                                                                                  _vm
-                                                                                    .objectsTreeView[
-                                                                                    _vm
-                                                                                      .objectPricingTreeIndex
-                                                                                  ]
-                                                                                    .singles
-                                                                                    .services[
-                                                                                    index
-                                                                                  ]
-                                                                                    .for_payment,
-                                                                                  null
-                                                                                ) >
-                                                                                -1
-                                                                              : _vm
-                                                                                  .objectsTreeView[
-                                                                                  _vm
-                                                                                    .objectPricingTreeIndex
-                                                                                ]
-                                                                                  .singles
-                                                                                  .services[
-                                                                                  index
-                                                                                ]
-                                                                                  .for_payment
-                                                                          },
-                                                                          on: {
-                                                                            change: function(
-                                                                              $event
-                                                                            ) {
-                                                                              var $$a =
-                                                                                  _vm
-                                                                                    .objectsTreeView[
-                                                                                    _vm
-                                                                                      .objectPricingTreeIndex
-                                                                                  ]
-                                                                                    .singles
-                                                                                    .services[
-                                                                                    index
-                                                                                  ]
-                                                                                    .for_payment,
-                                                                                $$el =
-                                                                                  $event.target,
-                                                                                $$c = $$el.checked
-                                                                                  ? true
-                                                                                  : false
-                                                                              if (
-                                                                                Array.isArray(
-                                                                                  $$a
-                                                                                )
-                                                                              ) {
-                                                                                var $$v = null,
-                                                                                  $$i = _vm._i(
-                                                                                    $$a,
-                                                                                    $$v
-                                                                                  )
-                                                                                if (
-                                                                                  $$el.checked
-                                                                                ) {
-                                                                                  $$i <
-                                                                                    0 &&
-                                                                                    _vm.$set(
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .singles
-                                                                                        .services[
-                                                                                        index
-                                                                                      ],
-                                                                                      "for_payment",
-                                                                                      $$a.concat(
-                                                                                        [
-                                                                                          $$v
-                                                                                        ]
-                                                                                      )
-                                                                                    )
-                                                                                } else {
-                                                                                  $$i >
-                                                                                    -1 &&
-                                                                                    _vm.$set(
-                                                                                      _vm
-                                                                                        .objectsTreeView[
-                                                                                        _vm
-                                                                                          .objectPricingTreeIndex
-                                                                                      ]
-                                                                                        .singles
-                                                                                        .services[
-                                                                                        index
-                                                                                      ],
-                                                                                      "for_payment",
-                                                                                      $$a
-                                                                                        .slice(
-                                                                                          0,
-                                                                                          $$i
-                                                                                        )
-                                                                                        .concat(
-                                                                                          $$a.slice(
-                                                                                            $$i +
-                                                                                              1
-                                                                                          )
-                                                                                        )
-                                                                                    )
-                                                                                }
-                                                                              } else {
-                                                                                _vm.$set(
-                                                                                  _vm
-                                                                                    .objectsTreeView[
-                                                                                    _vm
-                                                                                      .objectPricingTreeIndex
-                                                                                  ]
-                                                                                    .singles
-                                                                                    .services[
-                                                                                    index
-                                                                                  ],
-                                                                                  "for_payment",
-                                                                                  $$c
-                                                                                )
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                        }
-                                                                      ),
-                                                                      _vm._v(
-                                                                        " "
-                                                                      ),
-                                                                      _c("span")
-                                                                    ]
-                                                                  ),
-                                                                  _vm._v(" "),
-                                                                  _c(
-                                                                    "div",
-                                                                    {
-                                                                      staticClass:
-                                                                        "w-full flex items-center text-xs font-medium"
-                                                                    },
-                                                                    [
-                                                                      _c(
-                                                                        "span",
-                                                                        {
-                                                                          staticClass:
-                                                                            "mr-2 truncate"
-                                                                        },
-                                                                        [
-                                                                          _vm._v(
-                                                                            "\n                          " +
-                                                                              _vm._s(
-                                                                                _vm.toDDMMYYYY(
-                                                                                  single.month
-                                                                                )
-                                                                              ) +
-                                                                              "\n                          " +
-                                                                              _vm._s(
-                                                                                single.service_name
-                                                                              ) +
-                                                                              "\n                        "
-                                                                          )
-                                                                        ]
-                                                                      ),
-                                                                      _vm._v(
-                                                                        " "
-                                                                      ),
-                                                                      _c(
-                                                                        "span",
-                                                                        {
-                                                                          staticClass:
-                                                                            "ml-auto mr-2"
-                                                                        },
-                                                                        [
-                                                                          _vm._v(
-                                                                            _vm._s(
-                                                                              _vm._f(
-                                                                                "price"
-                                                                              )(
-                                                                                single.single_price *
-                                                                                  single.quantity
-                                                                              )
-                                                                            ) +
-                                                                              "\n                          лв."
-                                                                          )
-                                                                        ]
-                                                                      )
-                                                                    ]
-                                                                  )
-                                                                ]
-                                                              )
-                                                            }
-                                                          ),
-                                                          0
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
                                               ]
                                             )
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ])
+                                          }
+                                        ),
+                                        0
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
                             ]
                           )
                         ]

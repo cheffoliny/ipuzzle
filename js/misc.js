@@ -414,23 +414,20 @@ function show_hide_loader (func) {
 	//Показва панела за зареждане
 	loader = $('loading');
 
-    if( !loader ){
-        var faIco = document.createElement('i');
-
-        loader = document.createElement("DIV");
-        loader.appendChild(faIco);
-        loader.id = 'loading';
-        loader.style.border = '0px';
-        loader.style.textAlign = 'center';
-        loader.style.color = 'White';
-        loader.style.position = 'absolute';
-        loader.style.right = '50%';
-        loader.style.bottom = '50%';
-        loader.style.zIndex = 1000;
-        faIco.className = 'fas fa-puzzle-piece text-primary fa-pulse fa-5x';
-        document.body.appendChild(loader);
-    }
-
+	if( !loader ){
+		loader = document.createElement("i");
+		loader.appendChild(document.createTextNode(''));
+		loader.id = 'loading';
+		loader.className = 'fas fa-puzzle-piece fa-pulse';
+		loader.style.fontSize = '200px !important';
+		loader.style.right = '50%';
+		loader.style.bottom = '50%';
+		loader.style.color = '#2e8cb8';
+		loader.style.textShadow = '1px 1px 1px #eeeeee';
+		loader.style.position = 'absolute';
+		loader.style.zIndex = 1000;
+		document.body.appendChild(loader);
+	}
 	if( loader ) loader.style.display = (func == 1) ? 'block' : 'none';
 }
 

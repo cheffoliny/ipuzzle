@@ -631,7 +631,8 @@ class BuyController extends DBBase2 {
             return $this->setError("Невалидни параметри - документа не може да бъде създаден!");
         }
 
-        if ( $document['doc_type'] == "faktura" || $document['doc_type'] == "kvitanciq" ) {
+        if ( $document['doc_type'] == "faktura") {
+            // || $document['doc_type'] == "kvitanciq" 
             if ( !($document['id_deliverer'] ?? false) || !($document['deliverer_name'] ?? false) || !($document['deliverer_ein'] ?? false) ) {
                 return $this->setError("Въведете коректен доставчик!");
             }
@@ -727,7 +728,7 @@ class BuyController extends DBBase2 {
                     $bTransfer	= $oService->checkForTransfer($row['id_nomenclature_expense']);
 
                     if ( $bTransfer ) {
-                        if ( $document['doc_type'] != "oprostena" ) {
+                        if ( $document['doc_type'] != "kvitanciq" ) {
                             throw new Exception("Документ с НАПРАВЛЕНИЕ по ТРАНСФЕР\nможе да бъде само квитанция!", DBAPI_ERR_FAILED_TRANS);
                         }
 
@@ -743,7 +744,7 @@ class BuyController extends DBBase2 {
                         $aFirm 		= $oFirms->getFirmByIDOffice($row['id_office']);
                         $row['id_office'] = $aFirm['id_office_dds'] ?? 0;
 
-                        if ( $document['doc_type'] != "oprostena" ) {
+                        if ( $document['doc_type'] != "kvitanciq" ) {
                             throw new Exception("Не може да бъде записан документ\nот тип фактура с НАПРАВЛЕНИЕ по ДДС!", DBAPI_ERR_FAILED_TRANS);
                         }
                     } else {
@@ -782,7 +783,7 @@ class BuyController extends DBBase2 {
                 }
 
                 // ДДС
-                if ( $document['doc_type'] != "oprostena" && abs($vatSum) > 0 ) {
+                if ( $document['doc_type'] != "kvitanciq" && abs($vatSum) > 0 ) {
                     $ddsFirm = $this->getDDSFirmByEIN($document['client_ein']);
                     $ddsOffice = $ddsFirm['id_office_dds'] ?? 0;
 
@@ -968,7 +969,7 @@ class BuyController extends DBBase2 {
                 $bTransfer	= $oService->checkForTransfer($row['id_nomenclature_expense']);
 
                 if ( $bTransfer ) {
-                    if ( $document['doc_type'] != "oprostena" ) {
+                    if ( $document['doc_type'] != "kvitanciq" ) {
                         throw new Exception("Документ с НАПРАВЛЕНИЕ по ТРАНСФЕР\nможе да бъде само квитанция!", DBAPI_ERR_FAILED_TRANS);
                     }
 
@@ -984,7 +985,7 @@ class BuyController extends DBBase2 {
                     $aFirm 		= $oFirms->getFirmByIDOffice($row['id_office']);
                     $row['id_office'] = $aFirm['id_office_dds'] ?? 0;
 
-                    if ( $document['doc_type'] != "oprostena" ) {
+                    if ( $document['doc_type'] != "kvitanciq" ) {
                         throw new Exception("В описа на документа има номенклатура ДДС!\nМоля, изберете \"Квитанция\"!", DBAPI_ERR_FAILED_TRANS);
                     }
                 } else {
@@ -1023,7 +1024,7 @@ class BuyController extends DBBase2 {
             }
 
             // ДДС
-            if ( $document['doc_type'] != "oprostena" && abs($vatSum) > 0 ) {
+            if ( $document['doc_type'] != "kvitanciq" && abs($vatSum) > 0 ) {
                 $ddsFirm = $this->getDDSFirmByEIN($document['client_ein']);
                 $ddsOffice = $ddsFirm['id_office_dds'] ?? 0;
 

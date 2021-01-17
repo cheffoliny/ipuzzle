@@ -285,7 +285,7 @@ switch ($request) {
 
             // Todo: da se implementira!!!
             $aDeliverer = $sale->getDelivererByPerson();
-            $data['default_deliverer'] = isset($aDeliverer['jur_name']) ? $aDeliverer['jur_name'] : "ТЕЛЕПОЛ ЕООД";
+            $data['default_deliverer'] = isset($aDeliverer['jur_name']) ? $aDeliverer['jur_name'] : "ИНФРА-ЛГ ЕООД";
 
             // Doc ID
             $nID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
@@ -303,7 +303,7 @@ switch ($request) {
         } catch (Throwable $e) {
             http_response_code(400);
             echo json_encode(["error" => $e->getMessage()]);
-            die();
+                die();
         }
 
         echo json_encode($data);

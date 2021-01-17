@@ -48,10 +48,16 @@
 				
 				if( !empty( $aNorm ) )
 				{
-					$oResponse->setFormElement( 'form1', 'sMonth', 		array( 'value' => $aNorm['month'] ) );
-					$oResponse->setFormElement( 'form1', 'nNormShifts', array( 'value' => $aNorm['shifts'] ) );
-					$oResponse->setFormElement( 'form1', 'nNormHours', 	array( 'value' => $aNorm['hours'] ) );
-					$oResponse->setFormElement( 'form1', 'nIDToUpdate',	array( 'value' => $aNorm['id'] ) );
+					$oResponse->setFormElement( 'form1', 'sMonth', 		    array( 'value' => $aNorm['month'] ) );
+					$oResponse->setFormElement( 'form1', 'nNormShifts',     array( 'value' => $aNorm['shifts'] ) );
+					$oResponse->setFormElement( 'form1', 'nNormHours', 	    array( 'value' => $aNorm['hours'] ) );
+					$oResponse->setFormElement( 'form1', 'nIDToUpdate',     array( 'value' => $aNorm['id'] ) );
+					$oResponse->setFormElement( 'form1', 'nYearOvertime',   array( 'value' => $aNorm['year_overtime'] ) );
+
+                    if($aNorm['is_start_month_report'])
+                    {
+                        $oResponse->setFormElement( 'form1', 'nIsStartMonthReport', array( 'checked' => 'checked' ) );
+                    }
 				}
 				else
 				{
@@ -77,10 +83,16 @@
 				
 				if( !empty( $aNorm ) )
 				{
-					$oResponse->setFormElement( 'form1', 'sMonth', 		array( 'value' => $aNorm['month'] ) );
-					$oResponse->setFormElement( 'form1', 'nNormShifts', array( 'value' => $aNorm['shifts'] ) );
-					$oResponse->setFormElement( 'form1', 'nNormHours', 	array( 'value' => $aNorm['hours'] ) );
-					$oResponse->setFormElement( 'form1', 'nIDToUpdate',	array( 'value' => $aNorm['id'] ) );
+					$oResponse->setFormElement( 'form1', 'sMonth', 		    array( 'value' => $aNorm['month'] ) );
+					$oResponse->setFormElement( 'form1', 'nNormShifts',     array( 'value' => $aNorm['shifts'] ) );
+					$oResponse->setFormElement( 'form1', 'nNormHours', 	    array( 'value' => $aNorm['hours'] ) );
+					$oResponse->setFormElement( 'form1', 'nIDToUpdate',	    array( 'value' => $aNorm['id'] ) );
+                    $oResponse->setFormElement( 'form1', 'nYearOvertime',   array( 'value' => $aNorm['year_overtime'] ) );
+
+                    if($aNorm['is_start_month_report'])
+                    {
+                        $oResponse->setFormElement( 'form1', 'nIsStartMonthReport', array( 'checked' => 'checked' ) );
+                    }
 				}
 				else
 				{
@@ -93,10 +105,12 @@
 		
 		public function save( DBResponse $oResponse )
 		{
-			$nID			= Params::get( 'nIDToUpdate', 0 );
-			$nNormShifts	= Params::get( "nNormShifts", 0 );
-			$nNormHours		= Params::get( "nNormHours", 0 );
-			
+			$nID			        = Params::get( 'nIDToUpdate', 0 );
+			$nNormShifts	        = Params::get( "nNormShifts", 0 );
+			$nNormHours		        = Params::get( "nNormHours", 0 );
+			$nYearOvertime	        = Params::get( "nYearOvertime", 0 );
+            $nIsStartMonthReport    = Params::get( "nIsStartMonthReport", 0 );
+
 			if( empty( $nID ) )
 			{
 				throw new Exception( "Записа вече не съществува!", DBAPI_ERR_INVALID_PARAM );
@@ -111,12 +125,19 @@
 			{
 				throw new Exception( "Въведете максимален брой \nприравнени часове за месеца!", DBAPI_ERR_INVALID_PARAM );
 			}
+
+            if( empty($nYearOvertime) )
+            {
+                throw new Exception( "Въведете годиншна норма \nизвънреден труд!", DBAPI_ERR_INVALID_PARAM );
+            }
 			
 			$aData = array();
-			$aData['id'] 			= $nID;
-			$aData['norm_shifts'] 	= $nNormShifts;
-			$aData['norm_hours'] 	= $nNormHours;
-			
+			$aData['id']                    = $nID;
+			$aData['norm_shifts']           = $nNormShifts;
+			$aData['norm_hours']            = $nNormHours;
+			$aData['year_overtime']         = $nYearOvertime;
+			$aData['is_start_month_report'] = $nIsStartMonthReport;
+
 			$oNorms = new DBScheduleMonthNorms();
 			$oNorms->update( $aData );
 		}

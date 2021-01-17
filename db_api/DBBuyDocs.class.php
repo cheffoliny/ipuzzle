@@ -231,12 +231,12 @@
 				$doc_type_hint = "";
 				switch ($value['doc_type']) {
                     case "kvitanciq":
-                        $doc_type_text = 'ПФ';
-                        $doc_type_hint = 'Проформа фактура';
-                        break;
-                    case "oprostena":
                         $doc_type_text = 'К';
                         $doc_type_hint = 'Квитанция';
+                        break;
+                    case "oprostena":
+                        $doc_type_text = 'ПФ';
+                        $doc_type_hint = 'Проформа фактура';
                         break;
 					case "faktura": 	
 						$doc_type_text = 'Ф';

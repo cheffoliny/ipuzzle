@@ -382,7 +382,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $aData['dds_for_payment'] 	= true;
         $aData['note']				= "";
         $aData['single_view_name']	= "yслуга";
-        $aData['locked']			= false;
+        //$aData['locked']			= false;
         $aData['from_book']			= false;
         $aData['is_book']			= 0;
         $aData['id_city']			= $this->getDefaultIdCityForPerson();
@@ -644,7 +644,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 1 as quantity,
                 sdr.measure,
                 sdr.`month`,
-                SUM(sdr.single_price) AS single_price,
+                SUM(sdr.total_sum) AS single_price,
                 SUM(sdr.total_sum) AS total_sum,
                 SUM(sdr.paid_sum) AS paid_sum
                 
@@ -1138,7 +1138,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 if ($aMonthDuty[$key]['type'] != 'month') {
                     continue;
                 }
-                $aMonthDuty[$key]['view_type_by_services'] = $aMonthDuty[$key]['view_type_by_services'] . $view_type_by_services_suffix;
+                $aMonthDuty[$key]['view_type_by_services'] = $aMonthDuty[$key]['view_type_by_services'] . $view_type_byby_services_suffix;
             }
         }
 
@@ -1196,7 +1196,7 @@ class NEWDBSalesDocs extends DBBase2 {
         
         foreach ($aMonthDuty as $service) {
             $aServices[] = $service;
-             /*
+
             // Отстъпки
             $time = strtotime($service['month']);
 
@@ -1207,11 +1207,11 @@ class NEWDBSalesDocs extends DBBase2 {
             if ($dCon >= $dNow) {
                 $aConcession[$service['id_duty']][] = $service['month'];
 
-            }*/
+            }
         }
 
         unset($service);
-        /*
+
         foreach ($aConcession as $key => $val) {
             $cnt = count($val);
 
@@ -1283,15 +1283,15 @@ class NEWDBSalesDocs extends DBBase2 {
                 //die(print("<pre>".print_r($aTmp,true)."</pre>"));
                 $aServices[] = $aTmp;
             }
-        }*/
+        }
 
         foreach ($aSingleDuty as $service) {
             $aServices[] = $service;
         }
 
-        /* if ($isConcession) {
+        if ($isConcession) {
             $this->setAlert("Има предложени отстъпки!!!");
-        } */
+        }
 
         unset($service);
 
@@ -1372,15 +1372,15 @@ class NEWDBSalesDocs extends DBBase2 {
 
                         $dCon = mktime(0, 0, 0, date("m", $time), 1, date("Y", $time));
 
-                        /* if ($dCon >= $dNow) {
+                        if ($dCon >= $dNow) {
                             $aConcession[$service['id_duty']][] = $service['month'];
 
-                        } */
+                        }
                     }
                 }
 
                 unset($service);
-                /*
+
                 foreach ($aConcession as $key => $val) {
                     $cnt = count($val);
 
@@ -1455,7 +1455,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 }
 
                 $aConcession = [];
-                */
+
                 
                 foreach ($aSingleDuty as $service) {
                     $aServices[] = $service;
@@ -1470,11 +1470,11 @@ class NEWDBSalesDocs extends DBBase2 {
         }
 
         // Отстъпки
-        /*if ( !$isCredit ) {
+        if ( !$isCredit ) {
             if ($isConcession) {
                 $this->setAlert("Има предложени отстъпки!!!");
             }
-        }*/
+        }
 
         // valkata bre =>  темп шитс докато се върне павката... и го доизмисли
         $aServices = $this->serviceMonthCaption($aServices);
@@ -1642,7 +1642,6 @@ class NEWDBSalesDocs extends DBBase2 {
     }
 
     public function store( $post = null ) {
-        
         global $db_sod, $db_system, $db_finance, $db_name_finance, $db_name_sod, $db_name_system;
 
         if ( $post == null ) {
@@ -1828,7 +1827,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 foreach ( $docRows as $key => $row ) {
                     if ( $row['for_payment'] ) {
                         $is_dds 	= 0;
-                        $nTotal     += $row['total_sum'];
+                        $nTotal     += $row['total_sum_with_dds'];
 
                         // Номенклатура ДДС
                         if ( $row['id_service'] == -1 ) {
