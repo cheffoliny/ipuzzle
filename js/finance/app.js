@@ -11460,7 +11460,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return discountSum;
     },
 	reorderDocRowsByMonthlyDiscountsAndSingles: function reorderDocRowsByMonthlyDiscountsAndSingles() {
-    //reorderDocRowsByMonthlyAndSingles: function reorderDocRowsByMonthlyAndSingles() {
       var _this91 = this;
 
       var reordered = [];
@@ -11528,6 +11527,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         singles: singles,
         quantity: 1,
         measure: "бр.",
+
         totalForPayment: ((_monthly$totalForPaym = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym !== void 0 ? _monthly$totalForPaym : 0) + ((_discounts$totalForPa = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa !== void 0 ? _discounts$totalForPa : 0) + ((_singles$totalForPaym = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym !== void 0 ? _singles$totalForPaym : 0),
         totalSum: ((_monthly$totalForPaym2 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym2 !== void 0 ? _monthly$totalForPaym2 : 0) + ((_discounts$totalForPa2 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa2 !== void 0 ? _discounts$totalForPa2 : 0) + ((_singles$totalForPaym2 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym2 !== void 0 ? _singles$totalForPaym2 : 0) > 0 ? ((_monthly$totalForPaym3 = monthly === null || monthly === void 0 ? void 0 : monthly.totalForPayment) !== null && _monthly$totalForPaym3 !== void 0 ? _monthly$totalForPaym3 : 0) + ((_discounts$totalForPa3 = discounts === null || discounts === void 0 ? void 0 : discounts.totalForPayment) !== null && _discounts$totalForPa3 !== void 0 ? _discounts$totalForPa3 : 0) + ((_singles$totalForPaym3 = singles === null || singles === void 0 ? void 0 : singles.totalForPayment) !== null && _singles$totalForPaym3 !== void 0 ? _singles$totalForPaym3 : 0) : this.getTotalSumFromArr(objectTaxes)
       };
@@ -11538,6 +11538,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (monthlys.length > 0) {
         var idObject = monthlys[0].id_object;
+        var forSmartSot = monthlys[0].for_smartsot;
         var forPaymentState = this.getForPaymentStateFromArray(monthlys);
         var view_type_by_object_services = monthlys[0].view_type_by_object_services;
         var months = [];
@@ -11564,6 +11565,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           totalForPayment: this.getTotalSumFromArr(monthlys.filter(function (month) {
             return month.for_payment === true;
           })),
+          for_smartsot: forSmartSot,
           months: months,
           showTree: false
         };
@@ -11927,10 +11929,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.doc_rows.length) {
         var byServices = [];
         var smartMonthlyServices = [];
-        var monthly = [];
+        var regularMonthlyServices = [];
 		var discounts = [];
         var singles = [];
-        var free = [];
+        var freeSales = [];
 
         var _iterator2 = _createForOfIteratorHelper(this.doc_rows),
             _step2;
@@ -11944,7 +11946,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
             
             if (!service.for_smartsot && service.id_object && service.type === "month") {
-                monthly.push(service);
+                regularMonthlyServices.push(service);
             }
 
             if (service.id_object && service.type === "free") {
@@ -11956,7 +11958,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             if (!service.id_object && service.type === "free") {
-              free.push(service);
+                freeSales.push(service);
             }
           }
         } catch (err) {
@@ -11978,9 +11980,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
 
-        if (monthly.length) {
-          var monthlyGroups = this.groupBy(monthly, "id_service");
-          Object.values(monthlyGroups).forEach(function (group) {
+        if (regularMonthlyServices.length) {
+          var regularMonthlyGroups = this.groupBy(regularMonthlyServices, "id_service");
+          Object.values(regularMonthlyGroups).forEach(function (group) {
             byServices.push({
               for_payment: _this13.getForPaymentStateFromArray(group),
               name: group[0].view_type_by_services,
@@ -12011,8 +12013,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           byServices = [].concat(_toConsumableArray(byServices), singles);
         }
 
-        if (free.length) {
-          byServices = [].concat(_toConsumableArray(byServices), free);
+        if (freeSales.length) {
+          byServices = [].concat(_toConsumableArray(byServices), freeSales);
         }
 
         return byServices;
@@ -43185,2974 +43187,1955 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm.client.invoice_layout === "single"
-                    ? [
-                        _c("div", { staticClass: "grid-row" }, [
-                          !_vm.urlParams.id
-                            ? _c("div", { staticClass: "grid-cell" }, [
-                                _c("label", { staticClass: "row-checkbox" }, [
-                                  _c("input", {
-                                    attrs: { type: "checkbox" },
-                                    domProps: {
-                                      checked: _vm.servicesForPayment.length > 0
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.toggleAllServices($event)
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span")
-                                ])
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "grid-cell row-num",
-                              class: _vm.urlParams.id ? "col-span-2" : ""
-                            },
-                            [_vm._v("\n          1\n        ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "grid-cell col-start-3 col-end-5" },
-                            [
-                              _c("div", {
-                                staticClass:
-                                  "primary-info font-medium w-full focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                attrs: {
-                                  contenteditable: "",
-                                  spellcheck: "false",
-                                  title: _vm.document_data.single_view_name
-                                },
-                                domProps: {
-                                  innerHTML: _vm._s(
-                                    _vm.document_data.single_view_name
-                                  )
-                                },
-                                on: {
-                                  focus: function($event) {
-                                    return _vm.beginTextEdit($event)
-                                  },
-                                  keydown: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    $event.preventDefault()
-                                    return _vm.editTextRow(
-                                      $event,
-                                      _vm.document_data,
-                                      "single_view_name"
-                                    )
-                                  },
-                                  blur: function($event) {
-                                    return _vm.restoreTextIfNotConfirmed($event)
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "grid-cell text-right",
-                              attrs: {
-                                title: _vm.baseSum
-                                  ? _vm.baseSum
-                                  : _vm.allRowsTotal
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("price")(
-                                      _vm.baseSum
-                                        ? _vm.baseSum
-                                        : _vm.allRowsTotal
-                                    )
-                                  )
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v("лв.")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "grid-cell text-right",
-                              attrs: {
-                                title: _vm.baseSum
-                                  ? _vm.baseSum
-                                  : _vm.allRowsTotal
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("price")(
-                                      _vm.baseSum
-                                        ? _vm.baseSum
-                                        : _vm.allRowsTotal
-                                    )
-                                  )
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v("лв.")
-                              ])
-                            ]
-                          )
-                        ])
-                      ]
-                    : _vm.client.invoice_layout === "extended" ||
-                      (_vm.doc_type === "oprostena" && !_vm.urlParams.id)
-                    ? _vm._l(_vm.doc_rows, function(service, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: service.uuid,
-                            class: !service.for_payment
-                              ? "opacity-50 grid-row"
-                              : "grid-row"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  _c("label", { staticClass: "row-checkbox" }, [
-                                    service.id_object !== 0 &&
-                                    service.type === "month"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: service.for_payment,
-                                              expression: "service.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              service.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  service.for_payment,
-                                                  null
-                                                ) > -1
-                                              : service.for_payment
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a = service.for_payment,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        service,
-                                                        "for_payment",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        service,
-                                                        "for_payment",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    service,
-                                                    "for_payment",
-                                                    $$c
-                                                  )
+                    _vm.client.invoice_layout === "single"
+                        ? [
+                            _c("div", { staticClass: "grid-row" }, [
+                                !_vm.urlParams.id
+                                    ? _c("div", { staticClass: "grid-cell" }, [
+                                        _c("label", { staticClass: "row-checkbox" }, [
+                                            _c("input", {
+                                                attrs: { type: "checkbox" },
+                                                domProps: {
+                                                    checked: _vm.servicesForPayment.length > 0
+                                                },
+                                                on: {
+                                                    change: function($event) {
+                                                        return _vm.toggleAllServices($event)
+                                                    }
                                                 }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleMonthlyServicesForObject(
-                                                  service.id_object,
-                                                  service.for_payment,
-                                                  service.month
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : service.id_object !== 0 &&
-                                        service.type === "free"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: service.for_payment,
-                                              expression: "service.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              service.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  service.for_payment,
-                                                  null
-                                                ) > -1
-                                              : service.for_payment
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a = service.for_payment,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        service,
-                                                        "for_payment",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        service,
-                                                        "for_payment",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    service,
-                                                    "for_payment",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleObjectDiscount(
-                                                  service.id_object,
-                                                  service.for_payment
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: service.for_payment,
-                                              expression: "service.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              service.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  service.for_payment,
-                                                  null
-                                                ) > -1
-                                              : service.for_payment
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a = service.for_payment,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      service,
-                                                      "for_payment",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      service,
-                                                      "for_payment",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  service,
-                                                  "for_payment",
-                                                  $$c
-                                                )
-                                              }
-                                            }
-                                          }
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span")
-                                  ])
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", { staticClass: "flex primary-info" }, [
-                                _c("div", {
-                                  staticClass:
-                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
-                                  attrs: {
-                                    contenteditable: "",
-                                    spellcheck: "false",
-                                    title: service.object_name
-                                  },
-                                  domProps: {
-                                    innerHTML: _vm._s(service.object_name)
-                                  },
-                                  on: {
-                                    focus: function($event) {
-                                      return _vm.beginTextEdit($event)
-                                    },
-                                    keydown: function($event) {
-                                      if (
-                                        !$event.type.indexOf("key") &&
-                                        _vm._k(
-                                          $event.keyCode,
-                                          "enter",
-                                          13,
-                                          $event.key,
-                                          "Enter"
-                                        )
-                                      ) {
-                                        return null
-                                      }
-                                      $event.preventDefault()
-                                      return _vm.editTextRow(
-                                        $event,
-                                        service,
-                                        "object_name"
-                                      )
-                                    },
-                                    blur: function($event) {
-                                      return _vm.restoreTextIfNotConfirmed(
-                                        $event
-                                      )
-                                    }
-                                  }
-                                }),
+                                            }),
+                                            _vm._v(" "),
+                                            _c("span")
+                                        ])
+                                    ])
+                                    : _vm._e(),
                                 _vm._v(" "),
                                 _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.handleLinkAction(service)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      class: service.id_object
-                                        ? "fad fa-external-link fa-fw"
-                                        : !_vm.urlParams.id ||
-                                          _vm.is_new_relative_doc
-                                        ? "fad fa-edit fa-fw"
-                                        : "hidden"
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "secondary-info truncate" },
-                                [
-                                  _vm._v(
-                                    "\n            за м. " +
-                                      _vm._s(_vm._f("date")(service.month)) +
-                                      "\n          "
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", {
-                                staticClass:
-                                  "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                attrs: {
-                                  contenteditable: "",
-                                  spellcheck: "false",
-                                  title: service.service_name
-                                },
-                                domProps: {
-                                  innerHTML: _vm._s(service.service_name)
-                                },
-                                on: {
-                                  focus: function($event) {
-                                    return _vm.beginTextEdit($event)
-                                  },
-                                  keydown: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    $event.preventDefault()
-                                    return _vm.editTextRow(
-                                      $event,
-                                      service,
-                                      "service_name"
-                                    )
-                                  },
-                                  blur: function($event) {
-                                    return _vm.restoreTextIfNotConfirmed($event)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "secondary-info truncate" },
-                                [
-                                  _c(
-                                    "span",
+                                    "div",
                                     {
-                                      staticClass:
-                                        "underline cursor-pointer tracking-wider",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.showNomenclature(service)
-                                        }
-                                      }
+                                        staticClass: "grid-cell row-num",
+                                        class: _vm.urlParams.id ? "col-span-2" : ""
                                     },
-                                    [
-                                      _vm._v(
-                                        _vm._s(service.firm) +
-                                          " - " +
-                                          _vm._s(service.region)
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(_vm._s(service.quantity))
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(_vm._s(service.measure))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: { title: service.single_price }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("price")(service.single_price)
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: { title: service.total_sum }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(service.total_sum)
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      })
-                    : _vm.client.invoice_layout === "by_objects"
-                    ? _vm._l(_vm.objectsTreeView, function(object, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            class:
-                              object.for_payment.checked ||
-                              object.for_payment === true
-                                ? "grid-row"
-                                : "grid-row opacity-50"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  _c("label", { staticClass: "row-checkbox" }, [
-                                    object.hasOwnProperty("monthly")
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleObjectServices(
-                                                  object.id_object,
-                                                  object.for_payment.checked
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment,
-                                              expression: "object.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a = object.for_payment,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  object,
-                                                  "for_payment",
-                                                  $$c
-                                                )
-                                              }
-                                            }
-                                          }
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span")
-                                  ])
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell col-start-3 col-end-5"
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "flex primary-info" },
-                                  [
-                                    _c("div", {
-                                      staticClass:
-                                        "font-medium w-full truncate mr-2 focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                      attrs: {
-                                        contenteditable: "",
-                                        spellcheck: "false",
-                                        title: object.id_object
-                                          ? object.name
-                                          : object.object_name
-                                      },
-                                      domProps: {
-                                        innerHTML: _vm._s(
-                                          object.id_object
-                                            ? object.name
-                                            : object.object_name
-                                        )
-                                      },
-                                      on: {
-                                        focus: function($event) {
-                                          return _vm.beginTextEdit($event)
-                                        },
-                                        keydown: function($event) {
-                                          if (
-                                            !$event.type.indexOf("key") &&
-                                            _vm._k(
-                                              $event.keyCode,
-                                              "enter",
-                                              13,
-                                              $event.key,
-                                              "Enter"
-                                            )
-                                          ) {
-                                            return null
-                                          }
-                                          $event.preventDefault()
-                                          _vm.editTextRow(
-                                            $event,
-                                            object.hasOwnProperty("monthly")
-                                              ? object.monthly.months[0]
-                                                  .services[0]
-                                              : object,
-                                            "object_name"
-                                          )
-                                        },
-                                        blur: function($event) {
-                                          return _vm.restoreTextIfNotConfirmed(
-                                            $event
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.handleLinkAction(object)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", {
-                                          class: object.id_object
-                                            ? "fad fa-external-link fa-fw"
-                                            : !_vm.urlParams.id
-                                            ? "fad fa-edit fa-fw"
-                                            : "hidden"
-                                        })
-                                      ]
-                                    )
-                                  ]
+                                    [_vm._v("\n          1\n        ")]
                                 ),
                                 _vm._v(" "),
-                                object.id_object
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex secondary-info truncate"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "focus:outline-none mr-2",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.showObjectPricing(
-                                                  object
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fad fa-folder-tree fa-fw text-indigo-400"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        object.monthly
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate" },
-                                              [
-                                                _vm._v(
-                                                  "[ месечни такси:\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.monthly
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.monthly.totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        object.discounts
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate mx-1" },
-                                              [
-                                                _vm._v(
-                                                  "[ отстъпки: " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.discounts
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.discounts
-                                                          .totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        object.singles
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate" },
-                                              [
-                                                _vm._v(
-                                                  "[ еднократни: " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.singles
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.singles.totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex secondary-info truncate"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "focus:outline-none mr-2",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.handleLinkAction(
-                                                  object
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fad fa-folder-tree fa-fw text-indigo-400"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "truncate" },
-                                          [
-                                            _vm._v(
-                                              "[ " +
-                                                _vm._s(object.service_name) +
-                                                " " +
-                                                _vm._s(object.quantity) +
-                                                "\n              " +
-                                                _vm._s(object.measure) +
-                                                " x " +
-                                                _vm._s(
-                                                  _vm._f("price")(
-                                                    object.single_price
-                                                  )
-                                                ) +
-                                                " лв.\n              ]"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].quantity
-                                        : object.quantity
-                                    ) +
-                                    "\n          "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].measure
-                                        : object.measure
-                                    ) +
-                                    "\n          "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price * object.quantity
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price *
-                                                object.quantity
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      })
-                    : _vm.client.invoice_layout === "detail"
-                    ? _vm._l(_vm.byMonths, function(object, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            class:
-                              object.for_payment.checked ||
-                              object.for_payment === true
-                                ? "grid-row"
-                                : "grid-row opacity-50"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  _c("label", { staticClass: "row-checkbox" }, [
-                                    object.services &&
-                                    object.services.length &&
-                                    object.services[0].id_object !== 0 &&
-                                    object.services[0].type === "month"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleMonthlyServicesForObject(
-                                                  object.services[0].id_object,
-                                                  object.for_payment.checked,
-                                                  object.month
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : object.services &&
-                                        object.services.length &&
-                                        object.services[0].id_object !== 0 &&
-                                        object.services[0].type === "free"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleObjectDiscount(
-                                                  object.services[0].id_object,
-                                                  object.for_payment.checked
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment,
-                                              expression: "object.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a = object.for_payment,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  object,
-                                                  "for_payment",
-                                                  $$c
-                                                )
-                                              }
-                                            }
-                                          }
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span")
-                                  ])
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", { staticClass: "flex primary-info" }, [
-                                _c("div", {
-                                  staticClass:
-                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
-                                  attrs: {
-                                    contenteditable: "",
-                                    spellcheck: "false",
-                                    title: object.hasOwnProperty("services")
-                                      ? object.services[0].object_name
-                                      : object.object_name
-                                  },
-                                  domProps: {
-                                    innerHTML: _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].object_name
-                                        : object.object_name
-                                    )
-                                  },
-                                  on: {
-                                    focus: function($event) {
-                                      return _vm.beginTextEdit($event)
-                                    },
-                                    keydown: function($event) {
-                                      if (
-                                        !$event.type.indexOf("key") &&
-                                        _vm._k(
-                                          $event.keyCode,
-                                          "enter",
-                                          13,
-                                          $event.key,
-                                          "Enter"
-                                        )
-                                      ) {
-                                        return null
-                                      }
-                                      $event.preventDefault()
-                                      _vm.editTextRow(
-                                        $event,
-                                        object.hasOwnProperty("services")
-                                          ? object.services[0]
-                                          : object,
-                                        "object_name"
-                                      )
-                                    },
-                                    blur: function($event) {
-                                      return _vm.restoreTextIfNotConfirmed(
-                                        $event
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
                                 _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.handleLinkAction(object)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      class:
-                                        object.id_object || object.services
-                                          ? "fad fa-external-link fa-fw"
-                                          : !_vm.urlParams.id
-                                          ? "fad fa-edit fa-fw"
-                                          : "hidden"
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "secondary-info truncate" },
-                                [
-                                  _vm._v(
-                                    "\n            за м. " +
-                                      _vm._s(_vm._f("date")(object.month)) +
-                                      "\n          "
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", {
-                                staticClass:
-                                  "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                attrs: {
-                                  contenteditable: "",
-                                  spellcheck: "false",
-                                  title: object.hasOwnProperty("services")
-                                    ? object.name
-                                    : object.service_name
-                                },
-                                domProps: {
-                                  innerHTML: _vm._s(
-                                    object.hasOwnProperty("services")
-                                      ? object.name
-                                      : object.service_name
-                                  )
-                                },
-                                on: {
-                                  focus: function($event) {
-                                    return _vm.beginTextEdit($event)
-                                  },
-                                  keydown: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    $event.preventDefault()
-                                    _vm.editTextRow(
-                                      $event,
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0]
-                                        : object,
-                                      object.hasOwnProperty("services")
-                                        ? "view_type_detail"
-                                        : "service_name"
-                                    )
-                                  },
-                                  blur: function($event) {
-                                    return _vm.restoreTextIfNotConfirmed($event)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              object.hasOwnProperty("services") &&
-                              object.services[0].type == "month"
-                                ? _c(
                                     "div",
-                                    { staticClass: "secondary-info truncate" },
+                                    { staticClass: "grid-cell col-start-3 col-end-5" },
                                     [
-                                      _vm._v(
-                                        "\n            месечна такса\n          "
-                                      )
-                                    ]
-                                  )
-                                : object.type == "single"
-                                ? _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [
-                                      _vm._v(
-                                        "\n            еднократно\n          "
-                                      )
-                                    ]
-                                  )
-                                : object.hasOwnProperty("services") &&
-                                  object.id_objecto !== 0 &&
-                                  object.services[0].type == "free"
-                                ? _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [
-                                      _vm._v(
-                                        "\n            отстъпка\n          "
-                                      )
-                                    ]
-                                  )
-                                : _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [_vm._v("свободна продажба")]
-                                  )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].quantity
-                                        : object.quantity
-                                    ) +
-                                    "\n          "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].measure
-                                        : object.measure
-                                    ) +
-                                    "\n          "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price * object.quantity
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price *
-                                                object.quantity
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      })
-                    : _vm.client.invoice_layout === "by_objects"
-                    ? _vm._l(_vm.objectsTreeView, function(object, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            class:
-                              object.for_payment.checked ||
-                              object.for_payment === true
-                                ? "grid-row"
-                                : "grid-row opacity-50"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  _c("label", { staticClass: "row-checkbox" }, [
-                                    object.hasOwnProperty("monthly")
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleObjectServices(
-                                                  object.id_object,
-                                                  object.for_payment.checked
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment,
-                                              expression: "object.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a = object.for_payment,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  object,
-                                                  "for_payment",
-                                                  $$c
-                                                )
-                                              }
-                                            }
-                                          }
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span")
-                                  ])
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell col-start-3 col-end-5"
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "flex primary-info" },
-                                  [
-                                    _c("div", {
-                                      staticClass:
-                                        "font-medium w-full truncate mr-2 focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                      attrs: {
-                                        contenteditable: "",
-                                        spellcheck: "false",
-                                        title: object.id_object
-                                          ? object.name
-                                          : object.object_name
-                                      },
-                                      domProps: {
-                                        innerHTML: _vm._s(
-                                          object.id_object
-                                            ? object.name
-                                            : object.object_name
-                                        )
-                                      },
-                                      on: {
-                                        focus: function($event) {
-                                          return _vm.beginTextEdit($event)
-                                        },
-                                        keydown: function($event) {
-                                          if (
-                                            !$event.type.indexOf("key") &&
-                                            _vm._k(
-                                              $event.keyCode,
-                                              "enter",
-                                              13,
-                                              $event.key,
-                                              "Enter"
-                                            )
-                                          ) {
-                                            return null
-                                          }
-                                          $event.preventDefault()
-                                          _vm.editTextRow(
-                                            $event,
-                                            object.hasOwnProperty("monthly")
-                                              ? object.monthly.months[0]
-                                                  .services[0]
-                                              : object,
-                                            "object_name"
-                                          )
-                                        },
-                                        blur: function($event) {
-                                          return _vm.restoreTextIfNotConfirmed(
-                                            $event
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.handleLinkAction(object)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", {
-                                          class: object.id_object
-                                            ? "fad fa-external-link fa-fw"
-                                            : !_vm.urlParams.id
-                                            ? "fad fa-edit fa-fw"
-                                            : "hidden"
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                object.id_object
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex secondary-info truncate"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
+                                        _c("div", {
                                             staticClass:
-                                              "focus:outline-none mr-2",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.showObjectPricing(
-                                                  object
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fad fa-folder-tree fa-fw text-indigo-400"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        object.monthly
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate" },
-                                              [
-                                                _vm._v(
-                                                  "[ месечни такси:\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.monthly
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.monthly.totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        object.discounts
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate mx-1" },
-                                              [
-                                                _vm._v(
-                                                  "[ отстъпки: " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.discounts
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.discounts
-                                                          .totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        object.singles
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "truncate" },
-                                              [
-                                                _vm._v(
-                                                  "[ еднократни: " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.singles
-                                                          .totalForPayment
-                                                      )
-                                                    ) +
-                                                    " от\n              " +
-                                                    _vm._s(
-                                                      _vm._f("price")(
-                                                        object.singles.totalSum
-                                                      )
-                                                    ) +
-                                                    " лв. ]"
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "flex secondary-info truncate"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "focus:outline-none mr-2",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.handleLinkAction(
-                                                  object
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fad fa-folder-tree fa-fw text-indigo-400"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "truncate" },
-                                          [
-                                            _vm._v(
-                                              "[ " +
-                                                _vm._s(object.service_name) +
-                                                " " +
-                                                _vm._s(object.quantity) +
-                                                "\n              " +
-                                                _vm._s(object.measure) +
-                                                " x " +
-                                                _vm._s(
-                                                  _vm._f("price")(
-                                                    object.single_price
-                                                  )
-                                                ) +
-                                                " лв.\n              ]"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].quantity
-                                        : object.quantity
-                                    ) +
-                                    "\n          "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].measure
-                                        : object.measure
-                                    ) +
-                                    "\n          "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price * object.quantity
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price *
-                                                object.quantity
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      })
-                    : _vm.client.invoice_layout === "detail"
-                    ? _vm._l(_vm.byMonths, function(object, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            class:
-                              object.for_payment.checked ||
-                              object.for_payment === true
-                                ? "grid-row"
-                                : "grid-row opacity-50"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  _c("label", { staticClass: "row-checkbox" }, [
-                                    object.services &&
-                                    object.services.length &&
-                                    object.services[0].id_object !== 0 &&
-                                    object.services[0].type === "month"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleMonthlyServicesForObject(
-                                                  object.services[0].id_object,
-                                                  object.for_payment.checked,
-                                                  object.month
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : object.services &&
-                                        object.services.length &&
-                                        object.services[0].id_object !== 0 &&
-                                        object.services[0].type === "free"
-                                      ? _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment.checked,
-                                              expression:
-                                                "object.for_payment.checked"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment.checked
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment.checked,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment.checked
-                                          },
-                                          on: {
-                                            change: [
-                                              function($event) {
-                                                var $$a =
-                                                    object.for_payment.checked,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object.for_payment,
-                                                        "checked",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object.for_payment,
-                                                    "checked",
-                                                    $$c
-                                                  )
-                                                }
-                                              },
-                                              function($event) {
-                                                return _vm.toggleObjectDiscount(
-                                                  object.services[0].id_object,
-                                                  object.for_payment.checked
-                                                )
-                                              }
-                                            ]
-                                          }
-                                        })
-                                      : _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: object.for_payment,
-                                              expression: "object.for_payment"
-                                            }
-                                          ],
-                                          attrs: { type: "checkbox" },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              object.for_payment
-                                            )
-                                              ? _vm._i(
-                                                  object.for_payment,
-                                                  null
-                                                ) > -1
-                                              : object.for_payment
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a = object.for_payment,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      object,
-                                                      "for_payment",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  object,
-                                                  "for_payment",
-                                                  $$c
-                                                )
-                                              }
-                                            }
-                                          }
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span")
-                                  ])
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", { staticClass: "flex primary-info" }, [
-                                _c("div", {
-                                  staticClass:
-                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
-                                  attrs: {
-                                    contenteditable: "",
-                                    spellcheck: "false",
-                                    title: object.hasOwnProperty("services")
-                                      ? object.services[0].object_name
-                                      : object.object_name
-                                  },
-                                  domProps: {
-                                    innerHTML: _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].object_name
-                                        : object.object_name
-                                    )
-                                  },
-                                  on: {
-                                    focus: function($event) {
-                                      return _vm.beginTextEdit($event)
-                                    },
-                                    keydown: function($event) {
-                                      if (
-                                        !$event.type.indexOf("key") &&
-                                        _vm._k(
-                                          $event.keyCode,
-                                          "enter",
-                                          13,
-                                          $event.key,
-                                          "Enter"
-                                        )
-                                      ) {
-                                        return null
-                                      }
-                                      $event.preventDefault()
-                                      _vm.editTextRow(
-                                        $event,
-                                        object.hasOwnProperty("services")
-                                          ? object.services[0]
-                                          : object,
-                                        "object_name"
-                                      )
-                                    },
-                                    blur: function($event) {
-                                      return _vm.restoreTextIfNotConfirmed(
-                                        $event
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.handleLinkAction(object)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      class:
-                                        object.id_object || object.services
-                                          ? "fad fa-external-link fa-fw"
-                                          : !_vm.urlParams.id
-                                          ? "fad fa-edit fa-fw"
-                                          : "hidden"
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "secondary-info truncate" },
-                                [
-                                  _vm._v(
-                                    "\n            за м. " +
-                                      _vm._s(_vm._f("date")(object.month)) +
-                                      "\n          "
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell" }, [
-                              _c("div", {
-                                staticClass:
-                                  "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
-                                attrs: {
-                                  contenteditable: "",
-                                  spellcheck: "false",
-                                  title: object.hasOwnProperty("services")
-                                    ? object.name
-                                    : object.service_name
-                                },
-                                domProps: {
-                                  innerHTML: _vm._s(
-                                    object.hasOwnProperty("services")
-                                      ? object.name
-                                      : object.service_name
-                                  )
-                                },
-                                on: {
-                                  focus: function($event) {
-                                    return _vm.beginTextEdit($event)
-                                  },
-                                  keydown: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    $event.preventDefault()
-                                    _vm.editTextRow(
-                                      $event,
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0]
-                                        : object,
-                                      object.hasOwnProperty("services")
-                                        ? "view_type_detail"
-                                        : "service_name"
-                                    )
-                                  },
-                                  blur: function($event) {
-                                    return _vm.restoreTextIfNotConfirmed($event)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              object.hasOwnProperty("services") &&
-                              object.services[0].type == "month"
-                                ? _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [
-                                      _vm._v(
-                                        "\n            месечна такса\n          "
-                                      )
-                                    ]
-                                  )
-                                : object.type == "single"
-                                ? _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [
-                                      _vm._v(
-                                        "\n            еднократно\n          "
-                                      )
-                                    ]
-                                  )
-                                : object.hasOwnProperty("services") &&
-                                  object.id_objecto !== 0 &&
-                                  object.services[0].type == "free"
-                                ? _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [
-                                      _vm._v(
-                                        "\n            отстъпка\n          "
-                                      )
-                                    ]
-                                  )
-                                : _c(
-                                    "div",
-                                    { staticClass: "secondary-info truncate" },
-                                    [_vm._v("свободна продажба")]
-                                  )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].quantity
-                                        : object.quantity
-                                    ) +
-                                    "\n          "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(
-                                      object.hasOwnProperty("services")
-                                        ? object.services[0].measure
-                                        : object.measure
-                                    ) +
-                                    "\n          "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price * object.quantity
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price *
-                                                object.quantity
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      })
-                    : _vm.client.invoice_layout === "by_services"
-                    ? _vm._l(_vm.byServices, function(object, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            class:
-                              object.for_payment.checked ||
-                              object.for_payment === true
-                                ? "grid-row"
-                                : "grid-row opacity-50"
-                          },
-                          [
-                            !_vm.urlParams.id
-                              ? _c("div", { staticClass: "grid-cell" }, [
-                                  !object.hasOwnProperty("services")
-                                    ? _c(
-                                        "label",
-                                        { staticClass: "row-checkbox" },
-                                        [
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: object.for_payment,
-                                                expression: "object.for_payment"
-                                              }
-                                            ],
-                                            attrs: { type: "checkbox" },
+                                                "primary-info font-medium w-full focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                            attrs: {
+                                                contenteditable: "",
+                                                spellcheck: "false",
+                                                title: _vm.document_data.single_view_name
+                                            },
                                             domProps: {
-                                              checked: Array.isArray(
-                                                object.for_payment
-                                              )
-                                                ? _vm._i(
-                                                    object.for_payment,
-                                                    null
-                                                  ) > -1
-                                                : object.for_payment
+                                                innerHTML: _vm._s(
+                                                    _vm.document_data.single_view_name
+                                                )
                                             },
                                             on: {
-                                              change: function($event) {
-                                                var $$a = object.for_payment,
-                                                  $$el = $event.target,
-                                                  $$c = $$el.checked
-                                                    ? true
-                                                    : false
-                                                if (Array.isArray($$a)) {
-                                                  var $$v = null,
-                                                    $$i = _vm._i($$a, $$v)
-                                                  if ($$el.checked) {
-                                                    $$i < 0 &&
-                                                      _vm.$set(
-                                                        object,
-                                                        "for_payment",
-                                                        $$a.concat([$$v])
-                                                      )
-                                                  } else {
-                                                    $$i > -1 &&
-                                                      _vm.$set(
-                                                        object,
-                                                        "for_payment",
-                                                        $$a
-                                                          .slice(0, $$i)
-                                                          .concat(
-                                                            $$a.slice($$i + 1)
-                                                          )
-                                                      )
-                                                  }
-                                                } else {
-                                                  _vm.$set(
-                                                    object,
-                                                    "for_payment",
-                                                    $$c
-                                                  )
+                                                focus: function($event) {
+                                                    return _vm.beginTextEdit($event)
+                                                },
+                                                keydown: function($event) {
+                                                    if (
+                                                        !$event.type.indexOf("key") &&
+                                                        _vm._k(
+                                                            $event.keyCode,
+                                                            "enter",
+                                                            13,
+                                                            $event.key,
+                                                            "Enter"
+                                                        )
+                                                    ) {
+                                                        return null
+                                                    }
+                                                    $event.preventDefault()
+                                                    return _vm.editTextRow(
+                                                        $event,
+                                                        _vm.document_data,
+                                                        "single_view_name"
+                                                    )
+                                                },
+                                                blur: function($event) {
+                                                    return _vm.restoreTextIfNotConfirmed($event)
                                                 }
-                                              }
                                             }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span")
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell row-num",
-                                class: _vm.urlParams.id ? "col-span-2" : ""
-                              },
-                              [
-                                _vm._v(
-                                  "\n          " +
-                                    _vm._s(index + 1) +
-                                    "\n        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell col-start-3 col-end-5"
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "flex primary-info" },
-                                  [
-                                    _c("div", {
-                                      staticClass:
-                                        "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
-                                      attrs: {
-                                        contenteditable: "",
-                                        spellcheck: "false",
-                                        title: !object.id_object
-                                          ? object.type === "free" &&
-                                            !object.services
-                                            ? object.object_name
-                                            : object.name
-                                          : object.service_name
-                                      },
-                                      domProps: {
-                                        innerHTML: _vm._s(
-                                          !object.id_object
-                                            ? object.type === "free" &&
-                                              !object.services
-                                              ? object.object_name
-                                              : object.name
-                                            : object.service_name
-                                        )
-                                      },
-                                      on: {
-                                        focus: function($event) {
-                                          return _vm.beginTextEdit($event)
-                                        },
-                                        keydown: function($event) {
-                                          if (
-                                            !$event.type.indexOf("key") &&
-                                            _vm._k(
-                                              $event.keyCode,
-                                              "enter",
-                                              13,
-                                              $event.key,
-                                              "Enter"
-                                            )
-                                          ) {
-                                            return null
-                                          }
-                                          $event.preventDefault()
-                                          _vm.editTextRow(
-                                            $event,
-                                            object,
-                                            (!object.id_object &&
-                                              object.hasOwnProperty(
-                                                "services"
-                                              ) &&
-                                              object.type === "month") ||
-                                              (!object.id_object &&
-                                                object.hasOwnProperty(
-                                                  "services"
-                                                ) &&
-                                                object.type === "free")
-                                              ? "view_type_by_services"
-                                              : object.id_object
-                                              ? "service_name"
-                                              : "object_name"
-                                          )
-                                        },
-                                        blur: function($event) {
-                                          return _vm.restoreTextIfNotConfirmed(
-                                            $event
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    !object.services
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.handleLinkAction(
-                                                  object
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              class: object.id_object
-                                                ? "fad fa-external-link fa-fw"
-                                                : !_vm.urlParams.id
-                                                ? "fad fa-edit fa-fw"
-                                                : "hidden"
-                                            })
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]
+                                        })
+                                    ]
                                 ),
                                 _vm._v(" "),
-                                object.services && object.type === "month"
-                                  ? _c("div", {
-                                      staticClass: "secondary-info truncate",
-                                      domProps: {
-                                        textContent: _vm._s(
-                                          object.services[0].for_smartsot
-                                            ? "месечни такси [ смарт сот ]"
-                                            : "месечни такси"
-                                        )
-                                      }
-                                    })
-                                  : object.services && object.type === "free"
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "secondary-info truncate"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n            отстъпки\n          "
-                                        )
-                                      ]
-                                    )
-                                  : object.id_object && object.type === "single"
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "secondary-info truncate",
+                                _vm._m(0),
+                                _vm._v(" "),
+                                _c(
+                                    "div",
+                                    {
+                                        staticClass: "grid-cell text-right",
                                         attrs: {
-                                          title:
-                                            "еднократнo задължение [ " +
-                                            object.object_name +
-                                            " / " +
-                                            object.firm +
-                                            " - " +
-                                            object.region +
-                                            " ]"
+                                            title: _vm.baseSum
+                                                ? _vm.baseSum
+                                                : _vm.allRowsTotal
                                         }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n            еднократнo задължение [ " +
-                                            _vm._s(object.object_name) +
-                                            " /\n            " +
-                                            _vm._s(object.firm) +
-                                            " - " +
-                                            _vm._s(object.region) +
-                                            " ]\n          "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass: "secondary-info truncate"
-                                      },
-                                      [_vm._v("свободна продажба")]
-                                    )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "grid-cell text-right" }, [
-                              _c("div", { staticClass: "primary-info" }, [
-                                _vm._v(_vm._s(object.quantity))
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "secondary-info" }, [
-                                _vm._v(_vm._s(object.measure))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price
-                                        )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
+                                    },
+                                    [
+                                        _c("div", { staticClass: "primary-info" }, [
+                                            _vm._v(
+                                                _vm._s(
+                                                    _vm._f("price")(
+                                                        _vm.baseSum
+                                                            ? _vm.baseSum
+                                                            : _vm.allRowsTotal
+                                                    )
+                                                )
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "secondary-info" }, [
+                                            _vm._v("лв.")
+                                        ])
+                                    ]
+                                ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "grid-cell text-right",
-                                attrs: {
-                                  title: object.hasOwnProperty("totalSum")
-                                    ? object.totalSum
-                                    : object.single_price * object.quantity
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "primary-info" }, [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(
-                                        _vm._f("price")(
-                                          object.hasOwnProperty("totalSum")
-                                            ? object.totalSum
-                                            : object.single_price *
-                                                object.quantity
+                                _c(
+                                    "div",
+                                    {
+                                        staticClass: "grid-cell text-right",
+                                        attrs: {
+                                            title: _vm.baseSum
+                                                ? _vm.baseSum
+                                                : _vm.allRowsTotal
+                                        }
+                                    },
+                                    [
+                                        _c("div", { staticClass: "primary-info" }, [
+                                            _vm._v(
+                                                _vm._s(
+                                                    _vm._f("price")(
+                                                        _vm.baseSum
+                                                            ? _vm.baseSum
+                                                            : _vm.allRowsTotal
+                                                    )
+                                                )
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "secondary-info" }, [
+                                            _vm._v("лв.")
+                                        ])
+                                    ]
+                                )
+                            ])
+                        ]
+                        : _vm.client.invoice_layout === "extended" ||
+                        (_vm.doc_type === "oprostena" && !_vm.urlParams.id)
+                        ? _vm._l(_vm.doc_rows, function(service, index) {
+                            return _c(
+                                "div",
+                                {
+                                    key: service.uuid,
+                                    class: !service.for_payment
+                                        ? "opacity-50 grid-row"
+                                        : "grid-row"
+                                },
+                                [
+                                    !_vm.urlParams.id
+                                        ? _c("div", { staticClass: "grid-cell" }, [
+                                            _c("label", { staticClass: "row-checkbox" }, [
+                                                service.id_object !== 0 &&
+                                                service.type === "month"
+                                                    ? _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: service.for_payment,
+                                                                expression: "service.for_payment"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                service.for_payment
+                                                            )
+                                                                ? _vm._i(
+                                                                service.for_payment,
+                                                                null
+                                                            ) > -1
+                                                                : service.for_payment
+                                                        },
+                                                        on: {
+                                                            change: [
+                                                                function($event) {
+                                                                    var $$a = service.for_payment,
+                                                                        $$el = $event.target,
+                                                                        $$c = $$el.checked
+                                                                            ? true
+                                                                            : false
+                                                                    if (Array.isArray($$a)) {
+                                                                        var $$v = null,
+                                                                            $$i = _vm._i($$a, $$v)
+                                                                        if ($$el.checked) {
+                                                                            $$i < 0 &&
+                                                                            _vm.$set(
+                                                                                service,
+                                                                                "for_payment",
+                                                                                $$a.concat([$$v])
+                                                                            )
+                                                                        } else {
+                                                                            $$i > -1 &&
+                                                                            _vm.$set(
+                                                                                service,
+                                                                                "for_payment",
+                                                                                $$a
+                                                                                    .slice(0, $$i)
+                                                                                    .concat(
+                                                                                        $$a.slice($$i + 1)
+                                                                                    )
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        _vm.$set(
+                                                                            service,
+                                                                            "for_payment",
+                                                                            $$c
+                                                                        )
+                                                                    }
+                                                                },
+                                                                function($event) {
+                                                                    return _vm.toggleMonthlyServicesForObject(
+                                                                        service.id_object,
+                                                                        service.for_payment,
+                                                                        service.month
+                                                                    )
+                                                                }
+                                                            ]
+                                                        }
+                                                    })
+                                                    : service.id_object !== 0 &&
+                                                    service.type === "free"
+                                                    ? _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: service.for_payment,
+                                                                expression: "service.for_payment"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                service.for_payment
+                                                            )
+                                                                ? _vm._i(
+                                                                service.for_payment,
+                                                                null
+                                                            ) > -1
+                                                                : service.for_payment
+                                                        },
+                                                        on: {
+                                                            change: [
+                                                                function($event) {
+                                                                    var $$a = service.for_payment,
+                                                                        $$el = $event.target,
+                                                                        $$c = $$el.checked
+                                                                            ? true
+                                                                            : false
+                                                                    if (Array.isArray($$a)) {
+                                                                        var $$v = null,
+                                                                            $$i = _vm._i($$a, $$v)
+                                                                        if ($$el.checked) {
+                                                                            $$i < 0 &&
+                                                                            _vm.$set(
+                                                                                service,
+                                                                                "for_payment",
+                                                                                $$a.concat([$$v])
+                                                                            )
+                                                                        } else {
+                                                                            $$i > -1 &&
+                                                                            _vm.$set(
+                                                                                service,
+                                                                                "for_payment",
+                                                                                $$a
+                                                                                    .slice(0, $$i)
+                                                                                    .concat(
+                                                                                        $$a.slice($$i + 1)
+                                                                                    )
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        _vm.$set(
+                                                                            service,
+                                                                            "for_payment",
+                                                                            $$c
+                                                                        )
+                                                                    }
+                                                                },
+                                                                function($event) {
+                                                                    return _vm.toggleObjectDiscount(
+                                                                        service.id_object,
+                                                                        service.for_payment
+                                                                    )
+                                                                }
+                                                            ]
+                                                        }
+                                                    })
+                                                    : _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: service.for_payment,
+                                                                expression: "service.for_payment"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                service.for_payment
+                                                            )
+                                                                ? _vm._i(
+                                                                service.for_payment,
+                                                                null
+                                                            ) > -1
+                                                                : service.for_payment
+                                                        },
+                                                        on: {
+                                                            change: function($event) {
+                                                                var $$a = service.for_payment,
+                                                                    $$el = $event.target,
+                                                                    $$c = $$el.checked
+                                                                        ? true
+                                                                        : false
+                                                                if (Array.isArray($$a)) {
+                                                                    var $$v = null,
+                                                                        $$i = _vm._i($$a, $$v)
+                                                                    if ($$el.checked) {
+                                                                        $$i < 0 &&
+                                                                        _vm.$set(
+                                                                            service,
+                                                                            "for_payment",
+                                                                            $$a.concat([$$v])
+                                                                        )
+                                                                    } else {
+                                                                        $$i > -1 &&
+                                                                        _vm.$set(
+                                                                            service,
+                                                                            "for_payment",
+                                                                            $$a
+                                                                                .slice(0, $$i)
+                                                                                .concat(
+                                                                                    $$a.slice($$i + 1)
+                                                                                )
+                                                                        )
+                                                                    }
+                                                                } else {
+                                                                    _vm.$set(
+                                                                        service,
+                                                                        "for_payment",
+                                                                        $$c
+                                                                    )
+                                                                }
+                                                            }
+                                                        }
+                                                    }),
+                                                _vm._v(" "),
+                                                _c("span")
+                                            ])
+                                        ])
+                                        : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell row-num",
+                                            class: _vm.urlParams.id ? "col-span-2" : ""
+                                        },
+                                        [
+                                            _vm._v(
+                                                "\n          " +
+                                                _vm._s(index + 1) +
+                                                "\n        "
+                                            )
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell" }, [
+                                        _c("div", { staticClass: "flex primary-info" }, [
+                                            _c("div", {
+                                                staticClass:
+                                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
+                                                attrs: {
+                                                    contenteditable: "",
+                                                    spellcheck: "false",
+                                                    title: service.object_name
+                                                },
+                                                domProps: {
+                                                    innerHTML: _vm._s(service.object_name)
+                                                },
+                                                on: {
+                                                    focus: function($event) {
+                                                        return _vm.beginTextEdit($event)
+                                                    },
+                                                    keydown: function($event) {
+                                                        if (
+                                                            !$event.type.indexOf("key") &&
+                                                            _vm._k(
+                                                                $event.keyCode,
+                                                                "enter",
+                                                                13,
+                                                                $event.key,
+                                                                "Enter"
+                                                            )
+                                                        ) {
+                                                            return null
+                                                        }
+                                                        $event.preventDefault()
+                                                        return _vm.editTextRow(
+                                                            $event,
+                                                            service,
+                                                            "object_name"
+                                                        )
+                                                    },
+                                                    blur: function($event) {
+                                                        return _vm.restoreTextIfNotConfirmed(
+                                                            $event
+                                                        )
+                                                    }
+                                                }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                                "button",
+                                                {
+                                                    staticClass:
+                                                        "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                                    on: {
+                                                        click: function($event) {
+                                                            return _vm.handleLinkAction(service)
+                                                        }
+                                                    }
+                                                },
+                                                [
+                                                    _c("i", {
+                                                        class: service.id_object
+                                                            ? "fad fa-external-link fa-fw"
+                                                            : !_vm.urlParams.id ||
+                                                            _vm.is_new_relative_doc
+                                                                ? "fad fa-edit fa-fw"
+                                                                : "hidden"
+                                                    })
+                                                ]
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                            "div",
+                                            { staticClass: "secondary-info truncate" },
+                                            [
+                                                _vm._v(
+                                                    "\n            за м. " +
+                                                    _vm._s(_vm._f("date")(service.month)) +
+                                                    "\n          "
+                                                )
+                                            ]
                                         )
-                                      ) +
-                                      "\n          "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "secondary-info" }, [
-                                  _vm._v("лв.")
-                                ])
-                              ]
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell" }, [
+                                        _c("div", {
+                                            staticClass:
+                                                "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                            attrs: {
+                                                contenteditable: "",
+                                                spellcheck: "false",
+                                                title: service.service_name
+                                            },
+                                            domProps: {
+                                                innerHTML: _vm._s(service.service_name)
+                                            },
+                                            on: {
+                                                focus: function($event) {
+                                                    return _vm.beginTextEdit($event)
+                                                },
+                                                keydown: function($event) {
+                                                    if (
+                                                        !$event.type.indexOf("key") &&
+                                                        _vm._k(
+                                                            $event.keyCode,
+                                                            "enter",
+                                                            13,
+                                                            $event.key,
+                                                            "Enter"
+                                                        )
+                                                    ) {
+                                                        return null
+                                                    }
+                                                    $event.preventDefault()
+                                                    return _vm.editTextRow(
+                                                        $event,
+                                                        service,
+                                                        "service_name"
+                                                    )
+                                                },
+                                                blur: function($event) {
+                                                    return _vm.restoreTextIfNotConfirmed($event)
+                                                }
+                                            }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                            "div",
+                                            { staticClass: "secondary-info truncate" },
+                                            [
+                                                _c(
+                                                    "span",
+                                                    {
+                                                        staticClass:
+                                                            "underline cursor-pointer tracking-wider",
+                                                        on: {
+                                                            click: function($event) {
+                                                                return _vm.showNomenclature(service)
+                                                            }
+                                                        }
+                                                    },
+                                                    [
+                                                        _vm._v(
+                                                            _vm._s(service.firm) +
+                                                            " - " +
+                                                            _vm._s(service.region)
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell text-right" }, [
+                                        _c("div", { staticClass: "primary-info" }, [
+                                            _vm._v(_vm._s(service.quantity))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "secondary-info" }, [
+                                            _vm._v(_vm._s(service.measure))
+                                        ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: { title: service.single_price }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    _vm._s(
+                                                        _vm._f("price")(service.single_price)
+                                                    )
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: { title: service.total_sum }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    "\n            " +
+                                                    _vm._s(
+                                                        _vm._f("price")(service.total_sum)
+                                                    ) +
+                                                    "\n          "
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    )
+                                ]
                             )
-                          ]
-                        )
-                      })
-                    : _vm._e()
+                        })
+                        : _vm.client.invoice_layout === "by_objects"
+                        ? _vm._l(_vm.objectsTreeView, function(object, index) {
+                            return _c(
+                                "div",
+                                {
+                                    key: index,
+                                    class:
+                                        object.for_payment.checked ||
+                                        object.for_payment === true
+                                            ? "grid-row"
+                                            : "grid-row opacity-50"
+                                },
+                                [
+                                    !_vm.urlParams.id
+                                        ? _c("div", { staticClass: "grid-cell" }, [
+                                            _c("label", { staticClass: "row-checkbox" }, [
+                                                object.hasOwnProperty("monthly")
+                                                    ? _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: object.for_payment.checked,
+                                                                expression:
+                                                                    "object.for_payment.checked"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                object.for_payment.checked
+                                                            )
+                                                                ? _vm._i(
+                                                                object.for_payment.checked,
+                                                                null
+                                                            ) > -1
+                                                                : object.for_payment.checked
+                                                        },
+                                                        on: {
+                                                            change: [
+                                                                function($event) {
+                                                                    var $$a =
+                                                                            object.for_payment.checked,
+                                                                        $$el = $event.target,
+                                                                        $$c = $$el.checked
+                                                                            ? true
+                                                                            : false
+                                                                    if (Array.isArray($$a)) {
+                                                                        var $$v = null,
+                                                                            $$i = _vm._i($$a, $$v)
+                                                                        if ($$el.checked) {
+                                                                            $$i < 0 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a.concat([$$v])
+                                                                            )
+                                                                        } else {
+                                                                            $$i > -1 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a
+                                                                                    .slice(0, $$i)
+                                                                                    .concat(
+                                                                                        $$a.slice($$i + 1)
+                                                                                    )
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        _vm.$set(
+                                                                            object.for_payment,
+                                                                            "checked",
+                                                                            $$c
+                                                                        )
+                                                                    }
+                                                                },
+                                                                function($event) {
+                                                                    return _vm.toggleObjectServices(
+                                                                        object.id_object,
+                                                                        object.for_payment.checked
+                                                                    )
+                                                                }
+                                                            ]
+                                                        }
+                                                    })
+                                                    : _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: object.for_payment,
+                                                                expression: "object.for_payment"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                object.for_payment
+                                                            )
+                                                                ? _vm._i(
+                                                                object.for_payment,
+                                                                null
+                                                            ) > -1
+                                                                : object.for_payment
+                                                        },
+                                                        on: {
+                                                            change: function($event) {
+                                                                var $$a = object.for_payment,
+                                                                    $$el = $event.target,
+                                                                    $$c = $$el.checked
+                                                                        ? true
+                                                                        : false
+                                                                if (Array.isArray($$a)) {
+                                                                    var $$v = null,
+                                                                        $$i = _vm._i($$a, $$v)
+                                                                    if ($$el.checked) {
+                                                                        $$i < 0 &&
+                                                                        _vm.$set(
+                                                                            object,
+                                                                            "for_payment",
+                                                                            $$a.concat([$$v])
+                                                                        )
+                                                                    } else {
+                                                                        $$i > -1 &&
+                                                                        _vm.$set(
+                                                                            object,
+                                                                            "for_payment",
+                                                                            $$a
+                                                                                .slice(0, $$i)
+                                                                                .concat(
+                                                                                    $$a.slice($$i + 1)
+                                                                                )
+                                                                        )
+                                                                    }
+                                                                } else {
+                                                                    _vm.$set(
+                                                                        object,
+                                                                        "for_payment",
+                                                                        $$c
+                                                                    )
+                                                                }
+                                                            }
+                                                        }
+                                                    }),
+                                                _vm._v(" "),
+                                                _c("span")
+                                            ])
+                                        ])
+                                        : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell row-num",
+                                            class: _vm.urlParams.id ? "col-span-2" : ""
+                                        },
+                                        [
+                                            _vm._v(
+                                                "\n          " +
+                                                _vm._s(index + 1) +
+                                                "\n        "
+                                            )
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell col-start-3 col-end-5"
+                                        },
+                                        [
+                                            _c(
+                                                "div",
+                                                { staticClass: "flex primary-info" },
+                                                [
+                                                    _c("div", {
+                                                        staticClass:
+                                                            "font-medium w-full truncate mr-2 focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                                        attrs: {
+                                                            contenteditable: "",
+                                                            spellcheck: "false",
+                                                            title: object.id_object
+                                                                ? object.name
+                                                                : object.object_name
+                                                        },
+                                                        domProps: {
+                                                            innerHTML: _vm._s(
+                                                                object.id_object
+                                                                    ? object.name
+                                                                    : object.object_name
+                                                            )
+                                                        },
+                                                        on: {
+                                                            focus: function($event) {
+                                                                return _vm.beginTextEdit($event)
+                                                            },
+                                                            keydown: function($event) {
+                                                                if (
+                                                                    !$event.type.indexOf("key") &&
+                                                                    _vm._k(
+                                                                        $event.keyCode,
+                                                                        "enter",
+                                                                        13,
+                                                                        $event.key,
+                                                                        "Enter"
+                                                                    )
+                                                                ) {
+                                                                    return null
+                                                                }
+                                                                $event.preventDefault()
+                                                                _vm.editTextRow(
+                                                                    $event,
+                                                                    object.hasOwnProperty("monthly")
+                                                                        ? object.monthly.months[0]
+                                                                            .services[0]
+                                                                        : object,
+                                                                    "object_name"
+                                                                )
+                                                            },
+                                                            blur: function($event) {
+                                                                return _vm.restoreTextIfNotConfirmed(
+                                                                    $event
+                                                                )
+                                                            }
+                                                        }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                        "button",
+                                                        {
+                                                            staticClass:
+                                                                "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                                            on: {
+                                                                click: function($event) {
+                                                                    return _vm.handleLinkAction(object)
+                                                                }
+                                                            }
+                                                        },
+                                                        [
+                                                            _c("i", {
+                                                                class: object.id_object
+                                                                    ? "fad fa-external-link fa-fw"
+                                                                    : !_vm.urlParams.id
+                                                                        ? "fad fa-edit fa-fw"
+                                                                        : "hidden"
+                                                            })
+                                                        ]
+                                                    )
+                                                ]
+                                            ),
+                                            _vm._v(" "),
+                                            object.id_object
+                                                ? _c(
+                                                "div",
+                                                {
+                                                    staticClass:
+                                                        "flex secondary-info truncate"
+                                                },
+                                                [
+                                                    _c(
+                                                        "button",
+                                                        {
+                                                            staticClass:
+                                                                "focus:outline-none mr-2",
+                                                            on: {
+                                                                click: function($event) {
+                                                                    return _vm.showObjectPricing(
+                                                                        object
+                                                                    )
+                                                                }
+                                                            }
+                                                        },
+                                                        [
+                                                            _c("i", {
+                                                                staticClass:
+                                                                    "fad fa-folder-tree fa-fw text-indigo-400"
+                                                            })
+                                                        ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    object.monthly
+                                                        ? _c(
+                                                        "span",
+                                                        { staticClass: "truncate" },
+                                                        [
+                                                            _vm._v(
+                                                                "[ месечни такси:\n              " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.monthly
+                                                                            .totalForPayment
+                                                                    )
+                                                                ) +
+                                                                " от\n              " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.monthly.totalSum
+                                                                    )
+                                                                ) +
+                                                                " лв. ]"
+                                                            )
+                                                        ]
+                                                        )
+                                                        : _vm._e(),
+                                                    _vm._v(" "),
+                                                    object.discounts
+                                                        ? _c(
+                                                        "span",
+                                                        { staticClass: "truncate mx-1" },
+                                                        [
+                                                            _vm._v(
+                                                                "[ отстъпки: " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.discounts
+                                                                            .totalForPayment
+                                                                    )
+                                                                ) +
+                                                                " от\n              " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.discounts
+                                                                            .totalSum
+                                                                    )
+                                                                ) +
+                                                                " лв. ]"
+                                                            )
+                                                        ]
+                                                        )
+                                                        : _vm._e(),
+                                                    _vm._v(" "),
+                                                    object.singles
+                                                        ? _c(
+                                                        "span",
+                                                        { staticClass: "truncate" },
+                                                        [
+                                                            _vm._v(
+                                                                "[ еднократни: " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.singles
+                                                                            .totalForPayment
+                                                                    )
+                                                                ) +
+                                                                " от\n              " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.singles.totalSum
+                                                                    )
+                                                                ) +
+                                                                " лв. ]"
+                                                            )
+                                                        ]
+                                                        )
+                                                        : _vm._e()
+                                                ]
+                                                )
+                                                : _c(
+                                                "div",
+                                                {
+                                                    staticClass:
+                                                        "flex secondary-info truncate"
+                                                },
+                                                [
+                                                    _c(
+                                                        "button",
+                                                        {
+                                                            staticClass:
+                                                                "focus:outline-none mr-2",
+                                                            on: {
+                                                                click: function($event) {
+                                                                    return _vm.handleLinkAction(
+                                                                        object
+                                                                    )
+                                                                }
+                                                            }
+                                                        },
+                                                        [
+                                                            _c("i", {
+                                                                staticClass:
+                                                                    "fad fa-folder-tree fa-fw text-indigo-400"
+                                                            })
+                                                        ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                        "span",
+                                                        { staticClass: "truncate" },
+                                                        [
+                                                            _vm._v(
+                                                                "[ " +
+                                                                _vm._s(object.service_name) +
+                                                                " " +
+                                                                _vm._s(object.quantity) +
+                                                                "\n              " +
+                                                                _vm._s(object.measure) +
+                                                                " x " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.single_price
+                                                                    )
+                                                                ) +
+                                                                " лв.\n              ]"
+                                                            )
+                                                        ]
+                                                    )
+                                                ]
+                                                )
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell text-right" }, [
+                                        _c("div", { staticClass: "primary-info" }, [
+                                            _vm._v(
+                                                "\n            " +
+                                                _vm._s(
+                                                    object.hasOwnProperty("services")
+                                                        ? object.services[0].quantity
+                                                        : object.quantity
+                                                ) +
+                                                "\n          "
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "secondary-info" }, [
+                                            _vm._v(
+                                                "\n            " +
+                                                _vm._s(
+                                                    object.hasOwnProperty("services")
+                                                        ? object.services[0].measure
+                                                        : object.measure
+                                                ) +
+                                                "\n          "
+                                            )
+                                        ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: {
+                                                title: object.hasOwnProperty("totalSum")
+                                                    ? object.totalSum
+                                                    : object.single_price
+                                            }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    "\n            " +
+                                                    _vm._s(
+                                                        _vm._f("price")(
+                                                            object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price
+                                                        )
+                                                    ) +
+                                                    "\n          "
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: {
+                                                title: object.hasOwnProperty("totalSum")
+                                                    ? object.totalSum
+                                                    : object.single_price * object.quantity
+                                            }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    "\n            " +
+                                                    _vm._s(
+                                                        _vm._f("price")(
+                                                            object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price *
+                                                                object.quantity
+                                                        )
+                                                    ) +
+                                                    "\n          "
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    )
+                                ]
+                            )
+                        })
+                        : _vm.client.invoice_layout === "detail"
+                        ? _vm._l(_vm.byMonths, function(object, index) {
+                            return _c(
+                                "div",
+                                {
+                                    key: index,
+                                    class:
+                                        object.for_payment.checked ||
+                                        object.for_payment === true
+                                            ? "grid-row"
+                                            : "grid-row opacity-50"
+                                },
+                                [
+                                    !_vm.urlParams.id
+                                        ? _c("div", { staticClass: "grid-cell" }, [
+                                            _c("label", { staticClass: "row-checkbox" }, [
+                                                object.services &&
+                                                object.services.length &&
+                                                object.services[0].id_object !== 0 &&
+                                                object.services[0].type === "month"
+                                                    ? _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: object.for_payment.checked,
+                                                                expression:
+                                                                    "object.for_payment.checked"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                object.for_payment.checked
+                                                            )
+                                                                ? _vm._i(
+                                                                object.for_payment.checked,
+                                                                null
+                                                            ) > -1
+                                                                : object.for_payment.checked
+                                                        },
+                                                        on: {
+                                                            change: [
+                                                                function($event) {
+                                                                    var $$a =
+                                                                            object.for_payment.checked,
+                                                                        $$el = $event.target,
+                                                                        $$c = $$el.checked
+                                                                            ? true
+                                                                            : false
+                                                                    if (Array.isArray($$a)) {
+                                                                        var $$v = null,
+                                                                            $$i = _vm._i($$a, $$v)
+                                                                        if ($$el.checked) {
+                                                                            $$i < 0 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a.concat([$$v])
+                                                                            )
+                                                                        } else {
+                                                                            $$i > -1 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a
+                                                                                    .slice(0, $$i)
+                                                                                    .concat(
+                                                                                        $$a.slice($$i + 1)
+                                                                                    )
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        _vm.$set(
+                                                                            object.for_payment,
+                                                                            "checked",
+                                                                            $$c
+                                                                        )
+                                                                    }
+                                                                },
+                                                                function($event) {
+                                                                    return _vm.toggleMonthlyServicesForObject(
+                                                                        object.services[0].id_object,
+                                                                        object.for_payment.checked,
+                                                                        object.month
+                                                                    )
+                                                                }
+                                                            ]
+                                                        }
+                                                    })
+                                                    : object.services &&
+                                                    object.services.length &&
+                                                    object.services[0].id_object !== 0 &&
+                                                    object.services[0].type === "free"
+                                                    ? _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: object.for_payment.checked,
+                                                                expression:
+                                                                    "object.for_payment.checked"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                object.for_payment.checked
+                                                            )
+                                                                ? _vm._i(
+                                                                object.for_payment.checked,
+                                                                null
+                                                            ) > -1
+                                                                : object.for_payment.checked
+                                                        },
+                                                        on: {
+                                                            change: [
+                                                                function($event) {
+                                                                    var $$a =
+                                                                            object.for_payment.checked,
+                                                                        $$el = $event.target,
+                                                                        $$c = $$el.checked
+                                                                            ? true
+                                                                            : false
+                                                                    if (Array.isArray($$a)) {
+                                                                        var $$v = null,
+                                                                            $$i = _vm._i($$a, $$v)
+                                                                        if ($$el.checked) {
+                                                                            $$i < 0 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a.concat([$$v])
+                                                                            )
+                                                                        } else {
+                                                                            $$i > -1 &&
+                                                                            _vm.$set(
+                                                                                object.for_payment,
+                                                                                "checked",
+                                                                                $$a
+                                                                                    .slice(0, $$i)
+                                                                                    .concat(
+                                                                                        $$a.slice($$i + 1)
+                                                                                    )
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        _vm.$set(
+                                                                            object.for_payment,
+                                                                            "checked",
+                                                                            $$c
+                                                                        )
+                                                                    }
+                                                                },
+                                                                function($event) {
+                                                                    return _vm.toggleObjectDiscount(
+                                                                        object.services[0].id_object,
+                                                                        object.for_payment.checked
+                                                                    )
+                                                                }
+                                                            ]
+                                                        }
+                                                    })
+                                                    : _c("input", {
+                                                        directives: [
+                                                            {
+                                                                name: "model",
+                                                                rawName: "v-model",
+                                                                value: object.for_payment,
+                                                                expression: "object.for_payment"
+                                                            }
+                                                        ],
+                                                        attrs: { type: "checkbox" },
+                                                        domProps: {
+                                                            checked: Array.isArray(
+                                                                object.for_payment
+                                                            )
+                                                                ? _vm._i(
+                                                                object.for_payment,
+                                                                null
+                                                            ) > -1
+                                                                : object.for_payment
+                                                        },
+                                                        on: {
+                                                            change: function($event) {
+                                                                var $$a = object.for_payment,
+                                                                    $$el = $event.target,
+                                                                    $$c = $$el.checked
+                                                                        ? true
+                                                                        : false
+                                                                if (Array.isArray($$a)) {
+                                                                    var $$v = null,
+                                                                        $$i = _vm._i($$a, $$v)
+                                                                    if ($$el.checked) {
+                                                                        $$i < 0 &&
+                                                                        _vm.$set(
+                                                                            object,
+                                                                            "for_payment",
+                                                                            $$a.concat([$$v])
+                                                                        )
+                                                                    } else {
+                                                                        $$i > -1 &&
+                                                                        _vm.$set(
+                                                                            object,
+                                                                            "for_payment",
+                                                                            $$a
+                                                                                .slice(0, $$i)
+                                                                                .concat(
+                                                                                    $$a.slice($$i + 1)
+                                                                                )
+                                                                        )
+                                                                    }
+                                                                } else {
+                                                                    _vm.$set(
+                                                                        object,
+                                                                        "for_payment",
+                                                                        $$c
+                                                                    )
+                                                                }
+                                                            }
+                                                        }
+                                                    }),
+                                                _vm._v(" "),
+                                                _c("span")
+                                            ])
+                                        ])
+                                        : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell row-num",
+                                            class: _vm.urlParams.id ? "col-span-2" : ""
+                                        },
+                                        [
+                                            _vm._v(
+                                                "\n          " +
+                                                _vm._s(index + 1) +
+                                                "\n        "
+                                            )
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell" }, [
+                                        _c("div", { staticClass: "flex primary-info" }, [
+                                            _c("div", {
+                                                staticClass:
+                                                    "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
+                                                attrs: {
+                                                    contenteditable: "",
+                                                    spellcheck: "false",
+                                                    title: object.hasOwnProperty("services")
+                                                        ? object.services[0].object_name
+                                                        : object.object_name
+                                                },
+                                                domProps: {
+                                                    innerHTML: _vm._s(
+                                                        object.hasOwnProperty("services")
+                                                            ? object.services[0].object_name
+                                                            : object.object_name
+                                                    )
+                                                },
+                                                on: {
+                                                    focus: function($event) {
+                                                        return _vm.beginTextEdit($event)
+                                                    },
+                                                    keydown: function($event) {
+                                                        if (
+                                                            !$event.type.indexOf("key") &&
+                                                            _vm._k(
+                                                                $event.keyCode,
+                                                                "enter",
+                                                                13,
+                                                                $event.key,
+                                                                "Enter"
+                                                            )
+                                                        ) {
+                                                            return null
+                                                        }
+                                                        $event.preventDefault()
+                                                        _vm.editTextRow(
+                                                            $event,
+                                                            object.hasOwnProperty("services")
+                                                                ? object.services[0]
+                                                                : object,
+                                                            "object_name"
+                                                        )
+                                                    },
+                                                    blur: function($event) {
+                                                        return _vm.restoreTextIfNotConfirmed(
+                                                            $event
+                                                        )
+                                                    }
+                                                }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                                "button",
+                                                {
+                                                    staticClass:
+                                                        "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                                    on: {
+                                                        click: function($event) {
+                                                            return _vm.handleLinkAction(object)
+                                                        }
+                                                    }
+                                                },
+                                                [
+                                                    _c("i", {
+                                                        class:
+                                                            object.id_object || object.services
+                                                                ? "fad fa-external-link fa-fw"
+                                                                : !_vm.urlParams.id
+                                                                ? "fad fa-edit fa-fw"
+                                                                : "hidden"
+                                                    })
+                                                ]
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                            "div",
+                                            { staticClass: "secondary-info truncate" },
+                                            [
+                                                _vm._v(
+                                                    "\n            за м. " +
+                                                    _vm._s(_vm._f("date")(object.month)) +
+                                                    "\n          "
+                                                )
+                                            ]
+                                        )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell" }, [
+                                        _c("div", {
+                                            staticClass:
+                                                "primary-info font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200",
+                                            attrs: {
+                                                contenteditable: "",
+                                                spellcheck: "false",
+                                                title: object.hasOwnProperty("services")
+                                                    ? object.name
+                                                    : object.service_name
+                                            },
+                                            domProps: {
+                                                innerHTML: _vm._s(
+                                                    object.hasOwnProperty("services")
+                                                        ? object.name
+                                                        : object.service_name
+                                                )
+                                            },
+                                            on: {
+                                                focus: function($event) {
+                                                    return _vm.beginTextEdit($event)
+                                                },
+                                                keydown: function($event) {
+                                                    if (
+                                                        !$event.type.indexOf("key") &&
+                                                        _vm._k(
+                                                            $event.keyCode,
+                                                            "enter",
+                                                            13,
+                                                            $event.key,
+                                                            "Enter"
+                                                        )
+                                                    ) {
+                                                        return null
+                                                    }
+                                                    $event.preventDefault()
+                                                    _vm.editTextRow(
+                                                        $event,
+                                                        object.hasOwnProperty("services")
+                                                            ? object.services[0]
+                                                            : object,
+                                                        object.hasOwnProperty("services")
+                                                            ? "view_type_detail"
+                                                            : "service_name"
+                                                    )
+                                                },
+                                                blur: function($event) {
+                                                    return _vm.restoreTextIfNotConfirmed($event)
+                                                }
+                                            }
+                                        }),
+                                        _vm._v(" "),
+                                        object.hasOwnProperty("services") &&
+                                        object.services[0].type == "month"
+                                            ? _c(
+                                            "div",
+                                            { staticClass: "secondary-info truncate" },
+                                            [
+                                                _vm._v(
+                                                    "\n            месечна такса\n          "
+                                                )
+                                            ]
+                                            )
+                                            : object.type == "single"
+                                            ? _c(
+                                                "div",
+                                                { staticClass: "secondary-info truncate" },
+                                                [
+                                                    _vm._v(
+                                                        "\n            еднократно\n          "
+                                                    )
+                                                ]
+                                            )
+                                            : object.hasOwnProperty("services") &&
+                                            object.id_objecto !== 0 &&
+                                            object.services[0].type == "free"
+                                                ? _c(
+                                                    "div",
+                                                    { staticClass: "secondary-info truncate" },
+                                                    [
+                                                        _vm._v(
+                                                            "\n            отстъпка\n          "
+                                                        )
+                                                    ]
+                                                )
+                                                : _c(
+                                                    "div",
+                                                    { staticClass: "secondary-info truncate" },
+                                                    [_vm._v("свободна продажба")]
+                                                )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "grid-cell text-right" }, [
+                                        _c("div", { staticClass: "primary-info" }, [
+                                            _vm._v(
+                                                "\n            " +
+                                                _vm._s(
+                                                    object.hasOwnProperty("services")
+                                                        ? object.services[0].quantity
+                                                        : object.quantity
+                                                ) +
+                                                "\n          "
+                                            )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "secondary-info" }, [
+                                            _vm._v(
+                                                "\n            " +
+                                                _vm._s(
+                                                    object.hasOwnProperty("services")
+                                                        ? object.services[0].measure
+                                                        : object.measure
+                                                ) +
+                                                "\n          "
+                                            )
+                                        ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: {
+                                                title: object.hasOwnProperty("totalSum")
+                                                    ? object.totalSum
+                                                    : object.single_price
+                                            }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    "\n            " +
+                                                    _vm._s(
+                                                        _vm._f("price")(
+                                                            object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price
+                                                        )
+                                                    ) +
+                                                    "\n          "
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                        "div",
+                                        {
+                                            staticClass: "grid-cell text-right",
+                                            attrs: {
+                                                title: object.hasOwnProperty("totalSum")
+                                                    ? object.totalSum
+                                                    : object.single_price * object.quantity
+                                            }
+                                        },
+                                        [
+                                            _c("div", { staticClass: "primary-info" }, [
+                                                _vm._v(
+                                                    "\n            " +
+                                                    _vm._s(
+                                                        _vm._f("price")(
+                                                            object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price *
+                                                                object.quantity
+                                                        )
+                                                    ) +
+                                                    "\n          "
+                                                )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "secondary-info" }, [
+                                                _vm._v("лв.")
+                                            ])
+                                        ]
+                                    )
+                                ]
+                            )
+                        })
+                                : _vm.client.invoice_layout === "by_services"
+                                    ? _vm._l(_vm.byServices, function(object, index) {
+                                        return _c(
+                                            "div",
+                                            {
+                                                key: index,
+                                                class:
+                                                    object.for_payment.checked ||
+                                                    object.for_payment === true
+                                                        ? "grid-row"
+                                                        : "grid-row opacity-50"
+                                            },
+                                            [
+                                                !_vm.urlParams.id
+                                                    ? _c("div", { staticClass: "grid-cell" }, [
+                                                        !object.hasOwnProperty("services")
+                                                            ? _c(
+                                                            "label",
+                                                            { staticClass: "row-checkbox" },
+                                                            [
+                                                                _c("input", {
+                                                                    directives: [
+                                                                        {
+                                                                            name: "model",
+                                                                            rawName: "v-model",
+                                                                            value: object.for_payment,
+                                                                            expression: "object.for_payment"
+                                                                        }
+                                                                    ],
+                                                                    attrs: { type: "checkbox" },
+                                                                    domProps: {
+                                                                        checked: Array.isArray(
+                                                                            object.for_payment
+                                                                        )
+                                                                            ? _vm._i(
+                                                                            object.for_payment,
+                                                                            null
+                                                                        ) > -1
+                                                                            : object.for_payment
+                                                                    },
+                                                                    on: {
+                                                                        change: function($event) {
+                                                                            var $$a = object.for_payment,
+                                                                                $$el = $event.target,
+                                                                                $$c = $$el.checked
+                                                                                    ? true
+                                                                                    : false
+                                                                            if (Array.isArray($$a)) {
+                                                                                var $$v = null,
+                                                                                    $$i = _vm._i($$a, $$v)
+                                                                                if ($$el.checked) {
+                                                                                    $$i < 0 &&
+                                                                                    _vm.$set(
+                                                                                        object,
+                                                                                        "for_payment",
+                                                                                        $$a.concat([$$v])
+                                                                                    )
+                                                                                } else {
+                                                                                    $$i > -1 &&
+                                                                                    _vm.$set(
+                                                                                        object,
+                                                                                        "for_payment",
+                                                                                        $$a
+                                                                                            .slice(0, $$i)
+                                                                                            .concat(
+                                                                                                $$a.slice($$i + 1)
+                                                                                            )
+                                                                                    )
+                                                                                }
+                                                                            } else {
+                                                                                _vm.$set(
+                                                                                    object,
+                                                                                    "for_payment",
+                                                                                    $$c
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _c("span")
+                                                            ]
+                                                            )
+                                                            : _vm._e()
+                                                    ])
+                                                    : _vm._e(),
+                                                _vm._v(" "),
+                                                _c(
+                                                    "div",
+                                                    {
+                                                        staticClass: "grid-cell row-num",
+                                                        class: _vm.urlParams.id ? "col-span-2" : ""
+                                                    },
+                                                    [
+                                                        _vm._v(
+                                                            "\n          " +
+                                                            _vm._s(index + 1) +
+                                                            "\n        "
+                                                        )
+                                                    ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                    "div",
+                                                    {
+                                                        staticClass: "grid-cell col-start-3 col-end-5"
+                                                    },
+                                                    [
+                                                        _c(
+                                                            "div",
+                                                            { staticClass: "flex primary-info" },
+                                                            [
+                                                                _c("div", {
+                                                                    staticClass:
+                                                                        "font-medium w-full truncate focus:outline-none focus:shadow-outline focus:bg-white transition ease-in-out duration-200 mr-2",
+                                                                    attrs: {
+                                                                        contenteditable: "",
+                                                                        spellcheck: "false",
+                                                                        title: !object.id_object
+                                                                            ? object.type === "free" &&
+                                                                            !object.services
+                                                                                ? object.object_name
+                                                                                : object.name
+                                                                            : object.service_name
+                                                                    },
+                                                                    domProps: {
+                                                                        innerHTML: _vm._s(
+                                                                            !object.id_object
+                                                                                ? object.type === "free" &&
+                                                                                !object.services
+                                                                                ? object.object_name
+                                                                                : object.name
+                                                                                : object.service_name
+                                                                        )
+                                                                    },
+                                                                    on: {
+                                                                        focus: function($event) {
+                                                                            return _vm.beginTextEdit($event)
+                                                                        },
+                                                                        keydown: function($event) {
+                                                                            if (
+                                                                                !$event.type.indexOf("key") &&
+                                                                                _vm._k(
+                                                                                    $event.keyCode,
+                                                                                    "enter",
+                                                                                    13,
+                                                                                    $event.key,
+                                                                                    "Enter"
+                                                                                )
+                                                                            ) {
+                                                                                return null
+                                                                            }
+                                                                            $event.preventDefault()
+                                                                            _vm.editTextRow(
+                                                                                $event,
+                                                                                object,
+                                                                                (!object.id_object &&
+                                                                                    object.hasOwnProperty(
+                                                                                        "services"
+                                                                                    ) &&
+                                                                                    object.type === "month") ||
+                                                                                (!object.id_object &&
+                                                                                    object.hasOwnProperty(
+                                                                                        "services"
+                                                                                    ) &&
+                                                                                    object.type === "free")
+                                                                                    ? "view_type_by_services"
+                                                                                    : object.id_object
+                                                                                    ? "service_name"
+                                                                                    : "object_name"
+                                                                            )
+                                                                        },
+                                                                        blur: function($event) {
+                                                                            return _vm.restoreTextIfNotConfirmed(
+                                                                                $event
+                                                                            )
+                                                                        }
+                                                                    }
+                                                                }),
+                                                                _vm._v(" "),
+                                                                !object.services
+                                                                    ? _c(
+                                                                    "button",
+                                                                    {
+                                                                        staticClass:
+                                                                            "obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200",
+                                            on: {
+                                                click: function($event) {
+                                                    return _vm.handleLinkAction(
+                                                        object
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        [
+                                            _c("i", {
+                                                class: object.id_object
+                                                    ? "fad fa-external-link fa-fw"
+                                                    : !_vm.urlParams.id
+                                                    ? "fad fa-edit fa-fw"
+                                                    : "hidden"
+                                            })
+                                        ]
+                                        )
+                                                                    : _vm._e()
+                                                            ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        object.services && object.type === "month"
+                                                            ? _c("div", {
+                                                                staticClass: "secondary-info truncate",
+                                                                domProps: {
+                                                                    textContent: _vm._s(
+                                                                        object.services[0].for_smartsot
+                                                                            ? "месечни такси [ УСЛУГА ]"
+                                                                            : "месечни такси"
+                                                                    )
+                                                                }
+                                                            })
+                                                            : object.services && object.type === "free"
+                                                            ? _c(
+                                                                "div",
+                                                                {
+                                                                    staticClass: "secondary-info truncate"
+                                                                },
+                                                                [
+                                                                    _vm._v(
+                                                                        "\n            отстъпки\n          "
+                                                                    )
+                                                                ]
+                                                            )
+                                                            : object.id_object && object.type === "single"
+                                                                ? _c(
+                                                                    "div",
+                                                                    {
+                                                                        staticClass: "secondary-info truncate",
+                                                                        attrs: {
+                                                                            title:
+                                                                                "еднократнo задължение [ " +
+                                                                                object.object_name +
+                                                                                " / " +
+                                                                                object.firm +
+                                                                                " - " +
+                                                                                object.region +
+                                                                                " ]"
+                                                                        }
+                                                                    },
+                                                                    [
+                                                                        _vm._v(
+                                                                            "\n            еднократнo задължение [ " +
+                                                                            _vm._s(object.object_name) +
+                                                                            " /\n            " +
+                                                                            _vm._s(object.firm) +
+                                                                            " - " +
+                                                                            _vm._s(object.region) +
+                                                                            " ]\n          "
+                                                                        )
+                                                                    ]
+                                                                )
+                                                                : _c(
+                                                                    "div",
+                                                                    {
+                                                                        staticClass: "secondary-info truncate"
+                                                                    },
+                                                                    [_vm._v("свободна продажба")]
+                                                                )
+                                                    ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("div", { staticClass: "grid-cell text-right" }, [
+                                                    _c("div", { staticClass: "primary-info" }, [
+                                                        _vm._v(_vm._s(object.quantity))
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("div", { staticClass: "secondary-info" }, [
+                                                        _vm._v(_vm._s(object.measure))
+                                                    ])
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                    "div",
+                                                    {
+                                                        staticClass: "grid-cell text-right",
+                                                        attrs: {
+                                                            title: object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price
+                                                        }
+                                                    },
+                                                    [
+                                                        _c("div", { staticClass: "primary-info" }, [
+                                                            _vm._v(
+                                                                "\n            " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.hasOwnProperty("totalSum")
+                                                                            ? object.totalSum
+                                                                            : object.single_price
+                                                                    )
+                                                                ) +
+                                                                "\n          "
+                                                            )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("div", { staticClass: "secondary-info" }, [
+                                                            _vm._v("лв.")
+                                                        ])
+                                                    ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                    "div",
+                                                    {
+                                                        staticClass: "grid-cell text-right",
+                                                        attrs: {
+                                                            title: object.hasOwnProperty("totalSum")
+                                                                ? object.totalSum
+                                                                : object.single_price * object.quantity
+                                                        }
+                                                    },
+                                                    [
+                                                        _c("div", { staticClass: "primary-info" }, [
+                                                            _vm._v(
+                                                                "\n            " +
+                                                                _vm._s(
+                                                                    _vm._f("price")(
+                                                                        object.hasOwnProperty("totalSum")
+                                                                            ? object.totalSum
+                                                                            : object.single_price *
+                                                                            object.quantity
+                                                                    )
+                                                                ) +
+                                                                "\n          "
+                                                            )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("div", { staticClass: "secondary-info" }, [
+                                                            _vm._v("лв.")
+                                                        ])
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    })
+                        : _vm._e()
                 ],
-                2
+              2
               )
             : _vm._e(),
           _vm._v(" "),

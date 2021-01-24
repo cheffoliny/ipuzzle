@@ -64,7 +64,6 @@ class NEWDBSalesDocs extends DBBase2 {
 
     public function getDefaultCityNameByIdPerson($id) {
         global $db_name_sod, $db_name_personnel;
-
         if ( !is_numeric($id) || empty($id) ) {
             return 0;
         }
@@ -566,14 +565,14 @@ class NEWDBSalesDocs extends DBBase2 {
                 IF ( `type` = 'month', 1, quantity ) as quantity,
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
-                case
-                    #when for_smartsot = 1 AND `type` = 'month' then 1
-                    #when for_smartsot = 0 AND `type` = 'free' AND id_object != 0 then id_duty_row
-                    #when for_smartsot = 1 AND `type` = 'free' AND id_object != 0 then 2
-                    #when for_smartsot = 0 AND `type` = 'month' then id_service
+               case
+                    when for_smartsot = 1 AND `type` = 'month' then 1
+                    when for_smartsot = 0 AND `type` = 'free' AND id_object != 0 then id_duty_row
+                    when for_smartsot = 1 AND `type` = 'free' AND id_object != 0 then 2
+                    when for_smartsot = 0 AND `type` = 'month' then id_service
                     when `type` = 'single' or `type` = 'free' then id
                 END AS view_type
-                
+                 
             FROM {$db_name_finance}.{$sTable}
             WHERE id_sale_doc = {$nID}
                 AND is_dds != 1
@@ -605,18 +604,19 @@ class NEWDBSalesDocs extends DBBase2 {
                         service_name
                  )) AS service_name,
                  measure,
-                measure,
                 `month`,
                 IF ( `type` = 'month', SUM(total_sum), SUM(single_price) ) as single_price,
                 IF ( `type` = 'month', 1, quantity ) as quantity,
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
                 case
+                    when for_smartsot = 1 AND `type` = 'month' then 1
                     when id_object AND `type` = 'free' then 2
+                    when for_smartsot = 0 AND `type` = 'month' then id_service
                     when `type` = 'single' then id
                     WHEN `type` = 'free' AND id_object=0 THEN id
                 END AS view_type
-                
+               
             FROM {$db_name_finance}.{$sTable}
             WHERE id_sale_doc = {$nID}
                 AND is_dds != 1
@@ -1138,7 +1138,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 if ($aMonthDuty[$key]['type'] != 'month') {
                     continue;
                 }
-                $aMonthDuty[$key]['view_type_by_services'] = $aMonthDuty[$key]['view_type_by_services'] . $view_type_byby_services_suffix;
+                $aMonthDuty[$key]['view_type_by_services'] = $aMonthDuty[$key]['view_type_by_services'] . $view_type_by_services_suffix;
             }
         }
 
