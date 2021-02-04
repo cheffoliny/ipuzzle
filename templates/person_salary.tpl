@@ -82,12 +82,9 @@
 
 <input type="hidden" id="sPdfName" name="sPdfName" value="" />
 
-<div class="page_caption">Работна заплата на {$person_name}</div>
+	{include file='person_tabs.tpl'}
 
-<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-<tr>
-	<td>{include file=person_tabs.tpl}</td>
-</tr>
+	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 <tr>
 	<td id="filter_result">
 	<!-- начало на работната част -->

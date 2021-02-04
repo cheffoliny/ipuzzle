@@ -64,12 +64,9 @@
 		<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 		<input type="hidden" id="type_salary" name="type_salary" value="" />
 
-		<div class="page_caption">Трудов договор на {$person_name}</div>
-		
+		{include file='person_tabs.tpl'}
+
 		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-			<tr>
-				<td>{include file=person_tabs.tpl}</td>
-			</tr>
 			<tr class="odd">
 				<td>
 				<!-- начало на работната част -->

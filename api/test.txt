@@ -1,6 +1,7 @@
 <pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\wamp\www\ipuzzle\include\general.inc.php:1278:</small>
-<b>array</b> <i>(size=2)</i>
-  'hash' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'575312c198ca6198defd0ec6b8e39c0b'</font> <i>(length=32)</i>
-  'invoices' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'2020010000063'</font> <i>(length=13)</i>
+<small>C:\wamp64\www\ipuzzle-git\include\general.inc.php:1278:</small>
+<b>array</b> <i>(size=3)</i>
+  'id' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'593'</font> <i>(length=3)</i>
+  'remaining_days' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'20'</font> <i>(length=2)</i>
+  'due_days' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'20'</font> <i>(length=2)</i>
 </pre>

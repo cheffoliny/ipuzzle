@@ -287,12 +287,9 @@
 		<input type="hidden" id="nCountSalary" name="nCountSalary" value="0" />
 		<input type="hidden" id="nTotalSumSalary" name="nTotalSumSalary" value="0" />
 
-		<div class="page_caption">{if $id}Редактиране на служебни данни за{else}Нови служебни данни{/if} {$person_name}</div>
-		
+
+		{include file='person_tabs.tpl'}
 		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-			<tr>
-				<td>{include file=person_tabs.tpl}</td>
-			</tr>
 			<tr class="odd">
 				<td>
 				<!-- начало на работната част -->

@@ -1,28 +1,28 @@
 <?php
-	require_once('include/db_include.inc.php');
-	
-	class DBLeaves {
-		
-		/**
-		 * Проверка дали има молба за отпуск без резолюция за посочената дата.
-		 *
-		 * @param int $nIDPerson
-		 * @param int $nDay
-		 * @param int $nMonth
-		 * @param int $nYear
-		 * @return array
-		 */
-		public function isThereApplicationForDate( $nIDPerson, $nDay, $nMonth, $nYear )
-		{
-			global $db_personnel;
-			
-			$aEmptyArray = array( "leave_from" => "", "leave_to" => "", "leave_type" => "", "is_confirm" => "", "is_confirm_num" => "" );
-			
-			$nTime = mktime( 0, 0, 0, $nMonth, $nDay, $nYear );
-			
-			if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return $aEmptyArray;
-			
-				$sQuery = "
+require_once('include/db_include.inc.php');
+
+class DBLeaves {
+
+    /**
+     * Проверка дали има молба за отпуск без резолюция за посочената дата.
+     *
+     * @param int $nIDPerson
+     * @param int $nDay
+     * @param int $nMonth
+     * @param int $nYear
+     * @return array
+     */
+    public function isThereApplicationForDate( $nIDPerson, $nDay, $nMonth, $nYear )
+    {
+        global $db_personnel;
+
+        $aEmptyArray = array( "leave_from" => "", "leave_to" => "", "leave_type" => "", "is_confirm" => "", "is_confirm_num" => "" );
+
+        $nTime = mktime( 0, 0, 0, $nMonth, $nDay, $nYear );
+
+        if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return $aEmptyArray;
+
+        $sQuery = "
 				SELECT
 					IF
 					(
@@ -62,39 +62,39 @@
 						UNIX_TIMESTAMP( leave_to ) >= {$nTime}
 					)
 			";
-			
-			$oRes = $db_personnel->Execute( $sQuery );
-			
-			if( $oRes )
-			{
-				if( !$oRes->EOF )
-				{
-					$aData = $oRes->fields;
-					
-					return $aData;
-				}
-			}
-			
-			return $aEmptyArray;
-		}
-		
-		/**
-		 * Проверка дали времевия период застъпва молба за отпуск.
-		 *
-		 * @param int $nIDPerson
-		 * @param string $sStartDateTime
-		 * @param string $sEndDateTime
-		 * @param int $nIDExceptionApp ( Изключение )
-		 * 
-		 * @return bool
-		 */
-		public function isThereApplication( $nIDPerson, $sStartDateTime, $sEndDateTime, $nIDExceptionApp = 0 )
-		{
-			global $db_personnel;
-			
-			if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return false;
-			
-			$sQuery = "
+
+        $oRes = $db_personnel->Execute( $sQuery );
+
+        if( $oRes )
+        {
+            if( !$oRes->EOF )
+            {
+                $aData = $oRes->fields;
+
+                return $aData;
+            }
+        }
+
+        return $aEmptyArray;
+    }
+
+    /**
+     * Проверка дали времевия период застъпва молба за отпуск.
+     *
+     * @param int $nIDPerson
+     * @param string $sStartDateTime
+     * @param string $sEndDateTime
+     * @param int $nIDExceptionApp ( Изключение )
+     *
+     * @return bool
+     */
+    public function isThereApplication( $nIDPerson, $sStartDateTime, $sEndDateTime, $nIDExceptionApp = 0 )
+    {
+        global $db_personnel;
+
+        if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return false;
+
+        $sQuery = "
 				SELECT
 					*
 				FROM
@@ -102,7 +102,7 @@
 				WHERE
 					to_arc = 0
 					AND id_person = {$nIDPerson}
-					AND type = 'application'
+					AND ( type = 'application' OR type = 'hospital' )
 					AND IF
 					(
 						is_confirm = 0,
@@ -136,36 +136,36 @@
 						)
 					)
 			";
-			
-			if( !empty( $nIDExceptionApp ) && is_numeric( $nIDExceptionApp ) )
-			{
-				$sQuery .= "
+
+        if( !empty( $nIDExceptionApp ) && is_numeric( $nIDExceptionApp ) )
+        {
+            $sQuery .= "
 					AND id != {$nIDExceptionApp}
 				";
-			}
-			
-			$oRes = $db_personnel->Execute( $sQuery );
-			
-			if( $oRes )
-			{
-				if( !$oRes->EOF )
-				{
-					$aData = $oRes->GetArray();
-					
-					return !empty( $aData );
-				}
-			}
-			
-			return false;
-		}
-		
-		public function getApplication( $nID )
-		{
-			global $db_personnel;
-			
-			if( empty( $nID ) || !is_numeric( $nID ) )return array();
-			
-			$sQuery = "
+        }
+
+        $oRes = $db_personnel->Execute( $sQuery );
+
+        if( $oRes )
+        {
+            if( !$oRes->EOF )
+            {
+                $aData = $oRes->GetArray();
+
+                return !empty( $aData );
+            }
+        }
+
+        return false;
+    }
+
+    public function getApplication( $nID )
+    {
+        global $db_personnel;
+
+        if( empty( $nID ) || !is_numeric( $nID ) )return array();
+
+        $sQuery = "
 				SELECT
 					*
 				FROM
@@ -174,23 +174,23 @@
 					id = {$nID}
 				LIMIT 1
 			";
-			
-			$oRes = $db_personnel->Execute( $sQuery );
-			
-			if( $oRes )if( !$oRes->EOF )return $oRes->fields;
-			else return array();
-		}
-		
-		public function getLeavePDFData( $nID )
-		{
-			global $db_personnel, $db_name_sod;
-			
-			if( empty( $nID ) || !is_numeric( $nID ) )
-			{
-				return array();
-			}
-			
-			$sQuery = "
+
+        $oRes = $db_personnel->Execute( $sQuery );
+
+        if( $oRes )if( !$oRes->EOF )return $oRes->fields;
+        else return array();
+    }
+
+    public function getLeavePDFData( $nID )
+    {
+        global $db_personnel, $db_name_sod;
+
+        if( empty( $nID ) || !is_numeric( $nID ) )
+        {
+            return array();
+        }
+
+        $sQuery = "
 				SELECT
 					per_lea.id AS leave_id,
 					per_lea.year AS leave_year,
@@ -229,9 +229,16 @@
 					) AS leave_res_days,
 					DATE_FORMAT( per_lea.res_leave_from, '%d.%m.%Y' ) AS leave_res_from,
 					fir.jur_name AS firm_jur_name,
-					fir.jur_mol AS person_head,
+					fir.short_jur_mol AS person_head,
 					per_lea.is_confirm AS is_confirm,
-					DATE_FORMAT( per_lea.confirm_time, '%d.%m.%Y' ) AS confirm_date
+					per_lea.for_year AS for_year,
+					DATE_FORMAT( per_lea.confirm_time, '%d.%m.%Y' ) AS confirm_date,
+					IF
+					(
+						per_lea.id_code_leave != 0,
+						IF( ( cod_lea.to_arc = 0 AND cod_lea.is_due_leave = 1 ), 1, 0 ),
+						1
+					) AS is_due_leave
 				FROM
 					person_leaves per_lea
 				LEFT JOIN
@@ -252,53 +259,55 @@
 					per_lea.id = {$nID}
 				LIMIT 1
 			";
-			
-			$rs = $db_personnel->Execute( $sQuery );
-			
-			$aData = array();
-			
-			if( $rs )if( !$rs->EOF )$aData = $rs->fields;
-			
-			if( !empty( $aData ) )
-			{
-				$aPersonHeadNames = explode( " ", $aData['person_head'] );
-				if( !empty( $aPersonHeadNames ) )
-				{
-					$aData['person_head_short'] = utf8_substr( $aData['person_head'], 0, 1 ) . ". " . end( $aPersonHeadNames );
-				}
-				
-				//Remain Days
-				$nDaysRemaining = $this->getRemainingLeaveDays( $aData['leave_year'], $aData['person_id'], $aData['leave_id'] );
-				
-				if( $aData['leave_type_latin'] != "unpaid" )
-				{
-					if( $aData['is_confirm'] == 1 )
-					{
-						$aData['remain_days'] = $nDaysRemaining - ( ( int ) $aData['leave_res_days'] );
-					}
-					else
-					{
-						$aData['remain_days'] = $nDaysRemaining - ( ( int ) $aData['leave_days'] );
-					}
-				}
-				else
-				{
-					$aData['remain_days'] = $nDaysRemaining;
-				}
-				
-				if( $aData['remain_days'] < 0 )$aData['remain_days'] = "Молбата превишава разрешения брой дни за годината!";
-				else $aData['remain_days'] = "Оставащи дни за годината: " . $aData['remain_days'];
-				//End Remain Days
-			}
-			
-			return $aData;
-		}
-		
-		function getResultExtended( $aParams, &$aPaging = array() )
-		{
-			global $db_personnel, $db_name_sod;
-			
-			$sQuery = "
+
+        $rs = $db_personnel->Execute( $sQuery );
+
+        $aData = array();
+
+        if( $rs )if( !$rs->EOF )$aData = $rs->fields;
+
+        if( !empty( $aData ) )
+        {
+            //$aPersonHeadNames = explode( " ", $aData['person_head'] );
+            //if( !empty( $aPersonHeadNames ) )
+            //{
+            //	$aData['person_head_short'] = utf8_substr( $aData['person_head'], 0, 1 ) . ". " . end( $aPersonHeadNames );
+            //}
+
+            $aData['person_head_short'] = $aData['person_head'];
+
+            //Remain Days
+            $nDaysRemaining = $this->getRemainingLeaveDays( $aData['leave_year'], $aData['person_id'], $aData['leave_id'] );
+
+            if( $aData['leave_type_latin'] != "unpaid" && $aData['is_due_leave'] == "1" )
+            {
+                if( $aData['is_confirm'] == 1 )
+                {
+                    $aData['remain_days'] = $nDaysRemaining - ( ( int ) $aData['leave_res_days'] );
+                }
+                else
+                {
+                    $aData['remain_days'] = $nDaysRemaining - ( ( int ) $aData['leave_days'] );
+                }
+            }
+            else
+            {
+                $aData['remain_days'] = $nDaysRemaining;
+            }
+
+            if( $aData['remain_days'] < 0 )$aData['remain_days'] = "Молбата превишава разрешения брой дни за годината!";
+            else $aData['remain_days'] = "Оставащи дни за годината: " . $aData['remain_days'];
+            //End Remain Days
+        }
+
+        return $aData;
+    }
+
+    function getResultExtended( $aParams, &$aPaging = array() )
+    {
+        global $db_personnel, $db_name_sod;
+
+        $sQuery = "
 				SELECT SQL_CALC_FOUND_ROWS
 					per_lea.id AS id,
 					per_lea.leave_num AS leave_num,
@@ -415,145 +424,145 @@
 					AND per_lea.type = 'application'
 					AND ( per_lea.leave_types = 'due' OR per_lea.leave_types = 'unpaid' )
 			";
-			
-			if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
-			{
-				$sQuery .= "
+
+        if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
+        {
+            $sQuery .= "
 					AND fir.id = {$aParams['nIDFirm']}
 				";
-			}
-			if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
-			{
-				$sQuery .= "
+        }
+        if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
+        {
+            $sQuery .= "
 					AND off.id = {$aParams['nIDOffice']}
 				";
-			}
-			if( isset( $aParams['nIDObject'] ) && !empty( $aParams['nIDObject'] ) )
-			{
-				$sQuery .= "
+        }
+        if( isset( $aParams['nIDObject'] ) && !empty( $aParams['nIDObject'] ) )
+        {
+            $sQuery .= "
 					AND obj.id = {$aParams['nIDObject']}
 				";
-			}
-			if( isset( $aParams['nIsConfirm'] ) && $aParams['nIsConfirm'] != 2 )
-			{
-				if( $aParams['nIsConfirm'] != 3 )
-				{
-					$sQuery .= "
+        }
+        if( isset( $aParams['nIsConfirm'] ) && $aParams['nIsConfirm'] != 2 )
+        {
+            if( $aParams['nIsConfirm'] != 3 )
+            {
+                $sQuery .= "
 						AND per_lea.is_confirm = {$aParams['nIsConfirm']}
 					";
-				}
-				else
-				{
-					$sQuery .= "
+            }
+            else
+            {
+                $sQuery .= "
 						AND per_lea.is_confirm = 1
 						AND per_lea.application_days = 0
 					";
-				}
-			}
-			if( isset( $aParams['sDateFrom'] ) && !empty( $aParams['sDateFrom'] ) )
-			{
-				$sQuery .= "
+            }
+        }
+        if( isset( $aParams['sDateFrom'] ) && !empty( $aParams['sDateFrom'] ) )
+        {
+            $sQuery .= "
 					AND UNIX_TIMESTAMP( per_lea.leave_from ) >= UNIX_TIMESTAMP( '{$aParams['sDateFrom']} 00:00:00' )
 				";
-			}
-			if( isset( $aParams['sDateTo'] ) && !empty( $aParams['sDateTo'] ) )
-			{
-				$sQuery .= "
+        }
+        if( isset( $aParams['sDateTo'] ) && !empty( $aParams['sDateTo'] ) )
+        {
+            $sQuery .= "
 					AND UNIX_TIMESTAMP( per_lea.leave_from ) <= UNIX_TIMESTAMP( '{$aParams['sDateTo']} 23:59:59' )
 				";
-			}
-			if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
-			{
-				$sQuery .= "
+        }
+        if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
+        {
+            $sQuery .= "
 					AND CONCAT_WS( ' ', per.fname, per.mname, per.lname ) LIKE '%{$aParams['sPersonName']}%'
 				";
-			}
-			
-			//Sorting
-			$aColumnIndexes = array();
-			$aColumnIndexes[0] = "leave_num";
-			$aColumnIndexes[1] = "date_";
-			$aColumnIndexes[2] = "person_name";
-			$aColumnIndexes[3] = "person_position";
-			$aColumnIndexes[4] = "firm";
-			$aColumnIndexes[5] = "office";
-			$aColumnIndexes[6] = "object";
-			$aColumnIndexes[7] = "leave_type";
-			$aColumnIndexes[8] = "leave_from_";
-			$aColumnIndexes[9] = "leave_to_";
-			$aColumnIndexes[10] = "application_days";
-			$aColumnIndexes[11] = "code_leave_name";
-			$aColumnIndexes[12] = "created_user";
-			$aColumnIndexes[13] = "status";
-			$aColumnIndexes[14] = "time_confirm_";
-			$aColumnIndexes[15] = "res_leave_from_";
-			$aColumnIndexes[16] = "res_leave_to_";
-			$aColumnIndexes[17] = "res_application_days";
-			$aColumnIndexes[18] = "person_confirm";
-			
-			if( !isset( $aPaging['sortCol'] ) )$aPaging['sortCol'] = 0;
-			if( !isset( $aPaging['sortType'] ) )$aPaging['sortType'] = 0;
-			
-			$sSortField = $aColumnIndexes[$aPaging['sortCol']];
-			$sSortType = $aPaging['sortType'] == 0 ? "ASC" : "DESC";
-			
-			$sQuery .= "
+        }
+
+        //Sorting
+        $aColumnIndexes = array();
+        $aColumnIndexes[0] = "leave_num";
+        $aColumnIndexes[1] = "date_";
+        $aColumnIndexes[2] = "person_name";
+        $aColumnIndexes[3] = "person_position";
+        $aColumnIndexes[4] = "firm";
+        $aColumnIndexes[5] = "office";
+        $aColumnIndexes[6] = "object";
+        $aColumnIndexes[7] = "leave_type";
+        $aColumnIndexes[8] = "leave_from_";
+        $aColumnIndexes[9] = "leave_to_";
+        $aColumnIndexes[10] = "application_days";
+        $aColumnIndexes[11] = "code_leave_name";
+        $aColumnIndexes[12] = "created_user";
+        $aColumnIndexes[13] = "status";
+        $aColumnIndexes[14] = "time_confirm_";
+        $aColumnIndexes[15] = "res_leave_from_";
+        $aColumnIndexes[16] = "res_leave_to_";
+        $aColumnIndexes[17] = "res_application_days";
+        $aColumnIndexes[18] = "person_confirm";
+
+        if( !isset( $aPaging['sortCol'] ) )$aPaging['sortCol'] = 0;
+        if( !isset( $aPaging['sortType'] ) )$aPaging['sortType'] = 0;
+
+        $sSortField = $aColumnIndexes[$aPaging['sortCol']];
+        $sSortType = $aPaging['sortType'] == 0 ? "ASC" : "DESC";
+
+        $sQuery .= "
 				ORDER BY {$sSortField} {$sSortType}
 			";
-			//End Sorting
-			
-			//Paging
-			if( !isset( $aParams['api_action'] ) || ( $aParams['api_action'] != "export_to_pdf" && $aParams['api_action'] != "export_to_xls" ) )
-			{
-				if( isset( $aPaging['current_page'] ) && !empty( $aPaging['current_page'] ) )$nCurrentPage = $aPaging['current_page'];
-				else
-				{
-					$aPaging['current_page'] = 1;
-					$nCurrentPage = 1;
-				}
-				
-				$aPaging['page_size'] = $_SESSION['userdata']['row_limit'];
-				$nRowCount = $aPaging['page_size'];
-				$nRowOffset = ( $nCurrentPage - 1 ) * $nRowCount;
-				
-				$sQuery .= sprintf( "LIMIT %s, %s", $nRowOffset , $nRowCount );
-			}
-			//End Paging
-			
-			$rs = $db_personnel->Execute( $sQuery );
-			
-			$aData = array();
-			
-			if( $rs )if( !$rs->EOF )$aData = $rs->GetArray();
-			
-			//Paging
-			if( !isset( $aParams['api_action'] ) || ( $aParams['api_action'] != "export_to_pdf" && $aParams['api_action'] != "export_to_xls" ) )
-			{
-				$rs = $db_personnel->Execute( "SELECT FOUND_ROWS()" );
-				
-				if( !$rs || $rs->EOF )
-				{
-					$aPaging['max_rows'] = 0;
-					$aPaging['max_pages'] = 1;
-				}
-				else
-				{
-					$aPaging['max_rows'] = current( $rs->FetchRow() );
-					$aPaging['max_pages'] = ceil( $aPaging['max_rows'] / $aPaging['page_size'] );
-				}
-			}
-			//End Paging
-			
-			return $aData;
-		}
-		
-		function getRemainingLeaveDays( $nYear, $nIDPerson, $nIDAppException = 0 )
-		{
-			global $db_personnel;
-			
-			if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return 0;
-			
-			$sQuery = "
+        //End Sorting
+
+        //Paging
+        if( !isset( $aParams['api_action'] ) || ( $aParams['api_action'] != "export_to_pdf" && $aParams['api_action'] != "export_to_xls" ) )
+        {
+            if( isset( $aPaging['current_page'] ) && !empty( $aPaging['current_page'] ) )$nCurrentPage = $aPaging['current_page'];
+            else
+            {
+                $aPaging['current_page'] = 1;
+                $nCurrentPage = 1;
+            }
+
+            $aPaging['page_size'] = $_SESSION['userdata']['row_limit'];
+            $nRowCount = $aPaging['page_size'];
+            $nRowOffset = ( $nCurrentPage - 1 ) * $nRowCount;
+
+            $sQuery .= sprintf( "LIMIT %s, %s", $nRowOffset , $nRowCount );
+        }
+        //End Paging
+
+        $rs = $db_personnel->Execute( $sQuery );
+
+        $aData = array();
+
+        if( $rs )if( !$rs->EOF )$aData = $rs->GetArray();
+
+        //Paging
+        if( !isset( $aParams['api_action'] ) || ( $aParams['api_action'] != "export_to_pdf" && $aParams['api_action'] != "export_to_xls" ) )
+        {
+            $rs = $db_personnel->Execute( "SELECT FOUND_ROWS()" );
+
+            if( !$rs || $rs->EOF )
+            {
+                $aPaging['max_rows'] = 0;
+                $aPaging['max_pages'] = 1;
+            }
+            else
+            {
+                $aPaging['max_rows'] = current( $rs->FetchRow() );
+                $aPaging['max_pages'] = ceil( $aPaging['max_rows'] / $aPaging['page_size'] );
+            }
+        }
+        //End Paging
+
+        return $aData;
+    }
+
+    function getRemainingLeaveDays( $nYear, $nIDPerson, $nIDAppException = 0 )
+    {
+        global $db_personnel;
+
+        if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return 0;
+
+        $sQuery = "
 				SELECT
 					pl.year,
 					(
@@ -582,18 +591,19 @@
 								OR
 								pl2.leave_types = 'quittance'
 							)
+							#AND (pl2.year <= pl.year AND pl2.year >=  (pl.year-2) OR pl2.year = 2009)
 							AND pl2.year <= pl.year
 							AND pl2.id_person = '{$nIDPerson}'
 			";
-			
-			if( !empty( $nIDAppException ) )
-			{
-				$sQuery .= "
+
+        if( !empty( $nIDAppException ) )
+        {
+            $sQuery .= "
 							AND pl2.id != $nIDAppException
 				";
-			}
-			
-			$sQuery .= "
+        }
+
+        $sQuery .= "
 					) AS used_days_all
 				FROM
 					person_leaves pl
@@ -604,38 +614,38 @@
 					AND pl.leave_types = 'due'
 					AND pl.to_arc = 0
 			";
-			
-			$rs = $db_personnel->Execute( $sQuery );
-			
-			$aData = array();
-			$nRemainDays = 0;
-			
-			if( $rs )
-			{
-				if( !$rs->EOF )
-				{
-					$aData = $rs->GetArray();
-					
-					foreach( $aData as $val )
-					{
-						$nRemainDays = $val['used_days_all'];
-					}
-				}
-				else return 0;
-				
-				return $nRemainDays;
-			}
-			else return 0;
-		}
-		
-		function getResult($nID, $sSortField, $nSortType, $nPage, &$oResponse) {
-			global $db_personnel;
-			$db->debug=true;
-			
-			$id = (int) $nID;
-			$nDate = date( 'Y', mktime(0, 0, 0, date("m"), date("d"), date("Y")) );
 
-			$sQuery = sprintf(" 
+        $rs = $db_personnel->Execute( $sQuery );
+
+        $aData = array();
+        $nRemainDays = 0;
+
+        if( $rs )
+        {
+            if( !$rs->EOF )
+            {
+                $aData = $rs->GetArray();
+
+                foreach( $aData as $val )
+                {
+                    $nRemainDays = $val['used_days_all'];
+                }
+            }
+            else return 0;
+
+            return $nRemainDays;
+        }
+        else return 0;
+    }
+
+    function getResult($nID, $sSortField, $nSortType, $nPage, &$oResponse) {
+        global $db_personnel;
+        //$db->debug=true;
+
+        $id = (int) $nID;
+        $nDate = date( 'Y', mktime(0, 0, 0, date("m"), date("d"), date("Y")) );
+
+        $sQuery = sprintf(" 
 				SELECT SQL_CALC_FOUND_ROWS
 					t.id as _id,
 					t.id as id,
@@ -757,8 +767,10 @@
 								pl.leave_types = 'quittance'
 							)
 							AND pl.year <= t.year
+							#AND (pl.year <= t.year AND pl.year >= t.year-2 OR pl.year= 2009)
 							AND pl.id_person = '%d'
 					) AS cused_alldays,
+					t.remaining_days,
 					CONCAT(CONCAT_WS(' ', up.fname, up.mname, up.lname), ' (', DATE_FORMAT(t.updated_time,'%%d.%%m.%%y %%H:%%i:%%s'), ')') AS updated_user
 				FROM 
 					person_leaves t 
@@ -769,143 +781,160 @@
 					AND t.to_arc = 0
 				GROUP BY t.id
 				",
-				$nDate, $id, $id, $id, $id, $id, $id, $id, $id, $id, $id, $id
-			);
-			
-			//  $nDate, $id, $nDate, $id, $id, $id, $id, $id
-			// (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'student' AND year = t.year AND id_person = '%d') AS student,
-			// (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'due' AND year <= '%s'  AND id_person = '%d') AS used_alldays,
-			// (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'student' AND year <= '%s'  AND id_person = '%d') AS used_allpayed,
+            $nDate, $id, $id, $id, $id, $id, $id, $id, $id, $id, $id, $id
+        );
+
+        //  $nDate, $id, $nDate, $id, $id, $id, $id, $id
+        // (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'student' AND year = t.year AND id_person = '%d') AS student,
+        // (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'due' AND year <= '%s'  AND id_person = '%d') AS used_alldays,
+        // (SELECT SUM(application_days) FROM person_leaves WHERE to_arc=0 AND type = 'application' AND leave_types = 'student' AND year <= '%s'  AND id_person = '%d') AS used_allpayed,
 //			APILog::Log(0, $sQuery);
-			if( !empty( $sSortField ) ) {	
-				$sQuery .= sprintf(
-					"ORDER BY %s %s\n"
-					, $sSortField
-					, $nSortType == DBAPI_SORT_ASC ? "DESC" : "ASC"
-				);
+        if( !empty( $sSortField ) ) {
+            $sQuery .= sprintf(
+                "ORDER BY %s %s\n"
+                , $sSortField
+                , $nSortType == DBAPI_SORT_ASC ? "DESC" : "ASC"
+            );
 
-				$oResponse->setSort( $sSortField, $nSortType );
+            $oResponse->setSort( $sSortField, $nSortType );
 
-			}
-			
-			if( !empty( $nPage ) ) {	
-				$nRowCount = $_SESSION['userdata']['row_limit'];
-				$nRowOffset = ($nPage - 1) * $nRowCount;
-				 
-				$sQuery .= sprintf(
-					"LIMIT %s, %s"
-					, $nRowOffset
-					, $nRowCount 
-					);
-			};
-			
-			// Извличане на резултата
-			$rs = $db_personnel->Execute( $sQuery );
-			$aData = array();
-			if ( $rs ) {
-				if ( !$rs->EOF ) {			
-					$aData = $rs->GetArray();
-					
-					foreach ( $aData as &$val ) {
-						if ( $val['year'] == $nDate ) {
-							$val['remain'] = $val['cused_alldays']; //$val['due'] - $val['used_alldays'] - $val['used_allpayed'];
-						} elseif ( $val['year'] < $nDate ) {
-							$val['remain'] =  $val['cused_alldays']; //$val['due_days'] - ($val['used_days'] + $val['student']); // + $val['cused_alldays']
-						} else {
-							$val['remain'] = $val['due_days'] - $val['used_days'] - $val['student'];
-						}
-						
-						$val['due_days_all'] = $val['due_days'] + $this->getRemainingLeaveDays( $val['year'] - 1, $id );
-					}
+        }
 
-					$oResponse->setData( $aData );
-				}
-			} else {
-				return DBAPI_ERR_SQL_QUERY;
-			}
-			
-			// Извличане на броя на записите за цялата справка
-			$rs = $db_personnel->Execute("SELECT FOUND_ROWS()");
-			
-			if( !$rs || $rs->EOF )
-				return DBAPI_ERR_SQL_QUERY;
+        if( !empty( $nPage ) ) {
+            $nRowCount = $_SESSION['userdata']['row_limit'];
+            $nRowOffset = ($nPage - 1) * $nRowCount;
 
-			// Установяване на паремтрите по paging-a
-			if( !empty( $nPage ) ) {	
-				$nRowTotal = current( $rs->FetchRow() );;
-				
-				$oResponse->setPaging(
-					$nRowCount,
-					$nRowTotal,
-					ceil($nRowOffset / $nRowCount) + 1
-					);
-			}
-			
-			return DBAPI_ERR_SUCCESS;
-		}
-		
-		function update(&$aData) {
-			global $db_personnel;
-			
-			// WTF ?!!
+            $sQuery .= sprintf(
+                "LIMIT %s, %s"
+                , $nRowOffset
+                , $nRowCount
+            );
+        };
+
+        // Извличане на резултата
+        $rs = $db_personnel->Execute( $sQuery );
+        $aData = array();
+        if ( $rs ) {
+            if ( !$rs->EOF ) {
+                $aData = $rs->GetArray();
+                $unusable_days = 0;
+                foreach ( $aData as &$val ) {
+                    if($val['year'] < $nDate-2 AND $val['year'] != 2009 && !empty($val['remaining_days'])) {
+                        $unusable_days += $val['remaining_days'];
+                    }
+                }
+                foreach ( $aData as &$val ) {
+
+                    if ( $val['year'] == $nDate ) {
+                        $val['remain'] = !empty($unusable_days) ? $val['cused_alldays'] - $unusable_days : $val['cused_alldays']; //$val['due'] - $val['used_alldays'] - $val['used_allpayed'];
+                    } elseif ( $val['year'] < $nDate ) {
+                        $val['remain'] =  $val['cused_alldays']; //$val['due_days'] - ($val['used_days'] + $val['student']); // + $val['cused_alldays']
+                    } else {
+                        $val['remain'] = $val['due_days'] - $val['used_days'] - $val['student'];
+                    }
+
+
+
+                    if ( $val['year'] == $nDate) {
+
+//                            $val['due_days_all'] = $this->getRemainingLeaveDays( $val['year'], $id );
+                        $val['due_days_all'] = !empty($unusable_days) ? (($val['due_days'] + $this->getRemainingLeaveDays( $val['year'] - 1, $id )) - $unusable_days) : ($val['due_days'] + $this->getRemainingLeaveDays( $val['year'] - 1, $id ));
+
+                    } else {
+
+                        $val['due_days_all'] = ($val['due_days'] + $this->getRemainingLeaveDays( $val['year'] - 1, $id ));
+
+                    }
+                }
+
+                $oResponse->setData( $aData );
+            }
+        } else {
+            return DBAPI_ERR_SQL_QUERY;
+        }
+
+        // Извличане на броя на записите за цялата справка
+        $rs = $db_personnel->Execute("SELECT FOUND_ROWS()");
+
+        if( !$rs || $rs->EOF )
+            return DBAPI_ERR_SQL_QUERY;
+
+        // Установяване на паремтрите по paging-a
+        if( !empty( $nPage ) ) {
+            $nRowTotal = current( $rs->FetchRow() );;
+
+            $oResponse->setPaging(
+                $nRowCount,
+                $nRowTotal,
+                ceil($nRowOffset / $nRowCount) + 1
+            );
+        }
+
+        return DBAPI_ERR_SUCCESS;
+    }
+
+    function update(&$aData) {
+        global $db_personnel;
+
+        // WTF ?!!
 //			$id = $aData['id'];
-//			
+//
 //			if( empty( $id ) )
 //				$id = -1;
 
-			$id = isset($aData['id']) && is_numeric($aData['id']) ? $aData['id'] : -1;
-							
-			$rs = $db_personnel->Execute("SELECT * FROM person_contract WHERE id = {$id}");
-				
-			if( !$rs )
-				return DBAPI_ERR_SQL_QUERY;
-				
-			$aData['updated_user'] = $_SESSION['userdata']['id_person'];
-			$aData['updated_time'] = date('Y-m-d H:i:s');	
-				
-			if( $id == -1 )	{
-				if( !$db_personnel->Execute( $db_personnel->GetInsertSQL($rs, $aData) ) )
-					return DBAPI_ERR_SQL_QUERY;
-				$aData['id'] = $db_personnel->Insert_ID();	
-			} else {
-				if( !$db_personnel->Execute( $db_personnel->GetUpdateSQL($rs, $aData) ) )
-					return DBAPI_ERR_SQL_QUERY;
-			}
-			
-			return DBAPI_ERR_SUCCESS;
-		}
+        $id = isset($aData['id']) && is_numeric($aData['id']) ? $aData['id'] : -1;
 
-		function delete( $nID ) {
-			global $db_personnel;
-			
-			$nID = (int) $nID;
-			
-			if( empty( $nID ) )
-				return DBAPI_ERR_INVALID_PARAM;
+        $rs = $db_personnel->Execute("SELECT * FROM person_contract WHERE id = {$id}");
 
-			$rs = $db_personnel->Execute("SELECT * FROM person_leaves WHERE id = {$nID}");
-				
-			if( !$rs )
-				return DBAPI_ERR_SQL_QUERY;
-				
-			$aData = array();
-			$aData['updated_user']	= $_SESSION['userdata']['id_person'];	
-			$aData['updated_time']	= time();
-			$aData['to_arc']		= 1;
-			$db_personnel->GetUpdateSQL($rs, $aData);
-			if( !$db_personnel->Execute( $db_personnel->GetUpdateSQL($rs, $aData) ) )
-				return DBAPI_ERR_SQL_QUERY;
-			
-			return DBAPI_ERR_SUCCESS;
-		}
+        if( !$rs )
+            return DBAPI_ERR_SQL_QUERY;
 
-		function getResultOnce($nID, &$oData) {
-			global $db_personnel;
-			$oData = array();
-			
-			$id = (int) $nID;
-			
-			$sQuery = sprintf(" 
+        $aData['updated_user'] = $_SESSION['userdata']['id_person'];
+        $aData['updated_time'] = date('Y-m-d H:i:s');
+
+        if( $id == -1 )	{
+            if( !$db_personnel->Execute( $db_personnel->GetInsertSQL($rs, $aData) ) )
+                return DBAPI_ERR_SQL_QUERY;
+            $aData['id'] = $db_personnel->Insert_ID();
+        } else {
+            if( !$db_personnel->Execute( $db_personnel->GetUpdateSQL($rs, $aData) ) )
+                return DBAPI_ERR_SQL_QUERY;
+        }
+
+        return DBAPI_ERR_SUCCESS;
+    }
+
+    function delete( $nID ) {
+        global $db_personnel;
+
+        $nID = (int) $nID;
+
+        if( empty( $nID ) )
+            return DBAPI_ERR_INVALID_PARAM;
+
+        $rs = $db_personnel->Execute("SELECT * FROM person_leaves WHERE id = {$nID}");
+
+        if( !$rs )
+            return DBAPI_ERR_SQL_QUERY;
+
+        $aData = array();
+        $aData['updated_user']	= $_SESSION['userdata']['id_person'];
+        $aData['updated_time']	= time();
+        $aData['to_arc']		= 1;
+        $db_personnel->GetUpdateSQL($rs, $aData);
+        if( !$db_personnel->Execute( $db_personnel->GetUpdateSQL($rs, $aData) ) )
+            return DBAPI_ERR_SQL_QUERY;
+
+        return DBAPI_ERR_SUCCESS;
+    }
+
+    function getResultOnce($nID, &$oData) {
+        global $db_personnel;
+        $oData = array();
+
+        $id = (int) $nID;
+
+        $sQuery = sprintf(" 
 				SELECT 
 					t.id,
 					t.id as _id, 
@@ -913,6 +942,8 @@
 					t.type_salary,
 					t.fix_cost,
 					t.min_cost,
+					t.work_hours,
+					DATE_FORMAT( t.date_from, '%%d.%%m.%%Y' ) AS date_from,
 					t.insurance,
 					IF ( UNIX_TIMESTAMP(t.trial_from) > 315525600, DATE_FORMAT(t.trial_from, '%%d.%%m.%%Y'), '') as trial_from,
 					IF ( UNIX_TIMESTAMP(t.trial_to) > 315525600, DATE_FORMAT(t.trial_to, '%%d.%%m.%%Y'), '') as trial_to,
@@ -927,21 +958,372 @@
 				LEFT JOIN personnel as up on up.id = t.updated_user
 				WHERE t.id_person = '%d' 
 					AND t.to_arc = 0
-				", 
-				$id
-			);
-			
-			//APILog::log(0, $sQuery);
-			$rs = $db_personnel->Execute( $sQuery );
-			if ( $rs ) {
-				if (!$rs->EOF) {
-					$oData = $rs->fields;
-				}
-			} else {
-				return DBAPI_ERR_SQL_QUERY;
-			}
+				",
+            $id
+        );
 
-			return DBAPI_ERR_SUCCESS;		
-		}
-	}
+        //APILog::log(0, $sQuery);
+        $rs = $db_personnel->Execute( $sQuery );
+        if ( $rs ) {
+            if (!$rs->EOF) {
+                $oData = $rs->fields;
+            }
+        } else {
+            return DBAPI_ERR_SQL_QUERY;
+        }
+
+        return DBAPI_ERR_SUCCESS;
+    }
+
+    function getOne($nID) {
+        global $db_personnel;
+
+        $nID = (int) $nID;
+
+        $rs = $db_personnel->Execute("SELECT * FROM person_leaves WHERE id = {$nID}");
+
+        if ( $rs ) {
+            if ( !$rs->EOF ) {
+                return $rs->fields;
+            }
+        } else {
+            return array();
+        }
+
+
+    }
+
+    /*
+* Върща всичката полагаемата отпуска за служител
+* Вземат се оставащатата отпуска от текущата и 2 години назад!
+*/
+    public function getRemainingDaysByIDPerson($nIDPerson) {
+
+        global $db_personnel;
+
+        if(empty($nIDPerson))
+            return 0;
+
+        $sQ = "
+		        SELECT
+		        SUM(pl.remaining_days) as remaining_day
+		        FROM
+		        person_leaves pl
+		        WHERE 1
+		        AND pl.to_arc = 0
+		        AND pl.type = 'leave'
+		        AND pl.id_person = {$nIDPerson}
+		        AND pl.year BETWEEN (YEAR(NOW()) - 2) AND YEAR(NOW())
+		    ";
+
+        $oRes = $db_personnel->Execute( $sQ );
+
+        $aData = array();
+
+        if( $oRes )
+        {
+            if( !$oRes->EOF )
+            {
+                $aData = $oRes->GetArray();
+            }
+        }
+
+        if(!empty($aData)) {
+            return (($aData[0]['remaining_day']) > 0)? $aData[0]['remaining_day'] : 0;
+        }
+
+        return 0;
+    }
+
+
+    function getResultExtendedNew(DBResponse $oResponse , $aParams) {
+        global $db_personnel, $db_name_sod;
+
+        $oDBPersonLeaves = new DBPersonLeaves();
+        $oDBFiltersVisibleFields = new DBFiltersVisibleFields();
+
+        $nIDFilter = isset( $aParams['nIDFilter'] ) ? $aParams['nIDFilter'] : 0;
+
+        //Visible Fields
+        $aFilterFields = $oDBFiltersVisibleFields->getFieldsByIDFilter( $nIDFilter );
+
+        APILog::Log('213',$aFilterFields);
+
+        $sQuery = "
+				SELECT SQL_CALC_FOUND_ROWS
+					CONCAT_WS('@',per_lea.id , per_lea.id_person) AS id,
+					per_lea.leave_num AS leave_num,
+					IF
+					(
+						per_lea.date != '0000-00-00 00:00:00',
+						DATE_FORMAT( per_lea.date, '%Y-%m-%d' ),
+						''
+					) AS date,
+					per_lea.date AS date_,
+					
+					CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
+					per.id AS id_person,
+					per_lea.id_person_substitute AS id_person_substitute,
+					
+					pos_nc.name AS person_position,
+					fir.name AS firm,
+					off.name AS office,
+					obj.name AS object,
+					
+					CASE( per_lea.leave_types )
+						WHEN 'due' THEN 'Платен'
+						WHEN 'unpaid' THEN 'Неплатен'
+						ELSE ''
+					END AS leave_type,
+					per_lea.leave_types AS raw_leave_types,
+					
+					IF
+					(
+						per_lea.leave_from != '0000-00-00 00:00:00',
+						DATE_FORMAT( per_lea.leave_from, '%Y-%m-%d' ),
+						''
+					) AS leave_from,
+					per_lea.leave_from AS leave_from_,
+					DATE_FORMAT( per_lea.leave_from, '%Y-%m-%d' ) AS raw_leave_from,
+					IF
+					(
+						per_lea.leave_to != '0000-00-00 00:00:00',
+                        DATE_FORMAT( per_lea.leave_to, '%Y-%m-%d' ),
+						''
+					) AS leave_to,
+					per_lea.leave_to AS leave_to_,
+					
+					per_lea.application_days_offer AS application_days,
+					cod_lea.clause_paragraph AS code_leave_name,
+					cod_lea.id AS id_code_leave,
+					CONCAT_WS( ' ', per_cre.fname, per_cre.mname, per_cre.lname ) AS created_user,
+					IF
+					(
+						per_lea.is_confirm,
+						IF
+						(
+							per_lea.application_days = 0,
+							'Неразрешен',
+							'Потвърден'
+						),
+						'Непотвърден'
+					) AS status,
+					IF( per_cont.fix_cost != 0, 1, 0 ) AS state_salary,
+					
+					IF
+					(
+						per_lea.res_leave_from != '0000-00-00 00:00:00',
+						DATE_FORMAT( per_lea.res_leave_from, '%Y-%m-%d' ),
+						''
+					) AS res_leave_from,
+					per_lea.res_leave_from AS res_leave_from_,
+					IF
+					(
+						per_lea.res_leave_to != '0000-00-00 00:00:00',
+						DATE_FORMAT( per_lea.res_leave_to, '%Y-%m-%d' ),
+						''
+					) AS res_leave_to,
+					per_lea.res_leave_to AS res_leave_to_,
+					
+					per_lea.application_days AS res_application_days,
+					
+					per_lea.is_confirm,
+					IF
+					(
+						per_lea.confirm_user,
+						CONCAT_WS( ' ', per_con.fname, per_con.mname, per_con.lname ),
+						''
+					) AS person_confirm,
+					IF
+					(
+						per_lea.confirm_time != '0000-00-00 00:00:00',
+						per_lea.confirm_time,
+						''
+					) AS time_confirm,
+					per_lea.confirm_time AS time_confirm_,
+					0 AS checkbox_col
+				FROM
+					person_leaves per_lea
+				LEFT JOIN
+					code_leave cod_lea ON cod_lea.id = per_lea.id_code_leave
+				LEFT JOIN
+					personnel per_con ON per_con.id = per_lea.confirm_user
+				LEFT JOIN
+					personnel per ON per.id = per_lea.id_person
+				LEFT JOIN
+					person_contract per_cont ON ( per_cont.id_person = per.id AND per_cont.to_arc = 0 )
+				LEFT JOIN
+					positions_nc pos_nc ON pos_nc.id = per.id_position_nc
+				LEFT JOIN
+					{$db_name_sod}.offices off ON off.id = per.id_office
+				LEFT JOIN
+					{$db_name_sod}.firms fir ON fir.id = off.id_firm
+				LEFT JOIN
+					{$db_name_sod}.objects obj ON obj.id = per.id_region_object
+				LEFT JOIN
+					personnel per_cre ON per_cre.id = per_lea.created_user
+				WHERE
+					per_lea.to_arc = 0
+					AND per_lea.type = 'application'
+					AND ( per_lea.leave_types = 'due' OR per_lea.leave_types = 'unpaid' )
+			";
+
+        if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
+        {
+            $sQuery .= "
+					AND fir.id = {$aParams['nIDFirm']}
+				";
+        }
+        if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
+        {
+            $sQuery .= "
+					AND off.id = {$aParams['nIDOffice']}
+				";
+        }
+        if( isset( $aParams['nIDObject'] ) && !empty( $aParams['nIDObject'] ) )
+        {
+            $sQuery .= "
+					AND obj.id = {$aParams['nIDObject']}
+				";
+        }
+        if( isset( $aParams['sStatus'] ) && $aParams['sStatus'] != 'all')
+        {
+            if( $aParams['sStatus'] == 'confirm' )
+            {
+                $sQuery .= "
+						AND per_lea.is_confirm = 1
+						AND per_lea.application_days > 0
+					";
+            }
+            else if ( $aParams['sStatus'] == 'unauthorized')
+            {
+                $sQuery .= "
+						AND per_lea.is_confirm = 1
+						AND per_lea.application_days = 0
+					";
+            }
+            else if ( $aParams['sStatus'] == 'notConfirm')
+            {
+                $sQuery .= "
+						AND per_lea.is_confirm = 0
+					";
+            }
+        }
+        if( isset( $aParams['sDateFrom'] ) && !empty( $aParams['sDateFrom'] ) )
+        {
+            $sQuery .= "
+					AND UNIX_TIMESTAMP( per_lea.leave_from ) >= UNIX_TIMESTAMP( '".jsDateToMySQLDate($aParams['sDateFrom'])." 00:00:00' )
+				";
+        }
+        if( isset( $aParams['sDateTo'] ) && !empty( $aParams['sDateTo'] ) )
+        {
+            $sQuery .= "
+					AND UNIX_TIMESTAMP( per_lea.leave_from ) <= UNIX_TIMESTAMP( '".jsDateToMySQLDate($aParams['sDateTo'])." 23:59:59' )
+				";
+        }
+        if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
+        {
+            $sQuery .= "
+					AND CONCAT_WS( ' ', per.fname, per.mname, per.lname ) LIKE '%{$aParams['sPersonName']}%'
+				";
+        }
+
+        APILog::Log('222',$sQuery);
+
+        $oDBPersonLeaves->getResult($sQuery, 'date', DBAPI_SORT_DESC, $oResponse);
+
+        $oResponse->setField( 'checkbox_col', '', '' );
+        $oResponse->setFieldData( 'checkbox_col', 'input', array( 'type' => 'checkbox' ,  'exception' => 'false' ) );
+
+        if(empty($nIDFilter)) {
+            $oResponse->setField('leave_num', 'номер', 'сортирай по номер');
+            $oResponse->setField('date', 'дата', 'сортирай по дата',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('person_name', 'Служител', 'сортирай по Служител');
+            $oResponse->setField('person_position', 'Длъжност', 'сортирай по Длъжност');
+            $oResponse->setField('firm', 'Фирма', 'сортирай по Фирма');
+            $oResponse->setField('office', 'Регион', 'сортирай по Регион');
+            $oResponse->setField('object', 'Обект', 'сортирай по Обект');
+            $oResponse->setField('leave_type', 'Тип', 'сортирай по Тип');
+            $oResponse->setField('leave_from', 'Дата От', 'сортирай по Дата От',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('leave_to', 'Дата До', 'сортирай по Дата До',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('application_days', 'Дни', 'сортирай по Дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+            $oResponse->setField('code_leave_name', 'Чл. от КТ', 'сортирай по Чл. от КТ');
+            $oResponse->setField('created_user', 'Въвел', 'сортирай по Въвел');
+            $oResponse->setField('status', 'Статус', 'сортирай по Статус');
+            $oResponse->setField('res_leave_from', 'Дата от', 'сортирай по Дата от',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('res_leave_to', 'Дата до', 'сортирай по Дата до',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('res_application_days', 'Разрешени дни', 'сортирай по Разрешени дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+            $oResponse->setField('person_confirm', 'Потвърдил', 'сортирай по Потвърдил');
+        } else {
+
+            $oResponse->setField('leave_num', 'номер', 'сортирай по номер');
+
+            if(!empty($aFilterFields) && in_array('date',$aFilterFields)) {
+                $oResponse->setField('date', 'дата', 'сортирай по дата',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            }
+            if(!empty($aFilterFields) && in_array('person_name',$aFilterFields)) {
+                $oResponse->setField('person_name', 'Служител', 'сортирай по Служител');
+            }
+            if(!empty($aFilterFields) && in_array('person_position',$aFilterFields)) {
+                $oResponse->setField('person_position', 'Длъжност', 'сортирай по Длъжност');
+            }
+            if(!empty($aFilterFields) && in_array('firm',$aFilterFields)) {
+                $oResponse->setField('firm', 'Фирма', 'сортирай по Фирма');
+            }
+            if(!empty($aFilterFields) && in_array('office',$aFilterFields)) {
+                $oResponse->setField('office', 'Регион', 'сортирай по Регион');
+            }
+            if(!empty($aFilterFields) && in_array('object',$aFilterFields)) {
+                $oResponse->setField('object', 'Обект', 'сортирай по Обект');
+            }
+            if(!empty($aFilterFields) && in_array('leave_type',$aFilterFields)) {
+                $oResponse->setField('leave_type', 'Тип', 'сортирай по Тип');
+            }
+            if(!empty($aFilterFields) && in_array('leave_from',$aFilterFields)) {
+                $oResponse->setField('leave_from', 'Дата От', 'сортирай по Дата От',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            }
+            if(!empty($aFilterFields) && in_array('leave_to',$aFilterFields)) {
+                $oResponse->setField('leave_to', 'Дата До', 'сортирай по Дата До',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            }
+            if(!empty($aFilterFields) && in_array('application_days',$aFilterFields)) {
+                $oResponse->setField('application_days', 'Дни', 'сортирай по Дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+            }
+            if(!empty($aFilterFields) && in_array('code_leave_name',$aFilterFields)) {
+                $oResponse->setField('code_leave_name', 'Чл. от КТ', 'сортирай по Чл. от КТ');
+            }
+            if(!empty($aFilterFields) && in_array('created_user',$aFilterFields)) {
+                $oResponse->setField('created_user', 'Въвел', 'сортирай по Въвел');
+            }
+            if(!empty($aFilterFields) && in_array('status',$aFilterFields)) {
+                $oResponse->setField('status', 'Статус', 'сортирай по Статус');
+            }
+            if(!empty($aFilterFields) && in_array('res_leave_from',$aFilterFields)) {
+                $oResponse->setField('res_leave_from', 'Дата от', 'сортирай по Дата от',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            }
+            if(!empty($aFilterFields) && in_array('res_leave_to',$aFilterFields)) {
+                $oResponse->setField('res_leave_to', 'Дата до', 'сортирай по Дата до',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            }
+            if(!empty($aFilterFields) && in_array('res_application_days',$aFilterFields)) {
+                $oResponse->setField('res_application_days', 'Разрешени дни', 'сортирай по Разрешени дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+            }
+            if(!empty($aFilterFields) && in_array('person_confirm',$aFilterFields)) {
+                $oResponse->setField('person_confirm', 'Потвърдил', 'сортирай по Потвърдил');
+            }
+        }
+
+
+        $oResponse->setFIeldLink('leave_num', 'openLeave');
+        $oResponse->setFIeldLink('person_name', 'openPerson');
+
+        $oResponse->setFormElement( "form1", "sel" );
+        $oResponse->setFormElementChild( "form1", "sel", array("value" => "mark_all"), 		"--- Маркирай всички ---" );
+        $oResponse->setFormElementChild( "form1", "sel", array("value" => "unmark_all"), 	"--- Отмаркирай всички ---" );
+        $oResponse->setFormElementChild( "form1", "sel", array("value" => ""), 				"-----------------------------------------" );
+        $oResponse->setFormElementChild( "form1", "sel", array("value" => "confirm_selected"),		"Одобри избраните");
+
+        $oResponse->printResponse(null,null,false);
+    }
+
+
+}
 ?>

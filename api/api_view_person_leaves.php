@@ -339,7 +339,6 @@
 		{
 			$aParams = Params::getAll();
 			
-			$aRecord = parseObjectToArray( $aValue );
 			$sErrors = "";
 			
 			foreach( $aParams['result_data'] as $nKey => $aValue )
@@ -387,6 +386,7 @@
 			$oDBSalary			= new DBSalary();
 			$oDBPersonnel 		= new DBPersonnel();
 			$oDBHolidays		= new DBHolidays();
+			$oDBOffices			= new DBOffices();
 			
 			$nID 		= isset( $aParams['nID'] )			? $aParams['nID'] 		: 0;
 			$nIDPerson 	= isset( $aParams['nIDPerson'] ) 	? $aParams['nIDPerson'] : 0;
@@ -396,26 +396,26 @@
 			$nRemainLeaveDays = $oDBLeaves->getRemainingLeaveDays( substr( $aParams['sLeaveFromOffer'], 0, 4 ), $nIDPerson, $nID );
 			
 			//Validation
-			if( empty( $aParams['nApplicationDaysOffer'] ) )return "{$nID} : Не е въведен брой работни дни!";
+			if( empty( $aParams['nApplicationDaysOffer'] ) ) return "{$nID} : Не е въведен брой работни дни!";
 			if( !is_numeric( $aParams['nApplicationDaysOffer'] ) || $aParams['nApplicationDaysOffer'] < 1 )
 			{
 				return "{$nID} : Невалидна стойност за брой дни!";
 			}
-			if( empty( $aParams['sLeaveFromOffer'] ) )return "{$nID} : Невалидна дата!";
+			if( empty( $aParams['sLeaveFromOffer'] ) ) return "{$nID} : Невалидна дата!";
 			if( $bIsSubstituteNeeded )
 			{
-				if( empty( $aParams['nIDPersonSubstitute'] ) )return "{$nID} : Не е въведен заместник!";
+				if( empty( $aParams['nIDPersonSubstitute'] ) ) return "{$nID} : Не е въведен заместник!";
 			}
-			if( empty( $aParams['nIDCodeLeave'] ) )return "{$nID} : Не е въведен чл. от КТ!";
+			if( empty( $aParams['nIDCodeLeave'] ) ) return "{$nID} : Не е въведен чл. от КТ!";
 			
 			if( $aParams['nIsAllowed'] )
 			{
-				if( empty( $aParams['nApplicationDays'] ) )return "{$nID} : Не е въведен брой работни дни!";
+				if( empty( $aParams['nApplicationDays'] ) ) return "{$nID} : Не е въведен брой работни дни!";
 				if( !is_numeric( $aParams['nApplicationDays'] ) || $aParams['nApplicationDays'] < 1 )
 				{
 					return "{$nID} : Невалидна стойност за брой дни!";
 				}
-				if( empty( $aParams['sLeaveFrom'] ) )return "{$nID} : Невалидна дата!";
+				if( empty( $aParams['sLeaveFrom'] ) ) return "{$nID} : Невалидна дата!";
 			}
 			
 			if( $aParams['sLeaveType'] == "due" )
@@ -483,7 +483,7 @@
 			if( $aParams['nIsAllowed'] )
 			{
 				$nIsOverlapped = $oDBLeaves->isThereApplication( $nIDPerson, $aData['res_leave_from'], $aData['res_leave_to'], $nID );
-				if( $nIsOverlapped )return "{$nID} : Съществува молба, чиито дати се застъпват с въведените!";
+				if( $nIsOverlapped ) return "{$nID} : Съществува молба / болничен, чиито дати се застъпват с въведените!";
 			}
 			//End Check Overlap
 			
@@ -621,7 +621,7 @@
 				}
 				else
 				{
-					if( !$oDBHolidays->isHoliday( $nDay, $nMonth ) && !$oDBHolidays->isRestday( $nDay, $nMonth, $nYear ) )
+					if( !$oDBHolidays->isHoliday( $nDay, $nMonth , $nYear ) && !$oDBHolidays->isRestday( $nDay, $nMonth, $nYear ) )
 					{
 						$nIteration++;
 						$aMonthStat[$sYearMonthKey]++;

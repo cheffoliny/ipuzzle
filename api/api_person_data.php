@@ -380,36 +380,41 @@
 					if( !empty( $aDuplicate ) ) {
 						$oResponse->setError( DBAPI_ERR_INVALID_PARAM, "Служитела има активи!!!", __FILE__, __LINE__ );
 						return DBAPI_ERR_INVALID_PARAM;
-					}		
-					
-					$nLeaveDays = $oDBPersonLeaves->getHowManyDaysToAdd( $aParams['id'] );
-					
-					//$dayLeaves = 0.0548;
-					$dayLeaves = round( ( $nLeaveDays / 365 ), 4 );
-					$dateIn = jsDateToTimestamp( $aParams['date_in'] );
-					$dateOut = jsDateToTimestamp( $aParams['date_out'] );
-					$yearIn = date("Y", $dateIn);
-					$yearOut = date("Y", $dateOut);
-					if ( $yearIn < $yearOut ) {
-						$dateFrom = mktime(0, 0, 0, 1, 0, $yearOut);
-					} else $dateFrom = $dateIn;
-					$days = ( ($dateOut) - $dateFrom) / 86400;
-					$person = $aParams['id'];
-					
-					$leaveDays = round($dayLeaves * $days);  // Полагаема отпуска до момента на напускането - база 20/365 
-					
-					if( $yearOut >= date( "Y" ) )
-					{
-						$sQuery = "
+					}
+
+                    $nLeaveDays = $oDBPersonLeaves->getHowManyDaysToAdd( $aParams['id'] );
+
+                    //$dayLeaves = 0.0548;
+                    $dayLeaves = round( ( $nLeaveDays / 365 ), 4 );
+                    $dateIn = jsDateToTimestamp( $aParams['date_in'] );
+                    $dateOut = jsDateToTimestamp( $aParams['date_out'] );
+                    $yearIn = date("Y", $dateIn);
+                    $yearOut = date("Y", $dateOut);
+                    if ( $yearIn < $yearOut ) {
+                        $dateFrom = mktime(0, 0, 0, 1, 0, $yearOut);
+                    } else $dateFrom = $dateIn;
+                    $days = ( ($dateOut) - $dateFrom) / 86400;
+                    $person = $aParams['id'];
+
+                    $leaveDays = round($dayLeaves * $days);  // Полагаема отпуска до момента на напускането - база 20/365
+
+                    if( $yearOut >= date( "Y" ) )
+                    {
+                        $nUsedDaysInYear = $oDBPersonLeaves->getDueDaysByIDPeronAndYear( $person ,$yearOut );
+
+                        $nRemainingDaysNew = $leaveDays - $nUsedDaysInYear; //намира с колко дни трябва да се намали отпуската оставащо за годината
+
+                        $sQuery = "
 							UPDATE person_leaves
-							SET due_days = '{$leaveDays}'
+							SET 
+							  due_days = '{$leaveDays}',
+							  remaining_days =  {$nRemainingDaysNew}
 							WHERE type = 'leave'
 								AND id_person = '{$person}'
 								AND year = '{$yearOut}'
 						";
-						
-						$db_personnel->execute( $sQuery );
-					}
+                        $db_personnel->execute( $sQuery );
+                    }
 				}
 				
 				if ( $aParams['status'] == "moved" ) {

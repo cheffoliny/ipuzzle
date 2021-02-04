@@ -346,7 +346,7 @@ function dialogLeave( id, person ) {
 }
 
 function dialogSetupPersonLeave( id, person ) {
-	dialog_win('setup_person_leave&id='+id+'&id_person='+person,500,300,1,'setup_person_leave');
+	dialog_win('setup_person_leave&id='+id+'&id_person='+person,822,315,1,'setup_person_leave');
 }
 
 function dialogApplication( id, person ) {

@@ -94,14 +94,14 @@
 	</div>
 </div>
 {else}
-	{if $play_flex_file}
-	    {assign var=pageresult value="flex_page.tpl"}
-	    {include file=$pageresult}
-	    
-	{else}
+{*	{if $play_flex_file}*}
+{*	    {assign var=pageresult value="flex_page.tpl"}*}
+{*	    {include file=$pageresult}*}
+{*	    *}
+{*	{else}*}
 	    {assign var=pageresult value="$page.tpl"}
 	    {include file=$pageresult}
-	{/if}
+{*	{/if}*}
 {/if}
 
 <script type="text/javascript" language="javascript"  src="js/dlcalendar.js"></script>

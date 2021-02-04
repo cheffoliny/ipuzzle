@@ -78,9 +78,7 @@
 	<input type="hidden" id="id" name="id" value="{$id|default:0}" />
 	<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 
-	<div class="page_caption">{if $id}Редактиране на служител{else}Нов Служител{/if} {$person_name} </div>
-
-	{include file='object_tabs.tpl'}
+	{include file='person_tabs.tpl'}
 
 	<div class="container-fluid mb-4">
 
@@ -89,7 +87,7 @@
 				<div class="input-group input-group-sm">
 					<picture>
 						<img src="{$image}" class="rounded mx-auto d-block" alt="...">
-						<button class="btn btn-sm btn-info" type="button" onclick="return update_image();"><i class="far fa-refresh"></i> Промени</button>
+						<button class="btn btn-sm btn-info btn-block" type="button" onclick="return update_image();"><i class="far fa-refresh"></i> Промени</button>
 					</picture>
 				</div>
 			</div>
@@ -106,30 +104,42 @@
 					</div>
 					<input class="form-control" name="mname" type="text" id="mname" placeholder="Презиме..." />
 				</div>
-				<div class="input-group input-group-sm">
+				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
 						<span class="fa fa-signature fa-fw" data-fa-transform="right-22 down-10" title="Фамилия..."></span>
 					</div>
 					<input class="form-control" name="lname" type="text" id="lname" placeholder="Фамилия..." />
 				</div>
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕГН..."></span>
+					</div>
+					<input class="form-control" name="egn" type="text" id="egn" maxlength="10" onkeypress="return formatNumber(event);" placeholder="ЕГН" title="ЕГН"/>
+				</div>
+			</div>
+			<div class="col">
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+					</div>
+					<input class="form-control" name="addr_city" type="text" id="addr_city" placeholder="Град" title="град"/>
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+					</div>
+					<input class="form-control" name="addr_street" type="text" id="addr_street" placeholder="Улица" title="Улица"/>
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+					</div>
+					<input class="form-control" name="addr_num" type="text" id="addr_num" placeholder="№" title="№" />
+					<input class="form-control" name="addr_floor" type="text" id="addr_floor" placeholder="ет." title="ет." onkeypress="return formatNumber(event);" />
+					<input class="form-control" name="addr_app" type="text" id="addr_app" placeholder="ап." title="ап." onkeypress="return formatNumber(event);" />
+				</div>
 			</div>
 			<div class="col-3 col-sm-3 col-lg-3">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend">
-						<span class="fa fa-eye fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
-					</div>
-					<select class="form-control" name="statuses" id="statuses" ></select>
-				</div>
-			</div>
-			<div class="col-2 col-sm-2 col-lg-2">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend">
-						<span class="fa fa-eye fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
-					</div>
-					<select class="form-control" name="statuses" id="statuses" ></select>
-				</div>
-			</div>
-			<div class="col-2 col-sm-2 col-lg-2">
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
 						<span class="fa fa-phone-alt fa-fw" data-fa-transform="right-22 down-10" title="Телефон..."></span>
@@ -146,8 +156,7 @@
 					<div class="input-group-prepend">
 						<span class="fa fa-mobile-android fa-fw" data-fa-transform="right-22 down-10" title="Мобилен..."></span>
 					</div>
-					<input class="form-control" name="mobile_phone" id="mobile_phone" type="text" onkeypress="return formatDigits(event);" placeholder="Мобилен
-					\..." /></td>
+					<input class="form-control" name="mobile_phone" id="mobile_phone" type="text" onkeypress="return formatDigits(event);" placeholder="Мобилен..." /></td>
 				</div>
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
@@ -158,112 +167,98 @@
 			</div>
 		</div>
 
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-			<tr class="odd">
-				<td>
-				<!-- начало на работната част -->
-		  		    <table class="input">
-		  		    	<tr style="height: 20px;">
-		  		    		<td colspan="8">&nbsp;</td>
-		  		    	</tr>
-		                <tr class="even">
-		                    <td>Код</td><td align="left"><input name="EIC" type="text" class="inp100" id="EIC" onkeypress="return formatDigits(event);" /></td>
-		                    <td colspan="4">&nbsp;</td>
-		                    <td colspan="2" rowspan="6" valign="top">
-		                    </td>
-		                </tr>
-		                 <tr class="even">
-							<td>ЕГН</td><td><input name="egn" type="text" class="inp100" id="egn" maxlength="10" onkeypress="return formatNumber(event);" /></td>
-							<td>град</td>
-							<td colspan="2">
-								<input name="addr_city" type="text" id="addr_city" style="width: 73px;" />
-								&nbsp;ул.<input name="addr_street" type="text" id="addr_street" style="width: 160px;" />
-							</td><td>
-								&nbsp;№<input name="addr_num" type="text" id="addr_num" style="width: 30px; text-align: right;" />
-								&nbsp;ет.<input name="addr_floor" type="text" id="addr_floor" style="width: 28px; text-align: right;" onkeypress="return formatNumber(event);" />
-								&nbsp;ап.<input name="addr_app" type="text" id="addr_app" style="width: 28px; text-align: right;" onkeypress="return formatNumber(event);" />
-							</td>
-		                 </tr>
-		                 <tr class="odd">
-		                    <td>семейство</td>
-		                    <td>
-		                        <select class="select150" name="family_status" id="family_status">
-		                          	<option value="none">неопределено</option>
-		                          	<option value="married">семеен</option>
-		                          	<option value="single">несемеен</option>
-		                          	<option value="divorce">разведен</option>
-		                        </select>
-		                    </td>
-			                <td>IBAN</td><td><input name="iban" type="text" id="iban" class="inp200" title="Перонална банкова сметка"/></td>
-		                    <td align="right">email &nbsp;</td><td><input name="email" id="email" type="text" class="inp150" /></td>
-		                 </tr>
-		                 <tr class="even">
-							<td nowrap>ЛК №</td><td><input name="lkn" type="text" id="lkn" class="inp100" maxlength="15" onkeypress="return formatNumber(event);"  /></td>
-							<td>изд. на</td>
-							<td colspan="2">
-								<input name="lk_date" type="text" id="lk_date" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_lk_date" />
-								&nbsp;&nbsp;&nbsp;от&nbsp;<input name="lk_pub" type="text" id="lk_pub" style="width: 131px;" />
-							</td>
-							<td>СК №&nbsp;<input name="skn" type="text" id="skn" style="width: 117px;" maxlength="15" onkeypress="return formatNumber(event);" /></td>
-		                 </tr>
-		                 <tr class="odd">
-		                    <td colspan=6 valign="top">
-								<fieldset style="width: 768px;">
-									<legend>Телефони</legend>
-									<table class="input">
-										<tr>
-				</td>
-					                    </tr>
-									</table>
-								</fieldset>
-		                    </td>
-		                 </tr>
-		                 <tr class="even">
-		                    <td colspan="8" valign="top">
-								<fieldset style="width: 768px;">
-									<legend>Допълнителна информация</legend>
-									<table class="input">
-										<tr>
-											<td align="center">
-												<textarea name="note" style="width: 748px;" rows="8" id="note"></textarea>
-											</td>
-					                    </tr>
-					                    <tr style="height: 5px;"><td></td></tr>
-									</table>
-								</fieldset>
-		                    </td>
-		                 </tr>
-		                 <tr class="odd" style="height: 15px;"><td colspan="8"></td></tr>
-					</table>
-					<table  class="input">
-						<tr valign="top" class="odd">
-							<td valign="top" align="left" width="310px">
-								<select name="sPrintType" id="sPrintType" class="select300">
-									<option value="contract">Трудов Договор</option>
-									<option value="contract_addition">Доп. споразумение към Трудов Договор</option>
-									<option value="order">Прекрат. на трудово правоотношение</option>
-								</select>
-							</td>
-							
-							<td valign="top" align="left" width="390px">
-								<button class="btn btn-xs btn-info" onclick="printContract();">
-                                    <i class="fa fa-file-pdf-o"></i> Печат</button>&nbsp;
-							</td>
-							
-							<td valign="top" align="right" width="100px">
-								<button class="search" onclick="return submit_form();"><img src="images/confirm.gif"/>Потвърди</button>&nbsp;
-							</td>
-							<td valign="top" align="right" width="100px">
-								<button id="b100" onClick="close_form();"><img src="images/cancel.gif" />Затвори</button>
-							</td>
-							
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+		<div class="row clearfix mt-2">
+			<div class="col-2 col-sm-2 col-lg-2 pl-3">
+				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служебни данни </div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+					</div>
+					<input class="form-control" type="text" name="EIC" id="EIC" onkeypress="return formatDigits(event);" placeholder="КОД"/>
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+					</div>
+					<input class="form-control" type="text" name="skn" id="skn" onkeypress="return formatDigits(event);" placeholder="СК №&nbsp;"/>
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-mailbox fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+					</div>
+					<input class="form-control" name="email" id="email" type="text" onkeypress="return formatDigits(event);" placeholder="Еmail"/>
+				</div>
+			</div>
+			<div class="col-3 col-sm-3 col-lg-3">
+				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Други </div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="far fa-users fa-fw" data-fa-transform="right-22 down-10" title="Семейно положение..."></span>
+					</div>
+					<select class="form-control" name="family_status" id="family_status">
+						<option value="none"	>неопределено</option>
+						<option value="married"	>семеен</option>
+						<option value="single"	>несемеен</option>
+						<option value="divorce"	>разведен</option>
+					</select>
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="far fa-badge-dollar fa-fw" data-fa-transform="right-22 down-10" title="IBAN..."></span>
+					</div>
+					<input class="form-control" name="iban" type="text" id="iban" title="Перонална банкова сметка" placeholder="IBAN"/>
+				</div>
+			</div>
+			<div class="col">
+				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Лична карта </div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-passport fa-fw" data-fa-transform="right-22 down-10" title="ЛК номер"></span>
+					</div>
+					<input class="form-control" name="lkn" type="text" id="lkn" maxlength="15" onkeypress="return formatNumber(event);" placeholder="ЛК номер" />
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Дата на издаване"></span>
+					</div>
+					<input class="form-control" name="lk_date" type="text" id="lk_date" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_lk_date" />
+				</div>
+				<div class="input-group input-group-sm mb-1">
+					<div class="input-group-prepend">
+						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+					</div>
+					<input class="form-control" name="lk_pub" type="text" id="lk_pub" />
+				</div>
+			</div>
+			<div class="col-3 col-sm-3 col-lg-3">
+				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Допълнителна информация</div>
+				<div class="input-group input-group-sm mb-1">
+					<textarea class="w-100" name="note" rows="5" id="note"></textarea>
+				</div>
+			</div>
+		</div>
 	</div>
-
+	<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg" id="search">
+		<div class="col-6 col-sm-8 col-lg-8 pl-0">
+			<div class="input-group input-group-sm">
+				<div class="input-group-prepend">
+					<span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
+				</div>
+				<select class="form-control" name="sPrintType" id="sPrintType">
+					<option value="contract">Трудов Договор</option>
+					<option value="contract_addition">Доп. споразумение към Трудов Договор</option>
+					<option value="order">Прекрат. на трудово правоотношение</option>
+				</select>
+				<button class="btn btn-sm btn-info" onclick="printContract();"><i class="far fa-file-pdf-o"></i></button>&nbsp;
+			</div>
+		</div>
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div class="input-group input-group-sm ml-1 text-right">
+				<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
+				<button class="btn btn-sm btn-danger"	    onClick="close_form();"			><i class="far fa-window-close" ></i> Затвори </button>
+			</div>
+		</div>
+	</nav>
 </form>
 
 {/if}

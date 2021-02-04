@@ -27,12 +27,9 @@
 	<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 	<input type="hidden" id="id_document" name="id_document" value="0" />
 
-<div class="page_caption">Съпътстващи документи на {$person_name}</div>
+{include file='person_tabs.tpl'}
 
-<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-<tr>
-	<td>{include file=person_tabs.tpl}</td>
-</tr>
+	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 <tr>
 	<td id="filter_result">
 	<!-- начало на работната част -->

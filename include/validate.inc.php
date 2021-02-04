@@ -102,84 +102,84 @@ class Validate {
         	$this->result = $this->trueResult;
 			
 	}
-	
-	
-	/** ---------------------------------------------------
- 	* Проверка валидността на банкова сметка по стандарта IBAN
- 	* @name checkIBAN ()
- 	* @example 
- 	* 			$variable 	= "BG79UBBS84231003000111" - сметка в ОББ банка
- 	* 			return $result		
- 	* -----------------------------------------------------	
- 	**/
-	function checkIBAN () {
-		if (empty ($this->variable)) {
-			 $this->result = $this->emptyResult;
-			return true;
-		}
-			 
-		$weightsIBAN = array( 1,10, 3,30, 9,90,27,76,81,34,
-								49, 5,50,15,53,45,62,38,89,17,
-								73,51,25,56,75,71,31,19,93,57,
-								85,74,61,28,86,84);
-		$alpha2num = array(
-								'A'=>10,'B'=>11,'C'=>12,'D'=>13,'E'=>14,'F'=>15,'G'=>16,'H'=>17,
-								'I'=>18,'J'=>19,'K'=>20,'L'=>21,'M'=>22,'N'=>23,'O'=>24,'P'=>25,
-								'Q'=>26,'R'=>27,'S'=>28,'T'=>29,'U'=>30,'V'=>31,'W'=>32,'X'=>33,'Y'=>34,'Z'=>35);
-	
-		// актуални данни от http://www.ecbs.org/
-		$country_len = array(
-								'AD'=>24, 'AT'=>20, 'BE'=>16, 'CZ'=>24, 'DK'=>18, 'FI'=>18, 'FR'=>27, 'DE'=>22,
-								'GR'=>27, 'HU'=>28, 'IS'=>26, 'IE'=>22, 'IT'=>27, 'LU'=>20, 'NL'=>18,
-								'NO'=>15, 'PL'=>28, 'PT'=>25, 'SI'=>19, 'ES'=>24, 'SE'=>24, 'CH'=>21,
-								'GB'=>22, 'BG'=>22);
-	 
-		$IBAN = str_replace(array('-','/',' ',"\t","\n"), '', $this->variable);
-		$IBAN = strtoupper($IBAN);
-		$IBAN = ereg_replace("IBAN", "", $IBAN); // според ISO 13616 е позволено да има IBAN рефикс
-		
-		
-		
-		// преместване кода на държавата и контролната цифра накрая на стринга
-		// Използва се при пресмятане на теглата 
-		$matches = array();
-		$RegExp = '/^([A-Z][A-Z])(\d\d)([\dA-Z]{1,30})$/';
-		if (!preg_match($RegExp, $IBAN, $matches)) {
-			$this->result = $this->falseResult;
-			$this->errResult 	= "Некоректен запис в кода!";
-			return;
-		}
 
-		$IBAN = $matches[3] . $matches[1] . $matches[2];
 
-		$cc = $matches[1];
-		if (!isset($country_len[$cc]) || $country_len[$cc] != strlen($IBAN)) {
-			$this->result = $this->falseResult;
-			$this->errResult 	= "Дължината на сметката е некоректна!";
-			return;
-		}
+    /** ---------------------------------------------------
+     * Проверка валидността на банкова сметка по стандарта IBAN
+     * @name checkIBAN ()
+     * @example
+     * 			$variable 	= "BG79UBBS84231003000111" - сметка в ОББ банка
+     * 			return $result
+     * -----------------------------------------------------
+     **/
+    function checkIBAN () {
+        if (empty ($this->variable)) {
+            $this->result = $this->emptyResult;
+            return true;
+        }
 
-		// съпоставка на буквите с числата
-		$IBAN = strtr($IBAN, $alpha2num);
+        $weightsIBAN = array( 1,10, 3,30, 9,90,27,76,81,34,
+            49, 5,50,15,53,45,62,38,89,17,
+            73,51,25,56,75,71,31,19,93,57,
+            85,74,61,28,86,84);
+        $alpha2num = array(
+            'A'=>10,'B'=>11,'C'=>12,'D'=>13,'E'=>14,'F'=>15,'G'=>16,'H'=>17,
+            'I'=>18,'J'=>19,'K'=>20,'L'=>21,'M'=>22,'N'=>23,'O'=>24,'P'=>25,
+            'Q'=>26,'R'=>27,'S'=>28,'T'=>29,'U'=>30,'V'=>31,'W'=>32,'X'=>33,'Y'=>34,'Z'=>35);
 
-		// допустима дължина не повече от 36 (30 - за сметката, 4 за държавата, 2 контролна сума
-		if (!is_numeric($IBAN) || strlen($IBAN) > 36) {
-			$this->result = $this->falseResult;
-			return;
-		}
-			
-		$IBAN = strrev($IBAN);
+        // актуални данни от http://www.ecbs.org/
+        $country_len = array(
+            'AD'=>24, 'AT'=>20, 'BE'=>16, 'CZ'=>24, 'DK'=>18, 'FI'=>18, 'FR'=>27, 'DE'=>22,
+            'GR'=>27, 'HU'=>28, 'IS'=>26, 'IE'=>22, 'IT'=>27, 'LU'=>20, 'NL'=>18,
+            'NO'=>15, 'PL'=>28, 'PT'=>25, 'SI'=>19, 'ES'=>24, 'SE'=>24, 'CH'=>21,
+            'GB'=>22, 'BG'=>22);
 
-		$this->result = ($this->_get_control_number($IBAN, $weightsIBAN, 97) == 1) ? $this->trueResult : $this->falseResult;
-		if ($this->_get_control_number($IBAN, $weightsIBAN, 97) == 1) 
-			$this->result = $this->trueResult;
-		else {
-			$this->result = $this->falseResult;
-			$this->errResult 	= "Грешна контролна цифра!";
-		}
-			
-			
-	}
+        $IBAN = str_replace(array('-','/',' ',"\t","\n"), '', $this->variable);
+        $IBAN = strtoupper($IBAN);
+        $IBAN = str_replace("IBAN", "", $IBAN); // според ISO 13616 е позволено да има IBAN рефикс
+
+
+
+        // преместване кода на държавата и контролната цифра накрая на стринга
+        // Използва се при пресмятане на теглата
+        $matches = array();
+        $RegExp = '/^([A-Z][A-Z])(\d\d)([\dA-Z]{1,30})$/';
+        if (!preg_match($RegExp, $IBAN, $matches)) {
+            $this->result = $this->falseResult;
+            $this->errResult 	= "Некоректен запис в кода!";
+            return;
+        }
+
+        $IBAN = $matches[3] . $matches[1] . $matches[2];
+
+        $cc = $matches[1];
+        if (!isset($country_len[$cc]) || $country_len[$cc] != strlen($IBAN)) {
+            $this->result = $this->falseResult;
+            $this->errResult 	= "Дължината на сметката е некоректна!";
+            return;
+        }
+
+        // съпоставка на буквите с числата
+        $IBAN = strtr($IBAN, $alpha2num);
+
+        // допустима дължина не повече от 36 (30 - за сметката, 4 за държавата, 2 контролна сума
+        if (!is_numeric($IBAN) || strlen($IBAN) > 36) {
+            $this->result = $this->falseResult;
+            return;
+        }
+
+        $IBAN = strrev($IBAN);
+
+        $this->result = ($this->_get_control_number($IBAN, $weightsIBAN, 97) == 1) ? $this->trueResult : $this->falseResult;
+        if ($this->_get_control_number($IBAN, $weightsIBAN, 97) == 1)
+            $this->result = $this->trueResult;
+        else {
+            $this->result = $this->falseResult;
+            $this->errResult 	= "Грешна контролна цифра!";
+        }
+
+
+    }
 
     /* 30.04.2014 Стефан Миланов
      * По международен стандарт BIC кода е или 8 или 11 символа...
@@ -211,7 +211,6 @@ class Validate {
         }
 
     }
-
 	/** ---------------------------------------------------
  	* Проверка валидността на ЕГН
  	* @name checkEGN ()
@@ -587,57 +586,57 @@ class Validate {
 			
 			
 		$this->result 		= $this->trueResult;
-	} 
-	
-	
-	/** ---------------------------------------------------
- 	* Проверка валидността на НОМЕР НА ЛИЧНА КАРТА			- приложен е алгоритъм подобен на валидирането на ЕГН!
- 	* @name checkIDCARD ()
- 	* @example 
- 	* 			$variable 	= "305675765" 			
- 	* 			return $result		
- 	* -----------------------------------------------------	
- 	**/
-	
-	function checkIDCARD () {
-		if (empty ($this->variable)) {
-			$this->result = $this->emptyResult;
-			return true;
-		}
-
-		$IDCARD = $this->variable;		 
-
-		$RegExp = '/^([0-9]{8}[0-9]{1})$/';
-		if (!preg_match($RegExp, $IDCARD, $matches)) {
-			$this->result 		= $this->falseResult;
-			$this->errResult 	= "Некоректен брой цифри";
-			return true;
-		}
-		
-		$coeffs = array (2, 4, 8, 5, 10, 9, 7, 3); 
-		
-		$digits = array();
-		for ($i = 0; $i < strlen($IDCARD); $i++)
-			$digits[$i] = substr($IDCARD, $i, 1);
-	
-		$checksum = 0;
-		
-		for ($j = 0; $j < count($coeffs); $j++) 
-			$checksum += $digits[$j] * $coeffs[$j]; 
-		
-		$checksum %= 11;
-		
-		if (10 == $checksum) 
-			$checksum = 0;
-
-		if ($digits[8] != $checksum) { 
-			$this->result 		= $this->falseResult;
-			$this->errResult 	= "Грешна контролна цифра на въведения номер. Позиция 9";
-			return true;
-		}
-		
-		$this->result 		= $this->trueResult;
 	}
+
+
+    /** ---------------------------------------------------
+     * Проверка валидността на НОМЕР НА ЛИЧНА КАРТА			- приложен е алгоритъм подобен на валидирането на ЕГН!
+     * @name checkIDCARD ()
+     * @example
+     * 			$variable 	= "305675765"
+     * 			return $result
+     * -----------------------------------------------------
+     **/
+
+    function checkIDCARD () {
+        if (empty ($this->variable)) {
+            $this->result = $this->emptyResult;
+            return true;
+        }
+
+        $IDCARD = $this->variable;
+
+        $RegExp = '/^([0-9]{8}[0-9]{1})$/';
+        if (!preg_match($RegExp, $IDCARD, $matches)) {
+            $this->result 		= $this->falseResult;
+            $this->errResult 	= "Некоректен брой цифри";
+            return true;
+        }
+
+        $coeffs = array (2, 4, 8, 5, 10, 9, 7, 3);
+
+        $digits = array();
+        for ($i = 0; $i < strlen($IDCARD); $i++)
+            $digits[$i] = substr($IDCARD, $i, 1);
+
+        $checksum = 0;
+
+        for ($j = 0; $j < count($coeffs); $j++)
+            $checksum += $digits[$j] * $coeffs[$j];
+
+        $checksum %= 11;
+
+        if (10 == $checksum)
+            $checksum = 0;
+
+        if ($digits[8] != $checksum) {
+            $this->result 		= $this->falseResult;
+            $this->errResult 	= "Грешна контролна цифра на въведения номер. Позиция 9";
+            return true;
+        }
+
+        $this->result 		= $this->trueResult;
+    }
 	
 	/**
 	 * Проверява за валидност на ЕГН/EIN по зададен низ
