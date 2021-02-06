@@ -32,7 +32,7 @@
 							</td>
 							<td>
 								<select style="width:153px">
-									<option>Шумен</option>
+									<option>Димитровград</option>
 								</select>
 							</td>
 						</tr>

@@ -3,26 +3,29 @@
 	
 	class personLeavePDF extends PDFC
 	{
-		function personLeavePDF( $orientation )
+		function __construct( $orientation )
 		{
-			PDFC::PDFC( $orientation );
+            parent::__construct( $orientation );
 		}
 		
 		function PrintReport( $aParams )
 		{
+
+            $pdf_person_leave_without_num_and_date_userdata = $aParams['pdf_person_leave_without_num_and_date_userdata'];
+            $oDBFirms = new DBFirms();
+
 			$this->AddPage( 'P' );
 			
-			$this->SetFont( 'FreeSans', 'B', 10 );
-			$this->SetXY( 150, 25 );
-			$this->Cell( '', '', "вх. № {$aParams['PDFData']['leave_number']} / {$aParams['PDFData']['leave_date']} г." );
-			
-			//Row
-			$this->Ln( 6 );
-			
-			$this->moveX( -122 );
-			$this->SetFont( 'FreeSans', 'U', 12 );
-			$this->Cell( '', '', "ИНФРА ЕООД" );
-			
+//			$this->SetFont( 'FreeSans', 'B', 10 );
+			$this->SetXY( 150, 30 );
+			$this->Cell( '', '', "" );
+
+            $aJur           = $oDBFirms->getFirstJurFirm();
+            $jurEin         = $aJur['idn'] ?? "";
+
+            $this->Image( $_SESSION['BASE_DIR'] . '/images/title_'.$jurEin.'.png', '', '', 200 );
+
+
 			/*****************
 			 * --  МОЛБА  -- *
 			 *****************/
@@ -33,8 +36,15 @@
 			$this->moveX( -117 );
 			$this->SetFont( 'FreeSans', 'B', 13 );
 			$this->Cell( '', '', "МОЛБА" );
-			
-			//Row
+
+            if(!$pdf_person_leave_without_num_and_date_userdata) {
+                $this->SetFont( 'FreeSans', 'B', 10 );
+//            $this->SetXY( 150, 15 );
+                $this->moveX( -80 );
+                $this->Cell( '', '', "вх. № {$aParams['PDFData']['leave_number']} / {$aParams['PDFData']['leave_date']} г." );
+            }
+
+            //Row
 			$this->Ln( 10 );
 			
 			$this->moveX( 60 );
@@ -90,11 +100,20 @@
 			
 			$this->moveX( 25 );
 			$this->SetFont( 'FreeSans', '', 8 );
-			$this->Cell( '', '', "отпуск, по" );
-			$this->moveX( -168 );
+			$this->Cell( '', '', "отпуск от ");
+            $this->SetFont( 'FreeSans', 'B', 9 );
+            $this->moveX( -171 );
+            $this->Cell( '', '', $aParams['PDFData']['for_year']." г.");
+            $this->Line( 40, 76, 49, 76 );
+
+            $this->moveX( -160 );
+            $this->SetFont( 'FreeSans', '', 8 );
+            $this->Cell( '', '', ", по");
+
+			$this->moveX( -154 );
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			$this->Cell( '', '', $aParams['PDFData']['code_leave_name'] );
-			$this->Line( 41, 76, 130, 76 );
+			$this->Line( 56, 76, 130, 76 );
 			$this->moveX( -80 );
 			$this->SetFont( 'FreeSans', '', 8 );
 			$this->Cell( '', '', "от КТ, считано от" );
@@ -248,31 +267,35 @@
 			$this->moveX( -120 );
 			$this->SetFont( 'FreeSans', 'B', 13 );
 			$this->Cell( '', '', "ЗАПОВЕД" );
-			
-			//Row
-			$this->Ln( 6 );
-			
-			$sAddConfirmDate 	= !empty( $aParams['PDFData']['is_confirm'] ) ? " / {$aParams['PDFData']['confirm_date']} г." : "";
-			$this->moveX( -126 );
-			$this->SetFont( 'FreeSans', '', 10 );
-			$this->Cell( '', '', "№ {$aParams['PDFData']['leave_number']}" . $sAddConfirmDate );
-			$this->Line( 89, 186, 118, 186 );
-			
+
+            //Row
+            $this->Ln(6);
+
+            $sAddConfirmDate = !empty($aParams['PDFData']['is_confirm']) ? " / {$aParams['PDFData']['confirm_date']} г." : "";
+            $this->moveX(-126);
+            $this->SetFont('FreeSans', '', 10);
+            if(!$pdf_person_leave_without_num_and_date_userdata) {
+                $this->Cell('', '', "№ {$aParams['PDFData']['leave_number']}" . $sAddConfirmDate);
+                $this->Line(89, 186, 118, 186);
+            }
+
 			//Row
 			$this->Ln( 8 );
 			
 			$this->moveX( 40 );
 			$this->SetFont( 'FreeSans', 'B', 8 );
 			$this->Cell( '', '', "На основание чл. 155, ал. 1 от КТ ( чл. 156, т. 1 или т. 2 от КТ, чл. 160, ал. 1 от КТ ) и молба" );
-			
-			//Row
-			$this->Ln( 5 );
-			
-			$this->moveX( 35 );
-			$this->SetFont( 'FreeSans', 'B', 8 );
-			$this->Cell( '', '', "вх. № {$aParams['PDFData']['leave_number']} / {$aParams['PDFData']['leave_date']} г." );
-			$this->Line( 44, 199, 67, 199 );
-			
+
+            //Row
+            $this->Ln( 5 );
+
+            $this->moveX( 35 );
+            $this->SetFont( 'FreeSans', 'B', 8 );
+            if(!$pdf_person_leave_without_num_and_date_userdata) {
+                $this->Cell( '', '', "вх. № {$aParams['PDFData']['leave_number']} / {$aParams['PDFData']['leave_date']} г." );
+                $this->Line( 44, 199, 67, 199 );
+            }
+
 			//Row
 			$this->Ln( 8 );
 			
@@ -305,8 +328,8 @@
 			$this->moveX( -88 );
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			$this->Cell( '', '', $aParams['PDFData']['person_position'] );
-			$this->Line( 122, 215, 173, 215 );
-			$this->moveX( -35 );
+			$this->Line( 122, 215, 182, 215 );
+			$this->moveX( -27 );
 			$this->SetFont( 'FreeSans', '', 8 );
 			$this->Cell( '', '', "в отдел" );
 			

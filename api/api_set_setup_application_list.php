@@ -51,7 +51,7 @@
 						$oResponse->setField( 'leave_types', 			'тип',			'Сортирай по тип' );
 						$oResponse->setField( 'leave_from', 			'от дата', 		'Сортирай по дата' );
 						$oResponse->setField( 'leave_to', 				'до дата', 		'Сортирай по дата' );
-						$oResponse->setField( 'is_confirm', 			'потвърдена', 	'Сортирай по потвърдена', "images/confirm.gif" );
+						$oResponse->setField( 'is_confirm', 			'потвърдена', 	'Сортирай по потвърдена', "images/confirm.png" );
 						$oResponse->setField( 'application_days', 		'раб. дни', 	'Сортирай по дни', NULL, NULL, NULL, array('DATA_FORMAT' => DF_NUMBER) );
 						$oResponse->setField( 'updated_user', 			'...', 			'Сортиране по последно редактирал', 'images/dots.gif' );
 //						$oResponse->setField( '', 						'',  			'Изтрий', "images/cancel.gif", "delApplication", '');

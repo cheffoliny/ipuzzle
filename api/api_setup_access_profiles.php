@@ -71,7 +71,7 @@
 		$oResponse->setField(	'is_default', 
 								'по подразбиране', 
 								'Сортиране по профил по подразбиране', 
-								'images/confirm.gif', 
+								'images/confirm.png',
 								NULL, 
 								NULL, 
 								NULL

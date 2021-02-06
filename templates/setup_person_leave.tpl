@@ -227,11 +227,12 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            {*<label for="nIDPersonSubstitute" class="control-label col-sm-2">Заместник:</label>*}
-                            <div class="col-sm-12">
+                            <div class="col">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-addon wd">Заместник</span>
-                                    <select class="form-control form-control-select200"
+                                    <div class="input-group-prepend">
+                                        <i class="fa fa-refresh fa-fw"  data-fa-transform="right-22 down-10" title="Заместник"></i>
+                                    </div>
+                                    <select class="form-control"
                                             title="Заместник"
                                             id="nIDPersonSubstitute"
                                             name="nIDPersonSubstitute">
@@ -263,63 +264,49 @@
                     </div>
             </fieldset>
 
-            <fieldset style="display: none;" id="resolution">
-                <legend>Резолюция</legend>
-                <div class="container">
-                    <div class="form-inline">
-                        <div class="row">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon">
-                                    <input type="checkbox" id="nIsAllowed" name="nIsAllowed">
-                                </span>
-                                <span class="input-group-addon resolution-checkbox-label">Разрешава</span>
-                            </div>
-                            {*<div class="checkbox ">*}
-                            {*<label>*}
-                            {*<span class="resolution-checkbox-label">Разрешава </span><input type="checkbox" name="nIsAllowed" id="nIsAllowed">*}
-                            {*</label>*}
-                            {*</div>*}
-                            <div class="form-group resolution-section">
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-addon wd">Работни дни</span>
-                                    <input type="text"
-                                           title="Работни дни"
-                                            {*placeholder="Работни дни"*}
-                                           name="nApplicationDays"
-                                           id="nApplicationDays"
-                                           class="form-control form-control-inp50">
-                                </div>
-                                {*<label for="exampleInputPassword3">Работни дни</label>*}
-                                {*<input type="text" class="form-control-inp50" id="nApplicationDays" name="nApplicationDays">*}
-                            </div>
-                            {*<div class="form-group resolution-section">*}
-                            {*<label>&nbsp;,считани от</label>*}
-                            {*</div>*}
-                            <div class="form-group resolution-section">
-                                <div class="input-group input-group-sm" style="width: 220px;">
-                                    <span class="input-group-addon">
-                                        &nbsp;,считани от
-                                    </span>
-                                    <input type="text" class="form-control-inp50" id="sLeaveFrom" name="sLeaveFrom">
-                                    <span class="input-group-append">
-                                        <i class="far fa-calendar-alt"
-                                           id="btnResCalendar">
-                                        </i>
-                                    </span>
-                                </div>
-                            </div>
-                            {if $bRightResolute}
-                                <button type="button" class="btn btn-sm btn-success float-right" style="display: none;"
-                                        id="saveResLeave">Потвърди
-                                </button>
-                            {/if}
-                            <button type="button" class="btn btn-sm btn-default float-right" style="display: none;" id="printLeave">
-                                Печат
-                            </button>
+
+            <div class="input-group input-group-sm mb-1 text-white bg-info p-2"> Служебни данни </div>
+            <div class="row" style="display: none;" id="resolution">
+                <div class="col-1 pr-0 mr-0">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" type="checkbox" id="nIsAllowed" name="nIsAllowed" />
+                    </div>
+                </div>
+                <div class="col-1 p-0 m-0">
+                    <div class="form-group resolution-section">
+                        <div class="input-group input-group-sm">
+                            <input type="text" title="Работни дни" name="nApplicationDays" id="nApplicationDays"  class="form-control" />
                         </div>
                     </div>
                 </div>
-            </fieldset>
+                <div class="col p-0 m-0">
+                    <div class="input-group input-group-sm pt-2 pl-2">
+                        Работни дни, считани от
+                    </div>
+                </div>
+                <div class="col p-0 m-0">
+                    <div class="form-group resolution-section">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" id="sLeaveFrom" name="sLeaveFrom">
+                            <span class="input-group-append">
+                                <i class="far fa-calendar-alt"
+                                   id="btnResCalendar">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    {if $bRightResolute}
+                        <button type="button" class="btn btn-sm btn-success float-right" style="display: none;" id="saveResLeave">
+                            <i class="far fa-check"></i> Потвърди
+                        </button>
+                    {/if}
+                    <button type="button" class="btn btn-sm btn-info float-right mx-1" style="display: none;" id="printLeave">
+                        <i class="far fa-print "></i> Печат
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

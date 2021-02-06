@@ -218,8 +218,7 @@
 
 		/**
 		 * Функцията връща всички фирми, които са указани, че имат регион по ДДС
-		 * 
-		 * @author Павел Петров
+		 *
 		 * @name getFirmsAsDeliverer
 		 * @return array масив с фирмите
 		 */
@@ -236,12 +235,56 @@
 			";
 			
 			return $this->select($sQuery);
-		}	
-		
+		}
+
+        public function getJurFirm($nIDFirm) {
+            global $db_name_sod;
+
+            $sQuery = "
+				SELECT
+					f.jur_name,
+					f.address,
+					f.idn,
+					f.idn_dds,
+					f.jur_mol,
+					f.id_office_dds as dds
+				FROM {$db_name_sod}.firms ff
+				LEFT JOIN {$db_name_sod}.offices o ON (o.id = ff.id_office_dds AND o.to_arc = 0)
+				LEFT JOIN {$db_name_sod}.firms f ON f.id = o.id_firm
+				WHERE ff.id = {$nIDFirm}
+				  AND f.to_arc = 0
+				  AND ff.to_arc = 0
+				  AND f.jur_name != ''
+			";
+
+            return $this->selectOnce($sQuery);
+        }
+
+        public function getFirstJurFirm() {
+            global $db_name_sod;
+
+            $sQuery = "
+				SELECT
+					f.jur_name,
+					f.address,
+					f.idn,
+					f.idn_dds,
+					f.jur_mol,
+					f.id_office_dds as dds
+				FROM {$db_name_sod}.firms ff
+				LEFT JOIN {$db_name_sod}.offices o ON (o.id = ff.id_office_dds AND o.to_arc = 0)
+				LEFT JOIN {$db_name_sod}.firms f ON f.id = o.id_firm
+				WHERE f.to_arc = 0
+				  AND ff.to_arc = 0
+				  AND f.jur_name != ''
+			";
+
+            return $this->selectOnce($sQuery);
+        }
+
 		/**
 		 * Функцията връща всички фирми, групирани по юридически имена
-		 * 
-		 * @author Павел Петров
+		 *
 		 * @name getFirmsAsClient
 		 * @return array масив с фирмите
 		 */

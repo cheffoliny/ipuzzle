@@ -40,8 +40,8 @@
 			$oResponse->setField( "measure", 			"мерна единица", 		"Сортирай по мерна единица" );
 			$oResponse->setField( "source", 			"източник", 			"Сортирай по източник" );
 			$oResponse->setField( "leave_type", 		"при отпуски", 			"Сортирай" );
-			$oResponse->setField( "is_compensation", 	"обезщетение", 			"Сортирай", "images/confirm.gif", NULL, NULL, array( "style" => "width: 100px;", "DATA_FORMAT" => DF_CENTER ) );
-			$oResponse->setField( "is_hospital", 		"болнични", 			"Сортирай", "images/confirm.gif", NULL, NULL, array( "style" => "width: 100px;", "DATA_FORMAT" => DF_CENTER ) );
+			$oResponse->setField( "is_compensation", 	"обезщетение", 			"Сортирай", "images/confirm.png", NULL, NULL, array( "style" => "width: 100px;", "DATA_FORMAT" => DF_CENTER ) );
+			$oResponse->setField( "is_hospital", 		"болнични", 			"Сортирай", "images/confirm.png", NULL, NULL, array( "style" => "width: 100px;", "DATA_FORMAT" => DF_CENTER ) );
 			
 			if( $right_edit )
 			{

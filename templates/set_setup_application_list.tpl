@@ -55,7 +55,7 @@
 				</div>
 			</div>
 
-			<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height:330px; overflow: auto;"></div>
+			<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height:350px; overflow: auto;"></div>
 			<!-- край на работната част -->
 			<nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
 				<div class="col-12">

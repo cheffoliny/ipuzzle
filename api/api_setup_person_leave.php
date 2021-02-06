@@ -85,7 +85,7 @@ class ApiSetupPersonLeave
             $oResponse->setFormElement("form1", "sLeaveFromOffer", array(), mysqlDateToJsDate($aData["sLeaveFromOffer"]));
             $oResponse->setFormElement("form1", "nIDPersonSubstitute", array());
             $oResponse->setFormElement("form1", "is_confirmed", array(), 0);
-            $oResponse->setFormElementChild('form1', 'nIDPersonSubstitute', array("value" => 0), '--Изберете--');
+            $oResponse->setFormElementChild('form1', 'nIDPersonSubstitute', array("value" => 0), '-- Изберете заместник --');
 
 
             $oResponse->setFormElement("form1", "nIDCodeLeave", array());
