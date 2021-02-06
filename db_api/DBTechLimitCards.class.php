@@ -1271,7 +1271,7 @@ class DBTechLimitCards extends DBBase2 {
             if (!empty($aObject['id_oldobj'])) {
                 $oDBObjects2->makeNotActive($aObject['id_oldobj']);
             }
-        } elseif ($oDBTechRequests->getRequestBy($aLimitCard['id']) === 'company') { // Ако е заявен от Телепол
+        } elseif ($oDBTechRequests->getRequestBy($aLimitCard['id']) === 'company') { //
             $reason = $oDBHoldupReasons->getReasonById($aRequest['id_tech_reason']);
             if ($oDBHoldupReasons->isWarranty($aLimitCard['id_object']) && (int) $reason['is_warranty'] == 1) { // ако обекта е в гаранция
                 //                    APILog::Log(0,ArrayToString($aLastService));
