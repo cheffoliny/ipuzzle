@@ -1,7 +1,7 @@
 <pre class='xdebug-var-dump' dir='ltr'>
 <small>C:\wamp64\www\ipuzzle-git\include\general.inc.php:1278:</small>
 <b>array</b> <i>(size=3)</i>
-  'id' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'593'</font> <i>(length=3)</i>
+  'id' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'193'</font> <i>(length=3)</i>
   'remaining_days' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'20'</font> <i>(length=2)</i>
   'due_days' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'20'</font> <i>(length=2)</i>
 </pre>

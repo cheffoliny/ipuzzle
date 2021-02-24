@@ -40,36 +40,53 @@ function tab_href( page ) {
 					<li class="nav-item text-center" title="Информация">{if $view.object_info_view}<a class="nav-link" href="#" onclick="return tab_href('object_info');" id='object_info'><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{else}<a class="nav-link disabled" href="#"><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{/if}</li>
 				{/if}
 			{/if}
-		
+
+
+            {if $isFO and  $key == 'object_shifts_view' }
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+
+                        {if $page eq object_shifts} <i class="fas fa-tags fa-lg ml-2 mr-2"></i><br/> Тип смени &nbsp;&nbsp;
+                        {elseif $page eq object_duty} <i class="fas fa-sync-alt fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Смяна&nbsp;&nbsp;
+                        {elseif $page eq object_personnel_schedule } <i class="far fa-user fa-lg ml-2 mr-2"></i><br/> В график
+                        {else} <i class="fa fa-calendar fa-lg ml-2 mr-2"></i><br/> ГРАФИК
+                        {/if}
+                    </a>
+                    <div class="dropdown-menu">
+                        {if $view.object_shifts_view}
+                            <a class="dropdown-item text-puzzle" href="#" onclick="return tab_href('object_shifts');" id='object_shifts'><i class="fa fa-tags"></i> Тип смени </a>
+                        {else}
+                            <a class="dropdown-item text-puzzle disabled"><i class="fa fa-tags"></i> Тип смени </a>
+                        {/if}
+                        {if $view.object_personnel_schedule_view}
+                            <a class="dropdown-item text-puzzle" href="#" onclick="return tab_href('object_personnel_schedule');" id='object_personnel_schedule'><i class="far fa-users"></i> В график </a>
+                        {else}
+                            <a class="dropdown-item text-puzzle disabled"><i class="far fa-users"></i> В график </a>
+                        {/if}
+                        {if $view.object_duty_view}
+                            <a class="dropdown-item text-puzzle" href="#" onclick="return tab_href('object_duty');" id='object_duty'><i class="fa fa-sync-alt"></i> Смяна </a>
+                        {else}
+                            <a class="dropdown-item text-puzzle disabled"><i class="fa fa-sync-alt"></i> Смяна </a>
+                        {/if}
+                    </div>
+                </li>
+            {/if}
 			{*{if $key == 'object_personnel_schedule_view'}*}
 				{* Служители - График *}{*	  *}
-				{*{if $page eq object_personnel_schedule and $isFO}*}
-					{*<li class="nav-item" title="Служители за график"><a class="nav-link active" href="#"><i class="fa fa-id-card-o fa-lg"></i></a></li>*}
-				{*{else}*}
-					{*<li class="nav-item" title="Служители за график">{if $view.object_personnel_schedule_view}<a class="nav-link" href="#" onclick="return tab_href('object_personnel_schedule');" id='object_personnel_schedule'><i class="fa fa-id-card-o fa-lg"></i></a>{else}<a class="nav-link disabled" href="#"><i class="fa fa-id-card-o fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
+
 				{**}
 			{*{/if}*}
 			  {**}
 			{*{if $key == 'object_shifts_view' and $isFO}*}
 				{* Видове смени *}{*	  *}
-				{*{if $page eq object_shifts}*}
-                    {*<li class="nav-item" title="Видове смени"><a class="nav-link active" href="#"><i class="fa fa-exchange fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Видове смени">{if $view.object_shifts_view}<a class="nav-link" href="#" onclick="return tab_href('object_shifts');" id='object_shifts'><i class="fa fa-exchange fa-lg"></i></a>{else} ><a class="nav-link disabled" href="#"><i class="fa fa-exchange fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
+
 				{**}
 			{*{/if} *}
 
-			{*{if $key == 'object_duty_view' and $isFO}*}
-				{* Смяна *}{*	  *}
-				{*{if $page eq object_duty}*}
-                    {*<li class="nav-item" title="Валидиране на смяна"><a class="nav-link active"><i class="fa fa-exchange fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Валидиране на смяна">{if $view.object_duty_view}<a class="nav-link" href="#" onclick="return tab_href('object_duty');" id='object_duty'><i class="fa fa-exchange fa-lg"></i></a>{else}<a class="nav-link disabled"><i class="fa fa-exchange fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-				{**}
-			{*{/if} *}
+			{if $key == 'object_duty_view' and $isFO}
+
+
+			{/if}
 
 			{*{if $key == 'object_personnel_view' and $isFO}*}
 				{* Служители *}{*	  *}

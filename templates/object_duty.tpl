@@ -104,32 +104,13 @@
 <input type="hidden" id="nTime" name="nTime" value="0" />
 <input type="hidden" id="nStep" name="nStep" value="0" />
 
-<table class="search" style="width:100%;">
-	<tr>
-		<td class="header_buttons">
-		<span id="head_window">Смяна за обект {$object}</span> 
-		<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
-		{include file=object_tabs.tpl}
-		</td>
-	</tr>
+	{include file='object_tabs.tpl'}
 
-	<tr class="odd">
-		<td id="filter_result">
-		
-	{if $mobile}
-		{if $cnt>6}
-			<div id="search" style="padding-top: 10px; width: 800px; height: 220px; overflow-y: auto">
-		{else}
-			<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto">
-		{/if}
-	{/if}
-	
-	<!-- начало на работната част -->
-	
+	<div class="container-fluid mb-4" id="filter_result">
 		<table class="page_data">
 			<tr>
 				<td style="text-align: left; padding: 2px;">
-				
+
 					<div class="input-group" style="width:175px;">
 						<span class="input-group-addon">
 						<img src="images/glyphicons/cal.png" onClick="goTime();" style="width: 12px; height: 12px;"></span>
@@ -137,46 +118,36 @@
 						<input type="text" name="sShiftT" id="sShiftT" value="" style="width: 45px; text-align: center;" onkeypress="return formatTime(event);" maxlength="10" title="ЧЧ:ММ" />
 						<span class="input-group-addon"><img src="images/glyphicons/clock.png" onClick="goTime();" style="width: 12px; height: 12px;"></span>
 					</div>
-					
+
 				</td>
 				<td style="width: 200px; text-align: right; padding: 2px;">
 					Планирано:&nbsp;<input type="text" name="sDuty" id="sDuty" value="" style="width: 100px;" readonly />
-				
 				</td>
 			</tr>
+		</table>
+		<div class="row clearfix mt-2 h-75" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
 
-	  </table>
-	
-
-	<hr>
-
-	<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="padding: 1px; width: 100%; height: 360px; overflow-x: auto; overflow-y: auto; !important"></div>
-	
 	</div>
- 	<!-- край на работната част -->
-	</td>
-</tr>
-</table>
 
-<div id="search"  style="padding-top:10px;width:800px;">
-	<table class="page_data" >
-		<tr valign="top">
-			<td valign="top" style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
-				<button class="btn btn-xs btn-primary" onClick="dutyNext('prev');" ><img src="images/glyphicons/hand_left.png" style="width: 16px; height: 16px;" />Предишна </button>
-				<button class="btn btn-xs btn-primary" onClick="dutyNext('next');" >Следваща <img src="images/glyphicons/hand_right.png" style="width: 16px; height: 16px;" /></button>
-			</td>
-			<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
+	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+		<div class="col-6 pl-0">
+			<div class="input-group input-group-sm">
+				<button class="btn btn-sm btn-primary mr-1" onClick="dutyNext('prev');" ><i class="far fa-angle-left"></i> Предишна </button>
+				<button class="btn btn-sm btn-primary" onClick="dutyNext('next');" >Следваща <i class="far fa-angle-right"></i> </button>
+			</div>
+		</div>
+		<div class="col">
+			<div class="input-group input-group-sm ml-1">
 				{if $auto_schedule}
-					<button type="button" class="btn btn-xs btn-success" name="Validate" onClick="autoValidate(); return false;" title="Валидирай всички смени"><img src="images/glyphicons/refresh.png" style="width: 14px; height: 14px;"> Валидация </button>
+					<button class="btn btn-sm btn-success mr-1" name="Validate" onClick="autoValidate(); return false;" title="Валидирай всички смени"><img src="images/glyphicons/refresh.png" style="width: 14px; height: 14px;"> Валидация </button>
 				{/if}
-				<button id="butShift" class="btn btn-xs btn-success" onClick="goDuty();"><img src="images/glyphicons/change.png" style="width: 14px; height: 14px;"> Смяна </button>
-				<button id="b100" class="btn btn-xs btn-primary" onClick="openSchedule();"><img src="images/glyphicons/list.png" style="width: 14px; height: 14px;"> График </button>
-				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>
-			</td>
-		</tr>
-	</table>
-</div>
 
+				<button class="btn btn-sm btn-success mr-1"	onClick="goDuty();"         ><i class="fa fa-plus"></i> Смяна </button>
+				<button class="btn btn-sm btn-light mr-1"	onClick="openSchedule();"       ><i class="fas fa-calendar"  ></i> График </button>
+				<button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+			</div>
+		</div>
+	</nav>
 <div id="NoDisplay" style="display:none"></div>
 </form>
 

@@ -160,6 +160,38 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <i class="fa fa-refresh fa-fw"  data-fa-transform="right-22 down-10" title="Заместник"></i>
+                                    </div>
+                                    <select class="form-control"
+                                            title="Заместник"
+                                            id="nIDPersonSubstitute"
+                                            name="nIDPersonSubstitute">
+                                    </select>
+                                </div>
+                                {*<select name="nIDPersonSubstitute" id="nIDPersonSubstitute" class="form-control input-sm">*}
+                                {*</select>*}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon wd ">Чл. от КТ</span>
+                                    <select class="form-control form-control-select200"
+                                            title="Чл. от КТ"
+                                            id="nIDCodeLeave"
+                                            name="nIDCodeLeave">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group form-group-sm">
                         <div class="row">
                             <div class="col">
@@ -223,38 +255,6 @@
                                 </div>
                             </div>
                             <div class="col-6"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <div class="input-group input-group-sm">
-                                    <div class="input-group-prepend">
-                                        <i class="fa fa-refresh fa-fw"  data-fa-transform="right-22 down-10" title="Заместник"></i>
-                                    </div>
-                                    <select class="form-control"
-                                            title="Заместник"
-                                            id="nIDPersonSubstitute"
-                                            name="nIDPersonSubstitute">
-                                    </select>
-                                </div>
-                                {*<select name="nIDPersonSubstitute" id="nIDPersonSubstitute" class="form-control input-sm">*}
-                                {*</select>*}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-addon wd ">Чл. от КТ</span>
-                                    <select class="form-control form-control-select200"
-                                            title="Чл. от КТ"
-                                            id="nIDCodeLeave"
-                                            name="nIDCodeLeave">
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="row">

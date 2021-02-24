@@ -34,62 +34,31 @@
 {/literal}
 
 <form name="form1" id="form1" onsubmit="return false;">
-<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
-<input type="hidden" id="nIDShift" name="nIDShift" value="0" />
+	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
+	<input type="hidden" id="nIDShift" name="nIDShift" value="0" />
 
-<table class="search" style="width:100%;">
-	<tr>
-		<td class="header_buttons">
-		<span id="head_window">Видове смени за обект {$object}</span> 
-		<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
-		{include file=object_tabs.tpl}
-		</td>
-	</tr>
+	{include file='object_tabs.tpl'}
 
-	<tr class="odd">
-		<td id="filter_result">
-		{*{if $mobile}*}
-			{*{if $cnt>6}*}
-				{*<div id="search" style="padding-top: 10px; width: 800px; height: 220px; overflow-y: auto">*}
-			{*{else}*}
-				{*<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto">*}
-			{*{/if}*}
-		{*{/if}*}
-		
-		<!-- начало на работната част -->
-		
-	  <table class="page_data">
-		<tr>
-			<td valign="top" style="text-align: right; width: 800px; padding: 2px;">
-					
-			<button class="btn btn-xs btn-success" onClick="editShifts(0);"><i class="fa fa-plus"></i> Нова смяна</button>
-			
-			</td>
-		</tr>
-	</table>
-	
-	<hr>
+	<div class="container-fluid mb-4" id="filter_result">
 
-	<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 780px; height: 360px;overflow: auto;"></div>
-	
- 	<!-- край на работната част -->
-	</td>
-</tr>
-</table>
+		<div class="row clearfix mt-2 h-75" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
 
-<div id="search"  style="padding-top:10px;width:800px;">
-	<table class="page_data" >
-		<tr valign="top">
-			<td>
-				&nbsp;
-			</td>
-			<td style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
-				<button id="b100" class="btn btn-xs btn-primary" onClick="openSchedule();"><img src="images/glyphicons/list.png" style="width: 14px; height: 14px;"> График </button>
-				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>
-			</td>
-		</tr>
-	</table>
-</div>
+	</div>
+	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+		<div class="col-6 pl-0">
+			<div class="input-group input-group-sm">
+
+			</div>
+		</div>
+		<div class="col">
+			<div class="input-group input-group-sm ml-1">
+				<button class="btn btn-sm btn-success mr-1"	onClick="editShifts(0);"         ><i class="fa fa-plus"></i> Смяна </button>
+				<button class="btn btn-sm btn-light mr-1"	onClick="openSchedule();"       ><i class="fas fa-calendar"  ></i> График </button>
+				<button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+			</div>
+		</div>
+	</nav>
+
 <div id="NoDisplay" style="display:none"></div>
 </form>
 
