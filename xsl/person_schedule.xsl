@@ -209,10 +209,8 @@
 					<button class="btn btn-sm btn-success mx-1" onclick="dialogObjectDuty('nID={/response/action/form[@id='form1']/e[@id='nIDObject']/@value}')"><i class="far fa-sync"></i> Смяна</button>
 					<button class="btn btn-sm btn-success"  onclick="onSave()"><i class="far fa-save"></i> Запази</button>
 					<button class="btn btn-sm btn-danger mx-1" onclick="cleanShifts()"><i class="far fa-eraser"></i> Почисти</button>
-					<xsl:if test="/response/action/form[@id='form1']/e[@id='super_right']/@value=1">
-						<button class="btn btn-sm btn-warning" onclick="invalidate()">&lt;==</button>
-						<button class="btn btn-sm btn-warning" onclick="validate()">==&gt;</button>
-					</xsl:if>
+					<button class="btn btn-sm btn-warning mx-1" onclick="invalidate()"><i class="far fa-angle-double-left"></i></button>
+					<button class="btn btn-sm btn-warning mx-1" onclick="validate()"><i class="far fa-angle-double-right"></i></button>
 				</div>
 			</div>
 		</div>
