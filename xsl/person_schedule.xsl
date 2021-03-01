@@ -207,7 +207,7 @@
 				<div class="input-group input-group-sm ml-1">
 					<button class="btn btn-sm btn-info" onclick="dialogObjectPersonnelSchedule('nID={/response/action/form[@id='form1']/e[@id='nIDObject']/@value}')"><i class="far fa-users"></i> Служители</button>
 					<button class="btn btn-sm btn-success mx-1" onclick="dialogObjectDuty('nID={/response/action/form[@id='form1']/e[@id='nIDObject']/@value}')"><i class="far fa-sync"></i> Смяна</button>
-					<button class="btn btn-sm btn-success"  onclick="onSave()"><i class="far fa-save"></i> Запази</button>
+					<button class="btn btn-sm btn-success mx-1"  onclick="onSave()"><i class="far fa-save"></i> Запази</button>
 					<button class="btn btn-sm btn-danger mx-1" onclick="cleanShifts()"><i class="far fa-eraser"></i> Почисти</button>
 					<button class="btn btn-sm btn-warning mx-1" onclick="invalidate()"><i class="far fa-angle-double-left"></i></button>
 					<button class="btn btn-sm btn-warning mx-1" onclick="validate()"><i class="far fa-angle-double-right"></i></button>
