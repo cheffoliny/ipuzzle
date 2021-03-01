@@ -200,7 +200,7 @@
 						<option value="2"> за счетоводство </option>
 						<option value="3"> в ексел </option>
 					</select>
-					<button class="btn btn-sm btn-secondary" onclick="onPrint()"><i class="fas fa-print"></i></button>
+					<button class="btn btn-sm btn-secondary" onclick="onPrint()"><i class="fas fa-print"></i> Печат</button>
 				</div>
 			</div>
 			<div class="col-10">
