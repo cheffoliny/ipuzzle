@@ -236,11 +236,9 @@ class DBScheduleMonthNorms extends DBBase2 {
         if ($nMonth <= 4) {
             $sStartDate = $nYear . "01";
         } else if ($nMonth > 4 && $nMonth <= 8) {
-            $sStartDate = $nYear . "04";
-//        } else if ($nMonth > 6 && $nMonth <= 9) {
-//            $sStartDate = $nYear . "07";
+            $sStartDate = $nYear . "05";
         } else if ($nMonth > 8 && $nMonth <= 12) {
-            $sStartDate = $nYear . "10";
+            $sStartDate = $nYear . "09";
         }
 
         $sEndDate = $nYear . ( ( strlen($nMonth) < 2 ) ? ( "0" . $nMonth ) : $nMonth );

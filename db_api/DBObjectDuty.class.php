@@ -503,6 +503,7 @@
 					DATE_FORMAT(startShift, '%Y-%m')
 				FROM object_duty
 				WHERE 1
+				ORDER BY startShift DESC
 				";
 			
 			return $this->selectAssoc( $sQuery );
