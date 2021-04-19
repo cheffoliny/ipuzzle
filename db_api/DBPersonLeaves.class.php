@@ -866,14 +866,14 @@ class DBPersonLeaves extends DBBase2
 //				? $nYear . "-01"
 //				: $nYear . "-07";
 
-        if ($nMonth <= 3) {
-            $sStartDate = $nYear . "-01";
-        } else if ($nMonth > 3 && $nMonth <= 6) {
-            $sStartDate = $nYear . "-04";
-        } else if ($nMonth > 6 && $nMonth <= 9) {
-            $sStartDate = $nYear . "-07";
-        } else if ($nMonth > 9 && $nMonth <= 12) {
-            $sStartDate = $nYear . "-10";
+        if($nMonth <= 4) {
+            $sStartDate = $nYear . "01";
+        } else if ($nMonth > 4 && $nMonth <=8) {
+            $sStartDate = $nYear . "05";
+//        } else if ($nMonth > 8 && $nMonth <=12) {
+//            $sStartDate = $nYear . "09";
+        } else if ($nMonth > 8 && $nMonth <=12) {
+            $sStartDate = $nYear . "09";
         }
 
         $nMonth--;

@@ -219,7 +219,7 @@ class DBScheduleMonthNorms extends DBBase2 {
      * @param int $nYear
      * @param int $nMonth
      * @param bool $bInclude ( Включително последния месец )
-     * 
+     *
      * @return int
      */
     public function getHalfyearHourNormsToDate($nYear, $nMonth, $bInclude) {
@@ -233,13 +233,13 @@ class DBScheduleMonthNorms extends DBBase2 {
 //				? $nYear . "01"
 //				: $nYear . "07";
 
-        if ($nMonth <= 3) {
+        if ($nMonth <= 4) {
             $sStartDate = $nYear . "01";
-        } else if ($nMonth > 3 && $nMonth <= 6) {
+        } else if ($nMonth > 4 && $nMonth <= 8) {
             $sStartDate = $nYear . "04";
-        } else if ($nMonth > 6 && $nMonth <= 9) {
-            $sStartDate = $nYear . "07";
-        } else if ($nMonth > 9 && $nMonth <= 12) {
+//        } else if ($nMonth > 6 && $nMonth <= 9) {
+//            $sStartDate = $nYear . "07";
+        } else if ($nMonth > 8 && $nMonth <= 12) {
             $sStartDate = $nYear . "10";
         }
 
@@ -283,7 +283,7 @@ class DBScheduleMonthNorms extends DBBase2 {
      *
      * @param int $nYear
      * @param int $nMonth
-     * 
+     *
      * @return int
      */
     public function getHourNormsForDate($nYear, $nMonth) {
@@ -293,7 +293,7 @@ class DBScheduleMonthNorms extends DBBase2 {
         }
         //End Validation
         //Initialization
-        $sDate = $nYear . ( ( strlen($nMonth) < 2 ) ? ( "0" . $nMonth ) : $nMonth );        
+        $sDate = $nYear . ( ( strlen($nMonth) < 2 ) ? ( "0" . $nMonth ) : $nMonth );
         //End Initialization
 
         $sQuery = "
@@ -306,8 +306,8 @@ class DBScheduleMonthNorms extends DBBase2 {
 					AND sch_mon_nor.month = '{$sDate}'
 				LIMIT 1
 			";
-//            APILog::Log(0,ArrayToString($sQuery));
-        $aData = $this->selectOnce($sQuery);        
+            APILog::Log(0,ArrayToString($sQuery));
+        $aData = $this->selectOnce($sQuery);
 
         if (!empty($aData) && isset($aData['hours'])) {
             return $aData['hours'];
@@ -322,7 +322,7 @@ class DBScheduleMonthNorms extends DBBase2 {
         }
         $oDBPersonnelContractsHistory = new DBPersonnelContractsHistory();
 
-        $normMonth = $this->getHourNormsForDate($nYear, $nMonth);        
+        $normMonth = $this->getHourNormsForDate($nYear, $nMonth);
         $workHours = $oDBPersonnelContractsHistory->getContractDataForSchedule($nIDPerson);
         $oDBObjectScheduleSettings = new DBObjectScheduleSettings();
         $settings = $oDBObjectScheduleSettings->getActiveSettings();
@@ -352,7 +352,7 @@ class DBScheduleMonthNorms extends DBBase2 {
 
         }
 
-        // echo 'month_norms-'.$normMonth.'-work_time-'.$workHours['work_time'].'-max_day_work_hours-'.$settings['max_day_work_hours'].'<br>';          
+        // echo 'month_norms-'.$normMonth.'-work_time-'.$workHours['work_time'].'-max_day_work_hours-'.$settings['max_day_work_hours'].'<br>';
         if ($person_norm) {
             return getOnlyHours(SecToTime($person_norm));
         }
@@ -363,7 +363,7 @@ class DBScheduleMonthNorms extends DBBase2 {
     public function getPersonPeriodNorms($nIDPerson, $period_array) {
         $next_tmp = array();
         $prev_tmp = array();
-        
+
         if (empty($period_array['next']) || strtotime($period_array['next']) < strtotime($period_array['prev'])) {
             throw new Exception('Няма зададена дата за следващ отчетен период!');
 //                return false;
@@ -382,15 +382,15 @@ class DBScheduleMonthNorms extends DBBase2 {
         $norm_sum = 0;
         $start_year = $prev_tmp[0];
         $start_month = $prev_tmp[1];
-        
+
         while ($start_year != $next_tmp[0] || $start_month != $next_tmp[1]) {
             $norm = $this->getPersonalMonthNorm($nIDPerson, $start_year, $start_month);
             $norm_sum += $norm;
-            
+
             if ($start_month <= $next_tmp[1] || $start_year < $next_tmp[0]) {
                 $start_month++;
             }
-            
+
             if ($start_month > 12 && $start_year != $next_tmp[0]) {
                 $start_month = 1;
                 $start_year++;
@@ -441,7 +441,7 @@ class DBScheduleMonthNorms extends DBBase2 {
                 AND smn.to_arc = 0
                 ORDER BY smn.month DESC
                 LIMIT 1
-            ";        
+            ";
         return $this->selectOne($sQuery);
     }
 
