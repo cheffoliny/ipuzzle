@@ -418,28 +418,27 @@
             </div>
         </div>
     </div>
-
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" class="px-2 h-25" style="overflow: auto;"></div>
-
-    <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
-        <div class="col-6 col-sm-8 col-lg-8 pl-0">
-            <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-                    <span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
-                </div>
-                <input class="form-control" type="text" id="invoice_name" name="invoice_name" placeholder="Име за фактура..." />
-            </div>
-        </div>
-        <div class="col-6 col-sm-4 col-lg-4">
-            <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-light mr-1"	onclick="editFace(0)"           ><i class="fas fa-plus"  ></i> Контакт </button>
-                <button class="btn btn-sm btn-success mr-1"	onClick="formSubmit();"         ><i class="fas fa-check" ></i> Запиши </button>
-                <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
-            </div>
-        </div>
-    </nav>
-
 </form>
+
+<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" class="px-2 h-25" style="overflow: auto;"></div>
+
+<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+    <div class="col-6 col-sm-8 col-lg-8 pl-0">
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
+            </div>
+            <input class="form-control" type="text" id="invoice_name" name="invoice_name" placeholder="Име за фактура..." />
+        </div>
+    </div>
+    <div class="col-6 col-sm-4 col-lg-4">
+        <div class="input-group input-group-sm ml-1">
+            <button class="btn btn-sm btn-light mr-1"	onclick="editFace(0)"           ><i class="fas fa-plus"  ></i> Контакт </button>
+            <button class="btn btn-sm btn-success mr-1"	onClick="formSubmit();"         ><i class="fas fa-check" ></i> Запиши </button>
+            <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+        </div>
+    </div>
+</nav>
 
 
 
