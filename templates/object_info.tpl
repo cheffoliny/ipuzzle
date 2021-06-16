@@ -398,7 +398,7 @@
         </div>
 
         <div class="row clearfix mt-2">
-            <div class="col-12 px-1">
+            <div class="col-12 pl-1 pr-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
@@ -408,7 +408,7 @@
             </div>
         </div>
         <div class="row clearfix mt-2">
-            <div class="col-12 px-1">
+            <div class="col-12 pl-1 pr-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
@@ -419,7 +419,7 @@
         </div>
     </div>
 
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" class="h-25" style="overflow: auto;"></div>
+    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" class="h-25" style="overflow: auto;"></div>
 
     <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
         <div class="col-6 col-sm-8 col-lg-8 pl-0">
