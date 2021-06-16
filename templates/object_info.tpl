@@ -419,7 +419,7 @@
         </div>
     </div>
 </form>
-<div class="p-0 m-0 h-25" style="overflow: auto; position: relative;">
+<div class="p-0 m-0" style="overflow: auto; position: relative; height: 300px;">
     <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
 </div>
 <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
