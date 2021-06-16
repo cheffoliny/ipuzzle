@@ -237,9 +237,9 @@
 
     {include file='object_tabs.tpl'}
 
-    <div class="container-fluid mb-4">
+    <div class="container-fluid mb-4 mx-2">
         <div class="row clearfix mt-2">
-            <div class="col-2 col-sm-2 col-lg-2 pl-0">
+            <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-home fa-fw" data-fa-transform="right-22 down-10" title="Номер на обект"></span>
@@ -248,7 +248,7 @@
                     <input type="hidden" name="oldNum" id="oldNum"/>
                 </div>
             </div>
-            <div class="col-7 col-sm-7 col-lg-7">
+            <div class="col-7 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-home fa-fw" data-fa-transform="right-22 down-10" title="Номер на обект"></span>
@@ -256,7 +256,7 @@
                     <input class="form-control" type="text" name="name" id="name"  placeholder="Име на обекта..." />
                 </div>
             </div>
-            <div class="col-3 col-sm-3 col-lg-3">
+            <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-eye fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
@@ -267,7 +267,7 @@
         </div>
 
         <div class="row clearfix mt-2">
-            <div class="col-2 col-sm-2 col-lg-2 pl-3">
+            <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     {*<div class="input-group-prepend">*}
                         {*<span class="fa fa-play" title="Изграден на..."></span>*}
@@ -275,7 +275,7 @@
                     <input readonly class="form-control-plaintext text-white" name="start_time" id="start_time" />
                 </div>
             </div>
-            <div class="col-7 col-sm-7 col-lg-7">
+            <div class="col-7 px-1">
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
@@ -291,7 +291,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3 col-sm-3 col-lg-3">
+            <div class="col-3">
                 <div class="input-group input-group-sm pl-0">
                     <div class="input-group-prepend">
                         <span class="fab fa-whatsapp fa-fw" data-fa-transform="right-22 down-10" title="Телефон на обекта"></span>
@@ -301,7 +301,7 @@
             </div>
         </div>
         <div class="row clearfix mt-2">
-            <div class="col-2 col-sm-2 col-lg-2 pl-0">
+            <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-crop fa-fw" data-fa-transform="right-22 down-10" title="Дистанция..."></span>
@@ -309,7 +309,7 @@
                     <input class="form-control form-control-inp50" type=text name="nDistance" id="nDistance" onkeypress="return formatDigits(event);" />
                 </div>
             </div>
-            <div class="col-7 col-sm-7 col-lg-7">
+            <div class="col-7 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-road fa-fw" data-fa-transform="right-22 down-10" title="Ул./№/бл./вх./ет./ап./Местност"></span>
@@ -317,7 +317,7 @@
                     <input class="form-control" type=text name="sAddress" id="sAddress" placeholder="Ул./Местност" />
                 </div>
             </div>
-            <div class="col-3 col-sm-3 col-lg-3">
+            <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-hashtag fa-fw" data-fa-transform="right-22 down-10" title="Дейност"></span>
@@ -327,7 +327,7 @@
             </div>
         </div>
         <div class="row clearfix mt-4">
-            <div class="col-2 col-sm-2 col-lg-2 pl-0">
+            <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="far fa-clock fa-fw" data-fa-transform="right-22 down-10" title="Край на работно време..."></span>
@@ -335,7 +335,7 @@
                     <input class="form-control" type=text name="work_time_alert" id="work_time_alert" onkeypress="return formatTimeS(event);" placeholder="00:00:00" />
                 </div>
             </div>
-            <div class="col-7 col-sm-7 col-lg-7">
+            <div class="col-7 px-1">
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
@@ -351,7 +351,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3 col-sm-3 col-lg-3">
+            <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-cog fa-fw" data-fa-transform="right-22 down-10" title="Сервизна фирма"></span>
@@ -361,7 +361,7 @@
             </div>
         </div>
         <div class="row clearfix mt-2">
-            <div class="col-2 col-sm-2 col-lg-2">
+            <div class="col-2 px-1">
                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                     <label title="СОД" class="{$labelSOD}">
                         <input type="checkbox" name="isSOD" id="isSOD" autocomplete="on" /><i class="fa fa-car"></i>
@@ -371,7 +371,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col-7 col-sm-7 col-lg-7">
+            <div class="col-7 px-1">
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                          <div class="input-group-prepend">
@@ -387,7 +387,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3 col-sm-3 col-lg-3">
+            <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-cogs fa-fw" data-fa-transform="right-22 down-10" title="Сервизен офис"></span>
@@ -398,7 +398,7 @@
         </div>
 
         <div class="row clearfix mt-2">
-            <div class="col-12 col-sm-12 col-lg-12 pl-0">
+            <div class="col-12 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
@@ -408,7 +408,7 @@
             </div>
         </div>
         <div class="row clearfix mt-2">
-            <div class="col-12 col-sm-12 col-lg-12 pl-0">
+            <div class="col-12 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
