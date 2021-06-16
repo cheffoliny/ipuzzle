@@ -419,7 +419,7 @@
         </div>
     </div>
 
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" class="h-25" style="overflow: auto;"></div>
+    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" class="px-2 h-25" style="overflow: auto;"></div>
 
     <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
         <div class="col-6 col-sm-8 col-lg-8 pl-0">
