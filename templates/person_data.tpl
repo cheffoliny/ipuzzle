@@ -289,57 +289,88 @@
 
 
 		{include file='person_tabs.tpl'}
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-			<tr class="odd">
-				<td>
+
+		<div class="container-fluid mb-4">
 				<!-- начало на работната част -->
-		  		    <table class="input">
-		  		    	<tr style="height: 20px;">
-		  		    		<td colspan="8">&nbsp;</td>
-		  		    	</tr>
-		            <tr class="odd">
-		            <td colspan=6 valign="top">
-					<fieldset>
-						<legend>Служителя е зачислен към:</legend>
-						<table class="input">
-						
-							<tr class="even">
-								<td>фирма&nbsp;</td>
-								<td>
-									<select name="nIDFirm" id="nIDFirm" style="width: 200px;" onChange="formChange('firm');" ></select>
-								</td>
-								<td align="right">регион&nbsp;</td>
-								<td>
-									<select name="nIDOffice" id="nIDOffice" style="width: 200px;"></select>
-								</td>
-								<td align="right" width="200px">длъжност&nbsp;</td>
-								<td align="right">
-									<input name="position" id="position" type="text" style="width: 150px;" suggest="suggest" queryType="position" queryParams="id_position" onchange="onPositionChange()" onpast="onPositionChange()" />
-								</td>
-							</tr>
-							
-							<tr class="odd">
-								<td>обект&nbsp;</td>
-								<td colspan="2"><input name="obj" type="text" id="obj" style="width: 250px;" suggest="suggest" queryType="obj" queryParams="id_firm;nIDOffice" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" /></td>
-								<td>Само за физическа охрана!</td>
-								<td align="right">длъжност по НКИД&nbsp;</td>
-								<td align="right">
-								  <select name="nPositionNKID" id="nPositionNKID" style="width: 150px;"></select>
-								</td>
-							</tr>
-							
-							<tr style="height: 5px;"><td colspan="6"></td></tr>
-						</table>
-						</fieldset>
-					</td></tr>
+
+			<div class="row clearfix mt-2">
+				<div class="col-4 pl-3">
+					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служителя е зачислен към </div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Фирма..."></span>
+						</div>
+						<select class="form-control" name="nIDFirm" id="nIDFirm" onChange="formChange('firm');" ></select>
+					</div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Регион..."></span>
+						</div>
+						<select class="form-control" name="nIDOffice" id="nIDOffice" ></select>
+					</div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="fa fa-mailbox fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+						</div>
+						<input class="form-control" name="obj" type="text" id="obj" suggest="suggest" queryType="obj" queryParams="id_firm;nIDOffice" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" />
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Длъжност </div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="far fa-badge-check fa-fw" data-fa-transform="right-22 down-10" title="Семейно положение..."></span>
+						</div>
+						<select class="form-control" name="nPositionNKID" id="nPositionNKID" ></select>
+					</div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="far fa-badge-check fa-fw" data-fa-transform="right-22 down-10" title="IBAN..."></span>
+						</div>
+						<input class="form-control" name="position" id="position" type="text" suggest="suggest" queryType="position" queryParams="id_position" onchange="onPositionChange()" onpast="onPositionChange()" />
+					</div>
+				</div>
+				<div class="col">
+					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служебни данни </div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend" id="img_date_in">
+							<span class="fa fa-calendar-check fa-fw" data-fa-transform="right-22 down-10" title="Дата на постъпване"></span>
+						</div>
+						<input class="form-control" type="text" name="date_in" id="date_in" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
+					</div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend" id="img_date_out">
+							<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Дата на издаване"></span>
+						</div>
+						<input class="form-control" type="text" name="date_out" id="date_out" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
+						<input class="form-control ml-1 pr-0" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" disabled readonly/>&nbsp
+					</div>
+					<div class="input-group input-group-sm mb-1">
+						<div class="input-group-prepend">
+							<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+						</div>
+						<input class="form-control" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" disabled readonly/>&nbsp
+						<div class="input-group-append mr-0 pr-0">мес.</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-3 col-sm-3 col-lg-3">
+				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Допълнителна информация</div>
+				<div class="input-group input-group-sm mb-1">
+					<textarea class="w-100" name="note" rows="5" id="note"></textarea>
+				</div>
+			</div>
+		  		    <table
 		            <tr class="even">
 		               <td colspan=6 valign="top">
 						<fieldset>
 							<legend>Служебни данни:</legend>
 							<table class="input" width="100%">
 								<tr class="odd">
-									<td>дата на постъпване</td><td><input name="date_in" type="text" id="date_in" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_in" /></td>
-									<td align="right">прослужено време&nbsp;</td><td><input name="length_service" type="text" style="text-align: right; width: 60px;" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" />&nbsp; мес.</td>
+									<td>дата на постъпване</td><td></td>
+									<td align="right">прослужено време&nbsp;</td><td></td>
 									<td align="right">статус&nbsp;</td>
 									<td align="right" width="100px;">
 										<select id="status" name="status" style="width: 150px;" >
@@ -350,7 +381,7 @@
 									</td>
 								</tr>
 								<tr class="even">
-									<td>дата на напускане&nbsp;</td><td><input name="date_out" type="text" id="date_out" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_out" /></td>
+									<td>дата на напускане&nbsp;</td><td></td>
 									<td colspan="4">Забележка: не е възможно напускането, ако има налични удръжки!</td>
 								</tr>
 								<tr style="height: 5px;"><td colspan="6"></td></tr>
@@ -400,7 +431,7 @@
 					</table>
 				</td>
 			</tr>
-		</table>
+
 	</form>
 </div>
 

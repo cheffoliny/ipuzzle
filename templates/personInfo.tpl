@@ -85,7 +85,7 @@
 		<div class="row clearfix mt-2">
 			<div class="col-2 col-sm-2 col-lg-2 pl-3">
 				<div class="input-group input-group-sm">
-					<picture>
+					<picture class="w-100">
 						<img src="{$image}" class="rounded mx-auto d-block" alt="...">
 						<button class="btn btn-sm btn-info btn-block" type="button" onclick="return update_image();"><i class="far fa-refresh"></i> Промени</button>
 					</picture>

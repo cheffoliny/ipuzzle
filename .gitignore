@@ -18,3 +18,4 @@ admin_display/include/config.inc.php
 patrol_display/include/config.inc.php
 css/custom.css
 node_modules
+/npm-debug.log

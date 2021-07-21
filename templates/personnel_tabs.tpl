@@ -36,46 +36,6 @@ function tab_href( page ) {
 					<li class="nav-item text-center" title="Информация">{if $view.personInfo_view}<a class="nav-link" href="#" onclick="return tab_href('personInfo_view');" id='personInfo'><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{else}<a class="nav-link disabled" href="#"><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{/if}</li>
 				{/if}
 			{/if}
-		
-			{*{if $key == 'object_personnel_schedule_view'}*}
-				{* Служители - График *}{*	  *}
-				{*{if $page eq object_personnel_schedule and $isFO}*}
-					{*<li class="nav-item" title="Служители за график"><a class="nav-link active" href="#"><i class="fa fa-id-card-o fa-lg"></i></a></li>*}
-				{*{else}*}
-					{*<li class="nav-item" title="Служители за график">{if $view.object_personnel_schedule_view}<a class="nav-link" href="#" onclick="return tab_href('object_personnel_schedule');" id='object_personnel_schedule'><i class="fa fa-id-card-o fa-lg"></i></a>{else}<a class="nav-link disabled" href="#"><i class="fa fa-id-card-o fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-				{**}
-			{*{/if}*}
-			  {**}
-			{*{if $key == 'object_shifts_view' and $isFO}*}
-				{* Видове смени *}{*	  *}
-				{*{if $page eq object_shifts}*}
-                    {*<li class="nav-item" title="Видове смени"><a class="nav-link active" href="#"><i class="fa fa-exchange fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Видове смени">{if $view.object_shifts_view}<a class="nav-link" href="#" onclick="return tab_href('object_shifts');" id='object_shifts'><i class="fa fa-exchange fa-lg"></i></a>{else} ><a class="nav-link disabled" href="#"><i class="fa fa-exchange fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-				{**}
-			{*{/if} *}
-
-			{*{if $key == 'object_duty_view' and $isFO}*}
-				{* Смяна *}{*	  *}
-				{*{if $page eq object_duty}*}
-                    {*<li class="nav-item" title="Валидиране на смяна"><a class="nav-link active"><i class="fa fa-exchange fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Валидиране на смяна">{if $view.object_duty_view}<a class="nav-link" href="#" onclick="return tab_href('object_duty');" id='object_duty'><i class="fa fa-exchange fa-lg"></i></a>{else}<a class="nav-link disabled"><i class="fa fa-exchange fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-				{**}
-			{*{/if} *}
-
-			{*{if $key == 'object_personnel_view' and $isFO}*}
-				{* Служители *}{*	  *}
-				{*{if $page eq object_personnel}*}
-                    {*<li class="nav-item" ><a class="nav-link active"><i class="fa fa-group"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" >{if $view.object_personnel_view}<a class="nav-link" href="#" onclick="return tab_href('object_personnel');" id='object_personnel'><i class="fa fa-group"></i></a>{else}<a class="nav-link disabled"><i class="fa fa-group"></i></a>{/if}</li>*}
-				{*{/if}*}
-					{**}
-			{*{/if} *}
 
 			{if $key == 'object_contract_view'}
                 {if $page eq object_contract}

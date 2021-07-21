@@ -67,7 +67,7 @@ var dlcalendar_oCalendarDefaults =
 
 var dlcalendar_aCalendarStyles =
     [
-        [ "#dlcalendar_container",         'min-width:160px; width: 220px; table-layout:fixed; border: 1px solid #ccc; border: 1px solid rgba(0,0,0,0.15); -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175); box-shadow: 0 2px 4px rgba(0,0,0,0.2); background-color: #ffffff;' ],
+        [ "#dlcalendar_container",         'min-width:160px; width: 220px; table-layout:fixed; border: 1px solid #ccc; border: 1px solid rgba(0,0,0,0.15); -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175); box-shadow: 0 2px 4px rgba(0,0,0,0.2); background-color: #ffffff; z-index: 1001;' ],
         [ '#dlcalendar_navigationRow',     'padding: 3px 3px; font-size: 13px; width: 100%; margin: 0px; border: 0px solid #000000; background-color: #367fa9; color:#ffffff; text-align:center; cursor:default;' ],
 
         [ 'td.dlcalendar_monthYearCell',   'padding: 3px 3px; cursor: default; font-weight: bold;' ],
