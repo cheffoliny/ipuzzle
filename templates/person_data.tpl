@@ -336,102 +336,50 @@
 						<div class="input-group-prepend" id="img_date_in">
 							<span class="fa fa-calendar-check fa-fw" data-fa-transform="right-22 down-10" title="Дата на постъпване"></span>
 						</div>
-						<input class="form-control" type="text" name="date_in" id="date_in" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
+						<input class="form-control" type="text" name="date_in" id="date_in" onkeypress="return formatDate(event, '.');" maxlength="10" title="Дата на постъпване [ДД.ММ.ГГГГ]" />
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend" id="img_date_out">
-							<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Дата на издаване"></span>
+							<span class="fa fa-calendar-times fa-fw" data-fa-transform="right-22 down-10" title="Дата на напускане"></span>
 						</div>
-						<input class="form-control" type="text" name="date_out" id="date_out" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-						<input class="form-control ml-1 pr-0" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" disabled readonly/>&nbsp
+						<input class="form-control" type="text" name="date_out" id="date_out" onkeypress="return formatDate(event, '.');" maxlength="10" title="Дата на напускане [ДД.ММ.ГГГГ]" />
+						<input class="form-control bg-dark ml-1 pr-0" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" title="Прослужено време..." readonly/>
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+							<span class="fa fa-toggle-off fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
 						</div>
-						<input class="form-control" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" disabled readonly/>&nbsp
-						<div class="input-group-append mr-0 pr-0">мес.</div>
+						<select class="form-control" id="status" name="status" >
+							<option value="active">активен</option>
+							<option value="vacate">напуснал</option>
+							<option value="moved">прехвърляне</option>
+						</select>
 					</div>
 				</div>
 
 			</div>
 
-			<div class="col-3 col-sm-3 col-lg-3">
-				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Допълнителна информация</div>
-				<div class="input-group input-group-sm mb-1">
-					<textarea class="w-100" name="note" rows="5" id="note"></textarea>
+			<div class="row">
+				<div class="alert alert-danger alert-dismissable transparent-half col p-4 m-3">
+					Забележка: не е възможно напускането, ако има налични удръжки!
 				</div>
 			</div>
-		  		    <table
-		            <tr class="even">
-		               <td colspan=6 valign="top">
-						<fieldset>
-							<legend>Служебни данни:</legend>
-							<table class="input" width="100%">
-								<tr class="odd">
-									<td>дата на постъпване</td><td></td>
-									<td align="right">прослужено време&nbsp;</td><td></td>
-									<td align="right">статус&nbsp;</td>
-									<td align="right" width="100px;">
-										<select id="status" name="status" style="width: 150px;" >
-											<option value="active">активен</option>
-											<option value="vacate">напуснал</option>
-											<option value="moved">прехвърляне</option>
-										</select>
-									</td>
-								</tr>
-								<tr class="even">
-									<td>дата на напускане&nbsp;</td><td></td>
-									<td colspan="4">Забележка: не е възможно напускането, ако има налични удръжки!</td>
-								</tr>
-								<tr style="height: 5px;"><td colspan="6"></td></tr>
-							</table>
-						</fieldset>
-						</td>
-					</tr>
-		            <tr class="odd">
-		               <td colspan="6" valign="top">
-						<fieldset>
-							<legend>Длъжностна характеристика</legend>
-							<table class="input">
-								<tr class="odd">
-									<td>изберете файла с длъжностната характеристика:</td>
-									<td align="right"><button type="button" onclick="return update_character();"><img src="images/confirm.gif"/>Зареди</button></td>
-								</tr>
-								<tr style="height: 5px;"><td colspan="6"></td></tr>
-							</table>
-							</fieldset>
-						</td>
-					</tr>
-		            <tr class="odd">
-		               <td colspan="6" valign="top">
-						<fieldset>
-							<legend>История на назначенията</legend>
-							<table class="input" style="width: 100%;">
-								<tr class="even">
-									<td align="center"><div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 970px; height: 124px; overflow: auto;"></div></td>
-								</tr>
-								<tr style="height: 5px;"><td colspan="6"></td></tr>
-							</table>
-							</fieldset>
-						</td>
-					</tr>
 
-					</table>
-					<table  class="input">
-						<tr valign="top" class="odd">
-							<td valign="top" align="right" width="900px">
-								<button class="search" onclick="return submit_form();"><img src="images/confirm.gif"/>Потвърди</button>&nbsp;
-							</td>
-							<td valign="top" align="right" width="100px">
-								<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
-							</td>
-							
-						</tr>
-					</table>
-				</td>
-			</tr>
+			<div class="row mt-2">
+				<div class="col">
+					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2">История на назначенията</div>
+					<div class="w-100" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 160px; overflow: auto;"></div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
+			<div class="col text-right p-2">
 
+					<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
+					<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
+
+			</div>
+		</nav>
 	</form>
 </div>
 

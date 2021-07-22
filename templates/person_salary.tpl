@@ -83,40 +83,32 @@
 <input type="hidden" id="sPdfName" name="sPdfName" value="" />
 
 	{include file='person_tabs.tpl'}
+<div class="container-fluid" id="filter">
+	<div class="row" id="filter_result">
+		<div class="col-3 p-1 ml-2">
+			<div class="input-group input-group-sm mb-1">
+				<div class="input-group-prepend">
+					<span class="fa fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+				</div>
+				<input class="form-control inp50" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;
+				<input class="form-control inp75" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>
+			</div>
+		</div>
+		<div class="col p-1">
+			<div class="input-group input-group-sm mb-1">
+				<button class="btn btn-sm btn-info ml-2" type="button" onClick="formSubmit(1); return false;" name="Button"><i class="far fa-list"></i> Подробна</button>
+				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(2); return false;" name="Button"><i class="far fa-list-alt"></i> Обобщена</button>
+				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(3); return false;" name="Button"><i class="far fa-home-alt"></i> Обекти</button>
+			</div>
+		</div>
+		<div class="col-3 text-right p-1">
+			{if $personnel_edit}
+				<button class="btn btn-sm btn-success" id="b100" onClick="editSalary(0,1);"><i class="far fa-plus fa-lg"></i> Наработка</button>
+				<button class="btn btn-sm btn-danger" id="b100" onClick="editSalary(0,0);"><i class="far fa-minus fa-lg"></i> Удръжка</button>
+			{/if}
+		</div>
+	</div>
 
-	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-<tr>
-	<td id="filter_result">
-	<!-- начало на работната част -->
-	<center>
-		<table class="search">
-			<tr>
-				<td align="right" width="300px">
-					Год
-					<input style="width:40px; text-align:right" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>&nbsp;&nbsp;
-					Мес
-					<input style="width:30px; text-align:right" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;&nbsp;
-				</td>
-				<td align="center">
-					<button type="button" onClick="formSubmit(1); return false;" name="Button"><img src="images/confirm.gif">Подробна</button>
-				</td>
-				<td align="center">
-					<button type="button" onClick="formSubmit(2); return false;" name="Button"><img src="images/confirm.gif">Обобщена</button>
-				</td>
-				<td align="center">
-					<button type="button" onClick="formSubmit(3); return false;" name="Button"><img src="images/confirm.gif">Обекти</button>
-				</td>
-				<td valign="top" align="right" width="400px">{if $personnel_edit}
-					<button id="b100" onClick="editSalary(0,1);"><img src="images/plus.gif" />Наработка</button>
-					<button id="b100" onClick="editSalary(0,0);"><img src="images/erase.gif" />Удръжка</button>
-				{/if}</td>
-			</tr>
-
-	  </table>
-	</center>
-
-	<hr>
-	
 	<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 1000px; height: 350px; overflow: auto;"></div>
 
  	<!-- край на работната част -->
@@ -124,36 +116,33 @@
 </tr>
 </table>
 
+	<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
+		<div class="col">
+			{if $personnel_edit}
+				<button class="btn btn-sm btn-danger mr-1"	type="button" onclick="openPDF();" > <i class="far fa-file-pdf" ></i> Пл. Фиш</button>
+			{/if}
+		</div>
+		<div class="col">
+			<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-sm p-2 btn-success" title="Наработки">
+					<input type="checkbox" id="plus" name="plus" onclick="formSubmit(1);" checked /><i class="fas fa-plus-circle fa-lg"></i>
+				</label>
+				<input class="form-control inp75 mr-2" type="text" id="plus_price" name="plus_price" style="text-align: right;" readonly />
+				<label class="btn btn-sm p-2 btn-danger" title="Удръжки">
+					<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1); " /><i class="fas fa-minus-circle fa-lg"></i>
+				</label>
+				<input class="form-control inp75" type="text" id="minus_price" name="minus_price" style="text-align: right;" readonly />&nbsp;&nbsp;
+			</div>
+		</div>
+		<div class="col text-right p-2">
+			{if $personnel_edit}
+				<button class="btn btn-sm btn-success mr-1"	onclick="onPrint('export_to_xls');" > <i class="far fa-file-excel" ></i> </button>
+				<button class="btn btn-sm btn-danger mr-1"	 onclick="onPrint('export_to_pdf');" > <i class="far fa-file-pdf" ></i> </button>
+			{/if}
+			<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
+		</div>
+	</nav>
 
-<div id="search"  style="padding-top: 10px;width: 1000px;">
-	<table width="100%" cellspacing="1px" class="search">
-		<tr valign="top">
-			<td>
-			{if $personnel_edit}
-				<button type="button" onclick="openPDF();" >Пл. Фиш</button>
-			{/if}
-			</td>
-			<td width="700px" align="right">
-				<input type="checkbox" id="plus" name="plus" class="clear" checked onclick="formSubmit(1);" /> наработки: &nbsp;
-				<input type="text" id="plus_price" name="plus_price" style="width: 80px; text-align: right;" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1); " /> удръжки: &nbsp;
-				<input type="text" id="minus_price" name="minus_price" style="width: 80px; text-align: right;" readonly />&nbsp;&nbsp;
-			</td>
-			<td valign="bottom" align="right" width="50px">
-			{if $personnel_edit}
-				<a href="#" onclick="onPrint('export_to_xls');"><img src="images/excel.gif" border="0" /></a>
-			{/if}
-			</td>
-			<td valign="bottom" align="center" width="50px">
-			{if $personnel_edit}
-				<a href="#" onclick="onPrint('export_to_pdf');"><img src="images/pdf2.gif" border="0" /></a>
-			{/if}
-			</td>
-			<td valign="top" align="right" width="100px">
-				<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
-			</td>
-		</tr>
-	</table>
 </div>
 <div id="NoDisplay" style="display:none"></div>
 </form>

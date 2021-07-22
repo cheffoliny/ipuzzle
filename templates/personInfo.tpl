@@ -238,8 +238,8 @@
 			</div>
 		</div>
 	</div>
-	<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg" id="search">
-		<div class="col-6 col-sm-8 col-lg-8 pl-0">
+	<nav class="navbar fixed-bottom flex-row p-2 navbar-expand-lg" id="search">
+		<div class="col p-2">
 			<div class="input-group input-group-sm">
 				<div class="input-group-prepend">
 					<span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
@@ -252,11 +252,9 @@
 				<button class="btn btn-sm btn-info" onclick="printContract();"><i class="far fa-file-pdf-o"></i></button>&nbsp;
 			</div>
 		</div>
-		<div class="col-6 col-sm-4 col-lg-4">
-			<div class="input-group input-group-sm ml-1 text-right">
-				<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
-				<button class="btn btn-sm btn-danger"	    onClick="close_form();"			><i class="far fa-window-close" ></i> Затвори </button>
-			</div>
+		<div class="col text-right p-2">
+			<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
+			<button class="btn btn-sm btn-danger"	    onClick="close_form();"			><i class="far fa-window-close" ></i> Затвори </button>
 		</div>
 	</nav>
 </form>
