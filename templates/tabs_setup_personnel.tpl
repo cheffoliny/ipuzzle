@@ -18,7 +18,7 @@
         </li>
     {else}
         <li class="nav-item text-center" title="Служители">
-            <a class="nav-link" href="#" onclick="return tab_href('admin_personnels');" id='admin_personnel'>Служители</a>
+            <a class="nav-link" href="#" onclick="return tab_href('admin_personnels');" id='admin_personnels'>Служители</a>
         </li>
     {/if}
 
@@ -26,7 +26,7 @@
         <li class="nav-item text-center" title="График"><a class="nav-link active" href="#">График</a></li>
     {else}
         <li class="nav-item text-center" title="График">
-            <a class="nav-link" href="#" onclick="return tab_href('person_schedule');" id='setup_clients'>График</a>
+            <a class="nav-link" href="#" onclick="return tab_href('person_schedule');" id='person_schedule'>График</a>
         </li>
     {/if}
 

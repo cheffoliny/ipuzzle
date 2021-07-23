@@ -242,7 +242,7 @@
 		<div class="col p-2">
 			<div class="input-group input-group-sm">
 				<div class="input-group-prepend">
-					<span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
+					<span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Трудов Договор..."></span>
 				</div>
 				<select class="form-control" name="sPrintType" id="sPrintType">
 					<option value="contract">Трудов Договор</option>

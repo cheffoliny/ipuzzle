@@ -110,7 +110,7 @@
 
 						$oResponse->setFormElementChild('form1', 'nIDFirm',		array('value' => 0), 'Изберете');
 						$oResponse->setFormElementChild('form1', 'nIDOffice',	array('value' => 0), 'Изберете');
-						$oResponse->setFormElementChild('form1', 'code',		array('value' => 0), 'Изберете');
+						$oResponse->setFormElementChild('form1', 'code',		array('value' => 0), '-- Изберете наработка --');
 						
 						$aFirms = $oFirms->getFirms();
 

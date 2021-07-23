@@ -248,8 +248,8 @@
 			$oResponse->setFormElement( 'form1', 'sEducation', array( "value" => $aPerson['education'] ), $aPerson['education'] );
 			$oResponse->setFormElement( 'form1', 'sSpeciality', array( "value" => $aPerson['speciality'] ), $aPerson['speciality'] );
 			$oResponse->setFormElement( 'form1', 'sSpecialityOther', array( "value" => $aPerson['speciality_other'] ), $aPerson['speciality_other'] );
-			
-			$aLOS = split( ",", $aPerson['length_of_service'] );
+
+            $aLOS = explode(",", $aPerson['length_of_service']);
 
 			if (!empty($aLOS[0]))
 				$oResponse->setFormElement( 'form1', 'nLOSYears', array( "value" => $aLOS[0] ), $aLOS[0] );

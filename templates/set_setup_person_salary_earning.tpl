@@ -78,103 +78,139 @@
 </script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
-		<input type="hidden" id="id" name="id" value="{$id}" />
-		<input type="hidden" id="id_object" name="id_object" value="{$id_object}" />
-		<input type="hidden" id="id_person" name="id_person" value="{$id_person}" />
-		<input type="hidden" id="is_earning" name="is_earning" value="{$type}" />
-		<input type="hidden" id="id_code" name="id_code" value="0" />
-		<input type="hidden" id="sAct" name="sAct" value="load" />
-		<input type="hidden" id="month" name="month" value="{$year}{$month}" />
-		
-		<input type="hidden" id="refresh" name="refresh" value="{$refresh}" />
-		<input type="hidden" id="office" name="office" value="{$office}" />
-		<input type="hidden" id="firm" name="firm" value="{$firm}" />
-		<input type="hidden" id="codeto" name="codeto" value="{$codeto}" />
 
-		<div class="page_caption">{if $type eq 1}Наработка{else}Удръжка{/if} на служител за {$month}.{$year}</div>
-		<fieldset>
-			<legend>Обща информация за наработката:</legend><br />
-			<table class="input">
-			
-				<tr class="even">
-					<td width="140">Код на наработката:</td>
-					<td width="280px">
-						<table class="input" cellpadding="0" cellspacing="0">
-							<tr>
-								<td>
-									<select id="code" name="code" style="width: 120px;" onChange="codeChange(this);"></select>
-								</td>
-								<td align="right">
-									<input type="checkbox" id="auto" name="auto" class="clear" />
-								</td align="right">
-								<td>Автоматична</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				
-				<tr class="even">
-					<td>Фирма:</td>
-					<td>
-						<select name="nIDFirm" id="nIDFirm" style="width: 260px;" onChange="formChange();" ></select>
-					</td>
-				</tr>
+<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+	<input type="hidden" id="id" name="id" value="{$id}" />
+	<input type="hidden" id="id_object" name="id_object" value="{$id_object}" />
+	<input type="hidden" id="id_person" name="id_person" value="{$id_person}" />
+	<input type="hidden" id="is_earning" name="is_earning" value="{$type}" />
+	<input type="hidden" id="id_code" name="id_code" value="0" />
+	<input type="hidden" id="sAct" name="sAct" value="load" />
+	<input type="hidden" id="month" name="month" value="{$year}{$month}" />
 
-				<tr class="even">
-					<td>Регион:</td>
-					<td>
-						<select name="nIDOffice" id="nIDOffice" style="width: 260px;" onChange="formChange();" ></select>
-					</td>
-				</tr>
-				
-				<tr class="even">
-					<td>Към обект:</td>
-					<td><input id="region_object" name="region_object" type="text" class="default" suggest="suggest" queryType="region_object" queryParams="nIDFirm;nIDOffice" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" style="width: 260px;" /></td>
-				</tr>
-				
-				<tr class="even">
-					<td>Кратко описание:</td>
-					<td><input id="description" name="description" type="text" class="default" style="width: 260px;" /></td>
-				</tr>
-				
-			</table><br />
-		</fieldset>
-		
-		<fieldset>
-			<legend>Стойност на наработката:</legend><br />
-			<table class="input">
-			
-				<tr class="even">
-					<td width="140">Ед. стойност:</td>
-					<td><input id="sum" name="sum" type="text" class="default" onKeyPress="return formatMoney(event);" onKeyUp="sum_one(this.value);" /></td>
-				</tr>
-				
-				<tr class="even">
-					<td>Количество:</td>
-					<td><input id="count" name="count" type="text" class="default" onkeypress="return formatNumber(event);" onKeyUp="sum_two(this.value);" value="1" /></td>
-				</tr>
-				
-				<tr class="even">
-					<td>Обща стойност:</td>
-					<td><input id="sum_total" name="sum_total" type="text" class="default" onKeyPress="return formatMoney( event );" onKeyUp="sum_three( this.value );" /></td>
-				</tr>
-				
-			</table><br />
-		</fieldset>
-		
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="button" class="search" onClick="formSubmit();"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-	</form>
-</div>
+	<input type="hidden" id="refresh" name="refresh" value="{$refresh}" />
+	<input type="hidden" id="office" name="office" value="{$office}" />
+	<input type="hidden" id="firm" name="firm" value="{$firm}" />
+	<input type="hidden" id="codeto" name="codeto" value="{$codeto}" />
+
+	<div class="modal-content pb-3">
+		<div class="modal-header">
+			{if $type eq 1}Наработка{else}Удръжка{/if} на служител за {$month}.{$year}
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="parent.window.close();">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="modal-body">
+			<div class="input-group input-group-sm mb-1 text-white bg-info p-2"> Обща информация за наработката </div>
+			<div class="row">
+				<div class="col-7">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="far fa-money-bill-wave"  data-fa-transform="right-22 down-10" title="Код на наработка"></i>
+						</div>
+						<select class="form-control" id="code" name="code" onChange="codeChange(this);"></select>
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="col-6">
+						<div class="custom-control custom-checkbox ">
+							<input class="custom-control-input" type="checkbox" id="auto" name="auto"/>
+							<label class="custom-control-label" for="auto">Автоматична</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row py-1">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-tag"  data-fa-transform="right-22 down-10" title="Фирма"></i>
+						</div>
+						<select class="form-control" name="nIDFirm" id="nIDFirm" onChange="formChange();" ></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-tags"  data-fa-transform="right-22 down-10" title="Регион"></i>
+						</div>
+						<select class="form-control" name="nIDOffice" id="nIDOffice" onChange="formChange();" ></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row py-1">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-home"  data-fa-transform="right-22 down-10" title="Обект"></i>
+						</div>
+						<input class="form-control" id="region_object" name="region_object" type="text" suggest="suggest" queryType="region_object" queryParams="nIDFirm;nIDOffice" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-signature"  data-fa-transform="right-22 down-10" title="Обект"></i>
+						</div>
+						<input class="form-control bg-faded" id="description" name="description" type="text" class="default" placeholder="Кратко описание..."/>
+					</div>
+				</div>
+			</div>
+
+			<div class="input-group input-group-sm mb-1 text-white bg-info p-2"> Стойност на наработката </div>
+			<div class="row">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-money-bill"  data-fa-transform="right-22 down-10" title="Ед. стойност..."></i>
+						</div>
+						<input class="form-control text-right pr-5" id="sum" name="sum" type="text" class="default" onKeyPress="return formatMoney(event);" onKeyUp="sum_one(this.value);" placeholder="Ед. стойност" />
+					</div>
+				</div>
+			</div>
+			<div class="row py-1">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="far fa-digital-tachograph"  data-fa-transform="right-22 down-10" title="Количество..."></i>
+						</div>
+						<input class="form-control text-right pr-5" id="count" name="count" type="text" class="default" onkeypress="return formatNumber(event);" onKeyUp="sum_two(this.value);" value="1" placeholder="Количество"/>
+						<div class="input-group-append">бр.</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="input-group input-group-sm">
+						<div class="input-group-prepend">
+							<i class="fas fa-money-bill" data-fa-transform="right-22 down-10" title="Обща стойност..."></i>
+						</div>
+						<input class="form-control text-right pr-5" id="sum_total" name="sum_total" type="text" class="default" onKeyPress="return formatMoney( event );" onKeyUp="sum_three( this.value );" placeholder="Обща стойност" />
+						<div class="input-group-append">лв.</div>
+					</div>
+				</div>
+			</div>
+
+			<nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
+				<div class="col">
+					<div class="input-group input-group-sm text-right">
+						<button class="btn btn-block btn-sm btn-primary" onClick="formSubmit();"><i class="fa fa-plus"></i> Запиши</button>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+	</div>
+</form>
 
 {literal}
 	<script>
