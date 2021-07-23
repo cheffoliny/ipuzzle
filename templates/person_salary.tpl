@@ -69,7 +69,60 @@
 	function openPDF() {
 		loadDirect('openTicket', 'L');
 	}
-		
+
+		function nextMonth(grd, act) {
+			var oldDate;
+
+			if ( grd == 1 ) {
+				oldDate = $('sSearchDate');
+			} else {
+				oldDate = $('sSearchDate');
+			}
+
+			var MM = oldDate.value.substr(0,2);
+			var YY = oldDate.value.substr(3,4);
+
+			if(YY == "0000") {
+				var d = new Date();
+				var m = d.getMonth()+1;
+				var y = d.getFullYear();
+
+				if(m <=9) {
+					m = "0"+m;
+				}
+
+				oldDate.value = m + '.' + y;
+				return
+			}
+
+			if ( act == 'next' ) {
+				MM++;
+
+				if ( MM == '13' ) {
+					MM = '1';
+					YY++;
+				}
+			} else {
+				MM--;
+
+				if ( MM == '0' ) {
+					MM = '12';
+					YY--;
+				}
+			}
+
+			if ( MM < 10 ) {
+				MM = "0" + MM;
+			}
+
+			oldDate.value = MM + '.' + YY;
+
+			var year = $('year');
+			var month = $('month');
+
+			year.value = YY;
+			month.value = MM;
+		}
 	</script>
 {/literal}
 
@@ -79,19 +132,25 @@
 <input type="hidden" id="idc" name="idc" value="0" />
 <input type="hidden" id="sAct" name="sAct" value="1" />
 <input type="hidden" id="sName" name="sName" value="{$person_name2}" />
-
 <input type="hidden" id="sPdfName" name="sPdfName" value="" />
 
-	{include file='person_tabs.tpl'}
+{include file='person_tabs.tpl'}
+
 <div class="container-fluid" id="filter">
 	<div class="row" id="filter_result">
 		<div class="col-3 p-1 ml-2">
 			<div class="input-group input-group-sm mb-1">
+				<span class="input-group-addon " onclick="nextMonth(1, 'prev');" id="btnLeft">
+							<i class="far fa-chevron-left"></i>
+						</span>
 				<div class="input-group-prepend">
 					<span class="fa fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
 				</div>
 				<input class="form-control inp50" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;
 				<input class="form-control inp75" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>
+				<span class="input-group-append"  onclick="nextMonth(1, 'next');">
+							<i class="far fa-chevron-right"></i>
+						</span>
 			</div>
 		</div>
 		<div class="col p-1">
@@ -109,12 +168,9 @@
 		</div>
 	</div>
 
-	<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 1000px; height: 350px; overflow: auto;"></div>
+	<div class="row w-100 px-0 pb-4" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
 
  	<!-- край на работната част -->
-	</td>
-</tr>
-</table>
 
 	<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
 		<div class="col">
