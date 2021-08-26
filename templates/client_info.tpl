@@ -106,7 +106,7 @@
                     <div class="input-group-prepend">
                         <span class="fas fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН ДДС..."></span>
                     </div>
-                    <input class="form-control form-control" type="text" id="sInvoiceEINDDS" name="sInvoiceEINDDS" placeholder="ЕИН ДДС..." disabled />
+                    <input class="form-control form-control" type="text" id="sInvoiceEINDDS" name="sInvoiceEINDDS" placeholder="ЕИН ДДС..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
