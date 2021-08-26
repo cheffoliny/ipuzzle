@@ -45,7 +45,7 @@
                     <div class="input-group-prepend">
                         <span class="fas fa-at fa-fw" data-fa-transform="right-22 down-10" title="E-mail..."></span>
                     </div>
-                    <input class="form-control form-control" type="email" id="sEmail" name="sEmail" placeholder="E-mail..." disabled />
+                    <input class="form-control form-control" type="email" id="sEmail" name="sEmail" placeholder="E-mail..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
@@ -64,7 +64,7 @@
                     <div class="input-group-prepend">
                         <span class="fab fa-viber fa-fw" data-fa-transform="right-22 down-10" title="Телефон..."></span>
                     </div>
-                    <input class="form-control form-control" type="phone" id="sPhone" name="sPhone" placeholder="Телефон..." disabled />
+                    <input class="form-control form-control" type="phone" id="sPhone" name="sPhone" placeholder="Телефон..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
@@ -87,7 +87,7 @@
                     <div class="input-group-prepend">
                         <span class="fas fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН..."></span>
                     </div>
-                    <input class="form-control form-control" type="email" id="sInvoiceEIN" name="sInvoiceEIN" placeholder="ЕИН..." disabled />
+                    <input class="form-control form-control" type="email" id="sInvoiceEIN" name="sInvoiceEIN" placeholder="ЕИН..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
@@ -106,7 +106,7 @@
                     <div class="input-group-prepend">
                         <span class="fas fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН ДДС..."></span>
                     </div>
-                    <input class="form-control form-control" type="text" id="sInvoiceEINDDS" name="sInvoiceEINDDS" placeholder="ЕИН ДДС..." disabled />
+                    <input class="form-control form-control" type="text" id="sInvoiceEINDDS" name="sInvoiceEINDDS" placeholder="ЕИН ДДС..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
