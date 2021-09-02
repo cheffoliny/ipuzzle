@@ -1,0 +1,201 @@
+@font-face {
+    font-family: Ronduit;
+    src: url('RonduitCapitals-Light.otf');
+    font-stretch: ultra-condensed;
+}
+@font-face {
+    font-family: Ronduit;
+    font-weight: bold;
+    font-stretch: ultra-condensed;
+    src: url('RonduitCapitals-Light.otf');
+}
+
+body {
+    font-size: 12px;
+}
+body > .header {
+    max-height: 80px;
+}
+
+body > .header .logo {
+    font-family: Ronduit;
+    font-size: 12px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 6px;
+    font-weight: 500;
+}
+
+body > .header .navbar {
+    height: 50px;
+}
+
+body > .header .navbar .sidebar-toggle {
+    padding: 4px 4px;
+    margin: 8px 0px 8px 5px;
+    font-family: Ronduit;
+}
+
+input, textarea {
+    font-family: Verdana, Tahoma, Arial, Georgia;
+}
+
+input > .no-border {
+    border: 0px;
+    background: inherit;
+}
+
+.form-box .header {
+    background: #3d9970;
+}
+
+.navbar {
+    min-height: 40px;
+    margin-bottom: 10px;
+    font-family: Ronduit;
+}
+
+.navbar-nav > li > a {
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
+    font-family: Ronduit;
+    font-size: 12px;
+}
+
+.content {
+    padding: 5px 5px;
+    background: #f9f9f9;
+}
+
+.skin-blue .right-side > .content-header {
+    background: #fbfbfb;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.main-sidebar, .left-side {
+    font-family: Ronduit;
+    font-size: 10px !important;
+}
+
+.right-side > .content-header {
+    position: relative;
+    padding: 5px 5px 3px 7px;
+}
+
+.right-side > .content-header > .breadcrumb {
+    float: right;
+    background: transparent;
+    margin-top: 0px;
+    margin-bottom: 0;
+    font-size: 12px;
+    padding: 3px 5px;
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.box .box-body {
+    font-size: 11px;
+}
+
+.box .todo-list > li {
+    padding: 5px;
+}
+
+.box .todo-list > li .label {
+    margin-left: 0px;
+}
+
+.box .todo-list .handle {
+    margin: 0px 2px;
+}
+
+.box .box-header > .fa, .box .box-header > .glyphicon, .box .box-header > .ion, .box .box-header .box-title {
+
+    font-size: 12px;
+}
+
+.box-title {
+    font-family: Ronduit;
+}
+
+.small-box {
+    margin-bottom: 10px;
+}
+
+.btn {
+    font-family: Ronduit;
+    font-size: 10px !important;
+}
+
+.input-sm {
+    height: 28px;
+}
+
+.table {
+    margin-bottom: 10px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 4px;
+}
+
+.a {
+    color: #116699;
+    font-size: 9px;
+}
+
+a {
+    color: #003355;
+}
+
+.border-round-25 {
+    margin: 0px;
+    padding: 2px 3px !important;
+    border-radius: 3px;
+    height: 24px;
+    width: 24px;
+    border-width: 3px;
+    border-color: rgba( 255, 255, 255, 0.1);
+}
+
+.padding-top-3 {
+    padding-top: 3px;
+}
+
+.alert {
+    padding: 5px 5px 5px 22px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4 {
+    font-size: 11px;
+}
+
+.progress {
+    margin-bottom: 10px;
+}
+
+.jqstooltip {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: 1px solid #555;
+    background-color: #fff;
+    top: 50px;
+    width:auto !important;
+    height:auto !important;
+    position: absolute;
+}
+
+.ui-datepicker-calendar {
+    display: none;
+}
+
+.btn-group-sm>.btn, .btn-sm {
+    padding: 3px 10px;
+ }

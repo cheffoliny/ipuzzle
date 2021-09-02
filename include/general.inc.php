@@ -1210,7 +1210,7 @@ function addSpaces( $sText )
  * @param bool $bNegate ( TRUE = изваждане ; FALSE = събиране ) ( OPTIONAL, DEFAULT : FALSE )
  * @return string ( HH:mm )
  */
-function getTimeSum( $sTime1, $sTime2, $bNegate = false )
+function    getTimeSum( $sTime1, $sTime2, $bNegate = false )
 {
 	$aTime1 = explode( ":", $sTime1 );
 	$aTime2 = explode( ":", $sTime2 );

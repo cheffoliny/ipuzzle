@@ -358,7 +358,7 @@ function form2POST()
                 _rpc_obj_loader = document.createElement("i");
                 _rpc_obj_loader.appendChild(document.createTextNode(''));
                 _rpc_obj_loader.id = 'loading';
-                _rpc_obj_loader.className = 'fas fa-puzzle-piece fa-pulse';
+                _rpc_obj_loader.className = 'fas fa-puzzle-piece fa-pulse fa-3x';
                 _rpc_obj_loader.style.fontSize = '200px !important';
                 _rpc_obj_loader.style.right = '50%';
                 _rpc_obj_loader.style.bottom = '50%';

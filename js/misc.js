@@ -418,7 +418,7 @@ function show_hide_loader (func) {
 		loader = document.createElement("i");
 		loader.appendChild(document.createTextNode(''));
 		loader.id = 'loading';
-		loader.className = 'fas fa-puzzle-piece fa-pulse';
+		loader.className = 'fas fa-puzzle-piece fa-pulse fa-3x';
 		loader.style.fontSize = '200px !important';
 		loader.style.right = '50%';
 		loader.style.bottom = '50%';

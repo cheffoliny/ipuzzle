@@ -828,8 +828,9 @@ class DBObjectShifts extends DBBase2 {
                 if (!isset($aData[$nIDPerson]['duration2']))
                     $aData[$nIDPerson]['duration2'] = "00:00:00";   //&& $aData[$nIDPerson]['mode'] != 'leave'
 
-                if (!$bWeekendLeave && ($aData[$nIDPerson]['mode'] != 'leave' && $aData[$nIDPerson]['mode'] != 'plan')) {
-                    $aData[$nIDPerson]['duration1'] =
+                //if (!$bWeekendLeave && ($aData[$nIDPerson]['mode'] != 'leave' && $aData[$nIDPerson]['mode'] != 'plan')) {
+                if (!$bWeekendLeave || ($aData[$nIDPerson]['mode'] != 'leave' && $aData[$nIDPerson]['mode'] != 'plan')) {
+                        $aData[$nIDPerson]['duration1'] =
                         getTimeSum(
                             $aData[$nIDPerson]['duration1'], ( $aData[$nIDPerson]['mode'] != 'plan' && $aData[$nIDPerson]['mode'] != 'sick' ) ?
                             $aData[$nIDPerson]['shift_duration'] :

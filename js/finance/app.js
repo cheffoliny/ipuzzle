@@ -7038,11 +7038,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     preloaderIcon: {
       type: String,
-      "default": "fas fa-puzzle-piece"
+      "default": "fas fa-puzzle-piece fa-3x"
     },
     loaderIcon: {
       type: String,
-      "default": "fad fa-puzzle-piece"
+      "default": "fad fa-puzzle-piece fa-3x"
     }
   },
   data: function data() {

@@ -31,9 +31,6 @@
 
 		<script>
 			<xsl:for-each select="/response/action/form[@id='form1']/e[@id='object_shifts']/option">
-
-
-				<xsl:value-of select="title"/>
 				try {
 				new Framework.Tooltip('btnShiftTooltip[<xsl:value-of select="@id"/>]', 'btnShift[<xsl:value-of select="@id"/>]');
 				}
