@@ -30,12 +30,6 @@
     </input>
 
 		<script>
-			<xsl:for-each select="/response/action/form[@id='form1']/e[@id='object_shifts']/option">
-				try {
-				new Framework.Tooltip('btnShiftTooltip[<xsl:value-of select="@id"/>]', 'btnShift[<xsl:value-of select="@id"/>]');
-				}
-				catch( e ) {};
-			</xsl:for-each>
 
 			<xsl:text disable-output-escaping="yes">
 				<![CDATA[
@@ -46,7 +40,7 @@
 
 		</script>
 
-		<div id="divTitle" class="table-light text-center h3 lead"></div>
+		<div id="divTitle" class="table-light text-center h3 lead position-relative"></div>
 
 		<table class="ps_layout">
 			<tr>
@@ -228,7 +222,7 @@
 
 
 			<xsl:if test="@code">
-				<button id="btnShift[{$shift/@id}]" name="btnShift[{$shift/@id}]" class="btnShift btn btn-sm btn-primary mx-2"  onclick="onShiftClick( event )">
+				<button id="btnShift[{$shift/@id}]" name="btnShift[{$shift/@id}]" class="btnShift btn btn-sm btn-primary mx-2"  onclick="onShiftClick( event )" title="[{$shift/@code}] - {$shift/@description}&#013;Начало: {$shift/@shiftFromShort}&#013;Край: {$shift/@shiftToShort}&#013;Продължителност: {$shift/@paidDuration}&#013;Ставка: {$shift/@custStake}">
 					<xsl:value-of select="@code"/>
 				</button>
 			</xsl:if>
@@ -241,7 +235,7 @@
 			</xsl:if>
 
 
-			<div id="btnShiftTooltip[{$shift/@id}]" style="display:none; position: absolute;">
+			<div id="btnShiftTooltip[{$shift/@id}]" style="display:none;">
 				<table>
 					<tr>
 						<td colspan="2">

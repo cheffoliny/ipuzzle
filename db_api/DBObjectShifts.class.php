@@ -837,7 +837,7 @@ class DBObjectShifts extends DBBase2 {
                             "00:00:00"
                         );
 
-                    $aData[$nIDPerson]['duration1'] = getTimeSum($aData[$nIDPerson]['duration1'], $s_stake);
+                    $aData[$nIDPerson]['duration1'] = getTimeSum($aData[$nIDPerson]['duration1'], "00:00");
 
                     $aData[$nIDPerson]['duration2'] =
                         getTimeSum(
@@ -846,7 +846,7 @@ class DBObjectShifts extends DBBase2 {
                             "00:00:00"
                         );
 
-                    $aData[$nIDPerson]['duration2'] = getTimeSum($aData[$nIDPerson]['duration2'], $s_stake2);
+                    $aData[$nIDPerson]['duration2'] = getTimeSum($aData[$nIDPerson]['duration2'], "00:00");
                 }
 
                 $aData[$nIDPerson]['durationTotal'] = $this->round_shift($aData[$nIDPerson]['durationTotal1']) . " / " . $this->round_shift($aData[$nIDPerson]['durationTotal2']);
@@ -1724,123 +1724,123 @@ class DBObjectShifts extends DBBase2 {
         }
     }
 
-    public function last_day_of_feb($year) {
-        # The 0th day of a month is the same as the last day of the month before
-        $ultimo_feb_str = $year . "-03-00";
-        $ultimo_feb_date = date_create($ultimo_feb_str);
-        $return = date_format($ultimo_feb_date, "Y-m-d");
-        return $return;
-    }
+//    public function last_day_of_feb($year) {
+//        # The 0th day of a month is the same as the last day of the month before
+//        $ultimo_feb_str = $year . "-03-00";
+//        $ultimo_feb_date = date_create($ultimo_feb_str);
+//        $return = date_format($ultimo_feb_date, "Y-m-d");
+//        return $return;
+//    }
 
     // get all valid shifts for date ( format 201202 )
-    public function getShiftForObject($nIDObject, $date) {
+//    public function getShiftForObject($nIDObject, $date) {
+//
+//        $date_year = substr($date,0,4);
+//        $date_month = substr($date,4,2);
+//        $date_from = $date_year.'-'.$date_month.'-01';
+//        $date_to = date('Y-m-d', strtotime($date_from.' + 1 month'));
+//
+//
+//        if (empty($nIDObject) || !is_numeric($nIDObject)) {
+//            return false;
+//        }
+//        $sQuery = "
+//
+//            SELECT
+//                off.id,
+//                off.code,
+//                off.name,
+//                off.validFrom,
+//                off.validTo,
+//                off.id as _id,
+//                off.mode,
+//                CASE off.mode
+//                  WHEN 'night' THEN 'Нощна'
+//                  WHEN 'day' THEN 'Дневна'
+//                END as mode_name,
+//                off.shiftFrom,
+//                off.shiftTo,
+//                off.night_hour,
+//                off.description,
+//                off.duration,
+//                TIME_TO_SEC(off.duration) as duration_sec
+//            FROM object_shifts off
+//            WHERE off.id_obj = {$nIDObject}
+//            AND ((off.validFrom <= '{$date_from}' AND off.validTo >= '{$date_from}') OR (off.validFrom <= '{$date_to}' AND off.validTo = '0000-00-00'))
+//            AND off.to_arc = 0
+//        ";
+//
+////        print_r($sQuery);
+//        return $this->selectAssoc($sQuery);
+//    }
 
-        $date_year = substr($date,0,4);
-        $date_month = substr($date,4,2);
-        $date_from = $date_year.'-'.$date_month.'-01';
-        $date_to = date('Y-m-d', strtotime($date_from.' + 1 month'));
+//    public function getShiftInfo($nIDShift) {
+//        if (empty($nIDShift) || !is_numeric($nIDShift)) {
+//            return false;
+//        }
+//
+//        $sQuery = "
+//            SELECT
+//                os.id,
+//                os.description,
+//                os.duration,
+//                os.factor,
+//                os.code,
+//                os.name,
+//                os.validFrom,
+//                os.validTo,
+//                os.mode,
+//                CONCAT_WS('/',o.num,o.name) as 'name'
+//            FROM  object_shifts os
+//            LEFT JOIN objects o ON o.id = os.id_obj
+//            LEFT JOIN objects_duty od ON od.id_shift = os.id
+//            WHERE
+//            os.id = {$nIDShift}
+//            LIMIT 1
+//        ";
+//        return $this->selectOnce($sQuery);
+//    }
 
-
-        if (empty($nIDObject) || !is_numeric($nIDObject)) {
-            return false;
-        }
-        $sQuery = "
-            
-            SELECT
-                off.id,
-                off.code,
-                off.name,
-                off.validFrom,
-                off.validTo,
-                off.id as _id,
-                off.mode,
-                CASE off.mode
-                  WHEN 'night' THEN 'Нощна'
-                  WHEN 'day' THEN 'Дневна'
-                END as mode_name,
-                off.shiftFrom,
-                off.shiftTo,
-                off.night_hour,
-                off.description,
-                off.duration,
-                TIME_TO_SEC(off.duration) as duration_sec
-            FROM object_shifts off
-            WHERE off.id_obj = {$nIDObject}
-            AND ((off.validFrom <= '{$date_from}' AND off.validTo >= '{$date_from}') OR (off.validFrom <= '{$date_to}' AND off.validTo = '0000-00-00'))
-            AND off.to_arc = 0                           
-        ";
-
-//        print_r($sQuery);
-        return $this->selectAssoc($sQuery);
-    }
-
-    public function getShiftInfo($nIDShift) {
-        if (empty($nIDShift) || !is_numeric($nIDShift)) {
-            return false;
-        }
-
-        $sQuery = "
-            SELECT
-                os.id,
-                os.description,
-                os.duration,
-                os.factor,
-                os.code,
-                os.name,
-                os.validFrom,
-                os.validTo,
-                os.mode,
-                CONCAT_WS('/',o.num,o.name) as 'name'
-            FROM  object_shifts os
-            LEFT JOIN objects o ON o.id = os.id_obj
-            LEFT JOIN objects_duty od ON od.id_shift = os.id
-            WHERE
-            os.id = {$nIDShift}
-            LIMIT 1
-        ";
-        return $this->selectOnce($sQuery);
-    }
-
-    public function getDayshifts($nIDOffice) {
-
-        global $db_name_personnel;
-
-        if (empty($nIDOffice) || !is_numeric($nIDOffice)) {
-            return false;
-        }
-
-        $today = date('Y-m-d');
-
-        $sQuery = "
-            SELECT
-                od.id as shift_id,
-               	o.id as id_object,
-                o.name as name_object,
-                o.num as num_object,
-                o.phone as phone_object,
-                CONCAT_WS(' ',p.fname,p.lname) as person_name,
-                od.startShift,
-                od.realStartShift,
-                od.realEndShift,
-                os.name as shift_name,
-                os.code as shift_code,
-                os.`mode` as shift_mode,
-                os.shiftFrom,
-                os.shiftTo,
-                FROM_UNIXTIME(UNIX_TIMESTAMP(CONCAT_WS(' ',od.startShift,os.shiftFrom)) - MOD(UNIX_TIMESTAMP(CONCAT_WS(' ',od.startShift,os.shiftFrom)),1800)) as near_start_hour
-            FROM objects o
-            LEFT JOIN objects_duty od ON od.id_object = o.id AND od.to_arc = 0
-            LEFT JOIN object_shifts os ON os.id = od.id_shift
-            LEFT JOIN {$db_name_personnel}.personnel p ON p.id = od.id_person
-            WHERE 1
-            AND od.startShift = DATE(NOW())
-            AND o.id_office = 143
-        ";
-
-        return $this->selectAssoc($sQuery);
-
-
-    }
+//    public function getDayshifts($nIDOffice) {
+//
+//        global $db_name_personnel;
+//
+//        if (empty($nIDOffice) || !is_numeric($nIDOffice)) {
+//            return false;
+//        }
+//
+//        $today = date('Y-m-d');
+//
+//        $sQuery = "
+//            SELECT
+//                od.id as shift_id,
+//               	o.id as id_object,
+//                o.name as name_object,
+//                o.num as num_object,
+//                o.phone as phone_object,
+//                CONCAT_WS(' ',p.fname,p.lname) as person_name,
+//                od.startShift,
+//                od.realStartShift,
+//                od.realEndShift,
+//                os.name as shift_name,
+//                os.code as shift_code,
+//                os.`mode` as shift_mode,
+//                os.shiftFrom,
+//                os.shiftTo,
+//                FROM_UNIXTIME(UNIX_TIMESTAMP(CONCAT_WS(' ',od.startShift,os.shiftFrom)) - MOD(UNIX_TIMESTAMP(CONCAT_WS(' ',od.startShift,os.shiftFrom)),1800)) as near_start_hour
+//            FROM objects o
+//            LEFT JOIN objects_duty od ON od.id_object = o.id AND od.to_arc = 0
+//            LEFT JOIN object_shifts os ON os.id = od.id_shift
+//            LEFT JOIN {$db_name_personnel}.personnel p ON p.id = od.id_person
+//            WHERE 1
+//            AND od.startShift = DATE(NOW())
+//            AND o.id_office = 143
+//        ";
+//
+//        return $this->selectAssoc($sQuery);
+//
+//
+//    }
 
 }
 
