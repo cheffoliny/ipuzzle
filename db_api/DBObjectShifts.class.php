@@ -800,7 +800,6 @@ class DBObjectShifts extends DBBase2 {
                 }
                 if ($aData[$nIDPerson]['nStake2']) {
                     $s_stake2 = $this->sec_to_mysql_time($factor['factor'] * 3600);
-                    ;
                 } else {
                     $s_stake2 = "00:00";
                 }
