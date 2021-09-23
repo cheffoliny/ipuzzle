@@ -786,11 +786,6 @@ class DBObjectShifts extends DBBase2 {
                 $aData[$nIDPerson]['nStake'] = !empty($aDaysData[$nIDPerson]) ? $aDaysData[$nIDPerson]['n_stake'] : 0;
                 $aData[$nIDPerson]['nStake2'] = !empty($aDaysData[$nIDPerson]) ? $aDaysData[$nIDPerson]['n_stake2'] : 0;
 
-//					$s_stake 	= $this->sec_to_mysql_time($aData[$nIDPerson]['nStake'] * 0.145);
-//                    APILog::Log(0,ArrayToString($aData[$nIDPerson]['nStake']));
-//					$s_stake2 	= $this->sec_to_mysql_time($aData[$nIDPerson]['nStake2'] * 0.145);
-//                    APILog::Log(0,ArrayToString($s_stake2));
-//					throw new Exception(ArrayToString($aData[$nIDPerson]));
 
                 $factor = $oDBObjectScheduleSettings->getActiveSettings();
                 if ($aData[$nIDPerson]['nStake']) {
@@ -1020,59 +1015,9 @@ class DBObjectShifts extends DBBase2 {
             $oDBHolidays = new DBHolidays();
 
 
-
-//                $contractStartDate = $oDBPersonContract->getPersonDateFrom($nIDPerson);
-//            $contractStartArr = array();
-//            $contractStartDate = $oDBWorkContracts->getLastWorkContract($nIDPerson);
-//            if ($contractStartDate) {
-//                $contractStartDate = $contractStartDate['date_from'];
-//                $contractStartArr = explode('-', $contractStartDate);
-//            }
-////                $contractWorkHours = (int)$oDBPersonContract->getPersonWorkHours($nIDPerson);
-//            $contractWorkHours = (int) $oDBWorkContracts->getPersonWorkingHoursByLastData($nIDPerson);
-//            $nHoursNormSumLocal = 0;
-//            $nHoursNormEndLocal = 0;
-//            $nHoursNormEndToTheEndOfMonth = 0;
-//
-//            if ($contractStartArr[0] == $nYear && $contractStartArr[1] == $nMonth && $contractStartDate) {
-//                //Брой работни дни от подписване на договора до края на месеца
-//                if ($nMonth == "02") {
-////                            $nHoursNormSum = $oDBScheduleMonthNorms->getHalfyearHourNormsToDate( $nYear, $nMonth, false );
-//                    $workDaysCnt = $oDBHolidays->getWorkdaysInPeriod(date('Y-m-d', strtotime($contractStartDate)), $this->last_day_of_feb($nYear));
-//                } else {
-//                    $workDaysCnt = $oDBHolidays->getWorkdaysInPeriod(date('Y-m-d', strtotime($contractStartDate)), date($nYear . '-' . $nMonth . '-t'));
-//                }
-//                $nHoursNormEndToTheEndOfMonth = $workDaysCnt * $contractWorkHours;
-////                            if($nIDPerson==4186) {
-////                                APILog::Log(0,ArrayToString($workDaysCnt.'---'.$contractStartDate));
-////                            }
-//            }
-
             // Ако договора е в тримесечие преизчислява нормата за месеца от който е влязал договора
             $nHoursNormSumTmp = 0;
-//            if ($contractStartArr[0] == $nYear && $contractStartArr[1] > $nMonth - 3 && $contractStartArr[1] != $nMonth) {
-//                if ($contractStartArr[1] == "02") {
-//                    $workDaysCnt = $oDBHolidays->getWorkdaysInPeriod(date('Y-m-d', strtotime($contractStartDate)), $this->last_day_of_feb($nYear));
-//                    $tmpOneNorm = $oDBScheduleMonthNorms->getHourNormsForDate($contractStartArr[0], $contractStartArr[1]);
-//                        $nHoursNormSum = $nHoursNormSum - $tmpOneNorm + ($workDaysCnt*$contractWorkHours);
-//                    $nHoursNormSumTmp = ((int) $nHoursNormSum - (int) $tmpOneNorm) + ($workDaysCnt * $contractWorkHours);
-//                } else {
- //                   $workDaysCnt = $oDBHolidays->getWorkdaysInPeriod(date('Y-m-d', strtotime($contractStartDate)), date($nYear . '-' . $nMonth . '-t'));
-//                    $tmpOneNorm = $oDBScheduleMonthNorms->getHourNormsForDate($contractStartArr[0], $contractStartArr[1]);
-//                        $nHoursNormSum = $nHoursNormSum - $tmpOneNorm + ($workDaysCnt*$contractWorkHours);
-//                        $nHoursNormSum = $nHoursNormSum - $tmpOneNorm;
-//                }
-//            }
 
-            // Ако има дата на напускане
-//                if(!empty($contractEndDate)) {
-//                    $contractEndDate = $oDBWorkContractsEnd->getWorkContracts($nIDPerson);
-//                    $contractEndDate = explode('-',$contractEndDate['date_from']);
-//                    if($contractEndDate[0] == $nYear && $contractEndDate[1] == $nMonth) {
-//                        $workDaysCnt = $oDBHolidays->getWorkdaysInPeriod(date('Y-m-d',strtotime($contractStartDate)),date('Y-m-t'));
-//                        $nHoursNormEndToTheEndOfMonth = $workDaysCnt * $contractWorkHours;
-//                    }
-//                }
             // Изчисляване за график с работно време < от 8 часа
 //            if ($contractWorkHours < 8 && $contractWorkHours) {
 //
