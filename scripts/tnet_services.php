@@ -6,7 +6,7 @@
 	$telenet_system = "telenet_system";
 	$finance		= "finance";
 	$sod			= "sod";
-	$telepol		= "telepol_net";
+	$telepol		= "sod";
 
 	//$link = mysql_connect('213.91.252.134', 'lamerko', 'Olig0fren');
 	//$link = mysql_connect('localhost', 'root', '');

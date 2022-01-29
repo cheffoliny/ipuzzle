@@ -52,7 +52,7 @@
 	$oWorksheet->set_margins(0.25);
 	$oWorksheet->set_margin_right(0.25);
 	$oWorksheet->set_margin_bottom(0.5);
-	$oWorksheet->set_footer("Powered by TELEPOL Net © 2007. http://www.telepol.net",0.25);
+	$oWorksheet->set_footer("Powered by INTELLI SYSTEM Net © 2013 ",0.25);
 	
 	
 	// Формат за Заглавие

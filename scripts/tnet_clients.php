@@ -3,7 +3,7 @@
 	
 	// bazata sod
 	$sod		= "sod";
-	$telepol	= "telepol_net";
+	$telepol	= "sod";
 
 	function debug( $array ) {
 		echo "<pre>"; print_r($array); echo "<pre>";

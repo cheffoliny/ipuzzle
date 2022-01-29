@@ -1169,7 +1169,7 @@ fw.alarmArchive		= function() {
 
 								var checked = for_bulletin == '1' ? 'checked' : '';
 
-								dContent += '<input type="checkbox" name="for_bulletin" '+checked+' />Алармата като Бюлетин в telepol.com';
+								dContent += '<input type="checkbox" name="for_bulletin" '+checked+' />Алармата като Бюлетин в www.com';
 
 								  fw.confirm('Добавяне на коментар', dContent,'',function(){
 										var comment=$("textarea[name=txtComment]").val();
