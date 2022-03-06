@@ -11,7 +11,7 @@
 			$aFilters = $oDBFilters->getFiltersByReportClass( "DBStates", $nIDPerson );
 			
 			$oResponse->setFormElement( 'form1', 'schemes', array() );
-			$oResponse->setFormElementChild( 'form1', 'schemes', array( "value" => "0" ), "---Изберете---" );
+			$oResponse->setFormElementChild( 'form1', 'schemes', array( "value" => "0" ), "-- Изберете --" );
 			
 			$aFilter = array();
 			foreach( $aFilters as $key => $value )
@@ -59,7 +59,7 @@
 				$aFirms = $oDBFirms->getFirms4();
 				
 				$oResponse->setFormElement( 'form1', 'nIDFirm', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDFirm', array( "value" => "0" ), '---Всички фирми---' );
+				$oResponse->setFormElementChild( 'form1', 'nIDFirm', array( "value" => "0" ), '-- Всички фирми --' );
 				foreach( $aFirms as $key => $value )
 				{
 					if( $key == $aFilterParams['id_firm'] )
@@ -75,7 +75,7 @@
 				}
 				
 				$oResponse->setFormElement( 'form1', 'nIDOffice', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDOffice', array( "value" => "0" ), '---Всички Региони---' );
+				$oResponse->setFormElementChild( 'form1', 'nIDOffice', array( "value" => "0" ), '-- Всички Региони --' );
 				if( !empty( $aFilterParams['id_firm'] ) )
 				{
 					$oDBOffices = new DBOffices();
@@ -140,13 +140,13 @@
 				
 				global $space;
 				$oResponse->setFormElement( 'form1', 'nIDNomenclatureType', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "---Всички Типове Номенклатура---" );
+				$oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "-- Всички типове артикули --" );
 				$this->showNomenclatureTypes( 0, $aFilterParams['id_nomenclature_type'], $oResponse );
 				
 				$aNomenclatures = $oDBNomenclatures->getNamesByIDType( $aFilterParams['id_nomenclature_type'] );
 				
 				$oResponse->setFormElement( 'form1', 'nIDNomenclature', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "---Всички номенклатури---" );
+				$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "-- Всички артикули --" );
 				foreach( $aNomenclatures as $key => $value )
 				{
 					if( $key == $aFilterParams['id_nomenclature'] )
@@ -246,13 +246,13 @@
 				
 				global $space;
 				$oResponse->setFormElement( 'form1', 'nIDNomenclatureType', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "---Всички типове номенклатири---" );
+				$oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "-- Всички типове артикули --" );
 				$this->showNomenclatureTypes( 0, $aFilter['id_nomenclature_type'], $oResponse );
 				
 				$aNomenclatures = $oDBNomenclatures->getNamesByIDType( 0 );
 				
 				$oResponse->setFormElement( 'form1', 'nIDNomenclature', array() );
-				$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "---Всички номенклатури---" );
+				$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "-- Всички артикули --" );
 				foreach( $aNomenclatures as $key => $value )
 				{	
 					$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( 'value' => $key ), $value );
@@ -402,13 +402,13 @@
 
                 global $space;
                 $oResponse->setFormElement( 'form1', 'nIDNomenclatureType', array() );
-                $oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "---Всички Типове Номенклатура---" );
+                $oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "-- Всички типове артикули --" );
                 $this->showNomenclatureTypes( 0, $aFilterParams['id_nomenclature_type'], $oResponse );
 
                 $aNomenclatures = $oDBNomenclatures->getNamesByIDType( $aFilterParams['id_nomenclature_type'] );
 
                 $oResponse->setFormElement( 'form1', 'nIDNomenclature', array() );
-                $oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "---Всички номенклатури---" );
+                $oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "-- Всички артикули --" );
                 foreach( $aNomenclatures as $key => $value )
                 {
                     if( $key == $aFilterParams['id_nomenclature'] )
@@ -506,13 +506,13 @@
 
                 global $space;
                 $oResponse->setFormElement( 'form1', 'nIDNomenclatureType', array() );
-                $oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "---Всички типове номенклатири---" );
+                $oResponse->setFormElementChild( 'form1', 'nIDNomenclatureType', array( "value" => "0" ), "-- Всички типове артикули --" );
                 $this->showNomenclatureTypes( 0, $aFilter['id_nomenclature_type'], $oResponse );
 
                 $aNomenclatures = $oDBNomenclatures->getNamesByIDType( 0 );
 
                 $oResponse->setFormElement( 'form1', 'nIDNomenclature', array() );
-                $oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "---Всички номенклатури---" );
+                $oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( "value" => "0" ), "-- Всички артикули --" );
                 foreach( $aNomenclatures as $key => $value )
                 {
                     $oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array( 'value' => $key ), $value );
@@ -608,7 +608,7 @@
 			$nIDNomenclatureType = Params::get( 'nIDNomenclatureType' );
 			
 			$oResponse->setFormElement( 'form1', 'nIDNomenclature', array(), '' );
-			$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array_merge( array( "value" => '0' ) ), "---Всички номенклатури---" );
+			$oResponse->setFormElementChild( 'form1', 'nIDNomenclature', array_merge( array( "value" => '0' ) ), "-- Всички артикули --" );
 			
 			$oDBNomenclatures = new DBNomenclatures();	
 			$aNomenclatures = $oDBNomenclatures->getNamesByIDType( $nIDNomenclatureType );

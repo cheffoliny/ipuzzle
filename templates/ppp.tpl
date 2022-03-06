@@ -128,48 +128,39 @@
 			
 		}
 		
-		function deletePPPElement( id )
-		{
+		function deletePPPElement( id ) {
 			var nLoadedClosed = $('nLoadedClosed').value;
 			var nOnlyValidate = $('nOnlyValidate').value;
 			if( nLoadedClosed == 1 || nOnlyValidate == 1 )return false;
 			
-			if( confirm( 'Наистина ли желаете да премахнете записа?' ) )
-			{
+			if( confirm( 'Наистина ли желаете да премахнете записа?' ) ) {
 				$('nIDElement').value = id;
 				loadXMLDoc2( 'delete', 1 );
 			}
 		}
 		
-		function printPDF()
-		{
+		function printPDF() {
 			var nID = $('nID').value;
-			if( !nID )
-			{
+			if( !nID ) {
 				alert( 'Протокола не е записан!' );
-			}
-			else
-			{
+			} else {
 				loadDirect( 'export_to_pdf' );
 			}
 		}
 		
-		function nullSentType()
-		{
+		function nullSentType() {
 			document.getElementById( 'sSourceName' ).value = '';
 			document.getElementById( 'sSentBy' ).value = '';
 			document.getElementById( 'nIDSourceName' ).value = 0;
 		}
 		
-		function nullReceivedType()
-		{
+		function nullReceivedType() {
 			document.getElementById( 'sDestName' ).value = '';
 			document.getElementById( 'sReceivedBy' ).value = '';
 			document.getElementById( 'nIDDestName' ).value = 0;
 		}
 		
-		function getWindowWidth()
-		{
+		function getWindowWidth() {
 			var ww = 0;
 			if( self.innerWidth )
 				ww = self.innerWidth;
@@ -260,12 +251,18 @@
 		}
 		
 	</script>
-	
+	<style>
+		#result_data {
+            overflow: hidden !important;
+			max-height: 55% !important;
+        }
+	</style>
 
 {/literal}
 
 <body onresize="resizeHandler();" onload="resizeHandler();">
-<div class="content" style="overflow-y: auto; overflow-x: auto;">
+
+<div class="content">
 <form action="" method="POST" name="form1" id="form1" onsubmit="return submit_form();">
 	
 	<input type="hidden" name="sActiceElement" id="sActiveElement" value=""> 				<!-- Активен Елемент -->
@@ -289,107 +286,126 @@
 	<input type="hidden" name="t" id="t" value="{$sType}" />
 	<input type="hidden" name="nIDPerson" id="nIDPerson" value="{$nIDPerson}" />
 	<input type="hidden" name="hash" id="hash" value="" />
-			
-	<table class="search" style="width:100%;">
-	<tr>
-		<td colspan="2" class="header_buttons" style="height: 33px; text-align: center; vertical-align: top;">
-			<span id="head_window" style="color: #3060aa; vertical-align: bottom;" >ПРИЕМО-ПРЕДАВАТЕЛЕН ПРОТОКОЛ - 
-				&nbsp;&num; <input type="text" name="nID" id="nID" class="clear" value="{$nID|default:''}" readonly="readonly" style="width: 70px; line-height: 28px; font-size: 14px; font-weight: bold; text-shadow: -1px 1px #ffffff; color: #aa0000; text-align: right; border-bottom: 1px solid #cccccc;" />
-				&nbsp;/&nbsp;
-				<input type="text" name="nDay"	 id="nDay"	 class="clear" readonly="readonly" style="width: 20px; line-height: 28px; font-size: 14px; font-weight: bold; text-shadow: -1px 1px #ffffff; color: #4060aa;" /> .
-				<input type="text" name="nMonth" id="nMonth" class="clear" readonly="readonly" style="width: 20px;line-height: 28px; font-size: 14px; font-weight: bold; text-shadow: -1px 1px #ffffff; color: #4060aa;" /> .
-				<input type="text" name="nYear"  id="nYear"  class="clear" readonly="readonly" style="width: 40px;line-height: 28px; font-size: 14px; font-weight: bold; text-shadow: -1px 1px #ffffff; color: #4060aa;" />
-			</span>
-		</td>
-	</tr>
-	<tr><td style="height: 5px;"></td></tr>
-	<tr style="background: rgba(255,255,255,0.3)">
-		<td style="padding: 7px 2px 7px 2px;">
 
-			 &nbsp;Предаващ<br />
-			<div class="input-group" style="margin: 3px;">
-			<span class="input-group-addon"><img src="images/glyphicons/info.png" style="width: 12px; height: 12px;"></span>
-			<select name="sSendType" id="sSendType" class="select300" onchange="nullSentType();">
-				<option value="object">Обект</option>
-				<option value="storagehouse">Склад</option>
-				<option value="person">Служител</option>
-				<option value="client">Доставчик</option>
-			</select>
+	<div class="row nav-tabs nav-intelli py-1">
+		<div class="col pt-2 px-5">
+			<h6 class="text-white">ПРИЕМО-ПРЕДАВАТЕЛЕН ПРОТОКОЛ</h6>
+		</div>
+		<div class="col">
+			<div class="input-group">
+				<span class="input-group-addon">#</span>
+				<span class="input-group-addon mr-3">
+					<input type="text" name="nID" id="nID"	 size="5" class="form-control" value="{$nID|default:''}" readonly="readonly" />
+				</span>
+				<span class="input-group-addon text-white mx-3"> / </span>
+				<span class="input-group-addon">
+					<input type="text" name="nDay"	 id="nDay"	 size="2" class="form-control in" readonly="readonly" />
+				</span>
+				<span class="input-group-addon">
+					<input type="text" name="nMonth" id="nMonth" size="2" class="form-control" readonly="readonly" />
+				</span>
+				<span class="input-group-addon">
+					<input type="text" name="nYear"  id="nYear"  size="4" class="form-control" readonly="readonly" />
+				</span>
 			</div>
-	
-			<div class="input-group" style="margin: 3px;">
-			<span class="input-group-addon"><img src="images/glyphicons/inbox.out.png" style="width: 12px; height: 12px;"></span>
-			<input type="text" name="sSourceName" id="sSourceName" class="inp300" suggest="suggest" queryType="pppSourceName" queryParams="sSendType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на предаващия..." />
+		</div>
+	</div>
+	<div class="container-fluid bg-light">
+		<div class="row pt-2">
+			<div class="col">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<span class="far fa-upload fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
+					</div>
+					<select class="form-control" name="sSendType" id="sSendType" onchange="nullSentType();">
+						<option value="">-- Тип Предаващ --</option>
+						<option value="object">Обект</option>
+						<option value="storagehouse">Склад</option>
+						<option value="person">Служител</option>
+						<option value="client">Доставчик</option>
+					</select>
+				</div>
 			</div>
+			<div class="col">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<span class="far fa-download fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
+					</div>
+					<select name="sReceiveType" id="sReceiveType" class="form-control" onchange="nullReceivedType();">
+						<option value="">-- Тип Получаващ --</option>
+						<option value="object">Обект</option>
+						<option value="storagehouse">Склад</option>
+						<option value="person">Служител</option>
+						<option value="client">Доставчик</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row py-1">
+			<div class="col">
+				<div class="input-group input-group-sm suggest">
+					<div class="input-group-prepend">
+						<span class="fas fa-upload fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
+					</div>
+					<input type="text" name="sSourceName" id="sSourceName" class="form-control suggest" suggest="suggest" queryType="pppSourceName" queryParams="sSendType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на предаващия..." />
+				</div>
+			</div>
+			<div class="col">
+				<div class="input-group input-group-sm suggest">
+					<div class="input-group-prepend">
+						<span class="fas fa-download fa-fw" data-fa-transform="right-22 down-10" title="Тип Приемащ..."></span>
+					</div>
+					<input type="text" name="sDestName" id="sDestName" class="form-control bg-aqua-active" suggest="suggest"  queryType="pppDestName" queryParams="sReceiveType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на приемащия..." />
+				</div>
+			</div>
+		</div>
 
-		</td>
-		<td style="float: right; text-align: right;">
-			
-			 &nbsp;Приемащ&nbsp;<br />
-			<div class="input-group" style="border: 0px solid gray; float: right; margin: 3px; width: 300px;">
-			<span class="input-group-addon"><img src="images/glyphicons/info.png" style="float: right; width: 12px; height: 12px;"></span>
-			<select name="sReceiveType" id="sReceiveType" class="select300" onchange="nullReceivedType();">
-					<option value="object">Обект</option>
-					<option value="storagehouse">Склад</option>
-					<option value="person">Служител</option>
-					<option value="client">Доставчик</option>
-				</select>
+		<div class="row w-100 pt-2 text-primary"><div class="col px-4 py-1">Списък на материални запаси</div></div>
+
+
+		<div class="row px-0 bg-light" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 380px; overflow: auto;"></div>
+{*		<div class="w-100 px-0 py-1" style="height: 350px !important; border: 1px solid yellow; overflow: hidden;">*}
+{*			<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 350px !important;"></div>*}
+{*		</div>*}
+
+		<div class="row py-1">
+			<div class="col py-0 ">
+				<textarea class="w-100" rows="2" id="sNote" name="sNote" placeholder=" Допълнителна информация..." ></textarea>
 			</div>
-	
-			<div class="input-group" style="float: right; margin: 3px; width: 300px;">
-			<span class="input-group-addon"><img src="images/glyphicons/inbox.in.png" style="width: 12px; height: 12px;"></span>
-			<input type="text" name="sDestName" id="sDestName" class="inp300" suggest="suggest" queryType="pppDestName" queryParams="sReceiveType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на приемащия..." />
-			</div>
-			
-		</td>
-	</tr>
-			
-	<tr><td style="height: 5px;"></td></tr>
-	<tr style="background: rgba(255,255,255,0.3)">
-		<td colspan="2" style="padding: 0px 2px 7px 2px;">
-			&nbsp;Списък на материални запаси
-			<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 360px; overflow: auto;"></div>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" style="padding: 0px 2px 7px 2px;">
-			&nbsp;Забележка<br />
-			<textarea rows="3" id="sNote" name="sNote" style="width: 777px; background: rgba(255,255,255,0.8)" placeholder=" Допълнителна информация..." ></textarea>
-		</td>
-	</tr>
-	<tr>
-		<td>&nbsp;<input type="text" name="sSentBy" id="sSentBy" class="inp300" placeholder="Предаващ..." style="background: rgba(255,255,255,0.7)" /></td>
-		<td style="text-align: right;"><input type="text" name="sReceivedBy" id="sReceivedBy" class="inp300" placeholder="Получил..." style="background: rgba(255,255,255,0.7)" />&nbsp;</td>
-	</tr>
-</table>
-	
-<div id="search"  style="padding-top:10px; width:100%;">
-	<table class="page_data" >
-		<tr>
-			<td style="text-align: left; padding: 10px 0 10px 1px;">
-				
+		</div>
+
+		<div class="row">
+			<div class="col"><input type="text" name="sSentBy" id="sSentBy" class="form-control" placeholder="Предаващ..." /></div>
+			<div class="col"><input type="text" name="sReceivedBy" id="sReceivedBy" class="form-control" placeholder="Получил..." /></div>
+		</div>
+
+		<div class="row py-2" id="search">
+			<div class="col">
 				<input type="checkbox" name="nClosed" id="nClosed" class="clear" /> Потвърди
-				<button class="btn btn-xs btn-danger" id="cancelRecord" name="cancelRecord" class="search" style="background: #F09E93;" onclick="return cancelPPP();" title="Анулиране на ППП"><img src="images/cancel.gif"/>Анулирай</button>
-			</td>
-			<td style="text-align: right; width: 500px; padding: 10px 1px 10px 0;">
-				<button class="btn btn-xs btn-success"	onclick="setPPPElement( 0 );" id="addnom" name="addnom" type="button"><i class="fa fa-plus"></i> Добави </button>
-				<button class="btn btn-xs btn-info" type="submit" id="send"><img src="images/glyphicons/save.png" style="width: 14px; height: 14px;"> Запиши </button>
-				<button class="btn btn-xs btn-danger"	onClick="loadXMLDoc2( 'purgeDatabase', 3 );"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>
-				<button class="btn btn-xs btn-primary"	onClick="printPDF();"><i class="fa fa-file-pdf-o"></i> Разпечатай </button>
-			</td>
-		</tr>
-	</table>
-</div>
+				<button class="btn btn-sm btn-danger" id="cancelRecord" name="cancelRecord" onclick="return cancelPPP();" title="Анулиране на ППП"><i class="far fa-times"></i> Анулирай</button>
+			</div>
+			<div class="col text-right">
+				<button class="btn btn-sm btn-success"	onclick="setPPPElement( 0 );" id="addnom" name="addnom" type="button"><i class="far fa-plus"></i> Добави </button>
+				<button class="btn btn-sm btn-info" type="submit" id="send"><i class="far fa-save"></i> Запиши </button>
+{*				<button class="btn btn-sm btn-danger"	onClick="loadXMLDoc2( 'purgeDatabase', 3 );"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>*}
+				<button class="btn btn-sm btn-primary"	onClick="printPDF();"><i class="far fa-file-pdf"></i> Разпечатай </button>
+			</div>
+		</div>
 
-<table class="search" style="width: 100%;">
-	<tr>
-		<td align="left"><input type="text" name="sCreatedBy"	id="sCreatedBy"		class="clear" size="40" readonly="readonly" title="Създал"		style="text-shadow: 0px 1px #ffffff; color: #3060aa;" placeholder="Създал..." /></td>
-		<td align="left"><input type="text" name="sEditedBy"	id="sEditedBy"		class="clear" size="40" readonly="readonly" title="Редактирал"	style="text-shadow: 0px 1px #ffffff; color: #3060aa;" placeholder="Редактирал..." /></td>
-		<td align="left"><input type="text" name="sConfirmedBy" id="sConfirmedBy"	class="clear" size="40" readonly="readonly" title="Потвърдил"	style="text-shadow: 0px 1px #ffffff; color: #3060aa;" placeholder="Потвърдил..." /></td>
-	</tr>
-</table>
-
+		<div class="row fixed-bottom bg-light mx-2 mb-2">
+			<div class="col px-1">
+				<input type="text" name="sCreatedBy" id="sCreatedBy"	class="form-control" readonly="readonly" title="Създал"	placeholder="Създал..." />
+			</div>
+			<div class="col px-0">
+				<input type="text" name="sEditedBy"	id="sEditedBy" class="form-control" readonly="readonly" title="Редактирал"	placeholder="Редактирал..." />
+			</div>
+			<div class="col px-1">
+				<input type="text" name="sConfirmedBy" id="sConfirmedBy" class="form-control" readonly="readonly" title="Потвърдил"	placeholder="Потвърдил..." />
+			</div>
+		</div>
+	</div>
 </form>
+
 </div>
 </body>
 
