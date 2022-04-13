@@ -231,7 +231,7 @@
     <input type="hidden" id="bEditStatuses" name="bEditStatuses" value="{$bEditStatuses|default:true}"/>
     <input type="hidden" id="isService" name="isService" value="{$isService|default:0}"/>
     <!--added for test History! You can try to remove them!-->
-    <input type="hidden" name="objtype" id="objtype" data-alias="id_objtype" value="0" />
+
     <input type="hidden" class="input-transparent-no-borders form-control-inp120" id="geo_lat" name="geo_lat" data-alias="geo_lat" readonly />
     <input type="hidden" class="input-transparent-no-borders form-control-inp120" id="geo_lan" name="geo_lan" data-alias="geo_lan" readonly />
 
@@ -294,9 +294,10 @@
             <div class="col-3">
                 <div class="input-group input-group-sm pl-0">
                     <div class="input-group-prepend">
-                        <span class="fab fa-whatsapp fa-fw" data-fa-transform="right-22 down-10" title="Телефон на обекта"></span>
+                        <span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Телефон на обекта"></span>
                     </div>
-                    <input class="form-control" type="tel" name="phone" id="phone" placeholder=" 0хххх..." />
+                    <select class="form-control" name="objtype" id="objtype" ></select>
+                    <input class="form-control" type="hidden" name="phone" id="phone" placeholder=" 0хххх..." />
                 </div>
             </div>
         </div>
@@ -375,13 +376,13 @@
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                          <div class="input-group-prepend">
-                            <span class="fa fa-tags fa-fw" data-fa-transform="right-22 down-10" title="..."></span>
+                            <span class="fa fa-tags fa-fw" data-fa-transform="right-22 down-10" title="Администрация от..."></span>
                         </div>
                         <select class="form-control" name="nIDOffice" id="nIDOffice" ></select>
                     </div>
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="..."></span>
+                            <span class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="Реакция от..."></span>
                         </div>
                         <select class="form-control" name="nIDReactionOffice" id="nIDReactionOffice" ></select>
                     </div>
@@ -420,10 +421,10 @@
     </div>
 </form>
 <div class="p-0 m-0" style="overflow: auto; position: relative; height: 300px;">
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
+    <div class="w-100 p-0 m-0" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
 </div>
 <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
-    <div class="col-6 col-sm-8 col-lg-8 pl-0">
+    <div class="col-6 col-sm-7 col-lg-7 pl-0">
         <div class="input-group input-group-sm">
             <div class="input-group-prepend">
                 <span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
@@ -431,8 +432,8 @@
             <input class="form-control" type="text" id="invoice_name" name="invoice_name" placeholder="Име за фактура..." />
         </div>
     </div>
-    <div class="col-6 col-sm-4 col-lg-4">
-        <div class="input-group input-group-sm ml-1">
+    <div class="col-6 col-sm-5 col-lg-5 my-2 text-right">
+        <div class="input-group input-group-sm text-right">
             <button class="btn btn-sm btn-light mr-1"	onclick="editFace(0)"           ><i class="fas fa-plus"  ></i> Контакт </button>
             <button class="btn btn-sm btn-success mr-1"	onClick="formSubmit();"         ><i class="fas fa-check" ></i> Запиши </button>
             <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
