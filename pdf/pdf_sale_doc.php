@@ -859,7 +859,7 @@ class SaleDocPDF extends PDFC {
             if (is_null($invoiceEmail)) {
                 $aClientData = $oDBClients->getByID($aSaleDoc['id_client']);
                 if (empty($aClientData['invoice_email'])) {
-                    throw new Exception('Няма въведен Email за клиента! Не може да изратите фактура!');
+                    throw new Exception('Няма въведен Email за клиент! Не може да изратите фактура!'.$aSaleDoc['id_client']);
                 }
 
                 $email = $aClientData['invoice_email'];
