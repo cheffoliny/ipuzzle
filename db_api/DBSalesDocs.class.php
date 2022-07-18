@@ -258,7 +258,7 @@
 				}
 				//End Colouring
 
-				$paid_type_icon = $value['paid_type'] == "cash" ? "coins.gif" : "bank.gif";
+				$paid_type_icon = $value['paid_type'] == "cash" ? "coins.gif" : "bank.png";
                 $paid_type_hint = $value['paid_type'] == "cash" ? "в брой" : "по банка";
 
                 if ( $value['id_bank_epayment'] > 0 && $value['epay_provider'] > 0 ) {

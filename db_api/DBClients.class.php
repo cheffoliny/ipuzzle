@@ -443,7 +443,7 @@
 		
 		public function getPaymentsReport( DBResponse $oResponse, $aParams )
 		{
-			global $db_name_personnel, $db_name_finance, $db_finance;
+			global $db_name_personnel, $db_name_finance, $db_finance, $db_name_system;;
 			
 			$oSalesDocsMonth = new DBMonthTable( $db_name_finance, "sales_docs_", $db_finance );
             $DBEasypayProvider = new DBEasypayProvider();
@@ -459,15 +459,18 @@
 						s.id_bank_epayment,
 						s.easypay_date,
 						s.doc_date,
+						s.doc_type,
 						LPAD( s.doc_num, 10, 0 ) AS doc_num,
 						s.doc_status AS doc_status,
 						s.total_sum,
 						s.orders_sum,
-						
+						s.version AS version,
 						s.total_sum - s.orders_sum AS orders_remain,
-						s.last_order_time AS last_order_time
+						s.last_order_time AS last_order_time,
+						n.created_time as email_created_time
 					FROM
 						<table> s
+					LEFT JOIN {$db_name_system}.notifications n ON n.id_by_operator = s.id AND n.id = ( SELECT MAX(id) FROM {$db_name_system}.notifications WHERE id_by_operator = s.id )
 					WHERE
 						s.to_arc = 0
 						AND s.id_client = {$nID}
@@ -483,16 +486,21 @@
 			$sQuery = "
 					SELECT SQL_CALC_FOUND_ROWS
 						t.id,
+						t.doc_type,
 						t.epay_provider,
 						t.id_bank_epayment,
 						t.easypay_date,
+						t.id as btn_pdf,
+						t.id as btn_pdf_sign,
 						t.doc_date,
 						t.doc_num,
 						t.doc_status,
+						t.version AS version,
 						t.total_sum,
 						t.orders_sum,
 						t.orders_remain,
-						t.last_order_time
+						IF((t.total_sum - t.orders_sum) > 0, '0000-00-00 00:00:00' , t.last_order_time) AS last_order_time,
+						t.email_created_time
 					FROM
 						( {$sRowQuery} ) t
 			";
@@ -501,11 +509,19 @@
 			
 			//Calculate Totals
 			$nTotalSum = $nTotalPaid = $nTotalRemain = 0;
+            $nextDocNum = 0;
+
 			foreach( $oResponse->oResult->aData as $value ) {
 				if ($value['doc_status'] != 'canceled'){
 					$nTotalSum 		+= $value['total_sum'];
 					$nTotalPaid 	+= $value['orders_sum'];
 					$nTotalRemain 	+= $value['orders_remain'];
+
+                    if ( $value['last_order_time'] == "0000-00-00 00:00:00" ) {
+                        if ( $value['doc_num'] < $nextDocNum || $nextDocNum == 0 ) {
+                            $nextDocNum = $value['doc_num'];
+                        }
+                    }
 				}
 			}
 			
@@ -521,10 +537,17 @@
 			$oResponse->setField( "orders_remain", 		"Дължимо", 	"Сортирай по Дължима сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
 			$oResponse->setField( "last_order_time", 	"Плащане",  "Сортирай по Дата на последно плащане", 	NULL, NULL, NULL, array( "DATA_FORMAT" => DF_DATE ) );
             $oResponse->setField( "epay_provider",          "iPay",                          "Сортирай по начин на плащане");
+            $oResponse->setField( "email_created_time", "E-Фактура", 			"E-Фактура", 						                NULL, NULL, NULL, array( "DATA_FORMAT" => DF_DATE ) );
+            $oResponse->setField( 'btn_pdf_sign',	'',		'Изпрати фактура...', 'images/mail-send.png', 'signInvoice', '');
+
+            $oResponse->setField( 'btn_pdf',	'',		'Печат на фактура...', 'images/pdf.gif', '', '');
 
 			$oResponse->setFieldLink( "doc_num", "openSaleDoc" );
 
 			foreach ($oResponse->oResult->aData as $key => &$value) {
+
+                $oResponse->setDataAttributes( $key, 'btn_pdf', array('onclick' => "printSaleDoc({$value['id']}, {$value['version']})") );
+
 				if ($value['doc_status'] == 'canceled'){
 					$oResponse->setDataAttributes( $key, 'doc_date', array( 'style' => 'color:#FF0000;' ) );
 					$oResponse->setDataAttributes( $key, 'doc_num', array( 'title' => 'анулиран' ) );

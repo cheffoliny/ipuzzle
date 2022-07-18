@@ -678,7 +678,10 @@ class SaleDocPDF extends PDFC {
         while (1) ;
     }
 
-    public function PrintReport( $nID, $sPrintType = '', $sViewType = 'single', $local_save = 0, $forAutoSign = false ) {
+//        public function PrintReport( $nID, $sPrintType = '', $sViewType = 'single', $local_save = 0, $forAutoSign = false ) {
+
+    public function PrintReport($nID, $sPrintType = '', $sViewType = 'single', $local_save = 0, $forAutoSign = false, $invoiceEmail = null)
+    {
         $oDBSaleDoc = new DBSalesDocs();
 
         $aSaleDoc 	= array();
@@ -695,7 +698,7 @@ class SaleDocPDF extends PDFC {
         if ( !empty($nAdvice) ) {
             $oDBSaleDoc->getRecord($nAdvice, $aAdvice);
 
-            if ( isset($aAdvice['doc_num']) ) {
+            if (isset($aAdvice['doc_num'])) {
                 $adv_num 	= $aAdvice['doc_num'];
                 $adv_date	= date("d.m.Y", strtotime($aAdvice['doc_date']));
             }
@@ -703,9 +706,14 @@ class SaleDocPDF extends PDFC {
 
         $sDocDate = mysqlDateToJsDate($aSaleDoc['doc_date']);
 
+//        $this->sDocumentHeader = $sPrintType;
+//        $this->sViewType = $sViewType;
+//        $this->sDocDate = $sDocDate;
         $this->sDocumentHeader = $sPrintType;
-        $this->sViewType = $sViewType;
-        $this->sDocDate = $sDocDate;
+        $this->sViewType    = $sViewType;
+        $this->sDocDate     = $sDocDate;
+        $this->sClientID    = isset($aSaleDoc['id_client'])     ? str_pad($aSaleDoc['id_client'], 8, "0", STR_PAD_LEFT) : "";
+        $this->ein          = isset($aSaleDoc['deliverer_ein']) ? $aSaleDoc['deliverer_ein']                            : 0;
 
         switch( $sDocStatus ) {
 
@@ -767,7 +775,6 @@ class SaleDocPDF extends PDFC {
         }
 
         if (!$this->copie || $forAutoSign) {
-
             $this->aMargin['top']=15;
             $this->SetMargins( $this->aMargin['left'], $this->aMargin['top'], $this->aMargin['right'] );
 
@@ -784,19 +791,24 @@ class SaleDocPDF extends PDFC {
             $this->PrintTableDataHeader();
             $this->PrintTableData($nID);
 
+            if ($this->num_rows < 20) {
+                $this->printAdvert();
+            }
+
             $this->Ln($this->aOptions['BorderWidth']);
 
             $this->PrintTotal($aSaleDoc);
             $this->ClearRightMargin();
 
             $this->SetDisplayMode('real');
+
         // забранявам втори екземпляр по искане на Чефо - 4.11.2013г.
-                $this->flag = false;
+            $this->flag = false;
         } else {
-        $this->flag = true;
+            $this->flag = true;
         }
 
-        if ( $this->flag ) {
+        if ($this->flag) {
             if ($aSaleDoc['doc_status'] != "canceled") {
                 $this->sDocumentHeader = "";
             }
@@ -828,10 +840,44 @@ class SaleDocPDF extends PDFC {
         //$this->Image( $_SESSION['BASE_DIR'].'/images_adverts/adverts.jpg',$this->aMargin['left'], $this->aOptions['CaptionHeight'], $this->aMargin['left'] + $this->aOptions['TitleWidth'] + ($this->aOptions['Widths']['title'] + $this->aOptions['Widths']['body']) + $this->aMargin['right'] );
 
 
-        if($local_save == 1) {
-            $this->Output($_SESSION['BASE_DIR']."/sale_docs_unsigned/".$nID.".pdf",'F');
+//        if($local_save == 1) {
+//            $this->Output($_SESSION['BASE_DIR']."/sale_docs_unsigned/".$nID.".pdf",'F');
+//        } else {
+//            $this->Output();
+//        }
+
+        if ($local_save == 1) {
+            $this->Output($_SESSION['BASE_DIR'] . "/sale_docs_unsigned/" . $nID . ".pdf", 'F');
+        } elseif ($forAutoSign) {
+            $out_file_path = $_SESSION['BASE_DIR'] . "/tmp/" . $nID . ".pdf";
+            $this->Output($out_file_path, 'F');
+
+            $oDBClients = new DBClients();
+            $oDBNotificationsEvents = new DBNotificationsEvents();
+
+            $email = '';
+            if (is_null($invoiceEmail)) {
+                $aClientData = $oDBClients->getByID($aSaleDoc['id_client']);
+                if (empty($aClientData['invoice_email'])) {
+                    throw new Exception('Няма въведен Email за клиента! Не може да изратите фактура!');
+                }
+
+                $email = $aClientData['invoice_email'];
+            } else {
+                $email = $invoiceEmail;
+            }
+
+
+            $aNotificationInvoiceData = $oDBNotificationsEvents->getTemplateByCode("invoice_sign");
+
+            require_once "include/invoice_signer.inc.php";
+
+            $pdfSigner = new InvoiceSigner($nID, $email, $out_file_path, $aNotificationInvoiceData['email_subject'], $aNotificationInvoiceData['email_body'], $aSaleDoc['id_client']);
+            $pdfSigner->sign();
+            return $pdfSigner->getResult();
+
         } else {
-            $this->Output();
+            $this->Output("sale_doc_".$nID, "I");
         }
     }
 }
