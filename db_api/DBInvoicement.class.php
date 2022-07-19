@@ -30,8 +30,8 @@
 				LEFT JOIN {$db_name_sod}.clients c ON co.id_client = c.id
 				WHERE os.to_arc = 0
 					AND c.invoice_payment = 'bank'
-					AND c.invoice_email != ''
-					AND c.invoice_email is not null
+					#AND c.invoice_email != ''
+					#AND c.invoice_email is not null
 					AND os.last_paid <= NOW()
 					AND os.start_date <= NOW()
 				HAVING DATE(FROM_UNIXTIME(payment)) != first_day	
@@ -71,8 +71,8 @@
 				LEFT JOIN {$db_name_sod}.clients c ON co.id_client = c.id
 				WHERE os.to_arc = 0
 					AND c.invoice_payment = 'bank'
-					AND c.invoice_email != ''
-					AND c.invoice_email is not null
+					#AND c.invoice_email != ''
+					#AND c.invoice_email is not null
 					AND os.id_sale_doc = 0
 			";	
 			

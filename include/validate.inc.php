@@ -38,47 +38,21 @@ class Validate {
  	* 			return $result		
  	* -----------------------------------------------------	
  	**/
-	function checkEMAIL () {
-		
-		
-		if (empty ($this->variable)) {
-			$this->result = $this->emptyResult;
-			return true;
-		}
+    function checkEMAIL () {
 
-		if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $this->variable))  {
-			$this->result = $this->falseResult;
-			return; 
-		}
-	
-		$email_array = explode("@", $this->variable);
-		$local_array = explode(".", $email_array[0]);
-		
-		for ($i = 0; $i < sizeof($local_array); $i++) {
-			if (!ereg("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
-		 		$this->result = $this->falseResult;
-				return; 
-			}  
-		} 
-		
-		if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) {
-			$domain_array = explode(".", $email_array[1]);
-			if (sizeof($domain_array) < 2) {
-				$this->result = $this->falseResult;
-				return; 
-			}
-		
-			for ($i = 0; $i < sizeof($domain_array); $i++) {
-				if (!ereg("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
-					$this->result = $this->falseResult;
-					return;
-				}
-			}
-		}
-		
-		$this->result = $this->trueResult;	
-		
-	}
+
+        if (empty ($this->variable)) {
+            $this->result = $this->emptyResult;
+            return true;
+        }
+
+        if (!filter_var($this->variable, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+
+        $this->result = $this->trueResult;
+
+    }
 	
 	/** ---------------------------------------------------
  	* Проверка валидността на URL
