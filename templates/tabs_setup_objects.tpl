@@ -30,4 +30,12 @@
         </li>
     {/if}
 
+    {if $page eq "clients_notifications"}
+        <li class="nav-item text-center" title="Известия"><a class="nav-link active" href="#">Известия</a></li>
+    {else}
+        <li class="nav-item text-center" title="Известия">
+            <a class="nav-link" href="#" onclick="return tab_href('clients_notifications');" id='clients_notifications'>Известия</a>
+        </li>
+    {/if}
+
 </ul>

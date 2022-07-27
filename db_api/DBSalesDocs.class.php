@@ -763,7 +763,8 @@
 				}
 				if( !empty( $aFilterParams['email_send'] ) )
 				{
-					$sQuery .= " AND c.email != '' \n";
+					$sQuery .= " AND c.
+					email != '' \n";
 				}
 				if( $aFilterParams['doc_date_from'] != '0000-00-00 00:00:00' )
 				{
