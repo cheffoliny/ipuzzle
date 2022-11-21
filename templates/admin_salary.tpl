@@ -91,75 +91,71 @@
 {/literal}
 
 <form action="" name="form1" id="form1" onSubmit="return loadXMLDoc('result')">
-	<input type="hidden" id="id_object" name="id_object" valur="0">
-	<input type="hidden" id="uplaoded_file" name="uplaoded_file_name" valur="">
-	<input type="hidden" id="uplaoded_file" name="uplaoded_file_type" valur="">
+	<input type="hidden" id="id_object" name="id_object" value="0" />
+	<input type="hidden" id="uplaoded_file" name="uplaoded_file_name" value="" />
+	<input type="hidden" id="uplaoded_file" name="uplaoded_file_type" value="" />
 	<input type="hidden" id="id" name="id" value="0">
-	<input type="hidden" id="year_month" name="year_month" valur="0">
-	<table class = "page_data">
-		<tr>
-			<td class="page_name">Администрация - РАБОТНИ ЗАПЛАТИ (Подробна)</td>
-			<td class="buttons">
-				<table>
-					<tr>
-						<!--<td style="width:100px;">
-							<button style="width:60px;" onClick="openFixSalary()"><b>+ЩАТ</b></button>
-						</td> --> 
-						<td style="font-size:12px">
-							Импорт на
-						</td>
-						<td>
-							<select name="import_type" id="import_type" class="select150">
-								<option value='salary'/>Работни заплати
-								<option value='gsm'/>Фактура МТЕЛ
-							</select>
-						</td>
-						<td>
-							<button onclick="ImportSalary()"><img src="images/plus.gif">От Файл</button>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	
-	<center>
-		<table class="search">
-			<tr>
-				<td align="right">Тип</td>
-				<td align="left">
-					<select id="type" name="type" class="select200">
+	<input type="hidden" id="year_month" name="year_month" value="0">
+
+	{include file='tabs_setup_personnel.tpl'}
+
+	<div>
+		<div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary">
+			<div class="col-6 col-sm-4 col-lg-2">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+					</div>
+					<select class="form-control" name="firm" id="firm" onchange="onFirmChange()" ></select>&nbsp;&nbsp;
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2 pl-0">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+					</div>
+					<select class="form-control" name="region" id="region" onchange="onRegionChange()"></select>
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Тип..."></i>
+					</div>
+					<input class="form-control" name="region_object" id="region_object" type="text" suggest="suggest" queryType="region_object" queryParams="firm;region" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" placeholder="Обект..."/>
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2 pl-4-5">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Тип..."></i>
+					</div>
+					<select class="form-control" id="type" name="type">
 						<option value="1">Служители от</option>
 						<option value="2">За сметка на</option>
 					</select>&nbsp;&nbsp;
-				</td>
-				<td align="right">Фирма</td>
-				<td align="left">
-					<select name="firm" id="firm" class="select200" onchange="onFirmChange()" />&nbsp;&nbsp;
-				</td>
-				<td align="center">
-					Год
-					<input style="width:40px; text-align:right" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>&nbsp;&nbsp;
-					Мес
-					<input style="width:30px; text-align:right" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;&nbsp;
-				</td>
-			</tr>
-			<tr>
-				<td align="right">Регион</td>
-				<td align="left">
-					<select name="region" id="region" class="select200" onchange="onRegionChange()" />
-				</td>
-				<td align="right">Обект</td>
-				<td align="left">
-					<input name="region_object" id="region_object" type="text" class="inp200" suggest="suggest" queryType="region_object" queryParams="firm;region" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()"/>
-				</td>
-				<td align="center"><button type="submit" name="Button"><img src="images/confirm.gif">Търси</button></td>
-			</tr>
-	  </table>
-	</center>
-	
-	<hr>
-	
+				</div>
+			</div>
+			<div class="col-12 col-sm-8 col-lg-4">
+				<div class="btn-group input-group-sm">
+					<div class="input-group-prepend">
+						<i class="fas fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></i>
+					</div>
+					<input class="form-control" size="2" onkeypress="return formatDigits(event);" name="month" id="month" type="number" min="1" max="12" step="1" value="{$month}"/>
+					<input class="form-control mr-3" size="4" onkeypress="return formatDigits(event);" name="year" id="year" type="number" min="2016" max="2040" step="1" value="{$year}"/>
+					<button class="btn btn-sm btn-primary" type="submit" name="Button"><i class="far fa-search"></i> Търси</button>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-start pl-3 pt-1 pb-2 table-secondary">
+			<select type="hidden" name="import_type" id="import_type" style="display: none;">
+				<option value='salary'>Работни заплати</option>
+			</select>
+
+			<button style="display:none;" onclick="ImportSalary()">От Файл</button>
+		</div>
+	</div>
+
 	<div id="result"></div>
 	
 </form>

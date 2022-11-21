@@ -30,4 +30,20 @@
         </li>
     {/if}
 
+
+    {if $page eq "admin_salary_total"}
+        <li class="nav-item text-center" title="Заплати (Обобщена)"><a class="nav-link active" href="#"> [OБ] Заплати </a></li>
+    {else}
+        <li class="nav-item text-center" title="Заплати (Обобщена)">
+            <a class="nav-link" href="#" onclick="return tab_href('admin_salary_total');" id='admin_salary_total'> [OБ] Заплати </a>
+        </li>
+    {/if}
+
+    {if $page eq "admin_salary"}
+        <li class="nav-item text-center" title="Заплати (Обобщена)"><a class="nav-link active" href="#"> [Подр] Заплати </a></li>
+    {else}
+        <li class="nav-item text-center" title="Заплати (Обобщена)">
+            <a class="nav-link" href="#" onclick="return tab_href('admin_salary');" id='admin_salary'> [Подр] Заплати </a>
+        </li>
+    {/if}
 </ul>
