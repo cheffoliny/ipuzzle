@@ -76,7 +76,7 @@ class DBSalary
 			LEFT JOIN salary_earning_types se ON ( s.code = se.code AND se.to_arc = 0 )
 			WHERE 1
 				AND s.id_object = {$nIDObject} 
-				AND s.month = %04d%02d
+				AND s .`month` = %04d%02d
 				AND se.source = 'schedule'
 				"
 			, $nYear
@@ -112,8 +112,8 @@ class DBSalary
 				AND od.endRealShift   > 0
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND YEAR( od.startRealShift ) = {$nYear}
-				AND MONTH( od.startRealShift ) = {$nMonth}
+				AND `year`( od.startRealShift ) = {$nYear}
+				AND `month`( od.startRealShift ) = {$nMonth}
 				AND IF (od.stake = 0, IF (os.mode = 'leave' OR os.mode = 'sick', 1, 0) ,1) = 1
 				AND os.mode != 'leave' AND os.mode != 'sick'
 			";
@@ -197,7 +197,7 @@ class DBSalary
 				AND UNIX_TIMESTAMP(od.endRealShift) = {$nTime}
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND YEAR( od.endRealShift ) = {$nYear}
+				AND `year`( od.endRealShift ) = {$nYear}
 				AND (
 					MONTH( od.startRealShift ) = {$nMonth}
 					OR MONTH( od.endRealShift ) = {$nMonth}
@@ -232,9 +232,9 @@ class DBSalary
 			FROM salary s
 			WHERE 1
 				AND s.to_arc = 0
-				AND s.month = {$tMonth}
+				AND s .`month` = {$tMonth}
 				AND s.id_person IN ({$sIDPersons})
-			GROUP BY s.month,s.id_person 
+			GROUP BY s .`month`,s.id_person 
 		";
 		return $this->selectAssoc($sQuery);
 	}
@@ -247,9 +247,9 @@ class DBSalary
 			FROM salary s
 			WHERE 1
 				AND s.to_arc = 0
-				AND s.month = {$nYearMonth}
+				AND s .`month` = {$nYearMonth}
 				AND s.id_person = {$nIDPerson}
-			GROUP BY s.month, s.id_person
+			GROUP BY s .`month`, s.id_person
 		";
 		
 		return $this->selectOne( $sQuery );
@@ -276,7 +276,7 @@ class DBSalary
 			SELECT SQL_CALC_FOUND_ROWS 
 				t.id as _id, 
 				t.id_person AS id, 
-				CONCAT('     ',SUBSTRING(t.month,5),' - ',SUBSTRING(t.month,1,4)) AS month, 
+				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
 				p.code as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
@@ -336,7 +336,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND year <= {$nYear} 
+						AND `year` <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -346,7 +346,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year < {$nYear}  
+						AND `year` < {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS due_days,
@@ -356,7 +356,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year = {$nYear} 
+						AND `year` = {$nYear} 
 						AND id_person = t.id_person
 				) AS used_days,
 				(	SELECT SUM(due_days) 
@@ -365,7 +365,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND year <= {$nYear} 
+						AND `year` <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -375,7 +375,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year <= {$nYear}  
+						AND `year` <= {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS remain,
@@ -391,7 +391,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.firms f ON f.id = r.id_firm
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND p.id_office IN ({$sIDOffices})
 		";
 		
@@ -405,7 +405,7 @@ class DBSalary
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
 		
-		$sQuery .= " GROUP BY t.month, t.id_person\n";
+		$sQuery .= " GROUP BY t .`month`, t.id_person\n";
 		
 		global $db_personnel_backup;
 		
@@ -484,7 +484,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND year <= {$nYear} 
+						AND `year` <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -494,7 +494,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year < {$nYear}  
+						AND `year` < {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS due_days,
@@ -504,7 +504,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year = {$nYear} 
+						AND `year` = {$nYear} 
 						AND id_person = t.id_person
 				) AS used_days,
 				(	SELECT SUM(due_days) 
@@ -513,7 +513,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND year <= {$nYear} 
+						AND `year` <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -523,7 +523,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND year <= {$nYear}  
+						AND `year` <= {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS remain
@@ -535,7 +535,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.firms f ON f.id = r.id_firm
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND p.id_office IN ({$sIDOffices})
 		";
 
@@ -650,7 +650,7 @@ class DBSalary
 				SQL_CALC_FOUND_ROWS 
 				t.id as _id, 
 				t.id, 
-				t.month, 
+				t .`month`, 
 				CONCAT( sf.name,' (', sr.name, ')' ) AS firm_name,
 				CONCAT( so.name,' (', so.num, ')' ) AS object_name,
 				sf.code as firm_code,
@@ -666,7 +666,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND t.id_office IN ({$sIDOffices})
 		";
 		
@@ -682,7 +682,7 @@ class DBSalary
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
 		
-		$sQuery .= " GROUP BY t.month, sr.id, sf.id, so.id\n";
+		$sQuery .= " GROUP BY t .`month`, sr.id, sf.id, so.id\n";
 		
 		global $db_personnel_backup;
 		
@@ -699,7 +699,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND t.id_office IN ({$sIDOffices})
 		";
 		
@@ -737,7 +737,7 @@ class DBSalary
 			SELECT SQL_CALC_FOUND_ROWS
 				t.id as _id, 
 				t.id_person AS id, 
-				CONCAT('     ',SUBSTRING(t.month,5),' - ',SUBSTRING(t.month,1,4)) AS month, 
+				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
 				p.code as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
@@ -757,10 +757,10 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc = 0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
-			GROUP BY t.month, t.id_person
+			GROUP BY t .`month`, t.id_person
 		";
 		
 		$this->getResult($sQuery, 'id', DBAPI_SORT_ASC, $oResponse,$db_personnel_backup);
@@ -782,7 +782,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc = 0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -817,7 +817,7 @@ class DBSalary
 					salary sal
 				WHERE
 					sal.to_arc = 0
-					AND sal.month = '{$aData['nNextMonth']}'
+					AND sal .`month` = '{$aData['nNextMonth']}'
 					AND sal.code = ( SELECT code FROM salary_earning_types WHERE leave_type = 'due' )
 					AND sal.id_person = {$aValue['id']}
 			";
@@ -863,7 +863,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 			GROUP BY sr.id 
@@ -889,7 +889,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -931,7 +931,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -961,7 +961,7 @@ class DBSalary
 			WHERE 1
 				AND s.to_arc = 0
 				AND s.id_person = {$nIDPerson}
-				AND s.month = {$sMonth}
+				AND s .`month` = {$sMonth}
 				AND st.source = 'limit_card'
 		";
 		
@@ -1019,7 +1019,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND r.id IN ({$sIDOffices})
 		";
 		
@@ -1083,7 +1083,7 @@ class DBSalary
 				LEFT JOIN personnel as up on up.id = t. updated_user
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND r.id IN ( {$sIDOffices} )
 		";
 
@@ -1140,7 +1140,7 @@ class DBSalary
 				LEFT JOIN personnel as up on up.id = t. updated_user
 			WHERE 1
 				AND t.to_arc=0
-				AND t.month = {$nMonth}
+				AND t .`month` = {$nMonth}
 				AND r.id IN ( {$sIDOffices} )
 		";
 		
@@ -1220,7 +1220,7 @@ class DBSalary
 			WHERE 1
 				AND to_arc = 0
 				AND auto = 1
-				AND month = '{$nMonth}'
+				AND `month` = '{$nMonth}'
 		";
 		
 		return $this->select($sQuery);
@@ -1479,7 +1479,7 @@ class DBSalary
 				(
 					sal.code = sal_ear_typ_hos.code,
 					( SUBSTR( per_lea.res_leave_from, 1, 7 ) <= '{$sMonth}' AND SUBSTR( per_lea.res_leave_to, 1, 7 ) >= '{$sMonth}' ),
-					sal.month = {$aParams['nMonth']}
+					sal .`month` = {$aParams['nMonth']}
 				)
 			";
 		}
@@ -1649,7 +1649,7 @@ class DBSalary
 				SUM(
 					IF
 					(
-						( sal.code = '{$sCodeUnp}' AND sal.month = '{$sYearMonth}' ),
+						( sal.code = '{$sCodeUnp}' AND sal .`month` = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1657,7 +1657,7 @@ class DBSalary
 				SUM(
 					IF
 					(
-						( sal.code = '{$sCodeDue}' AND sal.month = '{$sYearMonth}' ),
+						( sal.code = '{$sCodeDue}' AND sal .`month` = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1666,7 +1666,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '-КОРЕКЦИЯ5' AND sal.month = '{$sPrevYearMonth}' ),
+							( sal.code = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1676,7 +1676,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '+ВАУЧЕРИ' AND sal.month = '{$sPrevYearMonth}' ),
+							( sal.code = '+ВАУЧЕРИ' AND sal .`month` = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1686,7 +1686,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '-КОРЕКЦИЯ5' AND sal.month = '{$sYearMonth}' ),
+							( sal.code = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1696,7 +1696,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '+ВАУЧЕРИ' AND sal.month = '{$sYearMonth}' ),
+							( sal.code = '+ВАУЧЕРИ' AND sal .`month` = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1722,32 +1722,32 @@ class DBSalary
 				(
 					(
 						sal.code = '{$sCodeUnp}'
-						AND sal.month = '{$sYearMonth}'
+						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
 						sal.code = '{$sCodeDue}'
-						AND sal.month = '{$sYearMonth}'
+						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
 						sal.code = '-КОРЕКЦИЯ5'
-						AND sal.month = '{$sPrevYearMonth}'
+						AND sal .`month` = '{$sPrevYearMonth}'
 					)
 					OR
 					(
 						sal.code = '+ВАУЧЕРИ'
-						AND sal.month = '{$sPrevYearMonth}'
+						AND sal .`month` = '{$sPrevYearMonth}'
 					)
 					OR
 					(
 						sal.code = '-КОРЕКЦИЯ5'
-						AND sal.month = '{$sYearMonth}'
+						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
 						sal.code = '+ВАУЧЕРИ'
-						AND sal.month = '{$sYearMonth}'
+						AND sal .`month` = '{$sYearMonth}'
 					)
 				)
 		";
@@ -1945,7 +1945,7 @@ class DBSalary
 				(
 					sal.id_person = per.id
 					AND sal.to_arc = 0
-					AND sal.month = '{$sYearMonth}'
+					AND sal .`month` = '{$sYearMonth}'
 				)
 			LEFT JOIN
 				person_leaves per_lea ON ( per_lea.id = sal.id_application AND per_lea.to_arc = 0 )
@@ -2007,7 +2007,7 @@ class DBSalary
 				(
 					sal.id_person = per.id
 					AND sal.to_arc = 0
-					AND sal.month = '{$sYearMonth}'
+					AND sal .`month` = '{$sYearMonth}'
 				)
 			LEFT JOIN
 				person_leaves per_lea ON ( per_lea.id = sal.id_application AND per_lea.to_arc = 0 )
