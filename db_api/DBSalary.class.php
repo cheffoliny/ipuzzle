@@ -73,7 +73,7 @@ class DBSalary
 		$sQuery = sprintf("
 			DELETE s 
 			FROM salary s
-			LEFT JOIN salary_earning_types se ON ( s.code = se.code AND se.to_arc = 0 )
+			LEFT JOIN salary_earning_types se ON ( s.`code` = se.`code` AND se.to_arc = 0 )
 			WHERE 1
 				AND s.id_object = {$nIDObject} 
 				AND s .`month` = %04d%02d
@@ -94,7 +94,7 @@ class DBSalary
 					DATE_FORMAT( od.startRealShift, '%Y' ), 
 					DATE_FORMAT( od.startRealShift, '%m' ) 
 					), 
-				se.code, 
+				se.`code`, 
 				1, 
 				IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * p.shifts_factor AS stake, 
 				IF (od.stake > 0, CONCAT('Дежурство - ', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ' [', CONCAT(( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) div 3600, ':', TRUNCATE(((( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) mod 3600) / 60), 0)), ' ч.]' ), CONCAT('ОТПУСК/БОЛНИЧЕН [', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ']') ) as name,
@@ -178,7 +178,7 @@ class DBSalary
 					DATE_FORMAT( od.startRealShift, '%Y' ), 
 					DATE_FORMAT( od.startRealShift, '%m' ) 
 					), 
-				se.code, 
+				se.`code`, 
 				1, 
 				IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * p.shifts_factor AS stake, 
 				IF (od.stake > 0, CONCAT('Дежурство - ', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ' [', ROUND((( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600), 1), ' ч.]' ), CONCAT('ОТПУСК/БОЛНИЧЕН [', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ']') ) as name,
@@ -277,7 +277,7 @@ class DBSalary
 				t.id as _id, 
 				t.id_person AS id, 
 				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
-				p.code as person_code,
+				p.`code` as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
 				CONCAT( o.name,' (', o.num, ')' ) as person_object_name,
@@ -290,7 +290,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -298,11 +298,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		$sQuery .= "
@@ -422,7 +422,7 @@ class DBSalary
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
 					$TotalColumn .= "SUM(code{$i}) as code{$i},\n";
-					$sQuery1[] = " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} \n";
+					$sQuery1[] = " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} \n";
 					$i++;
 				}
 			}
@@ -431,11 +431,11 @@ class DBSalary
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
 					$TotalColumn .= "SUM(code{$i}) as code{$i},\n";
-					$sQuery1[] = " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} \n";
+					$sQuery1[] = " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} \n";
 					$i++;
 				}
 			}
-			$sQuery1[] = "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery1[] = "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		$sTotalQuery1 = array();
 		$sTotalQuery1 = implode(",", $sQuery1);
@@ -653,8 +653,8 @@ class DBSalary
 				t .`month`, 
 				CONCAT( sf.name,' (', sr.name, ')' ) AS firm_name,
 				CONCAT( so.name,' (', so.num, ')' ) AS object_name,
-				sf.code as firm_code,
-				sr.code as region_code,
+				sf.`code` as firm_code,
+				sr.`code` as region_code,
 				so.num 	as object_num,
 				SUM(if(t.is_earning = 1,t.total_sum,-t.total_sum) ) AS total_sum 
 				
@@ -738,7 +738,7 @@ class DBSalary
 				t.id as _id, 
 				t.id_person AS id, 
 				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
-				p.code as person_code,
+				p.`code` as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
 				CONCAT( o.name,' (', o.num, ')' ) as person_object_name,
@@ -818,7 +818,7 @@ class DBSalary
 				WHERE
 					sal.to_arc = 0
 					AND sal .`month` = '{$aData['nNextMonth']}'
-					AND sal.code = ( SELECT code FROM salary_earning_types WHERE leave_type = 'due' )
+					AND sal.`code` = ( SELECT code FROM salary_earning_types WHERE leave_type = 'due' )
 					AND sal.id_person = {$aValue['id']}
 			";
 			
@@ -957,7 +957,7 @@ class DBSalary
 					SEPARATOR '\\n'
 				) AS salary_hint
 			FROM salary s 
-			LEFT JOIN salary_earning_types st ON st.code = s.code
+			LEFT JOIN salary_earning_types st ON st.`code` = s.`code`
 			WHERE 1
 				AND s.to_arc = 0
 				AND s.id_person = {$nIDPerson}
@@ -981,7 +981,7 @@ class DBSalary
 			SELECT
 				SUM(s.total_sum)
 			FROM salary s 
-			LEFT JOIN salary_earning_types st ON st.code = s.code
+			LEFT JOIN salary_earning_types st ON st.`code` = s.`code`
 			WHERE 1
 				AND s.id_person = {$nIDPerson}
 				AND s.created_time LIKE '$sDay%'
@@ -1055,7 +1055,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -1063,11 +1063,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		
@@ -1112,7 +1112,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -1120,11 +1120,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		
@@ -1241,7 +1241,7 @@ class DBSalary
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
 				per.id AS id_person,
 				fir.name AS firm,
-				off.name AS office,
+				offs.name AS office,
 				CASE per_lea.leave_types
 					WHEN 'due' THEN 'Платен'
 					WHEN 'unpaid'  THEN 'Неплатен'
@@ -1260,7 +1260,7 @@ class DBSalary
 				) AS date_from,
 				IF
 				(
-					sal.code = sal_ear_typ_hos.code,
+					sal.`code` = sal_ear_typ_hos.`code`,
 					-1,
 					ROUND( sal.count, 0 )
 				) AS res_application_days,
@@ -1308,7 +1308,7 @@ class DBSalary
 			$sQuery .= "
 				IF
 				(
-					sal.code = sal_ear_typ_hos.code,
+					sal.`code` = sal_ear_typ_hos.`code`,
 					IF( '{$sMonth}' > SUBSTR( per_lea.res_leave_from, 1, 7 ), 0, 1 ),
 					IF( per_lea.leave_types = 'unpaid', 0, 1 )
 				) AS allow_edit,
@@ -1407,9 +1407,9 @@ class DBSalary
 			LEFT JOIN
 				personnel per_con ON per_con.id = per_lea.confirm_user
 			LEFT JOIN
-				{$db_name_sod}.offices off ON off.id = per.id_office
+				{$db_name_sod}.offices offs ON offs.id = per.id_office
 			LEFT JOIN
-				{$db_name_sod}.firms fir ON fir.id = off.id_firm
+				{$db_name_sod}.firms fir ON fir.id = offs.id_firm
 			LEFT JOIN
 				{$db_name_sod}.objects obj ON obj.id = per.id_region_object
 			LEFT JOIN
@@ -1432,19 +1432,19 @@ class DBSalary
 			{
 				case 0:
 					$sQuery .= "
-						AND ( sal.code = sal_ear_typ_due.code OR sal.code = sal_ear_typ_unp.code )
+						AND ( sal.`code` = sal_ear_typ_due.`code` OR sal.`code` = sal_ear_typ_unp.`code` )
 					";
 					break;
 				
 				case 1:
 					$sQuery .= "
-						AND sal.code = sal_ear_typ_hos.code
+						AND sal.`code` = sal_ear_typ_hos.`code`
 					";
 					break;
 				
 				case 2:
 					$sQuery .= "
-						AND sal.code = sal_ear_typ_com.code
+						AND sal.`code` = sal_ear_typ_com.`code`
 					";
 					break;
 			}
@@ -1459,7 +1459,7 @@ class DBSalary
 		if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
 		{
 			$sQuery .= "
-				AND off.id = {$aParams['nIDOffice']}
+				AND offs.id = {$aParams['nIDOffice']}
 			";
 		}
 		if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
@@ -1477,7 +1477,7 @@ class DBSalary
 			$sQuery .= "
 				AND IF
 				(
-					sal.code = sal_ear_typ_hos.code,
+					sal.`code` = sal_ear_typ_hos.`code`,
 					( SUBSTR( per_lea.res_leave_from, 1, 7 ) <= '{$sMonth}' AND SUBSTR( per_lea.res_leave_to, 1, 7 ) >= '{$sMonth}' ),
 					sal .`month` = {$aParams['nMonth']}
 				)
@@ -1644,12 +1644,12 @@ class DBSalary
 			SELECT SQL_CALC_FOUND_ROWS
 				per.id AS id,
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
-				off.name AS office_name,
+				offs.name AS office_name,
 				CONCAT( obj.name, ' [', obj.num, ']' ) AS object_name,
 				SUM(
 					IF
 					(
-						( sal.code = '{$sCodeUnp}' AND sal .`month` = '{$sYearMonth}' ),
+						( sal.`code` = '{$sCodeUnp}' AND sal .`month` = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1657,7 +1657,7 @@ class DBSalary
 				SUM(
 					IF
 					(
-						( sal.code = '{$sCodeDue}' AND sal .`month` = '{$sYearMonth}' ),
+						( sal.`code` = '{$sCodeDue}' AND sal .`month` = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1666,7 +1666,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sPrevYearMonth}' ),
+							( sal.`code` = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1676,7 +1676,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '+ВАУЧЕРИ' AND sal .`month` = '{$sPrevYearMonth}' ),
+							( sal.`code` = '+ВАУЧЕРИ' AND sal .`month` = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1686,7 +1686,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sYearMonth}' ),
+							( sal.`code` = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1696,7 +1696,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.code = '+ВАУЧЕРИ' AND sal .`month` = '{$sYearMonth}' ),
+							( sal.`code` = '+ВАУЧЕРИ' AND sal .`month` = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1710,7 +1710,7 @@ class DBSalary
 			LEFT JOIN
 				person_contract per_con ON ( per_con.id_person = per.id AND per_con.to_arc = 0 )
 			LEFT JOIN
-				sod.offices off ON off.id = per.id_office
+				sod.offices offs ON offs.id = per.id_office
 			LEFT JOIN
 				sod.objects obj ON obj.id = per.id_region_object
 			LEFT JOIN
@@ -1721,32 +1721,32 @@ class DBSalary
 				AND
 				(
 					(
-						sal.code = '{$sCodeUnp}'
+						sal.`code` = '{$sCodeUnp}'
 						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.code = '{$sCodeDue}'
+						sal.`code` = '{$sCodeDue}'
 						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.code = '-КОРЕКЦИЯ5'
+						sal.`code` = '-КОРЕКЦИЯ5'
 						AND sal .`month` = '{$sPrevYearMonth}'
 					)
 					OR
 					(
-						sal.code = '+ВАУЧЕРИ'
+						sal.`code` = '+ВАУЧЕРИ'
 						AND sal .`month` = '{$sPrevYearMonth}'
 					)
 					OR
 					(
-						sal.code = '-КОРЕКЦИЯ5'
+						sal.`code` = '-КОРЕКЦИЯ5'
 						AND sal .`month` = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.code = '+ВАУЧЕРИ'
+						sal.`code` = '+ВАУЧЕРИ'
 						AND sal .`month` = '{$sYearMonth}'
 					)
 				)
@@ -1755,14 +1755,14 @@ class DBSalary
 		if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
 		{
 			$sQuery .= "
-				AND off.id_firm = {$aParams['nIDFirm']}
+				AND offs.id_firm = {$aParams['nIDFirm']}
 			";
 		}
 		
 		if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
 		{
 			$sQuery .= "
-				AND off.id = {$aParams['nIDOffice']}
+				AND offs.id = {$aParams['nIDOffice']}
 			";
 		}
 		
@@ -1926,8 +1926,8 @@ class DBSalary
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
 				per_con.min_cost AS min_cost,
 				per_con.class AS class,
-				SUM( IF( ( sal.code = '{$sCode1}' OR sal.code = '{$sCode2}' ), sal.count, 0 ) ) AS leave_count,
-				ROUND( SUM( IF( sal.code = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five,
+				SUM( IF( ( sal.`code` = '{$sCode1}' OR sal.`code` = '{$sCode2}' ), sal.count, 0 ) ) AS leave_count,
+				ROUND( SUM( IF( sal.`code` = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five,
 				IF( per.date_from != '0000-00-00', per.date_from, '' ) AS date_from,
 				IF( per.vacate_date != '0000-00-00', per.vacate_date, '' ) AS vacate_date,
 				IF( per.date_from != '0000-00-00', DATE_FORMAT( per.date_from, '%d.%m.%Y' ), ' --- ' ) AS format_date_from,
@@ -1993,7 +1993,7 @@ class DBSalary
 		
 		$sQueryTotal = "
 			SELECT SQL_CALC_FOUND_ROWS
-				ROUND( SUM( IF( sal.code = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five
+				ROUND( SUM( IF( sal.`code` = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five
 			FROM
 				personnel per
 			LEFT JOIN
