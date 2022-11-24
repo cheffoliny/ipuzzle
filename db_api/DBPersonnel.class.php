@@ -425,7 +425,7 @@
 				FROM personnel p
 				LEFT JOIN positions po ON p.id_position = po.id
 				WHERE p.to_arc = 0
-				AND po.function = 'technic'
+				AND po.position_function = 'technic'
 				";
 			
 			if( !empty( $nIDOffice ) )
@@ -444,7 +444,7 @@
 				LEFT JOIN positions po ON p.id_position = po.id
 				WHERE 1
 					AND p.status = 'active'
-					AND po.function = 'technic'
+					AND po.position_function = 'technic'
 				";
 		
 			
@@ -640,7 +640,7 @@
 				LEFT JOIN positions po ON p.id_position = po.id
 				WHERE 1 
 					AND p.status = 'active'
-					AND po.function = 'technic'
+					AND po.position_function = 'technic'
 				";
 		
 			

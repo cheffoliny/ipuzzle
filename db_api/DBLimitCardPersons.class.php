@@ -450,7 +450,7 @@
 				LEFT JOIN {$db_name_personnel}.positions po ON p.id_position = po.id
 				WHERE 1
 					AND p.status = 'active'
-					AND po.function = 'technic'
+					AND po.position_function = 'technic'
 					AND DATE( t.planned_start ) <= DATE( FROM_UNIXTIME( $nDate ) )
 					AND DATE( t.planned_end   ) >= DATE( FROM_UNIXTIME( $nDate ) )
 				";
