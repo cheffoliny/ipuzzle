@@ -124,9 +124,14 @@
 			month.value = MM;
 		}
 	</script>
+	<style>
+	        .container-fluid {
+            height: 80% !important;
+        }
+    </style>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" onsubmit="return false;" style="margin-bottom: 130px !important;">
 <input type="hidden" id="id" name="id" value="{$id|default:0}" />
 <input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 <input type="hidden" id="idc" name="idc" value="0" />
@@ -136,7 +141,7 @@
 
 {include file='person_tabs.tpl'}
 
-<div class="container-fluid" id="filter">
+<div class="container-fluid" id="filter" style="overflow: auto;">
 	<div class="row" id="filter_result">
 		<div class="col-3 p-1 ml-2">
 			<div class="input-group input-group-sm mb-1">
@@ -149,8 +154,8 @@
 				<input class="form-control inp50" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;
 				<input class="form-control inp75" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>
 				<span class="input-group-append"  onclick="nextMonth(1, 'next');">
-							<i class="far fa-chevron-right"></i>
-						</span>
+					<i class="far fa-chevron-right"></i>
+				</span>
 			</div>
 		</div>
 		<div class="col p-1">
@@ -168,41 +173,40 @@
 		</div>
 	</div>
 
-	<div class="row w-100 px-0 pb-4" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
-
+	<div class="row w-100 px-0" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
  	<!-- край на работната част -->
-
-	<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
-		<div class="col">
-			{if $personnel_edit}
-				<button class="btn btn-sm btn-danger mr-1"	type="button" onclick="openPDF();" > <i class="far fa-file-pdf" ></i> Пл. Фиш</button>
-			{/if}
-		</div>
-		<div class="col">
-			<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-				<label class="btn btn-sm p-2 btn-success" title="Наработки">
-					<input type="checkbox" id="plus" name="plus" onclick="formSubmit(1);" checked /><i class="fas fa-plus-circle fa-lg"></i>
-				</label>
-				<input class="form-control inp75 mr-2" type="text" id="plus_price" name="plus_price" style="text-align: right;" readonly />
-				<label class="btn btn-sm p-2 btn-danger" title="Удръжки">
-					<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1); " /><i class="fas fa-minus-circle fa-lg"></i>
-				</label>
-				<input class="form-control inp75" type="text" id="minus_price" name="minus_price" style="text-align: right;" readonly />&nbsp;&nbsp;
-			</div>
-		</div>
-		<div class="col text-right p-2">
-			{if $personnel_edit}
-				<button class="btn btn-sm btn-success mr-1"	onclick="onPrint('export_to_xls');" > <i class="far fa-file-excel" ></i> </button>
-				<button class="btn btn-sm btn-danger mr-1"	 onclick="onPrint('export_to_pdf');" > <i class="far fa-file-pdf" ></i> </button>
-			{/if}
-			<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
-		</div>
-	</nav>
-
 </div>
+<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
+	<div class="col">
+		{if $personnel_edit}
+			<button class="btn btn-sm btn-danger mr-1"	type="button" onclick="openPDF();" > <i class="far fa-file-pdf" ></i> Пл. Фиш</button>
+		{/if}
+	</div>
+	<div class="col">
+		<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+			<label class="btn btn-sm p-2 btn-success" title="Наработки">
+				<input type="checkbox" id="plus" name="plus" onclick="formSubmit(1);" checked /><i class="fas fa-plus-circle fa-lg"></i>
+			</label>
+			<input class="form-control inp75 mr-2" type="text" id="plus_price" name="plus_price" style="text-align: right;" readonly />
+			<label class="btn btn-sm p-2 btn-danger" title="Удръжки">
+				<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1); " /><i class="fas fa-minus-circle fa-lg"></i>
+			</label>
+			<input class="form-control inp75" type="text" id="minus_price" name="minus_price" style="text-align: right;" readonly />&nbsp;&nbsp;
+		</div>
+	</div>
+	<div class="col text-right p-2">
+		{if $personnel_edit}
+			<button class="btn btn-sm btn-success mr-1"	onclick="onPrint('export_to_xls');" > <i class="far fa-file-excel" ></i> </button>
+			<button class="btn btn-sm btn-danger mr-1"	 onclick="onPrint('export_to_pdf');" > <i class="far fa-file-pdf" ></i> </button>
+		{/if}
+		<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
+	</div>
+</nav>
+
 <div id="NoDisplay" style="display:none"></div>
 </form>
-
+<br/>
+<br/><br/><br/>
 <script>loadXMLDoc('result');//loadMainData();</script>
 	{if !$personnel_edit}
 		

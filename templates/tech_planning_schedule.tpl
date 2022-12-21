@@ -1,9 +1,5 @@
 {literal}
-    <script src="./js/highcharts/highcharts_4.0.4.js"></script>
-    <script src="./js/highcharts/highcharts-more.js"></script>
-    <script src="./js/highcharts/no-data-to-display.js"></script>
-    <script src="./js/highcharts/highslide-full.packed.js"></script>
-    <script src="./js/moment2.8.3.min.js"></script>
+
     <script>
         rpc_debug = true;
         rpc_xsl = "xsl/tech_planning_schedule.xsl";
@@ -12,31 +8,31 @@
          *	Site-specific configuration settings for Highslide JS
          */
         /* global hs */
-        hs.graphicsDir = './js/highcharts/graphics/';
-        hs.outlineType = 'rounded-white';
-        hs.wrapperClassName = 'draggable-header';
-        hs.captionEval = 'this.a.title';
-        hs.showCredits = false;
-        hs.allowMultipleInstances = false;
-        hs.Expander.prototype.onAfterExpand = addChartToExpand;
-        hs.Expander.prototype.onBeforeClose = deleteChartFromExpand;
-
-        jQuery(document).ready(function() {
-            jQuery(".in_team").css('backgroundColor','red');
-
-            jQuery('#result').on( 'click', '.open-team', function () {
-                var $row = jQuery(this),
-                    numTeam = $row.parents('td[data-numteam]').data('numteam'),
-                    nIDOff = $('nIDOffice');
-
-                if( nIDOff.value != 0 ) {
-                    dialogSetSetupTechTeams(nIDOff.value , numTeam);
-                }
-                else {
-                    alert("Грешка с определяне на офиса!");
-                }
-            })
-        });
+      //   hs.graphicsDir = './js/highcharts/graphics/';
+      //   hs.outlineType = 'rounded-white';
+      //   hs.wrapperClassName = 'draggable-header';
+      //   hs.captionEval = 'this.a.title';
+      //   hs.showCredits = false;
+      //   hs.allowMultipleInstances = false;
+      // //  hs.Expander.prototype.onAfterExpand = addChartToExpand;
+      //   hs.Expander.prototype.onBeforeClose = deleteChartFromExpand;
+      //
+      //   jQuery(document).ready(function() {
+      //       jQuery(".in_team").css('backgroundColor','red');
+      //
+      //       jQuery('#result').on( 'click', '.open-team', function () {
+      //           var $row = jQuery(this),
+      //               numTeam = $row.parents('td[data-numteam]').data('numteam'),
+      //               nIDOff = $('nIDOffice');
+      //
+      //           if( nIDOff.value != 0 ) {
+      //               dialogSetSetupTechTeams(nIDOff.value , numTeam);
+      //           }
+      //           else {
+      //               alert("Грешка с определяне на офиса!");
+      //           }
+      //       })
+      //   });
 
         function onInit() {
             if (parent.document.getElementById('id_request').value > 0) {
@@ -315,124 +311,124 @@
             return false;
         }
 
-        /**
-         * Премахва графиката от попъпите. Ако не се премахне остава в глобалния обект Highcharts
-         */
-        function deleteChartFromExpand () {
-            var c = jQuery("[id^='hc_daily_show']");
-            if(c.length) {
-                var chart = c.highcharts();
-                if (chart) {
-                    chart.destroy();
-                }
-                c.remove();
-            }
-
-        }
+        // /**
+        //  * Премахва графиката от попъпите. Ако не се премахне остава в глобалния обект Highcharts
+        //  */
+        // function deleteChartFromExpand () {
+        //     var c = jQuery("[id^='hc_daily_show']");
+        //     if(c.length) {
+        //         var chart = c.highcharts();
+        //         if (chart) {
+        //             chart.destroy();
+        //         }
+        //         c.remove();
+        //     }
+        //
+        // }
 
         /**
          * Графиката в попъпа с информацията за детайлото движение
          */
-        function addChartToExpand ( sender) {
-            var data = sender.custom.data, oSeries = {}, series = [];
-
-            for(var i in data) {
-                if(data.hasOwnProperty(i)) {
-                    if(! oSeries.hasOwnProperty(data[i].type) ) {
-                        oSeries[data[i].type] = {name: data[i].name, color: data[i].color, data: []}
-                    }
-
-                    var sNote = (data[i]['type'] == 'to_layer')? " <b>Забележка</b>: "+ data[i]['move_note'] : '';
-
-                    oSeries[data[i].type].data.push({
-                        x: 0,
-                        o_name: data[i]['o_name'] +sNote,
-                        low: moment.utc(data[i]['t_from']).valueOf(),
-                        high: moment.utc(data[i]['t_to']).valueOf()
-                    })
-                }
-            }
-
-            for(i in oSeries) {
-                if(oSeries.hasOwnProperty(i)){
-                    series.push(oSeries[i]);
-                }
-            }
-
-            jQuery("#hc_daily_show").highcharts({
-                chart: {
-                    type: 'columnrange',
-                    inverted: true,
-                    height: 120,
-                    spacingBottom: 5
-                },
-                noData: {
-                    style: {
-                        fontWeight: 'bold',
-                        fontSize: '15px',
-                        color: '#303030'
-                    }
-                },
-                title: {
-                    text: null
-                },
-                credits: false,
-                lang: {
-                    noData: 'Нама данни за показване',
-                    contextButtonTitle: 'Опции на графиката',
-                    downloadJPEG: 'Изтегли JPEG изображение',
-                    downloadPNG: 'Изтегли PNG изображение',
-                    downloadSVG: 'Изтегли SVG изображение',
-                    downloadPDF: 'Изтегли PDF документ',
-                    printChart: 'Принтирай графиката',
-                    loading: 'Зареждане',
-                    months: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
-                    shortMonths: ["Ян", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек"],
-                    weekdays: ["Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота"]
-                },
-                columnrange: {
-                    pointInterval: 2 * 3600 * 1000
-                },
-                exporting: {
-                    enabled: false
-                },
-                xAxis: {
-                    categories: ['dates'],
-                    labels: {
-                        enabled: false
-                    }
-                },
-                yAxis: {
-                    type: 'datetime',
-                    labels: {
-                        formatter: null
-                    },
-                    dateTimeLabelFormats: { //force all formats to be hour:minute:second
-                        hour: '%H:%M',
-                        day: '%H:%M'
-                    },
-                    title: {
-                        text: null
-                    },
-                    startOnTick: true
-                },
-                plotOptions: {
-                    columnrange: {
-                        grouping: false
-                    },
-                    series: {
-                        stacking: false
-                    }
-                },
-                tooltip:{
-                    formatter: function() {
-                        return '<b>' + this.series.name + '</b> - ' + this.point.o_name + '<br/>'+
-                            Highcharts.dateFormat('%H:%M',this.point.low ) + ' - ' +Highcharts.dateFormat('%H:%M',this.point.high)+'<br/>';
-                    }
-                },
-                series: series
-            });
-        }
+        // function addChartToExpand ( sender) {
+        //     var data = sender.custom.data, oSeries = {}, series = [];
+        //
+        //     for(var i in data) {
+        //         if(data.hasOwnProperty(i)) {
+        //             if(! oSeries.hasOwnProperty(data[i].type) ) {
+        //                 oSeries[data[i].type] = {name: data[i].name, color: data[i].color, data: []}
+        //             }
+        //
+        //             var sNote = (data[i]['type'] == 'to_layer')? " <b>Забележка</b>: "+ data[i]['move_note'] : '';
+        //
+        //             oSeries[data[i].type].data.push({
+        //                 x: 0,
+        //                 o_name: data[i]['o_name'] +sNote,
+        //                 low: moment.utc(data[i]['t_from']).valueOf(),
+        //                 high: moment.utc(data[i]['t_to']).valueOf()
+        //             })
+        //         }
+        //     }
+        //
+        //     for(i in oSeries) {
+        //         if(oSeries.hasOwnProperty(i)){
+        //             series.push(oSeries[i]);
+        //         }
+        //     }
+        //
+        //     jQuery("#hc_daily_show").highcharts({
+        //         chart: {
+        //             type: 'columnrange',
+        //             inverted: true,
+        //             height: 120,
+        //             spacingBottom: 5
+        //         },
+        //         noData: {
+        //             style: {
+        //                 fontWeight: 'bold',
+        //                 fontSize: '15px',
+        //                 color: '#303030'
+        //             }
+        //         },
+        //         title: {
+        //             text: null
+        //         },
+        //         credits: false,
+        //         lang: {
+        //             noData: 'Нама данни за показване',
+        //             contextButtonTitle: 'Опции на графиката',
+        //             downloadJPEG: 'Изтегли JPEG изображение',
+        //             downloadPNG: 'Изтегли PNG изображение',
+        //             downloadSVG: 'Изтегли SVG изображение',
+        //             downloadPDF: 'Изтегли PDF документ',
+        //             printChart: 'Принтирай графиката',
+        //             loading: 'Зареждане',
+        //             months: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+        //             shortMonths: ["Ян", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек"],
+        //             weekdays: ["Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота"]
+        //         },
+        //         columnrange: {
+        //             pointInterval: 2 * 3600 * 1000
+        //         },
+        //         exporting: {
+        //             enabled: false
+        //         },
+        //         xAxis: {
+        //             categories: ['dates'],
+        //             labels: {
+        //                 enabled: false
+        //             }
+        //         },
+        //         yAxis: {
+        //             type: 'datetime',
+        //             labels: {
+        //                 formatter: null
+        //             },
+        //             dateTimeLabelFormats: { //force all formats to be hour:minute:second
+        //                 hour: '%H:%M',
+        //                 day: '%H:%M'
+        //             },
+        //             title: {
+        //                 text: null
+        //             },
+        //             startOnTick: true
+        //         },
+        //         plotOptions: {
+        //             columnrange: {
+        //                 grouping: false
+        //             },
+        //             series: {
+        //                 stacking: false
+        //             }
+        //         },
+        //         tooltip:{
+        //             formatter: function() {
+        //                 return '<b>' + this.series.name + '</b> - ' + this.point.o_name + '<br/>'+
+        //                     Highcharts.dateFormat('%H:%M',this.point.low ) + ' - ' +Highcharts.dateFormat('%H:%M',this.point.high)+'<br/>';
+        //             }
+        //         },
+        //         series: series
+        //     });
+        // }
 
         rpc_on_exit = function ( nCode ) {
             if( !parseInt( nCode ) ) {
@@ -463,7 +459,7 @@
         });
 
     </script>
-    <link rel="stylesheet" href="./css/highslide.css" />
+
     <style>
         .t_full {
             padding-left: 0;

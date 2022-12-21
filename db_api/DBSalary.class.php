@@ -112,8 +112,8 @@ class DBSalary
 				AND od.endRealShift   > 0
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND `year`( od.startRealShift ) = {$nYear}
-				AND `month`( od.startRealShift ) = {$nMonth}
+				AND year( od.startRealShift ) = {$nYear}
+				AND month( od.startRealShift ) = {$nMonth}
 				AND IF (od.stake = 0, IF (os.mode = 'leave' OR os.mode = 'sick', 1, 0) ,1) = 1
 				AND os.mode != 'leave' AND os.mode != 'sick'
 			";
@@ -197,7 +197,7 @@ class DBSalary
 				AND UNIX_TIMESTAMP(od.endRealShift) = {$nTime}
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND `year`( od.endRealShift ) = {$nYear}
+				AND year( od.endRealShift ) = {$nYear}
 				AND (
 					MONTH( od.startRealShift ) = {$nMonth}
 					OR MONTH( od.endRealShift ) = {$nMonth}

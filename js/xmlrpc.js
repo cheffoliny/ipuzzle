@@ -573,21 +573,21 @@ function form2POST()
 																		// eval-ва JS в резултата
 																		ecxecuteXML(_rpc_result);
 																		
-																		if( rpc_debug && rpc_eol_debug && rpc_html_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");	
-																			
+																		if( rpc_debug && rpc_eol_debug && rpc_html_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");
+
 																	} else {
-																	// За Мозила
+																		// За Мозила
 																		var xsltProcessor = new XSLTProcessor();
 																		xsltProcessor.importStylesheet(xsl);
 																		var fragment = xsltProcessor.transformToFragment(xml, document);
 
 																		_rpc_result.innerHTML = "";
 																		_rpc_result.appendChild(fragment);
-																		
+
 																		// eval-ва JS в резултата
 																		ecxecuteXML(_rpc_result);
 
-																		if( rpc_debug && rpc_eol_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");	
+																		if( rpc_debug && rpc_eol_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");
 																	}
 																	FormProcessing_action(xml);
 																}
