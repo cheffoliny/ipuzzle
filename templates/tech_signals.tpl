@@ -221,8 +221,8 @@
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm">
-					<button class="btn btn-sm btn-success mr-2" name="Button" onclick="stopStart();"><i class="far fa-plus"></i> Мониторинг </button>
-					<button class="btn btn-sm btn-primary" type="button" name="Button" onclick="monitor('once');"><i class="far fa-plus"></i> Обнови </button>
+					<button class="btn btn-sm btn-success mr-2" name="Button" onclick="stopStart();"><i class="far fa-play"></i> Мониторинг </button>
+					<button class="btn btn-sm btn-primary" type="button" name="Button" onclick="monitor('once');"><i class="far fa-repeat"></i> Обнови </button>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2">
