@@ -568,24 +568,6 @@
                 <select class="form-control" id="nIDOffice" name="nIDOffice" onchange="getResult();" ></select>
             </div>
         </div>
-
-        {* INFO: 26.07.2016 - Скриваме временно селекта за да видим дали ще липсва на някой :) *}
-        {*<div class="col-lg-2 col-xs-2 t_full">*}
-        {*<div class="hide_element">*}
-        {*<!-- Обслужване -->*}
-        {*<div class="input-group input-group-sm">*}
-        {*<span class="input-group-addon glyphicon glyphicon-tags" ></span>*}
-        {*<table>*}
-        {*<select class="form-control" name="lc_type" id="lc_type" onchange="getResult();">*}
-        {*<option value="">-- Всички --</option>*}
-        {*{foreach from=$aTechTiming item=aType}*}
-        {*<option value="{$aType.id}">{$aType.description}</option>*}
-        {*{/foreach}*}
-        {*</select>*}
-        {*</div>*}
-        {*</div>*}
-        {*</div>*}
-
         <div class="col-lg-2 col-xs-1 t_full">
             <div class="input-group input-group-sm">
                 <span class="input-group-addon glyphicon glyphicon-list-alt" ></span>

@@ -9,7 +9,7 @@
 				hex = 255;
 
 				try {
-					tmpObj.style.color = "rgb(0,0,0)";
+					tmpObj.style.color = "rgb(255,255,255)";
 					tmpObj = obj;
 				} catch(e) {
 					alert(e.description);
@@ -48,7 +48,7 @@
 			
 			if ( obj < 0 ) return 0;
 			
-			tbody = document.getElementById("tbl1"); 
+			tbody = document.getElementById("tbl_result");
 			method = 'GET';
 			api_tech_signal = 'api/api_tech_signals.php';
 			params = 'obj=' + obj + '&last=' + lastID.value;
@@ -199,35 +199,52 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal" role="form">
 	<input type="hidden" id="nID"	 name="nID"		value="0"/>
 	<input type="hidden" id="lastID" name="lastID"	value="0"/>
 	<input type="hidden" id="status" name="status"	value="" />
 	<input type="hidden" id="flag"	 name="flag"	value="0"/>
-	
-	<table class="page_data">
-		<tr>
-			<td class="page_name">Сигнали от СОТ - МОНИТОРИНГ</td>
-		</tr>
-	</table>
-	
-	<table class="search" style="width: 100%; margin-top: 7px;">
-		<tr>
-			<td style="padding: 2px; text-align: right;">
-				<input type="text" class="inp100" name="nObject" id="nObject" value="0" style="height: 23px; text-align: right;"/>
-				<button class="btn btn-xs btn-success" name="Button" onclick="stopStart();"><img src="images/glyphicons/refresh.png"> Мониторинг </button>
-				<button class="btn btn-xs btn-primary" onclick="monitor('once');"><img src="images/glyphicons/refresh.png" > Обнови </button> 
-			</td>			
-		</tr>
-  	</table>
 
+	<ul class="nav nav-tabs nav-intelli">
+		<li class="nav-item text-center" title="Мониторинг"><a class="nav-link inactive" href="#">Сигнали от СОТ - МОНИТОРИНГ</a></li>
+	</ul>
 
-	<hr>
-	
+	<div>
+		<div class="row justify-content-start pl-3 py-2 table-secondary">
+			<div class="col-6 col-sm-4 col-lg-2">
+				<div class="input-group input-group-sm">
+					<div class="input-group-prepend">
+						<span class="far fa-handshake fa-fw" data-fa-transform="right-22 down-10" title="Тип на контрагента..."></span>
+					</div>
+					<input class="form-control" type="text" name="nObject" id="nObject" value="0" />
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2 pl-0">
+				<div class="input-group input-group-sm">
+					<button class="btn btn-sm btn-success mr-2" name="Button" onclick="stopStart();"><i class="far fa-plus"></i> Мониторинг </button>
+					<button class="btn btn-sm btn-primary" type="button" name="Button" onclick="monitor('once');"><i class="far fa-plus"></i> Обнови </button>
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2">
+				<div class="input-group input-group-sm">
+
+				</div>
+			</div>
+			<div class="col-6 col-sm-4 col-lg-2">
+				<div class="input-group input-group-sm">
+
+				</div>
+			</div>
+			<div class="col-6 col-sm-8 col-lg-4 pl-3">
+				<div class="input-group input-group-sm">
+
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="result"></div>
-	
-	<table class="result" id="okoto" >
-		<tr>
+	<table class="table table-sm table-striped table-dark" id="okoto" >
+		<tr class="bg-primary intelliheader" id="main">
 			<th style="width: 130px;" >час</th>
 			<th style="width: 70px;" >номер</th>
 			<th >обект</th>
@@ -235,9 +252,9 @@
 			<th style="width: 80px;">тип</th>
 			<th style="width: 30px;">%</th>
 		</tr>
-		<tbody id="tbl1"></tbody>
+		<tbody id="tbl_result">	</tbody>
 	</table>
-	
+
 </form>
 
 <script> 
