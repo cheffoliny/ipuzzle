@@ -1,5 +1,5 @@
 <?php
-	
+
 	class ApiAdminSalaryTotal
 	{	
 		public function load( DBResponse $oResponse ) {
@@ -68,17 +68,18 @@
 		
 		public function result1( DBResponse $oResponse )	{
 			
-			$account_firms = Params::get('account_firms','');
-			$account_regions = Params::get('account_regions', '');
-			$account_objects = Params::get('account_objects', '');
-			$nIDObject = Params::get('nIDObject','');
-			$nType = Params::get('type','1');
-			$nRadio = Params::get('nRadio','1');
-			$nYear = Params::get('year','');
-			$nMonth = Params::get('month','');
-			$nScheme = Params::get('schemes','');
-			$nPosition = Params::get('positions','0');
-			
+			$account_firms 		= Params::get('account_firms','');
+			$account_regions 	= Params::get('account_regions', '');
+			$account_objects 	= Params::get('account_objects', '');
+			$nIDObject 			= Params::get('nIDObject','');
+			$nType 				= Params::get('type','1');
+			$nRadio 			= Params::get('nRadio','1');
+			$nYear 				= Params::get('year','');
+			$nMonth 			= Params::get('month','');
+			$nScheme 			= Params::get('schemes','');
+			$nPosition 			= Params::get('positions','0');
+			$nActive 			= Params::get('active', 0);
+
 			
 			if( empty($nYear) || $nYear < 2007 || $nYear > 2050 ) {
 				throw new Exception("Въведете коректна година",DBAPI_ERR_INVALID_PARAM);
@@ -106,15 +107,16 @@
 				$sIDObjects = implode(",",$account_objects);
 			}
 			
-			$aData = array();
-			$aData['sIDFirms'] = $sIDFirms;
-			$aData['sIDOffices'] = $sIDOffices;
-			$aData['sIDObjects'] = $sIDObjects;
-			$aData['nMonth'] = $nYear.$nMonth;
-			$aData['id_scheme'] = $nScheme;
-			$aData['id_position'] = $nPosition;
-			$aData['nRadio'] = $nRadio;
-			
+			$aData 					= array();
+			$aData['sIDFirms'] 		= $sIDFirms;
+			$aData['sIDOffices'] 	= $sIDOffices;
+			$aData['sIDObjects'] 	= $sIDObjects;
+			$aData['nMonth'] 		= $nYear.$nMonth;
+			$aData['id_scheme'] 	= $nScheme;
+			$aData['id_position'] 	= $nPosition;
+			$aData['nRadio'] 		= $nRadio;
+			$aData['active'] 		= $nActive;
+
 			if($nType == 1) {
 				$oDBSalary->getReport1($aData,$oResponse);
 				$oResponse->printResponse("Работна заплата(Обобщена)","salary_total");
@@ -126,14 +128,15 @@
 		
 		public function result2(DBResponse $oResponse) {
 			
-			$account_firms = Params::get('account_firms','');
-			$account_regions = Params::get('account_regions', '');
-			$nYear = Params::get('year','');
-			$nMonth = Params::get('month','');
-			$nScheme = Params::get('schemes','');
-			$nPosition = Params::get('positions','0');
-			$nRadio = Params::get('nRadio','1');
-			
+			$account_firms 		= Params::get('account_firms','');
+			$account_regions 	= Params::get('account_regions', '');
+			$nYear 				= Params::get('year','');
+			$nMonth 			= Params::get('month','');
+			$nScheme 			= Params::get('schemes','');
+			$nPosition 			= Params::get('positions','0');
+			$nRadio 			= Params::get('nRadio','1');
+			$nActive 			= Params::get('active', 0);
+
 			if( empty($nYear) || $nYear < 2007 || $nYear > 2050 ) {
 				throw new Exception("Въведете коректна година",DBAPI_ERR_INVALID_PARAM);
 			}
@@ -147,18 +150,27 @@
 			
 			$oDBSalary = new DBSalary();
 			$oDBOffices = new DBOffices();
-			
+
+			APILog::Log(154, $account_firms);
+
 			$sIDFirms = implode(',',$account_firms);
+
+			APILog::Log( 158, "<pre>".print_r($sIDFirms)."<pre>");
+
+			APILog::Log(158, $account_regions);
 			$sIDOfficesFrom = implode(",",$account_regions);
-			
-			$aData = array();
-			$aData['nMonth'] = $nMonth;
-			$aData['sIDFirms'] = $sIDFirms;
-			$aData['sIDOffices'] = $sIDOfficesFrom;
-			$aData['id_position'] = $nPosition;
-			$aData['id_scheme'] = $nScheme;
-			$aData['nRadio'] = $nRadio;
-			
+
+			APILog::Log( 161, "<pre>".print_r($sIDOfficesFrom)."<pre>");
+
+			$aData 					= array();
+			$aData['nMonth'] 		= $nMonth;
+			$aData['sIDFirms'] 		= $sIDFirms;
+			$aData['sIDOffices'] 	= $sIDOfficesFrom;
+			$aData['id_position'] 	= $nPosition;
+			$aData['id_scheme'] 	= $nScheme;
+			$aData['nRadio'] 		= $nRadio;
+			$aData['active'] 		= $nActive;
+
 			$oDBSalary->getReportByRegions($aData,$oResponse);
 			
 			$oResponse->printResponse();

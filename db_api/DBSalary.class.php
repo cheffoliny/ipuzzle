@@ -12,7 +12,7 @@ class DBSalary
 		parent::__construct($db_personnel, 'salary');
 	}
 	
-	public function getSalaryRowByApplication( $nIDApplication )
+	public function getSalaryRowByApplication( $nIDApplication, $nYearMonth = 0 )
 	{
 		if( empty( $nIDApplication ) || !is_numeric( $nIDApplication ) )return 0;
 		
@@ -23,6 +23,7 @@ class DBSalary
 				salary
 			WHERE
 				to_arc = 0
+				" . ( !empty( $nYearMonth ) ? "AND month = {$nYearMonth}" : "" ) . "
 				AND id_application = {$nIDApplication}
 			LIMIT 1
 		";
@@ -73,10 +74,10 @@ class DBSalary
 		$sQuery = sprintf("
 			DELETE s 
 			FROM salary s
-			LEFT JOIN salary_earning_types se ON ( s.`code` = se.`code` AND se.to_arc = 0 )
+			LEFT JOIN salary_earning_types se ON ( s.code = se.code AND se.to_arc = 0 )
 			WHERE 1
 				AND s.id_object = {$nIDObject} 
-				AND s .`month` = %04d%02d
+				AND s.month = %04d%02d
 				AND se.source = 'schedule'
 				"
 			, $nYear
@@ -94,7 +95,7 @@ class DBSalary
 					DATE_FORMAT( od.startRealShift, '%Y' ), 
 					DATE_FORMAT( od.startRealShift, '%m' ) 
 					), 
-				se.`code`, 
+				se.code, 
 				1, 
 				IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * p.shifts_factor AS stake, 
 				IF (od.stake > 0, CONCAT('Дежурство - ', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ' [', CONCAT(( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) div 3600, ':', TRUNCATE(((( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) mod 3600) / 60), 0)), ' ч.]' ), CONCAT('ОТПУСК/БОЛНИЧЕН [', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ']') ) as name,
@@ -112,13 +113,13 @@ class DBSalary
 				AND od.endRealShift   > 0
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND year( od.startRealShift ) = {$nYear}
-				AND month( od.startRealShift ) = {$nMonth}
+				AND YEAR( od.startRealShift ) = {$nYear}
+				AND MONTH( od.startRealShift ) = {$nMonth}
 				AND IF (od.stake = 0, IF (os.mode = 'leave' OR os.mode = 'sick', 1, 0) ,1) = 1
 				AND os.mode != 'leave' AND os.mode != 'sick'
 			";
-		//AND od.stake > 0
-//				CONCAT(( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) div 3600, '.', ( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) mod 3600),
+		//      AND od.stake > 0
+        //				CONCAT(( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) div 3600, '.', ( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) mod 3600),
 			
 		//				CONCAT(TRUNCATE(( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600, 0), '.', ( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) / 60) ),
 
@@ -178,12 +179,13 @@ class DBSalary
 					DATE_FORMAT( od.startRealShift, '%Y' ), 
 					DATE_FORMAT( od.startRealShift, '%m' ) 
 					), 
-				se.`code`, 
+				se.code, 
 				1, 
 				IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * p.shifts_factor AS stake, 
 				IF (od.stake > 0, CONCAT('Дежурство - ', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ' [', ROUND((( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600), 1), ' ч.]' ), CONCAT('ОТПУСК/БОЛНИЧЕН [', DATE_FORMAT( od.startRealShift, '%d.%m.%Y %H:%i' ), ']') ) as name,
 				( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600,
-				ROUND( ( IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * ( ( TIME_TO_SEC(os.duration) ) / 3600 ) * p.shifts_factor ), 2 ) 
+				ROUND( ( IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * ( ( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600 ) * p.shifts_factor ), 2 )
+				
 			FROM {$db_name_sod}.object_duty od
 			LEFT JOIN {$db_name_sod}.objects o ON od.id_obj = o.id
 			LEFT JOIN {$db_name_sod}.object_shifts os ON od.id_shift = os.id
@@ -197,7 +199,7 @@ class DBSalary
 				AND UNIX_TIMESTAMP(od.endRealShift) = {$nTime}
 				AND od.id_obj = {$nIDObject}
 				AND od.endShift > od.startShift
-				AND year( od.endRealShift ) = {$nYear}
+				AND YEAR( od.endRealShift ) = {$nYear}
 				AND (
 					MONTH( od.startRealShift ) = {$nMonth}
 					OR MONTH( od.endRealShift ) = {$nMonth}
@@ -206,7 +208,10 @@ class DBSalary
 				AND os.mode != 'leave' AND os.mode != 'sick'
 		";
 		
+		//( TIME_TO_SEC(os.duration) ) / 3600
+		//ROUND( ( IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * ( ( TIME_TO_SEC(os.duration) ) / 3600 ) * p.shifts_factor ), 2 ) 
 		//AND ( od.stake > 0 OR os.stake > 0 )
+		//(IF (od.stake > 0, IF (pc.rate_reward, ((od.stake*pc.rate_reward)/100), od.stake), IF (pc.rate_reward, ((os.stake*pc.rate_reward)/100), os.stake)) * p.shifts_factor) * (( UNIX_TIMESTAMP( od.endRealShift ) - UNIX_TIMESTAMP( od.startRealShift ) ) / 3600)
 		$db_personnel->StartTrans();
 		
 		try 
@@ -224,6 +229,8 @@ class DBSalary
 		
 	}
 	
+	
+	
 	public function getPersonsEarnings($tMonth,$sIDPersons) {
 		$sQuery = "
 			SELECT
@@ -232,14 +239,14 @@ class DBSalary
 			FROM salary s
 			WHERE 1
 				AND s.to_arc = 0
-				AND s .`month` = {$tMonth}
+				AND s.month = {$tMonth}
 				AND s.id_person IN ({$sIDPersons})
-			GROUP BY s .`month`,s.id_person 
+			GROUP BY s.month,s.id_person 
 		";
 		return $this->selectAssoc($sQuery);
 	}
 	
-	public function getPersonEarningsFinal( $nYearMonth, $nIDPerson )
+	public function getPersonEarningsFinal( $nYearMonth, $nIDPerson, $sException = "" )
 	{
 		$sQuery = "
 			SELECT
@@ -247,37 +254,53 @@ class DBSalary
 			FROM salary s
 			WHERE 1
 				AND s.to_arc = 0
-				AND s .`month` = {$nYearMonth}
+				AND s.month = {$nYearMonth}
 				AND s.id_person = {$nIDPerson}
-			GROUP BY s .`month`, s.id_person
+		";
+		
+		if( !empty( $sException ) )
+		{
+			$sQuery .= "
+				AND s.code != '{$sException}'
+			";
+		}
+		
+		$sQuery .= "
+			GROUP BY s.month, s.id_person
 		";
 		
 		return $this->selectOne( $sQuery );
 	}
 	
 	public function getReport1($aData, $oResponse) {
-		global $db_name_sod;
+		global $db_name_sod, $db_personnel, $db_name_personnel;
+		
+		$nMonth 	= $aData['nMonth'];
+		$sIDFirms 	= $aData['sIDFirms'];
+		$sIDOffices = $aData['sIDOffices'];
+		$sIDObjects = $aData['sIDObjects'];
+		$nScheme	= $aData['id_scheme'];
+		$nPosition 	= $aData['id_position'];
+		$nRadio 	= $aData['nRadio'];
+		$nActive 	= $aData['active'];
+		
+		$sToday 	= date( "Y-m-d" );
+		
+		$nYear 		= substr($nMonth,0,4);
+		$sIDOffices = !empty($sIDOffices) ? $sIDOffices : implode(',',$_SESSION['userdata']['access_right_regions']);
 		
 		$oDBAdminSalaryTotalFilter = new DBAdminSalaryTotalFilters();
 		
-		$nMonth = $aData['nMonth'];
-		$sIDFirms = $aData['sIDFirms'];
-		$sIDOffices = $aData['sIDOffices'];
-		$sIDObjects = $aData['sIDObjects'];
-		$nScheme = $aData['id_scheme'];
-		$nPosition = $aData['id_position'];
-		$nRadio = $aData['nRadio'];
-		
-		$nYear = substr($nMonth,0,4);
-		
-		$sIDOffices = !empty($sIDOffices) ? $sIDOffices : implode(',',$_SESSION['userdata']['access_right_regions']);
+		$sQueryPositions = "SELECT GROUP_CONCAT(id) FROM {$db_name_personnel}.positions WHERE position_function IN ('patrul', 'dispatcher') ";
+		$positions	= $this->selectOneFromDB($db_personnel, $sQueryPositions);
+		//APILog::Log("ikoot ".$positions));
 		
 		$sQuery = " 
 			SELECT SQL_CALC_FOUND_ROWS 
 				t.id as _id, 
 				t.id_person AS id, 
-				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
-				p.`code` as person_code,
+				CONCAT('     ',SUBSTRING(t.month,5),' - ',SUBSTRING(t.month,1,4)) AS month, 
+				p.code as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
 				CONCAT( o.name,' (', o.num, ')' ) as person_object_name,
@@ -290,7 +313,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -298,11 +321,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		$sQuery .= "
@@ -312,11 +335,39 @@ class DBSalary
 					AND to_arc = 0
 					/**/LIMIT 1
 				) AS fix_cost,
-				(	SELECT min_cost
-					FROM person_contract
-					WHERE id_person = t.id_person
-					AND to_arc = 0
-					/**/LIMIT 1
+				#(	SELECT min_cost
+				#	FROM person_contract
+				#	WHERE id_person = t.id_person
+				#	AND to_arc = 0
+				#	/**/LIMIT 1
+				#) AS min_cost,
+				IF(
+					ISNULL(
+						(
+							SELECT min_cost
+							FROM person_contract_basic_salaries
+							WHERE
+								id_person = t.id_person
+								AND CONCAT( YEAR( date_from ), LPAD( MONTH( date_from ), 2, 0 ) ) <= '{$nMonth}'
+							ORDER BY id DESC
+							/**/LIMIT 1
+						)
+					),
+					(	SELECT min_cost
+						FROM person_contract
+						WHERE id_person = t.id_person
+						AND to_arc = 0
+						/**/LIMIT 1
+					),
+					(
+						SELECT min_cost
+						FROM person_contract_basic_salaries
+						WHERE
+							id_person = t.id_person
+							AND CONCAT( YEAR( date_from ), LPAD( MONTH( date_from ), 2, 0 ) ) <= '{$nMonth}'
+						ORDER BY id DESC
+						/**/LIMIT 1
+					)
 				) AS min_cost,
 				(	SELECT insurance
 					FROM person_contract
@@ -336,7 +387,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND `year` <= {$nYear} 
+						AND year <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -346,7 +397,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` < {$nYear}  
+						AND year < {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS due_days,
@@ -356,7 +407,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` = {$nYear} 
+						AND year = {$nYear} 
 						AND id_person = t.id_person
 				) AS used_days,
 				(	SELECT SUM(due_days) 
@@ -365,7 +416,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND `year` <= {$nYear} 
+						AND year <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -375,26 +426,36 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` <= {$nYear}  
+						AND year <= {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS remain,
 				p.egn,
-				SUM(if(t.is_earning = 1,t.total_sum,NULL) ) AS earnings, 
+				p.iban,
+				p.bic,
+				SUM(if(t.is_earning = 1,t.total_sum,NULL) ) AS earnings,
 				SUM(if(t.is_earning = 0,t.total_sum,NULL) ) AS expense,
-				SUM(if(t.is_earning = 1,t.total_sum,-t.total_sum) ) AS total_sum 
+				SUM(if(t.is_earning = 1,t.total_sum,-t.total_sum) ) AS total_sum,
+				t.code,
+				f.id as id_firm,
+				(SELECT position_function FROM {$db_name_personnel}.positions WHERE id = p.id_position) as pos
 			FROM 
 				salary t 
-				LEFT JOIN personnel p ON p.id = t.id_person 
+				LEFT JOIN {$db_name_personnel}.personnel p ON p.id = t.id_person 
 				LEFT JOIN {$db_name_sod}.offices r ON r.id = p.id_office
 				LEFT JOIN {$db_name_sod}.objects o ON o.id = p.id_region_object
 				LEFT JOIN {$db_name_sod}.firms f ON f.id = r.id_firm
+				LEFT JOIN {$db_name_sod}.offices rr ON rr.id = t.id_office
+				LEFT JOIN {$db_name_sod}.firms ff ON ff.id = rr.id_firm
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
-				AND p.id_office IN ({$sIDOffices})
+				AND t.month = {$nMonth}
+				AND p.id_office IN ({$sIDOffices})			
+				AND (IF (p.id_position IN ({$positions}), 1, 0) = 1 AND ( (t.code != '+ДЕЖ_Д') OR (ff.id != 2) )  OR IF (p.id_position NOT IN ({$positions}), 1, 0) = 1 )
 		";
-		
+		//AND (IF (p.id_position IN ({$positions}), 1, 0) = 1 AND ( (t.code != '+ДЕЖ_Д') OR (f.id != 2) )  OR IF ((p.id_position NOT IN ({$positions}), 1, 0) = 1 )
+		//AND IF (pos.position_function IN ('patrul', 'dispatcher'), 1, 0) = 1 AND ( (t.code != '+ДЕЖ_Д') OR (f.id != 2) )  OR IF (pos.position_function NOT IN ('patrul', 'dispatcher'), 1, 0) = 1
+		//LEFT JOIN {$db_name_personnel}.positions pos ON pos.id = p.id_position
 		switch( $nRadio ) {
 			case '1': if(!empty($sIDFirms))$sQuery .= " AND r.id_firm IN ({$sIDFirms})\n";break;
 			//case '2': if(!empty($sIDOffices))$sQuery .= " AND p.id_office IN ({$sIDOffices})\n";break;
@@ -405,12 +466,25 @@ class DBSalary
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
 		
-		$sQuery .= " GROUP BY t .`month`, t.id_person\n";
+		if ( !empty($nActive) ) {
+			$sQuery .= " AND ( p.vacate_date = '0000-00-00' OR p.vacate_date > '{$sToday}' ) \n";
+		}
 		
+		$sQuery .= " GROUP BY t.id_person\n"; //t.month, , p.id_position
+	//	$sQuery .= " HAVING IF (pos IN ('patrul', 'dispatcher'), 1, 0) = 1 AND ( (code != '+ДЕЖ_Д') OR (id_firm != 2) )  OR IF (pos NOT IN ('patrul', 'dispatcher'), 1, 0) = 1  ";
 		global $db_personnel_backup;
 		
 		$this->getResult($sQuery, 'person_name', DBAPI_SORT_ASC, $oResponse,$db_personnel_backup);
-		
+
+        //foreach( $oResponse->oResult->aData as &$aDataRow ) {
+        //    $aDataRow['pname'] = utf8_strtoupper($aDataRow['person_name']);
+       //}
+
+        foreach( $oResponse->oResult->aData as &$aDataRow ) {
+            $aDataRow['person_name'] = mb_strtoupper($aDataRow['person_name'], "UTF-8");
+            $aDataRow['postbank'] = "Postbank";
+        }
+
 		if(!empty($nScheme))
 			$TotalColumn = "SUM(ear_exp) as ear_exp,";
 			
@@ -422,7 +496,7 @@ class DBSalary
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
 					$TotalColumn .= "SUM(code{$i}) as code{$i},\n";
-					$sQuery1[] = " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} \n";
+					$sQuery1[] = " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} \n";
 					$i++;
 				}
 			}
@@ -431,11 +505,11 @@ class DBSalary
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
 					$TotalColumn .= "SUM(code{$i}) as code{$i},\n";
-					$sQuery1[] = " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} \n";
+					$sQuery1[] = " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} \n";
 					$i++;
 				}
 			}
-			$sQuery1[] = "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery1[] = "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		$sTotalQuery1 = array();
 		$sTotalQuery1 = implode(",", $sQuery1);
@@ -450,7 +524,7 @@ class DBSalary
 			SUM(earnings) as earnings,
 			SUM(expense) as expense,
 			SUM(total_sum) as total_sum,
-			SUM(min_cost) as min_cost,
+			#SUM(min_cost) as min_cost,
 			SUM(due_days) as due_days,
 			SUM(used_days) as used_days,
 			SUM(remain) as remain
@@ -472,19 +546,19 @@ class DBSalary
 				WHERE id_person = t.id_person
 				AND to_arc = 0
 				)) / if(count(distinct t.id) < 1, 1, count(distinct t.id)) AS fix_cost,
-				(	SELECT min_cost
-					FROM person_contract
-					WHERE id_person = t.id_person
-					AND to_arc = 0
-					/**/LIMIT 1
-				) AS min_cost,
+				#(	SELECT min_cost
+				#	FROM person_contract
+				#	WHERE id_person = t.id_person
+				#	AND to_arc = 0
+				#	/**/LIMIT 1
+				#) AS min_cost,
 				(	SELECT SUM(due_days) 
 					FROM person_leaves 
 					WHERE 1
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND `year` <= {$nYear} 
+						AND year <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -494,7 +568,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` < {$nYear}  
+						AND year < {$nYear}  
 						AND id_person = t.id_person
 				)
 				AS due_days,
@@ -504,7 +578,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` = {$nYear} 
+						AND year = {$nYear} 
 						AND id_person = t.id_person
 				) AS used_days,
 				(	SELECT SUM(due_days) 
@@ -513,7 +587,7 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'leave' 
 						AND leave_types = 'due' 
-						AND `year` <= {$nYear} 
+						AND year <= {$nYear} 
 						AND id_person = t.id_person
 				)
 				-
@@ -523,22 +597,33 @@ class DBSalary
 						AND to_arc=0 
 						AND type = 'application' 
 						AND (leave_types = 'due' OR leave_types = 'student') 
-						AND `year` <= {$nYear}  
+						AND year <= {$nYear}  
 						AND id_person = t.id_person
 				)
-				AS remain
+				AS remain,
+				t.code,
+				f.id as id_firm,
+				(SELECT position_function FROM {$db_name_personnel}.positions WHERE id = p.id_position) as pos
 			FROM 
 				salary t 
-				LEFT JOIN personnel p ON p.id = t.id_person 
+				LEFT JOIN {$db_name_personnel}.personnel p ON p.id = t.id_person 
+				
 				LEFT JOIN {$db_name_sod}.offices r ON r.id = p.id_office
 				LEFT JOIN {$db_name_sod}.objects o ON o.id = p.id_region_object
 				LEFT JOIN {$db_name_sod}.firms f ON f.id = r.id_firm
+				LEFT JOIN {$db_name_sod}.offices rr ON rr.id = t.id_office
+				LEFT JOIN {$db_name_sod}.firms ff ON ff.id = rr.id_firm
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND p.id_office IN ({$sIDOffices})
+				
+				
+				AND ( IF (p.id_position IN ({$positions}), 1, 0) = 1 AND ( (t.code != '+ДЕЖ_Д') OR (ff.id != 2) )  OR IF (p.id_position NOT IN ({$positions}), 1, 0) = 1 )
 		";
-
+		//
+		//AND (IF (p.id_position IN (7,16,44,50), 1, 0) = 1) AND ( (t.code != '+ДЕЖ_Д') OR (f.id != 2) )  OR IF (p.id_position NOT IN (7,16,44,50), 1, 0) = 1 
+//LEFT JOIN {$db_name_personnel}.positions pos ON pos.id = p.id_position
 		switch( $nRadio ) {
 			case '1': if(!empty($sIDFirms))$sQuery .= " AND r.id_firm IN ({$sIDFirms})\n";break;
 			//case '2': if(!empty($sIDOffices))$sQuery .= " AND p.id_office IN ({$sIDOffices})\n";break;
@@ -549,11 +634,22 @@ class DBSalary
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
 		
-		$sQuery .= "group by p.id
-			) as table1";
-		APILog::Log(0,$sQuery);
-		$aTotals = $this->selectOnceFromDB($db_personnel_backup,$sQuery);
+		if ( !empty($nActive) ) {
+			$sQuery .= " AND ( p.vacate_date = '0000-00-00' OR p.vacate_date > '{$sToday}' ) \n";
+		}
 				
+		//HAVING IF (pos IN ('patrul', 'dispatcher'), 1, 0) = 1 AND ( (code != '+ДЕЖ_Д') OR (id_firm != 2) )  OR IF (pos NOT IN ('patrul', 'dispatcher'), 1, 0) = 1 
+		$sQuery .= "group by p.id
+			
+			) as table1";
+		
+		$aTotals = $this->selectOnceFromDB($db_personnel_backup,$sQuery);// p.id_position
+		
+		$aTotals['min_cost'] = 0;
+		foreach( $oResponse->oResult->aData as &$aTempData ) {
+            $aTotals['min_cost'] += $aTempData['min_cost'];
+        }
+		
 		$oResponse->addTotal('earnings', $aTotals['earnings'] );
 		$oResponse->addTotal('expense', $aTotals['expense'] );
 		$oResponse->addTotal('total_sum', $aTotals['total_sum'] );
@@ -587,6 +683,17 @@ class DBSalary
 		
 		//$oResponse->setField( 'person_code', 		'код', 		'Сортирай по код служител', NULL, NULL, NULL, array('DATA_FORMAT' => DF_NUMBER) );
 		$oResponse->setField( 'person_name', 		'име', 		'Сортирай по име на служител', NULL, 'personnel'  );
+
+        if ( !empty($aFilters['egn']) ) {
+            $oResponse->setField( "egn", "ЕГН",	"Сортирай по ЕГН" );
+        }
+
+        if ( !empty($aFilters['iban']) ) {
+            $oResponse->setField( "iban", "IBAN",	"Сортирай по IBAN" );
+            $oResponse->setField( "bic", "BIC",	"Сортирай по BIC" );
+            $oResponse->setField( "postbank", "Postbank",	"" );
+        }
+
 		$oResponse->setField( 'person_firm_name', 	'регион',	'Сортирай по регион на назначение'  );
 		$oResponse->setField( 'person_object_name', 'назначен на обект',	'Сортирай по обект на назначение'  );
 		
@@ -594,17 +701,13 @@ class DBSalary
 			
 		if(!empty($aFilters['ear_exp']))$oResponse->setField( 'ear_exp', 	'нар - удр',	'Сортирай по наработки - удръжки'  );
 		
-		if ( !empty($aFilters['egn']) ) {
-			$oResponse->setField( "egn", "ЕГН",	"Сортирай по ЕГН" );
-		}
-			
-		if(!empty($aFilters['fix_salary']))$oResponse->setField( 'fix_cost', 			'фиксирина заплата', 	'Сортирай по фиксирана заплата', NULL, NULL, NULL, array('DATA_FORMAT' => DF_CURRENCY, 'DATA_TOTAL' => 1 ) );
-		if(!empty($aFilters['min_salary']))$oResponse->setField( 'min_cost', 			'минимална заплата', 	'Сортирай по минимална заплата', NULL, NULL, NULL, array('DATA_FORMAT' => DF_CURRENCY, 'DATA_TOTAL' => 1 ) );
-		if(!empty($aFilters['insurance']))$oResponse->setField( 'insurance', 		'осигорителна ставка', 	'Сортирай по осигорителна ставка', NULL, NULL, NULL, array('DATA_FORMAT' => DF_CURRENCY, 'DATA_TOTAL' => 1 ) );
-		if(!empty($aFilters['trial']))$oResponse->setField( 'trial', 	'пробен период',	'Сортирай по пробен период'  );
-		if(!empty($aFilters['due_days']))$oResponse->setField( 'due_days', 	'полагаем отпуск',	'Сортирай по полагаем отпуск'  );
-		if(!empty($aFilters['used_days']))$oResponse->setField( 'used_days', 	'използван отпуск',	'Сортирай по използван отпуск'  );
-		if(!empty($aFilters['remain']))$oResponse->setField( 'remain', 	'оставащ отпуск',	'Сортирай по оставащ отпуск'  );
+		if( !empty( $aFilters["fix_salary"] ) )	$oResponse->setField( "fix_cost", 	"фиксирина заплата", 	"Сортирай по фиксирана заплата", NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
+		if( !empty( $aFilters["min_salary"] ) )	$oResponse->setField( "min_cost", 	"минимална заплата", 	"Сортирай по минимална заплата", NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
+		if( !empty( $aFilters["insurance"] ) )	$oResponse->setField( "insurance", 	"осигорителна ставка", 	"Сортирай по осигорителна ставка", NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
+		if( !empty( $aFilters["trial"] ) )		$oResponse->setField( "trial", 		"пробен период", 		"Сортирай по пробен период" );
+		if( !empty( $aFilters["due_days"] ) )	$oResponse->setField( "due_days", 	"полаг. год. отпуск", 	"Сортирай по полагаем годишен отпуск" );
+		if( !empty( $aFilters["used_days"] ) )	$oResponse->setField( "used_days", 	"изп. год. отпуск", 	"Сортирай по използван годишен отпуск" );
+		if( !empty( $aFilters["remain"] ) )		$oResponse->setField( "remain", 	"ост. год. отпуск", 	"Сортирай по оставащ годишен отпуск" );
 		
 		$i = 1;
 		$aCodes = explode(',',$aFilters['earnings']);
@@ -632,17 +735,19 @@ class DBSalary
 		$oResponse->setFieldLink('expense','openSalary');
 		$oResponse->setFieldLink('total_sum','openSalary'); 
 	}
+	
 	public function getReport2($aData, $oResponse) {
-		global $db_name_sod;
+		global $db_name_sod, $db_name_personnel;
 		
-		$nMonth = $aData['nMonth'];
-		$sIDFirms = $aData['sIDFirms'];
+		$nMonth 	= $aData['nMonth'];
+		$sIDFirms 	= $aData['sIDFirms'];
 		$sIDObjects = $aData['sIDObjects'];
 		$sIDOffices = $aData['sIDOffices'];
-		$nPosition = $aData['id_position'];
-		$nRadio = $aData['nRadio'];
+		$nPosition 	= $aData['id_position'];
+		$nRadio 	= $aData['nRadio'];
+		$nActive 	= $aData['active'];
 		
-		
+		$sToday		= date( "Y-m-d" );
 		$sIDOffices = !empty($sIDOffices) ? $sIDOffices : implode(',',$_SESSION['userdata']['access_right_regions']);
 		
 		$sQuery = " 
@@ -650,11 +755,11 @@ class DBSalary
 				SQL_CALC_FOUND_ROWS 
 				t.id as _id, 
 				t.id, 
-				t .`month`, 
+				t.month, 
 				CONCAT( sf.name,' (', sr.name, ')' ) AS firm_name,
 				CONCAT( so.name,' (', so.num, ')' ) AS object_name,
-				sf.`code` as firm_code,
-				sr.`code` as region_code,
+				sf.code as firm_code,
+				sr.code as region_code,
 				so.num 	as object_num,
 				SUM(if(t.is_earning = 1,t.total_sum,-t.total_sum) ) AS total_sum 
 				
@@ -666,7 +771,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND t.id_office IN ({$sIDOffices})
 		";
 		
@@ -676,13 +781,15 @@ class DBSalary
 			case '3': if(!empty($sIDObjects))$sQuery .= " AND t.id_object IN ({$sIDObjects})\n";break;
 		}
 		
-		
+		if ( !empty($nActive) ) {
+			$sQuery .= " AND ( p.vacate_date = '0000-00-00' OR p.vacate_date > '{$sToday}' ) \n";
+		}		
 		
 		if(!empty($nPosition)) {
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
 		
-		$sQuery .= " GROUP BY t .`month`, sr.id, sf.id, so.id\n";
+		$sQuery .= " GROUP BY t.month, sr.id, sf.id, so.id\n";
 		
 		global $db_personnel_backup;
 		
@@ -699,7 +806,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND t.id_office IN ({$sIDOffices})
 		";
 		
@@ -731,14 +838,15 @@ class DBSalary
 		$nIDFirmFrom = $aData['nIDFirmFrom'];
 		$nIDFirmTo = $aData['nIDFirmTo'];
 		$nMonth = $aData['nMonth'];
+		$nPrevMonth = $aData['nPrevMonth'];
 		$sMonthSQL = $aData['sMonthSQL'];
 		
 		$sQuery = "
 			SELECT SQL_CALC_FOUND_ROWS
 				t.id as _id, 
 				t.id_person AS id, 
-				CONCAT('     ',SUBSTRING(t .`month`,5),' - ',SUBSTRING(t .`month`,1,4)) AS month, 
-				p.`code` as person_code,
+				CONCAT('     ',SUBSTRING(t.month,5),' - ',SUBSTRING(t.month,1,4)) AS month, 
+				p.code as person_code,
 				CONCAT_WS(' ', p.fname, p.mname, p.lname) as person_name,
 				CONCAT( f.name,' (', r.name, ')' ) as person_firm_name,
 				CONCAT( o.name,' (', o.num, ')' ) as person_object_name,
@@ -757,11 +865,32 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc = 0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
-			GROUP BY t .`month`, t.id_person
+			GROUP BY t.month, t.id_person
 		";
+		
+		//Previous Month Total Sum
+		$sQueryPrev = "
+			SELECT SQL_CALC_FOUND_ROWS
+				t.id_person AS id,
+				SUM( IF( t.is_earning = 1, t.total_sum, 0 ) ) AS earnings
+			FROM salary t
+				LEFT JOIN personnel p ON p.id = t.id_person
+				LEFT JOIN {$db_name_sod}.offices r ON r.id = p.id_office
+				LEFT JOIN {$db_name_sod}.offices sr ON sr.id = t.id_office
+			WHERE 1
+				AND t.to_arc = 0
+				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
+				AND t.month = {$nPrevMonth}
+				AND r.id_firm = {$nIDFirmFrom}
+				AND sr.id_firm = {$nIDFirmTo}
+			GROUP BY t.month, t.id_person
+		";
+		
+		$aDataPrev = $this->selectAssoc( $sQueryPrev );
+		//End Previous Month Total Sum
 		
 		$this->getResult($sQuery, 'id', DBAPI_SORT_ASC, $oResponse,$db_personnel_backup);
 		
@@ -782,7 +911,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc = 0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -799,9 +928,9 @@ class DBSalary
 		$oResponse->setField( "person_object_name", "Назначен на обект",						"Сортирай по обект на назначение" );
 		$oResponse->setField( "earnings", 			"Наработки за {$aData['sMonth']}", 			"Сортирай по наработки", 		NULL, NULL, NULL, array("DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
 		$oResponse->setField( "expense", 			"Удръжки за {$aData['sMonth']}", 			"Сортирай по удръжки", 			NULL, NULL, NULL, array("DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
-		$oResponse->setField( "total_sum", 			"За получаване през {$aData['sMonth']}", 	"Сортирай по за получаване", 	NULL, NULL, NULL, array("DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
-		$oResponse->setField( "leave_count", 		"Отпуск за {$aData['sNextMonth']}", 		"Сортирай по отпуск", 			NULL, NULL, NULL, array("DATA_FORMAT" => DF_NUMBER, "DATA_TOTAL" => 1 ) );
+		$oResponse->setField( "leave_count", 		"Отпуск за {$aData['sMonth']}", 			"Сортирай по отпуск", 			NULL, NULL, NULL, array("DATA_FORMAT" => DF_NUMBER, "DATA_TOTAL" => 1 ) );
 		$oResponse->setField( "leave_sum", 			"Начислена сума за отпуск", 				"Сортирай по сума за отпуск", 	NULL, NULL, NULL, array("DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
+		$oResponse->setField( "total_sum", 			"За получаване през {$aData['sMonth']}", 	"Сортирай по за получаване", 	NULL, NULL, NULL, array("DATA_FORMAT" => DF_CURRENCY, "DATA_TOTAL" => 1 ) );
 		
 		$oResponse->setFieldLink( "earnings",	"openSalary" );
 		$oResponse->setFieldLink( "expense",	"openSalary" );
@@ -817,8 +946,8 @@ class DBSalary
 					salary sal
 				WHERE
 					sal.to_arc = 0
-					AND sal .`month` = '{$aData['nNextMonth']}'
-					AND sal.`code` = ( SELECT code FROM salary_earning_types WHERE leave_type = 'due' )
+					AND sal.month = '{$aData['nMonth']}'
+					AND sal.code = ( SELECT code FROM salary_earning_types WHERE leave_type = 'due' )
 					AND sal.id_person = {$aValue['id']}
 			";
 			
@@ -828,10 +957,13 @@ class DBSalary
 			$nWorkDays = $oDBHolidays->getWorkdaysForMonth( $aData['nLeaveYear'], $aData['nLeaveMonth'] );
 			if( $nWorkDays != 0 )
 			{
-				$aValue['leave_sum'] = ( $aValue['leave_count'] / $nWorkDays ) * $aValue['total_sum'];
+				$nTotalSum = isset( $aDataPrev[$aValue['id']] ) ? $aDataPrev[$aValue['id']] : 0;
+				$aValue['leave_sum'] = ( $aValue['leave_count'] / $nWorkDays ) * $nTotalSum;
 			}
 			else $aValue['leave_sum'] = 0;
 			//End Leave Count
+			
+			$aValue['total_sum'] += $aValue['leave_sum'];
 		}
 	}
 	
@@ -860,10 +992,11 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.offices sr ON sr.id = t.id_office
 				LEFT JOIN {$db_name_sod}.firms sf ON sf.id = sr.id_firm
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
+				
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 			GROUP BY sr.id 
@@ -889,7 +1022,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -931,7 +1064,7 @@ class DBSalary
 			WHERE 1
 				AND t.to_arc=0
 				AND UNIX_TIMESTAMP( p.date_from ) <= UNIX_TIMESTAMP( '{$sMonthSQL}' )
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND f.id = {$nIDFirmFrom}
 				AND sf.id = {$nIDFirmTo}
 		";
@@ -939,29 +1072,26 @@ class DBSalary
 		return $this->selectOneFromDB($db_personnel_backup, $sQuery);
 	}
 
-	public function getTechEarning( $nIDPerson,$sMonth, &$sHint = "" )
-	{
+	public function getTechEarning( $nIDPerson,$sMonth, &$sHint = "" ) {
+		global $db_name_sod, $db_name_personnel;
+		
 		$sQuery = "
 			SELECT
 				SUM( s.total_sum ) AS salary,
 				GROUP_CONCAT(
 					(
-						CONCAT(
-							CONVERT( s.description USING utf8 ),
-							' : ',
-							s.total_sum,
-							CONVERT( ' лв.' USING utf8 )
-						)
+						CONCAT( DATE_FORMAT(s.created_time, '%d.%m.%Y'), ' [', o.num, '] ', o.name, ' : ', s.total_sum, ' лв.')
 					)
-					ORDER BY s.description
+					ORDER BY s.created_time
 					SEPARATOR '\\n'
 				) AS salary_hint
-			FROM salary s 
-			LEFT JOIN salary_earning_types st ON st.`code` = s.`code`
+			FROM {$db_name_personnel}.salary s 
+			LEFT JOIN {$db_name_personnel}.salary_earning_types st ON st.code = s.code
+			LEFT JOIN {$db_name_sod}.objects o ON (s.id_object = o.id)
 			WHERE 1
 				AND s.to_arc = 0
 				AND s.id_person = {$nIDPerson}
-				AND s .`month` = {$sMonth}
+				AND s.month = {$sMonth}
 				AND st.source = 'limit_card'
 		";
 		
@@ -976,12 +1106,61 @@ class DBSalary
 		else return 0;
 	}
 	
+	
+	public function getReportPersonSalary( $nIDPerson, $nDate, DBResponse $oResponse ) {
+		global $db_name_personnel, $db_name_sod;	
+
+		$right_edit = false;
+		
+		if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
+			if ( in_array('tech_planning_edit', $_SESSION['userdata']['access_right_levels']) ) {
+				$right_edit = true;
+			}
+		}
+		
+		$sQuery = "
+			SELECT SQL_CALC_FOUND_ROWS
+				s.created_time as created_time,
+				DATE_FORMAT(s.created_time, '%d.%m.%Y') as d,
+				CONCAT(' [', o.num, '] ', o.name) as name,
+				s.total_sum
+			FROM {$db_name_personnel}.salary s 
+			LEFT JOIN {$db_name_personnel}.salary_earning_types st ON st.code = s.code
+			LEFT JOIN {$db_name_sod}.objects o ON (s.id_object = o.id)
+			WHERE 1
+				AND s.to_arc = 0
+				AND s.id_person = {$nIDPerson}
+				AND s.month = {$nDate}
+				AND st.source = 'limit_card'
+		";
+			
+		if ( !$right_edit ) {
+			$sQuery .= " AND s.id_person = -1 ";
+		}
+			
+		$this->getResult( $sQuery, 'created_time', DBAPI_SORT_ASC, $oResponse );
+		
+		foreach( $oResponse->oResult->aData as $key => &$val ) {
+			$val['total_sum'] 		= sprintf("%01.2f лв.", $val['total_sum']);
+			$val['created_time'] 	= $val['d'];
+			
+			$oResponse->setDataAttributes( $key, 'created_time', 	array('nowrap' => 'nowrap','style' => 'text-align: center; width: 120px; white-space: nowrap !important;'));
+			$oResponse->setDataAttributes( $key, 'total_sum', 		array('nowrap' => 'nowrap','style' => 'text-align: center; width: 80px; white-space: nowrap !important;'));
+		}
+
+		$oResponse->setField('created_time',		'Дата',			'сортирай по Дата');
+		$oResponse->setField('name',				'Обект',		'сортирай по Служител');
+		$oResponse->setField('total_sum',			'Ставка',		'сортирай по Сума');	
+		
+		//$oResponse->addTotal("total_sum", $total);	
+	}	
+			
 	public function getTechEarningForDay( $nIDPerson,$sDay) {
 		$sQuery = "
 			SELECT
 				SUM(s.total_sum)
 			FROM salary s 
-			LEFT JOIN salary_earning_types st ON st.`code` = s.`code`
+			LEFT JOIN salary_earning_types st ON st.code = s.code
 			WHERE 1
 				AND s.id_person = {$nIDPerson}
 				AND s.created_time LIKE '$sDay%'
@@ -1019,7 +1198,7 @@ class DBSalary
 				LEFT JOIN {$db_name_sod}.objects so ON so.id = t.id_object
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND r.id IN ({$sIDOffices})
 		";
 		
@@ -1032,13 +1211,15 @@ class DBSalary
 		
 		$oDBAdminSalaryTotalFilter = new DBAdminSalaryTotalFilters();
 		
-		$nMonth = $aData['nMonth'];
-		$sIDFirms = $aData['sIDFirms'];
+		$nMonth 	= $aData['nMonth'];
+		$sIDFirms 	= $aData['sIDFirms'];
 		$sIDOffices = $aData['sIDOffices'];
-		$nPosition = $aData['id_position'];
-		$nScheme = $aData['id_scheme'];
-		$nRadio = $aData['nRadio'];
+		$nPosition 	= $aData['id_position'];
+		$nScheme 	= $aData['id_scheme'];
+		$nRadio 	= $aData['nRadio'];
+		$nActive 	= $aData['active'];
 		
+		$sToday 	= date( "Y-m-d" );
 		$sIDOffices = !empty($sIDOffices) ? $sIDOffices : implode(',',$_SESSION['userdata']['access_right_regions']);
 		
 		$sQuery = "
@@ -1055,7 +1236,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -1063,11 +1244,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		
@@ -1083,7 +1264,7 @@ class DBSalary
 				LEFT JOIN personnel as up on up.id = t. updated_user
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND r.id IN ( {$sIDOffices} )
 		";
 
@@ -1092,7 +1273,10 @@ class DBSalary
 			//case '2': if(!empty($sIDOffices))$sQuery .= " AND r.id IN ( {$sIDOffices} )\n";break;
 		}
 		
-		
+		if ( !empty($nActive) ) {
+			$sQuery .= " AND ( p.vacate_date = '0000-00-00' OR p.vacate_date > '{$sToday}' ) \n";
+		}
+				
 		if(!empty($nPosition)) {
 			$sQuery .= " AND p.id_position = {$nPosition}\n";
 		}
@@ -1112,7 +1296,7 @@ class DBSalary
 			$sCodeEarnings = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
@@ -1120,11 +1304,11 @@ class DBSalary
 			$sCodeExpenses = "'".implode("','",$aCodes)."'";
 			foreach ( $aCodes as $code ) {
 				if( !empty($code) ) {
-					$sQuery .= " SUM(if(t.`code` = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
+					$sQuery .= " SUM(if(t.code = '{$code}',total_sum,NULL)) AS code{$i} ,\n";
 					$i++;
 				}
 			}
-			$sQuery .= "SUM(if(t.`code` IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.`code` IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
+			$sQuery .= "SUM(if(t.code IN ({$sCodeEarnings}),total_sum,0)) - SUM(if(t.code IN ({$sCodeExpenses}),total_sum,0)) AS ear_exp ,\n";
 		}
 		
 		
@@ -1140,13 +1324,17 @@ class DBSalary
 				LEFT JOIN personnel as up on up.id = t. updated_user
 			WHERE 1
 				AND t.to_arc=0
-				AND t .`month` = {$nMonth}
+				AND t.month = {$nMonth}
 				AND r.id IN ( {$sIDOffices} )
 		";
 		
 		switch( $nRadio ) {
 			case '1': if(!empty($sIDFirms))$sQuery .= " AND r.id_firm IN ({$sIDFirms})\n";break;
 			//case '2': if(!empty($sIDOffices))$sQuery .= " AND r.id IN ( {$sIDOffices} )\n";break;
+		}
+		
+		if ( !empty($nActive) ) {
+			$sQuery .= " AND ( p.vacate_date = '0000-00-00' OR p.vacate_date > '{$sToday}' ) \n";
 		}
 		
 		if(!empty($nPosition)) {
@@ -1220,7 +1408,7 @@ class DBSalary
 			WHERE 1
 				AND to_arc = 0
 				AND auto = 1
-				AND `month` = '{$nMonth}'
+				AND month = '{$nMonth}'
 		";
 		
 		return $this->select($sQuery);
@@ -1241,7 +1429,7 @@ class DBSalary
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
 				per.id AS id_person,
 				fir.name AS firm,
-				offs.name AS office,
+				off.name AS office,
 				CASE per_lea.leave_types
 					WHEN 'due' THEN 'Платен'
 					WHEN 'unpaid'  THEN 'Неплатен'
@@ -1260,8 +1448,8 @@ class DBSalary
 				) AS date_from,
 				IF
 				(
-					sal.`code` = sal_ear_typ_hos.`code`,
-					-1,
+					sal.code = sal_ear_typ_hos.code,
+					ROUND( sal.count, 0 ), #-1  Pavel
 					ROUND( sal.count, 0 )
 				) AS res_application_days,
 				IF( per_cont.fix_cost != 0, 1, 0 ) AS state_salary,
@@ -1279,7 +1467,8 @@ class DBSalary
 								salary_unstored sal_uns
 							WHERE
 								#sal_uns.id_person = {$nIDLoggedPerson} AND
-								sal_uns.id_salary_row = sal.id
+								to_arc = 0
+								AND sal_uns.id_salary_row = sal.id
 							ORDER BY
 								id DESC
 							LIMIT 1
@@ -1292,7 +1481,8 @@ class DBSalary
 								salary_unstored sal_uns
 							WHERE
 								#sal_uns.id_person = {$nIDLoggedPerson} AND
-								sal_uns.id_salary_row = sal.id
+								to_arc = 0
+								AND sal_uns.id_salary_row = sal.id
 							ORDER BY
 								id DESC
 							LIMIT 1
@@ -1300,19 +1490,20 @@ class DBSalary
 					)
 				) AS total_sum,
 		";
-			
+		
 		if( isset( $aParams['nMonth'] ) && !empty( $aParams['nMonth'] ) )
 		{
 			$sMonth = substr( $aParams['nMonth'], 0, 4 ) . "-" . substr( $aParams['nMonth'], 4, 2 );
-			
-			$sQuery .= "
+			$sQuery .= " IF( per_lea.leave_types = 'unpaid', 0, 1 ) AS allow_edit, ";
+		/*	$sQuery .= "
 				IF
 				(
-					sal.`code` = sal_ear_typ_hos.`code`,
-					IF( '{$sMonth}' > SUBSTR( per_lea.res_leave_from, 1, 7 ), 0, 1 ),
+					sal.code = sal_ear_typ_hos.code,
+					IF( per_lea.leave_types = 'unpaid', 0, 1 ),  #IF( '{$sMonth}' > SUBSTR( per_lea.res_leave_from, 1, 7 ), 0, 1 ) pavel
 					IF( per_lea.leave_types = 'unpaid', 0, 1 )
 				) AS allow_edit,
 			";
+		*/	
 		}
 		else
 		{
@@ -1407,9 +1598,9 @@ class DBSalary
 			LEFT JOIN
 				personnel per_con ON per_con.id = per_lea.confirm_user
 			LEFT JOIN
-				{$db_name_sod}.offices offs ON offs.id = per.id_office
+				{$db_name_sod}.offices off ON off.id = per.id_office
 			LEFT JOIN
-				{$db_name_sod}.firms fir ON fir.id = offs.id_firm
+				{$db_name_sod}.firms fir ON fir.id = off.id_firm
 			LEFT JOIN
 				{$db_name_sod}.objects obj ON obj.id = per.id_region_object
 			LEFT JOIN
@@ -1432,19 +1623,19 @@ class DBSalary
 			{
 				case 0:
 					$sQuery .= "
-						AND ( sal.`code` = sal_ear_typ_due.`code` OR sal.`code` = sal_ear_typ_unp.`code` )
+						AND ( sal.code = sal_ear_typ_due.code OR sal.code = sal_ear_typ_unp.code )
 					";
 					break;
 				
 				case 1:
 					$sQuery .= "
-						AND sal.`code` = sal_ear_typ_hos.`code`
+						AND sal.code = sal_ear_typ_hos.code
 					";
 					break;
 				
 				case 2:
 					$sQuery .= "
-						AND sal.`code` = sal_ear_typ_com.`code`
+						AND sal.code = sal_ear_typ_com.code
 					";
 					break;
 			}
@@ -1459,7 +1650,7 @@ class DBSalary
 		if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
 		{
 			$sQuery .= "
-				AND offs.id = {$aParams['nIDOffice']}
+				AND off.id = {$aParams['nIDOffice']}
 			";
 		}
 		if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
@@ -1473,15 +1664,17 @@ class DBSalary
 		if( isset( $aParams['nMonth'] ) && !empty( $aParams['nMonth'] ) )
 		{
 			$sMonth = substr( $aParams['nMonth'], 0, 4 ) . "-" . substr( $aParams['nMonth'], 4, 2 );
-			
+			$sQuery .= " AND sal.month = {$aParams['nMonth']} ";
+			/*
 			$sQuery .= "
 				AND IF
 				(
-					sal.`code` = sal_ear_typ_hos.`code`,
-					( SUBSTR( per_lea.res_leave_from, 1, 7 ) <= '{$sMonth}' AND SUBSTR( per_lea.res_leave_to, 1, 7 ) >= '{$sMonth}' ),
-					sal .`month` = {$aParams['nMonth']}
+					sal.code = sal_ear_typ_hos.code,
+					sal.month = {$aParams['nMonth']}, #( SUBSTR( per_lea.res_leave_from, 1, 7 ) <= '{$sMonth}' AND SUBSTR( per_lea.res_leave_to, 1, 7 ) >= '{$sMonth}' ), Pavel
+					sal.month = {$aParams['nMonth']}
 				)
 			";
+			*/
 		}
 		else
 		{
@@ -1554,7 +1747,7 @@ class DBSalary
 			$sQuery .= sprintf( "LIMIT %s, %s", $nRowOffset , $nRowCount );
 		}
 		//End Paging
-		
+		APILog::Log(0, $sQuery);
 		$rs = $db_personnel->Execute( $sQuery );
 		
 		$aData = array();
@@ -1644,12 +1837,12 @@ class DBSalary
 			SELECT SQL_CALC_FOUND_ROWS
 				per.id AS id,
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
-				offs.name AS office_name,
+				off.name AS office_name,
 				CONCAT( obj.name, ' [', obj.num, ']' ) AS object_name,
 				SUM(
 					IF
 					(
-						( sal.`code` = '{$sCodeUnp}' AND sal .`month` = '{$sYearMonth}' ),
+						( sal.code = '{$sCodeUnp}' AND sal.month = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1657,7 +1850,7 @@ class DBSalary
 				SUM(
 					IF
 					(
-						( sal.`code` = '{$sCodeDue}' AND sal .`month` = '{$sYearMonth}' ),
+						( sal.code = '{$sCodeDue}' AND sal.month = '{$sYearMonth}' ),
 						sal.count,
 						0
 					)
@@ -1666,7 +1859,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.`code` = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sPrevYearMonth}' ),
+							( sal.code = '-КОРЕКЦИЯ5' AND sal.month = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1676,7 +1869,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.`code` = '+ВАУЧЕРИ' AND sal .`month` = '{$sPrevYearMonth}' ),
+							( sal.code = '+ВАУЧЕРИ' AND sal.month = '{$sPrevYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1686,7 +1879,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.`code` = '-КОРЕКЦИЯ5' AND sal .`month` = '{$sYearMonth}' ),
+							( sal.code = '-КОРЕКЦИЯ5' AND sal.month = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1696,7 +1889,7 @@ class DBSalary
 					SUM(
 						IF
 						(
-							( sal.`code` = '+ВАУЧЕРИ' AND sal .`month` = '{$sYearMonth}' ),
+							( sal.code = '+ВАУЧЕРИ' AND sal.month = '{$sYearMonth}' ),
 							sal.total_sum,
 							0
 						)
@@ -1710,7 +1903,7 @@ class DBSalary
 			LEFT JOIN
 				person_contract per_con ON ( per_con.id_person = per.id AND per_con.to_arc = 0 )
 			LEFT JOIN
-				sod.offices offs ON offs.id = per.id_office
+				sod.offices off ON off.id = per.id_office
 			LEFT JOIN
 				sod.objects obj ON obj.id = per.id_region_object
 			LEFT JOIN
@@ -1721,33 +1914,33 @@ class DBSalary
 				AND
 				(
 					(
-						sal.`code` = '{$sCodeUnp}'
-						AND sal .`month` = '{$sYearMonth}'
+						sal.code = '{$sCodeUnp}'
+						AND sal.month = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.`code` = '{$sCodeDue}'
-						AND sal .`month` = '{$sYearMonth}'
+						sal.code = '{$sCodeDue}'
+						AND sal.month = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.`code` = '-КОРЕКЦИЯ5'
-						AND sal .`month` = '{$sPrevYearMonth}'
+						sal.code = '-КОРЕКЦИЯ5'
+						AND sal.month = '{$sPrevYearMonth}'
 					)
 					OR
 					(
-						sal.`code` = '+ВАУЧЕРИ'
-						AND sal .`month` = '{$sPrevYearMonth}'
+						sal.code = '+ВАУЧЕРИ'
+						AND sal.month = '{$sPrevYearMonth}'
 					)
 					OR
 					(
-						sal.`code` = '-КОРЕКЦИЯ5'
-						AND sal .`month` = '{$sYearMonth}'
+						sal.code = '-КОРЕКЦИЯ5'
+						AND sal.month = '{$sYearMonth}'
 					)
 					OR
 					(
-						sal.`code` = '+ВАУЧЕРИ'
-						AND sal .`month` = '{$sYearMonth}'
+						sal.code = '+ВАУЧЕРИ'
+						AND sal.month = '{$sYearMonth}'
 					)
 				)
 		";
@@ -1755,14 +1948,14 @@ class DBSalary
 		if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
 		{
 			$sQuery .= "
-				AND offs.id_firm = {$aParams['nIDFirm']}
+				AND off.id_firm = {$aParams['nIDFirm']}
 			";
 		}
 		
 		if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
 		{
 			$sQuery .= "
-				AND offs.id = {$aParams['nIDOffice']}
+				AND off.id = {$aParams['nIDOffice']}
 			";
 		}
 		
@@ -1883,9 +2076,11 @@ class DBSalary
 	{
 		global $db_name_sod;
 		
-		$oDBHolidays 			= new DBHolidays();
-		$oDBObjectDuty 			= new DBObjectDuty();
-		$oDBSalaryEarningTypes 	= new DBSalaryEarning();
+		$oDBHolidays 					= new DBHolidays();
+		$oDBObjectDuty 					= new DBObjectDuty();
+		$oDBSalaryEarningTypes 			= new DBSalaryEarning();
+		$oDBFiltersVisibleFields 		= new DBFiltersVisibleFields();
+		$oDBPersonContractBasicSalaries	= new DBPersonContractBasicSalaries();
 		
 		$nYear = isset( $aParams['nYear'] ) ? $aParams['nYear'] : 0;
 		$nMonth = isset( $aParams['nMonth'] ) ? $aParams['nMonth'] : 0;
@@ -1915,9 +2110,9 @@ class DBSalary
 		$aHospitalEarning = $oDBSalaryEarningTypes->getHospitalEarning();
 		
 		$sCode1 = $sCode2 = $sCodeHos = "";
-		if( isset( $aLeaveEarning[0]['code'] ) )$sCode1 = $aLeaveEarning[0]['code'];
-		if( isset( $aLeaveEarning[1]['code'] ) )$sCode2 = $aLeaveEarning[1]['code'];
-		if( isset( $aHospitalEarning['code'] ) )$sCodeHos = $aHospitalEarning['code'];
+		if( isset( $aLeaveEarning[0]['code'] ) ) $sCode1 = $aLeaveEarning[0]['code'];
+		if( isset( $aLeaveEarning[1]['code'] ) ) $sCode2 = $aLeaveEarning[1]['code'];
+		if( isset( $aHospitalEarning['code'] ) ) $sCodeHos = $aHospitalEarning['code'];
 		//End Get Earning Codes
 		
 		$sQuery = "
@@ -1925,9 +2120,10 @@ class DBSalary
 				per.id AS id,
 				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
 				per_con.min_cost AS min_cost,
+				per_con.work_hours AS work_hours,
 				per_con.class AS class,
-				SUM( IF( ( sal.`code` = '{$sCode1}' OR sal.`code` = '{$sCode2}' ), sal.count, 0 ) ) AS leave_count,
-				ROUND( SUM( IF( sal.`code` = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five,
+				SUM( IF( ( sal.code = '{$sCode1}' OR sal.code = '{$sCode2}' ), sal.count, 0 ) ) AS leave_count,
+				ROUND( SUM( IF( sal.code = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five,
 				IF( per.date_from != '0000-00-00', per.date_from, '' ) AS date_from,
 				IF( per.vacate_date != '0000-00-00', per.vacate_date, '' ) AS vacate_date,
 				IF( per.date_from != '0000-00-00', DATE_FORMAT( per.date_from, '%d.%m.%Y' ), ' --- ' ) AS format_date_from,
@@ -1945,7 +2141,7 @@ class DBSalary
 				(
 					sal.id_person = per.id
 					AND sal.to_arc = 0
-					AND sal .`month` = '{$sYearMonth}'
+					AND sal.month = '{$sYearMonth}'
 				)
 			LEFT JOIN
 				person_leaves per_lea ON ( per_lea.id = sal.id_application AND per_lea.to_arc = 0 )
@@ -1961,6 +2157,7 @@ class DBSalary
 				)
 		";
 		
+		//Filtering
 		if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
 		{
 			$sQuery .= "
@@ -1981,19 +2178,17 @@ class DBSalary
 				AND obj.id = {$aParams['nIDObject']}
 			";
 		}
+		//End Filtering
 		
 		$sQuery .= "
 			GROUP BY per.id
 		";
-		
-//		APILog::Log(0, $sQuery );
-		
+
 		$this->getResult( $sQuery, "person_name", DBAPI_SORT_ASC, $oResponse );
-		
 		
 		$sQueryTotal = "
 			SELECT SQL_CALC_FOUND_ROWS
-				ROUND( SUM( IF( sal.`code` = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five
+				ROUND( SUM( IF( sal.code = '-КОРЕКЦИЯ5', sal.total_sum, 0 ) ), 2 ) AS correction_five
 			FROM
 				personnel per
 			LEFT JOIN
@@ -2007,7 +2202,7 @@ class DBSalary
 				(
 					sal.id_person = per.id
 					AND sal.to_arc = 0
-					AND sal .`month` = '{$sYearMonth}'
+					AND sal.month = '{$sYearMonth}'
 				)
 			LEFT JOIN
 				person_leaves per_lea ON ( per_lea.id = sal.id_application AND per_lea.to_arc = 0 )
@@ -2023,14 +2218,36 @@ class DBSalary
 				)
 		";
 		
+		//Filtering
+		if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
+		{
+			$sQueryTotal .= "
+				AND off.id_firm = {$aParams['nIDFirm']}
+			";
+		}
+		
+		if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
+		{
+			$sQueryTotal .= "
+				AND off.id = {$aParams['nIDOffice']}
+			";
+		}
+		
+		if( isset( $aParams['nIDObject'] ) && !empty( $aParams['nIDObject'] ) )
+		{
+			$sQueryTotal .= "
+				AND obj.id = {$aParams['nIDObject']}
+			";
+		}
+		//End Filtering
+		
 		$total = $this->selectOne( $sQueryTotal );
 		
-//		APILog::Log( 0, $total );
-		
-		
+		//Prepare Information
 		$nWorkdays = $oDBHolidays->getWorkdaysForMonth( $nYear, $nMonth );
 		
-		$nTotalVoucersSum = 0;
+		$sDate = LPAD( $nYear, 4, 0 ) . "-" . LPAD( $nMonth, 2, 0 ) . "-01";
+		//End Prepare Information
 		
 		foreach( $oResponse->oResult->aData as $nKey => &$aValue )
 		{
@@ -2046,105 +2263,88 @@ class DBSalary
 			$nEDay 		= isset( $aEFull[2] ) ? $aEFull[2] : 0;
 			
 			$nDaysSkipped = 0;
-			if( $nSMonth != $nMonth || $nSYear != $nYear )$nSDay = 0;
-			if( $nEMonth != $nMonth || $nEYear != $nYear )$nEDay = 0;
+			if( $nSMonth != $nMonth || $nSYear != $nYear ) $nSDay = 0;
+			if( $nEMonth != $nMonth || $nEYear != $nYear ) $nEDay = 0;
 			
-			//Adjust End Date
-			if( $nEDay != 0 )
-			{
-				$nEDay--;
-				if( $nEDay < 1 )
-				{
-					$nEMonth--;
-					if( $nEMonth < 1 ) { $nEYear--; $nEMonth = 12; }
-					$nEDay = date( "t", mktime( 0, 0, 0, $nEMonth, 1, $nEYear ) );
-				}
-			}
-			//End Adjust End Date
-			
-			$nDaysSkipped = ( $nWorkdays - $oDBHolidays->getWorkdaysForMonth( $nYear, $nMonth, $nSDay, $nEDay ) );
-			
+			//-- Set Dates In Value
 			if( $nSDay != 0 || $nEDay != 0 )
 			{
 				$aValue['from_to'] = ( $nSDay != 0 ? $aValue['format_date_from'] : "---" ) . " / " . ( $nEDay != 0 ? $aValue['format_vacate_date'] : "---" );
 			}
-			else
-			{
-				$aValue['from_to'] = "-";
-			}
+			else $aValue['from_to'] = "-";
+			//-- End Set Dates In Value
+			
+			$bIncludeLastDay = ( empty( $nEDay ) ? true : false );
+			$nDaysSkipped = ( $nWorkdays - $oDBHolidays->getWorkdaysForMonth( $nYear, $nMonth, $nSDay, $nEDay, $bIncludeLastDay ) );
 			//End Get Missed Days
+			
+			//Get Basic Salaries
+			$aBasicSalaryInfo = $oDBPersonContractBasicSalaries->getBasicSalaries( $aValue['id'], $sDate );
+			if( !empty( $aBasicSalaryInfo ) )
+			{
+				$aValue['min_cost'] = $aBasicSalaryInfo['min_cost'];
+				$aValue['work_hours'] = $aBasicSalaryInfo['work_hours'];
+			}
+			//End Get Basic Salaries
 			
 			$nVouchers = ( int ) $aValue['correction_five'];
 			
-//			APILog::Log( 0, "nVouchers=> ".$nVouchers );
+			//Get Hospitals
+			$aValue['hospital_count'] = $this->getPersonHospitalDays( $aValue['id'], $nYear, $nMonth );
+			//End Get Hospitals
 			
+			$aValue['clear_salary'] = ( $aValue['min_cost'] / $nWorkdays ) * ( $nWorkdays - ( int ) $aValue['leave_count'] - ( int ) $aValue['hospital_count'] - $nDaysSkipped );
+			if( $aValue['clear_salary'] < 0 ) $aValue['clear_salary'] = 0;
+			
+			$aValue['class_sum'] = ( $aValue['clear_salary'] * $aValue['class'] ) / 100;
+			
+			$aValue['workdays'] = $nWorkdays;
+			
+			$aValue['night_sum'] = $oDBObjectDuty->getPersonNightHoursSalary( $aValue['id'], $nYear, $nMonth, $aValue['min_cost'], $aValue['work_hours'], $nWorkdays );
+			$aValue['holiday_sum'] = $oDBObjectDuty->getPersonHolidayHoursSalary( $aValue['id'], $nYear, $nMonth, $aValue['min_cost'], $aValue['work_hours'], $nWorkdays );
+			
+			$aValue['overall'] = $aValue['clear_salary'] + $aValue['class_sum'] + $aValue['night_sum'] + $aValue['holiday_sum'];
+			
+			$aValue['person_salary'] = $this->getPersonEarningsFinal( ( $nYear . LPAD( $nMonth, 2, 0 ) ), $aValue['id'], ( empty( $nVouchers ) ? "" : "-КОРЕКЦИЯ5" ) );
+			
+			$aValue['remains'] = $aValue['person_salary'] - $aValue['overall'];
+			
+			$aValue['voucher_work_days'] = 60 / $nWorkdays * ( $nWorkdays - $aValue['leave_count'] - $aValue['hospital_count'] - $nDaysSkipped );
+			if( $aValue['voucher_work_days'] < 0 ) $aValue['voucher_work_days'] = 0;
+			
+			//Voucher Sum
+			$aValue['voucher_sum'] = 0;
+			if( $aValue['remains'] > 0 )
+			{
+				$aValue['voucher_sum'] = ( $aValue['remains'] < $aValue['voucher_work_days'] ) ? $aValue['remains'] : round( $aValue['voucher_work_days'], 0 );
+				//2010-04-07 : При остатъчна сума 5, ваучерите излизаха 0!
+				$aValue['voucher_sum'] = ( floor( $aValue['voucher_sum'] / 5 ) ) * 5;
+			}
+			elseif( $aValue['remains'] <= 0 && $aValue['voucher_work_days'] > 0 ) $aValue['voucher_sum'] = 5;
+			else $aValue['voucher_sum'] = 0;
+			
+			//-- Correct Voucher Sum
+			if( $aValue['hospital_count'] >= $aValue['workdays'] ) $aValue['voucher_sum'] = 0;
+			if( $aValue['leave_count'] >= $aValue['workdays'] ) $aValue['voucher_sum'] = 0;
+			//-- End Correct Voucher Sum
+			
+			if( $aValue['voucher_sum'] < 0 ) $aValue['voucher_sum'] = 0;
+			//End Voucher Sum
+			
+			//Availability Check
 			if( empty( $nVouchers ) )
 			{
-				//Get Hospitals
-				$aValue['hospital_count'] = $this->getPersonHospitalDays( $aValue['id'], $nYear, $nMonth );
-				//End Get Hospitals
-				
-				$aValue['clear_salary'] = ( $aValue['min_cost'] / $nWorkdays ) * ( $nWorkdays - ( int ) $aValue['leave_count'] - ( int ) $aValue['hospital_count'] - $nDaysSkipped );
-				if( $aValue['clear_salary'] < 0 )$aValue['clear_salary'] = 0;
-				
-				$aValue['class_sum'] = ( $aValue['clear_salary'] * $aValue['class'] ) / 100;
-				
-				$aValue['workdays'] = $nWorkdays;
-				
-				$aValue['night_sum'] = $oDBObjectDuty->getPersonNightHoursSalary( $aValue['id'], $nYear, $nMonth, $aValue['min_cost'], $nWorkdays );
-				$aValue['holiday_sum'] = $oDBObjectDuty->getPersonHolidayHoursSalary( $aValue['id'], $nYear, $nMonth, $aValue['min_cost'], $nWorkdays );
-				
-				$aValue['overall'] = $aValue['clear_salary'] + $aValue['class_sum'] + $aValue['night_sum'] + $aValue['holiday_sum'];
-				
-				$aValue['person_salary'] = $this->getPersonEarningsFinal( ( $nYear . LPAD( $nMonth, 2, 0 ) ), $aValue['id'] );
-				
-				$aValue['remains'] = $aValue['person_salary'] - $aValue['overall'];
-				
-				$aValue['voucher_work_days'] = 60 / $nWorkdays * ( $nWorkdays - $aValue['leave_count'] - $aValue['hospital_count'] - $nDaysSkipped );
-				if( $aValue['voucher_work_days'] < 0 ) $aValue['voucher_work_days'] = 0;
-				
-				//Voucher Sum
-				$aValue['voucher_sum'] = 0;
-				if( $aValue['remains'] > 0 )
-				{
-					$aValue['voucher_sum'] = ( $aValue['remains'] < $aValue['voucher_work_days'] ) ? $aValue['remains'] : $aValue['voucher_work_days'];
-					$aValue['voucher_sum'] -= ( $aValue['voucher_sum'] % 5 );
-				}
-				elseif( $aValue['remains'] <= 0 && $aValue['voucher_work_days'] > 0 ) $aValue['voucher_sum'] = 5;
-				else $aValue['voucher_sum'] = 0;
-				
-				//-- Correct Voucher Sum
-				if( $aValue['hospital_count'] >= $aValue['workdays'] ) $aValue['voucher_sum'] = 0;
-				if( $aValue['leave_count'] >= $aValue['workdays'] ) $aValue['voucher_sum'] = 0;
-				//-- End Correct Voucher Sum
-				
-				if( $aValue['voucher_sum'] < 0 ) $aValue['voucher_sum'] = 0;
-				
-				$aValue['voucher_sum'] = ( int ) $aValue['voucher_sum'];
-				//End Voucher Sum
-				
 				$aValue['is_available'] = 1;
 			}
 			else
 			{
-				$aValue['hospital_count']		= "---";
-				$aValue['clear_salary'] 		= "---";
-				$aValue['class_sum'] 			= "---";
-				$aValue['workdays'] 			= "---";
-				$aValue['night_sum'] 			= "---";
-				$aValue['holiday_sum'] 			= "---";
-				$aValue['overall'] 				= "---";
-				$aValue['person_salary'] 		= "---";
-				$aValue['remains'] 				= "---";
-				$aValue['voucher_work_days'] 	= "---";
-				$aValue['voucher_sum'] 			= $aValue['correction_five'];
+				$aValue['voucher_sum'] = $aValue['correction_five'];
 				
 				$oResponse->setRowAttributes( $aValue['id'], array( "style" => "font-style: italic; color: #969696;" ) );
 				
 				$aValue['is_available'] = 0;
-				
-//				$nTotalVoucersSum += $aValue['voucher_sum'];
 			}
+			//End Availability Check
 			
 			$aValue['v_sum'] = $aValue['voucher_sum'];
 			
@@ -2160,41 +2360,72 @@ class DBSalary
 		}
 		
 		$oResponse->addTotal( "voucher_sum", $total );
-
-		
 		
 		//Checkboxes
-		$oResponse->setField( 'chk', '', NULL, NULL, NULL, NULL, array( 'type' => 'checkbox' ) );
-		$oResponse->setFieldData( 'chk', 'input', array( 'type' => 'checkbox', 'exception' => 'false' ) );
-		$oResponse->setFieldAttributes( 'chk', array( 'style' => 'width: 25px;' ) );
-		
-		$oResponse->setFormElement( 'form1', 'sel', array(), '' );
-		$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '1' ), "--- Маркирай всички ---" );
-		$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '2' ), "--- Отмаркирай всички ---" );
-		$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '0' ), "------");
-		$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '3' ), "--- Прехвърли ---" );
+		if( !( isset( $aParams['api_action'] ) && substr( $aParams['api_action'], 0, 9 ) == "export_to" ) )
+		{
+			$oResponse->setField( 'chk', '', NULL, NULL, NULL, NULL, array( 'type' => 'checkbox' ) );
+			$oResponse->setFieldData( 'chk', 'input', array( 'type' => 'checkbox', 'exception' => 'false' ) );
+			$oResponse->setFieldAttributes( 'chk', array( 'style' => 'width: 25px;' ) );
+			
+			$oResponse->setFormElement( 'form1', 'sel', array(), '' );
+			$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '1' ), "--- Маркирай всички ---" );
+			$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '2' ), "--- Отмаркирай всички ---" );
+			$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '0' ), "------");
+			$oResponse->setFormElementChild( 'form1', 'sel', array( 'value' => '3' ), "--- Прехвърли ---" );
+		}
 		//End Checkboxes
 		
-		$oResponse->setField( "person_name", 		"Служител", 			"Сортирай по Служител", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_STRING ) );
-		$oResponse->setField( "workdays", 			"Работни Дни",			"Сортирай по Работни Дни", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
-		$oResponse->setField( "min_cost", 			"Основна по ТД",		"Сортирай по Основна по ТД", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "class", 				"Клас",					"Сортирай по Клас", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_PERCENT ) );
-		$oResponse->setField( "leave_count", 		"Дни Отпуск",			"Сортирай по Дни Отпуск", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
-		$oResponse->setField( "hospital_count", 	"Дни Болничен",			"Сортирай по Дни Болничен", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
-		$oResponse->setField( "from_to", 			"Назначен / Напуснал",	"Сортирай по Дни Назначен / Напуснал", 	NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
-		$oResponse->setField( "clear_salary", 		"Чиста Заплата",		"Сортирай по Чиста Заплата", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "class_sum", 			"Клас Сума",			"Сортирай по Клас Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "night_sum", 			"Нощен Труд Сума",		"Сортирай по Нощен Труд Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "holiday_sum", 		"Празничен Труд Сума",	"Сортирай по Празничен Труд Сума", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "overall", 			"Общо",					"Сортирай по Обща Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "person_salary", 		"Заработка",			"Сортирай по Заработка", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "remains", 			"Остатък",				"Сортирай по Остатък", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "voucher_work_days", 	"Ваучер Работни Дни",	"Сортирай по Ваучер Работни Дни", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
-		$oResponse->setField( "voucher_sum", 		"Ваучери Сума",			"Сортирай по Ваучери Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
-		$oResponse->setField( "v_sum",				"",						"",										NULL, NULL, NULL, array( "type" => "hidden", "style" => "visibility: hidden;" ) );
-		$oResponse->setField( "is_available",		"",						"",										NULL, NULL, NULL, array( "type" => "hidden", "style" => "visibility: hidden;" ) );
+		if( isset( $aParams['nIDScheme'] ) && !empty( $aParams['nIDScheme'] ) )
+		{
+			$aFields = $oDBFiltersVisibleFields->getFieldsByIDFilter( $aParams['nIDScheme'] );
+			
+			foreach( $aFields as $nKey => $sField )
+			{
+				if( $sField == "person_name" ) 			$oResponse->setField( "person_name", 		"Служител", 			"Сортирай по Служител", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_STRING ) );
+				if( $sField == "workdays" ) 			$oResponse->setField( "workdays", 			"Работни Дни",			"Сортирай по Работни Дни", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
+				if( $sField == "min_cost" ) 			$oResponse->setField( "min_cost", 			"Основна по ТД",		"Сортирай по Основна по ТД", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "class" ) 				$oResponse->setField( "class", 				"Клас",					"Сортирай по Клас", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_PERCENT ) );
+				if( $sField == "leave_count" ) 			$oResponse->setField( "leave_count", 		"Дни Отпуск",			"Сортирай по Дни Отпуск", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+				if( $sField == "hospital_count" ) 		$oResponse->setField( "hospital_count", 	"Дни Болничен",			"Сортирай по Дни Болничен", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+				if( $sField == "from_to" ) 				$oResponse->setField( "from_to", 			"Назначен / Напуснал",	"Сортирай по Дни Назначен / Напуснал", 	NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
+				if( $sField == "clear_salary" ) 		$oResponse->setField( "clear_salary", 		"Чиста Заплата",		"Сортирай по Чиста Заплата", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "class_sum" ) 			$oResponse->setField( "class_sum", 			"Клас Сума",			"Сортирай по Клас Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "night_sum" ) 			$oResponse->setField( "night_sum", 			"Нощен Труд Сума",		"Сортирай по Нощен Труд Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "holiday_sum" ) 			$oResponse->setField( "holiday_sum", 		"Празничен Труд Сума",	"Сортирай по Празничен Труд Сума", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "overall" ) 				$oResponse->setField( "overall", 			"Общо",					"Сортирай по Обща Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "person_salary" ) 		$oResponse->setField( "person_salary", 		"Заработка",			"Сортирай по Заработка", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "remains" ) 				$oResponse->setField( "remains", 			"Остатък",				"Сортирай по Остатък", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+				if( $sField == "voucher_work_days" ) 	$oResponse->setField( "voucher_work_days", 	"Ваучер Работни Дни",	"Сортирай по Ваучер Работни Дни", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+				if( $sField == "voucher_sum" ) 			$oResponse->setField( "voucher_sum", 		"Ваучери Сума",			"Сортирай по Ваучери Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			}
+		}
+		else
+		{
+			$oResponse->setField( "person_name", 		"Служител", 			"Сортирай по Служител", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_STRING ) );
+			$oResponse->setField( "workdays", 			"Работни Дни",			"Сортирай по Работни Дни", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
+			$oResponse->setField( "min_cost", 			"Основна по ТД",		"Сортирай по Основна по ТД", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "class", 				"Клас",					"Сортирай по Клас", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_PERCENT ) );
+			$oResponse->setField( "leave_count", 		"Дни Отпуск",			"Сортирай по Дни Отпуск", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+			$oResponse->setField( "hospital_count", 	"Дни Болничен",			"Сортирай по Дни Болничен", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+			$oResponse->setField( "from_to", 			"Назначен / Напуснал",	"Сортирай по Дни Назначен / Напуснал", 	NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CENTER ) );
+			$oResponse->setField( "clear_salary", 		"Чиста Заплата",		"Сортирай по Чиста Заплата", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "class_sum", 			"Клас Сума",			"Сортирай по Клас Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "night_sum", 			"Нощен Труд Сума",		"Сортирай по Нощен Труд Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "holiday_sum", 		"Празничен Труд Сума",	"Сортирай по Празничен Труд Сума", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "overall", 			"Общо",					"Сортирай по Обща Сума", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "person_salary", 		"Заработка",			"Сортирай по Заработка", 				NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "remains", 			"Остатък",				"Сортирай по Остатък", 					NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+			$oResponse->setField( "voucher_work_days", 	"Ваучер Работни Дни",	"Сортирай по Ваучер Работни Дни", 		NULL, NULL, NULL, array( "DATA_FORMAT" => DF_NUMBER ) );
+			$oResponse->setField( "voucher_sum", 		"Ваучери Сума",			"Сортирай по Ваучери Сума", 			NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
+		}
 		
-		$oResponse->setField( "to_salary",			"",						"" );
+		if( !( isset( $aParams['api_action'] ) && substr( $aParams['api_action'], 0, 9 ) == "export_to" ) )
+		{
+			$oResponse->setField( "v_sum",			"",	"",	NULL, NULL, NULL, array( "type" => "hidden", "style" => "visibility: hidden;" ) );
+			$oResponse->setField( "is_available",	"",	"",	NULL, NULL, NULL, array( "type" => "hidden", "style" => "visibility: hidden;" ) );
+			$oResponse->setField( "to_salary",		"",	"" );
+		}
 		
 		$oResponse->setFieldLink( "person_name", "openPerson" );
 	}
@@ -2216,8 +2447,8 @@ class DBSalary
 		$oDBPersonnel = new DBPersonnel();
 		
 		//Params
-		$nYear 	= empty( $nYear ) 	? data( "Y" ) : $nYear;
-		$nMonth = empty( $nMonth ) 	? data( "m" ) : $nMonth;
+		$nYear 	= empty( $nYear ) 	? date( "Y" ) : $nYear;
+		$nMonth = empty( $nMonth ) 	? date( "m" ) : $nMonth;
 		
 		$aIDOffice = $oDBPersonnel->getPersonnelOffice( $nIDPerson );
 		$nIDOffice = isset( $aIDOffice['id_office'] ) ? $aIDOffice['id_office'] : 0;
@@ -2246,6 +2477,48 @@ class DBSalary
 		
 		return DBAPI_ERR_SUCCESS;
 	}
+
+    public function getCreateSalaryByObject ($nIDObj) {
+        global $db_personnel, $db_name_sod, $db_name_personnel;
+        if (!empty($nIDObj) && is_numeric($nIDObj)) {
+            $sQuery = "
+            SELECT
+                sl.sum as sum
+            FROM {$db_name_personnel}.salary sl
+            LEFT JOIN {$db_name_sod}.tech_limit_cards tlc ON tlc.id = sl.id_limit_card
+            WHERE 1
+                AND sl.id_limit_card = {$nIDObj}
+                AND (tlc.`type` = 'create' OR tlc.id_tech_timing = 1)
+            ";
+            $data = $this->selectOnce($sQuery);
+            if ($data['sum'] != NULL && is_numeric($data['sum']))
+                return $data['sum'];
+            else
+                return false;
+        }
+        return flase;
+    }
+
+    public function getSalaryByLimitCard ($nIDLimitCard) {
+        global $db_personnel, $db_name_sod, $db_name_personnel;
+
+        if (empty($nIDLimitCard) && !is_numeric($nIDLimitCard)) {
+            return false;
+        }
+
+        $sQuery = "
+        SELECT
+            *
+        FROM {$db_name_personnel}.salary AS sl
+        LEFT JOIN {$db_name_sod}.tech_limit_cards AS tlc ON  tlc.id = sl.id_limit_card
+        WHERE sl.id_limit_card = {$nIDLimitCard}
+        AND sl.sum > 0
+        AND sl.to_arc=0        
+        ";
+
+        return $this->select($sQuery);
+
+    }
 	
 	public function getPersonHospitalDays( $nIDPerson, $nYear, $nMonth )
 	{
@@ -2254,10 +2527,9 @@ class DBSalary
 		
 		$oDBHolidays = new DBHolidays();
 		
-		$sYearMonth = $nYear . "-" . LPAD( $nMonth, 2, 0 );
-		
-		$nDaysInMonth = date( "t", mktime( 0, 0, 0, $nMonth, 1, $nYear ) );
-		
+		$sYearMonth 	= $nYear."-".LPAD( $nMonth, 2, 0 );
+		$sYearMonth2 	= $nYear.LPAD($nMonth, 2, 0);
+		$nDaysInMonth 	= date( "t", mktime( 0, 0, 0, $nMonth, 1, $nYear ) );
 		$sBeginMonth 	= $nYear . "-" . LPAD( $nMonth, 2, 0 ) . "-01";
 		$sEndMonth 		= $nYear . "-" . LPAD( $nMonth, 2, 0 ) . "-" . LPAD( $nDaysInMonth, 2, 0 );
 		
@@ -2271,14 +2543,15 @@ class DBSalary
 				person_leaves per_lea ON per_lea.id = sal.id_application
 			WHERE
 				sal.to_arc = 0
+				#AND sal.month = '{$sYearMonth2}'
 				AND per_lea.to_arc = 0
 				AND per_lea.type = 'hospital'
 				AND sal.id_person = {$nIDPerson}
-				AND ( '$sYearMonth' >= SUBSTR( per_lea.leave_from, 1, 7 ) AND '$sYearMonth' <= SUBSTR( per_lea.leave_to, 1, 7 ) )
+				AND ( '{$sYearMonth}' >= DATE_FORMAT( per_lea.leave_from, '%Y-%m' ) AND '{$sYearMonth}' <= DATE_FORMAT( per_lea.leave_to, '%Y-%m' ) )
 		";
 		
 		$aData = $this->select( $sQuery );
-		
+
 		$nSum = 0;
 		foreach( $aData as $nKey => $aValue )
 		{
@@ -2287,6 +2560,613 @@ class DBSalary
 		
 		return $nSum;
 	}
+	
+	public function setTechPersonnalRoads($aData) {
+		global $db_sod, $db_name_sod;
+
+        //добавено заради закриването на пътни листи от теленет-а
+        if(isset($aData['id_person'])) {
+            $nIDPerson = $aData['id_person'];
+        } else {
+            $nIDPerson = isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] : 0;
+        }
+
+        if(isset($aData['id_office'])) {
+            $nIDOffice = $aData['id_office'];
+        } else {
+            $nIDOffice = isset($_SESSION['userdata']['id_office']) ? $_SESSION['userdata']['id_office'] 	: 0;
+        }
+
+		$nIDRoadList	= isset($aData['id'])						? $aData['id']							: 0;
+		$km_in_city		= isset($aData['km_in_city'])				? $aData['km_in_city']					: 0;
+		$start_date		= isset($aData['start_date'])				? date("d.m.Y", $aData['start_date'])	: date("d.m.Y");
+		
+		$oDBSod 		= new DBBase2($db_sod, 	'tech_register');
+		
+		if ( empty($nIDPerson) || empty($nIDRoadList) ) {
+			return false;
+		}
+
+        $sQuery = "SELECT SUM(IF(current_status = 'cancel', IF(id_tech_cancel_reason > 0, IF(start_distance - personnel_distance > 0, start_distance - personnel_distance, start_distance), 0), IF(start_distance - personnel_distance > 0, start_distance - personnel_distance, start_distance))) FROM {$db_name_sod}.tech_register WHERE id_road_list = {$nIDRoadList} AND start_distance < 1000000 ";  //AND current_status != 'cancel'
+		//$sQuery = "SELECT SUM(reaction_distance) FROM {$db_name_sod}.tech_register WHERE id_road_list = {$nIDRoadList}";
+		$nReact = $oDBSod->selectOne($sQuery);
+
+        if ( abs($km_in_city - ($nReact / 1000)) <= 4 ) {
+            $nPev = 0;
+        } else {
+		    $nPev	= ($km_in_city - ($nReact / 1000)) * 0.30 * -1;
+        }
+
+        if ( $nPev < 0 ) {
+            $aPay					= array();
+            $aPay['id'] 			= 0;
+            $aPay['id_person'] 		= $nIDPerson;
+            $aPay['id_office'] 		= $nIDOffice;
+            $aPay['month'] 			= date("Ym");
+            $aPay['code'] 			= '+ТЕХН_ЛК';
+            $aPay['is_earning'] 	= 1;
+            $aPay['sum'] 			= $nPev;
+            $aPay['description'] 	= "По пътен лист №: {$nIDRoadList} от дата {$start_date}";
+            $aPay['count'] 			= 1;
+            $aPay['total_sum'] 		= $nPev;
+            $aPay['id_road_list'] 	= $nIDRoadList;
+
+            $this->update($aPay);
+        }
+		
+		return $nPev;
+	}
+	
+	public function setTechPersonnalFuels($aDataFuel) {
+		$nIDPerson		= isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] 	: 0;
+		$nIDOffice		= isset($_SESSION['userdata']['id_office']) ? $_SESSION['userdata']['id_office'] 	: 0;
+		
+		$nIDFuel		= isset($aDataFuel['fuel_list'])		? $aDataFuel['fuel_list']					: 0;
+		$sumTotal		= isset($aDataFuel['s_sum'])			? $aDataFuel['s_sum']						: 0;
+
+        // Изключено от 26.06.2014
+        $sumTotal       = 0;
+		
+		if ( empty($nIDFuel) || empty($sumTotal) ) {
+			return false;
+		}
+
+        if ( $sumTotal < 0 ) {
+            $aPay					= array();
+            $aPay['id'] 			= 0;
+            $aPay['id_person'] 		= $nIDPerson;
+            $aPay['id_office'] 		= $nIDOffice;
+            $aPay['month'] 			= date("Ym");
+            $aPay['code'] 			= '+ТЕХН_ЛК';
+            $aPay['is_earning'] 	= 1;
+            $aPay['sum'] 			= $sumTotal;
+            $aPay['description'] 	= "По горивен лист №: {$nIDFuel} от дата ".date("d.m.Y");
+            $aPay['count'] 			= 1;
+            $aPay['total_sum'] 		= $sumTotal;
+            $aPay['id_road_list'] 	= 0;
+
+            $this->update($aPay);
+        }
+		
+		return $sumTotal;
+	}
+
+
+	public function setAdminPersonnalRoads($aData) {
+		global $db_sod, $db_name_sod;
+
+        //добавено заради закриването на пътни листи от теленет-а
+        if(isset($aData['id_person'])) {
+            $nIDPerson = $aData['id_person'];
+        } else {
+            $nIDPerson = isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] : 0;
+        }
+
+        if(isset($aData['id_office'])) {
+            $nIDOffice = $aData['id_office'];
+        } else {
+            $nIDOffice = isset($_SESSION['userdata']['id_office']) ? $_SESSION['userdata']['id_office'] 	: 0;
+        }
+
+		$nIDRoadList	= isset($aData['id'])						? $aData['id']							: 0;
+		$km_in_city		= isset($aData['km_in_city'])				? $aData['km_in_city']					: 0;
+		$start_date		= isset($aData['start_date'])				? date("d.m.Y", $aData['start_date'])	: date("d.m.Y");
+
+		$oDBSod 		= new DBBase2($db_sod, 	'admin_register');
+
+		if ( empty($nIDPerson) || empty($nIDRoadList) ) {
+			return false;
+		}
+        //type_move = 'car' за да взема само движенията с кола
+		$sQuery = "SELECT SUM(start_distance) FROM {$db_name_sod}.admin_register WHERE id_road_list = {$nIDRoadList} AND type_move = 'car' AND start_distance < 1000000 AND current_status != 'cancel'";
+		$nReact = $oDBSod->selectOne($sQuery);
+
+        if ( abs($km_in_city - ($nReact / 1000)) <= 4 ) {
+            $nPev = 0;
+        } else {
+            $nPev	= ($km_in_city - ($nReact / 1000)) * 0.30 * -1;
+        }
+
+		//$nPev	= ($km_in_city - ($nReact / 1000)) * 0.30 * -1;
+
+        if ( $nPev < 0 ) {
+            $aPay					= array();
+            $aPay['id'] 			= 0;
+            $aPay['id_person'] 		= $nIDPerson;
+            $aPay['id_office'] 		= $nIDOffice;
+            $aPay['month'] 			= date("Ym");
+            $aPay['code'] 			= '+АУТО';
+            $aPay['is_earning'] 	= 1;
+            $aPay['sum'] 			= $nPev;
+            $aPay['description'] 	= "По пътен лист №: {$nIDRoadList} от дата {$start_date}";
+            $aPay['count'] 			= 1;
+            $aPay['total_sum'] 		= $nPev;
+            $aPay['id_road_list'] 	= $nIDRoadList;
+
+            $this->update($aPay);
+        }
+
+		return $nPev;
+	}
+
+
+	public function setAdminPersonnalFuels($aDataFuel) {
+		$nIDPerson		= isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] 	: 0;
+		$nIDOffice		= isset($_SESSION['userdata']['id_office']) ? $_SESSION['userdata']['id_office'] 	: 0;
+
+		$nIDFuel		= isset($aDataFuel['fuel_list'])		? $aDataFuel['fuel_list']					: 0;
+		$sumTotal		= isset($aDataFuel['s_sum'])			? $aDataFuel['s_sum']						: 0;
+
+        // Изключено от 26.06.2014
+        $sumTotal       = 0;
+
+		if ( empty($nIDFuel) || empty($sumTotal) ) {
+			return false;
+		}
+
+        if ( $sumTotal < 0 ) {
+            $aPay					= array();
+            $aPay['id'] 			= 0;
+            $aPay['id_person'] 		= $nIDPerson;
+            $aPay['id_office'] 		= $nIDOffice;
+            $aPay['month'] 			= date("Ym");
+            $aPay['code'] 			= '+АУТО';
+            $aPay['is_earning'] 	= 1;
+            $aPay['sum'] 			= $sumTotal;
+            $aPay['description'] 	= "По горивен лист №: {$nIDFuel} от дата ".date("d.m.Y");
+            $aPay['count'] 			= 1;
+            $aPay['total_sum'] 		= $sumTotal;
+            $aPay['id_road_list'] 	= 0;
+
+            $this->update($aPay);
+        }
+
+		return $sumTotal;
+	}
+
+    public function deleteRowByIDRoadList($nIDRoadList) {
+
+        if(empty($nIDRoadList)) {
+            return false;
+        }
+
+        $nIDPerson = isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] : 0;
+
+        $sQuery = "UPDATE salary
+                    SET
+                    to_arc = 1,
+                    updated_user = {$nIDPerson},
+                    updated_time = NOW()
+                    WHERE
+                    id_road_list = {$nIDRoadList}";
+
+        $this->select($sQuery);
+    }
+
+
+    public function getReportLeaveNew( DBResponse $oResponse  )
+    {
+        global $db_personnel, $db_name_sod;
+
+
+        $aParams = Params::getAll();
+
+        $oDBHolidays = new DBHolidays();
+
+        $oDBPersonLeaves = new DBPersonLeaves();
+        $oDBFiltersVisibleFields = new DBFiltersVisibleFields();
+
+        $nIDFilter = isset( $aParams['nIDFilter'] ) ? $aParams['nIDFilter'] : 0;
+        $nIDLoggedPerson = isset( $_SESSION['userdata']['id_person'] ) ? $_SESSION['userdata']['id_person'] : 0;
+
+        $aFilterFields = $oDBFiltersVisibleFields->getFieldsByIDFilter( $nIDFilter );
+
+        APILog::Log('22',$aFilterFields);
+        APILog::Log('iddddd',$nIDFilter);
+
+        $sQuery = "
+			SELECT SQL_CALC_FOUND_ROWS
+				CONCAT_WS('@',per_lea.id,per.id,sal.id) as id,
+				per_lea.id AS id_leave,
+				CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS person_name,
+				per.id AS id_person,
+				fir.name AS firm,
+				off.name AS office,
+				CASE per_lea.leave_types
+					WHEN 'due' THEN 'Платен'
+					WHEN 'unpaid'  THEN 'Неплатен'
+					WHEN 'student'  THEN 'Пл. Полагаем'
+					WHEN 'quittance'  THEN 'Обезщетение'
+					WHEN 'other'  THEN 'Друг'
+				END as leave_type,
+				CONCAT(
+					per_lea.application_days,
+					IF
+					(
+						per_lea.leave_from != '0000-00-00 00:00:00',
+						CONCAT( ' от ', DATE_FORMAT( per_lea.res_leave_from, '%d.%m.%Y' ) ),
+						''
+					)
+				) AS date_from,
+				IF
+				(
+					sal.code = sal_ear_typ_hos.code,
+					ROUND( sal.count, 0 ), #-1  Pavel
+					ROUND( sal.count, 0 )
+				) AS res_application_days,
+				IF( per_cont.fix_cost != 0, 1, 0 ) AS state_salary,
+				
+				IF
+				(
+					per_lea.leave_types = 'unpaid',
+					'Неплатен',
+					IF
+					(
+						(
+							SELECT
+								id
+							FROM
+								salary_unstored sal_uns
+							WHERE
+								#sal_uns.id_person = {$nIDLoggedPerson} AND
+								to_arc = 0
+								AND sal_uns.id_salary_row = sal.id
+							ORDER BY
+								id DESC
+							LIMIT 1
+						) IS NULL,
+						sal.total_sum,
+						(
+							SELECT
+								total_sum
+							FROM
+								salary_unstored sal_uns
+							WHERE
+								#sal_uns.id_person = {$nIDLoggedPerson} AND
+								to_arc = 0
+								AND sal_uns.id_salary_row = sal.id
+							ORDER BY
+								id DESC
+							LIMIT 1
+						)
+					)
+				) AS total_sum,
+		";
+
+        if( isset( $aParams['nMonth'] ) && !empty( $aParams['nMonth'] ) )
+        {
+            $sMonth = substr( $aParams['nMonth'], 0, 4 ) . "-" . substr( $aParams['nMonth'], 4, 2 );
+            $sQuery .= " IF( per_lea.leave_types = 'unpaid', 0, 1 ) AS allow_edit, ";
+        }
+        else
+        {
+            $sQuery .= "
+				IF( per_lea.leave_types = 'unpaid', 0, 1 ) AS allow_edit,
+			";
+        }
+
+        $sQuery .= "
+				per_lea.leave_num AS leave_num,
+				DATE_FORMAT( per_lea.date, '%d.%m.%Y' ) AS date,
+				per_lea.date AS date_,
+				pos_nc.name AS person_position,
+				obj.name AS object,
+				IF
+				(
+					per_lea.leave_from != '0000-00-00 00:00:00',
+					DATE_FORMAT( per_lea.leave_from, '%Y-%m-%d' ),
+					''
+				) AS leave_from,
+				per_lea.leave_from AS leave_from_,
+				IF
+				(
+					per_lea.leave_to != '0000-00-00 00:00:00',
+					DATE_FORMAT( per_lea.leave_to, '%Y-%m-%d' ),
+					''
+				) AS leave_to,
+				per_lea.leave_to AS leave_to_,
+				cod_lea.clause_paragraph AS code_leave_name,
+				CONCAT_WS( ' ', per_cre.fname, per_cre.mname, per_cre.lname ) AS created_user,
+				IF( per_lea.is_confirm, 'Потвърден', 'Непотвърден' ) AS status,
+				IF
+				(
+					per_lea.confirm_time != '0000-00-00 00:00:00',
+					DATE_FORMAT( per_lea.confirm_time, '%d.%m.%Y' ),
+					''
+				) AS time_confirm,
+				per_lea.confirm_time AS time_confirm_,
+				IF
+				(
+					per_lea.res_leave_from != '0000-00-00 00:00:00',
+					DATE_FORMAT( per_lea.res_leave_from, '%d.%m.%Y' ),
+					''
+				) AS res_leave_from,
+				per_lea.res_leave_from AS res_leave_from_,
+				IF
+				(
+					per_lea.res_leave_to != '0000-00-00 00:00:00',
+					DATE_FORMAT( per_lea.res_leave_to, '%d.%m.%Y' ),
+					''
+				) AS res_leave_to,
+				per_lea.res_leave_to AS res_leave_to_,
+				per_lea.application_days_offer AS days_count,
+				IF
+				(
+					per_lea.confirm_user,
+					CONCAT_WS( ' ', per_con.fname, per_con.mname, per_con.lname ),
+					''
+				) AS person_confirm,
+				
+				IF
+				(
+					(
+						SELECT
+							id
+						FROM
+							salary_unstored sal_uns
+						WHERE
+							#sal_uns.id_person = {$nIDLoggedPerson} AND
+							sal_uns.id_salary_row = sal.id
+						ORDER BY
+							id DESC
+						LIMIT 1
+					) IS NULL,
+					0,
+					1
+				) AS sum_editted
+			FROM
+				salary sal
+			LEFT JOIN
+				person_leaves per_lea ON per_lea.id = sal.id_application
+			LEFT JOIN
+				code_leave cod_lea ON cod_lea.id = per_lea.id_code_leave
+			LEFT JOIN
+				personnel per ON per.id = sal.id_person
+			LEFT JOIN
+				positions_nc pos_nc ON pos_nc.id = per.id_position_nc
+			LEFT JOIN
+				person_contract per_cont ON ( per_cont.id_person = per.id AND per_cont.to_arc = 0 )
+			LEFT JOIN
+				personnel per_cre ON per_cre.id = per_lea.created_user
+			LEFT JOIN
+				personnel per_con ON per_con.id = per_lea.confirm_user
+			LEFT JOIN
+				{$db_name_sod}.offices off ON off.id = per.id_office
+			LEFT JOIN
+				{$db_name_sod}.firms fir ON fir.id = off.id_firm
+			LEFT JOIN
+				{$db_name_sod}.objects obj ON obj.id = per.id_region_object
+			LEFT JOIN
+				salary_earning_types sal_ear_typ_due ON sal_ear_typ_due.leave_type = 'due'
+			LEFT JOIN
+				salary_earning_types sal_ear_typ_unp ON sal_ear_typ_unp.leave_type = 'unpaid'
+			LEFT JOIN
+				salary_earning_types sal_ear_typ_hos ON sal_ear_typ_hos.is_hospital = 1
+			LEFT JOIN
+				salary_earning_types sal_ear_typ_com ON sal_ear_typ_com.is_compensation = 1
+			WHERE
+				sal.to_arc = 0
+				AND sal.id_application != 0
+				AND sal.is_earning = 1
+		";
+
+//        $aParams['nMode'] = 0;
+
+        if( isset( $aParams['nMode'] ) )
+        {
+            switch( $aParams['nMode'] )
+            {
+                case 0:
+                    $sQuery .= "
+						AND ( sal.code = sal_ear_typ_due.code OR sal.code = sal_ear_typ_unp.code )
+					";
+                    break;
+
+                case 1:
+                    $sQuery .= "
+						AND sal.code = sal_ear_typ_hos.code
+					";
+                    break;
+
+                case 2:
+                    $sQuery .= "
+						AND sal.code = sal_ear_typ_com.code
+					";
+                    break;
+            }
+        }
+
+        if( isset( $aParams['nIDFirm'] ) && !empty( $aParams['nIDFirm'] ) )
+        {
+            $sQuery .= "
+				AND fir.id = {$aParams['nIDFirm']}
+			";
+        }
+        if( isset( $aParams['nIDOffice'] ) && !empty( $aParams['nIDOffice'] ) )
+        {
+            $sQuery .= "
+				AND off.id = {$aParams['nIDOffice']}
+			";
+        }
+        if( isset( $aParams['sPersonName'] ) && !empty( $aParams['sPersonName'] ) )
+        {
+            $sQuery .= "
+				AND CONCAT_WS( ' ', per.fname, per.mname, per.lname ) LIKE '%{$aParams['sPersonName']}%'
+			";
+        }
+
+        //Month Filter
+        if( isset( $aParams['nMonth'] ) && !empty( $aParams['nMonth'] ) )
+        {
+            $sMonth = substr( $aParams['nMonth'], 0, 4 ) . "-" . substr( $aParams['nMonth'], 4, 2 );
+            $sQuery .= " AND sal.month = {$aParams['nMonth']} ";
+        }
+        else
+        {
+            $sMonth = date( "Y-m" );
+        }
+        //End Month Filter
+
+        if( isset( $aParams['nStateSalary'] ) && !empty( $aParams['nStateSalary'] ) )
+        {
+            $sQuery .= "
+				AND IF( per_cont.fix_cost != 0, 1, 0 )
+			";
+        }
+        if( isset( $aParams['nLeaveNum'] ) && !empty( $aParams['nLeaveNum'] ) )
+        {
+            $sQuery .= "
+				AND per_lea.leave_num = {$aParams['nLeaveNum']}
+			";
+        }
+
+        $this->getResult($sQuery,'per_lea.leave_num',DBAPI_SORT_ASC,$oResponse,NULL,array(),1);
+
+
+//        APILog::Log('22',$aFilterFields);
+
+
+        if(empty($nIDFilter)) {
+            $oResponse->setField('leave_num', 'номер', 'сортирай по номер');
+            $oResponse->setField('code_leave_name', 'Чл. от КТ', 'сортирай по Чл. от КТ');
+//        $oResponse->setField('date', 'дата', 'сортирай по дата',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('person_name', 'Служител', 'сортирай по Служител');
+            $oResponse->setField('person_position', 'Длъжност', 'сортирай по Длъжност');
+            $oResponse->setField('firm', 'Фирма', 'сортирай по Фирма');
+            $oResponse->setField('office', 'Регион', 'сортирай по Регион');
+            $oResponse->setField('object', 'Обект', 'сортирай по Обект');
+            $oResponse->setField('leave_type', 'Тип', 'сортирай по Тип');
+            $oResponse->setField('leave_from', 'Дата От', 'сортирай по Дата От',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('leave_to', 'Дата До', 'сортирай по Дата До',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+//        $oResponse->setField('application_days', 'Дни', 'сортирай по Дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+
+            $oResponse->setField('created_user', 'Въвел', 'сортирай по Въвел');
+            $oResponse->setField('status', 'Статус', 'сортирай по Статус');
+//        $oResponse->setField('res_leave_from', 'Дата от', 'сортирай по Дата от',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+//        $oResponse->setField('res_leave_to', 'Дата до', 'сортирай по Дата до',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+            $oResponse->setField('res_application_days', 'Разрешени дни', 'сортирай по Разрешени дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+            $oResponse->setField('person_confirm', 'Потвърдил', 'сортирай по Потвърдил');
+
+            $oResponse->setField( 'total_sum', 'Сума', '' );
+            $oResponse->setFieldData( 'total_sum', 'input', array( 'type' => 'text' ,  'exception' => 'false' , 'onChange' => 'onExitInput(event)') );
+
+
+
+            APILog::Log('444444',$nIDFilter);
+
+        }
+        else if (!empty($nIDFilter) && !empty($aFilterFields))
+        {
+
+            if( isset( $aFilterFields) && in_array('leave_num' , $aFilterFields ) )
+                $oResponse->setField('leave_num', 'номер', 'сортирай по номер');
+
+            if( isset( $aFilterFields ) && !in_array( code_leave_name,$aFilterFields ) )
+                $oResponse->setField('code_leave_name', 'Чл. от КТ', 'сортирай по Чл. от КТ');
+
+            if( isset( $aFilterFields ) && in_array('person_name', $aFilterFields ) )
+                $oResponse->setField('person_name', 'Служител', 'сортирай по Служител');
+
+            if( isset( $aFilterFields ) && in_array('person_position', $aFilterFields ) )
+                $oResponse->setField('person_position', 'Длъжност', 'сортирай по Длъжност');
+
+            if( isset( $aFilterFields ) && in_array('firm', $aFilterFields ) )
+                $oResponse->setField('firm', 'Фирма', 'сортирай по Фирма');
+
+            if( isset( $aFilterFields ) && in_array( 'office',$aFilterFields ) )
+                $oResponse->setField('office', 'Регион', 'сортирай по Регион');
+
+            if( isset( $aFilterFields ) && in_array('object', $aFilterFields ) )
+                $oResponse->setField('object', 'Обект', 'сортирай по Обект');
+
+            if( isset( $aFilterFields ) && in_array('leave_type' ,$aFilterFields ) )
+                $oResponse->setField('leave_type', 'Тип', 'сортирай по Тип');
+
+            if( isset( $aFilterFields ) && in_array('date' ,$aFilterFields ) )
+                $oResponse->setField('date', 'дата', 'сортирай по дата',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array( 'leave_from',$aFilterFields ) )
+                $oResponse->setField('leave_from', 'Дата От', 'сортирай по Дата От',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array('leave_to' ,$aFilterFields ) )
+                $oResponse->setField('leave_to', 'Дата До', 'сортирай по Дата До',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array('leave_from_all', $aFilterFields ) )
+                $oResponse->setField('leave_from_all', 'Дата от', 'сортирай по Дата от',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array( 'created_user',$aFilterFields ) )
+                $oResponse->setField('created_user', 'Въвел', 'сортирай по Въвел');
+
+            if( isset( $aFilterFields ) && in_array('status', $aFilterFields ) )
+                $oResponse->setField('status', 'Статус', 'сортирай по Статус');
+
+            if( isset( $aFilterFields ) && in_array( 'time_confirm',$aFilterFields ) )
+                $oResponse->setField('person_confirm', 'Потвърдил', 'сортирай по Потвърдил');
+
+            if( isset( $aFilterFields ) && in_array( 'res_leave_from',$aFilterFields ) )
+                $oResponse->setField('res_leave_from', 'Дата от', 'сортирай по Дата от',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array( 'res_leave_to',$aFilterFields ) )
+                $oResponse->setField('res_leave_to', 'Дата До', 'сортирай по Дата До',NULL,NULL,NULL,array('DATA_FORMAT' => DF_DATE));
+
+            if( isset( $aFilterFields ) && in_array( 'res_application_days',$aFilterFields ) )
+                $oResponse->setField('res_application_days', 'Разрешени дни', 'сортирай по Разрешени дни',NULL,NULL,NULL,array('DATA_FORMAT' => DF_NUMBER));
+
+            if( isset( $aFilterFields ) && in_array( 'person_confirm',$aFilterFields ) )
+                $oResponse->setField('person_confirm', 'Потвърдил', 'сортирай по Потвърдил');
+
+            if( isset( $aFilterFields) && in_array('sum', $aFilterFields ) ) {
+                $oResponse->setField( 'total_sum', 'Сума', '' );
+                $oResponse->setFieldData( 'total_sum', 'input', array( 'type' => 'text' ,  'exception' => 'false' , 'onChange' => 'onExitInput(event)') );
+            }
+        }
+
+        $oResponse->setFIeldLink('leave_num', 'openLeave');
+        $oResponse->setFIeldLink('person_name', 'openPerson');
+    }
+
+    public function getSalaryViaLimitCardAndPerson($nIDLimitCard, $nIDPerson) {
+//        global $db_personnel, $db_name_sod, $db_name_personnel;
+
+        if (empty($nIDLimitCard) && !is_numeric($nIDLimitCard)) {
+            return false;
+        }
+
+        if (empty($nIDPerson) && !is_numeric($nIDPerson)) {
+            return false;
+        }
+
+        $sQuery = "
+        SELECT
+            *
+        FROM salary
+        WHERE id_limit_card = {$nIDLimitCard}
+          AND id_person = {$nIDPerson}        
+          AND to_arc = 0        
+        ";
+
+        return $this->selectOne($sQuery);
+    }
 }
 
 ?>
