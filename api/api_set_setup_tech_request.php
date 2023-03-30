@@ -33,7 +33,7 @@ class ApiSetSetupTechRequest {
 
         if ( !empty($nID) && $sAct == 'load' ) {
             $aTechRequests = $oTechRequests->getRequest( $nID );
-//				APILog::Log(0,$aTechRequests);
+				APILog::Log(0,$aTechRequests);
             if ( !empty($aTechRequests) ) {
                 $nIDFirm		    = $aTechRequests['id_firm'];
                 $nIDOffice		    = $aTechRequests['id_office'];
@@ -51,7 +51,7 @@ class ApiSetSetupTechRequest {
                 $oResponse->setFormElement('form1', 'sNum', array(), zero_padding( $aTechRequests['num'] )."/".$aTechRequests['created_time']);
                 $oResponse->setFormElement('form1', 'sRequestTime', array(), date("H:i",strtotime($aTechRequests['request_time'])));
                 $oResponse->setFormElement('form1', 'sRequestDate', array(), date("d.m.Y",strtotime($aTechRequests['request_time'])));
-//					$oResponse->setFormElement('form1', 'sType', array(), $aTechRequests['id_tech_timing']);
+				//$oResponse->setFormElement('form1', 'sType', array(), $aTechRequests['id_tech_timing']);
                 $oResponse->setFormElement('form1', 'obj', array(), $aTechRequests['object']);
                 $oResponse->setFormElement('form1', 'nObject', array(), $aTechRequests['id_object']);
                 $oResponse->setFormElement('form1', 'sRequestName', array(), $aTechRequests['request_person_name']);
@@ -87,8 +87,8 @@ class ApiSetSetupTechRequest {
                     $oResponse->setFormElementAttribute('form1', 'sRequestName', 'style','float: left;');
 
                 }
-                else if($sRequestBy == 'telepol') {
-                    $oResponse->setFormElementAttribute('form1', 'sRequestBy', 'value', 'telepol');
+                else if($sRequestBy == 'company') {
+                    $oResponse->setFormElementAttribute('form1', 'sRequestBy', 'value', 'company');
                 } else {
                     $oResponse->setFormElementAttribute('form1', 'sRequestBy', 'value', 'office');
                 }
@@ -165,54 +165,8 @@ class ApiSetSetupTechRequest {
                 }
                 else
                     $oResponse->setFormElement( "form1", "sLastService", array( "value" => $sLastService ) );
-
-
-//                    $sIsWarranty = '';
-
-//                    if (!empty($nIDReason)) {
-//                        $reason = $oTechReason->getReasonById($nIDReason);
-//                        //                           APILog::Log(0,$reason);
-//
-//                        if ((strtotime('today - '.$reason[0]['warranty_time'].' months') < strtotime($aLastService['date'])) && $reason[0]['is_warranty']) {
-//
-//                            $sIsWarranty = "Обекта е в гаранция!";
-//
-//                        }
-//                    }
-
-
-//                    if ($sIsWarranty != '')
-//                        $oResponse->setFormElement( "form1", "sIsWarranty", array( "value" => $sIsWarranty,
-//                                                "style" => "border: 0px; width: 370px; height: 20px; background-color: transparent; color: white; cursor: pointer; font-weight: bold; background-color: red;" ) );
-//                    else
-//                        $oResponse->setFormElement( "form1", "sIsWarranty", array( "value" => $sIsWarranty));
-                //End Get Last Service
-
-//					$oResponse->setFormElement('form1', 'nIDReason', array(), '');
-//					$oResponse->setFormElementChild('form1', 'nIDReason', array('value' => 0), 'Избери');
-
-//					foreach ( $aTechReason as $key => $val ) {
-//						if ( $nIDReason == $key ) {
-//							$oResponse->setFormElementChild('form1', 'nIDReason', array('value' => $key, 'selected' => 'selected'), $val);
-//						} else $oResponse->setFormElementChild('form1', 'nIDReason', array('value' => $key), $val);
-//					}
             }
         }
-//        elseif ( $nIDOldObj > 0 ) {
-//            $oObject = new DBObjects();
-//            $aObject = array();
-//
-//            $aObject = $oObject->getInfoByID( $nID );
-//            //APILog::Log(0, $aObject);
-//
-//            $nIDFirm	= isset($aObject['id_firm']) ? $aObject['id_firm'] : 0;
-//            $nIDOffice	= isset($aObject['id_office']) ? $aObject['id_office'] : 0;
-//            $nIDReason = 4;
-//
-////				$oResponse->setFormElement('form1', 'sType', array(), 'holdup');
-//            $oResponse->setFormElement('form1', 'obj', array(), isset($aObject['name']) ? $aObject['name'] : '');
-//            $oResponse->setFormElement('form1', 'nObject', array(), isset($aObject['id']) ? $aObject['id'] : 0);
-//        }
 
         //трябва да се виждат всички фирми от всички потребители L1-210
         $aFirms = $oFirms->getFirmsWithoutRights();
@@ -227,63 +181,25 @@ class ApiSetSetupTechRequest {
         $oResponse->setFormElementChild('form1', 'nIDOffice', array('value' => 0), 'Офис');
         $oResponse->setFormElementChild('form1', 'nIDReason', array('value' => 0), 'Изберете причина');
 
-//            $aTechReason = $oTechReason->getTechReason();
-
-        if ($sType != 0)
-            $aTechReason = $oTechReason->getReasonByType($sType);
-
-      //  if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
-            //if ( in_array( 'tech_request_type', $_SESSION['userdata']['access_right_levels']) ) {
-                // ако има права да вижда всички типове
-//						$aTechTiming = $oTechTiming->getAllAssoc();
-                $aTechTiming = $oTechTiming->select("
-                        SELECT 
-                          tt.id,
-                          tt.description
-                          FROM tech_timing_firms ttf
-                           LEFT JOIN tech_timing tt ON tt.id = ttf.id_tech_timing
-                           WHERE ttf.id_firm = {$nIDFirm}
-                           AND tt.to_arc = 0 
-					");
-//            } else {
-//                //ако няма права да не вижда типовете изграждане и сваляне и аранживорка и пуска нова заявка
-//                $aTechTiming = $oTechTiming->select("
-//                        SELECT
-//                          tt.id,
-//                          tt.description
-//                          FROM tech_timing_firms ttf
-//                           LEFT JOIN tech_timing tt ON tt.id = ttf.id_tech_timing
-//                           WHERE ttf.id_firm = {$nIDFirm}
-//                           AND tt.name NOT IN ('create', 'destroy' , 'arrange')
-//                           AND tt.to_arc = 0
-//					");
-//            }
-     //   }
+        $aTechTiming = $oTechTiming->getAllAssoc();
 
         foreach ($aTechTiming as $val) {
             if ( $sType == $val['id'])
                 $oResponse->setFormElementChild('form1', 'sType', array('value' => $val['id'], 'selected' => 'selected'), $val['description']);
             else
                 $oResponse->setFormElementChild('form1', 'sType', array('value' => $val['id']), $val['description']);
-
         }
 
         if ($sType != 0)
-            foreach ( $aTechReason as $val ) {
+            $aTechReason = $oTechReason->getReasonByType($sType);
 
-                // И НЯМАМ ИД НА ЗАЯВКАТА ПРОВЕРКА ДАЛИ ЗА ОБЕКТА ИМА РЕМОНТ В РАМКИТЕ НА ЕДНА СЕДМИЦА
-                //АКО ИМА РЕМОНТ ЩЕ ИЗВЕЖДАМ И ТЕКСТА ЗА НЕДОВЪРШЕН РЕМОНТ
-//                    if( $val['id'] == $oTechRequests->nIDReasonContinueArrange ) {
-//                        continue;
-//                    }
-
-//                    APILog::Log($val['id'], "TESTA");
-
-                if ( $nIDReason == $val['id'] ) {
+        if ($sType != 0) {
+            foreach ($aTechReason as $val) {
+                if ($nIDReason == $val['id']) {
                     $oResponse->setFormElementChild('form1', 'nIDReason', array('value' => $val['id'], 'selected' => 'selected'), $val['name']);
                 } else $oResponse->setFormElementChild('form1', 'nIDReason', array('value' => $val['id']), $val['name']);
-
             }
+        }
 
         foreach ( $aFirms as $key => $val ) {
             if ( $nIDFirm == $key ) {
@@ -294,7 +210,7 @@ class ApiSetSetupTechRequest {
         unset($key); unset($val);
 
         if ( $nIDFirm > 0 ) {
-            $aOffices = $oOffices->getFirmOfficesRightAssoc( $nIDFirm );
+            $aOffices = $oOffices->getFirmOfficesAssocWithoutRights( $nIDFirm );
             foreach ( $aOffices as $key => $val ) {
                 if ( $nIDOffice == $key ) {
                     $oResponse->setFormElementChild('form1', 'nIDOffice', array('value' => $key, 'selected' => 'selected'), $val['name']);
@@ -318,8 +234,8 @@ class ApiSetSetupTechRequest {
         $sPlannedStartH         = Params::get("sPlannedStartH", '');
         $sRequestTime           = Params::get("sRequestTime", '');
         $sRequestDate           = Params::get("sRequestDate", '');
-        $sTimeLimitH            = Params::get("sTimeLimitH", '');
-        $sTimeLimit             = Params::get("sTimeLimit", '');
+        //$sTimeLimitH            = Params::get("sTimeLimitH", '');
+        //$sTimeLimit             = Params::get("sTimeLimit", '');
 
         $nPriority              = Params::get("nPriority", 0);
         $sNameTemplate          = Params::get("sTemplateName", ''); //име на шаблон
@@ -336,12 +252,12 @@ class ApiSetSetupTechRequest {
 
 
         $oTechRequests = new DBTechRequests();
-        $oTechRequestsTemplates = new DBTechRequestsTemplates();
+        //$oTechRequestsTemplates = new DBTechRequestsTemplates();
         $oDBObjectStates = new DBStates(); // за извличане на номенклатуррите на обект
         $oDBTechOperations = new DBTechOperations();
         $oTechTiming = new DBTechTiming();
         $oTechLimitCard = new DBTechLimitCards();
-        $oDBTechPlanSupport = new DBTechPlanSupport();
+        //$oDBTechPlanSupport = new DBTechPlanSupport();
 
         //if ( $right_edit ) {
 
@@ -422,14 +338,7 @@ class ApiSetSetupTechRequest {
                 дали има нов договор
             */
 
-            $aType = array('destroy' , 'arrange'); // типове при който ще следим дали обекта е нов
-
-            if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
-                if ( in_array( 'tech_request_type', $_SESSION['userdata']['access_right_levels']) ) {
-                    // ако има права да вижда всички типове може да пуска и аранжировка на нов договор
-                    $aType = array('destroy');
-                }
-            }
+            //$aType = array('destroy' , 'arrange'); // типове при който ще следим дали обекта е нов
 
 //					if(in_array($sTypeReason ,$aType)) {
 //						// проверяваме дали обекта е с нов договор
@@ -446,73 +355,73 @@ class ApiSetSetupTechRequest {
         // край на проверката за обекта и причината
 
         // Времена за всяка заявка
-        $aObjectNomenclatures = $oDBObjectStates->getNomenclaturesForObjectWithRooms($nObject);
+        //$aObjectNomenclatures = $oDBObjectStates->getNomenclaturesForObjectWithRooms($nObject);
 
         $aIDsNomenclature = array(); // id-та на номенклатури за заявката
         $aNomenclatureCnt = array(); // за всяко ид колко пъти го имам като номенклатура
 
-        if(!empty($aObjectNomenclatures)) {
-            //пресмятам времето за всички номенклатури
-            foreach($aObjectNomenclatures as $aRoom) {
-                if(!empty($aRoom['nomenclatures'])) {
-                    foreach($aRoom['nomenclatures'] as $aNomenclatures)
-                    {
-                        //гледам колко пъти имам една номенклатура на обекта
-                        if( isset( $aNomenclatureCnt[$aNomenclatures['id']] ) )
-                        {
-
-                            $aNomenclatureCnt[$aNomenclatures['id']]+=$aNomenclatures['count'];
-                        }
-                        else
-                        {
-                            $aNomenclatureCnt[$aNomenclatures['id']] = $aNomenclatures['count'];
-                        }
-
-                        $aIDsNomenclature[$aNomenclatures['id']] = $aNomenclatures['id'];
-                    }
-                }
-            }
-        }
+//        if(!empty($aObjectNomenclatures)) {
+//            //пресмятам времето за всички номенклатури
+//            foreach($aObjectNomenclatures as $aRoom) {
+//                if(!empty($aRoom['nomenclatures'])) {
+//                    foreach($aRoom['nomenclatures'] as $aNomenclatures)
+//                    {
+//                        //гледам колко пъти имам една номенклатура на обекта
+//                        if( isset( $aNomenclatureCnt[$aNomenclatures['id']] ) )
+//                        {
+//
+//                            $aNomenclatureCnt[$aNomenclatures['id']]+=$aNomenclatures['count'];
+//                        }
+//                        else
+//                        {
+//                            $aNomenclatureCnt[$aNomenclatures['id']] = $aNomenclatures['count'];
+//                        }
+//
+//                        $aIDsNomenclature[$aNomenclatures['id']] = $aNomenclatures['id'];
+//                    }
+//                }
+//            }
+//        }
 
         $nNomenclaturesTime = 0; // време за номенкатурите
 
-        if(!empty($aIDsNomenclature)) {
-
-            $sQueryTime = "
-                        SELECT
-                        n.id AS id,
-                        ntt.minute As `min`,
-                        n.id AS n_id
-                        FROM
-                        nomenclatures AS n
-                        LEFT JOIN
-                        nomenclature_types nt
-                        ON n.id_type = nt.id
-                        LEFT JOIN nomenclature_types_timing AS ntt
-                        ON nt.id = ntt.id_nomenclature_types
-                        WHERE 1
-                        AND ntt.to_arc = 0
-                        AND ntt.id_tech_timing = {$sType}
-                        AND n.id IN (".implode($aIDsNomenclature, ",").")
-                        GROUP BY n.id_type
-                    ";
-
-            // за всеки ред според броя да сумирам времето за номенкклатурите
-            $aNomeclaturesTimes = $oDBObjectStates->selectAssoc($sQueryTime);
-
-            foreach($aNomeclaturesTimes as $sKey=>$Val)
-            {
-                $nNomenclaturesTime+= $aNomenclatureCnt[$sKey]*$aNomeclaturesTimes[$sKey]['min'];
-            }
-        }
-        else {
+//        if(!empty($aIDsNomenclature)) {
+//
+//            $sQueryTime = "
+//                        SELECT
+//                        n.id AS id,
+//                        ntt.minute As `min`,
+//                        n.id AS n_id
+//                        FROM
+//                        nomenclatures AS n
+//                        LEFT JOIN
+//                        nomenclature_types nt
+//                        ON n.id_type = nt.id
+//                        LEFT JOIN nomenclature_types_timing AS ntt
+//                        ON nt.id = ntt.id_nomenclature_types
+//                        WHERE 1
+//                        AND ntt.to_arc = 0
+//                        AND ntt.id_tech_timing = {$sType}
+//                        AND n.id IN (".implode($aIDsNomenclature, ",").")
+//                        GROUP BY n.id_type
+//                    ";
+//
+//            // за всеки ред според броя да сумирам времето за номенкклатурите
+//            $aNomeclaturesTimes = $oDBObjectStates->selectAssoc($sQueryTime);
+//
+//            foreach($aNomeclaturesTimes as $sKey=>$Val)
+//            {
+//                $nNomenclaturesTime+= $aNomenclatureCnt[$sKey]*$aNomeclaturesTimes[$sKey]['min'];
+//            }
+//        }
+//        else {
             //ако няма номенклатури на обекта вземам времето за кокретната операция
             $aInfoTiming = $oTechTiming->getRecord($sType);
             $nNomenclaturesTime = $aInfoTiming['minute'];
-        }
+//        }
 
         //Време само за операции
-        $nOperationTime = $oDBTechOperations->calcTimeByIDTechTiming($sType);
+        //$nOperationTime = $oDBTechOperations->calcTimeByIDTechTiming($sType);
 
 //				if ( empty($nIDReason) && $sType == 'holdup' ) {
 //					throw new Exception("Изберете причина за обслужването!", DBAPI_ERR_INVALID_PARAM);
@@ -539,7 +448,7 @@ class ApiSetSetupTechRequest {
 
         $aData['created_type'] = 'manual';
         $aData['priority']  = $nPriority;
-        $aData['time']      = $nOperationTime + $nNomenclaturesTime;
+        //$aData['time']      = $nOperationTime + $nNomenclaturesTime;
 
         if( empty( $nID ) )
         {
@@ -554,44 +463,18 @@ class ApiSetSetupTechRequest {
         $aData['duration'] = $nDuration;
         $aData['request_time'] = date("Y-m-d" ,jsDateToTimestamp($sRequestDate)).' '.$sRequestTime;
 
-        $aData['time_limit'] = jsDateToMySQLDate($sTimeLimit).' '.$sTimeLimitH;
+        //$aData['time_limit'] = jsDateToMySQLDate($sTimeLimit).' '.$sTimeLimitH;
 
         //ако е шаблон да го запази при щаблоните
-        if($nIsTemplate){
-            $aData['name'] = $sNameTemplate;
+        //if($nIsTemplate){
+          //  $aData['name'] = $sNameTemplate;
 
-            $oTechRequestsTemplates->update($aData);
-        } else {
-
-            if($nID == 0 ) {
-                if((int)$sType == 5) {
-                    //Проверка дали има такова планово обслужване за обекта
-
-                    $aPlanSupport = $oDBTechPlanSupport->getPlanSupportByIDObjectAndIDReason((int)$nObject,(int)$nIDReason);
-
-                    if(!empty($aPlanSupport)) {
-
-                        if ((int)$nIDReason != 6) {
-
-                            $sQuery = "
-                                        UPDATE
-                                          tech_plan_support tps
-                                        JOIN tech_reason tr ON tr.id = tps.id_reason
-                                        SET tps.last_date = '{$aPlanSupport['end_date_raw']}'
-                                        WHERE
-                                          tps.id = {$aPlanSupport['id']}
-                                        AND tps.id_object = {$nObject}
-                                    ";
-
-                            $oDBTechPlanSupport->select($sQuery);
-                        }
-                    }
-                }
-            }
-
-
+          //  $oTechRequestsTemplates->update($aData);
+       // } else {
             $oTechRequests->update( $aData );
-        }
+       // }
+
+        $oResponse->setAlert("Успешно записана заявка");
 
         $oResponse->setFormElement('form1','nID',array(),$aData['id']);
         //}
@@ -627,10 +510,10 @@ class ApiSetSetupTechRequest {
         }
         if( !empty( $nIDObject ) )
         {
-            if ($oDBHoldupReasons->isWarranty($nIDObject))
-                $aLastService = $oTechLimitCards->getLastService( $nIDObject,1 );
-            else
-                $aLastService = $oTechLimitCards->getLastService( $nIDObject);
+            //if ($oDBHoldupReasons->isWarranty($nIDObject))
+            //    $aLastService = $oTechLimitCards->getLastService( $nIDObject,1 );
+            //else
+            $aLastService = $oTechLimitCards->getLastService( $nIDObject);
 
 
 
@@ -639,16 +522,15 @@ class ApiSetSetupTechRequest {
                 $sLastService .= $aLastService['type'] . " : ";
                 $sLastService .= $aLastService['persons'];
 
-//                if ((strtotime('today - '.$aLastService['warranty_time'].' months') < strtotime($aLastService['date'])) && $aLastService['is_warranty']){
-            if ($oDBHoldupReasons->isWarranty($nIDObject)){
-                $oResponse->setFormElement( "form1", "sLastService", array( "value" => $sLastService,
-                    "style" => "border: 0px; width: 225px; height: 50px; color: white; cursor: pointer; font-weight: bold; background-color: red;" ) );
-                $sLastService .= "\n Обекта е в гаранция!";
-            }
-            else {
+            //if ($oDBHoldupReasons->isWarranty($nIDObject)){
+            //    $oResponse->setFormElement( "form1", "sLastService", array( "value" => $sLastService,
+            //        "style" => "border: 0px; width: 225px; height: 50px; color: white; cursor: pointer; font-weight: bold; background-color: red;" ) );
+            //    $sLastService .= "\n Обекта е в гаранция!";
+            //}
+            //else {
                 $oResponse->setFormElement( "form1", "sLastService", array( "value" => $sLastService,
                     "style" => "border: 0px; width: 225px; height: 50px; color: white; cursor: pointer; font-weight: bold; background-color: white;" ) );
-            }
+            //}
         }
         else
         {

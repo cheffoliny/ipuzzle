@@ -42,23 +42,23 @@
 
                     var sRowStyle = crow.getAttribute('style');
 
-					if(notEdit != '1' || sRowStyle == 'background-color: #612c2c') {
+					if(notEdit != '1' || sRowStyle == 'background-color: #2c2c61') {
 
-                        if( sRowStyle == 'background-color: #612c2c' && notEdit == 1 ) {
+                        if( sRowStyle == 'background-color: #2c2c61' && notEdit == 1 ) {
                             crow.setAttribute('style', 'background-color: #F2D8C9', 0);
                         } else {
                             crow.setAttribute('style', 'background-color'+row_color, 0);
                         }
 
                         for ( j=0 ; j<crow.cells.length ; j++ ) {
-                            crow.cells[j].style.color = '#000000';
+                            crow.cells[j].style.color = '#fefefef';
                             crow.cells[j].style.fontWeight = 'normal';
                         }
 					}
 
 				}
 				
-				theRow.setAttribute('style', 'background-color: #612c2c', 0);
+				theRow.setAttribute('style', 'background-color: #2c2c61', 0);
 
 				for ( i=0 ; i<theRow.cells.length ; i++ ) {
 					theRow.cells[i].style.color = '#ffffff';
@@ -259,7 +259,11 @@
 
 	<xsl:choose>
 		<xsl:when test="/response/result/data = ''">
-			<center><p style="color:Red;font: bolder;">Резултатът е празен!</p></center>
+			<div class="alert alert-danger alert-dismissable col-sm-11 transparent-half ml-4">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<i class="fas fa-info-circle fa-2x"></i> <h5> Съобщение: </h5>
+				Няма намерени резултати по зададените критерии за търсене.
+			</div>
 		</xsl:when>
 		<xsl:otherwise>
 			<xsl:if test="$rpc_paging = 'on'">
@@ -372,12 +376,12 @@
 
 			<!-- заглавна част -->
 
-			<div style="width:100%; overflow:auto;" class="result_data">
+			<div id="result_data"  class="container-fluid body-content" >
 				<xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>result_data</xsl:attribute>
-				<table width="100%" cellspacing="1" cellpadding="1" class="result">
+				<table class="table table-sm table-striped table-dark">
 					<xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>tbl_result</xsl:attribute>
 					<xsl:for-each select="response/result/title/r">
-						<tr>
+						<tr class="bg-primary text-center intelliheader">
 							<xsl:for-each select="c">
 								<xsl:choose>
 									<xsl:when test=". != ' '">
@@ -401,13 +405,13 @@
 						</tr>
 					</xsl:for-each>
 					<xsl:for-each select="response/result/fields">
-						<tr>
-						
-							
+						<tr class="bg-primary intelliheader">
+
+
 							<xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>main</xsl:attribute>
-							
+
 							<xsl:if test="$rpc_autonumber = 'on'">
-								<th class="even">#</th>
+								<th class="col-1 text-center even">#</th>
 							</xsl:if>
 							
 							
@@ -446,13 +450,13 @@
 					
 					<!-- total -->
 					<xsl:for-each select="response/result/total">
-						<tr class="total">
+						<tr class="bg-seccess">
 							<xsl:for-each select="c">
-								<td>								
-									<xsl:value-of select="."/> 
+								<td>
+									<xsl:value-of select="."/>
 								</td>
-							</xsl:for-each>						
-						</tr>				
+							</xsl:for-each>
+						</tr>
 					</xsl:for-each>
 					
 					<!-- data -->
@@ -466,7 +470,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
-					
+
 					<xsl:for-each select="/response/result/data/r">
 						<!-- insert empty hidden row -->
 						<xsl:if test="position() = 1 and $rpc_edit_report = 'on'">
@@ -476,7 +480,7 @@
 								<xsl:for-each select="c">
 									<xsl:variable name="fpos"><xsl:value-of select="position()"/></xsl:variable>
 									<td>
-										<xsl:if test="/response/result/fields/c[position() = $fpos]/data">			
+										<xsl:if test="/response/result/fields/c[position() = $fpos]/data">
 											<xsl:call-template name="display_control">
 												<xsl:with-param name="data" select="/response/result/fields/c[position() = $fpos]"/>
 												<xsl:with-param name="disable" select="."/>
@@ -486,22 +490,18 @@
 								</xsl:for-each>
 							</tr>
 						</xsl:if>
-						
-						<xsl:variable name="id_row">
-							<xsl:value-of select="@id"/>
-						</xsl:variable>
-						<tr  onmousedown="{$rpc_prefix}setPointer(this, {position()},{$id_row});">
-						
+						<tr onmouseover="{$rpc_prefix}setPointer(this, {position()}, 'over');" onmouseout="{$rpc_prefix}setPointer(this, {position()}, 'out');" onmousedown="{$rpc_prefix}setPointer(this, {position()}, 'click');">
+
 							<xsl:for-each select="./@*">
 								<xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute>
 							</xsl:for-each>
-									
+
 							<xsl:choose>
 								<xsl:when test="(position() mod 2) = 0">
-									<xsl:attribute name="bgcolor">#F0F0F0</xsl:attribute>
+									<xsl:attribute name="style">rgba(240,240,240,0.8)</xsl:attribute>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:attribute name="bgcolor">white</xsl:attribute>
+									<xsl:attribute name="style">rgba(255,255,255,0.8)</xsl:attribute>
 								</xsl:otherwise>
 							</xsl:choose>
 							
@@ -766,6 +766,21 @@
 							<br/>
 						</td>
 					</tr></table>
+					<div class="row fixed-bottom p-2 text-right">
+						<xsl:if test="$rpc_excel_panel = 'on'">
+							<xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>result_foother</xsl:attribute>
+							<div class="btn-group btn-sm">
+								<button class="btn btn-sm btn-success">
+									<xsl:attribute name="onClick"><xsl:value-of select="$rpc_prefix"/>xslLoadDirectXML('export_to_xls')</xsl:attribute>
+									<i class="far fa-file-excel fa-lg"></i>&nbsp;&nbsp; EXCEL
+								</button>
+								<button class="btn btn-sm btn-danger ml-1">
+									<xsl:attribute name="onClick"><xsl:value-of select="$rpc_prefix"/>xslLoadDirectXML('export_to_pdf')</xsl:attribute>
+									<i class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp; PDF&nbsp;&nbsp;&nbsp;
+								</button>
+							</div>
+						</xsl:if>
+					</div>
 				</div>
 			</xsl:if>
 

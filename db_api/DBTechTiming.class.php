@@ -12,7 +12,7 @@ class DBTechTiming extends DBBase2
     public function getDescription($nID = NULL, $description = NULL) {
         $sQuery = "
 						SELECT
-							description 
+							`description` 
 						FROM tech_timing
 						WHERE 1 " ;
 

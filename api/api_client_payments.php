@@ -1,8 +1,6 @@
 <?php
-
 	class ApiClientPayments
 	{
-		
 		public function result( DBResponse $oResponse )
 		{
 			$aParams = Params::getAll();

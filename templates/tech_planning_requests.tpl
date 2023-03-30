@@ -16,8 +16,6 @@
         }
 
         function getResult() {
-
-//			if( $('nIDOffice').value != 0 ) {
             parent.document.getElementById('id_request_office').value = $('nIDOffice').value;
             loadXMLDoc2('result');
 //			}
@@ -86,7 +84,6 @@
         //        }
 
         function objChange() {
-//            $('nIDObject').value = 0;
             $sObjectName = document.getElementById('sObjectName').value;
         }
 
@@ -153,7 +150,7 @@
         </div>
     </div>
 
-	<div id="result" rpc_excel_panel="off" rpc_paging="off" class="container-fluid"></div>
+	<div id="result" rpc_excel_panel="off" rpc_paging="off" class="container-fluid body-content"></div>
 
 </form>
 

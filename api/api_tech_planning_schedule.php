@@ -15,26 +15,26 @@ class ApiTechPlanningSchedule {
 
         if (!empty($nIDRequest)) {
             $aRequest = $oDBTechRequests->getRecord($nIDRequest);
-            if ($aRequest['tech_type'] == 'contract') {
-                $aContract = $oDBContracts->getRecord($aRequest['id_contract']);
-                $nIDOffice = $aContract['id_office'];
-            } else {
+//            if ($aRequest['tech_type'] == 'contract') {
+//                $aContract = $oDBContracts->getRecord($aRequest['id_contract']);
+//                $nIDOffice = $aContract['id_office'];
+//            } else {
                 $oDBObjects = new DBObjects();
 
                 $sTechTimingName = $oDBTechTiming->getType((int)$aRequest['id_tech_timing'],1);
 
-                if( $sTechTimingName != 'create' )
-                {
+    //            if( $sTechTimingName != 'create' )
+    //            {
                     // ако е изграждане няма ид на обект
                     $aObject = $oDBObjects->getRecord($aRequest['id_object']);
                     $nIDOffice = $aObject['id_office'];
-                }
-                else
-                {
-                    $nIDOffice = $_SESSION['userdata']['id_office'];
-                }
+    //            }
+    //            else
+     //           {
+      //              $nIDOffice = $_SESSION['userdata']['id_office'];
+       //         }
 
-            }
+  //          }
         } else {
             $nIDOffice = $_SESSION['userdata']['id_office'];
         }

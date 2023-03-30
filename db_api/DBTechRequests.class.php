@@ -379,7 +379,7 @@ class DBTechRequests extends DBBase2 {
 
         $nIDTechTiming = Params::get('nIDTechTiming',0);
         $sObjectName = Params::get('sObjectName',0);
-        //$nIDObject = Params::get('nIDObject',0);
+        $sObjectName = Params::get('sObjectName',0);
 
         $right_edit = false;
 

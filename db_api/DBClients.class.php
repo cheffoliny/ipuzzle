@@ -450,6 +450,8 @@
 			
 			$nID = (int) isset( $aParams['nID'] ) ? $aParams['nID'] : 0;
 
+            $aDocTypes = array('oprostena','kvitanciq');
+
             $aPayProvider = $DBEasypayProvider->getAllAssoc();
 			
 			$sRowQuery = "
@@ -504,26 +506,28 @@
 					FROM
 						( {$sRowQuery} ) t
 			";
-			
-			$this->getResult( $sQuery, 'doc_date', DBAPI_SORT_DESC, $oResponse );
-			
-			//Calculate Totals
-			$nTotalSum = $nTotalPaid = $nTotalRemain = 0;
+            $this->getResult( $sQuery, 'doc_date', DBAPI_SORT_DESC, $oResponse );
+
+
+
+            //Calculate Totals
+            $nTotalSum = $nTotalPaid = $nTotalRemain = 0;
             $nextDocNum = 0;
 
-			foreach( $oResponse->oResult->aData as $value ) {
-				if ($value['doc_status'] != 'canceled'){
-					$nTotalSum 		+= $value['total_sum'];
-					$nTotalPaid 	+= $value['orders_sum'];
-					$nTotalRemain 	+= $value['orders_remain'];
+            foreach( $oResponse->oResult->aData as $key=>$value ) {
+                if ($value['doc_status'] != 'canceled'){
+                    $nTotalSum 		+= $value['total_sum'];
+                    $nTotalPaid 	+= $value['orders_sum'];
+                    $nTotalRemain 	+= $value['orders_remain'];
 
                     if ( $value['last_order_time'] == "0000-00-00 00:00:00" ) {
                         if ( $value['doc_num'] < $nextDocNum || $nextDocNum == 0 ) {
                             $nextDocNum = $value['doc_num'];
                         }
                     }
-				}
-			}
+                }
+
+            }
 			
 			$oResponse->addTotal( "total_sum", 		$nTotalSum . " лв." 	);
 			$oResponse->addTotal( "orders_sum", 	$nTotalPaid . " лв." 	);
@@ -544,9 +548,16 @@
 
 			$oResponse->setFieldLink( "doc_num", "openSaleDoc" );
 
-			foreach ($oResponse->oResult->aData as $key => &$value) {
+            foreach ($oResponse->oResult->aData as $key => &$value) {
 
                 $oResponse->setDataAttributes( $key, 'btn_pdf', array('onclick' => "printSaleDoc({$value['id']}, {$value['version']})") );
+
+                $sBackgroundColor = "";
+                if(in_array($value['doc_type'],$aDocTypes)){
+                    $sBackgroundColor = 'background:#F2D8C9';
+
+                    $oResponse->setRowAttributes($value['id'], array('style'=> $sBackgroundColor));
+                }
 
 				if ($value['doc_status'] == 'canceled'){
 					$oResponse->setDataAttributes( $key, 'doc_date', array( 'style' => 'color:#FF0000;' ) );
@@ -560,12 +571,24 @@
                 $paid_type_hint = "";
 
                 if ( $value['id_bank_epayment'] > 0 && $value['epay_provider'] > 0 ) {
-                    APILog::Log($aPayProvider);
+                    //APILog::Log($aPayProvider);
                     if(isset($aPayProvider[$value['epay_provider']])) {
                         $paid_type_icon = strtolower($aPayProvider[$value['epay_provider']]['name']).".png";
                         $paid_type_hint = "Електронно плащане през ".$aPayProvider[$value['epay_provider']]['name'];
                     }
 
+                }
+
+                if($value['last_order_time'] != '0000-00-00 00:00:00' && $value['doc_status'] == 'canceled') {
+                    $oResponse->setDataAttributes( $key, 'doc_num', array('title' => 'анулиран','onclick' => "openSaleDoc({$value['id']})", 'style' => 'cursor: pointer;color:#253878;') );
+                }
+
+                if ( $value['total_sum'] == $value['orders_sum'] || $value['doc_num'] == $nextDocNum ) {
+                    $oResponse->setDataAttributes( $key, 'doc_num', array('onclick' => "openSaleDoc({$value['id']})", 'style' => 'cursor: pointer;color:#253878;') );
+                } else {
+                    if ($value['doc_status'] != 'canceled') {
+                        $oResponse->setDataAttributes( $key, 'doc_num', array('onclick' => "openSaleDoc({$value['id']})",'style' => 'color:#f89406;cursor: pointer;') );
+                    }
                 }
 
                 $value['epay_provider'] = 0;

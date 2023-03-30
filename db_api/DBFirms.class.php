@@ -85,7 +85,25 @@
 			
 			return $this->selectAssoc( $sQuery );
 		}
-		
+
+        /**
+         * Всички фирми без да се вземат под внимание правата на потребителя
+         * @return array
+         */
+        public function getFirmsWithoutRights() {
+            $sQuery = "
+				SELECT
+					f.id,
+					CONCAT(f.name, ' [', f.code, ']') AS name
+				FROM firms f
+				#RIGHT JOIN offices o ON o.id_firm = f.id
+				WHERE
+					f.to_arc = 0
+				ORDER BY f.name
+			";
+
+            return $this->selectAssoc( $sQuery );
+        }
 		
 		public function getFirmByOffice( $nIDOffice ) {
 			global $db_name_sod;

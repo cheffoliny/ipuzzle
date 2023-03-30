@@ -4,36 +4,6 @@
         rpc_debug = true;
         rpc_xsl = "xsl/tech_planning_schedule.xsl";
 
-        /**
-         *	Site-specific configuration settings for Highslide JS
-         */
-        /* global hs */
-      //   hs.graphicsDir = './js/highcharts/graphics/';
-      //   hs.outlineType = 'rounded-white';
-      //   hs.wrapperClassName = 'draggable-header';
-      //   hs.captionEval = 'this.a.title';
-      //   hs.showCredits = false;
-      //   hs.allowMultipleInstances = false;
-      // //  hs.Expander.prototype.onAfterExpand = addChartToExpand;
-      //   hs.Expander.prototype.onBeforeClose = deleteChartFromExpand;
-      //
-      //   jQuery(document).ready(function() {
-      //       jQuery(".in_team").css('backgroundColor','red');
-      //
-      //       jQuery('#result').on( 'click', '.open-team', function () {
-      //           var $row = jQuery(this),
-      //               numTeam = $row.parents('td[data-numteam]').data('numteam'),
-      //               nIDOff = $('nIDOffice');
-      //
-      //           if( nIDOff.value != 0 ) {
-      //               dialogSetSetupTechTeams(nIDOff.value , numTeam);
-      //           }
-      //           else {
-      //               alert("Грешка с определяне на офиса!");
-      //           }
-      //       })
-      //   });
-
         function onInit() {
             if (parent.document.getElementById('id_request').value > 0) {
                 jQuery('#to_tech_request').hide();
@@ -273,43 +243,43 @@
         }
 
 
-        function show_hint(id_person, ym) {
-            dialogPersonalPrices(id_person, ym);
-        }
+        // function show_hint(id_person, ym) {
+        //     dialogPersonalPrices(id_person, ym);
+        // }
 
-        function show_daily_graph(id_person, nDate, element) {
-            var target = 'ApiLiftkom.getTechDailyDataForDay',
-                params = [{tech_id:id_person, forDate: nDate}],
-                $elem = jQuery(element);
-
-            jQuery.ajax({
-                type: 'post',
-                url: 'dashboard/api.php',
-                async: true,
-                data:{
-                    requests:JSON.stringify([{target: target, params: params}])
-                },
-                dataType:'json'
-            }).done(function(data) {
-
-                hs.htmlExpand(null, {
-                    anchor: 'left top',
-                    pageOrigin: {
-                        x: $elem.position().left + 20,
-                        y: $elem.position().top + 20
-                    },
-                    headingText: moment.unix(nDate).format('DD-MM-YYYYг.'),
-                    maincontentText: '<div id="hc_daily_show"></div>',
-                    width: $elem.parents('tr').width() * 0.6,
-                    height: 180
-                }, {date: nDate, person: id_person, data:data[0]['response']});
-
-            }).fail(function() {
-                console.log( 'fail' );
-            });
-
-            return false;
-        }
+        // function show_daily_graph(id_person, nDate, element) {
+        //     var target = 'ApiLiftkom.getTechDailyDataForDay',
+        //         params = [{tech_id:id_person, forDate: nDate}],
+        //         $elem = jQuery(element);
+        //
+        //     jQuery.ajax({
+        //         type: 'post',
+        //         url: 'dashboard/api.php',
+        //         async: true,
+        //         data:{
+        //             requests:JSON.stringify([{target: target, params: params}])
+        //         },
+        //         dataType:'json'
+        //     }).done(function(data) {
+        //
+        //         hs.htmlExpand(null, {
+        //             anchor: 'left top',
+        //             pageOrigin: {
+        //                 x: $elem.position().left + 20,
+        //                 y: $elem.position().top + 20
+        //             },
+        //             headingText: moment.unix(nDate).format('DD-MM-YYYYг.'),
+        //             maincontentText: '<div id="hc_daily_show"></div>',
+        //             width: $elem.parents('tr').width() * 0.6,
+        //             height: 180
+        //         }, {date: nDate, person: id_person, data:data[0]['response']});
+        //
+        //     }).fail(function() {
+        //         console.log( 'fail' );
+        //     });
+        //
+        //     return false;
+        // }
 
         // /**
         //  * Премахва графиката от попъпите. Ако не се премахне остава в глобалния обект Highcharts
@@ -540,70 +510,67 @@
 <dlcalendar click_element_id="imgDate" input_element_id="date" tool_tip="Изберете дата"></dlcalendar>
 
 <form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal" role="form">
-    <input type="hidden" name="start" id="start" value="0">
-    <input type="hidden" name="end" id="end" value="0">
-    <input type="hidden" name="id_request" id="id_request" value="0">
-    <input type="hidden" name="id_request_from_contract" id="id_request_from_contract" value="{$nIDRequest|default:0}">
+    <input type="hidden" name="start" id="start" value="0" />
+    <input type="hidden" name="end" id="end" value="0" />
+    <input type="hidden" name="id_request" id="id_request" value="0" />
+    <input type="hidden" name="id_request_from_contract" id="id_request_from_contract" value="{$nIDRequest|default:0}" />
 
-    <div class="row"  id="row">
-        <div class="col-lg-1 hidden-xs">
-            Планиране
+    <div class="row bg-light pt-1"  id="row">
+        <div class="col-auto">
+            <h6 class="mt-1 ml-1 d-none d-lg-block">Планиране</h6>
         </div>
 
-        <div class="col-lg-2 col-xs-3">
+        <div class="col-2">
             <div class="input-group input-group-sm">
-                <button class="btn btn-xs btn-info" type="button" onClick="open_tech_teams();"><span class="fa fa-users"></span> Екипи &nbsp; </button>
-                &nbsp;
-                <span class="input-group input-group-addon">
-                    <input type="checkbox" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick="getResult();"/>
-                    Техници
-                </span>
+                <span class="input-group-addon"><i class="far fa-file-alt"></i></span>
+                <select class="form-control form-control-select100" id="nIDOffice" name="nIDOffice" onchange="getResult();" title="Регион за техническа поддръжка" ></select>
             </div>
         </div>
 
-        <!-- край техници -->
-        <div class="col-lg-2 col-xs-2 t_full">
+        <div class="col-2">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon glyphicon glyphicon-file"></span>
-                <select class="form-control" id="nIDOffice" name="nIDOffice" onchange="getResult();" ></select>
-            </div>
-        </div>
-        <div class="col-lg-2 col-xs-1 t_full">
-            <div class="input-group input-group-sm">
-                <span class="input-group-addon glyphicon glyphicon-list-alt" ></span>
-                <select class="form-control" name="type" id="type" onchange="changeType(this.value)">
+                <span class="input-group-addon"><i class="far fa-list-alt"></i></span>
+                <select class="form-control form-control-select100" name="type" id="type" onchange="changeType(this.value)" title="Изглед...">
                     <option value="day">Дневен</option>
                     <option value="month">Месечен</option>
                 </select>
             </div>
         </div>
-        <div class="col-lg-3 col-xs-3">
-            <div id="pDay">
-                <div class="input-group input-group-sm">
-                    <span class="input-group-addon glyphicon glyphicon-chevron-left" onclick="nextDate('prev');" ></span>
-                    <span class="input-group-addon glyphicon glyphicon-calendar" id="imgDate" ></span>
-                    <input class="form-control form-control-calendar" id="date" name="date" type="text" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
-                    <span class="input-group-addon glyphicon glyphicon-chevron-right" onclick="nextDate('next');" style="z-index:auto;" ></span>
-                </div>
-            </div>
-        </div>
+        <div class="col-auto " id="pDay">
 
-        <div class="col-lg-2 col-xs-2" id="pMonth">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon glyphicon glyphicon-chevron-left" onclick="nextMonth('prev');"></span>
-                <input class="form-control form-control-calendar" id="dateM" name="dateM" type="text" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
-                <span class="input-group-addon glyphicon glyphicon-chevron-right" onclick="nextMonth('next');" ></span>
+                <span class="input-group-addon" onclick="nextDate('prev');" ><i class="far fa-chevron-left"></i></span>
+                <span class="input-group-addon" id="imgDate" ><i class="far fa-calendar-alt"></i></span>
+                <input class="form-control form-control-inp75" id="date" name="date" type="text" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
+                <span class="input-group-append" onclick="nextDate('next');"><i class="far fa-chevron-right"></i></span>
             </div>
         </div>
-        <div class="col-lg-2 col-xs-3" style="text-align: right; padding-right: 15px;">
+        <div class="col-auto "  id="pMonth">
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon"  onclick="nextMonth('prev');"><i class="far fa-chevron-left"></i></span>
+                <input class="form-control form-control-inp75" id="dateM" name="dateM" type="text" onkeypress="return formatDate(event, '.');" maxlength="7" readonly title="ММ.ГГГГ" />
+                <span class="input-group-append" onclick="nextMonth('next');"><i class="far fa-chevron-right"></i></span>
+            </div>
+
+        </div>
+        <div class="col-auto">
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon" title="Само техници"><i class="far fa-users"></i></span>
+                <span class="input-group-append">
+                    <input type="checkbox" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick="getResult();" placeholder="Само техници.." />
+                </span>
+            </div>
+        </div>
+        <div class="col-auto text-right pr-3">
             {if $right_edit}
-                <button class="btn btn-xs btn-info" type="search" name="button" onClick="save();" ><span class="fa fa-save"></span>  Запази &nbsp; </button>
+                <button class="btn btn-sm btn-info" type="search" name="button" onClick="save();" ><i class="far fa-save"></i>  Запази &nbsp;</button>
             {else}
             {/if}
-            <button class="btn btn-xs btn-success" type="button" onClick="getResult();"><span class="fa fa-refresh"></span> Обнови </button>
+            <button class="btn btn-sm btn-info" type="button" onClick="open_tech_teams();"><i class="far fa-users"></i> Екипи &nbsp; </button>
+            <button class="btn btn-sm btn-success" type="button" onClick="getResult();"><i class="far fa-redo-alt"></i> Обнови </button>
 
             {* INFO: 26.07.2016 - Скриваме временно бутона за да видим дали ще липсва на някой :) *}
-            {*<button class="btn btn-xs btn-primary" onclick="parent.window.location='page.php?page=tech_support_requests';" id="to_tech_request"><span class="fa fa-reply"></span> Заявки </button>*}
+            {*<button class="btn btn-sm btn-primary" onclick="parent.window.location='page.php?page=tech_support_requests';" id="to_tech_request"><span class="far fa-reply"></span> Заявки </button>*}
             <!-- Затворени карти
                 <td align="right" valign="middle" width="50px">
                     <input type="checkbox" class="clear" checked="checked" name="closedLimitCards" id="closedLimitCards" onClick = "getResult();">
@@ -612,117 +579,6 @@
                 -->
         </div>
     </div>
-
-    {*<tr style="height:35px;">*}
-    {*<td width="200px" class="page_caption">График</td>*}
-
-    {*<td align="right" valign="middle" width="100px">Фирма</td>*}
-    {*<td valign="middle" width="170px">*}
-    {*<select style="width:150px;" class="default" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2('loadOffices')" />*}
-    {*</td>*}
-
-    {*<td align="right" valign="middle" width="50px">*}
-    {*<input type="checkbox" class="clear" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick = "getResult();">*}
-    {*</td>*}
-    {*<td valign="middle" width="150px">*}
-    {*само техници*}
-    {*</td>*}
-
-    {*<td>*}
-    {*<div id="pDay">*}
-    {*<table>*}
-    {*<tr>*}
-    {*<td valign="middle">*}
-    {*<button onclick="nextDate('prev');" ><img src="images/mleft.gif" /></button>*}
-    {*</td>*}
-    {*<td valign="middle" align="center" >*}
-    {*<input style="width:70px;" id="date" name="date" type="text" class="clear" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />*}
-    {*</td>*}
-    {*<td valign="middle">*}
-    {*<button onclick="nextDate('next');" ><img src="images/mright.gif" /></button>*}
-    {*</td>*}
-    {*<td>*}
-    {*<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgDate" />*}
-    {*</td>*}
-    {*</tr>*}
-    {*</table>*}
-    {*</div>*}
-
-    {*<div id="pMonth">*}
-    {*<table>*}
-    {*<tr>*}
-    {*<td valign="middle">*}
-    {*<button onclick="nextMonth('prev');" ><img src="images/mleft.gif" /></button>*}
-    {*</td>*}
-    {*<td valign="middle" align="center">*}
-    {*<input style="width:70px;" id="dateM" name="dateM" type="text" class="clear" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />*}
-    {*</td>*}
-    {*<td valign="middle">*}
-    {*<button onclick="nextMonth('next');" ><img src="images/mright.gif" /></button>*}
-    {*</td>*}
-    {*</tr>*}
-    {*</table>*}
-    {*</div>*}
-    {*</td>*}
-
-    {*<td style="width:200px;" align="center" >*}
-    {*<button onclick="parent.window.location='page.php?page=tech_support_requests';">Към заявки</button>*}
-    {*</td>*}
-    {*<td>*}
-    {*&nbsp;*}
-    {*</td>*}
-    {*</tr>*}
-
-    {*<tr style="height:30px;" class="hide_element">*}
-    {*<td align="center" width="250px">*}
-    {*<table class="input">*}
-    {*<tr>*}
-    {*<td align="right" nowrap>Тип:&nbsp;</td>*}
-    {*<td align="left">*}
-    {*<select style="width:120px;" name="type" id="type" onchange="changeType(this.value)">*}
-    {*<option value="day">Дневен</option>*}
-    {*<option value="month">Месечен</option>*}
-    {*</select>*}
-    {*</td>*}
-    {*</tr>*}
-    {*<tr>*}
-    {*<td align="right" nowrap>Вид операция:&nbsp;</td>*}
-    {*<td align="left">*}
-    {*<select style="width: 120px;" name="lc_type" id="lc_type" onchange="getResult();">*}
-    {*<option value="">-- Всички --</option>*}
-    {*<option value="create">Изграждане</option>*}
-    {*<option value="destroy">Снемане</option>*}
-    {*<option value="holdup">Профилактика</option>*}
-    {*<option value="arrange">Аранжиране</option>*}
-    {*</select>*}
-    {*</td>*}
-    {*</tr>*}
-    {*</table>*}
-    {*</td>*}
-    {*<td align="right" valign="middle" width="100px">Регион</td>*}
-    {*<td valign="middle" width="170px">*}
-    {*<select style="width:150px;" class="default" name="nIDOffice" id="nIDOffice" onchange="getResult();" />*}
-    {*</td>*}
-    {*<td align="right" valign="middle" width="50px">*}
-    {*<input type="checkbox" class="clear" checked="checked" name="closedLimitCards" id="closedLimitCards" onClick = "getResult();">*}
-    {*</td>*}
-    {*<td valign="middle" width="150px">*}
-    {*затворени карти*}
-    {*</td>*}
-    {*<td colspan="1" align="center" width="105px">*}
-    {*<button type="button" onClick="getResult();" class="search"><img src="images/reload.gif" />Обнови</button>*}
-    {*</td>*}
-    {*<td colspan="1" width="200px" align="center">*}
-    {*{if $right_edit}*}
-    {*<button class="saveplan" type="button" name="button" onClick="save();" ><b>Запази</b></button>*}
-    {*{else}&nbsp;*}
-    {*{/if}				*}
-    {*</td>*}
-    {*<td >*}
-    {*&nbsp;*}
-    {*</td>*}
-    {*</tr>*}
-
 
     <div id="result" style="height: 90%;" rpc_excel_panel="off" rpc_resize="off"></div>
 

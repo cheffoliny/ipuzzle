@@ -1,10 +1,19 @@
 <?php
 
-	$nIDRequest = isset($_GET['id_request']) ? $_GET['id_request'] : '0';
-	
-		
-	
-	if(!empty($nIDRequest)) {
+    $oDBTechTiming = new DBTechTiming();
+
+    $nIDRequest = isset($_GET['id_request']) ? $_GET['id_request'] : '0';
+    $right_edit = false;
+
+    if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
+        if ( in_array( 'tech_planning_edit', $_SESSION['userdata']['access_right_levels']) ) {
+            $right_edit = true;
+        }
+    }
+
+    $aTechTiming = $oDBTechTiming->getAll();
+
+    if(!empty($nIDRequest)) {
 		
 		$oDBTechRequests = new DBTechRequests();
 		$oDBContracts = new DBContracts();
@@ -33,26 +42,35 @@
 			$template->assign('nHours',$nHours);
 			$template->assign('nMinute',$nMinute);
 			$template->assign('nPicNum',$nPicNum);
-		
-		} else {
-			
-			$oDBObjects = new DBObjects();
-			
-			$aObject = $oDBObjects->getRecord($aRequest['id_object']);
-			
-			$sTechType = '';
-			switch ($aRequest['type']) {
-				case 'create': $sTechType = 'Изграждане';break;
-				case 'destroy': $sTechType = 'Сваляне';break;
-				case 'holdup': $sTechType = 'Профилактика';break;
-				case 'arrange': $sTechType = 'Аранжиране';break;
-			}
-			
-			$template->assign('sObjectName',$aObject['name']);
-			$template->assign('sTechType',$sTechType);
-		}
-	}
-	
-	$template->assign('nIDRequest',$nIDRequest);
 
+        } else {
+
+            $oDBObjects = new DBObjects();
+
+
+            $sTechTimingName = $oDBTechTiming->getType((int)$aRequest['id_tech_timing'],1);
+            // за да взема типа и ако е изграждане да не търси обекта
+
+            if($sTechTimingName != 'create')
+            {
+                // ако заявката е за изграждане да не търси обект защото при изграждане обект не се подава
+                $aObject = $oDBObjects->getRecord($aRequest['id_object']);
+            }
+
+            $sTechType = '';
+            switch ($aRequest['type']) {
+                case 'create': $sTechType = 'Изграждане';break;
+                case 'destroy': $sTechType = 'Сваляне';break;
+                case 'holdup': $sTechType = 'Профилактика';break;
+                case 'arrange': $sTechType = 'Аранжиране';break;
+            }
+
+            $template->assign('sObjectName',$aObject['name']);
+            $template->assign('sTechType',$sTechType);
+        }
+    }
+
+$template->assign('nIDRequest',	$nIDRequest);
+$template->assign('right_edit', $right_edit);
+$template->assign('aTechTiming', $aTechTiming);
 ?>

@@ -2032,86 +2032,35 @@ class DBTechLimitCards extends DBBase2 {
 
         $sQuery = "
 		SELECT
-
-		#MAX( tl.created_time ) AS created_time,
-		MAX( tl.real_end ) AS created_time,
-
-
-
-		#DATE_FORMAT( tl.created_time, '%d.%m.%Y' ) AS date,
-		DATE_FORMAT( tl.real_end, '%d.%m.%Y' ) AS date,
-
-		#DATE_FORMAT( tl.real_end, '%Y.%m.%d' ) AS date_end,
-
-		MAX( tl.id) AS max_id,
-
-		obj.name AS obekt,
-
-		obj.id AS id_oj,
-
-		tre.name AS reason_name,
-
-		tre.id AS reason_id,
-
-		tre.is_warranty,
-
-		tre.warranty_time,
-
-		tt.description AS type,
-
-		lcp.id_limit_card,
-
-
-		DATE_FORMAT( tl.created_time, '%d.%m.%Y' ) AS date,
-
-		/*			CASE
-
-		WHEN tl.type = 'create' THEN 'Изграждане'
-
-		WHEN tl.type = 'destroy' THEN 'Снемане'
-
-		WHEN tl.type = 'arrange' THEN 'Аранжиране'
-
-		WHEN tl.type = 'holdup' THEN 'Профилактика'
-
-		WHEN tl.type = 'plan' THEN 'Планово обсл.'
-
-		END AS type,*/
-
-		GROUP_CONCAT( CONCAT_WS( ' ', p.fname, p.lname ) SEPARATOR ', ' ) AS persons,
-
-		GROUP_CONCAT( p.id SEPARATOR',') AS persons_id
-
+		    MAX( tl.real_end ) AS created_time,
+            #DATE_FORMAT( tl.real_end, '%d.%m.%Y' ) AS date,
+            MAX( tl.id) AS max_id,
+            obj.name AS obekt,
+            obj.id AS id_oj,
+            tre.name AS reason_name,
+            tre.id AS reason_id,
+            tre.is_warranty,
+            tre.warranty_time,
+            tt.description AS 'type',
+            lcp.id_limit_card,
+            DATE_FORMAT( tl.created_time, '%d.%m.%Y' ) AS date,
+            GROUP_CONCAT( CONCAT_WS( ' ', p.fname, p.lname ) SEPARATOR ', ' ) AS persons,
+		    GROUP_CONCAT( p.id SEPARATOR',') AS persons_id
 		FROM tech_limit_cards tl
-
 		LEFT JOIN objects obj ON obj.id = tl.id_object
-
 		LEFT JOIN limit_card_persons lcp ON lcp.id_limit_card = tl.id
-
-		LEFT JOIN {$db_name_personnel}.personnel p ON FIND_IN_SET( p.id, lcp.id_person )
-
+		LEFT JOIN {$db_name_personnel}.personnel p ON FIND_IN_SET( p.id, lcp.id_person )   
 		LEFT JOIN tech_requests tr ON tr.id = tl.id_request
-
 		LEFT JOIN tech_reason tre ON tre.id = tr.id_tech_reason
-
 		LEFT JOIN tech_timing tt ON tt.id = tl.id_tech_timing
-
 		WHERE 1
-
-		AND obj.id = {$nIDObject}
-
-		AND tl.to_arc = 0
-
-		AND tr.to_arc = 0
-
-		AND tl.status = 'closed'
-
-		{$warrantyOrder}
-
+		    AND obj.id = {$nIDObject}
+		    AND tl.to_arc = 0
+		    AND tr.to_arc = 0
+		    AND tl.status = 'closed'
+		    {$warrantyOrder}
 		GROUP BY tl.created_time
-
 		ORDER BY tl.created_time DESC
-
 		LIMIT 1
 
 		";

@@ -509,7 +509,7 @@ function dialgOpenFuelList(id) {
 }
 
 function dialogTechRequest(id) {
-	dialog_win('set_setup_tech_request&id='+id, 390, 530, 1, 'set_setup_tech_request');
+	dialog_win('set_setup_tech_request&id='+id, 440, 530, 1, 'set_setup_tech_request');
 }
 
 function dialogWCMoveAdd(id, nIDCard) {
@@ -736,7 +736,7 @@ function dialogAssetsNomenclatures ( id ) {
 // }
 
 function dialogObjectSupport( params, winname ) {
-	dialogWinHelper('object_support', params,  800, 400, 1, winname);
+	dialogWinHelper('object_support', params,  800, 540, 1, winname);
 }
 
 function dialogShiftHistory(id) {
