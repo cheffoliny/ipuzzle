@@ -87,7 +87,7 @@
             </div>
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:385px; overflow: auto;"></div>
+                <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:350px; overflow: auto;"></div>
             </div>
         </div>
         <div class="">
@@ -99,7 +99,7 @@
                 </h5>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div id="result2" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:380px; overflow: auto;"></div>
+                <div id="result2" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:350px; overflow: auto;"></div>
             </div>
         </div>
     </div>

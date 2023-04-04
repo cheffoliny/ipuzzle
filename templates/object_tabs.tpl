@@ -165,54 +165,37 @@ function tab_href( page ) {
 
 
 
-			{*{if $key == 'object_troubles_view' and $false}*}
-				{* Проблеми *}{*	  *}
-				{*{if $page eq object_troubles}*}
-					{*<li class="active"><a class="nav-link active">Проблеми</a></li>*}
-				{*{else}*}
-					{*<li class="disabled">{if $view.object_troubles_view}<a class="nav-link" href="#" onclick="return tab_href('object_troubles');" id='object_troubles'>Проблеми</a>{else}Проблеми{/if}</li>*}
-				{*{/if}*}
-					{**}
-			{*{/if} *}
+            {if $key == 'object_support_view'}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-			{*{if $key == 'object_support_view'}*}
-				{* Обслужване *}{*	  *}
-				{*{if $page eq object_support}*}
-                    {*<li class="nav-item" title="Сервиз"><a class="nav-link active"><i class="fa fa-wrench fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Сервиз">{if $view.object_support_view}<a class="nav-link" href="#" onclick="return tab_href('object_support');" id='object_support'><i class="fa fa-wrench fa-lg"></i></a>{else}<a class="nav-link disabled"><i class="fa fa-wrench fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-					{**}
-			{*{/if} *}
+                        {if $page eq object_support}<i class="fab fa-whmcs fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp; Обслужване &nbsp;&nbsp;&nbsp;
+                        {elseif $page eq object_store} <i class="fas fa-warehouse-alt fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Склад &nbsp;&nbsp;
+                        {else} <i class="fab fa-whmcs fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; СЕРВИЗ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {/if}
+                    </a>
+                    <div class="dropdown-menu">
 
-			{*{if $key == 'object_store_view'}*}
-				{* Запаси *}{*	  *}
-				{*{if $page eq object_store}*}
-                    {*<li class="nav-item" title="Запаси"><a class="nav-link active"><i class="fa fa-database fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Запаси">{if $view.object_store_view}<a class="nav-link" href="#" onclick="return tab_href('object_store');" id='object_store'><i class="fa fa-database fa-lg"></i></a>{else}<a class="nav-link disabled"><i class="fa fa-database fa-lg"></i></a>{/if}</li>*}
-				{*{/if}*}
-			{**}
-			{*{/if}*}
+                        {* Обслужване *}
+                        {if $page eq 'object_support'}
+                            <a class="dropdown-item"  href="#" onclick="return false;">Обслужване</a>
+                        {else}
+                            {if $view.object_support_view}<a class="dropdown-item text-puzzle px-1" href="#" onclick="return tab_href('object_support');" id='object_support'><i class="fab fa-whmcs fa-lg ml-1 mr-1"></i> Обслужване</a>
+                            {else}<a class="dropdown-item text-puzzle disabled px-1"><i class="fab fa-whmcs fa-lg ml-2 mr-2"></i> Обслужване</a>{/if}
+                        {/if}
 
-			{*{if $key == 'object_store_view'}*}
-				{* Карта *}{*	*}
-				{*{if $page eq object_geo}*}
-                    {*<li class="nav-item" title="Карта"><a class="nav-link active"><i class="fa fa-map fa-lg"></i></a></li>*}
-				{*{else}*}
-                    {*<li class="nav-item" title="Карта">{if $view.object_geo}<a class="nav-link" href="#" onclick="return tab_href('object_geo');" id='object_geo'><i class="fa fa-map fa-lg"></i>{else}<a class="nav-link disabled"><i class="fa fa-map fa-lg"></i>{/if}</a></li>*}
-				{*{/if}*}
-				{**}
-			{*{/if}*}
+                        {* Склад *}
+{*                        {if $page eq 'object_store'}*}
+{*                            <a class="dropdown-item active" href="#" onclick="return false;"><i class="fab fa-gears fa-lg ml-2 mr-2"></i> Склад</a>*}
+{*                        {else}*}
+                            {if $view.object_store_view}<a class="dropdown-item text-puzzle px-1" href="#" onclick="return tab_href('object_store');" id='object_store'><i class="fas fa-warehouse-alt fa-lg ml-2 mr-2"></i> Склад</a>
+                            {else}<a class="dropdown-item text-puzzle disabled px-1"><i class="fas fa-warehouse-alt fa-lg ml-2 mr-2"></i> Склад</a>{/if}
+{*                        {/if}*}
 
-	 
-			{*{if $smarty.foreach.rights.iteration == 20}*}
-				{**}
-				{*</ul>*}
-				{*<ul class="nav nav-pills nav-left">*}
-				{**}
-				{**}
-			{*{/if}*}
+                    </div>
+                </li>
+
+            {/if}
 		{/foreach}
 
         <li class="nav-item dropdown ml-auto mr-5">

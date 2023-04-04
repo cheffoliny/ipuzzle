@@ -1,1 +1,0 @@
-ALTER TABLE `personnel`.`work_contracts` ADD `term_optional` VARCHAR(200) NOT NULL AFTER `reward_optional`;

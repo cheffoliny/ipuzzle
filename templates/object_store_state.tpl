@@ -4,18 +4,9 @@
 		
 	</script>
 {/literal}
-<body style="background: none;">
-<form name="form1" id="form1" onsubmit="return false;">
-	<input type="hidden" id="nID" name="nID" value="0" />
 
-	<table class="page_data" >
-	<tr>
-		<td style="color: #204060; text-align: left; width: 100%; padding: 1px 0 1px 1px; border: 1px solid #fff;">
-			Техника зачислена на обекта
-		</td>
-	</tr>
-	</table>
-	
+<form name="form1" id="form1" class="w-100 h-100 p-0 m-0" onsubmit="return false;">
+	<input type="hidden" id="nID" name="nID" value="0" />
 	<div id="result" rpc_excel_panel="off" rpc_paging="off"></div>
 </form>
 

@@ -22,63 +22,47 @@
 
 <form name="form1" id="form1" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
+
+
+	{include file='object_tabs.tpl'}
+
+	<div id="accordion" class="m-0 p-0">
+
+			<div class="nav nav-tabs navbar-dark bg-faded my-0" id="headingOne">
+				<h5 class="my-0 px-1">
+					<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<i class="fa fa-expand fa-lg mr-2 ml-2"></i>Наличност в обекта
+					</button>
+				</h5>
+{*				<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();">*}
+			</div>
+
+			<div id="collapseOne" class="collapse show p-0 m-0" aria-labelledby="headingOne" data-parent="#accordion">
+				<iframe class="w-100 h-100 p-0 m-0" id="object_state" name="object_state" frameborder=0 src='page.php?page=object_store_state' style="min-height: 350px !important;"></iframe>
+			</div>
+
+			<div class="nav nav-tabs navbar-dark bg-faded mb-1" id="headingTwo">
+				<h5 class="mb-0">
+					<button class="btn btn-link collapsed float-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						<i class="fa fa-expand fa-lg mr-2 ml-2"></i>ППП
+					</button>
+				</h5>
+			</div>
+			<div id="collapseTwo" class="collapse p-0 m-0" aria-labelledby="headingTwo" data-parent="#accordion">
+				<iframe class="w-100 h-100 p-0 m-0" id="object_ppp" name="object_ppp" frameborder=0 src='page.php?page=object_store_ppp'style="min-height: 350px !important;"></iframe>
+			</div>
+
+	</div>
+
 	
-<table class="search" style="width:100%;">
-	<tr>
-		<td class="header_buttons">
-		<span id="head_window">Техника на {$object}</span> 
-				<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
-				{include file=object_tabs.tpl}
-			</td>
-		</tr>
-		
-		<tr class="odd">
-			<td id="filter_result">
-		<!-- начало на работната част -->
-		
-		
-		{*{if $mobile}*}
-			{*{if $cnt > 6}*}
-				{*<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto;">*}
-			{*{else}*}
-				{*<div id="search" style="padding-top: 10px; width: 800px; height: 270px; overflow-y: auto;">*}
-			{*{/if}*}
-		{*{/if}*}
-		
-		<table border='0' width="100%" height="410px">
-			<tr>
-				<td width="100%" height="50%">
-					<iframe id="object_state" name="object_state" width="100%" height="100%" frameborder=0 src='page.php?page=object_store_state'>
-					</iframe>
-				</td>
-			</tr>
-			<tr>
-				<td width="100%" height="50%">
-					<iframe id="object_ppp" name="object_ppp" width="100%" height="100%" frameborder=0 src='page.php?page=object_store_ppp'>
-					</iframe>
-				</td>
-			</tr>
-		</table>
-		
-		{*{if $mobile}</div>{/if}*}
-	 	<!-- край на работната част -->
-		</td>
-	</tr>
-</table>
-	
-<div id="search"  style="padding-top:10px; width:800px;">
-	<table class="page_data" >
-		<tr>
-			<td style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
-				<button onclick="openPPPForTransfer( 0, 1 );" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Към обекта </button>
-				&nbsp;
-				<button onclick="openPPPForTransfer( 0, 2 );" class="btn btn-xs btn-danger"><img src="images/glyphicons/minus.png"> От обекта </button>
-			</td>
-			<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
-				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>
-			</td>
-		</tr>
-	</table>
+<div id="search" class="navbar fixed-bottom flex-row navbar-expand-lg">
+	<div class="col ">
+		<button onclick="openPPPForTransfer( 0, 1 );" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Към обекта </button>
+		<button onclick="openPPPForTransfer( 0, 2 );" class="btn btn-sm btn-danger"><i class="fa fa-minus"></i> От обекта </button>
+	</div>
+	<div class="col text-right py-2">
+		<button id="b100" class="btn btn-sm btn-danger" onClick="window.close();"><i class="fa fa-times"></i> Затвори </button>
+	</div>
 </div>
 	
 	<div id="NoDisplay" style="display: none;"></div>
