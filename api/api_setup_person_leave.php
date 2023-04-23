@@ -396,7 +396,7 @@ class ApiSetupPersonLeave
         $bIsSubstituteNeeded = $oDBPersonnel->isSubstituteNeeded($nIDPerson);
 //			$nRemainLeaveDays = $oDBLeaves->getRemainingLeaveDays( substr( $aParams['sLeaveFromOffer'], 0, 4 ), $nIDPerson );
         $nRemainLeaveDays = $oDBPersonLeaves->getRemainingDays($nIDPerson,$aParams['forYear']);
-        ob_toFile($nRemainLeaveDays,"leave.txt");
+        //ob_toFile($nRemainLeaveDays,"leave.txt");
 
         //Validation
         if (empty($aParams['nApplicationDaysOffer'])) throw new Exception("Моля, въведете брой работни дни!", DBAPI_ERR_INVALID_PARAM);
