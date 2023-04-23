@@ -85,7 +85,7 @@ class DBSalary
 			);
 		
 		$sQuery2 = "
-			INSERT INTO salary (id_person, id_office, id_object, id_object_duty, month, code, is_earning, sum, description, count, total_sum )
+			INSERT INTO salary (`id_person`, `id_office`, `id_object`, `id_object_duty`, `month`, `code`, `is_earning`, `sum`, `description`, `count`, `total_sum` )
 			SELECT 
 				od.id_person, 
 				o.id_office, 
@@ -169,7 +169,7 @@ class DBSalary
 		$nMonth = date('m', $nTime);
 		
 		$sQuery2 = "
-			INSERT INTO salary (id_person, id_office, id_object, id_object_duty, month, code, is_earning, sum, description, count, total_sum )
+			INSERT INTO salary (`id_person`, `id_office`, `id_object`, `id_object_duty`, `month`, `code`, `is_earning`, `sum`, `description`, `count`, `total_sum` )
 			SELECT 
 				od.id_person, 
 				o.id_office, 

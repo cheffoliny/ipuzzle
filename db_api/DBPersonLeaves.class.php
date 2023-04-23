@@ -736,11 +736,13 @@ class DBPersonLeaves extends DBBase2
     public function getPersonLeavesForMonth($nYear, $nMonth)
     {
         //Validation
-        if (empty($nYear) || !is_numeric($nYear) || $nYear < 2000 || $nYear > 3000) {
+        if (empty($nYear) || !is_numeric($nYear) || $nYear < 2000 || $nYear > 3000)
+        {
             return array();
         }
 
-        if (empty($nMonth) || !is_numeric($nMonth) || $nMonth < 1 || $nMonth > 12) {
+        if (empty($nMonth) || !is_numeric($nMonth) || $nMonth < 1 || $nMonth > 12)
+        {
             return array();
         }
         //End Validation
@@ -798,22 +800,23 @@ class DBPersonLeaves extends DBBase2
 						( SUBSTR( per_lea.leave_from, 1, 7 ) <= '{$sYearMonth}' AND SUBSTR( per_lea.leave_to, 1, 7 ) >= '{$sYearMonth}' )
 					)
 			";
-
+APILog::Log(111, $sQuery );
         $aData = $this->select($sQuery);
 
         $aOutput = array();
 
-        foreach ($aData as $nKey => $aValue) {
-            $aOutput[$aValue['id_person']][$aValue['id']]['leave_from'] = $aValue['leave_from'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['leave_to'] = $aValue['leave_to'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['leave_from_bg'] = $aValue['leave_from_bg'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['leave_to_bg'] = $aValue['leave_to_bg'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['person_name'] = $aValue['person_name'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['leave_type'] = $aValue['leave_type'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['application_type'] = $aValue['application_type'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['is_confirm'] = $aValue['is_confirm'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['is_confirm_num'] = $aValue['is_confirm_num'];
-            $aOutput[$aValue['id_person']][$aValue['id']]['days'] = $aValue['days'];
+        foreach( $aData as $nKey => $aValue )
+        {
+            $aOutput[$aValue['id_person']][$aValue['id']]['leave_from'] 		= $aValue['leave_from'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['leave_to'] 			= $aValue['leave_to'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['leave_from_bg'] 		= $aValue['leave_from_bg'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['leave_to_bg'] 		= $aValue['leave_to_bg'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['person_name'] 		= $aValue['person_name'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['leave_type'] 		= $aValue['leave_type'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['application_type'] 	= $aValue['application_type'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['is_confirm'] 		= $aValue['is_confirm'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['is_confirm_num'] 	= $aValue['is_confirm_num'];
+            $aOutput[$aValue['id_person']][$aValue['id']]['days'] 				= $aValue['days'];
         }
 
         return $aOutput;

@@ -621,8 +621,6 @@
 					<button class="btn btn-sm btn-info mx-1" type="button" name="viewHours" onClick="getHours();" title="Брой часове"><i class="far fa-clock"></i></button>
 					<button class="btn btn-sm btn-success" type="button" onClick="return loadXMLDoc2( 'result' );" name="Button"><i class="far fa-search"></i> График</button>
 					<!-- <button type="button" onClick="return loadXMLDoc2( 'correctAllShiftHours' );" name="Button"><img src="images/confirm.gif">Часове</button> -->
-					<!-- <button type="button" onClick="return loadXMLDoc2( 'saveAllLeavesToSchedule' );" name="Button"><img src="images/confirm.gif">Отпуски</button> -->
-
 {*					{if $auto_schedule}*}
 {*					<button type="button" name="Validate" onClick="return autoValidate();" class="search"><img src="images/reload.gif">Валидация</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*}
 {*					{/if}*}

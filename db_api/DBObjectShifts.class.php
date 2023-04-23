@@ -936,7 +936,7 @@ class DBObjectShifts extends DBBase2 {
 
                                 $sWord = $aLeave['application_type'] == "application" ? "Отпуск" : "Болничен";
                                 $sToAdd = "\n\n";
-                                $sToAdd .= "{$sWord} От:\t" . $aLeave['leave_from_bg'] . "\n";
+                                $sToAdd .= "{$sWord} От33:\t" . $aLeave['leave_from_bg'] . "\n";
                                 $sToAdd .= "{$sWord} До:\t" . $aLeave['leave_to_bg'] . "\n";
                                 $sToAdd .= "Тип:\t\t" . $aLeave['leave_type'] . "\n";
                                 $sToAdd .= "Статус:\t" . $aLeave['is_confirm'];

@@ -337,33 +337,33 @@ class MyHandler
 
             //if ( !empty($val['h1']) || !empty($val['h2']) ) {
             if ( !empty($val['is_earning']) ) {
-                $oResponse->setDataAttributes( $key, 'code', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'name', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'firm', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'region', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'objectsa', array('style' => 'background-color: #BEDAF8; !important;'));
+                $oResponse->setDataAttributes( $key, 'code', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'name', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'firm', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'region', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'objectsa', array('class' => 'bg-dark'));
                 if ( $act == 1 ) {
-                    $oResponse->setDataAttributes( $key, 'sum', array('style' => 'background-color: #BEDAF8; color: blue; !important;'));
+                    $oResponse->setDataAttributes( $key, 'sum', array('class' => 'bg-dark'));
                 }
-                $oResponse->setDataAttributes( $key, 'count', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'total_sum', array('style' => 'background-color: #BEDAF8; color: blue; !important;'));
-                $oResponse->setDataAttributes( $key, 'paid', array('style' => 'background-color: #BEDAF8; color: blue; !important;'));
-                $oResponse->setDataAttributes( $key, 'paid_date', array('style' => 'background-color: #BEDAF8; !important;'));
-                $oResponse->setDataAttributes( $key, 'updated_user', array('style' => 'background-color: #BEDAF8; !important;'));
+                $oResponse->setDataAttributes( $key, 'count', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'total_sum', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'paid', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'paid_date', array('class' => 'bg-dark'));
+                $oResponse->setDataAttributes( $key, 'updated_user', array('class' => 'bg-dark'));
             } else {
-                $oResponse->setDataAttributes( $key, 'code', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'name', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'firm', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'region', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'objectsa', array('style' => 'background-color: #FF9500; !important;'));
+                $oResponse->setDataAttributes( $key, 'code', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'name', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'firm', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'region', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'objectsa', array('class' => 'bg-warning'));
                 if ( $act == 1 ) {
-                    $oResponse->setDataAttributes( $key, 'sum', array('style' => 'background-color: #FF9500; color: red; !important;'));
+                    $oResponse->setDataAttributes( $key, 'sum', array('class' => 'bg-danger'));
                 }
-                $oResponse->setDataAttributes( $key, 'count', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'total_sum', array('style' => 'background-color: #FF9500; color: red; !important;'));
-                $oResponse->setDataAttributes( $key, 'paid', array('style' => 'background-color: #FF9500; color: red; !important;'));
-                $oResponse->setDataAttributes( $key, 'paid_date', array('style' => 'background-color: #FF9500; !important;'));
-                $oResponse->setDataAttributes( $key, 'updated_user', array('style' => 'background-color: #FF9500; !important;'));
+                $oResponse->setDataAttributes( $key, 'count', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'total_sum', array('class' => 'bg-danger'));
+                $oResponse->setDataAttributes( $key, 'paid', array('class' => 'bg-danger'));
+                $oResponse->setDataAttributes( $key, 'paid_date', array('class' => 'bg-warning'));
+                $oResponse->setDataAttributes( $key, 'updated_user', array('class' => 'bg-warning'));
             }
 
             if (!empty($val['auto'])) {

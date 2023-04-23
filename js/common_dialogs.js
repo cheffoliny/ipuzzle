@@ -259,15 +259,15 @@ function dialogFirm( id ) {
 }
 
 function dialogPerson( id ) {
-	dialog_win('personInfo&id='+id,1000,520,1,'personInfo');
+	dialog_win('personInfo&id='+id,1000,620,1,'personInfo');
 }
 
 function dialogPersonLeave( id ) {
-	dialog_win('person_leave&id='+id,1000,520,1,'person_leave');
+	dialog_win('person_leave&id='+id,1000,620,1,'person_leave');
 }
 
 function dialogPersonSalary( id,sMonth,sYear ) {
-	dialog_win('person_salary&id='+id+'&sMonth='+sMonth+'&sYear='+sYear,1000,520,1,'person_salary');
+	dialog_win('person_salary&id='+id+'&sMonth='+sMonth+'&sYear='+sYear,1000,620,1,'person_salary');
 }
 
 function dialogSalaryEarning( id ) {

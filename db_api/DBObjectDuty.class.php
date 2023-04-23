@@ -1793,75 +1793,75 @@
 		 * @param string $sStartDate ( Y-m-d )
 		 * @param int $nDays
 		 */
-		public function putPersonLeaveForDays( $nIDPerson, $sStartDate, $nDays )
-		{
-			global $db_sod;
-			
-			$oDBHolidays 			= new DBHolidays();
-			$oDBObjectShifts		= new DBObjectShifts();
-			$oDBPersonMonthLimits 	= new DBPersonMonthLimits();
-			$oDBPersonnel			= new DBPersonnel();
-			
-			//Initial Data
-			if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return DBAPI_ERR_INVALID_PARAM;
-			
-			$aStartDate = explode( "-", $sStartDate );
-			if( !isset( $aStartDate[0] ) || !isset( $aStartDate[1] ) || !isset( $aStartDate[2] ) )
-			{
-				return DBAPI_ERR_INVALID_PARAM;
-			}
-			else
-			{
-				$nYear 	= ( int ) $aStartDate[0];
-				$nMonth = ( int ) $aStartDate[1];
-				$nDay 	= ( int ) $aStartDate[2];
-			}
-			
-			$nIDPersonObject = $oDBPersonnel->getPersonObject( $nIDPerson );
-			if( empty( $nIDPersonObject ) )return DBAPI_ERR_SUCCESS;
-			
-			$nDaysInMonth = ( int ) date( "t", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
-			$sSQLDate = $nYear . "-" . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ) . "-" . ( strlen( $nDay ) < 2 ? ( "0" . $nDay ) : $nDay );
-			
-			$aObjectLeaveShift = $oDBObjectShifts->getShiftLeaveForObject( $nIDPersonObject );
-			//End Initial Data
-			
-			$this->StartTrans();
-			$nIteration = 0;
-			$nAddWorkDay = false;
-			
-			while( $nIteration < $nDays )
-			{
-				$nMyWeekday = ( int ) date( "w", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
-				
-				if( $nMyWeekday == 0 || $nMyWeekday == 6 )
-				{
-					if( $oDBHolidays->isWorkday( $nDay, $nMonth, $nYear ) )$nAddWorkDay = true;
-				}
-				else
-				{
-					if( !$oDBHolidays->isHoliday( $nDay, $nMonth ) && !$oDBHolidays->isRestday( $nDay, $nMonth, $nYear ) )$nAddWorkDay = true;
-				}
-				
-				if( $nAddWorkDay )
-				{
-					$nHoursToAdd = 0;
-					if( !empty( $nIDPersonObject ) && !empty( $aObjectLeaveShift['id'] ) )
-					{
-						if( $aObjectLeaveShift['shift_to_sec'] <= $aObjectLeaveShift['shift_from_sec'] )$nAddDay = 86400;
-						else $nAddDay = 0;
-						
-						$aData = array();
-						$aData['id_obj'] = $nIDPersonObject;
-						$aData['id_shift'] = $aObjectLeaveShift['id'];
-						$aData['id_person'] = $nIDPerson;
-						$aData['startShift'] = date( "Y-m-d", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) ) . " " . $aObjectLeaveShift['shift_from'];
-						$aData['endShift'] = date( "Y-m-d", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) + $nAddDay ) . " " . $aObjectLeaveShift['shift_to'];
-						$aData['startRealShift'] = $aData['startShift'];
-						$aData['endRealShift'] = $aData['endShift'];
-						
-						//Existance Check
-						$sExisting = "
+        public function putPersonLeaveForDays( $nIDPerson, $sStartDate, $nDays )
+        {
+            global $db_sod;
+
+            $oDBHolidays 			= new DBHolidays();
+            $oDBObjectShifts		= new DBObjectShifts();
+            $oDBPersonMonthLimits 	= new DBPersonMonthLimits();
+            $oDBPersonnel			= new DBPersonnel();
+
+            //Initial Data
+            if( empty( $nIDPerson ) || !is_numeric( $nIDPerson ) )return DBAPI_ERR_INVALID_PARAM;
+
+            $aStartDate = explode( "-", $sStartDate );
+            if( !isset( $aStartDate[0] ) || !isset( $aStartDate[1] ) || !isset( $aStartDate[2] ) )
+            {
+                return DBAPI_ERR_INVALID_PARAM;
+            }
+            else
+            {
+                $nYear 	= ( int ) $aStartDate[0];
+                $nMonth = ( int ) $aStartDate[1];
+                $nDay 	= ( int ) $aStartDate[2];
+            }
+
+            $nIDPersonObject = $oDBPersonnel->getPersonObject( $nIDPerson );
+            if( empty( $nIDPersonObject ) )return DBAPI_ERR_SUCCESS;
+
+            $nDaysInMonth = ( int ) date( "t", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
+            $sSQLDate = $nYear . "-" . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ) . "-" . ( strlen( $nDay ) < 2 ? ( "0" . $nDay ) : $nDay );
+
+            $aObjectLeaveShift = $oDBObjectShifts->getShiftLeaveForObject( $nIDPersonObject );
+            //End Initial Data
+
+            $this->StartTrans();
+            $nIteration = 0;
+            $nAddWorkDay = false;
+
+            while( $nIteration < $nDays )
+            {
+                $nMyWeekday = ( int ) date( "w", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
+
+                if( $nMyWeekday == 0 || $nMyWeekday == 6 )
+                {
+                    if( $oDBHolidays->isWorkday( $nDay, $nMonth, $nYear ) )$nAddWorkDay = true;
+                }
+                else
+                {
+                    if( !$oDBHolidays->isHoliday( $nDay, $nMonth , $nYear) && !$oDBHolidays->isRestday( $nDay, $nMonth, $nYear ) )$nAddWorkDay = true;
+                }
+
+                if( $nAddWorkDay )
+                {
+                    $nHoursToAdd = 0;
+                    if( !empty( $nIDPersonObject ) && !empty( $aObjectLeaveShift['id'] ) )
+                    {
+                        if( $aObjectLeaveShift['shift_to_sec'] <= $aObjectLeaveShift['shift_from_sec'] )$nAddDay = 86400;
+                        else $nAddDay = 0;
+
+                        $aData = array();
+                        $aData['id_obj'] = $nIDPersonObject;
+                        $aData['id_shift'] = $aObjectLeaveShift['id'];
+                        $aData['id_person'] = $nIDPerson;
+                        $aData['startShift'] = date( "Y-m-d", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) ) . " " . $aObjectLeaveShift['shift_from'];
+                        $aData['endShift'] = date( "Y-m-d", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) + $nAddDay ) . " " . $aObjectLeaveShift['shift_to'];
+                        $aData['startRealShift'] = $aData['startShift'];
+                        $aData['endRealShift'] = $aData['endShift'];
+
+                        //Existance Check
+                        $sExisting = "
 							SELECT
 								id
 							FROM
@@ -1873,13 +1873,13 @@
 								AND startShift = '{$aData['startShift']}'
 								AND endShift = '{$aData['endShift']}'
 						";
-						$aExisting = $this->select( $sExisting );
-						//End Existance Check
-						
-						if( empty( $aExisting ) )
-						{
-							//Delete Null Shift For Date
-							$sDeleteQuery = "
+                        $aExisting = $this->select( $sExisting );
+                        //End Existance Check
+
+                        if( empty( $aExisting ) )
+                        {
+                            //Delete Null Shift For Date
+                            $sDeleteQuery = "
 								DELETE
 								FROM
 									object_duty
@@ -1889,55 +1889,55 @@
 									AND id_person = {$nIDPerson}
 									AND startShift LIKE '{$sSQLDate}%'
 							";
-							
-							$oRes = $db_sod->Execute( $sDeleteQuery );
-							if( !$oRes )return DBAPI_ERR_SQL_QUERY;
-							//End Delete Null Shift For Date
-							
-							$nResult = $this->update( $aData );
-							if( $nResult != DBAPI_ERR_SUCCESS )
-							{
-								$this->FailTrans();
-								return $nResult;
-							}
-							
-							$nHoursToAdd += 8;
-						}
-					}
-					
-					$nResult = $oDBPersonMonthLimits->IncreaseHours( $nIDPerson, $nYear . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ), $nHoursToAdd );
-					if( $nResult != DBAPI_ERR_SUCCESS )
-					{
-						$this->FailTrans();
-						return $nResult;
-					}
-					
-					$nIteration++;
-					$nAddWorkDay = false;
-				}
-				
-				//Progress Date
-				if( $nIteration < $nDays )
-				{
-					$nDay++;
-					if( $nDay > $nDaysInMonth )
-					{
-						$nDay = 1;
-						$nMonth++;
-						if( $nMonth > 12 ) { $nMonth = 1; $nYear++; }
-						
-						$nDaysInMonth = ( int ) date( "t", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
-					}
-					
-					$sSQLDate = $nYear . "-" . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ) . "-" . ( strlen( $nDay ) < 2 ? ( "0" . $nDay ) : $nDay );
-				}
-				//End Progress Date
-			}
-			
-			$this->CompleteTrans();
-			
-			return DBAPI_ERR_SUCCESS;
-		}
+
+                            $oRes = $db_sod->Execute( $sDeleteQuery );
+                            if( !$oRes )return DBAPI_ERR_SQL_QUERY;
+                            //End Delete Null Shift For Date
+
+                            $nResult = $this->update( $aData );
+                            if( $nResult != DBAPI_ERR_SUCCESS )
+                            {
+                                $this->FailTrans();
+                                return $nResult;
+                            }
+
+                            $nHoursToAdd += 8;
+                        }
+                    }
+
+                    $nResult = $oDBPersonMonthLimits->IncreaseHours( $nIDPerson, $nYear . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ), $nHoursToAdd );
+                    if( $nResult != DBAPI_ERR_SUCCESS )
+                    {
+                        $this->FailTrans();
+                        return $nResult;
+                    }
+
+                    $nIteration++;
+                    $nAddWorkDay = false;
+                }
+
+                //Progress Date
+                if( $nIteration < $nDays )
+                {
+                    $nDay++;
+                    if( $nDay > $nDaysInMonth )
+                    {
+                        $nDay = 1;
+                        $nMonth++;
+                        if( $nMonth > 12 ) { $nMonth = 1; $nYear++; }
+
+                        $nDaysInMonth = ( int ) date( "t", mktime( 0, 0, 0, $nMonth, $nDay, $nYear ) );
+                    }
+
+                    $sSQLDate = $nYear . "-" . ( strlen( $nMonth ) < 2 ? ( "0" . $nMonth ) : $nMonth ) . "-" . ( strlen( $nDay ) < 2 ? ( "0" . $nDay ) : $nDay );
+                }
+                //End Progress Date
+            }
+
+            $this->CompleteTrans();
+
+            return DBAPI_ERR_SUCCESS;
+        }
 		
 		/**
 		 * Връща нощните часове за служител, според настройките за начало и край на нощния труд.
@@ -2259,6 +2259,42 @@
 			
 			return getRoundTime( $sHolidayLength );
 		}
+
+        public function clearDutyLeavePerson($nIDPerson, $nIDObject, $nYear, $nMonth) {
+            global $db_sod, $db_name_sod;
+
+            if ( empty($nYear) || !is_numeric($nYear) ) {
+                return false;
+            }
+
+            if ( empty($nMonth) || !is_numeric($nMonth) ) {
+                return false;
+            }
+
+            if ( empty($nIDObject) || !is_numeric($nIDObject) ) {
+                return false;
+            }
+
+            if ( empty($nIDPerson) || !is_numeric($nIDPerson) ) {
+                return false;
+            }
+
+            $sQuery = "
+				UPDATE {$db_name_sod}.object_duty
+				SET startShift = DATE(startShift),
+					endShift = DATE_ADD(DATE(startShift), INTERVAL 1 DAY),
+					startRealShift = '0000-00-00 00:00:00',
+					endRealShift = '0000-00-00 00:00:00',
+					id_shift = 0
+				WHERE id_obj = {$nIDObject}
+					AND YEAR(startShift) = {$nYear}
+					AND MONTH(startShift) = {$nMonth}
+					AND id_person = {$nIDPerson}
+					AND id_shift = 1000001
+			";
+
+            $db_sod->Execute($sQuery);
+        }
 	}
 
 ?>

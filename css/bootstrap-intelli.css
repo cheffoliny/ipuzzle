@@ -19,20 +19,24 @@ table.result th.holiday {
     color: #FF0000 !important;
 }
 
+table.result td.holiday {
+    background-color: #D2DCF0 !important;
+    color: #FF0000 !important;
+}
+
 table.result td {
     background: rgba(0, 0, 0, 0.8) !important;
 }
 
-table.result th.work_weekend
-{
+table.result th.work_weekend {
     background-image: none;
-    background-color: #C8C8DD;
+    background-color: #C8C8DD !important;
 }
 
 table.result td.work_weekend
 {
     background-image: none;
-    background-color: #DDDDF1;
+    background-color: #DDDDF1 !important;
 }
 
 
