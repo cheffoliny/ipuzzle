@@ -407,9 +407,9 @@
                     </div>
                 </nav>
 
-                <div id="result_data"  class="container-fluid body-content" >
+                <div id="result_data"  class="container-fluid body-content pb-5" >
                     <xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>result_data</xsl:attribute>
-                    <table class="table table-sm table-striped table-dark">
+                    <table class="table table-sm table-striped table-dark mb-5">
                         <tbody>
                             <xsl:attribute name="id"><xsl:value-of select="$rpc_prefix"/>tbl_result</xsl:attribute>
                             <xsl:for-each select="response/result/title/r">
