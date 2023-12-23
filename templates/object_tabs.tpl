@@ -10,6 +10,13 @@ function tab_href( page ) {
 	}	
 }
 
+function TechRequestForObject() {
+    var oID = $('nID');
+    //var objectId = $('nID').value;
+    dialogTechRequestForObject(0, oID.value);
+
+}
+
 </script>
 {/literal}
 
@@ -209,7 +216,7 @@ function tab_href( page ) {
                     <a class="dropdown-item text-puzzle" onClick="ServiceStatus();"><i class="fa fa-low-vision"></i> &nbsp; Байпас &nbsp; </a>
                 {/if}
                 <a class="dropdown-item text-puzzle" href="#" onClick="makePayment();"><i class="far fa-credit-card"></i> &nbsp; Плащане &nbsp; </a>
-                <a class="dropdown-item text-puzzle" href="#" onClick="techSupport();"><i class="fab fa-whmcs"></i> &nbsp; Задача &nbsp; </a>
+                <a class="dropdown-item text-puzzle" href="#" onClick="TechRequestForObject();"><i class="fab fa-whmcs"></i> &nbsp; Задача &nbsp; </a>
             </div>
         </li>
 </ul>

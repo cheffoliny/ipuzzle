@@ -12,7 +12,7 @@ class ApiSetSetupTechRequest {
         $aOffices		= array();
 
         $nID			= Params::get("nID", 0);
-        //$nIDOldObj		= Params::get("nIDOldObj", 0);
+        $nIDObject		= Params::get("nIDObject", 0);
         $nIDFirm		= Params::get("nIDFirm", 0);
         $nIDOffice		= Params::get("nIDOffice", 0);
         $nIDReason		= Params::get("nIDReason", 0);
@@ -166,6 +166,21 @@ class ApiSetSetupTechRequest {
                 else
                     $oResponse->setFormElement( "form1", "sLastService", array( "value" => $sLastService ) );
             }
+        } elseif ( (int) $nIDObject > 0) {
+            $oObject = new DBObjects();
+            $aObject = array();
+
+            $aObject = $oObject->getInfoByID( (int) $nIDObject );
+
+            //APILog::Log(0, $aObject);
+
+            $nIDFirm	= isset($aObject['id_firm']) ? $aObject['id_firm'] : 0;
+            $nIDOffice	= isset($aObject['id_office']) ? $aObject['id_office'] : 0;
+            //$nIDReason = 4;
+
+//				$oResponse->setFormElement('form1', 'sType', array(), 'holdup');
+            $oResponse->setFormElement('form1', 'obj', array(), isset($aObject['name']) ? $aObject['name'] : '');
+            $oResponse->setFormElement('form1', 'nObject', array(), isset($aObject['id']) ? $aObject['id'] : 0);
         }
 
         //трябва да се виждат всички фирми от всички потребители L1-210
@@ -577,10 +592,11 @@ class ApiSetSetupTechRequest {
         if( !isset( $aObject['num'] ) )$nIDObject = 0;
         $num = isset( $aObject['num'] ) && !empty( $aObject['num'] ) ? $aObject['num'] : 0;
 
-        $old = isset($aOld['id_oldobj']) && !empty($aOld['id_oldobj']) ? $aOld['id_oldobj'] : -1;
+       // $old = isset($aOld['id_oldobj']) && !empty($aOld['id_oldobj']) ? $aOld['id_oldobj'] : -1;
 
         $oResponse->setFormElement( 'form1', 'nNum', array( "value" => $num ) );
-        $oResponse->setFormElement( 'form1', 'nOld', array( "value" => $old ) );
+       // $oResponse->setFormElement( 'form1', 'nOld', array( "value" => $old ) );
+       // $oResponse->setFormElement( 'form1', 'nOld', array( "value" => $old ) );
         //End Syncronization
 
         $oResponse->printResponse();

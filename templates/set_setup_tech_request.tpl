@@ -50,14 +50,13 @@
 		}
 
 		function onSuggestObject(aParams) {
-			$('nObject').value = aParams.KEY;
-			var idObject = aParams.KEY;
+			//$('nObject').value = aParams.KEY;
+			jQuery('#nObject').val(aParams.KEY);
 
 			rpc_on_exit = function( nCode )
 			{
 				if( !parseInt( nCode ) )
 				{
-	//                    setPlanSupport(idObject);
 
 					if( $("sUnprocessed").value != "" )
 					{
@@ -96,7 +95,7 @@
 
 		function onChangeRequestBy() {
 
-			toggleAlertPayment();
+			//toggleAlertPayment();
 
 			if ( jQuery('#sRequestBy').val() == 'telepol' ) {
 				jQuery('#clientDiv').hide();
@@ -130,7 +129,7 @@
 		}
 
 		function objChange() {
-			if(empty($('obj').value)) {
+			if($('obj').value == '') {
 				$('nObject').value = 0;
 				$("sLastService").value = "";
 				$('obj').value = '';
@@ -166,6 +165,13 @@
 				dialogObjectInfo( '&nID=' + nID );
 			}
 		}
+
+		function openObject()
+		{
+			var nID = $('nObject').value;
+			dialogObjectInfo('nID='+nID);
+		}
+
 	</script>
 {/literal}
 
@@ -176,17 +182,11 @@
 			<input type="hidden" id="nID" name="nID" value="{$nID}">
 			<input type="hidden" id="sAct" name="sAct" value="load" />
 			<input type="hidden" id="nObject" name="nObject" value="0" />
+			<input type="hidden" id="nIDObject" name="nIDObject" value="{$nIDObject}">
 			<input type="hidden" id="nNum" name="nNum" value="0" />
 			<input type="hidden" id="nOld" name="nOld" value="0" />
 			<input type="hidden" id="sUnprocessed" name="sUnprocessed" value="" />
 			<input type="hidden" id="bDis" name="bDis" value="{$bDis}" />
-			{*Оферта*}
-			<input type="hidden" id="nIDContract" name="nIDContract" value="0" />  {* Има ли оферта по тази заявка *}
-			<input type="hidden" id="bIsSigned"   name="bIsSigned"   value="0" />  {* Дали офертата е потвърдена *}
-			<input type="hidden" id="bIsUpdated"  name="bIsUpdated"  value="0" />  {* Дали полето е ъпдейтвано - ако да, приемаме, че офертата е дефинирана *}
-
-			{*Констативен проткол*}
-			{*<input type="hidden" id="nIDAscertainmentProtocol" name="nIDAscertainmentProtocol" value="0" />*}
 
 			<input type="hidden" id="nTempIDFirm" name="nTempIDFirm" value="0" />
 			<input type="hidden" id="nTempIDOffice" name="nTempIDOffice" value="0" />
@@ -297,5 +297,26 @@
 </div>
 
 <script>
+	{literal}
 	loadXMLDoc2('load');
+	rpc_on_exit = function(){
+	//	onChangeRequestDirections(0);
+		rpc_on_exit = function(){}
+	}
+
+	jQuery(document).ready(function() {
+		jQuery('#requests_directions').on('change',function(){
+	//		onChangeRequestDirections(1);
+		});
+		if(!empty(jQuery('#nIDObject').val())) {
+			loadXMLDoc2( 'getunprocessed' );
+			rpc_on_exit = function(){
+				var aParams =  {'KEY': jQuery('#nIDObject').val()};
+				onSuggestObject(aParams);
+				jQuery('#nIDObject').val(0);
+			}
+		}
+	});
+	checkIdRequest();
+	{/literal}
 </script>

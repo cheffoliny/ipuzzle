@@ -151,12 +151,12 @@
             return data;
 
         }
-		
-		function techSupport() {
-			var id = $('nID').value;
-			
-			dialogTechSupport(id);
-		}
+
+		// function techSupport() {
+		// 	var id = $('nID').value;
+        //
+		// 	dialogTechSupport(id);
+		// }
 
         function ServiceStatus() {
 

@@ -195,7 +195,7 @@
 					&nbsp;
 				</td>
 				<td class="buttons" align="right">
-					<button onclick="editRequest(0)"><img src="images/plus.gif"> Нова Задача </button>
+					<button onclick="editRequest(0)"><i class="far fa-plus"></i> Нова Задача </button>
 				</td>
 			</tr>
 		</table>

@@ -512,6 +512,11 @@ function dialogTechRequest(id) {
 	dialog_win('set_setup_tech_request&id='+id, 440, 530, 1, 'set_setup_tech_request');
 }
 
+function dialogTechRequestForObject(id, objectId) {
+	dialog_win('set_setup_tech_request&id='+id + '&objectId='+objectId, 440, 530, 1, 'set_setup_tech_request');
+}
+
+
 function dialogWCMoveAdd(id, nIDCard) {
 	dialog_win('working_card_movement_add&id='+id+'&nIDCard='+nIDCard, 390, 240, 1, 'working_card_movement_add');
 }

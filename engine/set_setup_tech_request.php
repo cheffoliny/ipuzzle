@@ -1,6 +1,6 @@
 <?php
 $nID 		= !empty( $_GET['id'] ) 		? $_GET['id'] 		: 0;
-//$nIDObj 	= !empty( $_GET['idOldObj'] ) 	? $_GET['idOldObj'] : 0;
+$nIDObject 	= !empty( $_GET['objectId'] ) 	? $_GET['objectId'] : 0;
 $bDis 	    = !empty( $_GET['dis'] ) 	    ? $_GET['dis']      : 0;
 $right_edit = false;
 
@@ -48,4 +48,4 @@ $template->assign('aTechRequest', $aTechRequest);
 $template->assign('sRequestTime', date('H:i'));
 $template->assign('sRequestDate', date('d.m.Y'));
 $template->assign('bDis', $bDis);
-$template->assign('nSetLimitTime', $nSetLimitTime);
+//$template->assign('nSetLimitTime', $nSetLimitTime);
