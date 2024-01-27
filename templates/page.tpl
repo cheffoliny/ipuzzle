@@ -30,7 +30,7 @@
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 
-    {*<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAgMeepfn7LP4uw75BUQ8Q79tfuBs4ouKw"></script>*}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCJCSAQPKRrx7XlFccO_EkFqzZ74-EcA8o"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}

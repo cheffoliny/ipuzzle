@@ -12,9 +12,7 @@ function tab_href( page ) {
 
 function TechRequestForObject() {
     var oID = $('nID');
-    //var objectId = $('nID').value;
     dialogTechRequestForObject(0, oID.value);
-
 }
 
 </script>
@@ -170,7 +168,13 @@ function TechRequestForObject() {
                 </li>
 			{/if}
 
-
+            {if $key == 'object_geo'}
+                {if $page eq 'object_geo'}
+                    <li class="nav-item text-center" title="Карта..."><a class="nav-link active"><i class="fa fa-map fa-lg"></i><br />Карта</a></li>
+                {else}
+                    <li class="nav-item text-center" title="Карта..." >{if $view.object_geo}<a class="nav-link" href="#" onclick="return tab_href('object_geo');" id='object_geo'><i class="fa fa-map fa-lg"></i><br />Карта</a>{else}<a class="nav-link disabled" onclick="return false;"><i class="fa fa-map fa-lg"></i><br />Карта</a>{/if}</li>
+                {/if}
+            {/if}
 
             {if $key == 'object_support_view'}
                 <li class="nav-item dropdown">
@@ -201,6 +205,7 @@ function TechRequestForObject() {
 
                     </div>
                 </li>
+
 
             {/if}
 		{/foreach}
