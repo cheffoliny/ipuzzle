@@ -9,6 +9,9 @@
     <script type="text/javascript" language="javascript" src="js/bowser.min.js"></script>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCJCSAQPKRrx7XlFccO_EkFqzZ74-EcA8o&libraries=places async"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -28,9 +31,6 @@
     <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=2"></script>
     <script type="text/javascript" language="javascript" src="js/format.js"></script>
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
-
-
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCJCSAQPKRrx7XlFccO_EkFqzZ74-EcA8o"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}

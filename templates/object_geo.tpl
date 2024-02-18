@@ -21,12 +21,13 @@
 //        console.log('address');
 //
         var place = autocomplete.getPlace();
+        alert(place);
         if (place.geometry) {
             marker.setPosition(place.geometry.location);
             map.panTo(place.geometry.location);
         } else {
 //                document.getElementById('locationAddress').placeholder = 'Изберете адрес!';
-            document.getElementById('pac-input').placeholder = 'Изберете адрес!';
+            //document.getElementById('pac-input').placeholder = 'Изберете адрес!';
         }
 
 
@@ -81,20 +82,20 @@
             disableDefaultUI: true,
             scrollwheel: true,
             center: coor,
+            mapTypeId: 'satellite',
             streetViewControl: false
         });
 
-        if ($('savePov').disabled) {
-            autocomplete = new google.maps.places.Autocomplete(
-//                     (  document.getElementById('locationAddress')), {
-                (  document.getElementById('pac-input')), {
-                    types: ['address'],
-                    componentRestrictions: countryRestrict
-                });
-            autocomplete.bindTo('bounds', map);
-            autocomplete.addListener('place_changed', onPlaceChanged);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('pac-input'));
-        }
+       // if ($('savePov').disabled) {
+            // autocomplete = new google.maps.places.Autocomplete(
+            //     (  document.getElementById('pac-input')), {
+            //         types: ['address'],
+            //         componentRestrictions: countryRestrict
+            //     });
+            // autocomplete.bindTo('bounds', map);
+            // autocomplete.addListener('place_changed', onPlaceChanged);
+            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('pac-input'));
+      //  }
 
         marker = new google.maps.Marker({
             position: coor,
@@ -106,26 +107,11 @@
             visible: true,
             zIndex: 5000
         });
-        var btnObjects = document.createElement("button");
-        btnObjects.setAttribute('class', 'controls btn btn-info');
-        btnObjects.innerHTML = "Запиши";
+        // var btnObjects = document.createElement("button");
+        //  btnObjects.setAttribute('class', 'controls btn btn-info');
+        //   btnObjects.innerHTML = "Запиши";
 
-        jQuery(btnObjects).on('click', function () {
-            var pos = marker.getPosition();
-            jQuery('#new_lan').val(pos.lng());
-            jQuery('#new_lat').val(pos.lat());
-
-            loadXMLDoc2('save');
-            rpc_on_exit = function() {
-                window.location.reload();
-            }
-        });
-
-        var divObjects = document.createElement("div");
-        divObjects.appendChild(btnObjects);
-        divObjects.index = 1;
-
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(divObjects);
+       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(divObjects);
 
         if (!empty(ppov) && !empty(ppov.lat)) {
             astorPlace = new google.maps.LatLng(ppov.lat, ppov.lng);
@@ -149,7 +135,7 @@
         }
 
         //google.maps.event.addDomListener(diva, 'click', showAlert);
-        google.maps.event.addDomListener(diva, 'click', function (event) {
+        google.maps.event.addListener(diva, 'click', function (event) {
             if (clicktopoint) {
                 var x = event.x - 32;
                 var y = event.y - 135;
@@ -175,7 +161,7 @@
 
             var json = JSON.stringify(pov);
             $('new_pov').value = json;
-            $('savePov').disabled = false;
+            // $('savePov').disabled = false;
         });
 
         if (typeof ppov.left == 'object' && toggle) {
@@ -201,13 +187,13 @@
     function toggleStreetView(toggleParam) {
 
         toggle = (typeof(toggleParam) != 'undefined')? toggleParam : panorama.getVisible();
-        $('savePov').disabled = true;
+        //   $('savePov').disabled = true;
 
         if (toggle == false) {
             disableMovement(false);
             panorama.setVisible(true);
-            $('savePov').style.visibility = 'visible';
-            $('clearPov').style.visibility = 'visible';
+            // $('savePov').style.visibility = 'visible';
+            // $('clearPov').style.visibility = 'visible';
 //            $('saveCoords').style.visibility = 'visible';
 //            jQuery('.save-pos').show();
 //            $('movePov').style.visibility = 'visible';
@@ -234,10 +220,10 @@
         } else {
             disableMovement(false);
             panorama.setVisible(false);
-            $('savePov').style.visibility = 'hidden';
-            $('clearPov').style.visibility = 'hidden';
-            $('saveCoords').style.visibility = 'hidden';
-            jQuery('.save-pos').hide();
+            // $('savePov').style.visibility = 'hidden';
+            // $('clearPov').style.visibility = 'hidden';
+            // $('saveCoords').style.visibility = 'hidden';
+            // jQuery('.save-pos').hide();
 //            $('movePov').style.visibility = 'hidden';
 
             jQuery('div[name=marker]').remove();
@@ -254,7 +240,7 @@
                 //disableDoubleClickZoom: true,
                 //zoomControl: false,
                 //disableDefaultUI: true,
-                //streetViewControl: false
+                //streetViewControl: false,
 
                 addressControl: false,
                 enableCloseButton: false,
@@ -283,22 +269,24 @@
     }
 
     function saveLastPov() {
-        if (confirm('Наистина ли желаете да запазите изгледа?')) {
+        if ( confirm('Наистина ли желаете да запазите изгледа?') ) {
             var arrLeft = new Array();
             var arrTop = new Array();
+            alert($('new_pov').value);
+            alert($('ppov').value);
 
-            if(jQuery('#new_pov').val() != "") {
-                jQuery('#ppov').val(jQuery('#new_pov').val());
-            }
-            var ppov = jQuery.parseJSON(jQuery('#ppov').val());
-
-            jQuery('div[name=marker]').each(function () {
+            $('ppov').value = $('new_pov').value;
+            ppov = jQuery.parseJSON($('ppov').value);
+            alert(ppov);
+            jQuery('div[name=marker]').each(function() {
 
 
-                var yy = parseInt(jQuery(this).css('top'), 10);
                 var xx = parseInt(jQuery(this).css('left'), 10);
-                arrTop.push(yy);
+                var yy = parseInt(jQuery(this).css('top'), 10);
+
                 arrLeft.push(xx);
+                arrTop.push(yy);
+
 
                 ppov.left = arrLeft;
                 ppov.top = arrTop;
@@ -308,60 +296,50 @@
             });
 
             loadXMLDoc2('saveLastPov');
-            $('savePov').disabled = true;
+            // $('savePov').disabled = true;
 
-            rpc_on_exit = function () {
+            rpc_on_exit = function() {
                 clicktogo = false;
                 clicktopoint = false;
 
                 alert('Промените бяха запазени!');
-                window.location.reload();
 
-//                var p = $('new_pov').value;
-//                ppov = jQuery.parseJSON(p);
-//
-//                initialize(ppov);
-//                disableMovement(false);
-//                panorama.setVisible(true);
-            }
-
-            jQuery('#points').hide();
-//            jQuery('#movePov').show();
-        }
-    }
-
-    function clearLastPov() {
-
-        if (confirm('Наистина ли желаете да рестартирате изгледа?')) {
-            loadXMLDoc2('clearPov');
-
-            rpc_on_exit = function () {
-                jQuery('div[name=marker]').remove();
-                var p = $('ppov').value;
+                var p = $('new_pov').value;
                 ppov = jQuery.parseJSON(p);
 
                 initialize(ppov);
                 disableMovement(false);
                 panorama.setVisible(true);
             }
-
-            jQuery('#points').hide();
-//            jQuery('#movePov').show();
         }
     }
 
-    function moveLastPov() {
-        if (confirm('Наистина ли желаете да редактирате изгледа? Всички точки ще бъдат изтрити!')) {
-            clicktogo = true;
-            clicktopoint = false;
+    // function clearLastPov() {
+    //
+    //     if ( confirm('Наистина ли желаете да рестартирате изгледа?') ) {
+    //         loadXMLDoc2('clearPov');
+    //
+    //         rpc_on_exit = function() {
+    //             jQuery('div[name=marker]').remove();
+    //             var p = $('ppov').value;
+    //             ppov = jQuery.parseJSON(p);
+    //
+    //             initialize(ppov);
+    //             disableMovement(false);
+    //             panorama.setVisible(true);
+    //         }
+    //     }
+    // }
 
-//            jQuery('#movePov').hide();
-//            jQuery('#points').show();
+    function moveLastPov() {
+        if ( confirm('Наистина ли желаете да редактирате изгледа? Всички точки ще бъдат изтрити!') ) {
+            clicktogo = true;
+            clicktopoint = true;
 
             jQuery('div[name=marker]').remove();
             var p = $('ppov').value;
             ppov = jQuery.parseJSON(p);
-            $('savePov').disabled = false;
+            // $('savePov').disabled = false;
 
             initialize(ppov);
             //disableMovement(false);
@@ -369,61 +347,15 @@
         }
     }
 
-    function clearAsPoints() {
-        if (confirm('Желаете ли всички точки да бъдат изтрити?')) {
-            jQuery('div[name=marker]').remove();
+    function setGeoLatLan() {
+        var pos = marker.getPosition();
+        jQuery('#new_lan').val(pos.lng());
+        jQuery('#new_lat').val(pos.lat());
+
+        loadXMLDoc2('save');
+        rpc_on_exit = function() {
+            window.location.reload();
         }
-    }
-
-    function addAsPoints() {
-        clicktogo = false;
-        clicktopoint = true;
-        disableMovement(false);
-
-        var p = $('ppov').value;
-        ppov = jQuery.parseJSON(p);
-
-        //initialize(ppov);
-        panorama.setVisible(true);
-    }
-
-
-    function addressToLocation(address, callback) {
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode(
-            {
-                address: address
-            },
-            function (results, status) {
-
-                var resultLocations = [];
-
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results) {
-                        var numOfResults = results.length;
-                        for (var i = 0; i < numOfResults; i++) {
-                            var result = results[i];
-                            resultLocations.push(
-                                {
-                                    text: result.formatted_address,
-                                    addressStr: result.formatted_address,
-                                    location: result.geometry.location
-                                }
-                            );
-                        }
-                        ;
-                    }
-                } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    // address not found
-                }
-
-                if (resultLocations.length > 0) {
-                    callback(resultLocations);
-                } else {
-                    callback(null);
-                }
-            }
-        );
     }
 
     function switchTab(e) {
@@ -436,32 +368,32 @@
         var sAction = jEl.attr('id');
 
         switch(sAction) {
-            case "map_view" :
-                toggleStreetView(true);
-                jQuery('#points').hide();
-                break;
-            case "street_view" :
-                toggleStreetView(false);
-                jQuery('#points').hide();
-                $('savePov').style.visibility = 'hidden';
-                $('clearPov').style.visibility = 'hidden';
-                break;
-            case "edit":
-                moveLastPov();
-                jQuery('#points').hide();
-                $('savePov').style.visibility = 'visible';
-                $('clearPov').style.visibility = 'visible';
-                $('clearPov').style.display = 'inline';
-                break;
-
-            case 'pointsEdit':
-                toggleStreetView(false);
-                jQuery('#points').show();
-                $('savePov').style.visibility = 'visible';
-                jQuery('#savePov').removeAttr('disabled');
-                $('clearPov').style.display = 'none';
-//                jQuery('#clearPov').removeAttr('disabled');
-                break;
+//             case "map_view" :
+//                 toggleStreetView(true);
+//                 jQuery('#points').hide();
+//                 break;
+//             case "street_view" :
+//                 toggleStreetView(false);
+//                 jQuery('#points').hide();
+//                 $('savePov').style.visibility = 'hidden';
+//                 $('clearPov').style.visibility = 'hidden';
+//                 break;
+//             case "edit":
+//                 moveLastPov();
+//                 jQuery('#points').hide();
+//                 $('savePov').style.visibility = 'visible';
+//                 $('clearPov').style.visibility = 'visible';
+//                 $('clearPov').style.display = 'inline';
+//                 break;
+//
+//             case 'pointsEdit':
+//                 toggleStreetView(false);
+//                 jQuery('#points').show();
+//                 $('savePov').style.visibility = 'visible';
+//                 jQuery('#savePov').removeAttr('disabled');
+//                 $('clearPov').style.display = 'none';
+// //                jQuery('#clearPov').removeAttr('disabled');
+//                 break;
 
 
         }
@@ -470,32 +402,82 @@
 
     //google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-
-    <style type="text/css">
-        #map_canvas {
-            height: 100%;
-        }
-
-
-
-    </style>
 {/literal}
-<form action="" name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" onsubmit="return false;">
     <input type="hidden" name="nID" id="nID" value="{$nID|default:0}"/>
     <input type="hidden" name="ppov" id="ppov" value="{$pov|escape}">
-    <input type="hidden" name="new_lan" id="new_lan" value="0"/>
-    <input type="hidden" name="new_lat" id="new_lat" value="0"/>
-    <input type="hidden" name="new_pov" id="new_pov" value=""/>
+    <input type="hidden" name="new_lan" id="new_lan" value="0" />
+    <input type="hidden" name="new_lat" id="new_lat" value="0" />
+    <input type="hidden" name="new_pov" id="new_pov" value="" />
 
-    {include file='object_tabs.tpl'}
+    {include file="object_tabs.tpl"}
 
-    <div id="filter" class="container-fluid mb-4 mx-2">
-        <div class="row h-100 mt-2">
-            <div id="filter_result" class="col px-1">
-                <div id="map_canvas" class="w-100" ></div>
-            </div>
-        </div>
+    <div id="map_canvas" style="width:100%; height: 450px;"></div>
+    <div class="fixed-bottom w-100 start-50 my-3 mx-5 text-center">
+        <button class="btn btn-sm btn-success px-5" onclick="setGeoLatLan(); return false;">&nbsp; Запази </button>
     </div>
+
+    {*    <div class="position-relative">*}
+{*        <input id="pac-input" class="controls" type="text" placeholder="Въведете адрес" value="{$objAddress}" />*}
+
+
+
+{*                    <div class="dropup">*}
+{*                     <span class="dropdown">*}
+{*                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">*}
+{*                            <span class="btn btn-sm btn-default">*}
+{*                                <span id="dropdown_text">*}
+{*                                    <i class="far fa-globe"></i>&nbsp;Карта*}
+{*                                </span>*}
+{*                                <b class="caret"></b>*}
+{*                            </span>*}
+{*                        </a>*}
+{*                        <ul class="dropdown-menu" role="menu" style="text-align: left;">*}
+{*                        <li onclick="switchTab(this);" id="map_view" class="active"><a href="#"><i class="far fa-globe"></i>&nbsp;Карта</a></li>*}
+{*                        <li onclick="switchTab(this);" id="street_view"><a href="#"><i class="far fa-image"></i>&nbsp;Изглед</a></li>*}
+{*                        <li onclick="switchTab(this);" id="edit"><a href="#"><i class="far fa-pencil-alt"></i></i>&nbsp;Редакция</a></li>*}
+{*                        <li onclick="switchTab(this);" id="pointsEdit"><a href="#"><i class="far fa-map-marker"></i>&nbsp;Точки</a></li>*}
+{*                        </ul>*}
+{*                    </span>*}
+
+                        {*<input type="radio" id="toMap" name="typeMap" value="toMap" checked="checked"*}
+                        {*onchange="toggleStreetView();"/> Карта*}
+                        {*<input type="radio" id="toStreet" name="typeMap" value="toStreet" onchange="toggleStreetView();"/>*}
+                        {*Снимка*}
+{*                        <button type="button" id="savePov" name="savePov" disabled="disabled" style="visibility: hidden;" class="btn btn-sm btn-success" onclick="saveLastPov(); return false;">*}
+{*                            <span class="far fa-save"></span>*}
+{*                            Запази*}
+{*                        </button>*}
+
+{*                        <button type="button" id="clearPov" name="clearPov" class="btn btn-sm btn-danger" style="visibility: hidden;" onclick="clearLastPov(); return false;" >*}
+{*                            <i class="far fa-times"></i>*}
+{*                            Изчисти*}
+{*                        </button>*}
+                        {*&nbsp;&nbsp;&nbsp;&nbsp;*}
+                        {*<button type="button" id="movePov" name="movePov" onclick="moveLastPov(); return false;"*}
+                        {*style="visibility: hidden;">Редакция*}
+                        {*</button>*}
+{*                        <span id="points" style="display: none;">*}
+{*                    <button type="button" id="clearPoints" name="clearPoints" class="btn btn-sm btn-danger" onclick="clearAsPoints(); return false;">*}
+{*                        <i class="far fa-times"></i>*}
+{*                        Изтриване на точки*}
+{*                    </button>*}
+
+{*                    <button type="button" id="addPoints" name="addPoints" class="btn btn-sm btn-success" onclick="addAsPoints(); return false;">*}
+{*                        <i class="far fa-plus"></i>*}
+{*                        Добавяне на точки*}
+{*                    </button>*}
+{*                </span>*}
+
+{*                        <span class="save-pos" style="display: none;">*}
+
+{*                    <input type="checkbox" id="saveCoords" checked="checked" name="saveCoords" style="visibility: hidden; "/> Запазване на позиция*}
+{*                </span>*}
+{*                    </div>*}
+
+
+{*    </div>*}
+
 </form>
 
 <script>

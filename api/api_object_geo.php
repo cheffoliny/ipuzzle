@@ -1,96 +1,106 @@
 <?php
 
-	class ApiObjectGeo{
+class ApiObjectGeo{
 
-		public function save(DBResponse $oResponse)
-		{
-			$oDBObject = new DBObjects();
+    public function save(DBResponse $oResponse)
+    {
+        $oDBObject = new DBObjects();
 
-			$aParams = Params::getAll();
+        $aParams = Params::getAll();
 
-			if(empty($aParams['nID']))
-			{
-				throw new Exception("Няма привързан обект");
-			}
+        if(empty($aParams['nID']))
+        {
+            throw new Exception("Няма привързан обект");
+        }
 
-			if( empty($aParams['new_lan']) || empty($aParams['new_lat']) )
-			{
-				throw new Exception("Въведете координати на обекта");
-			}
+        if( empty($aParams['new_lan']) || empty($aParams['new_lat']) )
+        {
+            throw new Exception("Въведете координати на обекта");
+        }
 
-			$aData = array();
+        $aData = array();
 
-			$aData['id'] 		= $aParams['nID'];
-			$aData['geo_lan']	= $aParams['new_lan'];
-			$aData['geo_lat']	= $aParams['new_lat'];
-			$aData['confirmed']	= 1;
+        $aData['id'] 		= $aParams['nID'];
+        $aData['geo_lan']	= $aParams['new_lan'];
+        $aData['geo_lat']	= $aParams['new_lat'];
+        // ПО искане на Денчев - Краси го
+        $aData['confirmed']	= 1;
 
-			$oDBObject->update($aData);
+        $oDBObject->update($aData);
 
-            $oResponse->printResponse();
-		}
+        $oDBObjectsHistory = new DBObjectsHistory();
+        $oDBObjectsHistory->logCoordinatesHistory($aParams['nID'],['geo_lat'=>$aParams['new_lat'],'geo_lan'=>$aParams['new_lan']]);
 
-        public function saveLastPov( DBResponse $oResponse ) {
-            $newPov = Params::get("new_pov",    "");
-            $nID    = Params::get("nID",        0);
-            $isCoor = Params::get("saveCoords", 0);
+        $oResponse->printResponse();
+    }
 
-            if ( !empty($newPov) && !empty($nID) ) {
-                $oObject            = new DBObjects();
+    public function saveLastPov( DBResponse $oResponse ) {
+        $newPov = Params::get("new_pov",    "");
+        $nID    = Params::get("nID",        0);
+        $isCoor = Params::get("saveCoords", 0);
 
-                $aData              = array();
-                $aData['id'] 		= $nID;
-                $aData['geo_pov']   = $newPov;
+APILog::Log(112121, $isCoor);
+        if ( !empty($newPov) && !empty($nID) ) {
+            $oObject            = new DBObjects();
 
-                if ( $isCoor == 1 ) {
-                    $json = json_decode($newPov);
+            $aData              = array();
+            $aData['id'] 		= $nID;
+            $aData['geo_pov']   = $newPov;
 
-                    $lan = isset($json->lng) ? $json->lng : 0;
-                    $lat = isset($json->lat) ? $json->lat : 0;
+            if ( $isCoor == 1 ) {
+                $json = json_decode($newPov);
 
-                    if ( $lan > 0 && $lat > 0 ) {
-                        $aData['geo_lan']   = $lan;
-                        $aData['geo_lat']   = $lat;
-                    }
+                $lan = isset($json->lng) ? $json->lng : 0;
+                $lat = isset($json->lat) ? $json->lat : 0;
+                APILog::Log(112121, $lan, $lat);
+                if ( $lan > 0 && $lat > 0 ) {
+                    $aData['geo_lan']   = $lan;
+                    $aData['geo_lat']   = $lat;
                 }
 
-                $oObject->update($aData);
+//                    $oDBObjectsHistory = new DBObjectsHistory();
+//                    $oDBObjectsHistory->logCoordinatesHistory($nID,['geo_lat'=>$lat,'geo_lan'=>$lan]);
             }
 
-            $oResponse->printResponse();
+            $oObject->update($aData);
+
+
         }
 
-        public function clearPov( DBResponse $oResponse ) {
-            $nID    = Params::get("nID",        0);
+        $oResponse->printResponse();
+    }
 
-            if ( !empty($nID) ) {
-                $oObject            = new DBObjects();
+    public function clearPov( DBResponse $oResponse ) {
+        $nID    = Params::get("nID",        0);
 
-                $aData              = array();
-                $aData['id'] 		= $nID;
-                $aData['geo_pov']   = "";
+        if ( !empty($nID) ) {
+            $oObject            = new DBObjects();
 
-                $oObject->update($aData);
+            $aData              = array();
+            $aData['id'] 		= $nID;
+            $aData['geo_pov']   = "";
 
-                $oResponse->setFormElement( 'form1', 'ppov', array(), json_encode(array()) );
-            }
+            $oObject->update($aData);
 
-            $oResponse->printResponse();
+            $oResponse->setFormElement( 'form1', 'ppov', array(), json_encode(array()) );
         }
 
-        public function loadPov( DBResponse $oResponse ) {
-            $nID    = Params::get("nID",        0);
+        $oResponse->printResponse();
+    }
 
-            if ( !empty($nID) ) {
-                $oObject    = new DBObjects();
-                $aObject    = $oObject->getRecord($nID);
+    public function loadPov( DBResponse $oResponse ) {
+        $nID    = Params::get("nID",        0);
 
-                $pov        = isset($aObject['geo_pov']) && !empty($aObject['geo_pov']) ? $aObject['geo_pov'] : json_encode(array());
+        if ( !empty($nID) ) {
+            $oObject    = new DBObjects();
+            $aObject    = $oObject->getRecord($nID);
 
-                $oResponse->setFormElement( 'form1', 'ppov', array(), $pov );
-            }
+            $pov        = isset($aObject['geo_pov']) && !empty($aObject['geo_pov']) ? $aObject['geo_pov'] : json_encode(array());
 
-            $oResponse->printResponse();
+            $oResponse->setFormElement( 'form1', 'ppov', array(), $pov );
         }
-	}
+
+        $oResponse->printResponse();
+    }
+}
 ?>

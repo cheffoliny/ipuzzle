@@ -8,8 +8,8 @@
 		$oDBObjects = new DBObjects();
 		
 		$aObject = $oDBObjects->getRecord($nID);
-	}	
-	
+	}
+
 	$isSOD  = isset($aObject['is_sod']) ? $aObject['is_sod'] : 0;
 	$isFO   = isset($aObject['is_fo']) ? $aObject['is_fo'] : 0;
 	
@@ -25,7 +25,11 @@
 	$template->assign("cnt", count($view));	
 	$template->assign("mobile", $mobile);
 
-    $template->assign('nID',$nID);
+    $template->assign("nID", $nID);
+
+    $template->assign( "object",    $aObject['object'] );
+    $template->assign( "num",       $aObject['num'] );
+
     $template->assign('pov',$pov);
 	$template->assign('aObject',$aObject);
 	/* added by Me 25.09.2013 */

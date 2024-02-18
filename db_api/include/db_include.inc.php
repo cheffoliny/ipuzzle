@@ -86,6 +86,7 @@
 	define('DF_CENTER',			11);	// 'text-align:center'
 	define('DF_ZEROLEADNUM',	12);	// 'text-align:center'
 	define('DF_PERCENT',		13);	// 'd%'
-    define('DF_CURRENCY6',		14);	// 0.000000 лв.
+	define('DF_CURRENCY6',		14);	// 0.000000 лв.
+	define('DF_MEASURE_BR',		15);	// Мерна единица бр.
 
 ?>
