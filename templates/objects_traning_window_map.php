@@ -6,42 +6,24 @@ require_once ("../config/connect.inc.php");
 require_once ("../include/general.inc.php");
 global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 	// google maps
-	$aGoogleKey['telepol.net']				= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xRv7QWxkr-3IKJEXfTogZixrXvNrxTFUqzQfNBIIEf8T4kg00Wf1-SGFw";
-	$aGoogleKey['telenet1.telepol.com']		= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xQgXI407SWkrCxD7M_O9RWeWzWn6RSNTfQvxkRbeE7SAJbtK4I5-WfXOQ";
-	$aGoogleKey['telenet2.telepol.com']		= "ABQIAAAAdouWIVeqAFAeslBKto6N4BShAnn75XYqscKnPf6_hzGF3TrSxhRTvQJKhEDsGJpITp3aF0FMhCQF5g";
-	$aGoogleKey['telenet141.telepol.com']	= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRT6DNrntbAvLOhrdQYN5rbYhqEAShRhu9ZGvGvbQNA9vYpzD-5qsLBfpw";
-	$aGoogleKey['telenet3.telepol.com']		= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRQMDjmGTT5ypxXB9Ff318Fyipe0JBRKL5KUgOugQrAGnSgdvz5_aP_VbA";
-	$aGoogleKey['telenet4.telepol.com']		= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRTCp9nmh9mFF2L6s8hmh4hPFidbkhTHS1ll0RuDXDEuGdIXVWIQKYi0jA";
-
-	$aGoogleKey['test']						= "ABQIAAAAdouWIVeqAFAeslBKto6N4BRbZHnKkPiOgFOiUuTNWhFQ49yrExRhejihQkQuG_BNLFEVRHwgqxuYfw";
-
-	// Ключ, за да работи 213.91.252.171/telenet
-	$aGoogleKey['me']						= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRSfR_24ogle1PQ1-HK0Qt4m44VuEhR7KHTJGU7QlOCW3VrY-37xPd4uJQ";
-	$aGoogleKey['misho_ruse']				= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRQXbLfHs64ZxiPj7gaGyb9LYpEnFxTLl7idOPXVifL2BLSsj2GRoz4A4Q";
+//	$aGoogleKey['telepol.net']				= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xRv7QWxkr-3IKJEXfTogZixrXvNrxTFUqzQfNBIIEf8T4kg00Wf1-SGFw";
+//	$aGoogleKey['telenet1.telepol.com']		= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xQgXI407SWkrCxD7M_O9RWeWzWn6RSNTfQvxkRbeE7SAJbtK4I5-WfXOQ";
+//	$aGoogleKey['telenet2.telepol.com']		= "ABQIAAAAdouWIVeqAFAeslBKto6N4BShAnn75XYqscKnPf6_hzGF3TrSxhRTvQJKhEDsGJpITp3aF0FMhCQF5g";
+//	$aGoogleKey['telenet141.telepol.com']	= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRT6DNrntbAvLOhrdQYN5rbYhqEAShRhu9ZGvGvbQNA9vYpzD-5qsLBfpw";
+//	$aGoogleKey['telenet3.telepol.com']		= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRQMDjmGTT5ypxXB9Ff318Fyipe0JBRKL5KUgOugQrAGnSgdvz5_aP_VbA";
+//	$aGoogleKey['telenet4.telepol.com']		= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRTCp9nmh9mFF2L6s8hmh4hPFidbkhTHS1ll0RuDXDEuGdIXVWIQKYi0jA";
+//
+//	$aGoogleKey['test']						= "ABQIAAAAdouWIVeqAFAeslBKto6N4BRbZHnKkPiOgFOiUuTNWhFQ49yrExRhejihQkQuG_BNLFEVRHwgqxuYfw";
+//
+//	// Ключ, за да работи 213.91.252.171/telenet
+//	$aGoogleKey['me']						= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRSfR_24ogle1PQ1-HK0Qt4m44VuEhR7KHTJGU7QlOCW3VrY-37xPd4uJQ";
+//	$aGoogleKey['misho_ruse']				= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRQXbLfHs64ZxiPj7gaGyb9LYpEnFxTLl7idOPXVifL2BLSsj2GRoz4A4Q";
 		
 	
 	switch( $_SERVER["HTTP_HOST"] ) {
 		case '213.91.252.171' : 
 			$GoogleKey = $aGoogleKey['me'];
 			break;
-		case '172.16.1.122:81' : 
-			$GoogleKey = $aGoogleKey['misho_ruse'];
-			break;
-		case '213.91.252.135' : 
-			$GoogleKey = $aGoogleKey['telenet1.telepol.com'];
-			break;
-		case '213.91.252.162' : 
-			$GoogleKey = $aGoogleKey['telenet2.telepol.com'];
-			break;
-		case '213.91.252.141' : 
-			$GoogleKey = $aGoogleKey['telenet141.telepol.com'];
-			break;
-		case '213.91.252.129' :
-			$GoogleKey = $aGoogleKey['telenet4.telepol.com'];
-			break;			
-		case '213.91.252.198' :
-			$GoogleKey = $aGoogleKey['telenet3.telepol.com'];
-			break;			
 		default:
 			$GoogleKey = $aGoogleKey['telepol.net'];
 			break;
@@ -82,7 +64,8 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 		AND p.id_office = $nIDOffice
 
 		GROUP BY p.id
-	";	
+	";
+	echo $sQuery;
 	$aObjects = $oBase->select($sQuery);
         //RAZMENENI SA NA REALNATA
 	$nCenterLat = $aObjects[0]['office_geo_lan'];
@@ -133,7 +116,7 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 	var init = function() {
 		var script = document.createElement("script");
 		script.type = "text/javascript";
-		//script.src = "http://maps.google.com/maps/api/js?sensor=false&callback=gMaps&key=<?=$GoogleKey; ?>";
+		script.src = "https://maps.google.com/maps/api/js?sensor=false&callback=gMaps&key=<?=$GoogleKey; ?>";
 		document.body.appendChild(script);		
 	}
 	

@@ -1,16 +1,100 @@
-<script type="text/javascript">
 {literal}
-	//rpc_debug = true;	
-	rpc_action_script = 'api/api_objects_traning_window.php';		
+	<script xmlns="http://www.w3.org/1999/html">
+		//
+		rpc_debug = true;
+		filterVisible = false;
+
+		function onInit() {
+			loadXMLDoc2('result');
+			rpc_on_exit = function() {
+
+			//	setStyles();
+			};
+		}
+
+		function getResult() {
+			loadXMLDoc2('result');
+		}
+
+		function setIds() {
+
+			var aID = [] , aTmp = [];
+
+			jQuery("input[type='checkbox']").each(function() {
+				var jThis = jQuery(this);
+
+				if(jThis.is(":checked")) {
+					var sID = jThis.attr('id');
+
+					if(sID.includes("cancel_checkbox")) {
+						sID = sID.replace('cancel_checkbox[','');
+						sID = sID.replace(']','');
+						aTmp = sID.split('@');
+
+						aID.push(aTmp[0]);
+					}
+				}
+			});
+			alert(aID);
+			if(!empty(aID)) {
+				jQuery('#sIDForCancel').val(aID.join(','));
+
+			}
+			else {
+				jQuery('#sIDForCancel').val('');
+			}
+		}
+
+		function just_do_it() {
+
+			switch($('sel').value) {
+
+				case 'mark_all':
+					if ( confirm('Наистина ли желаете да маркирате всички записи?') ) {
+						checkAll(true);
+					}
+					break;
+
+				case 'unmark_all':
+					if ( confirm('Наистина ли желаете да отмаркирате всички записи?') ) {
+						checkAll(false);
+					}
+					break;
+				case 'del':
+					if ( confirm('Наистина ли желаете да върнете маркираните записи?') ) {
+						setIds();
+
+						loadXMLDoc2('cancel2');
+						rpc_on_exit = function() {
+							window.location.reload();
+							rpc_on_exit = function() {}
+						}
+
+					}
+					break;
+
+			}
+		}
+
+	</script>
+
 {/literal}
-</script>
+<dlcalendar click_element_id="imgDeadlineFrom" input_element_id="sDeadlineFrom" tool_tip="Изберете дата"></dlcalendar>
+<dlcalendar click_element_id="imgDeadlineTo" input_element_id="sDeadlineTo" tool_tip="Изберете дата"></dlcalendar>
+<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal" role="form">
+	<input type="hidden" name="nIDPerson" id="nIDPerson" value="{$nIDPerson}">
+	<input type="hidden" name="nIDOffice" id="nIDOffice" value="{$nIDOffice}">
 
-<form name="form1" id="form1" autocomplete=off style="margin:0;">
-<table class="header" style="width:100%;" cellpadding="0" cellspacing="0" border="0">
-<tr>
-	<td align="center" style="color:ffffff;font-weight:bold">{$sType}&nbsp;обекти&nbsp;за&nbsp;{$sPerson}</td>
-</tr>
-</table>
+	<input type="hidden" name="sType" id="sType" value="{$sType}">
+	<input type="hidden" id="sIDForCancel" name="sIDForCancel" value="" />
+
+	<ul class="nav nav-tabs nav-intelli">
+		<li class="nav-item text-center text-white px-4 py-2 mb-1" title="...">Задачи на {$sPerson}</li>
+	</ul>
+
+	<div id="result" rpc_excel_panel="on" rpc_paging="on"></div>
 </form>
-<iframe src ="templates/objects_traning_window_map.php?GoogleKey={$GoogleKey}&nIDPerson={$nIDPerson}&nIDOffice={$nIDOffice}&dateFrom={$dateFrom}&dateTo={$dateTo}&tType={$tType}" style="width:100%; height: 100%;" frameborder="0" scrolling="No" id="mapFrame" name="mapFrame" ></iframe>
 
+<script>
+	onInit();
+</script>

@@ -28,7 +28,7 @@ class ApiObjectsTraning {
 		}
 	
 	public function result(DBResponse $oResponse){
-		global $db_sod,$db_name_sod,$db_personnel,$db_name_personnel;
+		global $db_sod, $db_name_sod, $db_personnel, $db_name_personnel;
 		$oBase = new DBBase2($db_personnel,'personnel');
 		$nOffice   = Params::getInstance()->nIDOffice;
 
@@ -46,25 +46,25 @@ class ApiObjectsTraning {
                 (	
 					 	SELECT COUNT(vo.id) 
 						FROM sod.objects o
-						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id
+						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id AND vo.to_arc = 0
 						WHERE o.id_office = p.id_office AND o.id_status <> 4 AND o.is_sod = 1 AND vo.id_person = p.id AND vo.`type` = 'reacted'
 			      )  AS 'reacted_objects',
 			      (	
 					 	SELECT COUNT(vo.id) 
 						FROM sod.objects o
-						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id
+						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id AND vo.to_arc = 0
 						WHERE o.id_office = p.id_office AND o.id_status <> 4 AND o.is_sod = 1 AND vo.id_person = p.id AND vo.`type` = 'visited'
 			      )  AS 'visited_objects',
 			      (	
 					 	SELECT COUNT(vo.id) 
 						FROM sod.objects o
-						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id
+						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id AND vo.to_arc = 0
 						WHERE o.id_office = p.id_office AND o.id_status <> 4 AND o.is_sod = 1 AND vo.id_person = p.id AND vo.`type` = 'familiar'
 			      )  AS 'known_objects',
 			      (	
 					 	SELECT (COUNT(DISTINCT o.id) - SUM(IF(vo.id_person = p.id, 1, 0)))
 						FROM sod.objects o
-						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id
+						LEFT JOIN sod.visited_objects vo ON vo.id_object = o.id AND vo.to_arc = 0
 						WHERE o.id_office = p.id_office AND o.id_status <> 4 AND o.is_sod = 1
 			      )  AS 'unknown_objects'
 			      

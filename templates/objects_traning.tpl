@@ -14,7 +14,7 @@
 			if (!ids) return;
 			var id_person = ids.split('@')[0];
 			var id_office = ids.split('@')[1];
-			dialog_win('objects_traning_window&id_person='+id_person+'&id_office='+id_office+'&type=known',1000,600);
+			dialog_win('objects_traning_window&id_person='+id_person+'&id_office='+id_office+'&type=familiar',1000,600);
 		}
 		var onClickOpenVisited = function(ids) {
 			if (!ids) return;
@@ -55,7 +55,7 @@
 
 			<div class="col-6 col-sm-8 col-lg-4 pl-3">
 				<div class="input-group input-group-sm">
-					<button type="button" id="btnSubmit" type="submit" onclick="onSubmit(); return false;" class="btn btn-primary btn-xs">Покажи</button>
+					<button type="button" id="btnSubmit" type="submit" onclick="onSubmit(); return false;" class="btn btn-primary btn-sm"><i class="far fa-search"></i> Покажи</button>
 				</div>
 			</div>
 		</div>
