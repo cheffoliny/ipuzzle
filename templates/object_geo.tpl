@@ -74,7 +74,11 @@
         map = new google.maps.Map(diva, {
             zoom: 14,
 //            maxZoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //ROADMAP (normal, default 2D map)
+            //SATELLITE (photographic map)
+            //HYBRID (photographic map + roads and city names)
+            //TERRAIN (map with mountains, rivers, etc.)
             disableDoubleClickZoom: true,
             panControl: true,
             zoomControl: true,
@@ -82,7 +86,7 @@
             disableDefaultUI: true,
             scrollwheel: true,
             center: coor,
-            mapTypeId: 'satellite',
+            mapTypeId: google.maps.MapTypeId.HYBRID,
             streetViewControl: false
         });
 
