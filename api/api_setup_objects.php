@@ -214,8 +214,9 @@
 				$aFirmStatuses = $oFirmStatuses->getFirmStatuses( $aParams['id_firm'] ); 
 				
 				
-				if ( !isset($aParams['aStatus']) ) $aParams['aStatus'] = 0;
+				if ( !isset($aParams['aStatus']  ) ) $aParams['aStatus'] = 0;
 				if ( !isset($aParams['nFunction']) ) $aParams['nFunction'] = 0;
+                if ( !isset($aParams['nCity']) ) $aParams['nCity'] = 0;
 				
 				$oResponse->setFormElement( 'form1', 'aStatus' );
 				$oResponse->setFormElementChild( 'form1', 'aStatus', array( 'value' => 0 ), '-- Всички състояния --' );
@@ -267,7 +268,23 @@
 					$oResponse->setFormElementAttribute( 'form1', 'nFunction', 'value', $aParams['nFunction'] );
 				}
 				//End Set Object Functions Combo
-				
+
+                //Set City Combo
+                $oCities = new DBCities();
+                $aCities = $oCities->getCities2();
+
+                $oResponse->setFormElement( 'form1', 'nCity' );
+                $oResponse->setFormElementChild( 'form1', 'nCity', array( 'value' => 0 ), " Всички населени места " );
+                foreach( $aCities as $aCity )
+                {
+                    $oResponse->setFormElementChild( 'form1', 'nCity', array( 'value' => $aCity['id'] ), $aCity['name'] );
+                }
+                if( $aParams['nCity'] != 0 )
+                {
+                    $oResponse->setFormElementAttribute( 'form1', 'nCity', 'value', $aParams['nCity'] );
+                }
+                //End City Combo
+
 				//Set Dates
 				$oResponse->setFormElement( "form1", "sUnpaid" );
 				for( $i = -6; $i <= 3; $i++ )
@@ -467,6 +484,11 @@
 					{
 						$oResponse->setField( 'tech_reg', 'Регион за техн.поддръжка', NULL, NULL,"openObject",NULL, array('DATA_FORMAT' => DF_STRING));
 					}
+
+                    if( $value == "nCityC")
+                    {
+                        $oResponse->setField( 'city_name', 'Населено място', NULL, NULL,"openObject",NULL, array('DATA_FORMAT' => DF_STRING));
+                    }
 					
 					if( $value == "nReactReg")
 					{
@@ -641,7 +663,10 @@
 
 			if( !empty( $aParams['nFunction'] ) && is_numeric( $aParams['nFunction'] ) )
 				$aWhere[] = sprintf(" t.id_function = %s ", $aParams['nFunction'] );
-			if( !empty( $aParams['nType'] ) && is_numeric( $aParams['nType'] ) )
+            if( !empty( $aParams['nCity'] ) && is_numeric( $aParams['nCity'] ) )
+                $aWhere[] = sprintf(" t.address_city = %s ", $aParams['nCity'] );
+
+            if( !empty( $aParams['nType'] ) && is_numeric( $aParams['nType'] ) )
 				$aWhere[] = sprintf(" t.id_objtype = %s ", $aParams['nType'] );
 			if( !empty( $aParams['sAddress'] ) )
 				$aWhere[] = sprintf(" t.address LIKE '%%%s%%' ", $aParams['sAddress'] );
@@ -908,6 +933,7 @@
 					t.address AS address,
 					t.distance AS distance,
 					t.operativ_info AS operative_info,
+					ci.`name` AS city_name,
 					{$sTotalContract}
 					cl.name AS name_client,
 					{$sTotalColumn}
@@ -928,6 +954,7 @@
 					LEFT JOIN firms rf ON rf.id = ro.id_firm
 					LEFT JOIN offices tof ON tof.id = t.id_tech_office
 					LEFT JOIN firms tf ON tf.id = tof.id_firm
+					LEFT JOIN cities ci ON ci.id = t.address_city
 					#LEFT JOIN faces fa ON fa.id_obj = t.id
 					{$sMolJoin}
 					{$sPhoneJoin}

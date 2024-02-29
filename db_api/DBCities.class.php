@@ -56,7 +56,7 @@
 						post_code
 					FROM cities 
 					WHERE to_arc = 0
-						AND id_office != 0
+						AND id_reaction_office != 0
 						{$sCondition}
 					ORDER BY name
 				";

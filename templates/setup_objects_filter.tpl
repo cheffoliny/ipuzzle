@@ -106,6 +106,20 @@
             <div class="row mb-2">
                 <div class="col-6">
                     <div class="custom-control custom-checkbox ">
+                        <input class="custom-control-input" type="checkbox" id="nCityC" name="nCityC" />
+                        <label class="custom-control-label" for="nCityC">Населено място</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="custom-control custom-checkbox ">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-6">
+                    <div class="custom-control custom-checkbox ">
                         <input class="custom-control-input" type="checkbox" id="nAddress" name="nAddress" />
                         <label class="custom-control-label" for="nAddress">Адрес</label>
                     </div>

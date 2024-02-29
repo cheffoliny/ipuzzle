@@ -419,7 +419,7 @@
                 </div>
                 <div class="col-6 col-sm-4 col-lg-2 pl-4-5">
                     <div class="input-group input-group-sm"  data-fa-transform="right-22 down-10" id="nStatusTd" onclick="showStatusSelect();">
-                        <div class="suggest" id="nStatusInp"></div>
+                        <div class="form-control suggest" id="nStatusInp"></div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-8 col-lg-4">
@@ -486,23 +486,10 @@
                 </div>
                 <div class="col-12 col-sm-8 col-lg-4">
                     <div class="input-group input-group-sm">
-                        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-compact btn-light mr-2" title="СОД">
-                                <input type="checkbox" name="nIsSOD" id="nIsSOD" autocomplete="off" /><i class="fa fa-car fa-lg"></i>
-                            </label>
-                            <label class="btn btn-compact btn-light mr-2" title="С работно време">
-                                <input type="checkbox" name="nIsWorkTime" id="nIsWorkTime" /><i class="far fa-clock fa-lg"></i>
-                            </label>
-                            <label class="btn btn-compact btn-light mr-2" title="Без клиент">
-                                <input type="checkbox" name="nHasNoClient" id="nHasNoClient" /><i class="fa fa-user-times fa-lg"></i>
-                            </label>
-                            <label class="btn btn-compact btn-light mr-2" title="Такси с ДДС">
-                                <input type="checkbox" id="nDDS" name="nDDS" /><i class="fas fa-euro-sign fa-lg"></i>
-                            </label>
-                            <label class="btn btn-compact btn-light" title="В сервизен режим">
-                                <input type="checkbox" name="nIsServiceMode" id="nIsServiceMode" /><i class="fa fa-wrench fa-lg"></i>
-                            </label>
+                        <div class="input-group-prepend">
+                            <i class="fa fa-map-signs fa-fw" data-fa-transform="right-22 down-10" title="Населено място..."></i>
                         </div>
+                        <select class="form-control" name="nCity" id="nCity" ></select>
                     </div>
                 </div>
             </div>
@@ -541,12 +528,25 @@
                     </div>
                 </div>
                 <div class="col-6 col-sm-8 col-lg-4">
-                    <!-- Button trigger modal -->
-                    {*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">*}
-                        {*Launch demo modal*}
-                    {*</button>*}
-
-
+                    <div class="input-group input-group-sm">
+                        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-compact btn-light mr-2" title="СОД">
+                                <input type="checkbox" name="nIsSOD" id="nIsSOD" autocomplete="off" /><i class="fa fa-car fa-lg"></i>
+                            </label>
+                            <label class="btn btn-compact btn-light mr-2" title="С работно време">
+                                <input type="checkbox" name="nIsWorkTime" id="nIsWorkTime" /><i class="far fa-clock fa-lg"></i>
+                            </label>
+                            <label class="btn btn-compact btn-light mr-2" title="Без клиент">
+                                <input type="checkbox" name="nHasNoClient" id="nHasNoClient" /><i class="fa fa-user-times fa-lg"></i>
+                            </label>
+                            <label class="btn btn-compact btn-light mr-2" title="Такси с ДДС">
+                                <input type="checkbox" id="nDDS" name="nDDS" /><i class="fas fa-euro-sign fa-lg"></i>
+                            </label>
+                            <label class="btn btn-compact btn-light" title="В сервизен режим">
+                                <input type="checkbox" name="nIsServiceMode" id="nIsServiceMode" /><i class="fa fa-wrench fa-lg"></i>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -594,8 +594,8 @@
 
         if( statusSelectTD )
         {
-            statusSelect.style.top =(statusSelectTD.clientHeight +  getAbsoluteTop(statusSelectTD))+'px' ;
-            statusSelect.style.left =(getAbsoluteLeft(statusSelectTD))+'px' ;
+           // statusSelect.style.top =(statusSelectTD.clientHeight +  getAbsoluteTop(statusSelectTD))+'px' ;
+           // statusSelect.style.left =(getAbsoluteLeft(statusSelectTD))+'px' ;
         }
 		//nStatus
 

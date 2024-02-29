@@ -50,16 +50,17 @@
 			$aVisibleColumns['nMonthTax'] 		= Params::get( 'nMonthTax', 		'' );
 			$aVisibleColumns['nUnpaidSingle'] 	= Params::get( 'nUnpaidSingle', 	'' );
 			$aVisibleColumns['nLastPaid'] 		= Params::get( 'nLastPaid', 		'' );
-			$aVisibleColumns['nObjectFunction'] = Params::get( 'nObjectFunction', 	'' );
-			$aVisibleColumns['nObjectPhone'] 	= Params::get( 'nObjectPhone', 		'' );
-			$aVisibleColumns['nStartDate'] 		= Params::get( 'nStartDate', 		'' );
-			$aVisibleColumns['nAddress'] 		= Params::get( 'nAddress', 			'' );
+			$aVisibleColumns['nObjectFunction'] = Params::get( 'nObjectFunction','' );
+			$aVisibleColumns['nObjectPhone'] 	= Params::get( 'nObjectPhone', 	'' );
+			$aVisibleColumns['nStartDate'] 		= Params::get( 'nStartDate', 	'' );
+            $aVisibleColumns['nCityC'] 	        = Params::get( 'nCityC', 			'' );
+			$aVisibleColumns['nAddress'] 		= Params::get( 'nAddress', 		'' );
 			$aVisibleColumns['nDistance'] 		= Params::get( 'nDistance', 		'' );
-			$aVisibleColumns['nOperativeInfo'] 	= Params::get( 'nOperativeInfo', 	'' );
+			$aVisibleColumns['nOperativeInfo'] 	= Params::get( 'nOperativeInfo', '' );
 			$aVisibleColumns['nAdminReg'] 		= Params::get( 'nAdminReg', 		'' );
-			$aVisibleColumns['nTechReg'] 		= Params::get( 'nTechReg', 			'' );
+			$aVisibleColumns['nTechReg'] 		= Params::get( 'nTechReg', 		'' );
 			$aVisibleColumns['nReactReg'] 		= Params::get( 'nReactReg', 		'' );
-            $aVisibleColumns['nWorkTime'] 		= Params::get( 'nWorkTime', 				'' );
+            $aVisibleColumns['nWorkTime'] 		= Params::get( 'nWorkTime', 		'' );
 
             $aFilterTotals['id_filter'] 		= $nID;
 
