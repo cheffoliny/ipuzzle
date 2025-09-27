@@ -25,7 +25,7 @@
 			$nIDScheme 	= isset( $aParams['schemes'] ) 		? $aParams['schemes'] 		: 0;
 			$nIDClient 	= isset( $aParams['nIDClient'] ) 	? $aParams['nIDClient'] 	: 0;
 			$nIDFirm 	= isset( $aParams['nIDFirm'] ) 		? $aParams['nIDFirm'] 		: 0;
-			
+
 			if ( !empty($nIDFirm) ) {
 				$sFirm = $oFirms->getName($nIDFirm);
 			}
@@ -474,7 +474,13 @@
 			$nPage 		= isset( $aParams['current_page'] ) ? $aParams['current_page'] : '1';
 			$nRowOffset = ( $nPage - 1 ) * $nRowLimit;
 			//--End Paging
-			
+
+//            // Право за скрит преглед
+            $nHideDocs = 1;
+            if ( in_array('sale_doc_hide_view', $_SESSION['userdata']['access_right_levels']) ) {
+                $nHideDocs = 1;
+            }
+
 			$aParams['sClientName'] = addslashes($aParams['sClientName']);
 			//End Params
 			
@@ -608,11 +614,15 @@
 						t.to_arc = 0
 			";
 			
-			// Pavel - anulirani
+			// Anulirani
 			if ( $TotalQuery == 1 ) {
-				$sQuery .= " AND t.doc_status != 'canceled' \n";
+				$sQuery .= " AND t.doc_status != 'canceled' ";
 			}
-			
+
+            if ( $nHideDocs > 0 ) {
+                $sQuery .= " AND t.paid_type = 'cash' OR ( t.paid_type = 'bank' AND t.id_bank_epayment > 0 ) ";
+            }
+
 			if ( !empty($nIDFirm) ) {
 				$sQuery .= " AND off_row.id_firm = {$nIDFirm} ";
 			}

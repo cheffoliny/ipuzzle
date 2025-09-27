@@ -449,6 +449,11 @@
             $DBEasypayProvider = new DBEasypayProvider();
 			
 			$nID = (int) isset( $aParams['nID'] ) ? $aParams['nID'] : 0;
+//            // Право за скрит преглед
+            $nHideDocs = 1;
+            if ( in_array('sale_doc_hide_view', $_SESSION['userdata']['access_right_levels']) ) {
+                $nHideDocs = 1;
+            }
 
             $aDocTypes = array('oprostena','kvitanciq');
 
@@ -467,6 +472,7 @@
 						s.total_sum,
 						s.orders_sum,
 						s.version AS version,
+						s.paid_type AS paid_type,
 						s.total_sum - s.orders_sum AS orders_remain,
 						s.last_order_time AS last_order_time,
 						n.created_time as email_created_time
@@ -478,6 +484,7 @@
 						AND s.id_client = {$nID}
 
 			";
+
             //ABS( s.total_sum - s.orders_sum ) AS orders_remain,
 			$nResult = $oSalesDocsMonth->makeUnionSelect( $sRowQuery );
 			if( $nResult != DBAPI_ERR_SUCCESS )
@@ -506,6 +513,9 @@
 					FROM
 						( {$sRowQuery} ) t
 			";
+            if ( $nHideDocs > 0 ) {
+                $sQuery .= " WHERE t.paid_type = 'cash' OR ( t.paid_type = 'bank' AND t.id_bank_epayment > 0 ) ";
+            }
             $this->getResult( $sQuery, 'doc_date', DBAPI_SORT_DESC, $oResponse );
 
 
