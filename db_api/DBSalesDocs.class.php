@@ -478,7 +478,7 @@
 //            // Право за скрит преглед
             $nHideDocs = 1;
             if ( in_array('sale_doc_hide_view', $_SESSION['userdata']['access_right_levels']) ) {
-                $nHideDocs = 1;
+                $nHideDocs = 0;
             }
 
 			$aParams['sClientName'] = addslashes($aParams['sClientName']);
