@@ -87,6 +87,11 @@
 
             $pdf = new SaleDocPDF("P");
             break;
+        case 2:     // v1: Стари
+             require_once("pdf/pdf_sale_doc.php");
+
+             $pdf = new SaleDocPDF("P");
+             break;
         case 3:     // v3: Двойни цени, тотали в ЕВРО
             require_once("pdf/pdf_invoice_euro.php");
 
