@@ -11,7 +11,10 @@
 
 			$this->AddFont('FreeSans', '', 'Roboto-Regular.php');
 			$this->AddFont('FreeSans', 'B', 'Roboto-Bold.php');
-			$this->SetMargins( $this->aMargin['left'], $this->aMargin['top'], $this->aMargin['right'] );
+            $this->AddFont('FreeSansEur', '', 'Roboto-Regular.php');
+            $this->AddFont('FreeSansEur', 'B', 'Roboto-Bold.php');
+
+            $this->SetMargins( $this->aMargin['left'], $this->aMargin['top'], $this->aMargin['right'] );
 			$this->_PageWidth  = $orientation == 'P' ? 210 : 297;
 			$this->_PageHeight = $orientation == 'P' ? 297 : 210;
 			$this->SetAuthor('IntelliSys 2013');

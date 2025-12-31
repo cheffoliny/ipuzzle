@@ -520,7 +520,7 @@ class NEWDBSalesDocs extends DBBase2 {
         return $this->select($sQuery);
     }
 
-    public function getVatTotal($nID) {
+    public function getVatTotal($nID, $v = false) {
         global $db_name_finance;
 
         if ( !$this->isValidID($nID) ) {
@@ -528,10 +528,15 @@ class NEWDBSalesDocs extends DBBase2 {
         }
 
         $sTable		= PREFIX_SALES_DOCS_ROWS.substr($nID, 0, 6);
+        $c          = "total_sum";
+
+        if ( $v ) {
+            $c = "total_sum_bgn";
+        }
 
         $sQuery = "
             SELECT
-            SUM(`total_sum`) as 'vat_total'
+            SUM(`{$c}`) as 'vat_total'
             FROM {$db_name_finance}.{$sTable}
             WHERE id_sale_doc = {$nID}
             AND is_dds = 1
@@ -561,11 +566,14 @@ class NEWDBSalesDocs extends DBBase2 {
                  )) AS service_name,
                 measure,
                 `month`,
-                IF ( `type` = 'month', SUM(total_sum), SUM(single_price) ) as single_price,
+                IF (`type` = 'month' OR `type` = 'single' AND group_single_payments = 1, SUM(total_sum), SUM(single_price) ) AS single_price,
+                IF (`type` = 'month' OR `type` = 'single' AND group_single_payments = 1, SUM(total_sum_bgn), SUM(single_price_bgn) ) AS single_price_bgn,
                 IF ( `type` = 'month', 1, quantity ) as quantity,
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
-               case
+                SUM(total_sum_bgn) AS total_sum_bgn,
+                SUM(paid_sum_bgn) AS paid_sum_bgn,
+                CASE
                     when for_smartsot = 1 AND `type` = 'month' then 1
                     when for_smartsot = 0 AND `type` = 'free' AND id_object != 0 then id_duty_row
                     when for_smartsot = 1 AND `type` = 'free' AND id_object != 0 then 2
@@ -605,10 +613,13 @@ class NEWDBSalesDocs extends DBBase2 {
                  )) AS service_name,
                  measure,
                 `month`,
-                IF ( `type` = 'month', SUM(total_sum), SUM(single_price) ) as single_price,
-                IF ( `type` = 'month', 1, quantity ) as quantity,
+                IF (`type` = 'month', SUM(total_sum), SUM(single_price) ) as single_price,
+                IF (`type` = 'month', SUM(total_sum_bgn), IF (`type` = 'single' AND group_single_payments, SUM(total_sum_bgn), SUM(single_price_bgn) ) ) AS single_price_bgn,
+                IF (`type` = 'month', 1, quantity ) as quantity,
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
+                SUM(total_sum_bgn) AS total_sum_bgn,
+                SUM(paid_sum_bgn) AS paid_sum_bgn,
                 case
                     when for_smartsot = 1 AND `type` = 'month' then 1
                     when id_object AND `type` = 'free' then 2
@@ -646,7 +657,10 @@ class NEWDBSalesDocs extends DBBase2 {
                 sdr.`month`,
                 SUM(sdr.total_sum) AS single_price,
                 SUM(sdr.total_sum) AS total_sum,
-                SUM(sdr.paid_sum) AS paid_sum
+                SUM(sdr.paid_sum) AS paid_sum,
+                SUM(sdr.single_price_bgn) AS single_price_bgn,
+                SUM(sdr.total_sum_bgn) AS total_sum_bgn,
+                SUM(sdr.paid_sum_bgn) AS paid_sum_bgn
                 
             FROM {$db_name_finance}.{$sTable} sdr
             JOIN {$db_name_finance}.{$sBaseTable} sd ON sd.id = sdr.id_sale_doc
@@ -679,6 +693,9 @@ class NEWDBSalesDocs extends DBBase2 {
                 SUM(single_price) AS single_price,
                 SUM(total_sum) AS total_sum,
                 SUM(paid_sum) AS paid_sum,
+                SUM(single_price_bgn) AS single_price_bgn,
+                SUM(total_sum_bgn) AS total_sum_bgn,
+                SUM(paid_sum_bgn) AS paid_sum_bgn,
                 case
                     when id_object then id_object
                     WHEN `type` = 'free' AND id_object=0 THEN id

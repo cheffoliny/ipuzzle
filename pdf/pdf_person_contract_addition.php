@@ -567,7 +567,7 @@
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			if( !empty( $aParams['nBasicSalary'] ) )
 			{
-				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nBasicSalary'], 0 ) ) . " лева" );
+				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nBasicSalary'], 0 ) ) . " " );
 			}
 			$this->moveX( -31 );
 			$this->SetFont( 'FreeSans', 'B', 9 );
@@ -590,7 +590,7 @@
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			if( !empty( $aParams['nSalary'] ) )
 			{
-				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nSalary'], 0 ) ) . " лева" );
+				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nSalary'], 0 ) ) . " " );
 			}
 			$this->moveX( -31 );
 			$this->SetFont( 'FreeSans', 'B', 9 );

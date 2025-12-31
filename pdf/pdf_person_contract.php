@@ -633,7 +633,7 @@
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			if( !empty( $aParams['nSalary'] ) )
 			{
-				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nSalary'], 0 ) ) . " лева" );	//Value
+				$this->Cell( '', '', convertDigitToText( (string) round( $aParams['nSalary'], 0 ) ) . " " );	//Value
 			}
 			$this->Line( 85, 190, 170, 190 );
 			

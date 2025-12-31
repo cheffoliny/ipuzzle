@@ -30,8 +30,10 @@
 					sdr.service_name,
 					sdr.quantity,
 					sdr.measure,
-					abs(sdr.single_price) AS single_price,
-					abs(sdr.total_sum) AS total_sum,
+					SUM(sdr.single_price) AS single_price,
+                    SUM(sdr.total_sum) AS total_sum,
+                    SUM(sdr.single_price_bgn) AS single_price_bgn,
+                    SUM(sdr.total_sum_bgn) AS total_sum_bgn
 					sdr.paid_sum,
 					sdr.paid_date
 				FROM ".PREFIX_SALES_DOCS_ROWS.$sYearMonth." sdr
@@ -101,7 +103,8 @@
 						'1' AS quantity,
 						'бр.' as measure,
 						SUM(sdr.total_sum) AS single_price,
-					";
+                        SUM(sdr.total_sum_bgn) AS single_price_bgn,
+                    ";
 				break;
 				case 'by_services':
 					$sQuery .= "
@@ -109,14 +112,16 @@
 						'1' AS quantity,
 						'бр.' as measure,
 						SUM(sdr.total_sum) AS single_price,
-					";
-				break;
+                        SUM(sdr.total_sum_bgn) AS single_price_bgn,
+                    ";
+                break;
 				case 'by_objects':
 					$sQuery .= "
 						IF ( LENGTH(sdr.object_name) > 0, sdr.object_name, ob.name ) as service,
 						'1' AS quantity,
 						'бр.' as measure,
 						SUM(sdr.total_sum) AS single_price,
+                        SUM(sdr.total_sum_bgn) AS single_price_bgn,
 					";	
 				break;
 				case 'detail':
@@ -126,12 +131,13 @@
 						sdr.quantity,
 						sdr.measure,
 						SUM(sdr.single_price) AS single_price,
+                        SUM(sdr.single_price_bgn) AS single_price_bgn,
 					";
 			}
 			
 			$sQuery .= "
-					
-					SUM(sdr.total_sum) AS total_sum
+                    SUM(sdr.total_sum) AS total_sum,
+                    SUM(sdr.total_sum_bgn) AS total_sum_bgn
 				FROM ".PREFIX_SALES_DOCS_ROWS.$sYearMonth." sdr
 				LEFT JOIN {$db_name_sod}.objects ob ON ob.id = sdr.id_object
 				WHERE sdr.id_sale_doc = {$nIDSaleDoc}

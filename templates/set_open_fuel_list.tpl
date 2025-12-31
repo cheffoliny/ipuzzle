@@ -27,7 +27,7 @@
 					<td><input type="text" name="nKm" id="nKm" style="width: 128px; text-align: right;" onkeypress="return formatDigits(event);" maxlength="6" /></td>
 				</tr>
 				<tr class="even">
-					<td>Гориво в лева:</td>
+					<td>Гориво:</td>
 					<td><input type="text" name="nFuelPrice" id="nFuelPrice" style="width: 128px; text-align: right;" onkeypress="return formatMoney(event);" maxlength="6" /></td>
 				</tr>
 				<tr class="even">
