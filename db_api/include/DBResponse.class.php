@@ -802,17 +802,17 @@
 									break;
 					case DF_CURRENCY : 
 //									$sContent = sprintf("%01.2f лв.", $sContent);
-									$sContent = number_format($sContent, 2 , '.' , ' ' )." лв.";
+									$sContent = number_format($sContent, 2 , '.' , ' ' )." € ";
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_CURRENCY4 : 
 //									$sContent = sprintf("%01.4f лв.", $sContent);
-                                    $sContent = number_format($sContent, 4 , '.' , ' ' )." лв.";
+                                    $sContent = number_format($sContent, 4 , '.' , ' ' )." € ";
 									$aAttribute = array( 'align' => 'right' );
 									break;
                     case DF_CURRENCY6 :
 //                                    $sContent = sprintf("%01.6f лв.", $sContent);
-                                    $sContent = number_format($sContent, 6 , '.' , ' ' )." лв.";
+                                    $sContent = number_format($sContent, 6 , '.' , ' ' )." € ";
                                     $aAttribute = array( 'align' => 'right' );
                                     break;
 					case DF_DATE : 
