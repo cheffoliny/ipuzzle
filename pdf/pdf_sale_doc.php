@@ -346,7 +346,8 @@ class SaleDocPDF extends PDFC {
     }
 
     // Печат на цените по фактурата
-    private function PrintTableData($nID) {
+    private function PrintTableData($nID)
+    {
 
         $oDBSalesDocsRows 	= new DBSalesDocsRows();
         $oSalesDocs 		= new DBSalesDocs();
@@ -394,7 +395,9 @@ class SaleDocPDF extends PDFC {
 
             foreach( $this->aOptions['Fields'] as $sFieldKey => $aField ) {
 
-                if($sFieldKey == 'single_price' || $sFieldKey == 'total_sum') {
+                if ($sFieldKey == 'single_price' || $sFieldKey == 'total_sum') {
+                    $sFieldKey .= "_bgn";
+
                     $sData = sprintf('%0.3f лв.', $sType != "kreditno izvestie" ? $aRow[$sFieldKey] : $aRow[$sFieldKey] * -1);
                 } else {
                     if ($sFieldKey == 'month') {
@@ -465,7 +468,7 @@ class SaleDocPDF extends PDFC {
         $sCreatedUser = $oDBPersonnel->getPersonnelNames2($nIDCreatedUser);
 
         $sType		= isset($aSaleDoc['doc_type']) 	? $aSaleDoc['doc_type'] : "faktura";
-        $nTotalSum 	= $sType != "kreditno izvestie" ? $aSaleDoc['total_sum'] : $aSaleDoc['total_sum'] * -1;
+        $nTotalSum 	= $sType != "kreditno izvestie" ? $aSaleDoc['total_sum_bgn'] : $aSaleDoc['total_sum_bgn'] * -1;
         $nTaxSum 	= round($nTotalSum * 5/6,2);
         $nSumDDS 	= $nTotalSum - $nTaxSum;
 
@@ -495,7 +498,7 @@ class SaleDocPDF extends PDFC {
         $this->SetLineWidth( $this->aOptions['BorderWidth'] );
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize'] + 2 );
         $this->SetFillColor( $this->aOptions['Background']['body']  );
-        $this->Cell( $width,  $this->aOptions['RowHeight'], slovom ($aSaleDoc['total_sum'], $_currency, $_currency_100), 1, 0, 'L', 1);
+        $this->Cell( $width,  $this->aOptions['RowHeight'], slovom ($aSaleDoc['total_sum_bgn'], $_currency, $_currency_100), 1, 0, 'L', 1);
         $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize'] + 2 );
         $this->PrintRow( $x, "Дан. основа", sprintf('%0.2f',$nTaxSum).' '.$_currency, $this->aOptions['Fields']['price']['width'], $this->aOptions['Fields']['sum']['width'],'R' );
 
