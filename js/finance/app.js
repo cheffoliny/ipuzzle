@@ -39556,7 +39556,7 @@ var render = function() {
                                             _vm.relative_document.total_sum
                                           )
                                         ) +
-                                        " лв.\n        "
+                                        " € \n        "
                                     )
                                   ]
                                 )
@@ -40169,7 +40169,7 @@ var render = function() {
                                         _vm.document_data.orders_sum
                                     )
                                   ) +
-                                  " лв.\n        "
+                                  " € \n        "
                               )
                             ]
                           ),
@@ -40189,7 +40189,7 @@ var render = function() {
                                       _vm.document_data.orders_sum
                                     )
                                   ) +
-                                  " лв.\n        "
+                                  " € \n        "
                               )
                             ]
                           )
@@ -41087,7 +41087,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    _vm._s(order.order_sum.toFixed(2)) + " лв."
+                                    _vm._s(order.order_sum.toFixed(2)) + " € "
                                   )
                                 ]
                               ),
@@ -41875,7 +41875,7 @@ var render = function() {
                                 _c(
                                   "span",
                                   { staticClass: "secondary-info text-right" },
-                                  [_vm._v("лв.")]
+                                  [_vm._v("€ ")]
                                 )
                               ])
                             ]
@@ -42926,7 +42926,7 @@ var render = function() {
                                             _vm.relative_document.total_sum
                                           )
                                         ) +
-                                        " лв.\n        "
+                                        " € \n        "
                                     )
                                   ]
                                 )
@@ -43294,7 +43294,7 @@ var render = function() {
                                         ]),
                                         _vm._v(" "),
                                         _c("div", { staticClass: "secondary-info" }, [
-                                            _vm._v("лв.")
+                                            _vm._v("€ ")
                                         ])
                                     ]
                                 ),
@@ -43323,7 +43323,7 @@ var render = function() {
                                         ]),
                                         _vm._v(" "),
                                         _c("div", { staticClass: "secondary-info" }, [
-                                            _vm._v("лв.")
+                                            _vm._v("€ ")
                                         ])
                                     ]
                                 )
@@ -43740,7 +43740,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     ),
@@ -43763,7 +43763,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     )
@@ -44070,7 +44070,7 @@ var render = function() {
                                                                         object.monthly.totalSum
                                                                     )
                                                                 ) +
-                                                                " лв. ]"
+                                                                " €  ]"
                                                             )
                                                         ]
                                                         )
@@ -44096,7 +44096,7 @@ var render = function() {
                                                                             .totalSum
                                                                     )
                                                                 ) +
-                                                                " лв. ]"
+                                                                " €  ]"
                                                             )
                                                         ]
                                                         )
@@ -44121,7 +44121,7 @@ var render = function() {
                                                                         object.singles.totalSum
                                                                     )
                                                                 ) +
-                                                                " лв. ]"
+                                                                " €  ]"
                                                             )
                                                         ]
                                                         )
@@ -44173,7 +44173,7 @@ var render = function() {
                                                                         object.single_price
                                                                     )
                                                                 ) +
-                                                                " лв.\n              ]"
+                                                                " € \n              ]"
                                                             )
                                                         ]
                                                     )
@@ -44234,7 +44234,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     ),
@@ -44266,7 +44266,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     )
@@ -44750,7 +44750,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     ),
@@ -44782,7 +44782,7 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("div", { staticClass: "secondary-info" }, [
-                                                _vm._v("лв.")
+                                                _vm._v("€ ")
                                             ])
                                         ]
                                     )
@@ -45094,7 +45094,7 @@ var render = function() {
                                                         ]),
                                                         _vm._v(" "),
                                                         _c("div", { staticClass: "secondary-info" }, [
-                                                            _vm._v("лв.")
+                                                            _vm._v("€ ")
                                                         ])
                                                     ]
                                                 ),
@@ -45126,7 +45126,7 @@ var render = function() {
                                                         ]),
                                                         _vm._v(" "),
                                                         _c("div", { staticClass: "secondary-info" }, [
-                                                            _vm._v("лв.")
+                                                            _vm._v("€ ")
                                                         ])
                                                     ]
                                                 )
@@ -45196,7 +45196,7 @@ var render = function() {
                                           ].totalForPayment
                                         )
                                       ) +
-                                      "\n          лв.\n        "
+                                      "\n          € \n        "
                                   )
                                 ]
                               ),
@@ -45252,7 +45252,7 @@ var render = function() {
                                                   _vm.objectPricingTreeIndex
                                                 ].monthly.totalForPayment
                                               )
-                                            ) + "\n              лв."
+                                            ) + "\n              € "
                                           )
                                         ])
                                       ]
@@ -45452,7 +45452,7 @@ var render = function() {
                                                               _vm._f("price")(
                                                                 month.totalSum
                                                               )
-                                                            ) + " лв."
+                                                            ) + " € "
                                                           )
                                                         ]
                                                       )
@@ -45532,7 +45532,7 @@ var render = function() {
                                                                     tax.single_price *
                                                                       tax.quantity
                                                                   )
-                                                                ) + " лв."
+                                                                ) + " € "
                                                               )
                                                             ])
                                                           ]
@@ -45576,7 +45576,7 @@ var render = function() {
                                                     _vm.objectPricingTreeIndex
                                                   ].discounts.totalForPayment
                                                 )
-                                              ) + "\n              лв."
+                                              ) + "\n              € "
                                             )
                                           ])
                                         ]
@@ -45781,7 +45781,7 @@ var render = function() {
                                                             ].discounts.totalSum
                                                           )
                                                         ) +
-                                                          "\n                  лв."
+                                                          "\n                  € "
                                                       )
                                                     ]
                                                   )
@@ -45859,7 +45859,7 @@ var render = function() {
                                                                 _vm._f("price")(
                                                                   discount.total_sum
                                                                 )
-                                                              ) + " лв."
+                                                              ) + " € "
                                                             )
                                                           ])
                                                         ]
@@ -45902,7 +45902,7 @@ var render = function() {
                                                     _vm.objectPricingTreeIndex
                                                   ].singles.totalForPayment
                                                 )
-                                              ) + "\n              лв."
+                                              ) + "\n              € "
                                             )
                                           ])
                                         ]
@@ -46109,7 +46109,7 @@ var render = function() {
                                                                 single.quantity
                                                             )
                                                           ) +
-                                                            "\n                  лв."
+                                                            "\n                  € "
                                                         )
                                                       ]
                                                     )
@@ -46257,7 +46257,7 @@ var render = function() {
                                                   _vm.objectPricingTreeIndex
                                                 ].monthly.totalForPayment
                                               )
-                                            ) + "\n              лв."
+                                            ) + "\n              € "
                                           )
                                         ])
                                       ]
@@ -46457,7 +46457,7 @@ var render = function() {
                                                               _vm._f("price")(
                                                                 month.totalSum
                                                               )
-                                                            ) + " лв."
+                                                            ) + " € "
                                                           )
                                                         ]
                                                       )
@@ -46537,7 +46537,7 @@ var render = function() {
                                                                     tax.single_price *
                                                                       tax.quantity
                                                                   )
-                                                                ) + " лв."
+                                                                ) + " € "
                                                               )
                                                             ])
                                                           ]
@@ -46581,7 +46581,7 @@ var render = function() {
                                                     _vm.objectPricingTreeIndex
                                                   ].discounts.totalForPayment
                                                 )
-                                              ) + "\n              лв."
+                                              ) + "\n              € "
                                             )
                                           ])
                                         ]
@@ -46786,7 +46786,7 @@ var render = function() {
                                                             ].discounts.totalSum
                                                           )
                                                         ) +
-                                                          "\n                  лв."
+                                                          "\n                  € "
                                                       )
                                                     ]
                                                   )
@@ -46864,7 +46864,7 @@ var render = function() {
                                                                 _vm._f("price")(
                                                                   discount.total_sum
                                                                 )
-                                                              ) + " лв."
+                                                              ) + " € "
                                                             )
                                                           ])
                                                         ]
@@ -46907,7 +46907,7 @@ var render = function() {
                                                     _vm.objectPricingTreeIndex
                                                   ].singles.totalForPayment
                                                 )
-                                              ) + "\n              лв."
+                                              ) + "\n              € "
                                             )
                                           ])
                                         ]
@@ -47114,7 +47114,7 @@ var render = function() {
                                                                 single.quantity
                                                             )
                                                           ) +
-                                                            "\n                  лв."
+                                                            "\n                  € "
                                                         )
                                                       ]
                                                     )
@@ -47478,7 +47478,7 @@ var render = function() {
                                         _vm.document_data.orders_sum
                                     )
                                   ) +
-                                  "\n          лв.\n        "
+                                  "\n          € \n        "
                               )
                             ]
                           ),
@@ -47498,7 +47498,7 @@ var render = function() {
                                       _vm.document_data.orders_sum
                                     )
                                   ) +
-                                  " лв.\n        "
+                                  " € \n        "
                               )
                             ]
                           )
@@ -47525,7 +47525,7 @@ var render = function() {
                       _vm._v(
                         "\n        " +
                           _vm._s(_vm._f("price")(_vm.baseSum)) +
-                          " лв.\n      "
+                          " € \n      "
                       )
                     ]
                   ),
@@ -47549,7 +47549,7 @@ var render = function() {
                           _vm._v(
                             "\n        " +
                               _vm._s(_vm._f("price")(_vm.vatSum)) +
-                              " лв.\n      "
+                              " € \n      "
                           )
                         ]
                       )
@@ -47571,7 +47571,7 @@ var render = function() {
                       _vm._v(
                         "\n        " +
                           _vm._s(_vm._f("price")(_vm.totalSum)) +
-                          " лв.\n      "
+                          " € \n      "
                       )
                     ]
                   )
@@ -49491,7 +49491,7 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(
                                     _vm._f("price")(_vm.currentSum.total_sum)
-                                  ) + " лв."
+                                  ) + " € "
                                 )
                               ]
                             ),
@@ -49526,7 +49526,7 @@ var render = function() {
                                     _vm._f("price")(
                                       _vm.currentSum.total_sum_with_dds
                                     )
-                                  ) + " лв."
+                                  ) + " € "
                                 )
                               ]
                             ),
@@ -50094,7 +50094,7 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(
                                     _vm._f("price")(_vm.currentSum.total_sum)
-                                  ) + " лв."
+                                  ) + " € "
                                 )
                               ]
                             ),
