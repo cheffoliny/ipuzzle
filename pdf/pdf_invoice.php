@@ -489,6 +489,8 @@ class InvoicePDF extends PDFC
 
             foreach ($this->aOptions['Fields'] as $sFieldKey => $aField) {
                 if ($sFieldKey == 'single_price' || $sFieldKey == 'total_sum') {
+                    $sFieldKey .= "_bgn";
+
                     $sData = sprintf('%0.3f лв.', $sType != "kreditno izvestie" ? $aRow[$sFieldKey] : $aRow[$sFieldKey] * -1);
                 } else {
                     if ( $sFieldKey == 'service' ) {
@@ -579,7 +581,7 @@ class InvoicePDF extends PDFC
         $aBanks = $oDBBanks->getInvoiceAccounts($nIDFirm);
 
         $sType = isset($this->document['doc_type']) ? $this->document['doc_type'] : "faktura";
-        $nTotalSum = $sType != "kreditno izvestie" ? $this->document['total_sum'] : $this->document['total_sum'] * -1;
+        $nTotalSum = $sType != "kreditno izvestie" ? $this->document['total_sum_bgn'] : $this->document['total_sum_bgn'] * -1;
         $nTaxSum = round($nTotalSum * 5 / 6, 2);
         $nSumDDS = $nTotalSum - $nTaxSum;
 
@@ -676,7 +678,7 @@ class InvoicePDF extends PDFC
         $this->Cell($width / 3, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
 
         $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize']);
-        $this->Cell($width, $this->aOptions['RowHeight'],  'Словом: '. slovom($this->document['total_sum'], $_currency, $_currency_100."          " ), 1, 0, 'R', 1);
+        $this->Cell($width, $this->aOptions['RowHeight'],  'Словом: '. slovom($this->document['total_sum_bgn'], $_currency, $_currency_100."          " ), 1, 0, 'R', 1);
 
         $this->Ln();
 

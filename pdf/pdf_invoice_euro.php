@@ -491,7 +491,7 @@
 
              foreach ($this->aOptions['Fields'] as $sFieldKey => $aField) {
                  if ($sFieldKey == 'single_price' || $sFieldKey == 'total_sum') {
-                     $sData = sprintf('%0.3f €', $sType != "kreditno izvestie" ? $aRow[$sFieldKey] : $aRow[$sFieldKey] * -1);
+                     $sData = sprintf('%0.3f лв.', $sType != "kreditno izvestie" ? $aRow[$sFieldKey] : $aRow[$sFieldKey] * -1);
                  } else {
                      if ( $sFieldKey == 'service' ) {
                          $line = $this->ProcessServiceText($aRow[$sFieldKey], $aField['width']);
