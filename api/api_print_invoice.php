@@ -79,36 +79,68 @@
 
     $document = $oSaleDocs->getDocData($nID);
 
-    $version = (int) ($aParams['v'] ?? ($document['version'] ?? 2));
+    $version = (int) ($aParams['v'] ?? ($document['version'] ?? 3));
 
-    if ( $version != 1 ) {
+    switch ( $version ) {
+        case 1:     // v1: Стари
+            require_once("pdf/pdf_sale_doc.php");
 
-        require_once("pdf/pdf_invoice.php");
+            $pdf = new SaleDocPDF("P");
+            break;
+        case 2:     //v2: Текущи, преди ЕВРО
+            require_once("pdf/pdf_invoice.php");
 
-        $pdf = new InvoicePDF("P");
+            $pdf = new InvoicePDF("P");
+            break;
+//         case 3:     // v3: Двойни цени, тотали в ЕВРО
+//             require_once("pdf/pdf_invoice_eur.php");
+//
+//             $pdf = new InvoiceEURPDF("P");
+//             break;
+        default:    // v4: Двойни цени, тотали и опис в ЕВРО
+            require_once("pdf/pdf_invoice_euro.php");
 
-        try {
-            $pdf->PrintReport($nID, '', $document['view_type'], 0);
-        } catch (Exception $e) {
-            http_response_code(400);
-
-            echo $e->getMessage();
-            die();
-        }
-    } else {
-        require_once("pdf/pdf_sale_doc.php");
-
-        $pdf = new SaleDocPDF("P");
-
-        try {
-            $pdf->PrintReport($nID, '', $document['view_type'], 0);
-        } catch (Exception $e) {
-            http_response_code(400);
-
-            echo $e->getMessage();
-            die();
-        }
+            $pdf = new InvoiceEURPDF("P");
+            break;
     }
+
+    try {
+        $pdf->PrintReport($nID, '', $document['view_type'], 0);
+    } catch (Exception $e) {
+        http_response_code(400);
+
+        echo $e->getMessage();
+        die();
+    }
+
+//     if ( $version != 1 ) {
+//
+//         require_once("pdf/pdf_invoice.php");
+//
+//         $pdf = new InvoicePDF("P");
+//
+//         try {
+//             $pdf->PrintReport($nID, '', $document['view_type'], 0);
+//         } catch (Exception $e) {
+//             http_response_code(400);
+//
+//             echo $e->getMessage();
+//             die();
+//         }
+//     } else {
+//         require_once("pdf/pdf_sale_doc.php");
+//
+//         $pdf = new SaleDocPDF("P");
+//
+//         try {
+//             $pdf->PrintReport($nID, '', $document['view_type'], 0);
+//         } catch (Exception $e) {
+//             http_response_code(400);
+//
+//             echo $e->getMessage();
+//             die();
+//         }
+//     }
 
     //var_dump($version); die();
 

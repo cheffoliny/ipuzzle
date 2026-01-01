@@ -15,13 +15,46 @@
 			$oResponse->printResponse( "Картон на клиента - Плащания", "clients_payments" );
 		}
 
+//         public function openPDF(DBResponse $oResponse) {
+//             $nID    = Params::get('nIDInvoice', 0);
+//             //$sTable = "sales_docs_".substr($nID, 0, 6);
+//
+//             $oDBSalesDocs   = new DBSalesDocs();
+//             $oSaleDocPDF    = new SaleDocPDF('P');
+//             $aSalesDocs     = $oDBSalesDocs->getDoc($nID);
+//
+//             $oSaleDocPDF->copie = true;
+//             $oSaleDocPDF->PrintReport($nID, '', $aSalesDocs['view_type']);
+//
+//             $oSaleDocPDF->Output();
+//         }
+
         public function openPDF(DBResponse $oResponse) {
             $nID    = Params::get('nIDInvoice', 0);
             //$sTable = "sales_docs_".substr($nID, 0, 6);
 
             $oDBSalesDocs   = new DBSalesDocs();
-            $oSaleDocPDF    = new SaleDocPDF('P');
             $aSalesDocs     = $oDBSalesDocs->getDoc($nID);
+
+            $oSaleDocPDF    = new SaleDocPDF('P');
+
+            switch ( $aSalesDocs['version'] ) {
+                case 1:     // v1: Стари
+                    require_once("pdf/pdf_sale_doc.php");
+
+                    $oSaleDocPDF = new SaleDocPDF("P");
+                    break;
+                case 3:     // v3: тотали в ЕВРО
+                    require_once("pdf/pdf_invoice_euro.php");
+
+                    $oSaleDocPDF = new InvoiceEURPDF("P");
+                    break;
+                default:    //v2: Текущи, преди ЕВРО
+                    require_once("pdf/pdf_invoice.php");
+
+                    $oSaleDocPDF = new InvoicePDF("P");
+                    break;
+            }
 
             $oSaleDocPDF->copie = true;
             $oSaleDocPDF->PrintReport($nID, '', $aSalesDocs['view_type']);
@@ -60,12 +93,12 @@
 
                     $oSaleDocPDF = new InvoicePDF("P");
                     break;
-                case 3:     // v3: Двойни цени, тотали в ЕВРО
+                case 3:     // v3: в ЕВРО
                     require_once("pdf/pdf_invoice_euro.php");
 
                     $oSaleDocPDF = new InvoiceEURPDF("P");
                     break;
-                default:    // v4: Двойни цени, тотали и опис в ЕВРО
+                default:    //
                     require_once("pdf/pdf_invoice.php");
 
                     $oSaleDocPDF = new InvoicePDF("P");
