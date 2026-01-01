@@ -108,6 +108,7 @@
 				break;
 				case 'by_services':
 					$sQuery .= "
+                        sdr.id_service,
 						sdr.service_name AS service,
 						'1' AS quantity,
 						'бр.' as measure,

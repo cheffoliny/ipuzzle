@@ -661,7 +661,6 @@ class NEWDBSalesDocs extends DBBase2 {
                 SUM(sdr.single_price_bgn) AS single_price_bgn,
                 SUM(sdr.total_sum_bgn) AS total_sum_bgn,
                 SUM(sdr.paid_sum_bgn) AS paid_sum_bgn
-                
             FROM {$db_name_finance}.{$sTable} sdr
             JOIN {$db_name_finance}.{$sBaseTable} sd ON sd.id = sdr.id_sale_doc
             WHERE sdr.id_sale_doc = {$nID}
@@ -685,7 +684,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 object_name,
                 object_name AS service_name,
                 case
-                when id_object THEN 1
+                WHEN id_object THEN 1
                 WHEN `type` = 'free' AND id_object=0 THEN quantity
                 END as quantity,
                 measure,
