@@ -87,17 +87,52 @@
 
             $pdf = new SaleDocPDF("P");
             break;
+        case 2:     // v1: Стари
+            require_once("pdf/pdf_invoice.php");
+
+            $pdf = new InvoicePDF("P");
+            break;
         case 3:     // v3: Двойни цени, тотали в ЕВРО
             require_once("pdf/pdf_invoice_euro.php");
 
             $pdf = new InvoiceEURPDF("P");
             break;
         default:    //v2: Текущи, преди ЕВРО
-            require_once("pdf/pdf_sale_doc.php");
+            require_once("pdf/pdf_invoice.php");
 
             $pdf = new InvoicePDF("P");
             break;
     }
+
+//     $version = (int) ($aParams['v'] ?? ($document['version'] ?? 2));
+//
+//         if ( $version != 1 ) {
+//             require_once("pdf/pdf_invoice.php");
+//
+//             $pdf = new InvoicePDF("P");
+//
+//             try {
+//                 $pdf->PrintReport($nID, '', $document['view_type'], 0);
+//             } catch (Exception $e) {
+//                 http_response_code(400);
+//
+//                 echo $e->getMessage();
+//                 die();
+//             }
+//         } else {
+//             require_once("pdf/pdf_sale_doc.php");
+//
+//             $pdf = new SaleDocPDF("P");
+//
+//             try {
+//                 $pdf->PrintReport($nID, '', $document['view_type'], 0);
+//             } catch (Exception $e) {
+//                 http_response_code(400);
+//
+//                 echo $e->getMessage();
+//                 die();
+//             }
+//         }
 
     try {
         $pdf->PrintReport($nID, '', $document['view_type'], 0);
