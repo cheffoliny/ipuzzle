@@ -125,13 +125,13 @@
           <div class="flex flex-col items-end border p-1 px-2">
             <span
               class="w-full text-right text-black text-smplus font-medium"
-            >{{currentSum.total_sum | price}} лв.</span>
+            >{{currentSum.total_sum | price}} €</span>
             <span class="w-full text-right text-orange-500 text-xssplus">без ддс</span>
           </div>
           <div class="flex flex-col items-end border p-1 px-2">
             <span
               class="w-full text-right text-black text-smplus font-medium"
-            >{{currentSum.total_sum_with_dds | price}} лв.</span>
+            >{{currentSum.total_sum_with_dds | price}} €</span>
             <span class="w-full text-right text-orange-500 text-xssplus">с ддс</span>
           </div>
         </div>

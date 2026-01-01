@@ -45,7 +45,7 @@
                 <span title="сума" class="primary-info text-right">
                    {{document.total_sum | price}}
                 </span>
-                <span class="secondary-info text-right">лв.</span>
+                <span class="secondary-info text-right">€</span>
               </div>
             </li>
           </template>

@@ -355,7 +355,7 @@
           > 
             {{ relative_document.doc_num }} от
             {{ toDDMMYYYY(relative_document.doc_date) }} г. /
-            {{ relative_document.total_sum | price }} лв.
+            {{ relative_document.total_sum | price }} €
           </button>
           <button
             v-else
@@ -528,12 +528,12 @@
           <!-- single price -->
           <div :title="(baseSum ? baseSum : allRowsTotal)" class="grid-cell text-right">
             <div class="primary-info">{{ (baseSum ? baseSum : allRowsTotal) | price }}</div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
           <!-- total-sum -->
           <div :title="(baseSum ? baseSum : allRowsTotal)" class="grid-cell text-right">
             <div class="primary-info">{{ (baseSum ? baseSum : allRowsTotal) | price }}</div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
         </div>
       </template>
@@ -647,14 +647,14 @@
           <!-- single price -->
           <div :title="service.single_price" class="grid-cell text-right">
             <div class="primary-info">{{ service.single_price | price }}</div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
           <!-- total sum -->
           <div :title="service.total_sum" class="grid-cell text-right">
             <div class="primary-info">
               {{ service.total_sum | price }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
         </div>
       </template>
@@ -740,15 +740,15 @@
               <span v-if="object.monthly" class="truncate"
                 >[ месечни такси:
                 {{ object.monthly.totalForPayment | price }} от
-                {{ object.monthly.totalSum | price }} лв. ]</span
+                {{ object.monthly.totalSum | price }} € ]</span
               >
               <span v-if="object.discounts" class="truncate mx-1"
                 >[ отстъпки: {{ object.discounts.totalForPayment | price }} от
-                {{ object.discounts.totalSum | price }} лв. ]</span
+                {{ object.discounts.totalSum | price }} € ]</span
               >
               <span v-if="object.singles" class="truncate"
                 >[ еднократни: {{ object.singles.totalForPayment | price }} от
-                {{ object.singles.totalSum | price }} лв. ]</span
+                {{ object.singles.totalSum | price }} € ]</span
               >
             </div>
             <div v-else class="flex secondary-info truncate">
@@ -760,7 +760,7 @@
               </button>
               <span class="truncate"
                 >[ {{ object.service_name }} {{ object.quantity }}
-                {{ object.measure }} x {{ object.single_price | price }} лв.
+                {{ object.measure }} x {{ object.single_price | price }} €
                 ]</span
               >
             </div>
@@ -791,7 +791,7 @@
                   : object.single_price | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€ </div>
           </div>
           <!-- total sum -->
           <div :title="object.hasOwnProperty('totalSum') ? object.totalSum : (object.single_price * object.quantity)" class="grid-cell text-right">
@@ -802,7 +802,7 @@
                   : (object.single_price * object.quantity) | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€ </div>
           </div>
         </div>
       </template>
@@ -995,7 +995,7 @@
                   : object.single_price | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€ </div>
           </div>
           <!-- total -->
           <div :title="object.hasOwnProperty('totalSum') ? object.totalSum : (object.single_price * object.quantity)" class="grid-cell text-right">
@@ -1006,7 +1006,7 @@
                   : (object.single_price * object.quantity) | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€ </div>
           </div>
         </div>
       </template>
@@ -1129,7 +1129,7 @@
                   : object.single_price | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
           <!-- total -->
           <div :title="object.hasOwnProperty('totalSum') ? object.totalSum : (object.single_price * object.quantity)" class="grid-cell text-right">
@@ -1140,7 +1140,7 @@
                   : (object.single_price * object.quantity) | price
               }}
             </div>
-            <div class="secondary-info">лв.</div>
+            <div class="secondary-info">€</div>
           </div>
         </div>
       </template>
@@ -1158,7 +1158,7 @@
             {{
               objectsTreeView[objectPricingTreeIndex].totalForPayment | price
             }}
-            лв.
+            €
           </div>
           <button @click="closeObjectPricingModal()" class="p-2 text-xs">
             <i class="fal fa-times fa-fw"></i>
@@ -1181,7 +1181,7 @@
                   objectsTreeView[objectPricingTreeIndex].monthly
                     .totalForPayment | price
                 }}
-                лв.</span
+                € </span
               >
             </div>
 
@@ -1228,7 +1228,7 @@
                   >
                     <span class="ml-2">{{ month.name }}</span>
                     <span class="ml-auto mr-2"
-                      >{{ month.totalSum | price }} лв.</span
+                      >{{ month.totalSum | price }} € </span
                     >
                   </div>
                   <button
@@ -1260,7 +1260,7 @@
                   >
                     <span class="mr-2 truncate">{{ tax.service_name }}</span>
                     <span
-                      >{{ (tax.single_price * tax.quantity) | price }} лв.</span
+                      >{{ (tax.single_price * tax.quantity) | price }} € </span
                     >
                   </div>
                 </div>
@@ -1282,7 +1282,7 @@
                   objectsTreeView[objectPricingTreeIndex].discounts
                     .totalForPayment | price
                 }}
-                лв.</span
+                € </span
               >
             </div>
 
@@ -1326,7 +1326,7 @@
                       objectsTreeView[objectPricingTreeIndex].discounts.totalSum
                         | price
                     }}
-                    лв.</span
+                    € </span
                   >
                 </div>
                 <button
@@ -1357,7 +1357,7 @@
                     <span class="mr-2 truncate">{{
                       discount.reference_service_name
                     }}</span>
-                    <span class>{{ discount.total_sum | price }} лв.</span>
+                    <span class>{{ discount.total_sum | price }} € </span>
                   </div>
                 </div>
               </template>
@@ -1378,7 +1378,7 @@
                   objectsTreeView[objectPricingTreeIndex].singles
                     .totalForPayment | price
                 }}
-                лв.</span
+                € </span
               >
             </div>
 
@@ -1412,7 +1412,7 @@
                     >{{
                       (single.single_price * single.quantity) | price
                     }}
-                    лв.</span
+                    € </span
                   >
                 </div>
               </div>
@@ -1491,7 +1491,7 @@
                           ? object.totalForPayment
                           : (object.single_price * object.quantity) | price
                       }}
-                      лв.</span
+                      € </span
                     >
                   </div>
                   <button
@@ -1526,7 +1526,7 @@
                           objectsTreeView[objectPricingTreeIndex].monthly
                             .totalForPayment | price
                         }}
-                        лв.</span
+                        € </span
                       >
                     </div>
 
@@ -1580,7 +1580,7 @@
                           >
                             <span class="ml-2">{{ month.name }}</span>
                             <span class="ml-auto mr-2"
-                              >{{ month.totalSum | price }} лв.</span
+                              >{{ month.totalSum | price }} € </span
                             >
                           </div>
                           <button
@@ -1617,7 +1617,7 @@
                               >{{
                                 (tax.single_price * tax.quantity) | price
                               }}
-                              лв.</span
+                              € </span
                             >
                           </div>
                         </div>
@@ -1639,7 +1639,7 @@
                           objectsTreeView[objectPricingTreeIndex].discounts
                             .totalForPayment | price
                         }}
-                        лв.</span
+                        € </span
                       >
                     </div>
 
@@ -1689,7 +1689,7 @@
                               objectsTreeView[objectPricingTreeIndex].discounts
                                 .totalSum | price
                             }}
-                            лв.</span
+                            € </span
                           >
                         </div>
                         <button
@@ -1725,7 +1725,7 @@
                               discount.reference_service_name
                             }}</span>
                             <span class
-                              >{{ discount.total_sum | price }} лв.</span
+                              >{{ discount.total_sum | price }} € </span
                             >
                           </div>
                         </div>
@@ -1747,7 +1747,7 @@
                           objectsTreeView[objectPricingTreeIndex].singles
                             .totalForPayment | price
                         }}
-                        лв.</span
+                        € </span
                       >
                     </div>
 
@@ -1782,7 +1782,7 @@
                             >{{
                               (single.single_price * single.quantity) | price
                             }}
-                            лв.</span
+                            € </span
                           >
                         </div>
                       </div>
@@ -1909,11 +1909,11 @@
             {{
               (document_data.total_sum - document_data.orders_sum) | price
             }}
-            лв.
+            € 
           </div>
           <div class="custom-label">платени:</div>
           <div class="custom-input text-right">
-            {{ document_data.orders_sum | price }} лв.
+            {{ document_data.orders_sum | price }} € 
           </div>
         </template>
       </div>
@@ -1921,18 +1921,18 @@
       <div class="f-right">
         <div class="custom-label col-start-3 col-end-4">основа:</div>
         <div :title="baseSum" class="custom-input text-right">
-          {{ baseSum | price }} лв.
+          {{ baseSum | price }} € 
         </div>
 
         <div v-if="showVat" class="custom-label col-start-3 col-end-4">
           ддс:
         </div>
         <div v-if="showVat" :title="vatTitle" class="custom-input text-right">
-          {{ vatSum | price }} лв.
+          {{ vatSum | price }} € 
         </div>
         <div class="custom-label col-start-3 col-end-4">тотал:</div>
         <div :title="totalSum" class="custom-input text-right">
-          {{ totalSum | price }} лв.
+          {{ totalSum | price }} € 
         </div>
       </div>
     </div>

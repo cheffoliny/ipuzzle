@@ -34,7 +34,8 @@
                 class="truncate mr-2 text-left"
               >{{order.bank_account}}</div>
 
-              <div :title="order.order_sum" class="w-24 ml-auto text-right">{{order.order_sum.toFixed(2)}} лв.</div>
+              <div :title="order.order_sum" class="w-24 ml-auto text-right">{{order.order_sum}} €</div>
+
 
               <i :title="order.user" 
               v-tippy="{ trigger : 'mouseenter', placement : 'bottom',arrow : true}"
@@ -204,7 +205,7 @@ export default {
       }
     },
     cancelOrder(order) {
-      if (confirm(`Анулиране ордер ${order.num} на стойност ${order.order_sum} лв.?`)) {
+      if (confirm(`Анулиране ордер ${order.num} на стойност ${order.order_sum} €?`)) {
         this.loading = true;
         axios
           .post(`${this.endPoint}?action=annulment_order`, {

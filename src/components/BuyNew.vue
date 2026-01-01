@@ -285,7 +285,7 @@
           > 
             {{ relative_document.doc_num }} от
             {{ toDDMMYYYY(relative_document.doc_date) }} г. /
-            {{ relative_document.total_sum | price }} лв.
+            {{ relative_document.total_sum | price }} €
           </button>
           <button
             v-else

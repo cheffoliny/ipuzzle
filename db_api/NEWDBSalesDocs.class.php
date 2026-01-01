@@ -1587,6 +1587,7 @@ class NEWDBSalesDocs extends DBBase2 {
         $post['document_data']['is_advice'] = 0;
         $post['document_data']['id_advice'] = $nID;
         $post['document_data']['id'] = 0;
+        $post['document_data']['version'] = 3;
 
         return $this->store($post);
     }
