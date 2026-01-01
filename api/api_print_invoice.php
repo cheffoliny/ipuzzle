@@ -122,14 +122,3 @@
 
     $oDocument = new DBMonthTable($db_name_finance,PREFIX_SALES_DOCS, $db_finance);
     //$oDocument->update($document);
-
-
-
-    //09.05.2016 - Този метод се използва за разпечатване на документи от telepol.com и mytelepol.
-    //Трябва да може да се разпечатват и анулирани документи, затова в условието се добавя проверка
-    //за наличие на параметър _key - Този ключ се предава от двата сайта.
-    //if ( ($aSaleDoc['doc_status'] == 'final') || isset( $aParams['_key'] )) {
-
-
-
-    //}

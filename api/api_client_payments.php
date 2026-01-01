@@ -29,20 +29,20 @@
             $oSaleDocPDF->Output();
         }
 
-        public function signPDF(DBResponse $oResponse) {
-//            $nID    = Params::get('nIDInvoice', 0);
-//            $oDBSalesDocs   = new DBSalesDocs();
-//            $aSalesDocs     = $oDBSalesDocs->getDoc($nID);
-
-            if($aSalesDocs['version'] == 1) {
-                $oSaleDocPDF    = new SaleDocPDF('P');
-            } else {
-                $oSaleDocPDF    = new InvoicePDF('P');
-            }
-
-            header('Content-type: text/json');
-            echo $oSaleDocPDF->PrintReport($nID, '', $aSalesDocs['view_type'],0,true);
-        }
+//         public function signPDF(DBResponse $oResponse) {
+// //            $nID    = Params::get('nIDInvoice', 0);
+// //            $oDBSalesDocs   = new DBSalesDocs();
+// //            $aSalesDocs     = $oDBSalesDocs->getDoc($nID);
+//
+//             if($aSalesDocs['version'] == 1) {
+//                 $oSaleDocPDF    = new SaleDocPDF('P');
+//             } else {
+//                 $oSaleDocPDF    = new InvoicePDF('P');
+//             }
+//
+//             header('Content-type: text/json');
+//             echo $oSaleDocPDF->PrintReport($nID, '', $aSalesDocs['view_type'],0,true);
+//         }
 
         public function signPDF(DBResponse $oResponse) {
             $nID            = Params::get('nIDInvoice', 0);
@@ -61,14 +61,14 @@
                     $oSaleDocPDF = new InvoicePDF("P");
                     break;
                 case 3:     // v3: Двойни цени, тотали в ЕВРО
-                    require_once("pdf/pdf_invoice_eur.php");
+                    require_once("pdf/pdf_invoice_euro.php");
 
                     $oSaleDocPDF = new InvoiceEURPDF("P");
                     break;
                 default:    // v4: Двойни цени, тотали и опис в ЕВРО
-                    require_once("pdf/pdf_invoice_eurozone.php");
+                    require_once("pdf/pdf_invoice.php");
 
-                    $oSaleDocPDF = new InvoiceEUZNPDF("P");
+                    $oSaleDocPDF = new InvoicePDF("P");
                     break;
             }
 		}
