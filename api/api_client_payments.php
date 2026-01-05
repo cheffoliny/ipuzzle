@@ -44,15 +44,15 @@
 
                     $oSaleDocPDF = new SaleDocPDF("P");
                     break;
-                case 3:     // v3: тотали в ЕВРО
-                    require_once("pdf/pdf_invoice_euro.php");
-
-                    $oSaleDocPDF = new InvoiceEURPDF("P");
-                    break;
-                default:    //v2: Текущи, преди ЕВРО
+                case 2:     //v2: Текущи, преди ЕВРО
                     require_once("pdf/pdf_invoice.php");
 
                     $oSaleDocPDF = new InvoicePDF("P");
+                    break;
+                default:    //
+                    require_once("pdf/pdf_invoice_euro.php");
+
+                    $oSaleDocPDF = new InvoiceEURPDF("P");
                     break;
             }
 
