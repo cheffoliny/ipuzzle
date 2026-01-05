@@ -5,7 +5,7 @@
 		{
 			$aParams = Params::getAll();
 			
-			if( isset( $aParams['nID'] ) && !empty( $aParams['nID'] ) )
+			if( isset( $aParams['nID']  ) && !empty( $aParams['nID'] ) )
 			{
 				$oClients = new DBClients();
 				
@@ -93,17 +93,15 @@
 
                     $oSaleDocPDF = new InvoicePDF("P");
                     break;
-                case 3:     // v3: в ЕВРО
+                default:    //
                     require_once("pdf/pdf_invoice_euro.php");
 
                     $oSaleDocPDF = new InvoiceEURPDF("P");
                     break;
-                default:    //
-                    require_once("pdf/pdf_invoice.php");
-
-                    $oSaleDocPDF = new InvoicePDF("P");
-                    break;
             }
+
+            header('Content-type: text/json');
+            echo $oSaleDocPDF->PrintReport($nID, '', $aSalesDocs['view_type'],0,true);
 		}
 
 
