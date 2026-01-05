@@ -1795,7 +1795,7 @@ class NEWDBSalesDocs extends DBBase2 {
                 $document['paid_type'] = $document['paid_type'] ?: "bank";
 
                 $document['view_type'] = $view_type ?? $document['view_type'];
-                $document['version'] = 2;
+               // $document['version'] = 2;
                 $document['created_user'] = $nIDUser;
                 $document['created_time'] = $document['doc_date_create'] ?: time();
                 $document['updated_user'] = $nIDUser;
@@ -2230,7 +2230,7 @@ class NEWDBSalesDocs extends DBBase2 {
             $aData['view_type'] = $document['view_type'] ?: $docOrigin['view_type'];
             $aData['advice_reason'] = $document['advice_reason'] ?: $docOrigin['advice_reason'];
             $aData['id_city'] = $document['id_city'] ?: $docOrigin['id_city'];
-            $aData['version'] = 2;
+           // $aData['version'] = 2;
 
             $oDocument->update($aData);
 
