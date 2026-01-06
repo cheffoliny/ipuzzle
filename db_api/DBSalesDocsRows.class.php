@@ -485,7 +485,7 @@
 				FROM {$db_name_finance}.{$sTableName} sd
 				LEFT JOIN sod.offices o ON sd.id_office = o.id
 				LEFT JOIN finance.nomenclatures_services ns ON ns.id = sd.id_service
-				WHERE (id_sale_doc = {$nIDSaleDoc}) and (sd.id_office = o.id)
+				WHERE (id_sale_doc = {$nIDSaleDoc}) and (sd.id_office = o.id) AND sd.is_dds = 0 
 			";
 			return $this->select2($sQuery);
 		}
