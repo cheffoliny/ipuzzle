@@ -472,7 +472,7 @@
 			$sQuery = "
 				SELECT
 					sd.*,
-					IF(SUBSTRING(sd.id,1,6) > 202600, SUM(sd.total_sum), SUM(sd.total_sum_bgn) ) AS total_sum,
+					IF(SUBSTRING(sd.id,1,6) > 202600, sd.total_sum, sd.total_sum_bgn) AS total_sum,
 					IF( ns.is_stock = 1 ,
  						 o.work_flow_acc_tech,
 						 IF( DATE_FORMAT( sd.month, '%Y' ) = '$sCurrentMonth' ,
