@@ -1,0 +1,454 @@
+/* Access administration screens migrated from the legacy page_data/input layout. */
+body.ui-refresh-content .ui-access-list,
+body.ui-refresh-content .ui-access-dialog {
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-access-list-shell#search {
+    padding: 0;
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter) !important;
+}
+
+body.ui-refresh-content .ui-access-heading {
+    width: 100%;
+    min-height: 40px;
+    border-collapse: collapse;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+}
+
+body.ui-refresh-content .ui-access-heading td.page_name {
+    height: 40px;
+    padding: 7px 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+body.ui-refresh-content .ui-access-heading td.buttons {
+    width: 1%;
+    padding: 5px 8px;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .ui-access-heading button,
+body.ui-refresh-content .ui-access-filter-table button,
+body.ui-refresh-content .ui-access-dialog-actions button,
+body.ui-refresh-content .ui-dual-list button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    box-shadow: 0 1px 2px rgba(24, 50, 75, 0.08);
+}
+
+body.ui-refresh-content .ui-access-heading button {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-access-heading button:hover,
+body.ui-refresh-content .ui-access-heading button:focus {
+    border-color: #14763e;
+    background: #187e45;
+}
+
+body.ui-refresh-content .ui-access-heading button img,
+body.ui-refresh-content .ui-access-filter-table button img,
+body.ui-refresh-content .ui-access-dialog-actions button img,
+body.ui-refresh-content .ui-dual-list button img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+body.ui-refresh-content .ui-access-filter-wrap {
+    display: block;
+    padding: 8px;
+}
+
+body.ui-refresh-content .ui-access-filter-wrap > br,
+body.ui-refresh-content .ui-access-list-shell > hr,
+body.ui-refresh-content .ui-access-list > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-access-filter-table {
+    width: auto;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 6px;
+    background: transparent !important;
+}
+
+body.ui-refresh-content .ui-access-filter-table td {
+    padding: 3px 5px;
+    color: #354b61;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-access-filter-table select.form-control {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 280px;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-access-filter-table button:hover,
+body.ui-refresh-content .ui-access-filter-table button:focus,
+body.ui-refresh-content .ui-access-dialog-actions button:hover,
+body.ui-refresh-content .ui-access-dialog-actions button:focus,
+body.ui-refresh-content .ui-dual-list button:hover,
+body.ui-refresh-content .ui-dual-list button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-access-dialog-body {
+    padding: 12px;
+    background: #fff;
+}
+
+body.ui-refresh-content #search.ui-access-dialog-body {
+    padding: 12px;
+    background: #fff !important;
+}
+
+body.ui-refresh-content .ui-access-form-table {
+    width: 100%;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-access-form-table > tbody > tr > td {
+    padding: 3px 6px;
+    color: #354b61;
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-access-form-table > tbody > tr > td:first-child:not([colspan]) {
+    width: 150px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-access-form-table .form-control:not([multiple]) {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-height: 30px;
+    padding: 5px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-access-form-table .ui-access-inline-control {
+    display: inline-block;
+    width: 200px !important;
+    margin-right: 5px;
+}
+
+body.ui-refresh-content .ui-access-form-table textarea.form-control {
+    min-height: 54px;
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-access-selection {
+    min-width: 0;
+    margin: 4px 0 0;
+    padding: 10px 12px 12px;
+    border: 1px solid var(--ip-content-border) !important;
+    border-radius: 7px;
+    background: #f7fafc;
+}
+
+body.ui-refresh-content .ui-access-selection legend {
+    width: auto;
+    margin: 0 0 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+body.ui-refresh-content .ui-dual-list {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px 0;
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-dual-list td {
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-dual-list td:nth-child(2) {
+    width: 42px;
+    text-align: center;
+}
+
+body.ui-refresh-content .ui-dual-list-select {
+    box-sizing: border-box;
+    width: 100% !important;
+    height: 220px !important;
+    padding: 4px;
+    border: 1px solid #aebfd0;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-dual-list button {
+    width: 34px !important;
+    min-width: 34px;
+    margin: 3px 0;
+    padding: 5px;
+}
+
+body.ui-refresh-content .ui-access-dialog-actions#search {
+    padding: 8px 12px;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa !important;
+}
+
+body.ui-refresh-content .ui-access-dialog-actions table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+body.ui-refresh-content .ui-access-dialog-actions button[onclick*="update"],
+body.ui-refresh-content .ui-access-dialog-actions button[onclick*="save"] {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-access-group-dialog .ui-access-dialog-body {
+    padding-top: 16px;
+    padding-bottom: 12px;
+}
+
+body.ui-refresh-content .ui-access-password-dialog .ui-access-selection {
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+body.ui-refresh-content .ui-access-account-dialog .ui-access-form-table {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+body.ui-refresh-content .ui-access-profile-dialog .ui-access-dialog-body {
+    padding-bottom: 8px;
+}
+
+body.ui-refresh-content .ui-access-level-grid {
+    height: min(400px, calc(100vh - 190px)) !important;
+    min-height: 220px;
+    margin-top: 5px;
+    border: 1px solid var(--ip-content-border);
+    border-radius: 6px;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-access-rights-table {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-access-rights-table tr[bgcolor] {
+    background: #dfeaf4 !important;
+}
+
+body.ui-refresh-content .ui-access-rights-table tr[bgcolor] td {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 6px 9px;
+    border-bottom: 1px solid #b8c9d9;
+    color: #294c69;
+}
+
+body.ui-refresh-content .ui-access-rights-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e0e7ee;
+}
+
+body.ui-refresh-content .ui-access-profile-actions {
+    margin-top: 8px;
+    border-spacing: 0;
+}
+
+body.ui-refresh-content .ui-access-profile-actions .btn {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px !important;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-access-rights {
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-access-rights-toolbar {
+    width: 100%;
+    border-collapse: collapse;
+    background: #dce7f1;
+}
+
+body.ui-refresh-content .ui-access-rights-toolbar td {
+    padding: 5px 8px;
+}
+
+body.ui-refresh-content .ui-access-rights-toolbar button,
+body.ui-refresh-content .ui-access-rights-filters button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-access-rights-toolbar button {
+    width: 32px !important;
+    padding: 5px;
+}
+
+body.ui-refresh-content .ui-access-rights-filters {
+    padding: 10px;
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-access-rights-layout {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px 0;
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-access-rights-layout > tbody > tr > td:first-child {
+    width: auto;
+}
+
+body.ui-refresh-content .ui-access-rights-layout > tbody > tr > td:nth-child(2) {
+    width: 16px;
+}
+
+body.ui-refresh-content .ui-access-rights-layout > tbody > tr > td:last-child {
+    width: 350px;
+}
+
+body.ui-refresh-content .ui-access-rights-selector,
+body.ui-refresh-content .ui-access-mode-selector,
+body.ui-refresh-content .ui-access-scope-fields {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-access-rights-selector .ui-access-selection {
+    box-sizing: border-box;
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-access-rights .ui-dual-list-select {
+    height: 200px !important;
+}
+
+body.ui-refresh-content .ui-access-mode-selector td,
+body.ui-refresh-content .ui-access-scope-fields td {
+    padding: 5px 4px;
+    color: #354b61;
+}
+
+body.ui-refresh-content .ui-access-scope-fields td:first-child {
+    width: 92px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-access-scope-fields .form-control {
+    box-sizing: border-box;
+    width: 100% !important;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-access-rights > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-access-rights #result {
+    margin-top: 0;
+}
+
+@media (max-width: 760px) {
+    body.ui-refresh-content .ui-access-heading td.page_name {
+        font-size: 13px;
+    }
+
+    body.ui-refresh-content .ui-access-filter-table {
+        width: 100%;
+    }
+
+    body.ui-refresh-content .ui-access-filter-table select.form-control {
+        width: min(280px, 52vw);
+    }
+
+    body.ui-refresh-content .ui-access-dialog-body {
+        padding: 8px;
+    }
+
+    body.ui-refresh-content .ui-access-form-table > tbody > tr > td:first-child:not([colspan]) {
+        width: 120px;
+    }
+
+    body.ui-refresh-content .ui-access-rights-filters {
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-access-rights-layout {
+        min-width: 780px;
+    }
+}

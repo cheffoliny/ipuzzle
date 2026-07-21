@@ -1,0 +1,120 @@
+/*
+ * Generic report footer only. Visibility and actions remain controlled by
+ * rpc_paging and rpc_excel_panel in the DOM renderer.
+ */
+body.ui-refresh-content .rpc-result-toolbar {
+    min-height: 42px;
+    padding: 4px 6px !important;
+    gap: 8px;
+    background-color: #20364c !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 -3px 10px rgba(20, 38, 56, 0.18);
+}
+
+body.ui-refresh-content .rpc-result-paging {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
+    padding: 0;
+}
+
+body.ui-refresh-content .rpc-result-paging > .row {
+    align-items: center;
+    margin: 0;
+    padding: 0 !important;
+}
+
+body.ui-refresh-content .rpc-result-paging > .row > div:first-child {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
+    padding: 0 8px;
+    color: #d7e3ee;
+    line-height: 30px;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .rpc-result-paging > .row > div:last-child {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+    max-width: none;
+    padding: 0;
+    color: #91a8bc;
+}
+
+body.ui-refresh-content .rpc-result-paging .btn {
+    min-width: 30px;
+    height: 30px;
+    margin-left: 2px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #dcecff !important;
+    line-height: 20px;
+}
+
+body.ui-refresh-content .rpc-result-paging .btn:hover,
+body.ui-refresh-content .rpc-result-paging .btn:focus {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+body.ui-refresh-content .rpc-result-paging .btn.disabled {
+    color: #ffffff !important;
+    background-color: #1976d2;
+    border-color: #4da3f5;
+    opacity: 1;
+}
+
+body.ui-refresh-content .rpc-result-exports {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+    padding: 0;
+}
+
+body.ui-refresh-content .rpc-result-exports .btn-group {
+    gap: 4px;
+}
+
+body.ui-refresh-content .rpc-result-exports .btn {
+    min-width: 86px;
+    height: 30px;
+    margin-left: 0 !important;
+    border-radius: 4px !important;
+    font-weight: 600;
+}
+
+@media (max-width: 700px) {
+    body.ui-refresh-content .rpc-result-toolbar {
+        gap: 4px;
+        padding-right: 4px !important;
+        padding-left: 4px !important;
+    }
+
+    body.ui-refresh-content .rpc-result-paging > .row > div:first-child {
+        padding-right: 4px;
+        padding-left: 4px;
+        font-size: 12px;
+    }
+
+    body.ui-refresh-content .rpc-result-paging .btn {
+        min-width: 28px;
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+
+    body.ui-refresh-content .rpc-result-exports .btn {
+        min-width: 38px;
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 0;
+    }
+
+    body.ui-refresh-content .rpc-result-exports .btn svg,
+    body.ui-refresh-content .rpc-result-exports .btn i {
+        font-size: 16px;
+    }
+}

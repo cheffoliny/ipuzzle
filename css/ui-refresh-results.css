@@ -1,0 +1,10 @@
+/*
+ * Report layout adjustments only. Keep table colors, row states, paging,
+ * exports and specialized planning renderers in their existing stylesheets.
+ */
+body.ui-refresh-content #result:not(.body-content) > .container-fluid.body-content,
+body.ui-refresh-content #result2:not(.body-content) > .container-fluid.body-content {
+    box-sizing: border-box;
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+}

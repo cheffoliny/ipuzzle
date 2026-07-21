@@ -1,0 +1,2708 @@
+/* Explicit migration layer for compact nomenclature lists and editors. */
+body.ui-refresh-content .ui-nomenclature-list {
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-nomenclature-heading {
+    width: 100%;
+    min-height: 40px;
+    border-collapse: collapse;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+}
+
+body.ui-refresh-content .ui-nomenclature-heading td.page_name {
+    height: 40px;
+    padding: 7px 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+body.ui-refresh-content .ui-nomenclature-heading td.buttons {
+    width: 1%;
+    padding: 5px 8px;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .ui-nomenclature-heading button,
+body.ui-refresh-content .ui-nomenclature-filter button,
+body.ui-refresh-content .ui-nomenclature-actions button,
+body.ui-refresh-content .ui-finance-list-actions button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    box-shadow: 0 1px 2px rgba(24, 50, 75, 0.08);
+}
+
+body.ui-refresh-content .ui-nomenclature-heading button {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-finance-list-shell,
+body.ui-refresh-content .ui-finance-list {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-finance-list > .page_caption {
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+body.ui-refresh-content .ui-finance-list #filter {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-finance-list-actions {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-finance-list-actions td {
+    padding: 6px 8px;
+}
+
+body.ui-refresh-content .ui-finance-list-actions button {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-finance-list-actions button:hover,
+body.ui-refresh-content .ui-finance-list-actions button:focus {
+    border-color: #14763e;
+    background: #187e45;
+}
+
+body.ui-refresh-content .ui-nomenclature-heading button:hover,
+body.ui-refresh-content .ui-nomenclature-heading button:focus {
+    border-color: #14763e;
+    background: #187e45;
+}
+
+body.ui-refresh-content .ui-nomenclature-filter-wrap {
+    display: block;
+    padding: 8px;
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-nomenclature-filter {
+    width: auto;
+    margin: 0 auto;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 5px 2px;
+    background: transparent !important;
+}
+
+body.ui-refresh-content .ui-nomenclature-filter td {
+    padding: 2px 3px;
+    color: #354b61;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-nomenclature-filter .form-control {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 210px;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-nomenclature-filter-wide {
+    min-width: 780px;
+}
+
+body.ui-refresh-content .ui-nomenclature-filter button:hover,
+body.ui-refresh-content .ui-nomenclature-filter button:focus,
+body.ui-refresh-content .ui-nomenclature-actions button:hover,
+body.ui-refresh-content .ui-nomenclature-actions button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-nomenclature-list > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-nomenclature-dialog-shell {
+    padding: 0;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-nomenclature-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0 12px 12px;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-nomenclature-dialog .page_caption {
+    margin-right: -12px;
+    margin-left: -12px;
+    padding: 0 12px;
+}
+
+body.ui-refresh-content .ui-nomenclature-dialog > br,
+body.ui-refresh-content .ui-nomenclature-dialog-shell > br {
+    display: none;
+}
+
+body.ui-refresh-content .ui-nomenclature-form {
+    width: 100%;
+    margin: 10px 0 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-nomenclature-form td {
+    padding: 3px 6px;
+    color: #354b61;
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-nomenclature-form select,
+body.ui-refresh-content .ui-attribute-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-attribute-dialog select {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-nomenclature-fieldset {
+    margin: 2px 0;
+    padding: 9px 10px 10px;
+    border: 1px solid var(--ip-content-border);
+    border-radius: 7px;
+    background: #f7fafc;
+}
+
+body.ui-refresh-content .ui-nomenclature-fieldset legend {
+    width: auto;
+    margin: 0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+body.ui-refresh-content .ui-nomenclature-section {
+    margin-top: 8px;
+}
+
+body.ui-refresh-content .ui-nomenclature-actions {
+    width: 100%;
+    margin: 10px 0 0 !important;
+    border: 0;
+    border-top: 1px solid var(--ip-content-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-nomenclature-actions td {
+    padding: 8px 6px;
+}
+
+body.ui-refresh-content .ui-nomenclature-actions button.search,
+body.ui-refresh-content .ui-nomenclature-actions button[type="submit"] {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-attribute-dialog {
+    padding-top: 8px;
+}
+
+body.ui-refresh-content .ui-attribute-dialog .ui-nomenclature-form,
+body.ui-refresh-content .ui-attribute-dialog .ui-nomenclature-actions {
+    margin-top: 8px !important;
+}
+
+body.ui-refresh-content .ui-attribute-dialog #visibility {
+    min-height: 38px;
+    height: auto !important;
+}
+
+body.ui-refresh-content .ui-nomenclature-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0 5px 0 0;
+    accent-color: #087cf0;
+    vertical-align: -3px;
+}
+
+body.ui-refresh-content .ui-trouble-dialog .ui-nomenclature-form select,
+body.ui-refresh-content .ui-trouble-dialog .ui-nomenclature-form textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-trouble-dialog .ui-nomenclature-form textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-organization-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-organization-dialog .ui-nomenclature-fieldset {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-organization-dialog .ui-nomenclature-fieldset > br {
+    display: none;
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer {
+    width: 100%;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 6px 3px;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer td {
+    padding: 2px;
+    color: #354b61;
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer select {
+    box-sizing: border-box;
+    max-width: none;
+    padding: 5px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer-button {
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 30px !important;
+    min-width: 30px;
+    height: 30px;
+    margin: 2px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer-button:hover,
+body.ui-refresh-content .ui-nomenclature-transfer-button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-nomenclature-transfer-vertical td {
+    vertical-align: bottom;
+}
+
+body.ui-refresh-content .ui-organization-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-organization-dialog .ui-nomenclature-form select {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-location-dialog .ui-nomenclature-form input:not([type="hidden"]),
+body.ui-refresh-content .ui-location-dialog .ui-nomenclature-form select,
+body.ui-refresh-content .ui-financial-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-financial-dialog .ui-nomenclature-form select {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-month-charge-dialog .ui-nomenclature-fieldset {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-month-charge-fields {
+    margin-top: 0;
+}
+
+body.ui-refresh-content .ui-operational-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-operational-dialog .ui-nomenclature-fieldset {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-operational-dialog textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-patruls-dialog textarea {
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-request-items-toolbar {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+    background: #edf3f8;
+}
+
+body.ui-refresh-content .ui-request-items-toolbar td {
+    padding: 5px 7px;
+}
+
+body.ui-refresh-content .ui-request-dialog .ui-request-sections {
+    margin-top: 6px;
+}
+
+body.ui-refresh-content .ui-request-dialog #result {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-tech-prices-summary-wrap {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-tech-prices-summary {
+    width: 100%;
+    max-width: 700px;
+    margin-left: auto;
+}
+
+body.ui-refresh-content .ui-tech-prices-summary .ui-nomenclature-form {
+    width: 100% !important;
+    margin-top: 0;
+}
+
+body.ui-refresh-content .ui-tech-prices-summary button {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #176da8;
+    border-radius: 5px;
+    background: #1976b8;
+    color: #fff;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-inline-calendar-trigger {
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    color: #0874dc;
+    cursor: pointer;
+    vertical-align: -4px;
+}
+
+body.ui-refresh-content .ui-inline-calendar-trigger:focus,
+body.ui-refresh-content .ui-inline-calendar-trigger:hover {
+    color: #075ea9;
+    outline: 2px solid var(--ip-content-focus);
+    outline-offset: 2px;
+}
+
+body.ui-refresh-content .ui-object-troubles,
+body.ui-refresh-content .ui-object-troubles-shell,
+body.ui-refresh-content .ui-object-troubles-actions,
+body.ui-refresh-content .ui-object-troubles-actions > table {
+    box-sizing: border-box;
+    width: 100% !important;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-object-troubles-shell {
+    border: 0;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-object-troubles-shell .header_buttons {
+    height: 40px !important;
+    padding: 7px 12px;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-object-troubles-filter {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-object-troubles-filter td {
+    padding: 7px 8px !important;
+    color: #354b61;
+}
+
+body.ui-refresh-content .ui-object-troubles-filter .input-group {
+    display: inline-flex;
+    width: 100% !important;
+    align-items: stretch;
+}
+
+body.ui-refresh-content .ui-object-troubles-filter .input-group-addon-warning {
+    display: inline-flex;
+    width: 32px;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d2a23b;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+    background: #fff3cd;
+    color: #8a6200;
+}
+
+body.ui-refresh-content .ui-object-troubles-filter .form-control {
+    box-sizing: border-box;
+    width: 210px;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 0 5px 5px 0;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-object-troubles #filter_result > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-object-troubles #result {
+    box-sizing: border-box;
+    border-top: 1px solid var(--ip-content-border);
+}
+
+body.ui-refresh-content .ui-object-troubles-actions {
+    padding-top: 0 !important;
+}
+
+body.ui-refresh-content .ui-object-troubles-actions .ui-nomenclature-actions {
+    margin-top: 0 !important;
+}
+
+body.ui-refresh-content .ui-object-troubles-actions .btn-success {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-object-troubles-actions .btn-danger {
+    border-color: #b34242;
+    background: #c64a4a;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-holidays {
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-holidays-heading > tbody > tr > td:last-child {
+    padding: 4px 8px;
+}
+
+body.ui-refresh-content .ui-holidays-controls,
+body.ui-refresh-content .ui-holidays-controls table {
+    border: 0;
+    background: transparent !important;
+}
+
+body.ui-refresh-content .ui-holidays-controls td {
+    padding: 2px 3px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .ui-holidays-controls select,
+body.ui-refresh-content .ui-holidays-controls input {
+    box-sizing: border-box;
+    height: 30px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: #263d52;
+}
+
+body.ui-refresh-content .ui-holidays-heading .ui-holidays-shift,
+body.ui-refresh-content .ui-holidays-heading .btn-info {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-width: 30px;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-holidays-heading .ui-holidays-shift:hover,
+body.ui-refresh-content .ui-holidays-heading .ui-holidays-shift:focus,
+body.ui-refresh-content .ui-holidays-heading .btn-info:hover,
+body.ui-refresh-content .ui-holidays-heading .btn-info:focus {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.24);
+}
+
+body.ui-refresh-content .ui-holidays #legend {
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 4px;
+}
+
+body.ui-refresh-content .ui-holidays > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-holidays iframe#result {
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    border: 0;
+}
+
+body.ui-refresh-content .ui-catalog-dialog,
+body.ui-refresh-content .ui-money-nomenclature-dialog,
+body.ui-refresh-content .ui-activity-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-service-dialog > .ui-nomenclature-form {
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-service-dialog .ui-nomenclature-fieldset {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-service-dialog .ui-nomenclature-fieldset legend {
+    max-width: 100%;
+    white-space: normal;
+}
+
+body.ui-refresh-content .ui-catalog-dialog .ui-nomenclature-form input:not([type="hidden"]),
+body.ui-refresh-content .ui-catalog-dialog .ui-nomenclature-form select,
+body.ui-refresh-content .ui-money-nomenclature-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-money-nomenclature-dialog .ui-nomenclature-form select,
+body.ui-refresh-content .ui-activity-dialog .ui-nomenclature-form input:not([type="hidden"]),
+body.ui-refresh-content .ui-activity-dialog .ui-nomenclature-form textarea {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-activity-dialog .ui-nomenclature-form textarea {
+    box-sizing: border-box;
+    min-height: 70px;
+    padding: 5px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-inline-dialog-actions button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-inline-dialog-actions button:first-child {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-inline-dialog-actions button:first-child:hover,
+body.ui-refresh-content .ui-inline-dialog-actions button:first-child:focus {
+    border-color: #14763e;
+    background: #187e45;
+}
+
+body.ui-refresh-content .ui-account-mapping-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-account-mapping-dialog .ui-nomenclature-fieldset {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-account-mapping-dialog .ui-nomenclature-transfer {
+    min-width: 770px;
+}
+
+body.ui-refresh-content .ui-account-mapping-dialog .ui-nomenclature-form select {
+    width: 250px;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-activity-filter input[type="text"] {
+    box-sizing: border-box;
+    width: 210px;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-configuration-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-configuration-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-configuration-dialog .ui-nomenclature-form select {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-nomenclature-type-dialog .ui-nomenclature-type-fields {
+    margin-top: 4px;
+}
+
+body.ui-refresh-content .ui-nomenclature-type-dialog .input-group {
+    display: flex;
+    align-items: stretch;
+}
+
+body.ui-refresh-content .ui-nomenclature-type-dialog .input-group-addon {
+    display: inline-flex;
+    width: 30px;
+    min-width: 30px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #b8c8d8;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+    background: #eaf1f7;
+    color: #315c7d;
+}
+
+body.ui-refresh-content .ui-nomenclature-type-dialog .input-group > input,
+body.ui-refresh-content .ui-nomenclature-type-dialog .input-group > select {
+    flex: 1 1 auto;
+    width: auto !important;
+    border-radius: 0 5px 5px 0 !important;
+}
+
+body.ui-refresh-content .ui-scheme-dialog .ui-nomenclature-fieldset,
+body.ui-refresh-content .ui-tech-operation-dialog .ui-nomenclature-fieldset,
+body.ui-refresh-content .ui-status-transfer-wrap {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-scheme-dialog .ui-nomenclature-transfer,
+body.ui-refresh-content .ui-tech-operation-dialog .ui-nomenclature-transfer,
+body.ui-refresh-content .ui-status-mapping-dialog .ui-nomenclature-transfer {
+    min-width: 650px;
+}
+
+body.ui-refresh-content .ui-scheme-dialog #name {
+    box-sizing: border-box;
+    width: 420px;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-scheme-dialog > .ui-nomenclature-form,
+body.ui-refresh-content .ui-scheme-dialog #builder > .ui-nomenclature-form,
+body.ui-refresh-content .ui-tech-operation-dialog > .ui-nomenclature-form,
+body.ui-refresh-content .ui-tech-operation-dialog #builder > .ui-nomenclature-form {
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-tech-operation-dialog .ui-nomenclature-form > tbody > tr:nth-child(3) > td,
+body.ui-refresh-content .ui-tech-operation-dialog .ui-nomenclature-form > tbody > tr:nth-child(4) > td {
+    line-height: 24px;
+}
+
+body.ui-refresh-content .ui-status-firm-filter {
+    box-sizing: border-box;
+    width: 320px;
+    max-width: 100%;
+    margin: 8px auto;
+}
+
+body.ui-refresh-content .ui-status-transfer-wrap {
+    width: 690px;
+    max-width: 100%;
+    margin: 4px auto;
+}
+
+body.ui-refresh-content .ui-tech-operations-layout {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-collapse: collapse;
+    background: #dbe5ee;
+}
+
+body.ui-refresh-content .ui-tech-operations-layout td {
+    padding: 0;
+    border: 0;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-tech-operations-layout tr:first-child td {
+    border-bottom: 6px solid #dbe5ee;
+}
+
+body.ui-refresh-content .ui-tech-operations-layout iframe {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-movement-scheme-dialog {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+body.ui-refresh-content .ui-movement-scheme-dialog .page_caption {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+body.ui-refresh-content .ui-movement-scheme-dialog > .ui-nomenclature-form {
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-movement-scheme-fields,
+body.ui-refresh-content .ui-movement-scheme-fields > tbody > tr > td > table {
+    box-sizing: border-box;
+    width: 100% !important;
+    height: auto !important;
+}
+
+body.ui-refresh-content .ui-movement-scheme-fields td {
+    width: auto !important;
+}
+
+body.ui-refresh-content .ui-movement-scheme-dialog .ui-nomenclature-fieldset {
+    box-sizing: border-box;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0;
+    margin: 2px 0 6px;
+}
+
+body.ui-refresh-content .ui-personnel-list,
+body.ui-refresh-content .ui-personnel-list-shell,
+body.ui-refresh-content .ui-personnel-list-actions,
+body.ui-refresh-content .ui-personnel-list-actions > table {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-personnel-toolbar {
+    box-sizing: border-box;
+    width: 100%;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 4px;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-personnel-toolbar td {
+    padding: 6px 8px;
+    color: #354b61;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-personnel-toolbar button,
+body.ui-refresh-content .ui-personnel-list-actions button,
+body.ui-refresh-content .ui-person-leave-list .btn,
+body.ui-refresh-content .ui-personnel-modal-list .btn {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-personnel-list-actions {
+    margin-top: 8px;
+    padding: 7px 8px !important;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-personnel-result {
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-personnel-modal-list .modal-content {
+    min-height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.ui-refresh-content .ui-personnel-modal-list .modal-body {
+    padding: 10px 12px;
+}
+
+body.ui-refresh-content .ui-personnel-modal-list .fixed-bottom,
+body.ui-refresh-content .ui-person-leave-list .fixed-bottom {
+    position: static !important;
+    margin: 8px 0 0 !important;
+    padding: 0 !important;
+}
+
+body.ui-refresh-content .ui-personnel-modal-list .input-group,
+body.ui-refresh-content .ui-person-leave-list > .row .input-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+body.ui-refresh-content .ui-personnel-modal-list .form-control {
+    box-sizing: border-box;
+    min-height: 30px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+}
+
+body.ui-refresh-content .ui-personnel-report-filter {
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 4px 3px;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-personnel-report-filter input,
+body.ui-refresh-content .ui-personnel-report-filter select {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-personnel-report-filter button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #087cf0;
+    border-radius: 5px;
+    background: #087cf0;
+    color: #fff;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-leave-graph-report {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-leave-graph-layout {
+    width: 100%;
+    min-width: 1000px;
+    border: 0;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-leave-graph-report table.legend {
+    box-sizing: border-box;
+    border: 1px solid #b8c8d8 !important;
+    border-radius: 6px;
+    border-spacing: 2px !important;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-leave-graph-report table.legend td {
+    padding: 3px !important;
+    border: 1px solid #c5d2de !important;
+    font-size: 12px;
+}
+
+body.ui-refresh-content .ui-person-leave-list > .row {
+    margin: 6px 8px !important;
+    align-items: center;
+}
+
+body.ui-refresh-content .ui-personnel-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-personnel-dialog .ui-nomenclature-fieldset {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    margin: 7px 0;
+}
+
+body.ui-refresh-content .ui-personnel-dialog .ui-nomenclature-form,
+body.ui-refresh-content .ui-personnel-dialog .ui-personnel-notes,
+body.ui-refresh-content .ui-personnel-dialog .ui-person-document-validity {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-leave-entry-dialog .ui-nomenclature-form,
+body.ui-refresh-content .ui-person-document-dialog .ui-nomenclature-form {
+    table-layout: fixed;
+}
+
+body.ui-refresh-content .ui-personnel-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-personnel-dialog select,
+body.ui-refresh-content .ui-personnel-dialog textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-personnel-dialog textarea,
+body.ui-refresh-content .ui-personnel-notes textarea {
+    width: 100% !important;
+    min-height: 60px;
+    padding: 6px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-leave-balance-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-leave-balance-dialog .modal-body {
+    padding: 8px 10px;
+}
+
+body.ui-refresh-content .ui-leave-balance-dialog .input-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+body.ui-refresh-content .ui-leave-balance-dialog .form-control {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 30px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+}
+
+/* Warehouse, storagehouse and asset catalog migration. */
+body.ui-refresh-content .ui-assets-list {
+    overflow-x: hidden;
+}
+
+body.ui-refresh-content .ui-storagehouses-filter {
+    min-width: 720px;
+}
+
+body.ui-refresh-content .ui-asset-dialog {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-asset-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-asset-dialog .ui-nomenclature-form select {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-asset-dialog .ui-nomenclature-actions td:first-child {
+    width: auto !important;
+}
+
+body.ui-refresh-content .ui-asset-dialog .ui-nomenclature-actions td:last-child {
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .ui-asset-transfer-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-asset-transfer-shell {
+    width: 100%;
+    margin: 4px 0 0;
+    border: 0;
+    background: transparent;
+}
+
+body.ui-refresh-content .ui-asset-transfer-shell .ui-nomenclature-fieldset {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-asset-nomenclature-dialog .ui-nomenclature-transfer {
+    min-width: 570px;
+}
+
+body.ui-refresh-content .ui-asset-nomenclature-dialog .ui-nomenclature-transfer select {
+    width: 250px !important;
+}
+
+body.ui-refresh-content .ui-asset-settings-dialog .ui-nomenclature-fieldset {
+    margin-top: 10px;
+}
+
+body.ui-refresh-content .ui-storagehouse-layout {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-storagehouse-layout > tbody > tr > td {
+    padding: 0;
+}
+
+body.ui-refresh-content .ui-storagehouse-layout > tbody > tr:nth-child(2) {
+    display: none;
+}
+
+body.ui-refresh-content .ui-storagehouse-dialog .ui-storagehouse-address {
+    margin-top: 6px;
+}
+
+body.ui-refresh-content .ui-storagehouse-dialog .ui-storagehouse-address .ui-nomenclature-form {
+    margin-top: 0;
+}
+
+body.ui-refresh-content .ui-storagehouse-person-transfer {
+    min-width: 0;
+}
+
+body.ui-refresh-content .ui-storagehouse-person-transfer select {
+    width: 100% !important;
+    min-height: 96px;
+}
+
+body.ui-refresh-content .ui-asset-info-dialog {
+    padding-bottom: 8px;
+}
+
+body.ui-refresh-content .ui-asset-info-dialog #filter {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-asset-info-main {
+    display: grid;
+    grid-template-columns: minmax(570px, 3fr) minmax(280px, 2fr);
+    grid-template-rows: auto 1fr;
+    gap: 4px 10px;
+    align-items: start;
+}
+
+body.ui-refresh-content .ui-asset-info-summary {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+body.ui-refresh-content .ui-asset-info-details {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+}
+
+body.ui-refresh-content .ui-asset-attributes {
+    box-sizing: border-box;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    min-width: 0;
+    min-height: 185px;
+    margin-top: 10px;
+}
+
+body.ui-refresh-content .ui-asset-attributes #me {
+    box-sizing: border-box;
+    height: 150px !important;
+    padding-right: 3px;
+}
+
+body.ui-refresh-content .ui-asset-info-dialog input:not([type="hidden"]),
+body.ui-refresh-content .ui-asset-info-dialog select {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-asset-info-actions {
+    clear: both;
+    margin-top: 8px !important;
+}
+
+body.ui-refresh-content .ui-asset-info-actions td {
+    width: auto !important;
+}
+
+body.ui-refresh-content .ui-assets-report {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-assets-report > .page_caption {
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+body.ui-refresh-content .ui-assets-report-actions {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-assets-report-actions td {
+    padding: 6px 8px;
+}
+
+body.ui-refresh-content .ui-assets-report-actions button,
+body.ui-refresh-content .ui-assets-ppp-toolbar button,
+body.ui-refresh-content .ui-asset-search-filter button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #198a4a;
+    border-radius: 5px;
+    background: #209653;
+    color: #fff;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-assets-report-filter {
+    min-width: 520px;
+}
+
+body.ui-refresh-content .ui-assets-report-filter input,
+body.ui-refresh-content .ui-assets-report-filter select,
+body.ui-refresh-content .ui-assets-stock-filter input,
+body.ui-refresh-content .ui-assets-stock-filter select,
+body.ui-refresh-content .ui-assets-totals-filter select {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-assets-search-cell {
+    padding-left: 20px !important;
+}
+
+body.ui-refresh-content .ui-assets-report > hr {
+    display: none;
+}
+
+body.ui-refresh-content .ui-assets-stock-filter-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-assets-stock-filter,
+body.ui-refresh-content .ui-assets-totals-filter {
+    min-width: 850px;
+    margin: 0 auto;
+}
+
+body.ui-refresh-content .ui-assets-totals-result {
+    box-sizing: border-box;
+    width: 100%;
+    border-top: 1px solid var(--ip-content-border);
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-assets-totals-table {
+    min-width: 1300px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+body.ui-refresh-content .ui-assets-totals-table th {
+    padding: 6px 7px;
+    border: 0 !important;
+    border-right: 1px solid #c6d3df !important;
+    border-bottom: 1px solid #b6c6d5 !important;
+    background: #dce8f2 !important;
+    color: #28465f;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-assets-totals-table .bla {
+    padding: 4px 6px;
+    border: 0 !important;
+    border-right: 1px solid #d4dee7 !important;
+    border-bottom: 1px solid #d4dee7 !important;
+    background: #fff !important;
+}
+
+body.ui-refresh-content .ui-asset-bar-cell {
+    box-sizing: border-box;
+    width: 110px;
+    padding: 4px 0 !important;
+}
+
+body.ui-refresh-content .ui-asset-bar-left {
+    text-align: right;
+}
+
+body.ui-refresh-content .ui-asset-bar-right {
+    text-align: left;
+}
+
+body.ui-refresh-content .ui-asset-bar {
+    display: inline-block;
+    max-width: 100px;
+    height: 10px;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-asset-bar-negative {
+    background: #d64b4b;
+}
+
+body.ui-refresh-content .ui-asset-bar-positive {
+    background: #3086d6;
+}
+
+body.ui-refresh-content .ui-asset-value {
+    width: 100px;
+    text-align: right;
+}
+
+body.ui-refresh-content .ui-asset-search-dialog {
+    padding-top: 0;
+}
+
+body.ui-refresh-content .ui-asset-search-caption,
+body.ui-refresh-content .ui-assets-ppp-caption {
+    width: calc(100% + 24px);
+    margin: 0 -12px;
+    border-collapse: collapse;
+}
+
+body.ui-refresh-content .ui-asset-search-caption td,
+body.ui-refresh-content .ui-assets-ppp-caption td {
+    padding: 0;
+}
+
+body.ui-refresh-content .ui-asset-search-filter {
+    min-width: 820px;
+    margin-top: 8px;
+}
+
+body.ui-refresh-content .ui-asset-search-result {
+    width: 100%;
+    margin-top: 5px;
+    border-top: 1px solid var(--ip-content-border);
+}
+
+body.ui-refresh-content .ui-assets-ppp-toolbar-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-assets-ppp-toolbar {
+    min-width: 900px;
+    margin: 8px 0;
+    border: 0;
+    border-spacing: 5px;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-assets-ppp-toolbar input,
+body.ui-refresh-content .ui-assets-ppp-toolbar select {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-assets-ppp-actions .export {
+    text-align: center;
+}
+
+body.ui-refresh-content .ui-assets-ppp-actions input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #087cf0;
+    vertical-align: -3px;
+}
+
+/* Purchase, sale, document-filter and payment dialogs. */
+body.ui-refresh-content .ui-finance-document-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding-bottom: 8px;
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog > .page_caption {
+    position: sticky;
+    left: 0;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog table.input,
+body.ui-refresh-content .ui-finance-document-dialog table.search {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog fieldset {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 4px 0;
+    padding: 8px 9px;
+    border: 1px solid var(--ip-content-border);
+    border-radius: 7px;
+    background: #f7fafc;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog fieldset legend {
+    width: auto;
+    margin: 0;
+    padding: 3px 7px;
+    border-radius: 4px;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-finance-document-dialog select,
+body.ui-refresh-content .ui-finance-document-dialog textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 29px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-finance-document-dialog input.clear[readonly],
+body.ui-refresh-content .ui-finance-document-dialog input:disabled,
+body.ui-refresh-content .ui-finance-document-dialog select:disabled {
+    border-color: #d2dce5;
+    background: #eef3f7;
+    color: #64788b;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0 4px 0 0;
+    accent-color: #087cf0;
+    vertical-align: -3px;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog button.search,
+body.ui-refresh-content .ui-finance-document-dialog #b_save,
+body.ui-refresh-content .ui-finance-document-dialog #b_confirm,
+body.ui-refresh-content .ui-finance-document-dialog #sbm {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog button:hover,
+body.ui-refresh-content .ui-finance-document-dialog button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog button.search:hover,
+body.ui-refresh-content .ui-finance-document-dialog #b_save:hover,
+body.ui-refresh-content .ui-finance-document-dialog #b_confirm:hover,
+body.ui-refresh-content .ui-finance-document-dialog #sbm:hover {
+    border-color: #14763e;
+    background: #187e45;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog .ui-document-danger {
+    border-color: #c74444;
+    background: #d85252;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-finance-document-dialog .ui-document-danger:hover,
+body.ui-refresh-content .ui-finance-document-dialog .ui-document-danger:focus {
+    border-color: #a92e2e;
+    background: #bd3939;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-document-icon-button {
+    width: 32px;
+    min-width: 32px;
+    padding: 5px !important;
+}
+
+body.ui-refresh-content .ui-document-filter-dialog {
+    min-width: 760px;
+}
+
+body.ui-refresh-content .ui-document-filter-dialog > table {
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-document-filter-dialog > table:last-of-type {
+    margin-top: 8px !important;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-document-filter-transfer {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-document-filter-transfer > table {
+    min-width: 570px;
+    margin: 0 auto;
+}
+
+body.ui-refresh-content .ui-document-filter-transfer select {
+    width: 250px !important;
+    min-height: 76px;
+}
+
+body.ui-refresh-content .ui-document-row-dialog {
+    min-width: 440px;
+}
+
+body.ui-refresh-content .ui-document-subview-dialog > table:last-of-type,
+body.ui-refresh-content .ui-document-row-dialog > table:last-of-type,
+body.ui-refresh-content .ui-buy-document-dialog > table:last-of-type,
+body.ui-refresh-content .ui-sale-document-dialog > table:last-of-type {
+    margin-top: 6px;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-sale-document-dialog #result,
+body.ui-refresh-content .ui-document-subview-dialog #result {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid var(--ip-content-border);
+    background: #202529;
+}
+
+body.ui-refresh-content .ui-payment-dialog {
+    min-width: 370px;
+}
+
+body.ui-refresh-content .ui-payment-dialog > table.input {
+    width: 100%;
+    margin-top: 6px !important;
+    border-spacing: 0 3px;
+}
+
+body.ui-refresh-content .ui-payment-dialog > table.input td {
+    padding: 3px 5px;
+}
+
+body.ui-refresh-content .ui-payment-dialog > table.input tr:last-child td {
+    padding-top: 7px;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+/* Personnel schedules, shift reports and object duty dialogs. */
+body.ui-refresh-content .ui-schedule-dialog,
+body.ui-refresh-content .ui-schedule-report,
+body.ui-refresh-content .ui-schedule-list {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+body.ui-refresh-content .ui-schedule-dialog button,
+body.ui-refresh-content .ui-schedule-report button,
+body.ui-refresh-content .ui-schedule-list button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+body.ui-refresh-content .ui-schedule-dialog button.btn-success,
+body.ui-refresh-content .ui-schedule-report button.search,
+body.ui-refresh-content .ui-schedule-report button.btn-success {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-schedule-dialog button.btn-danger {
+    border-color: #c74444;
+    background: #d85252;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-schedule-icon-button,
+body.ui-refresh-content .ui-schedule-addon-button {
+    width: 30px !important;
+    min-width: 30px;
+    height: 30px;
+    padding: 6px !important;
+}
+
+body.ui-refresh-content .ui-schedule-addon-button {
+    min-height: 26px !important;
+    height: 26px;
+    border: 0 !important;
+    border-radius: 3px;
+    background: transparent !important;
+}
+
+body.ui-refresh-content .ui-schedule-filter-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-schedule-filter {
+    min-width: 720px;
+}
+
+body.ui-refresh-content .ui-shifts-count-filter {
+    min-width: 1000px;
+}
+
+body.ui-refresh-content .ui-schedule-filter input:not([type="radio"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-schedule-filter select,
+body.ui-refresh-content .ui-schedule-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-schedule-dialog select,
+body.ui-refresh-content .ui-schedule-dialog textarea {
+    box-sizing: border-box;
+    min-height: 29px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-schedule-dialog input[type="checkbox"],
+body.ui-refresh-content .ui-schedule-report input[type="checkbox"],
+body.ui-refresh-content .ui-schedule-report input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #087cf0;
+    vertical-align: -3px;
+}
+
+body.ui-refresh-content .ui-shift-editor-layout {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-shift-editor-layout .header_buttons {
+    box-sizing: border-box;
+    padding: 7px 10px;
+    border-bottom: 1px solid #18324b;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+    color: #fff;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-shift-editor-field {
+    float: none;
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100%;
+    padding: 0;
+}
+
+body.ui-refresh-content .ui-shift-editor-field .input-group {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    align-items: center;
+    gap: 4px;
+}
+
+body.ui-refresh-content .ui-shift-editor-field .input-group-addon {
+    display: inline-flex;
+    width: 26px;
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    color: #315c7d;
+}
+
+body.ui-refresh-content .ui-shift-editor-field input,
+body.ui-refresh-content .ui-shift-editor-field select,
+body.ui-refresh-content .ui-shift-editor-field textarea {
+    min-width: 0;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-shift-editor-field .inp300,
+body.ui-refresh-content .ui-shift-editor-field .select300,
+body.ui-refresh-content .ui-shift-description textarea {
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-shift-description textarea {
+    height: 62px !important;
+    resize: vertical;
+}
+
+body.ui-refresh-content .ui-schedule-actions {
+    width: 100% !important;
+    margin: 6px 0 0 !important;
+}
+
+body.ui-refresh-content .ui-schedule-actions-wrap {
+    box-sizing: border-box;
+    width: 100% !important;
+    padding-top: 0 !important;
+}
+
+body.ui-refresh-content .ui-schedule-result {
+    box-sizing: border-box;
+    max-width: 100%;
+    border: 1px solid var(--ip-content-border);
+}
+
+body.ui-refresh-content .ui-object-personnel-schedule #result {
+    box-sizing: border-box;
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-object-personnel-schedule > table.search,
+body.ui-refresh-content .ui-object-personnel-schedule > div#search {
+    box-sizing: border-box;
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-object-personnel-schedule .input-group-addon,
+body.ui-refresh-content .ui-object-duty-dialog .input-group-addon,
+body.ui-refresh-content .ui-person-schedule-report .input-group-prepend {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #315c7d;
+}
+
+body.ui-refresh-content .ui-object-duty-dialog .fixed-bottom {
+    position: static;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px 8px !important;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-object-duty-dialog #filter_result {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 4px;
+    padding: 0;
+}
+
+body.ui-refresh-content .ui-schedule-date-nav {
+    width: 100%;
+    border-collapse: collapse;
+    background: #e7f0f8;
+}
+
+body.ui-refresh-content .ui-schedule-date-nav td {
+    padding: 4px 7px;
+}
+
+body.ui-refresh-content .ui-person-schedule-report .table-secondary {
+    border-bottom: 1px solid var(--ip-content-border);
+    background: var(--ip-content-filter) !important;
+}
+
+body.ui-refresh-content .ui-person-schedule-report .input-group-prepend {
+    min-width: 24px;
+}
+
+/* Technical support, limit-card and working-card screens. */
+body.ui-refresh-content .ui-technical-list,
+body.ui-refresh-content .ui-technical-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-technical-list button,
+body.ui-refresh-content .ui-technical-dialog button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 9px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+body.ui-refresh-content .ui-technical-list button:hover,
+body.ui-refresh-content .ui-technical-list button:focus,
+body.ui-refresh-content .ui-technical-dialog button:hover,
+body.ui-refresh-content .ui-technical-dialog button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-technical-list button.search,
+body.ui-refresh-content .ui-technical-dialog button.search,
+body.ui-refresh-content .ui-technical-list button.btn-success,
+body.ui-refresh-content .ui-technical-dialog button.btn-success {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-technical-list button.search:hover,
+body.ui-refresh-content .ui-technical-dialog button.search:hover,
+body.ui-refresh-content .ui-technical-list button.btn-success:hover,
+body.ui-refresh-content .ui-technical-dialog button.btn-success:hover {
+    border-color: #14763e;
+    background: #187e45;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-technical-list button:disabled,
+body.ui-refresh-content .ui-technical-dialog button:disabled {
+    border-color: #c8d3dd;
+    background: #e7edf2;
+    color: #81909d;
+    cursor: not-allowed;
+    opacity: .82;
+}
+
+body.ui-refresh-content .ui-technical-dialog button.btn-danger,
+body.ui-refresh-content .ui-technical-dialog button.ui-technical-danger,
+body.ui-refresh-content .ui-technical-list button.ui-technical-danger {
+    border-color: #c74444;
+    background: #d85252;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-technical-heading,
+body.ui-refresh-content .ui-technical-toolbar,
+body.ui-refresh-content .ui-technical-filter,
+body.ui-refresh-content .ui-technical-form,
+body.ui-refresh-content .ui-technical-fields {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-technical-filter-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-technical-filter {
+    min-width: 690px;
+    margin: 4px auto;
+    border: 1px solid #c2d1de;
+    border-radius: 6px;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-technical-filter td,
+body.ui-refresh-content .ui-technical-toolbar td,
+body.ui-refresh-content .ui-technical-fields td {
+    padding: 4px 6px;
+}
+
+body.ui-refresh-content .ui-technical-filter input:not([type="radio"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-technical-filter select,
+body.ui-refresh-content .ui-technical-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-technical-dialog select,
+body.ui-refresh-content .ui-technical-dialog textarea {
+    box-sizing: border-box;
+    min-height: 29px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-technical-dialog input[readonly],
+body.ui-refresh-content .ui-technical-dialog textarea[readonly],
+body.ui-refresh-content .ui-technical-dialog input:disabled,
+body.ui-refresh-content .ui-technical-dialog select:disabled {
+    border-color: #d2dce5;
+    background: #eef3f7;
+    color: #64788b;
+}
+
+body.ui-refresh-content .ui-technical-list input[type="checkbox"],
+body.ui-refresh-content .ui-technical-list input[type="radio"],
+body.ui-refresh-content .ui-technical-dialog input[type="checkbox"],
+body.ui-refresh-content .ui-technical-dialog input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #087cf0;
+    vertical-align: -3px;
+}
+
+body.ui-refresh-content .ui-technical-dialog fieldset {
+    box-sizing: border-box;
+    max-width: 100%;
+    border: 1px solid #bfd0df;
+    border-radius: 7px;
+    background: #f8fbfd;
+}
+
+body.ui-refresh-content .ui-technical-dialog legend {
+    padding: 0 6px;
+    color: #315c7d;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-technical-actions,
+body.ui-refresh-content .ui-technical-actions-wrap,
+body.ui-refresh-content .ui-technical-result {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-technical-result {
+    border: 1px solid var(--ip-content-border);
+}
+
+body.ui-refresh-content .ui-limit-card-persons #result,
+body.ui-refresh-content .ui-limit-card-persons #dresult,
+body.ui-refresh-content .ui-limit-card-operations #result,
+body.ui-refresh-content .ui-limit-card-persons .ui-technical-actions-wrap,
+body.ui-refresh-content .ui-limit-card-operations .ui-technical-actions-wrap {
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-limit-card-info .ui-technical-form,
+body.ui-refresh-content .ui-limit-card-info .ui-technical-fields,
+body.ui-refresh-content .ui-working-card-info .ui-technical-form {
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-limit-card-timing .ui-inline-calendar-trigger {
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-technical-icon-button,
+body.ui-refresh-content .ui-technical-addon-button {
+    width: 30px !important;
+    min-width: 30px !important;
+    padding: 5px !important;
+}
+
+body.ui-refresh-content .ui-technical-addon-button {
+    height: 31px;
+    border-radius: 4px !important;
+}
+
+body.ui-refresh-content .ui-working-card-info select[multiple] {
+    min-height: 190px;
+}
+
+body.ui-refresh-content .ui-working-card-info .ui-nomenclature-transfer-button {
+    width: 42px !important;
+    margin: 3px 5px;
+}
+
+body.ui-refresh-content #row.ui-technical-planning-toolbar {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    min-height: 42px;
+    height: auto;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 4px;
+    padding: 5px 7px;
+    border: 1px solid #bccddd;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #f8fbfd, #e8f0f7);
+    color: #29465f;
+    text-shadow: none;
+}
+
+body.ui-refresh-content .ui-technical-planning-toolbar .input-group {
+    display: flex;
+    align-items: center;
+}
+
+body.ui-refresh-content .ui-technical-planning-toolbar .input-group-addon,
+body.ui-refresh-content .ui-technical-planning-toolbar .input-group-append {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #315c7d;
+}
+
+body.ui-refresh-content .ui-tech-planning-result {
+    min-height: 360px;
+    overflow: auto;
+}
+
+body.ui-refresh-content .ui-tech-time-bar {
+    display: inline-block;
+    max-width: 100%;
+    height: 20px;
+    margin: 3px 0;
+    border: 1px solid #ba3737;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #f36565, #d83f3f);
+    vertical-align: middle;
+}
+
+body.ui-refresh-content .ui-tech-time-bar-1 { width: 40px; }
+body.ui-refresh-content .ui-tech-time-bar-2 { width: 80px; }
+body.ui-refresh-content .ui-tech-time-bar-3 { width: 120px; }
+body.ui-refresh-content .ui-tech-time-bar-4 { width: 160px; }
+body.ui-refresh-content .ui-tech-time-bar-5 { width: 200px; }
+body.ui-refresh-content .ui-tech-time-bar-6 { width: 240px; }
+body.ui-refresh-content .ui-tech-time-bar-7 { width: 280px; }
+body.ui-refresh-content .ui-tech-time-bar-8 { width: 320px; }
+body.ui-refresh-content .ui-tech-time-bar-9 { width: 360px; }
+body.ui-refresh-content .ui-tech-time-bar-10 { width: 400px; }
+body.ui-refresh-content .ui-tech-time-bar-11 { width: 440px; }
+body.ui-refresh-content .ui-tech-time-bar-12 { width: 480px; }
+body.ui-refresh-content .ui-tech-time-bar-13 { width: 520px; }
+body.ui-refresh-content .ui-tech-time-bar-14 { width: 560px; }
+body.ui-refresh-content .ui-tech-time-bar-15 { width: 600px; }
+body.ui-refresh-content .ui-tech-time-bar-16 { width: 640px; }
+
+body.ui-refresh-content .ui-tech-analytics #mapcontainer,
+body.ui-refresh-content .ui-tech-analytics #sideblock {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Electronic contracts, employee profile and contract print dialogs. */
+body.ui-refresh-content .ui-contract-list,
+body.ui-refresh-content .ui-contract-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-contract-dialog > .page_caption {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+body.ui-refresh-content .ui-contract-list button,
+body.ui-refresh-content .ui-contract-dialog button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 9px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+body.ui-refresh-content .ui-contract-list button:hover,
+body.ui-refresh-content .ui-contract-list button:focus,
+body.ui-refresh-content .ui-contract-dialog button:hover,
+body.ui-refresh-content .ui-contract-dialog button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-contract-list button.search,
+body.ui-refresh-content .ui-contract-dialog button.search,
+body.ui-refresh-content .ui-contract-dialog button.btn-success {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-contract-list button.search:hover,
+body.ui-refresh-content .ui-contract-dialog button.search:hover,
+body.ui-refresh-content .ui-contract-dialog button.btn-success:hover {
+    border-color: #14763e;
+    background: #187e45;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-contract-dialog button.btn-danger {
+    border-color: #c74444;
+    background: #d85252;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-contract-list button:disabled,
+body.ui-refresh-content .ui-contract-dialog button:disabled {
+    border-color: #c8d3dd;
+    background: #e7edf2;
+    color: #81909d;
+    cursor: not-allowed;
+    opacity: .82;
+}
+
+body.ui-refresh-content .ui-contract-filter-wrap {
+    overflow-x: auto;
+}
+
+body.ui-refresh-content .ui-contract-filter {
+    min-width: 760px;
+    margin: 4px auto;
+    border: 1px solid #c2d1de;
+    border-radius: 6px;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-contract-filter td,
+body.ui-refresh-content .ui-contract-toolbar td,
+body.ui-refresh-content .ui-contract-fields td {
+    padding: 4px 6px;
+}
+
+body.ui-refresh-content .ui-contract-filter input:not([type="radio"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-contract-filter select,
+body.ui-refresh-content .ui-contract-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-contract-dialog select,
+body.ui-refresh-content .ui-contract-dialog textarea {
+    box-sizing: border-box;
+    min-height: 29px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-contract-dialog input[readonly],
+body.ui-refresh-content .ui-contract-dialog textarea[readonly],
+body.ui-refresh-content .ui-contract-dialog input:disabled,
+body.ui-refresh-content .ui-contract-dialog select:disabled {
+    border-color: #d2dce5;
+    background: #eef3f7;
+    color: #64788b;
+}
+
+body.ui-refresh-content .ui-contract-dialog fieldset {
+    box-sizing: border-box;
+    max-width: 100%;
+    border: 1px solid #bfd0df;
+    border-radius: 7px;
+    background: #f8fbfd;
+}
+
+body.ui-refresh-content .ui-contract-dialog legend {
+    padding: 0 6px;
+    color: #315c7d;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-contract-result,
+body.ui-refresh-content .ui-contract-actions-wrap,
+body.ui-refresh-content .ui-contract-actions {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-contract-result {
+    border: 1px solid var(--ip-content-border);
+}
+
+body.ui-refresh-content .ui-person-assets #result,
+body.ui-refresh-content .ui-person-assets-attach #result,
+body.ui-refresh-content .ui-person-assets .ui-contract-actions-wrap,
+body.ui-refresh-content .ui-person-assets-attach .ui-contract-actions-wrap {
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-object-contract .input-group-prepend,
+body.ui-refresh-content .ui-person-info .input-group-prepend,
+body.ui-refresh-content .ui-object-contract .input-group-addon-ok {
+    display: inline-flex;
+    min-width: 28px;
+    align-items: center;
+    justify-content: center;
+    color: #315c7d;
+}
+
+body.ui-refresh-content .ui-object-contract .container-fluid,
+body.ui-refresh-content .ui-person-info .container-fluid {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-object-contract-details {
+    box-sizing: border-box;
+    width: 390px !important;
+    max-width: 100%;
+    padding: 6px;
+    border: 1px solid #c3d2df;
+    border-radius: 6px;
+    background: #f7fafc;
+}
+
+body.ui-refresh-content .ui-object-contract-details .input-group,
+body.ui-refresh-content .ui-object-contract-details input,
+body.ui-refresh-content .ui-object-contract-details textarea {
+    box-sizing: border-box;
+    width: 100% !important;
+}
+
+body.ui-refresh-content .ui-object-contract .fixed-bottom,
+body.ui-refresh-content .ui-person-info .fixed-bottom {
+    position: static;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 6px;
+    padding: 7px 8px !important;
+    border-top: 1px solid var(--ip-content-border);
+    background: #f3f7fa;
+}
+
+body.ui-refresh-content .ui-person-info .ui-person-photo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 135px;
+    margin: 0 auto 6px;
+    object-fit: cover;
+    border: 1px solid #bac9d6;
+    border-radius: 6px;
+    background: #eef3f7;
+}
+
+body.ui-refresh-content .ui-contract-print-content {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 640px;
+    padding: 0 6px 8px;
+}
+
+body.ui-refresh-content .ui-contract-print-form > fieldset,
+body.ui-refresh-content .ui-contract-print-form > table {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-contract-print-form table.input input:not([type="checkbox"]),
+body.ui-refresh-content .ui-contract-print-form table.input select,
+body.ui-refresh-content .ui-contract-print-form table.input textarea {
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-contract-print-button {
+    min-width: 105px;
+}
+
+/* Monitoring, patrol movement and state reports. */
+body.ui-refresh-content .ui-monitor-report,
+body.ui-refresh-content .ui-monitor-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-monitor-report button,
+body.ui-refresh-content .ui-monitor-dialog button {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 9px;
+    border: 1px solid #aebfce;
+    border-radius: 5px;
+    background: #fff;
+    color: #31516d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+body.ui-refresh-content .ui-monitor-report button:hover,
+body.ui-refresh-content .ui-monitor-report button:focus,
+body.ui-refresh-content .ui-monitor-dialog button:hover,
+body.ui-refresh-content .ui-monitor-dialog button:focus {
+    border-color: #7f9db8;
+    background: #e7f1fb;
+    color: #195d9c;
+}
+
+body.ui-refresh-content .ui-monitor-report button.search,
+body.ui-refresh-content .ui-monitor-dialog button.search {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-monitor-report button.search:hover,
+body.ui-refresh-content .ui-monitor-dialog button.search:hover {
+    border-color: #14763e;
+    background: #187e45;
+}
+
+body.ui-refresh-content .ui-monitor-report button.btn-danger,
+body.ui-refresh-content .ui-monitor-dialog button.btn-danger,
+body.ui-refresh-content .ui-monitor-report button.ui-monitor-danger {
+    border-color: #c74444;
+    background: #d85252;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-monitor-report button.ui-monitor-icon-button {
+    width: 32px;
+    min-width: 32px;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+body.ui-refresh-content .ui-monitor-heading,
+body.ui-refresh-content .ui-monitor-toolbar,
+body.ui-refresh-content .ui-monitor-filter,
+body.ui-refresh-content .ui-monitor-result,
+body.ui-refresh-content .ui-monitor-actions {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body.ui-refresh-content .ui-monitor-report > center {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 3px 8px;
+}
+
+body.ui-refresh-content .ui-monitor-filter,
+body.ui-refresh-content .ui-monitor-toolbar {
+    margin: 4px auto;
+    border: 1px solid #c2d1de;
+    border-radius: 6px;
+    background: var(--ip-content-filter);
+}
+
+body.ui-refresh-content .ui-monitor-filter td,
+body.ui-refresh-content .ui-monitor-toolbar td,
+body.ui-refresh-content .ui-monitor-dialog-fields td {
+    padding: 4px 6px;
+}
+
+body.ui-refresh-content .ui-monitor-report input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-monitor-report select,
+body.ui-refresh-content .ui-monitor-dialog input:not([type="hidden"]):not([type="checkbox"]),
+body.ui-refresh-content .ui-monitor-dialog select,
+body.ui-refresh-content .ui-monitor-dialog textarea {
+    box-sizing: border-box;
+    min-height: 29px;
+    padding: 4px 7px;
+    border: 1px solid #b8c8d8;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ip-content-text);
+}
+
+body.ui-refresh-content .ui-monitor-report input:disabled,
+body.ui-refresh-content .ui-monitor-dialog input:disabled,
+body.ui-refresh-content .ui-monitor-report select:disabled,
+body.ui-refresh-content .ui-monitor-dialog select:disabled {
+    border-color: #d2dce5;
+    background: #eef3f7;
+    color: #64788b;
+}
+
+body.ui-refresh-content .ui-monitor-search-cell {
+    padding-left: 14px !important;
+}
+
+body.ui-refresh-content .ui-monitor-result {
+    width: 100%;
+    overflow: auto;
+    border: 1px solid var(--ip-content-border);
+    background: var(--ip-content-result);
+}
+
+body.ui-refresh-content .ui-live-monitor-result,
+body.ui-refresh-content .ui-monitor-actions {
+    width: calc(100% - 16px) !important;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body.ui-refresh-content .ui-monitor-dialog > .page_caption {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+body.ui-refresh-content .ui-monitor-dialog-fields,
+body.ui-refresh-content .ui-monitor-dialog-actions {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-monitor-dialog-action-cell {
+    padding-top: 18px;
+    text-align: right;
+}
+
+body.ui-refresh-content .ui-monitor-dialog fieldset {
+    box-sizing: border-box;
+    max-width: 100%;
+    border: 1px solid #bfd0df;
+    border-radius: 7px;
+    background: #f8fbfd;
+}
+
+body.ui-refresh-content .ui-monitor-dialog legend {
+    padding: 0 6px;
+    color: #315c7d;
+    font-weight: 600;
+}
+
+@media (max-width: 700px) {
+    body.ui-refresh-content .ui-nomenclature-filter-wrap {
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-nomenclature-filter {
+        min-width: 520px;
+    }
+
+    body.ui-refresh-content .ui-nomenclature-dialog {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    body.ui-refresh-content .ui-organization-dialog > .ui-nomenclature-form > tbody > tr > td {
+        display: block;
+        box-sizing: border-box;
+        width: 100% !important;
+        padding-right: 4px;
+        padding-left: 4px;
+        text-align: left !important;
+    }
+
+    body.ui-refresh-content .ui-organization-dialog > .ui-nomenclature-form > tbody > tr > td:empty {
+        display: none;
+    }
+
+    body.ui-refresh-content .ui-organization-dialog .ui-nomenclature-transfer {
+        min-width: 630px;
+    }
+
+    body.ui-refresh-content .ui-account-mapping-dialog .ui-nomenclature-transfer {
+        min-width: 770px;
+    }
+
+    body.ui-refresh-content .ui-scheme-dialog .ui-nomenclature-transfer,
+    body.ui-refresh-content .ui-tech-operation-dialog .ui-nomenclature-transfer,
+    body.ui-refresh-content .ui-status-mapping-dialog .ui-nomenclature-transfer {
+        min-width: 650px;
+    }
+
+    body.ui-refresh-content .ui-common-leaves-report .ui-personnel-report-filter {
+        min-width: 520px;
+    }
+
+    body.ui-refresh-content .ui-personnel-list-shell .ui-personnel-toolbar {
+        min-width: 520px;
+    }
+
+    body.ui-refresh-content .ui-personnel-list-shell > tbody > tr > #filter_result {
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-month-charge-fields > tbody > tr > td {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    body.ui-refresh-content .ui-object-troubles-filter td {
+        display: block;
+        box-sizing: border-box;
+        width: 100% !important;
+    }
+
+    body.ui-refresh-content .ui-holidays-heading > tbody > tr > td {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    body.ui-refresh-content .ui-holidays-controls {
+        width: 100% !important;
+    }
+
+    body.ui-refresh-content .ui-storagehouses-list .ui-nomenclature-filter-wrap {
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-asset-info-main {
+        display: block;
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-asset-info-summary,
+    body.ui-refresh-content .ui-asset-info-details {
+        min-width: 570px;
+    }
+
+    body.ui-refresh-content .ui-asset-attributes {
+        min-width: 280px;
+    }
+
+    body.ui-refresh-content .ui-technical-filter {
+        min-width: 690px;
+    }
+
+    body.ui-refresh-content .ui-limit-card-info .ui-technical-form,
+    body.ui-refresh-content .ui-working-card-info .ui-technical-form {
+        overflow-x: auto;
+    }
+
+    body.ui-refresh-content .ui-contract-filter {
+        min-width: 760px;
+    }
+
+    body.ui-refresh-content .ui-person-info .row,
+    body.ui-refresh-content .ui-object-contract .row {
+        min-width: 680px;
+    }
+
+    body.ui-refresh-content .ui-monitor-report > center .ui-monitor-filter {
+        min-width: 720px;
+    }
+
+    body.ui-refresh-content .ui-object-monitor-report > center .ui-monitor-filter {
+        min-width: 620px;
+    }
+}
+
+@media (max-width: 500px) {
+	body.ui-refresh-content .ui-activity-dialog > .ui-nomenclature-form > tbody > tr > td:first-child {
+		width: 105px !important;
+	}
+
+	body.ui-refresh-content .ui-activity-dialog .ui-nomenclature-form input:not([type="hidden"]),
+	body.ui-refresh-content .ui-activity-dialog .ui-nomenclature-form textarea {
+		width: 100% !important;
+	}
+
+    body.ui-refresh-content .ui-location-dialog > .ui-nomenclature-form > tbody > tr > td {
+        display: block;
+        box-sizing: border-box;
+        width: 100% !important;
+        padding-right: 4px;
+        padding-left: 4px;
+        text-align: left !important;
+    }
+
+    body.ui-refresh-content .ui-location-dialog > .ui-nomenclature-form > tbody > tr > td:empty {
+        display: none;
+    }
+
+    body.ui-refresh-content .ui-location-dialog .ui-nomenclature-form input:not([type="hidden"]),
+    body.ui-refresh-content .ui-location-dialog .ui-nomenclature-form select {
+        width: 100% !important;
+    }
+
+    body.ui-refresh-content .ui-alarm-reason-dialog > .ui-nomenclature-form > tbody > tr > td {
+        display: block;
+        box-sizing: border-box;
+        width: 100% !important;
+        padding-right: 4px;
+        padding-left: 4px;
+        text-align: left !important;
+    }
+
+    body.ui-refresh-content .ui-alarm-reason-dialog .ui-nomenclature-form input:not([type="hidden"]) {
+        width: 100% !important;
+    }
+
+    body.ui-refresh-content .ui-month-charge-fields {
+        width: 100% !important;
+        table-layout: auto;
+    }
+
+    body.ui-refresh-content .ui-month-charge-fields > tbody > tr > td:first-child {
+        width: auto !important;
+        min-width: 0;
+        white-space: normal;
+    }
+
+    body.ui-refresh-content .ui-month-charge-fields > tbody > tr > td:last-child {
+        width: 90px;
+        white-space: nowrap;
+    }
+}

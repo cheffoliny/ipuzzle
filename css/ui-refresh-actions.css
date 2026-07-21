@@ -1,0 +1,101 @@
+/* Filter/action buttons only. Report cells and specialized toolbars are excluded. */
+body.ui-refresh-content .table-secondary .btn:not(.btn-link) {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 5px !important;
+    font-family: var(--ip-content-font) !important;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    box-shadow: 0 1px 2px rgba(24, 50, 75, 0.08);
+    transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+body.ui-refresh-content .table-secondary .btn:not(.btn-link):hover,
+body.ui-refresh-content .table-secondary .btn:not(.btn-link):focus {
+    filter: none;
+    box-shadow: 0 3px 8px rgba(24, 50, 75, 0.18);
+}
+
+body.ui-refresh-content .table-secondary .btn:not(.btn-link):active,
+body.ui-refresh-content .table-secondary .btn:not(.btn-link).active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(24, 50, 75, 0.14);
+}
+
+body.ui-refresh-content .table-secondary .btn-primary,
+body.ui-refresh-content .table-secondary .btn-info {
+    border-color: #1769c2;
+    background-color: #1976d2;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-primary:hover,
+body.ui-refresh-content .table-secondary .btn-primary:focus,
+body.ui-refresh-content .table-secondary .btn-info:hover,
+body.ui-refresh-content .table-secondary .btn-info:focus {
+    border-color: #0f56a3;
+    background-color: #1265b8;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-success {
+    border-color: #198a4a;
+    background-color: #209653;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-success:hover,
+body.ui-refresh-content .table-secondary .btn-success:focus {
+    border-color: #14763e;
+    background-color: #187e45;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-danger {
+    border-color: #b83d46;
+    background-color: #c74750;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-danger:hover,
+body.ui-refresh-content .table-secondary .btn-danger:focus {
+    border-color: #9f3139;
+    background-color: #ad3740;
+    color: #ffffff;
+}
+
+body.ui-refresh-content .table-secondary .btn-light {
+    border-color: #b9c8d6;
+    background-color: #f8fbfd;
+    color: #35516d;
+}
+
+body.ui-refresh-content .table-secondary .btn-light:hover,
+body.ui-refresh-content .table-secondary .btn-light:focus,
+body.ui-refresh-content .table-secondary .btn-light.active {
+    border-color: #8fa8bd;
+    background-color: #e4edf5;
+    color: #23435f;
+}
+
+body.ui-refresh-content .table-secondary .btn:disabled,
+body.ui-refresh-content .table-secondary .btn.disabled {
+    box-shadow: none;
+    opacity: 0.56;
+    cursor: not-allowed;
+}
+
+body.ui-refresh-content .table-secondary .btn svg,
+body.ui-refresh-content .table-secondary .btn i {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 767.98px) {
+    body.ui-refresh-content .table-secondary .btn:not(.btn-link) {
+        min-height: 32px;
+    }
+}

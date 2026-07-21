@@ -1,0 +1,79 @@
+/* Font Awesome 7 SVG icons exposed as color-aware CSS masks. */
+.ui-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--ui-icon-source);
+    mask-image: var(--ui-icon-source);
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    vertical-align: -0.125em;
+}
+
+.ui-icon-plus { --ui-icon-source: url("fa7/regular/plus.svg"); }
+.ui-icon-search { --ui-icon-source: url("fa7/regular/magnifying-glass.svg"); }
+.ui-icon-edit { --ui-icon-source: url("fa7/regular/pen-to-square.svg"); }
+.ui-icon-delete { --ui-icon-source: url("fa7/regular/trash-can.svg"); }
+.ui-icon-check { --ui-icon-source: url("fa7/regular/check.svg"); }
+.ui-icon-close { --ui-icon-source: url("fa7/regular/xmark.svg"); }
+.ui-icon-left { --ui-icon-source: url("fa7/regular/chevron-left.svg"); }
+.ui-icon-right { --ui-icon-source: url("fa7/regular/chevron-right.svg"); }
+.ui-icon-up { --ui-icon-source: url("fa7/regular/chevron-up.svg"); }
+.ui-icon-down { --ui-icon-source: url("fa7/regular/chevron-down.svg"); }
+.ui-icon-save { --ui-icon-source: url("fa7/regular/floppy-disk.svg"); }
+.ui-icon-key { --ui-icon-source: url("fa7/regular/key.svg"); }
+.ui-icon-user { --ui-icon-source: url("fa7/regular/user.svg"); }
+.ui-icon-users { --ui-icon-source: url("fa7/regular/users.svg"); }
+.ui-icon-lock { --ui-icon-source: url("fa7/regular/lock.svg"); }
+.ui-icon-copy { --ui-icon-source: url("fa7/regular/copy.svg"); }
+.ui-icon-filter { --ui-icon-source: url("fa7/regular/filter.svg"); }
+.ui-icon-file-excel { --ui-icon-source: url("fa7/regular/file-excel.svg"); }
+.ui-icon-file-pdf { --ui-icon-source: url("fa7/regular/file-pdf.svg"); }
+.ui-icon-file-import { --ui-icon-source: url("fa7/regular/file-import.svg"); }
+.ui-icon-calendar { --ui-icon-source: url("fa7/regular/calendar.svg"); }
+.ui-icon-refresh { --ui-icon-source: url("fa7/regular/rotate.svg"); }
+.ui-icon-settings { --ui-icon-source: url("fa7/regular/gear.svg"); }
+.ui-icon-mail { --ui-icon-source: url("fa7/regular/envelope.svg"); }
+.ui-icon-home { --ui-icon-source: url("fa7/regular/house.svg"); }
+.ui-icon-more { --ui-icon-source: url("fa7/regular/ellipsis.svg"); }
+.ui-icon-minus { --ui-icon-source: url("fa7/regular/minus.svg"); }
+.ui-icon-volume { --ui-icon-source: url("fa7/regular/volume-high.svg"); }
+.ui-icon-info { --ui-icon-source: url("fa7/regular/circle-info.svg"); }
+.ui-icon-tag { --ui-icon-source: url("fa7/regular/tag.svg"); }
+.ui-icon-list { --ui-icon-source: url("fa7/regular/list.svg"); }
+.ui-icon-code { --ui-icon-source: url("fa7/regular/hashtag.svg"); }
+.ui-icon-name { --ui-icon-source: url("fa7/regular/font.svg"); }
+.ui-icon-layout { --ui-icon-source: url("fa7/regular/table-cells.svg"); }
+.ui-icon-play { --ui-icon-source: url("fa7/regular/play.svg"); }
+.ui-icon-stop { --ui-icon-source: url("fa7/regular/stop.svg"); }
+.ui-icon-clock { --ui-icon-source: url("fa7/regular/clock.svg"); }
+.ui-icon-money { --ui-icon-source: url("fa7/regular/euro-sign.svg"); }
+.ui-icon-wrench { --ui-icon-source: url("fa7/regular/wrench.svg"); }
+.ui-icon-sort { --ui-icon-source: url("fa7/regular/sort.svg"); }
+.ui-icon-tags { --ui-icon-source: url("fa7/regular/tags.svg"); }
+.ui-icon-document { --ui-icon-source: url("fa7/regular/file-lines.svg"); }
+.ui-icon-contract { --ui-icon-source: url("fa7/regular/file-signature.svg"); }
+.ui-icon-barcode { --ui-icon-source: url("fa7/regular/barcode.svg"); }
+.ui-icon-location { --ui-icon-source: url("fa7/regular/location-dot.svg"); }
+.ui-icon-phone { --ui-icon-source: url("fa7/regular/phone.svg"); }
+.ui-icon-mobile { --ui-icon-source: url("fa7/regular/mobile-screen.svg"); }
+.ui-icon-id-card { --ui-icon-source: url("fa7/regular/id-card.svg"); }
+.ui-icon-card { --ui-icon-source: url("fa7/regular/credit-card.svg"); }
+.ui-icon-certificate { --ui-icon-source: url("fa7/regular/certificate.svg"); }
+.ui-icon-monitor { --ui-icon-source: url("fa7/regular/radar.svg"); }
+
+button > .ui-icon:first-child,
+a > .ui-icon:first-child {
+    margin-right: 2px;
+}
+
+button[title] > .ui-icon:only-child,
+a[title] > .ui-icon:only-child {
+    margin-right: 0;
+}

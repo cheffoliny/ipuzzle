@@ -1,0 +1,148 @@
+/*
+ * Explicitly migrated legacy report shells.
+ * Unmarked legacy forms stay unchanged until they are reviewed and migrated.
+ */
+body.ui-refresh-content .ui-legacy-report-heading {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid #afc0d2;
+    background-color: #dce7f1;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading td.page_name {
+    width: 100% !important;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #315c7d, #23435f);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search {
+    width: 100%;
+    padding: 0;
+    background: #dce7f1 !important;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills {
+    display: flex;
+    float: none !important;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 2px;
+    margin: 0;
+    padding: 4px 8px 0;
+    border-bottom: 1px solid #afc0d2 !important;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills > li {
+    border: 0 !important;
+    background: transparent !important;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills > li > a {
+    display: block;
+    min-height: 34px;
+    padding: 7px 11px;
+    border: 1px solid transparent;
+    border-radius: 5px 5px 0 0;
+    color: #35516d !important;
+    font-size: 13px;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills > li > a:hover,
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills > li > a:focus {
+    border-color: #bfd0df;
+    background: #eef4f9;
+    color: #126ac4 !important;
+}
+
+body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills > li > a:not([href]) {
+    border-color: #afc0d2 #afc0d2 #fff;
+    background: #fff;
+    color: #075fb8 !important;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-export-docs .ui-legacy-report-filter {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    background: #dce7f1;
+}
+
+body.ui-refresh-content .ui-export-docs .ui-legacy-report-filter td {
+    width: 100%;
+    padding: 8px;
+}
+
+body.ui-refresh-content .ui-export-docs-filter {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+body.ui-refresh-content .ui-export-docs-filter > .form-control {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    height: 30px !important;
+    padding: 5px 8px;
+    border: 1px solid #b8c8d8;
+    border-radius: 4px !important;
+    background: #fff;
+}
+
+body.ui-refresh-content .ui-export-docs-filter input[name$="H"] {
+    width: 52px !important;
+    text-align: center;
+}
+
+body.ui-refresh-content .ui-export-docs-filter input.inp75 {
+    width: 98px !important;
+    text-align: center;
+}
+
+body.ui-refresh-content .ui-export-docs-filter select.form-control {
+    width: 190px !important;
+}
+
+body.ui-refresh-content .ui-export-docs-filter > .input-group-addon {
+    display: inline-flex;
+    flex: 0 0 28px;
+    box-sizing: border-box;
+    width: 28px;
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #b8c8d8;
+    border-radius: 4px;
+    background: #eef3f7;
+}
+
+body.ui-refresh-content .ui-export-docs-filter > .btn {
+    min-height: 30px;
+    margin-left: auto;
+}
+
+body.ui-refresh-content form.ui-export-docs > hr {
+    display: none;
+}
+
+@media (max-width: 760px) {
+    body.ui-refresh-content .ui-legacy-report-heading #search .nav-pills {
+        justify-content: flex-start;
+    }
+
+    body.ui-refresh-content .ui-export-docs-filter > .btn {
+        margin-left: 0;
+    }
+}
