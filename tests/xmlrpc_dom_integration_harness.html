@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>XMLRPC DOM integration harness</title>
+    <script>
+        var bowser = { msie: false };
+        var xslRequests = 0;
+        var apiRequests = 0;
+        var debugWrites = [];
+
+        window.open = function () {
+            return {
+                closed: false,
+                document: {
+                    open: function () {},
+                    write: function (value) { debugWrites.push(value); }
+                }
+            };
+        };
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        function jQuery() {
+            return { keypress: function () {} };
+        }
+
+        function getFramework() {
+            return {
+                serialize: function () { return ""; },
+                showDisabler: function () {},
+                hideDisabler: function () {}
+            };
+        }
+
+        function MockXMLHttpRequest() {
+            this.readyState = 0;
+            this.responseText = "";
+            this.responseXML = null;
+            this.onreadystatechange = null;
+            this.url = "";
+        }
+
+        MockXMLHttpRequest.prototype.overrideMimeType = function () {};
+        MockXMLHttpRequest.prototype.setRequestHeader = function () {};
+        MockXMLHttpRequest.prototype.getResponseHeader = function () { return "application/xml; charset=UTF-8"; };
+        MockXMLHttpRequest.prototype.open = function (method, url) {
+            this.url = url;
+            this.readyState = 1;
+        };
+        MockXMLHttpRequest.prototype.send = function () {
+            if (this.url.indexOf(".xsl") !== -1) {
+                xslRequests++;
+                throw new Error("General report attempted to load XSL");
+            }
+
+            apiRequests++;
+            this.responseText =
+                '<response><result>' +
+                    '<fields><c><name>name</name><caption>Име</caption></c></fields>' +
+                    '<data><r id="1"><c>Интеграционен тест</c></r></data>' +
+                    '<paging><rows_total>1</rows_total><rows_per_page>20</rows_per_page><current_page>1</current_page><page_total>1</page_total></paging>' +
+                '</result></response>';
+            this.responseXML = new DOMParser().parseFromString(this.responseText, "application/xml");
+            this.readyState = 4;
+            if (this.onreadystatechange) {
+                this.onreadystatechange();
+            }
+        };
+
+        window.XMLHttpRequest = MockXMLHttpRequest;
+    </script>
+    <script src="../js/rpc_result_renderer.js"></script>
+    <script src="../js/xmlrpc.js"></script>
+</head>
+<body>
+    <form id="form1"></form>
+    <div id="summary">Изпълнение...</div>
+    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_autonumber="off"></div>
+
+    <script>
+        rpc_action_script = "api/mock.php";
+        rpc_debug = true;
+        var unsupportedProfile = window.location.search.indexOf("unsupported=1") !== -1;
+        if (unsupportedProfile) {
+            rpc_xsl = "xsl/object_storage.xsl";
+        } else if (window.location.search.indexOf("person_schedule=1") !== -1) {
+            rpc_xsl = "xsl/person_schedule.xsl";
+        } else if (window.location.search.indexOf("limit_card_persons=1") !== -1) {
+            rpc_xsl = "xsl/limit_card_persons.xsl";
+        } else if (window.location.search.indexOf("tech_planning_schedule=1") !== -1) {
+            rpc_xsl = "xsl/tech_planning_schedule.xsl";
+        } else if (window.location.search.indexOf("tech_planning_request=1") !== -1) {
+            rpc_xsl = "xsl/tech_planning_request.xsl";
+        } else {
+            rpc_xsl = "xsl/general_result.xsl";
+        }
+        rpc_on_exit = function () {};
+
+        window.onload = function () {
+            loadXMLDoc("result");
+
+            var resultText = document.getElementById("result").textContent;
+            var rendered = unsupportedProfile
+                ? resultText.indexOf("No DOM renderer profile is registered for xsl/object_storage.xsl.") !== -1
+                : resultText.indexOf("Интеграционен тест") !== -1;
+            var noExport = document.querySelectorAll("#result_foother button").length === 0;
+            var noPaging = !document.getElementById("paging");
+            var noXsl = xslRequests === 0;
+            var oneApi = apiRequests === 1;
+            var debugOutput = debugWrites.join("");
+            var requestPosition = debugOutput.indexOf("Request to:");
+            var responsePosition = debugOutput.indexOf("XML Response:");
+            var processPosition = debugOutput.indexOf("XML process");
+            var rawResponseLogged = debugOutput.indexOf("&lt;response&gt;") !== -1;
+            var debugOrder = requestPosition !== -1 && responsePosition > requestPosition && processPosition > responsePosition;
+            var domErrorLogged = !unsupportedProfile || debugOutput.indexOf("DOM renderer error:") !== -1;
+            var passed = rendered && noExport && noPaging && noXsl && oneApi && rawResponseLogged && debugOrder && domErrorLogged;
+            var summary = document.getElementById("summary");
+
+            summary.className = passed ? "pass" : "fail";
+            summary.textContent = (passed ? "PASS" : "FAIL") +
+                ": profile=" + RpcResultRenderer.getStylesheetProfile(rpc_xsl) +
+                ": rendered=" + rendered +
+                ", noExport=" + noExport +
+                ", noPaging=" + noPaging +
+                ", noXsl=" + noXsl +
+                ", apiRequests=" + apiRequests +
+                ", rawXmlDebug=" + rawResponseLogged +
+                ", debugBeforeProcessing=" + debugOrder +
+                ", domErrorLogged=" + domErrorLogged;
+        };
+    </script>
+</body>
+</html>

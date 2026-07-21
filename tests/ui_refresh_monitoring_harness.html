@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Monitoring and patrol UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=4">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=14">
+    <style>
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #aebfce;background:#fff}.states-preview,.patrol-preview{width:1000px}.live-preview{width:820px}.stop-preview{width:420px}.automatic-preview{width:400px}.result-preview{height:125px}.result-preview table{width:100%;border-collapse:collapse}.result-preview td,.result-preview th{padding:6px 8px;border-bottom:1px solid #394047;color:#e6edf3!important;text-align:left}.result-preview th{background:#087cf0;color:#fff!important}
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview states-preview">
+    <form class="ui-monitor-report ui-states-report">
+        <table class="page_data ui-monitor-heading ui-monitor-toolbar"><tr><td class="page_name">Наличности</td><td style="text-align:right">Филтри:</td><td><select><option>Основен</option></select></td><td><button type="button" class="ui-monitor-icon-button" title="Нов филтър"><span class="ui-icon ui-icon-plus"></span></button> <button type="button" class="ui-monitor-icon-button" title="Редактиране"><span class="ui-icon ui-icon-edit"></span></button> <button type="button" class="ui-monitor-icon-button ui-monitor-danger" title="Премахване"><span class="ui-icon ui-icon-delete"></span></button></td></tr></table>
+        <center><table class="search ui-monitor-filter ui-states-filter"><tr><td>Фирма</td><td><select><option>ИНФРА ЛГ</option></select></td><td>Регион</td><td><select><option>Димитровград</option></select></td><td>Тип</td><td><select><option>Склад</option></select></td><td>Склад</td><td><input value="Централен склад"></td></tr><tr><td>Тип номенклатура</td><td><select><option>Техника</option></select></td><td>Номенклатура</td><td><select><option>Всички</option></select></td><td colspan="3"></td><td style="text-align:right"><button type="button" class="search"><span class="ui-icon ui-icon-search"></span>Търси</button></td></tr></table></center>
+        <div class="ui-monitor-result result-preview"><table><tr><th>Номенклатура</th><th>Количество</th><th>Склад</th><th>Стойност</th></tr><tr><td>Контролен панел</td><td>12</td><td>Централен склад</td><td>1 440.00 €</td></tr><tr><td>Датчик</td><td>34</td><td>Централен склад</td><td>680.00 €</td></tr></table></div>
+    </form>
+</div>
+
+<div class="preview patrol-preview">
+    <form class="ui-monitor-report ui-patrol-movement-report">
+        <div class="page_caption ui-monitor-heading">РК: Движение на патрули</div>
+        <table class="search ui-monitor-toolbar"><tr><td><button type="button" class="search">Към Обекти</button></td><td style="width:200px"></td><td>Шаблон:</td><td><select><option>Основен</option></select></td><td><button type="button" class="ui-monitor-icon-button"><span class="ui-icon ui-icon-plus"></span></button> <button type="button" class="ui-monitor-icon-button"><span class="ui-icon ui-icon-edit"></span></button> <button type="button" class="ui-monitor-icon-button ui-monitor-danger"><span class="ui-icon ui-icon-delete"></span></button></td></tr></table>
+        <center><table class="search ui-monitor-filter"><tr><td>Тип:</td><td><select><option>Подробна</option></select></td><td>Регион:</td><td><select><option>Димитровград</option></select></td><td>Позивна:</td><td><input value="12" style="width:50px"></td></tr><tr><td>Аларми:</td><td><select><option>Всички</option></select></td><td>от дата:</td><td><input value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>до дата:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button> <button type="button" class="search"><span class="ui-icon ui-icon-search"></span>Търси</button></td></tr></table></center>
+        <div class="ui-monitor-result result-preview"><table><tr><th>Патрул</th><th>Обект</th><th>Пристигане</th><th>Освобождаване</th></tr><tr><td>12</td><td>Обект 16400</td><td>14:20</td><td>14:38</td></tr></table></div>
+    </form>
+</div>
+
+<div class="preview live-preview">
+    <form class="ui-monitor-report ui-object-monitor-report">
+        <div class="page_caption ui-monitor-heading">МОНИТОРИНГ за обект с номер: 16400</div>
+        <center><table class="search ui-monitor-filter"><tr><td>Номер на обект:</td><td><input value="16400" readonly></td><td><button type="button" class="search"><span class="ui-icon ui-icon-monitor"></span>Мониторинг</button></td><td><button type="button"><span class="ui-icon ui-icon-refresh"></span>Обнови</button></td></tr></table></center>
+        <div class="ui-monitor-result ui-live-monitor-result result-preview"><table><tr><th>час</th><th>номер</th><th>обект</th><th>сигнал</th><th>тип</th><th>%</th></tr><tr><td>14:32:08</td><td>16400</td><td>Склад</td><td>Проверка</td><td>тест</td><td>100%</td></tr></table></div>
+        <div class="ui-monitor-actions"><table style="width:100%"><tr><td style="text-align:right"><button type="button" class="btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></td></tr></table></div>
+    </form>
+</div>
+
+<div class="preview stop-preview">
+    <form class="ui-nomenclature-dialog ui-monitor-dialog ui-stop-movement-dialog">
+        <div class="page_caption ui-monitor-heading">Спиране движението на патрул</div>
+        <table class="input ui-monitor-dialog-fields"><tr><td>Пристигане:</td><td><input value="14:20:00" style="width:70px"><input value="21.07.2026" style="width:100px"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Освобождаване:</td><td><input value="14:38:00" style="width:70px"><input value="21.07.2026" style="width:100px"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr></table>
+        <fieldset><legend>Бележка:</legend><textarea style="width:100%;height:55px"></textarea></fieldset>
+        <table class="input ui-monitor-dialog-actions"><tr><td style="text-align:right"><button type="button" class="search"><span class="ui-icon ui-icon-save"></span>Запиши</button> <button type="button" class="btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview automatic-preview">
+    <form class="ui-nomenclature-dialog ui-monitor-dialog ui-states-filter-dialog">
+        <div class="page_caption ui-monitor-heading">Редактиране на филтър</div>
+        <table class="input ui-monitor-dialog-fields"><tr><td><input type="checkbox" class="ui-nomenclature-checkbox" checked></td><td>Автоматичен филтър</td></tr><tr><td><input type="checkbox" class="ui-nomenclature-checkbox" checked></td><td>Количество</td></tr><tr><td>Дата:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Период:</td><td><select><option>месец</option></select></td></tr><tr><td colspan="2" class="ui-monitor-dialog-action-cell"><button type="button" class="search"><span class="ui-icon ui-icon-save"></span>Запиши</button> <button type="button" class="btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

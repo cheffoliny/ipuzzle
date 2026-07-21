@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iPuzzle dialog refresh harness</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fa5/css/all.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+</head>
+<body class="ui-refresh-content p-3">
+    <form class="mx-auto" style="max-width: 620px" onsubmit="return false;">
+        <div class="modal-content pb-3">
+            <div class="modal-header">
+                <h6 class="modal-title text-white">Добавяне на примерен запис</h6>
+                <button type="button" class="close" aria-label="Затвори"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend"><span class="far fa-user fa-fw" title="Име"></span></div>
+                            <input class="form-control" type="text" placeholder="Име...">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend"><span class="far fa-folder-open fa-fw" title="Група"></span></div>
+                            <select class="form-control"><option>Изберете група</option></select>
+                        </div>
+                    </div>
+                </div>
+                <nav class="navbar navbar-light bg-secondary text-white my-3">Допълнителни настройки</nav>
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="dialog-default">
+                    <label class="custom-control-label" for="dialog-default">Направи основен</label>
+                </div>
+            </div>
+            <div class="modal-footer mb-0">
+                <button class="btn btn-sm btn-light"><i class="far fa-times"></i> Отказ</button>
+                <button class="btn btn-sm btn-primary"><i class="fas fa-check"></i> Запиши</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

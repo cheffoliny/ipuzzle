@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operational UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css">
+    <style>
+        html, body { width: 100%; min-height: 100%; margin: 0; }
+        .preview { margin-bottom: 18px; border-bottom: 6px solid #dbe5ee; }
+        .preview-result { box-sizing:border-box; height:120px; padding:8px; overflow:auto; background:#202529; color:#e6edf3; }
+        .preview-result table { width:100%; border-collapse:collapse; }
+        .preview-result td { padding:6px 8px; border-bottom:1px solid #394047; color:#e6edf3 !important; }
+        .dialog-preview { box-sizing:border-box; max-width:calc(100% - 16px); margin:18px auto; border:1px solid #b6c6d5; }
+        .assistant-preview { width:540px !important; }
+        .request-preview { width:600px !important; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<section class="preview">
+    <form class="ui-nomenclature-list ui-tech-prices-list">
+        <table class="page_data ui-nomenclature-heading"><tr><td class="page_name">Електронен договор – Техника</td></tr></table>
+        <div class="ui-tech-prices-summary-wrap"><div class="ui-tech-prices-summary"><table class="search ui-nomenclature-form"><tr><td>Дата на последната ценова листа:</td><td><input value="21.07.2026" readonly></td><td></td></tr><tr><td>Базова цена:</td><td><input value="45.00" readonly> €</td><td></td></tr><tr><td>Оскъпяване:</td><td><input value="1.10" readonly> €</td><td><button><span class="ui-icon ui-icon-edit"></span> Редакция</button></td></tr><tr><td>Последна редакция:</td><td><input value="Администратор" readonly></td><td></td></tr></table></div></div>
+        <div class="preview-result"><table><tr><td>Датчик</td><td>45.00 €</td><td>Активен</td></tr><tr><td>Клавиатура</td><td>85.00 €</td><td>Активен</td></tr></table></div>
+    </form>
+</section>
+
+<div class="content ui-nomenclature-dialog-shell dialog-preview assistant-preview">
+    <form class="ui-nomenclature-dialog ui-operational-dialog ui-assistant-dialog">
+        <div class="page_caption">Редакция на рекламен сътрудник</div>
+        <table class="input ui-nomenclature-form"><tr><td>Фирма:</td><td><select><option>ИНФРА</option></select></td></tr><tr><td>Регион:</td><td><select><option>Димитровград</option></select></td></tr><tr><td>Сътрудник:</td><td><select><option>Иван Иванов</option></select></td></tr><tr><td colspan="2"><fieldset class="ui-nomenclature-fieldset"><legend>Населени места:</legend><table class="ui-nomenclature-transfer"><tr><td><select style="width:200px" size="6" multiple><option>Хасково</option><option>Харманли</option></select></td><td><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select style="width:200px" size="6" multiple><option>Димитровград</option></select></td></tr></table></fieldset></td></tr></table>
+        <table class="input ui-nomenclature-actions"><tr><td></td><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell dialog-preview request-preview">
+    <form class="ui-nomenclature-dialog ui-operational-dialog ui-request-dialog">
+        <div class="page_caption">Попълване на задача</div>
+        <fieldset class="ui-nomenclature-fieldset"><legend>От склад:</legend><table class="input ui-nomenclature-form"><tr><td>Регион:</td><td><select><option>Димитровград</option></select></td></tr><tr><td>Склад:</td><td><select><option>Централен склад</option></select></td></tr><tr><td>МОЛ:</td><td><input value="Петър Петров" readonly></td></tr></table></fieldset>
+        <table class="input ui-nomenclature-form ui-nomenclature-section"><tr><td>Към склад:</td><td><select><option>Технически склад</option></select></td></tr></table>
+        <table class="input ui-nomenclature-form ui-request-sections"><tr><td><fieldset class="ui-nomenclature-fieldset"><legend>Номенклатури:</legend><table class="page_data ui-request-items-toolbar"><tr><td class="buttons"><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-plus"></span></button></td></tr></table><div class="preview-result"><table><tr><td>Датчик</td><td>2 бр.</td></tr><tr><td>Кабел</td><td>30 м.</td></tr></table></div></fieldset></td></tr><tr><td><fieldset class="ui-nomenclature-fieldset"><legend>Коментар:</legend><textarea style="width:100%;height:60px">За монтаж на нов обект</textarea></fieldset></td></tr></table>
+        <table class="input ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

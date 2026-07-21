@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contract and profile UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=4">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=14">
+    <style>
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #aebfce;background:#fff}.contracts-preview{width:1000px}.object-preview{width:1000px}.profile-preview{width:1000px}.print-preview{width:640px}.attestation-preview{width:500px}.result-preview{box-sizing:border-box;width:100%;height:110px;overflow:auto;background:#202529;color:#e6edf3}.result-preview table{width:100%;border-collapse:collapse}.result-preview td,.result-preview th{padding:6px 8px;border-bottom:1px solid #394047;color:#e6edf3!important;text-align:left}.result-preview th{background:#087cf0;color:#fff!important}.profile-photo{width:110px;height:135px;background:linear-gradient(145deg,#dae5ee,#aebfce)}
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview contracts-preview">
+    <form class="ui-nomenclature-list ui-contract-list ui-electronic-contracts">
+        <table class="page_data ui-nomenclature-heading ui-contract-heading"><tr><td class="page_name">Задачи — електронни договори</td></tr></table>
+        <div class="ui-nomenclature-filter-wrap ui-contract-filter-wrap"><table class="search ui-nomenclature-filter ui-contract-filter"><tr><td>Статус:</td><td><select><option>Чакащи</option></select></td><td>Населено място:</td><td><select><option>Димитровград</option></select></td><td>От:</td><td><input value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>До:</td><td><input value="31.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td><button type="button" class="search"><span class="ui-icon ui-icon-search"></span>Търси</button></td></tr></table></div>
+        <div class="ui-contract-result result-preview"><table><tr><th>№</th><th>Контрагент</th><th>Обект</th><th>Статус</th></tr><tr><td>2026-188</td><td>СИМ СЕКЮРИТИ ЕООД</td><td>Обект 16400</td><td>Чакащ</td></tr></table></div>
+    </form>
+</div>
+
+<div class="preview object-preview">
+    <form class="ui-nomenclature-dialog ui-contract-dialog ui-object-contract">
+        <div class="page_caption">Договор на обект</div>
+        <div class="container-fluid"><div class="row clearfix mt-2"><div class="col-3"><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-code"></span></div><input class="form-control" value="16400" disabled></div></div><div class="col-9"><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-info"></span></div><input class="form-control" value="СИМ СЕКЮРИТИ ЕООД" disabled></div></div></div><div class="row clearfix mt-2"><div class="col-3"><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-barcode"></span></div><input class="form-control" value="123456789" disabled></div></div><div class="col-3"><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-certificate"></span></div><input class="form-control" value="Д-2026-188" readonly></div></div><div class="col-6"><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-location"></span></div><input class="form-control" value="гр. Димитровград" disabled></div></div></div><div class="ui-object-contract-details mt-2"><div class="input-group"><span class="input-group-addon-ok"><span class="ui-icon ui-icon-play"></span></span><input value="01.07.2026" readonly></div><div class="input-group"><span class="input-group-addon-ok"><span class="ui-icon ui-icon-stop"></span></span><input value="30.06.2027" readonly></div><div class="input-group"><span class="input-group-addon-ok"><span class="ui-icon ui-icon-info"></span></span><textarea readonly>Техническа информация</textarea></div></div></div>
+        <div class="ui-contract-result result-preview"><table><tr><th>Услуга</th><th>Количество</th><th>Цена</th></tr><tr><td>Техническа поддръжка</td><td>1</td><td>120.00 €</td></tr></table></div>
+        <nav class="navbar fixed-bottom"><span style="margin-left:auto"><button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-save"></span>Запиши</button> <button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></span></nav>
+    </form>
+</div>
+
+<div class="preview profile-preview">
+    <form class="ui-nomenclature-dialog ui-contract-dialog ui-person-info">
+        <div class="page_caption">Служебен профил</div>
+        <div class="container-fluid"><div class="row clearfix mt-2"><div class="col-2"><picture><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='135'%3E%3Crect width='100%25' height='100%25' fill='%23cbd8e3'/%3E%3C/svg%3E" class="ui-person-photo profile-photo" alt="Снимка на служителя"><button type="button" class="btn btn-sm btn-info btn-block"><span class="ui-icon ui-icon-refresh"></span>Промени</button></picture></div><div class="col-3"><div class="input-group input-group-sm mb-1"><div class="input-group-prepend"><span class="ui-icon ui-icon-name"></span></div><input class="form-control" value="Иван"></div><div class="input-group input-group-sm mb-1"><div class="input-group-prepend"><span class="ui-icon ui-icon-name"></span></div><input class="form-control" value="Иванов"></div><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-barcode"></span></div><input class="form-control" value="9001010000"></div></div><div class="col"><div class="input-group input-group-sm mb-1"><div class="input-group-prepend"><span class="ui-icon ui-icon-location"></span></div><input class="form-control" value="Димитровград"></div><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-location"></span></div><input class="form-control" value="ул. България 1"></div></div><div class="col-3"><div class="input-group input-group-sm mb-1"><div class="input-group-prepend"><span class="ui-icon ui-icon-phone"></span></div><input class="form-control" value="0391 00000"></div><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-mobile"></span></div><input class="form-control" value="0888 000000"></div></div></div></div>
+        <nav class="navbar fixed-bottom"><div class="input-group input-group-sm"><span class="input-group-prepend"><span class="ui-icon ui-icon-contract"></span></span><select><option>Трудов договор</option></select><button type="button" class="btn btn-sm btn-info"><span class="ui-icon ui-icon-file-pdf"></span></button></div><span style="margin-left:auto"><button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-save"></span>Запиши</button> <button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></span></nav>
+    </form>
+</div>
+
+<div class="preview print-preview">
+    <div class="content ui-contract-print-content">
+        <form class="ui-nomenclature-dialog ui-contract-dialog ui-contract-print-form">
+            <div class="page_caption">Трудов договор</div>
+            <fieldset><legend>Основна информация</legend><table class="input"><tr><td>Номер:</td><td><input value="188"></td></tr><tr><td>Дата:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Служител:</td><td><input size="45" value="Иван Иванов"></td></tr><tr><td>Длъжност:</td><td><input size="45" value="Техник"></td></tr></table></fieldset>
+            <table class="input"><tr><td style="text-align:right"><button type="button" class="search ui-contract-print-button"><span class="ui-icon ui-icon-file-pdf"></span>Печат</button></td></tr></table>
+        </form>
+    </div>
+</div>
+
+<div class="preview attestation-preview">
+    <form class="ui-nomenclature-dialog ui-contract-dialog ui-attestation-dialog">
+        <div class="page_caption">Нова атестация</div>
+        <table class="input ui-contract-fields"><tr><td>Тип:</td><td><select><option>поощрение</option></select></td></tr><tr><td>Оценка:</td><td><input> Процент: <input style="width:50px"> %</td></tr><tr><td>Дата от:</td><td><input value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Дата до:</td><td><input value="31.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Становище:</td><td><textarea rows="3"></textarea></td></tr></table>
+        <table class="input ui-nomenclature-actions ui-contract-actions"><tr><td style="text-align:right"><button type="button" class="search"><span class="ui-icon ui-icon-save"></span>Запиши</button> <button type="button" class="btn btn-xs btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

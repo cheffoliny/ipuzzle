@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Organization UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css">
+    <style>
+        html, body { width: 100%; min-height: 100%; margin: 0; }
+        .preview-result { box-sizing: border-box; height: 150px; padding: 8px; overflow: auto; background: #202529; color: #e6edf3; }
+        .preview-result table { width: 100%; border-collapse: collapse; }
+        .preview-result td { padding: 6px 8px; border-bottom: 1px solid #394047; }
+        .dialog-preview { box-sizing: border-box; width: 720px !important; max-width: calc(100% - 16px); margin: 18px auto; border: 1px solid #b6c6d5; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<form class="ui-nomenclature-list">
+    <table class="page_data ui-nomenclature-heading"><tr><td class="page_name">Касови апарати</td><td class="buttons"><button><span class="ui-icon ui-icon-plus"></span> Добави</button></td></tr></table>
+    <center class="ui-nomenclature-filter-wrap"><table class="search table-secondary ui-nomenclature-filter ui-nomenclature-filter-wide"><tr><td>Фирма:</td><td><select class="form-control"><option>ИНФРА</option></select></td><td></td><td>Регион:</td><td><select class="form-control"><option>Димитровград</option></select></td><td colspan="2"></td></tr><tr><td>Служител:</td><td><select class="form-control"><option>Иван Иванов</option></select></td><td></td><td>Номер:</td><td><input class="form-control" value="FP-001"></td><td></td><td><button><span class="ui-icon ui-icon-search"></span> Търси</button></td></tr></table></center>
+    <div class="preview-result"><table><tr><td>FP-001</td><td>ИНФРА</td><td>Иван Иванов</td></tr><tr><td>FP-002</td><td>ИНФРА</td><td>Мария Петрова</td></tr></table></div>
+</form>
+
+<div class="content ui-nomenclature-dialog-shell dialog-preview">
+    <form class="ui-nomenclature-dialog ui-organization-dialog">
+        <div class="page_caption">Редакция на касов апарат</div>
+        <table class="input ui-nomenclature-form"><tr><td>Номер:</td><td><input value="FP-001"></td></tr><tr><td colspan="2"><fieldset class="ui-nomenclature-fieldset"><legend>Зачислен на:</legend><table class="input ui-nomenclature-transfer"><tr><td><select style="width:270px" size="6" multiple><option>Георги Георгиев</option><option>Мария Петрова</option></select></td><td><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select style="width:270px" size="6" multiple><option>Иван Иванов</option></select></td></tr></table></fieldset></td></tr></table>
+        <table class="input ui-nomenclature-actions"><tr><td></td><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell dialog-preview">
+    <form class="ui-nomenclature-dialog ui-organization-dialog ui-cashier-dialog">
+        <div class="page_caption">Редакция на касиер – банкови сметки</div>
+        <fieldset class="ui-nomenclature-fieldset"><legend>Банкови сметки:</legend><table class="input ui-nomenclature-transfer ui-nomenclature-transfer-vertical"><tr><td>Оперира със сметки:<br><select style="width:300px;height:70px" multiple><option>Основна сметка</option></select></td><td></td><td>Следи движението на сметки:<br><select style="width:300px;height:70px" multiple><option>Разплащателна сметка</option></select></td></tr><tr><td style="text-align:center"><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-down"></span></button><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-up"></span></button></td><td></td><td style="text-align:center"><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-down"></span></button><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-up"></span></button></td></tr><tr><td><select style="width:300px;height:70px" multiple><option>Каса</option></select></td><td></td><td><select style="width:300px;height:70px" multiple><option>Служебна сметка</option></select></td></tr></table></fieldset>
+        <table class="input ui-nomenclature-actions"><tr><td></td><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nomenclature UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css">
+    <script src="../js/rpc_result_renderer.js"></script>
+    <style>
+        html, body { width: 100%; min-height: 100%; margin: 0; }
+        .dialog-preview { box-sizing: border-box; width: 620px !important; max-width: calc(100% - 20px); margin: 18px auto; border: 1px solid #b6c6d5; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<form class="ui-nomenclature-list">
+    <table class="page_data ui-nomenclature-heading"><tr><td class="page_name">Автомобили — МОДЕЛИ</td><td class="buttons"><button><span class="ui-icon ui-icon-plus"></span> Добави</button></td></tr></table>
+    <center class="ui-nomenclature-filter-wrap"><table class="search table-secondary ui-nomenclature-filter"><tr><td>Марка</td><td><select class="form-control"><option>Всички</option></select></td><td><button><span class="ui-icon ui-icon-search"></span>Търси</button></td></tr></table></center>
+    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
+</form>
+
+<div class="content ui-nomenclature-dialog-shell dialog-preview">
+    <form class="ui-nomenclature-dialog">
+        <div class="page_caption">Редакция на модел</div>
+        <table class="input ui-nomenclature-form">
+            <tr><td>Модел:</td><td><input type="text" class="inp150" value="Transit"></td></tr>
+            <tr><td>Марка:</td><td><select class="select150"><option>Ford</option></select></td></tr>
+        </table>
+        <table class="input ui-nomenclature-actions"><tr><td></td><td align="right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<script>
+window.deleteRow = function () { return false; };
+window.onload = function () {
+    var xml = new DOMParser().parseFromString(
+        '<response><result><fields>' +
+        '<c><name>model</name><caption>Модел</caption><title>Модел</title></c>' +
+        '<c><name>active</name><caption>Активен</caption><img>images/confirm.gif</img></c>' +
+        '<c><name>delete</name><caption></caption><img>images/cancel.gif</img><link>deleteRow</link><btn></btn></c>' +
+        '</fields><data><r id="7"><c>Transit</c><c>1</c><c id="7">1</c></r></data></result></response>',
+        'application/xml'
+    );
+    var result = document.getElementById('result');
+    RpcResultRenderer.render(xml, result, RpcResultRenderer.getOptions(result, { resultArea: 'result' }));
+};
+</script>
+</body>
+</html>

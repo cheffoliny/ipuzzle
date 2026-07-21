@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-20",
+  "deletion_authorized": false,
+  "scope": "Static application/runtime audit. Dynamic page, API, Smarty and autoload targets are retained unless there is separate evidence that they are unused.",
+  "groups": [
+    {
+      "id": "legacy_backup_copies",
+      "classification": "safe_after_review",
+      "reason": "Files with backup/mistyped extensions which cannot be loaded by the normal PHP, Smarty or API routing.",
+      "selectors": {
+        "files": [
+          "api/api_admin_salary_total.php_elos",
+          "api/api_admin_salary_total_filter.php_elos",
+          "classes/Params.class.pph",
+          "db_api/DBAdminSalaryTotalFilters.class.php_elos",
+          "db_api/DBPersonContractBasicSalaries.class.php_elos",
+          "db_api/DBPersonLeaves.class.php_elos",
+          "db_api/DBSalary.class.php_",
+          "db_api/DBSalaryEarning.class.php_",
+          "db_api/DBSalaryExpense.class.php_",
+          "pdf/pdf_invoce.php_",
+          "templates/admin_salary_total.tpl_",
+          "templates/admin_salary_total_filter.tpl_elos"
+        ]
+      }
+    },
+    {
+      "id": "diagnostic_and_obsolete_config_entrypoints",
+      "classification": "safe_after_review",
+      "reason": "Unreferenced PHP diagnostic/configuration copies. info.php also exposes runtime configuration when web-accessible, so it should not remain in a production document root.",
+      "selectors": {
+        "files": [
+          "config/config.inc.svn.php",
+          "config/connect.inc.svn.php",
+          "info.php"
+        ]
+      }
+    },
+    {
+      "id": "broken_unreferenced_amf_gateways",
+      "classification": "safe_after_review",
+      "reason": "Unreferenced entry points which require JSON/XML-RPC gateway directories that are not present in this package.",
+      "selectors": {
+        "files": [
+          "amfphp/json.php",
+          "amfphp/xmlrpc.php"
+        ]
+      }
+    },
+    {
+      "id": "retired_browser_xsl_files",
+      "classification": "safe_after_review",
+      "reason": "Physical XSL files are no longer fetched or executed. Their path strings remain renderer profile identifiers and must not be removed from JS/templates.",
+      "selectors": {
+        "files": [
+          "xsl/general_result.xsl",
+          "xsl/limit_card_persons.xsl",
+          "xsl/object_storage.xsl",
+          "xsl/person_schedule.xsl",
+          "xsl/tech_planning_request.xsl",
+          "xsl/tech_planning_schedule.xsl"
+        ]
+      }
+    },
+    {
+      "id": "fontawesome_distribution_sources",
+      "classification": "safe_after_review",
+      "reason": "The application loads only all.css/all.min.css and their webfonts; package source, metadata, SVG, sprite and JS distributions are not requested.",
+      "selectors": {
+        "directories": [
+          "css/fa5/js",
+          "css/fa5/less",
+          "css/fa5/metadata",
+          "css/fa5/scss",
+          "css/fa5/sprites",
+          "css/fa5/svgs"
+        ],
+        "globs": [
+          "css/fa5/css/*.css"
+        ]
+      },
+      "exclude": {
+        "files": [
+          "css/fa5/css/all.css",
+          "css/fa5/css/all.min.css"
+        ]
+      }
+    },
+    {
+      "id": "generated_smarty_cache",
+      "classification": "generated_cleanup_candidate",
+      "reason": "Compiled Smarty output; clear the contents only and let Smarty regenerate it.",
+      "selectors": {
+        "directories": [
+          "templates_c"
+        ]
+      }
+    },
+    {
+      "id": "ide_metadata",
+      "classification": "safe_after_review",
+      "reason": "IDE-local metadata is not used by the application runtime.",
+      "selectors": {
+        "directories": [
+          ".idea"
+        ]
+      }
+    },
+    {
+      "id": "vendor_examples_and_manuals",
+      "classification": "safe_after_review",
+      "reason": "Bundled examples, interactive demos and manuals are not referenced by application code. License files are intentionally retained.",
+      "selectors": {
+        "directories": [
+          "include/adodb/docs",
+          "include/adodb/session/old",
+          "include/barcodes/html"
+        ],
+        "files": [
+          "include/adodb/pear/auth_adodb_example.php",
+          "include/adodb/phpdoc",
+          "include/adodb/phpdoc.dist.xml",
+          "include/barcodes/barcodes.mht",
+          "include/barcodes/index.php",
+          "include/barcodes/test.php",
+          "include/parse_excel/example.php",
+          "include/parse_excel/jxlrwtest.xls",
+          "include/parse_excel/README.txt",
+          "include/php2excel/CHANGELOG",
+          "include/php2excel/CONTACT",
+          "include/php2excel/FAQ",
+          "include/php2excel/HEADER",
+          "include/php2excel/HOMEPAGE",
+          "include/php2excel/manual.mht",
+          "include/php2excel/php.bmp",
+          "include/php2excel/README",
+          "include/php2excel/THANKS",
+          "include/php2excel/TODO"
+        ],
+        "globs": [
+          "include/php2excel/example-*.php"
+        ]
+      }
+    },
+    {
+      "id": "amf_alternative_recordset_adapters",
+      "classification": "conditional_candidate",
+      "condition": "Remove only while AMFPHP continues to receive ADOdb recordsets exclusively through adodbAdapter.php.",
+      "reason": "No application or AMFPHP mapping references these alternative database adapters.",
+      "selectors": {
+        "files": [
+          "amfphp/core/shared/adapters/doctrineAdapter.php",
+          "amfphp/core/shared/adapters/fbsqlAdapter.php",
+          "amfphp/core/shared/adapters/informixAdapter.php",
+          "amfphp/core/shared/adapters/mssqlAdapter.php",
+          "amfphp/core/shared/adapters/mysqlAdapter.php",
+          "amfphp/core/shared/adapters/mysqliAdapter.php",
+          "amfphp/core/shared/adapters/mysqliobjectAdapter.php",
+          "amfphp/core/shared/adapters/oci8Adapter.php",
+          "amfphp/core/shared/adapters/odbcAdapter.php",
+          "amfphp/core/shared/adapters/pdoAdapter.php",
+          "amfphp/core/shared/adapters/peardbAdapter.php",
+          "amfphp/core/shared/adapters/pgsqlAdapter.php",
+          "amfphp/core/shared/adapters/plainrecordsetAdapter.php",
+          "amfphp/core/shared/adapters/sqliteAdapter.php",
+          "amfphp/core/shared/adapters/sqliteobjectAdapter.php",
+          "amfphp/core/shared/adapters/zendrowAdapter.php",
+          "amfphp/core/shared/adapters/zendrowsetAdapter.php"
+        ]
+      }
+    },
+    {
+      "id": "adodb_non_mysqli_drivers",
+      "classification": "conditional_candidate",
+      "condition": "Remove only while DBSmartConnection and replication_engine remain hard-coded to the mysqli driver for MySQL 5.7.",
+      "reason": "Static application references select mysqli only; ADOdb supports dynamic driver names, so this group is deliberately conditional.",
+      "selectors": {
+        "globs": [
+          "include/adodb/drivers/adodb-*.inc.php"
+        ]
+      },
+      "exclude": {
+        "files": [
+          "include/adodb/drivers/adodb-mysqli.inc.php"
+        ]
+      }
+    },
+    {
+      "id": "adodb_optional_tooling",
+      "classification": "conditional_candidate",
+      "condition": "Remove only if this repository is not used for ADOdb schema conversion, performance pages, PEAR auth or ADOdb-backed PHP sessions.",
+      "reason": "No references outside the ADOdb package were found, but these are optional operational tools rather than dead syntax.",
+      "selectors": {
+        "directories": [
+          "include/adodb/datadict",
+          "include/adodb/pear",
+          "include/adodb/perf",
+          "include/adodb/session",
+          "include/adodb/xsl"
+        ],
+        "files": [
+          "include/adodb/adodb-active-record.inc.php",
+          "include/adodb/adodb-active-recordx.inc.php",
+          "include/adodb/adodb-datadict.inc.php",
+          "include/adodb/adodb-pager.inc.php",
+          "include/adodb/adodb-pear.inc.php",
+          "include/adodb/adodb-perf.inc.php",
+          "include/adodb/adodb-xmlschema.inc.php",
+          "include/adodb/adodb-xmlschema03.inc.php",
+          "include/adodb/pivottable.inc.php",
+          "include/adodb/xmlschema.dtd",
+          "include/adodb/xmlschema03.dtd"
+        ]
+      },
+      "exclude": {
+        "directories": [
+          "include/adodb/docs",
+          "include/adodb/session/old"
+        ],
+        "files": [
+          "include/adodb/pear/auth_adodb_example.php"
+        ]
+      }
+    },
+    {
+      "id": "development_and_build_inputs",
+      "classification": "retain_dev_only",
+      "reason": "Not needed by PHP at runtime, but required for regression testing, migrations or rebuilding finance assets.",
+      "selectors": {
+        "directories": [
+          "scripts",
+          "src",
+          "tests"
+        ],
+        "files": [
+          "package.json",
+          "package-lock.json",
+          "mix-manifest.json"
+        ]
+      }
+    },
+    {
+      "id": "legacy_finance_templates_replaced_by_vue",
+      "classification": "conditional_candidate",
+      "condition": "Remove only after production access logs and database-driven page/menu configuration confirm that direct page=buy and page=sales routes are no longer used.",
+      "reason": "Current purchase and sale entry points open buy_new and sale_new through the finance application; no static application reference opens the legacy buy.tpl or sales.tpl templates.",
+      "selectors": {
+        "files": [
+          "templates/buy.tpl",
+          "templates/sales.tpl"
+        ]
+      }
+    }
+  ],
+  "protected": {
+    "files": [
+      "api/api_general.php",
+      "classes/AmfServer.class.php",
+      "css/fa5/css/all.css",
+      "css/fa5/css/all.min.css",
+      "db_api/include/DBSmartConnection.class.php",
+      "include/adodb/adodb.inc.php",
+      "include/adodb/drivers/adodb-mysqli.inc.php",
+      "js/rpc_result_renderer.js",
+      "js/xmlrpc.js",
+      "mix-manifest.json",
+      "page.php",
+      "robot.php",
+      "templates/index.tpl",
+      "templates/page.tpl"
+    ],
+    "directories": [
+      "css/fa5/webfonts"
+    ]
+  },
+  "unclassified_policy": "Do not infer that an unreferenced api/, engine/, templates/, db_api/ or classes/ file is unused. Those areas have database-driven routes, Smarty includes and class autoloading. Zend modules also remain unmarked until a runtime dependency trace is available."
+}

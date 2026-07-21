@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Person schedule DOM renderer</title>
+    <style>
+        body { font: 14px Arial, sans-serif; margin: 20px; }
+        .pass { color: #177245; }
+        .fail { color: #b00020; }
+        .fixed-bottom { position: static !important; }
+    </style>
+    <script src="../js/rpc_result_renderer.js"></script>
+</head>
+<body>
+    <h1>Person schedule DOM renderer</h1>
+    <div id="summary">Изпълнение...</div>
+    <ol id="assertions"></ol>
+    <div id="result"></div>
+
+    <script>
+        var shiftCode = null;
+        var dayCellId = null;
+        var initCalls = 0;
+        var toolbarCalls = [];
+        var personCall = null;
+
+        window.onShiftClick = function (event) {
+            shiftCode = (event.srcElement || event.target).getAttribute("data-shift-code");
+            return false;
+        };
+        window.onDayClick = function (event) {
+            dayCellId = (event.srcElement || event.target).id;
+            return false;
+        };
+        window.onInit = function () { initCalls++; };
+        window.onClickPerson = function (id) { personCall = id; return false; };
+        window.dialogObjectPersonnelSchedule = function (value) { toolbarCalls.push("persons:" + value); };
+        window.dialogObjectDuty = function (value) { toolbarCalls.push("duty:" + value); };
+        window.onSave = function () { toolbarCalls.push("save"); };
+        window.cleanShifts = function () { toolbarCalls.push("clean"); };
+        window.invalidate = function () { toolbarCalls.push("invalidate"); };
+        window.validate = function () { toolbarCalls.push("validate"); };
+        window.onPrint = function () { toolbarCalls.push("print"); };
+
+        function parseXml(source) {
+            return new DOMParser().parseFromString(source, "application/xml");
+        }
+
+        function check(name, condition) {
+            var item = document.createElement("li");
+            item.className = condition ? "pass" : "fail";
+            item.textContent = (condition ? "PASS: " : "FAIL: ") + name;
+            document.getElementById("assertions").appendChild(item);
+            return condition ? 1 : 0;
+        }
+
+        window.onload = function () {
+            var xml = parseXml(
+                '<response>' +
+                    '<action><form id="form1">' +
+                        '<e id="nIDObject" value="1649"/>' +
+                        '<e id="nResultIDObject" value="1649"/>' +
+                        '<e id="nResultYear" value="2026"/>' +
+                        '<e id="nResultMonth" value="7"/>' +
+                        '<e id="divTitle">График за 07.2026 г. - Тестов обект</e>' +
+                        '<e id="object_shifts"><option id="7" code="Д" description="Дневна" shiftFromShort="08:00" shiftToShort="16:00" paidDuration="08:00" custStake="1.00" shiftDuration="08:00" shiftCoefDuration="07:30" shiftIsLeave="0" visible="block"/></e>' +
+                        '<e id="sid[1][2544]">07:30</e>' +
+                        '<e id="real_hours[2544]">02:30</e>' +
+                    '</form></action>' +
+                    '<result>' +
+                        '<fields>' +
+                            '<c><name>personName</name><title>Име</title><link>onClickPerson</link></c>' +
+                            '<c><name>shift_hours</name><title>Часове</title></c>' +
+                            '<c><name>1</name><title>1</title></c>' +
+                        '</fields>' +
+                        '<data>' +
+                            '<r id="2544"><c id="2544">Техник</c><c value="&lt;span id=&quot;shift_hours_span[2544][0]&quot; style=&quot;color:#0000FF&quot;&gt;-1&lt;/span&gt; / &lt;span id=&quot;shift_hours_span[2544][1]&quot; style=&quot;color:#FF0000&quot;&gt;2&lt;/span&gt;">-1 / 2</c><c class="days invalidated" onclick="onDayClick()">Д</c></r>' +
+                            '<r id="__TOTAL__" class="total"><c>Общо</c><c>-1 / 2</c><c>07:30</c></r>' +
+                        '</data>' +
+                    '</result>' +
+                '</response>'
+            );
+            var result = document.getElementById("result");
+            var options = RpcResultRenderer.getOptions(result, {
+                profile: RpcResultRenderer.getStylesheetProfile("xsl/person_schedule.xsl"),
+                resultArea: "result"
+            });
+            RpcResultRenderer.render(xml, result, options);
+
+            document.getElementById("btnShift[7]").click();
+            var regularShiftCode = shiftCode;
+            document.getElementById("btnShift[0]").click();
+            var clearShiftCode = shiftCode;
+            document.getElementById("c[1][2544]").click();
+            result.querySelector("#tableResult a").click();
+            var toolbarButtons = result.querySelectorAll(".fixed-bottom button");
+            for (var buttonIndex = 0; buttonIndex < toolbarButtons.length; buttonIndex++) {
+                toolbarButtons[buttonIndex].click();
+            }
+
+            var passed = 0;
+            var total = 13;
+            passed += check("person_schedule.xsl се обслужва без browser XSLT", options.profile === "personSchedule" && RpcResultRenderer.isSupportedStylesheet("xsl/person_schedule.xsl"));
+            passed += check("запазени са основните legacy DOM идентификатори", !!document.getElementById("tableShifts") && !!document.getElementById("container") && !!document.getElementById("tableResult"));
+            passed += check("заглавието и периодът идват от action XML", document.getElementById("divTitle").textContent.indexOf("07.2026") !== -1 && document.getElementById("nResultYear").value === "2026" && document.getElementById("nResultMonth").value === "7");
+            passed += check("бутонът за смяна и скритите му параметри са възстановени", regularShiftCode === "Д" && document.getElementById("shiftCoefDuration[7]").value === "07:30" && document.getElementById("shiftIsLeave[7]").value === "0");
+            passed += check("бутонът за изчистване подава #0", clearShiftCode === "#0");
+            passed += check("клетките запазват c[field][person] идентификаторите", !!document.getElementById("c[shift_hours][2544]") && !!document.getElementById("c[1][2544]"));
+            passed += check("денят запазва интерактивния onDayClick", dayCellId === "c[1][2544]");
+            passed += check("sid и real_hours са инициализирани от action XML", document.getElementById("sid[1][2544]").value === "07:30" && document.getElementById("real_hours[2544]").value === "02:30");
+            passed += check("цветните стойности за часовете са DOM елементи, не текстов HTML", document.getElementById("shift_hours_span[2544][1]").textContent === "2");
+            passed += check("персоналният линк използва ID от XML клетката", personCall === "2544");
+            passed += check("горният и долният header са запазени", result.querySelectorAll("#tableResult > tr > th").length === 6);
+            passed += check("toolbar действията са свързани към legacy функциите", toolbarCalls.length === 7 && toolbarCalls[1] === "persons:nID=1649" && toolbarCalls[2] === "duty:nID=1649");
+            passed += check("onInit се извиква след построяване на графика", initCalls === 1 && document.getElementById("container").style.width !== "");
+
+            document.getElementById("summary").className = passed === total ? "pass" : "fail";
+            document.getElementById("summary").textContent = passed + "/" + total + " успешни проверки";
+        };
+    </script>
+</body>
+</html>

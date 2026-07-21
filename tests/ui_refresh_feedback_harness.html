@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iPuzzle feedback refresh harness</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fa5/css/all.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-feedback.css">
+</head>
+<body class="ui-refresh-content p-3">
+    <button class="btn btn-primary" type="button" onclick="document.getElementById('loading').style.display='flex'">Покажи зареждане</button>
+    <button class="btn btn-warning" type="button" onclick="document.getElementById('systemMessageBG').style.display='block';document.getElementById('systemMessageDialog').style.display='block'">Покажи съобщение</button>
+
+    <div id="loading" class="rpc-loading" role="status" aria-live="polite" aria-label="Зареждане" style="display:none">
+        <i class="fas fa-puzzle-piece fa-pulse rpc-loading__icon" aria-hidden="true"></i>
+        <span class="rpc-loading__text">Зареждане...</span>
+    </div>
+
+    <div id="systemMessageBG" style="display:none"></div>
+    <div class="canvasModal2 system-message" id="systemMessageDialog" role="alertdialog" aria-modal="true" aria-labelledby="systemMessageTitle" style="width:300px;display:none">
+        <div class="system-message__header">
+            <div id="systemMessageTitle" class="system-message__title">Системно съобщение</div>
+            <button type="button" class="closeDialog system-message__close" aria-label="Затвори"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="system-message__body">
+            <i class="fa fa-warning fa-2x text-red system-message__icon" aria-hidden="true"></i>
+            <div id="sytemMessageValue">Некоректно въведени данни</div>
+        </div>
+        <div class="system-message__footer"><button type="button" class="btn btn-sm btn-primary">Добре</button></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nomenclature groups UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css">
+    <style>
+        html, body { width: 100%; min-height: 100%; margin: 0; }
+        .preview { margin-bottom: 24px; border-bottom: 6px solid #dbe5ee; }
+        .result-preview { box-sizing: border-box; width: 100%; height: 180px; padding: 8px; overflow: auto; background: #202529; color: #e6edf3; }
+        .result-preview table { width: 100%; border-collapse: collapse; }
+        .result-preview td { padding: 6px 8px; border-bottom: 1px solid #394047; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<section class="preview">
+    <form class="ui-object-troubles">
+        <table class="search ui-object-troubles-shell"><tr><td class="header_buttons"><span>Проблеми при обект 16400</span></td></tr><tr><td id="filter_result">
+            <table class="page_data ui-object-troubles-filter"><tr>
+                <td style="width:280px"><div class="input-group"><span class="input-group-addon-warning" title="Неотстранени"><span class="ui-icon ui-icon-settings"></span></span><select class="inp150 form-control"><option>Всички</option><option>Технически</option></select></div></td>
+                <td><input type="checkbox" class="clear ui-nomenclature-checkbox"> Неотстранени</td>
+            </tr></table>
+            <div id="result" class="result-preview" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off"><table><tr><td>19.07.2026</td><td>Технически проблем</td><td>Проверка на предавател</td></tr><tr><td>20.07.2026</td><td>Оперативен проблем</td><td>Контакт с клиента</td></tr></table></div>
+        </td></tr></table>
+        <div id="search" class="ui-object-troubles-actions"><table class="page_data ui-nomenclature-actions"><tr><td></td><td style="text-align:right"><button class="btn btn-xs btn-success"><span class="ui-icon ui-icon-plus"></span> Проблем</button> <button class="btn btn-xs btn-danger"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table></div>
+    </form>
+</section>
+
+<section class="preview">
+    <form class="ui-holidays">
+        <table class="page_data ui-nomenclature-heading ui-holidays-heading"><tr><td class="page_name">Номенклатури – Празнични / Работни дни</td><td>
+            <table class="input ui-holidays-controls"><tr><td>
+                <table class="input"><tr><td>Тип:</td><td><select><option>Празничен</option></select></td><td><div id="legend" style="width:30px;height:20px;background:#ff6677"></div></td></tr></table>
+            </td><td><table class="input"><tr><td>Година:</td><td><button class="ui-holidays-shift"><span class="ui-icon ui-icon-left"></span></button></td><td><input class="inp75" value="2026" readonly style="text-align:center"></td><td><button class="ui-holidays-shift"><span class="ui-icon ui-icon-right"></span></button></td><td><button class="btn btn-xs btn-info"><span class="ui-icon ui-icon-file-pdf"></span> PDF</button></td></tr></table></td></tr></table>
+        </td></tr></table>
+        <iframe id="result" title="Календар" srcdoc="<!doctype html><meta charset='utf-8'><style>body{font:14px Arial;color:#263d52;margin:10px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar div{padding:10px 4px;text-align:center;border:1px solid #d3dee8;border-radius:4px}.holiday{background:#ffdddd}</style><div class='calendar'><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Нд</div><div>1</div><div>2</div><div class='holiday'>3</div><div>4</div><div>5</div><div>6</div><div>7</div></div>" style="width:100%;height:180px"></iframe>
+    </form>
+</section>
+</body>
+</html>

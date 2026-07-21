@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assets UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=8">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=9">
+    <style>
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #b6c6d5}.storage-preview{width:310px!important}.nomenclature-preview{width:700px!important}.asset-info-preview{width:1000px!important}.report-preview{width:1000px!important}.preview-result{height:90px;background:#202529;color:#e6edf3;padding:8px}.preview-result table{width:100%;border-collapse:collapse}.preview-result td{padding:5px 8px;border-bottom:1px solid #394047;color:#e6edf3!important}
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="content ui-nomenclature-dialog-shell preview storage-preview">
+    <form class="ui-nomenclature-dialog ui-asset-dialog ui-storagehouse-dialog">
+        <div class="page_caption">Нов склад</div>
+        <table class="ui-storagehouse-layout"><tr><td><div class="nav nav-tabs"><span class="nav-link active">Основни</span><span class="nav-link">МОЛ</span></div></td></tr><tr><td>&nbsp;</td></tr><tr><td>
+            <table class="input ui-nomenclature-form"><tr><td>Име:</td><td><input style="width:220px" value="Централен склад"></td></tr><tr><td>Фирма:</td><td><select style="width:220px"><option>ИНФРА ЕООД</option></select></td></tr><tr><td>Регион:</td><td><select style="width:220px"><option>Димитровград</option></select></td></tr><tr><td>МОЛ:</td><td><select style="width:220px"><option>Иван Иванов</option></select></td></tr><tr><td>Тип:</td><td><select style="width:220px"><option>Нова техника</option></select></td></tr><tr><td colspan="2"><fieldset class="ui-nomenclature-fieldset ui-storagehouse-address"><legend>Адрес</legend><table class="input ui-nomenclature-form"><tr><td>Населено място:</td><td><select class="select150"><option>Димитровград</option></select></td></tr><tr><td>Квартал:</td><td><select class="select150"><option>Център</option></select></td></tr><tr><td>Улица:</td><td><input class="inp150" value="Раковски"></td></tr></table></fieldset></td></tr></table>
+            <table class="input ui-nomenclature-actions"><tr><td>&nbsp;</td><td><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+        </td></tr></table>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell preview nomenclature-preview">
+    <form class="ui-nomenclature-dialog ui-asset-dialog ui-asset-nomenclature-dialog">
+        <div class="page_caption">Нова номенклатура</div>
+        <table class="input ui-nomenclature-form"><tr><td>Име:</td><td><input style="width:220px" value="Лаптоп"></td></tr><tr><td>Група:</td><td><select style="width:220px"><option>Компютърна техника</option></select></td></tr></table>
+        <div class="ui-asset-transfer-wrap"><table class="search ui-asset-transfer-shell"><tr><td><fieldset class="ui-nomenclature-fieldset"><legend>Атрибути</legend><table class="ui-nomenclature-transfer"><tr><td><select size="7" multiple><option>Процесор</option><option>Памет</option><option>Диск</option></select></td><td><button type="button" class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button type="button" class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select size="7" multiple><option>Сериен номер</option><option>Производител</option></select></td></tr></table></fieldset></td></tr></table></div>
+        <table class="input ui-nomenclature-actions"><tr><td>&nbsp;</td><td><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview asset-info-preview">
+    <form class="ui-nomenclature-dialog ui-asset-dialog ui-asset-info-dialog">
+        <div class="page_caption">Редактиране на актив</div>
+        <div class="ui-asset-info-main">
+            <table class="input ui-nomenclature-form ui-asset-info-summary"><tr><td>Инвентарен номер:</td><td><input style="width:50px" value="1256"></td><td>Име:</td><td><input style="width:350px" value="Преносим компютър"></td></tr></table>
+            <fieldset class="ui-nomenclature-fieldset ui-asset-attributes"><legend>Допълнителни атрибути</legend><div id="me"><table class="input ui-nomenclature-form"><tr><td>Сериен номер:</td><td><input value="SN-2026-001"></td></tr><tr><td>Производител:</td><td><input value="Lenovo"></td></tr></table></div></fieldset>
+            <table class="input ui-nomenclature-form ui-asset-info-details"><tr><td>Група:</td><td><select><option>Компютърна техника</option></select></td><td>Остатъчен срок:</td><td><input value="18 месеца"></td></tr><tr><td>Номенклатура:</td><td><select><option>Лаптоп</option></select></td><td>Цена:</td><td><input value="1200.00 €"></td></tr><tr><td>М.О.Л.:</td><td><input value="Иван Иванов"></td><td>Дата на фактура:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr></table>
+        </div>
+        <table class="input ui-nomenclature-actions ui-asset-info-actions"><tr><td></td><td><button type="button" class="search"><span class="ui-icon ui-icon-check"></span> Потвърди</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview report-preview">
+    <form class="ui-nomenclature-list ui-assets-report ui-assets-movement-report">
+        <div class="page_caption">Активи - Придобиване</div><table class="search ui-assets-report-actions"><tr><td style="text-align:right"><button type="button"><span class="ui-icon ui-icon-plus"></span> Нов ППП</button></td></tr></table>
+        <center class="ui-nomenclature-filter-wrap"><table class="search ui-nomenclature-filter ui-assets-report-filter"><tr><td>От:</td><td><input value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>До:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td class="ui-assets-search-cell"><button type="button"><span class="ui-icon ui-icon-search"></span> Търси</button></td></tr></table></center>
+        <div class="preview-result"><table><tr><td>000125</td><td>Преносим компютър</td><td>ИНФРА ЕООД</td><td>1200.00 €</td></tr><tr><td>000126</td><td>Монитор</td><td>ИНФРА ЕООД</td><td>320.00 €</td></tr></table></div>
+    </form>
+</div>
+</body>
+</html>

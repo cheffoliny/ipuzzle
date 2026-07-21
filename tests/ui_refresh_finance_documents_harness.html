@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finance documents UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=8">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=10">
+    <style>
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #b6c6d5}.filter-preview{width:900px!important}.document-preview{width:800px!important}.payment-preview{width:400px!important}.result-preview{height:90px;padding:7px;background:#202529;color:#e6edf3}.result-preview table{width:100%;border-collapse:collapse}.result-preview td{padding:5px 7px;border-bottom:1px solid #394047;color:#e6edf3!important}
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview filter-preview">
+    <form class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-filter-dialog">
+        <div class="page_caption">Редактиране на филтър</div>
+        <table class="input"><tr><td></td><td>Име:</td><td><input style="width:200px" value="Неплатени фактури"></td><td><input type="checkbox" checked> филтър по подразбиране</td></tr></table>
+        <table class="input"><tr><td><fieldset><legend>Документ</legend><table class="input"><tr><td>Номер:</td><td><input class="inp100" value="1000"> до <input class="inp100" value="2000"></td><td>Вид:</td><td><select style="width:160px"><option>Данъчна фактура</option></select></td></tr><tr><td>Дата:</td><td><input class="inp75" value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button> до <input class="inp75" value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>Статус:</td><td><select style="width:160px"><option>Неанулирани</option></select></td></tr><tr><td>Плащане:</td><td><select><option>По банка</option></select></td><td>Погасеност:</td><td><select style="width:160px"><option>Непогасени</option></select></td></tr></table></fieldset></td></tr></table>
+        <table class="input"><tr><td><fieldset><legend>Контрагент и създател</legend><table class="input"><tr><td>Фирма:</td><td><select style="width:180px"><option>ИНФРА ЕООД</option></select></td><td>Регион:</td><td><select style="width:180px"><option>Димитровград</option></select></td><td>Създател:</td><td><select style="width:180px"><option>Всички</option></select></td></tr></table></fieldset></td></tr></table>
+        <table class="input"><tr><td><fieldset class="ui-document-filter-transfer"><legend>Номенклатури</legend><table><tr><td><select multiple><option>Абонамент</option><option>Сервиз</option></select></td><td><button type="button" class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button type="button" class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select multiple><option>Техническа поддръжка</option></select></td></tr></table></fieldset></td><td></td><td><button type="button" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview document-preview">
+    <form class="ui-nomenclature-dialog ui-finance-document-dialog ui-sale-document-dialog">
+        <div class="page_caption">Фактура № 00001256</div>
+        <table class="input"><tr><td><fieldset><legend>Клиент</legend><table class="input"><tr><td>Име:</td><td><input style="width:260px" value="СИМ СЕКЮРИТИ ЕООД"></td><td>ЕИК:</td><td><input value="123456789"></td></tr><tr><td>Адрес:</td><td colspan="3"><input style="width:480px" value="гр. Димитровград"></td></tr></table></fieldset></td></tr></table>
+        <div id="result" class="result-preview"><table><tr><td>Абонаментна такса</td><td>1 бр.</td><td>120.00 €</td></tr><tr><td>Техническа поддръжка</td><td>2 ч.</td><td>80.00 €</td></tr></table></div>
+        <table class="input"><tr><td>Дата:</td><td><input value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>Общо:</td><td><input value="200.00 €" readonly></td></tr></table>
+        <table class="input"><tr><td>Печат:</td><td><select><option>Оригинал</option></select></td><td><button type="button" class="ui-document-icon-button" title="PDF"><span class="ui-icon ui-icon-file-pdf"></span></button></td><td><button type="button" class="ui-document-danger"><span class="ui-icon ui-icon-delete"></span> Анулирай</button></td><td><button type="button" id="b_confirm"><span class="ui-icon ui-icon-check"></span> Потвърди</button></td><td><button type="button" id="b_save"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview payment-preview">
+    <form class="ui-nomenclature-dialog ui-finance-document-dialog ui-payment-dialog">
+        <div class="page_caption">Плащане</div>
+        <table class="input"><tr><td>Сума:</td><td><input value="200.00"> €</td></tr><tr><td>Сметка:</td><td><select><option>Каса EUR</option></select></td></tr><tr><td>Платено в брой:</td><td><input value="200.00"> €</td></tr><tr><td>Ресто:</td><td><input value="0.00" readonly> €</td></tr><tr><td colspan="2"><button type="button" class="search"><span class="ui-icon ui-icon-check"></span> Потвърди</button> <button type="button"><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

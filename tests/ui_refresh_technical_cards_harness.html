@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Technical cards UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=2">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=12">
+    <style>
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #aebfce;background:#fff}.limit-preview{width:800px}.working-preview{width:860px}.support-preview{width:1100px}.planning-preview{width:1000px}.result-preview{box-sizing:border-box;width:100%;height:130px;overflow:auto;background:#202529;color:#e6edf3}.result-preview table{width:100%;border-collapse:collapse}.result-preview td,.result-preview th{padding:6px 8px;border-bottom:1px solid #394047;color:#e6edf3!important;text-align:left}.result-preview th{background:#087cf0;color:#fff!important}.planning-grid td{text-align:center}.planning-grid .planned{background:#476f95!important}.planning-grid .leave{background:#87575e!important}
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview limit-preview">
+    <form class="ui-nomenclature-dialog ui-technical-dialog ui-limit-card-info">
+        <div class="page_caption">Информация за лимитна карта № 1258</div>
+        <table class="ui-technical-shell" style="width:100%"><tr><td>
+            <table class="input ui-technical-form"><tr><td><fieldset><legend>Основна информация</legend><table class="input ui-technical-fields"><tr><td>Номер:</td><td><input value="1258" readonly></td><td>Дата:</td><td><input value="21.07.2026" readonly></td><td>Статус:</td><td><input value="Активна" readonly></td></tr><tr><td>Обект:</td><td colspan="5"><input style="width:95%" value="16400 — Склад Димитровград" readonly></td></tr></table></fieldset></td></tr><tr><td><fieldset><legend>Планиране/изпълнение</legend><table class="input ui-technical-fields ui-limit-card-timing"><tr><td>Планиран старт:</td><td><input style="width:45px" value="08:00"><input style="width:85px" value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>Планиран край:</td><td><input style="width:45px" value="12:00"><input style="width:85px" value="21.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr></table></fieldset></td></tr></table>
+            <table class="input ui-nomenclature-actions ui-technical-actions ui-limit-card-actions"><tr><td><button type="button" class="search ui-technical-danger"><span class="ui-icon ui-icon-close"></span>Анулирай</button></td><td style="text-align:right"><button type="button" class="search"><span class="ui-icon ui-icon-check"></span>Потвърди</button> <button type="button" class="btn btn-xs btn-danger"><span class="ui-icon ui-icon-close"></span>Затвори</button></td></tr></table>
+        </td></tr></table>
+    </form>
+</div>
+
+<div class="preview working-preview">
+    <form class="ui-nomenclature-dialog ui-technical-dialog ui-working-card-info">
+        <div class="page_caption" style="background:#209653">Работна карта № 88 — активна</div>
+        <table class="input ui-technical-form" style="width:100%"><tr><td><fieldset><legend>Избор на региони</legend><table style="margin:auto"><tr><td><select multiple><option>Хасково</option><option>Кърджали</option><option>Стара Загора</option></select></td><td><button type="button" class="search ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button type="button" class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select multiple><option>Димитровград</option><option>Харманли</option></select></td></tr></table></fieldset></td></tr></table>
+        <table class="ui-nomenclature-actions ui-technical-actions" style="width:100%"><tr><td style="text-align:right"><button type="button" class="search"><span class="ui-icon ui-icon-save"></span>Запази</button> <button type="button"><span class="ui-icon ui-icon-check"></span>Приключи</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview support-preview">
+    <form class="ui-nomenclature-list ui-technical-list ui-tech-support-requests">
+        <div class="page_caption">Задачи за техническо обслужване</div>
+        <table class="input ui-technical-toolbar" style="width:100%"><tr><td><button type="button"><span class="ui-icon ui-icon-right"></span>Към планиране</button></td><td style="text-align:right">Филтри: <select><option>Текущи задачи</option></select> <button type="button" class="ui-technical-icon-button"><span class="ui-icon ui-icon-plus"></span></button> <button type="button" class="ui-technical-icon-button"><span class="ui-icon ui-icon-edit"></span></button> <button type="button" class="ui-technical-icon-button"><span class="ui-icon ui-icon-delete"></span></button> <button type="button" class="search"><span class="ui-icon ui-icon-plus"></span>Нова задача</button></td></tr></table>
+        <div class="ui-technical-filter-wrap"><table class="input ui-nomenclature-filter ui-technical-filter ui-tech-request-filter"><tr><td>От дата:</td><td><input value="01.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>До дата:</td><td><input value="31.07.2026"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td><input type="radio" checked> Задачи</td><td><input type="radio"> Ел. договори</td></tr><tr><td>Фирма:</td><td><select><option>ИНФРА ЕООД</option></select></td><td>Регион:</td><td><select><option>Димитровград</option></select></td><td>Обект:</td><td><input value="16400"><button type="button" class="search"><span class="ui-icon ui-icon-search"></span>Търси</button></td></tr></table></div>
+        <div class="ui-technical-result result-preview"><table><tr><th>№</th><th>Обект</th><th>Тип</th><th>Статус</th></tr><tr><td>4512</td><td>16400 — Склад</td><td>Профилактика</td><td>Чакаща</td></tr><tr><td>4513</td><td>16412 — Магазин</td><td>Изграждане</td><td>Планирана</td></tr></table></div>
+    </form>
+</div>
+
+<div class="preview planning-preview">
+    <form class="form-horizontal ui-nomenclature-list ui-technical-list ui-tech-planning-schedule">
+        <div class="row bg-light pt-1 ui-technical-planning-toolbar" id="row"><div class="col-auto"><h6>Планиране</h6></div><div class="col-2"><div class="input-group input-group-sm"><span class="input-group-addon"><span class="ui-icon ui-icon-document"></span></span><select class="form-control"><option>Димитровград</option></select></div></div><div class="col-2"><div class="input-group input-group-sm"><span class="input-group-addon"><span class="ui-icon ui-icon-list"></span></span><select class="form-control"><option>Дневен</option></select></div></div><div class="col-auto"><div class="input-group input-group-sm"><button type="button" class="input-group-addon ui-technical-addon-button"><span class="ui-icon ui-icon-left"></span></button><button type="button" class="input-group-addon ui-technical-addon-button"><span class="ui-icon ui-icon-calendar"></span></button><input class="form-control" value="21.07.2026"><button type="button" class="input-group-append ui-technical-addon-button"><span class="ui-icon ui-icon-right"></span></button></div></div><div class="col-auto"><button type="button" class="btn btn-sm btn-info"><span class="ui-icon ui-icon-users"></span>Екипи</button> <button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-refresh"></span>Обнови</button></div></div>
+        <div class="ui-technical-result ui-tech-planning-result result-preview"><table class="planning-grid"><tr><th>Техник</th><th>08:00</th><th>09:00</th><th>10:00</th><th>11:00</th><th>12:00</th><th>13:00</th><th>14:00</th></tr><tr><td>Иван Иванов</td><td class="planned">4512</td><td class="planned">4512</td><td class="planned">4512</td><td>—</td><td class="planned">4513</td><td class="planned">4513</td><td>—</td></tr><tr><td>Петър Петров</td><td>—</td><td class="leave">О</td><td class="leave">О</td><td class="leave">О</td><td>—</td><td class="planned">4514</td><td class="planned">4514</td></tr></table></div>
+        <div style="padding:5px">Приблизително 8 часа <span class="ui-tech-time-bar ui-tech-time-bar-8"></span></div>
+    </form>
+</div>
+</body>
+</html>

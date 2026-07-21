@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Access rights UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-refresh-access.css">
+    <style>
+        html, body { width: 100%; height: 100%; margin: 0; }
+        #result table { width: 100%; border-collapse: collapse; }
+        #result th, #result td { padding: 6px 10px; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<form class="ui-access-rights">
+    <div class="page_caption">Права на Достъп</div>
+    <table class="ui-access-rights-toolbar"><tr><td align="right"><button title="Покажи/скрий филтрите"><span class="ui-icon ui-icon-filter"></span></button></td></tr></table>
+    <div id="filters" class="ui-access-rights-filters">
+        <table class="ui-access-rights-layout"><tr>
+            <td>
+                <table class="search ui-access-rights-selector"><tr><td>
+                    <fieldset class="ui-access-selection"><legend>Изобразени права:</legend>
+                        <table class="ui-dual-list"><tr>
+                            <td><select class="form-control ui-dual-list-select" multiple><option>Клиенти</option><option>Обекти</option><option>Продажби</option></select></td>
+                            <td><button title="Добави"><span class="ui-icon ui-icon-right"></span></button><br><button title="Премахни"><span class="ui-icon ui-icon-left"></span></button></td>
+                            <td><select class="form-control ui-dual-list-select" multiple><option>Нива на достъп</option><option>Потребители</option></select></td>
+                        </tr></table>
+                    </fieldset>
+                </td></tr></table>
+            </td>
+            <td></td>
+            <td valign="top">
+                <table class="search ui-access-mode-selector"><tr><td><input type="radio" checked> По Служители</td><td><input type="radio"> По Профили</td></tr></table>
+                <div id="firmregion"><table class="search ui-access-scope-fields">
+                    <tr><td>Фирма:</td><td><select class="form-control"><option>ИНФРА ЕООД</option></select></td></tr>
+                    <tr><td>Регион:</td><td><select class="form-control"><option>Всички</option></select></td></tr>
+                    <tr><td>Длъжност:</td><td><select class="form-control"><option>Всички</option></select></td></tr>
+                </table></div>
+                <button><span class="ui-icon ui-icon-search"></span> Търси</button>
+            </td>
+        </tr></table>
+    </div>
+    <div id="result" rpc_excel_panel="off">
+        <table><thead><tr><th>Служител</th><th>Профил</th><th>Право</th><th>Стойност</th></tr></thead>
+        <tbody><tr><td>Примерен потребител</td><td>Администратор</td><td>Нива на достъп</td><td>Да</td></tr></tbody></table>
+    </div>
+</form>
+</body>
+</html>

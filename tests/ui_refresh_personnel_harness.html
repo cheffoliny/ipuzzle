@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personnel UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=8">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=8">
+    <style>
+        html, body { width:100%; min-height:100%; margin:0; }
+        .preview { box-sizing:border-box; max-width:calc(100% - 16px); margin:16px auto; border:1px solid #b6c6d5; }
+        .list-preview { width:700px; }
+        .leave-preview { width:460px !important; }
+        .document-preview { width:415px !important; }
+        .balance-preview { width:300px; }
+        .result-preview { height:130px; padding:8px; background:#202529; color:#e6edf3; }
+        .result-preview table { width:100%; border-collapse:collapse; }
+        .result-preview td { padding:6px 8px; border-bottom:1px solid #394047; color:#e6edf3 !important; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview list-preview">
+    <form class="ui-personnel-list ui-personnel-modal-list">
+        <div class="modal-content"><div class="modal-header">Молби за отпуск <button type="button" class="close"><span>&times;</span></button></div><div class="modal-body">
+            <table class="ui-personnel-toolbar"><tr><td>Преглед по години <input class="form-control" style="width:70px" value="2026"></td><td style="text-align:right"><button class="btn btn-primary"><span class="ui-icon ui-icon-search"></span> Търси</button> <button class="btn btn-success"><span class="ui-icon ui-icon-plus"></span> Добави</button></td></tr></table>
+            <div class="ui-personnel-result result-preview"><table><tr><td>15.07.2026</td><td>Платен отпуск</td><td>5 дни</td></tr><tr><td>03.08.2026</td><td>Неплатен отпуск</td><td>2 дни</td></tr></table></div>
+            <nav class="navbar fixed-bottom"><button class="btn btn-danger"><span class="ui-icon ui-icon-close"></span> Затвори</button></nav>
+        </div></div>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell preview leave-preview">
+    <form class="ui-nomenclature-dialog ui-personnel-dialog ui-leave-entry-dialog">
+        <div class="page_caption">Редакция на молба за отпуск</div>
+        <fieldset class="ui-nomenclature-fieldset"><legend>Данни за молбата</legend><table class="input ui-nomenclature-form"><tr><td>За година:</td><td><input value="2026"></td><td>Дата:</td><td><input value="21.07.2026"> <button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>От дата:</td><td><input value="27.07.2026"> <button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>До дата:</td><td><input value="31.07.2026"> <button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr><tr><td>Работни дни:</td><td><input value="5"></td><td>Тип:</td><td><select><option>полагаем</option></select></td></tr></table></fieldset>
+        <fieldset class="ui-nomenclature-fieldset"><legend>Допълнителна информация</legend><table class="ui-personnel-notes"><tr><td><textarea>Семейна почивка</textarea></td></tr></table></fieldset>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell preview document-preview">
+    <form class="ui-nomenclature-dialog ui-personnel-dialog ui-person-document-dialog">
+        <div class="page_caption">Редактиране на документ</div>
+        <fieldset class="ui-nomenclature-fieldset"><legend>Съпътстващи документи</legend><table class="input ui-nomenclature-form"><tr><td style="width:110px">Тип:</td><td><input value="Лична карта"></td></tr><tr><td>Дата:</td><td><input style="width:104px" value="21.07.2026"> <button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button> № <input style="width:70px" value="12345"></td></tr><tr><td>Валидност:</td><td><table class="ui-person-document-validity"><tr><td>от</td><td><input style="width:70px"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td><td>до</td><td><input style="width:70px"><button type="button" class="ui-inline-calendar-trigger"><span class="ui-icon ui-icon-calendar"></span></button></td></tr></table></td></tr></table></fieldset>
+        <fieldset class="ui-nomenclature-fieldset"><legend>Бележка</legend><table class="ui-personnel-notes"><tr><td><textarea></textarea></td></tr></table></fieldset>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit" class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview balance-preview">
+    <form class="ui-personnel-dialog ui-leave-balance-dialog"><div class="modal-content"><div class="modal-header">Нов отпуск</div><div class="modal-body"><div class="input-group"><span class="ui-icon ui-icon-calendar"></span><input class="form-control" value="2026"> Год.</div><div class="input-group"><span class="ui-icon ui-icon-calendar"></span><input class="form-control" value="20"> Дни</div><nav class="navbar fixed-bottom"><button class="btn btn-primary"><span class="ui-icon ui-icon-plus"></span> Добави</button></nav></div></div></form>
+</div>
+</body>
+</html>

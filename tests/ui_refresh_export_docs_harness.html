@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Export documents UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/fa5/css/all.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <link rel="stylesheet" href="../css/ui-refresh-actions.css">
+    <link rel="stylesheet" href="../css/ui-refresh-legacy-reports.css">
+    <style>
+        html, body { width: 100%; height: 100%; margin: 0; }
+        #result { min-height: 190px; overflow: auto; }
+        #result table { width: 100%; border-collapse: collapse; }
+        #result th, #result td { padding: 6px 10px; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<form class="ui-export-docs">
+    <table class="page_data ui-legacy-report-heading" id="capt">
+        <tr>
+            <td class="page_name">Експорт на Документи за продажба [приход]</td>
+        </tr>
+        <tr>
+            <td>
+                <div id="search">
+                    <ul class="nav nav-pills nav-left" style="float:right;border-bottom:1px solid #fff">
+                        <li style="background-color:#b61247;border:solid #fff;border-width:1px 1px 0"><a>Експорт Приходни док.</a></li>
+                        <li style="background-color:#cc421c;border:solid #fff;border-width:1px 1px 0"><a href="#">Експорт Разходни док.</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="search table-secondary ui-legacy-report-filter">
+        <tr>
+            <td>
+                <div class="input-group input-group-sm ui-export-docs-filter">
+                    <span class="input-group-addon"><i class="far fa-chevron-right"></i></span>
+                    <input class="form-control" name="sPeriodFromH" value="00:00" aria-label="Начален час">
+                    <input class="form-control inp75" name="sPeriodFrom" value="01.07.2026" aria-label="Начална дата">
+                    <input class="form-control" name="sPeriodToH" value="14:30" aria-label="Краен час">
+                    <input class="form-control inp75" name="sPeriodTo" value="20.07.2026" aria-label="Крайна дата">
+                    <span class="input-group-addon"><i class="far fa-chevron-left"></i></span>
+                    <select class="form-control" name="nIDFirm" aria-label="Фирма"><option>ИНФРА ЕООД</option></select>
+                    <select class="form-control" name="nIDOffice" aria-label="Офис"><option>Всички офиси</option></select>
+                    <button type="button" class="btn btn-sm btn-primary"><i class="far fa-file-export"></i> Експорт</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="result" rpc_excel_panel="on" rpc_paging="on" rpc_resize="on">
+        <table>
+            <thead><tr><th>№</th><th>Дата</th><th>Клиент</th><th>Сума</th></tr></thead>
+            <tbody>
+                <tr><td>000001</td><td>20.07.2026</td><td>Примерен клиент</td><td>120.00 €</td></tr>
+                <tr><td>000002</td><td>20.07.2026</td><td>Втори клиент</td><td>84.50 €</td></tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+</body>
+</html>

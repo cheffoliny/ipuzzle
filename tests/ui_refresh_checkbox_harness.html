@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkbox states UI harness</title>
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
+    <style>
+        html, body { margin: 0; min-height: 100%; }
+        .modal-content { width: 760px; max-width: calc(100% - 24px); margin: 20px auto; }
+        .modal-header { background: #315c7d; color: #fff; }
+        .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; }
+        .state-card { padding: 12px; border: 1px solid #d4dee7; border-radius: 6px; background: #fff; }
+        .state-name { margin-bottom: 9px; color: #607386; font-size: 12px; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="modal-content">
+    <div class="modal-header"><h6 class="modal-title">Редакция на филтър</h6></div>
+    <div class="modal-body">
+        <div class="state-card"><div class="state-name">Непоставена отметка</div><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="unchecked"><label class="custom-control-label" for="unchecked">Неплатени задължения</label></div></div>
+        <div class="state-card"><div class="state-name">Поставена отметка</div><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="checked" checked><label class="custom-control-label" for="checked">Реагиращ офис</label></div></div>
+        <div class="state-card"><div class="state-name">Неактивна</div><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="disabled" disabled><label class="custom-control-label" for="disabled">Административен офис</label></div></div>
+        <div class="state-card"><div class="state-name">Избрана и неактивна</div><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="checked-disabled" checked disabled><label class="custom-control-label" for="checked-disabled">Работно време</label></div></div>
+    </div>
+</div>
+</body>
+</html>

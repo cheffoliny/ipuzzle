@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scheme UI harness</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=7">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=7">
+    <style>
+        html, body { width:100%; min-height:100%; margin:0; }
+        .preview { box-sizing:border-box; max-width:calc(100% - 16px); margin:16px auto; border:1px solid #b6c6d5; }
+        .type-preview { width:400px; }
+        .scheme-preview { width:712px !important; }
+        .status-preview { width:820px; }
+        .movement-preview { width:250px; }
+    </style>
+</head>
+<body class="ui-refresh-content">
+<div class="preview type-preview">
+    <form class="ui-nomenclature-dialog ui-configuration-dialog ui-nomenclature-type-dialog">
+        <div class="page_caption">Редакция на тип номенклатура</div>
+        <table class="search ui-nomenclature-form ui-nomenclature-type-fields"><tr><td><div class="input-group"><span class="input-group-addon"><span class="ui-icon ui-icon-tag"></span></span><input value="Технически услуги"></div><div class="input-group"><span class="input-group-addon"><span class="ui-icon ui-icon-tag"></span></span><select><option>Основна група</option></select></div><div id="IsCtrl"><input type="checkbox" class="ui-nomenclature-checkbox"> Контролен панел</div></td></tr></table>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="content ui-nomenclature-dialog-shell preview scheme-preview">
+    <form class="ui-nomenclature-dialog ui-configuration-dialog ui-scheme-dialog">
+        <div class="page_caption">Редактиране на шаблон</div>
+        <table class="input ui-nomenclature-form"><tr><td>Наименование: <input id="name" value="Стандартен договор"></td></tr><tr><td><fieldset class="ui-nomenclature-fieldset"><legend>Номенклатури</legend><table class="ui-nomenclature-transfer"><tr><td><select style="width:300px" size="6" multiple><option>Датчик</option><option>Клавиатура</option></select></td><td><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select style="width:300px" size="6" multiple><option>Сирена</option></select></td></tr></table></fieldset></td></tr><tr><td><input type="checkbox" class="ui-nomenclature-checkbox" checked> Шаблон за ел. договори <select style="float:right"><option>Номенклатура Детектор</option></select></td></tr></table>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit"><span class="ui-icon ui-icon-save"></span> Потвърди</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview status-preview">
+    <form class="ui-nomenclature-dialog ui-configuration-dialog ui-status-mapping-dialog">
+        <div class="page_caption">Настройка на статуси</div>
+        <div class="ui-status-firm-filter"><table class="input ui-nomenclature-form"><tr><td>Фирма:</td><td><select><option>ИНФРА ЕООД</option></select></td></tr></table></div>
+        <fieldset class="ui-nomenclature-fieldset ui-status-transfer-wrap"><legend>Статуси</legend><table class="ui-nomenclature-transfer"><tr><td><select style="width:300px" size="6" multiple><option>Нов</option><option>Временно спрян</option></select></td><td><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-right"></span></button><br><button class="ui-nomenclature-transfer-button"><span class="ui-icon ui-icon-left"></span></button></td><td><select style="width:300px" size="6" multiple><option>Активен</option></select></td></tr></table></fieldset>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button type="submit"><span class="ui-icon ui-icon-save"></span> Потвърди</button></td></tr></table>
+    </form>
+</div>
+
+<div class="preview movement-preview">
+    <form class="ui-nomenclature-dialog ui-configuration-dialog ui-movement-scheme-dialog">
+        <div class="page_caption">Редактиране на шаблон</div>
+        <table class="ui-nomenclature-form"><tr><td>Име:</td><td><input style="width:200px" value="Стандартен"></td></tr></table>
+        <table class="ui-movement-scheme-fields"><tr><td><table><tr><td><fieldset class="ui-nomenclature-fieldset"><legend>Видими полета</legend><label><input type="checkbox" class="ui-nomenclature-checkbox" checked> регион</label><br><label><input type="checkbox" class="ui-nomenclature-checkbox"> време на оповестяване</label><br><label><input type="checkbox" class="ui-nomenclature-checkbox"> време на пристигане</label><br><label><input type="checkbox" class="ui-nomenclature-checkbox"> престой</label></fieldset></td></tr></table></td></tr><tr><td><input type="checkbox" class="ui-nomenclature-checkbox"> шаблон по подразбиране</td></tr></table>
+        <table class="ui-nomenclature-actions"><tr><td style="text-align:right"><button class="search"><span class="ui-icon ui-icon-save"></span> Запиши</button> <button><span class="ui-icon ui-icon-close"></span> Затвори</button></td></tr></table>
+    </form>
+</div>
+</body>
+</html>

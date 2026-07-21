@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>RPC result renderer harness</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fa5/css/all.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/bootstrap-intelli.css">
+    <link rel="stylesheet" href="../css/ui-refresh-content.css">
+    <link rel="stylesheet" href="../css/ui-refresh-results.css">
+    <link rel="stylesheet" href="../css/ui-refresh-report-controls.css">
+    <style>
+        body { font: 14px Arial, sans-serif; margin: 20px; }
+        .pass { color: #177245; }
+        .fail { color: #b00020; }
+        .test-result nav { position: static !important; }
+        .test-result { border: 1px solid #ddd; margin: 10px 0; padding: 5px; }
+    </style>
+    <script src="../js/rpc_result_renderer.js"></script>
+</head>
+<body class="ui-refresh-content">
+    <h1>RPC result renderer</h1>
+    <div id="summary">Изпълнение...</div>
+    <ol id="assertions"></ol>
+
+    <h2>Default on</h2>
+    <div id="default_result" class="test-result" rpc_prefix="default_"></div>
+
+    <h2>Panels off</h2>
+    <div id="off_result" class="test-result" rpc_prefix="off_" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" rpc_autonumber="off" style="height: 365px; overflow: auto;"></div>
+
+    <h2>Empty result</h2>
+    <div id="empty_result" class="test-result" rpc_prefix="empty_"></div>
+
+    <h2>Paging only</h2>
+    <div id="paging_only_result" class="test-result" rpc_prefix="paging_only_" rpc_excel_panel="off" rpc_paging="on" rpc_autonumber="off"></div>
+
+    <h2>Export only</h2>
+    <div id="export_only_result" class="test-result" rpc_prefix="export_only_" rpc_excel_panel="on" rpc_paging="off"></div>
+
+    <h2>Global defaults off</h2>
+    <div id="global_off_result" class="test-result" rpc_prefix="global_off_"></div>
+
+    <h2>Tech planning request profile</h2>
+    <input type="hidden" id="id_request" value="0">
+    <div id="tech_request_result" class="test-result" rpc_prefix="tech_request_" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 365px;"></div>
+
+    <h2>Tech planning schedule profile</h2>
+    <div id="tech_schedule_result" class="test-result" rpc_prefix="tech_schedule_" rpc_excel_panel="off" rpc_resize="off"></div>
+
+    <h2>Limit card persons profile</h2>
+    <div id="limit_card_persons_result" class="test-result" rpc_prefix="lc_" rpc_excel_panel="off" rpc_paging="off"></div>
+
+    <div id="option_probe" hidden
+         rpc_prefix="probe_"
+         rpc_resize="no"
+         rpc_action_script="api/probe.php"
+         rpc_excel_panel="off"
+         rpc_paging="off"
+         rpc_edit_report="on"
+         rpc_invoice_toolbar="on"
+         rpc_admin_invoice_toolbar="on"
+         rpc_invoice_services_toolbar="on"
+         rpc_transfer_objects
+         rpc_autonumber="off"
+         rpc_offset="25"></div>
+
+    <script>
+        var directCalls = [];
+        var schedulePlanningCall = null;
+        window.loadDirect = function (action) {
+            directCalls.push({
+                action: action,
+                prefix: window.rpc_prefix,
+                resultArea: window.rpc_result_area,
+                actionScript: window.rpc_action_script
+            });
+            return false;
+        };
+        window.loadXMLDoc = function () { return false; };
+        window.planning = function (person, column, row) {
+            schedulePlanningCall = [person, column, row];
+            document.getElementById([person, column, row].join(",")).style.setProperty("background-color", "#612c2c", "important");
+        };
+        window.openLimitCard = function () { return false; };
+
+        function parseXml(source) {
+            return new DOMParser().parseFromString(source, "application/xml");
+        }
+
+        function assert(name, condition) {
+            var item = document.createElement("li");
+            item.className = condition ? "pass" : "fail";
+            item.appendChild(document.createTextNode((condition ? "PASS: " : "FAIL: ") + name));
+            document.getElementById("assertions").appendChild(item);
+            return condition;
+        }
+
+        window.onload = function () {
+            var reportXml = parseXml(
+                '<?xml version="1.0" encoding="UTF-8"?>' +
+                '<response>' +
+                    '<result>' +
+                        '<fields>' +
+                            '<c><name>name</name><caption>Име</caption><title>Име</title><link>openRow</link></c>' +
+                            '<c><name>active</name><caption>Активен</caption><title>Избор</title><data><input type="checkbox" exception="false"/></data></c>' +
+                        '</fields>' +
+                        '<data><r id="17"><c>Тест</c><c>1</c></r></data>' +
+                        '<total><c></c><c>Общо</c><c>1</c></total>' +
+                        '<paging><rows_total>1</rows_total><rows_per_page>20</rows_per_page><current_page>1</current_page><page_total>1</page_total><sfield>name</sfield><stype>0</stype></paging>' +
+                    '</result>' +
+                '</response>'
+            );
+            var emptyXml = parseXml('<response><result><fields><c><name>name</name><caption>Име</caption></c></fields><data/></result></response>');
+            var scheduleXml = parseXml(
+                '<response><result>' +
+                    '<fields>' +
+                        '<c><name>name</name><caption>Служители</caption><title>Служители</title></c>' +
+                        '<c><name>08:00</name><caption>08:00</caption><title>08:00</title></c>' +
+                    '</fields>' +
+                    '<data>' +
+                        '<r id="17"><c class="person">Техник</c><c id="17,16,1" onClick="planning(17,16,1)" style="cursor:pointer;"/></r>' +
+                        '<r id="18"><c class="person">Друг</c><c onclick="openLimitCard(9)" style="background: #123456; color: white;">Задача</c></r>' +
+                    '</data>' +
+                    '<total><c/><c>1 ч.</c><c>10 €</c></total>' +
+                '</result></response>'
+            );
+            var limitCardPersonsXml = parseXml(
+                '<response><result>' +
+                    '<fields>' +
+                        '<c><name>person</name><caption>Служител</caption><title>Служител</title><link>openLimitPerson</link></c>' +
+                        '<c style="width:30px"><name>n8</name><caption>8</caption><title>8:00</title></c>' +
+                        '<c style="width:30px"><name>n9</name><caption>9</caption><title>9:00</title></c>' +
+                    '</fields>' +
+                    '<data>' +
+                        '<r id="2544"><c id="1,2544">Техник</c><c style="background-color:#F09E93" title="Лимитна карта № 1">8:00</c><c></c></r>' +
+                    '</data>' +
+                '</result></response>'
+            );
+            var defaultContainer = document.getElementById("default_result");
+            var offContainer = document.getElementById("off_result");
+            var emptyContainer = document.getElementById("empty_result");
+            var pagingOnlyContainer = document.getElementById("paging_only_result");
+            var exportOnlyContainer = document.getElementById("export_only_result");
+            var globalOffContainer = document.getElementById("global_off_result");
+            var techRequestContainer = document.getElementById("tech_request_result");
+            var techScheduleContainer = document.getElementById("tech_schedule_result");
+            var limitCardPersonsContainer = document.getElementById("limit_card_persons_result");
+            var optionProbe = document.getElementById("option_probe");
+            var defaultOptions = RpcResultRenderer.getOptions(defaultContainer, { resultArea: "default_result" });
+            var offOptions = RpcResultRenderer.getOptions(offContainer, { resultArea: "off_result" });
+            var probeOptions = RpcResultRenderer.getOptions(optionProbe, { resultArea: "option_probe" });
+            var booleanOptions = RpcResultRenderer.getOptions(document.createElement("div"), { autonumber: false });
+            var passed = 0;
+            var total = 0;
+
+            window.openRow = function () { return false; };
+            RpcResultRenderer.render(reportXml, defaultContainer, defaultOptions);
+            RpcResultRenderer.render(reportXml, offContainer, offOptions);
+            RpcResultRenderer.render(emptyXml, emptyContainer, RpcResultRenderer.getOptions(emptyContainer, { resultArea: "empty_result" }));
+            RpcResultRenderer.render(reportXml, pagingOnlyContainer, RpcResultRenderer.getOptions(pagingOnlyContainer, { resultArea: "paging_only_result" }));
+            RpcResultRenderer.render(reportXml, exportOnlyContainer, RpcResultRenderer.getOptions(exportOnlyContainer, {
+                resultArea: "export_only_result",
+                actionScript: "api/export_probe.php"
+            }));
+            RpcResultRenderer.render(reportXml, globalOffContainer, RpcResultRenderer.getOptions(globalOffContainer, {
+                resultArea: "global_off_result",
+                excelPanel: "off",
+                paging: "off"
+            }));
+            RpcResultRenderer.render(reportXml, techRequestContainer, RpcResultRenderer.getOptions(techRequestContainer, {
+                profile: RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_request.xsl"),
+                resultArea: "tech_request_result"
+            }));
+            RpcResultRenderer.render(scheduleXml, techScheduleContainer, RpcResultRenderer.getOptions(techScheduleContainer, {
+                profile: RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_schedule.xsl"),
+                resultArea: "tech_schedule_result"
+            }));
+            RpcResultRenderer.render(limitCardPersonsXml, limitCardPersonsContainer, RpcResultRenderer.getOptions(limitCardPersonsContainer, {
+                profile: RpcResultRenderer.getStylesheetProfile("xsl/limit_card_persons.xsl"),
+                resultArea: "limit_card_persons_result"
+            }));
+
+            var techRequestRow = techRequestContainer.querySelector('[data-rpc-report-row="1"]');
+            var defaultReportRow = defaultContainer.querySelector('[data-rpc-report-row="1"]');
+            var defaultInitialBackground = defaultReportRow.style.backgroundColor;
+            defaultReportRow.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+            var defaultHoverBackground = defaultReportRow.style.backgroundColor;
+            defaultReportRow.dispatchEvent(new MouseEvent("mouseout", { bubbles: true }));
+            var defaultRestoredBackground = defaultReportRow.style.backgroundColor;
+            techRequestRow.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+            var techScheduleCell = techScheduleContainer.querySelector('[id="17,16,1"]');
+            techScheduleCell.click();
+            var limitCardPersonCall = null;
+            window.openLimitPerson = function (id) { limitCardPersonCall = id; };
+            limitCardPersonsContainer.querySelector("a").click();
+
+            var exportButtons = exportOnlyContainer.querySelectorAll("#export_only_result_foother button");
+            exportButtons[0].click();
+            exportButtons[1].click();
+
+            function check(name, condition) {
+                total++;
+                if (assert(name, condition)) { passed++; }
+            }
+
+            check("general_result.xsl се разпознава", RpcResultRenderer.isGeneralResultStylesheet("xsl/general_result.xsl"));
+            check("специализиран XSL не се прихваща", !RpcResultRenderer.isGeneralResultStylesheet("xsl/person_schedule.xsl"));
+            check("tech_planning_request.xsl се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedStylesheet("xsl/tech_planning_request.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_request.xsl") === "techPlanningRequest");
+            check("tech_planning_schedule.xsl се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedStylesheet("xsl/tech_planning_schedule.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_schedule.xsl") === "techPlanningSchedule");
+            check("limit_card_persons.xsl се обслужва без browser XSLT", RpcResultRenderer.isSupportedStylesheet("xsl/limit_card_persons.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/limit_card_persons.xsl") === "limitCardPersons");
+            check("атрибутът rpc_excel_panel=off има приоритет", offOptions.excelPanel === "off");
+            check("boolean false за rpc_autonumber се запазва", booleanOptions.autonumber === false);
+            check("rpc_prefix се чете от текущия result контейнер", probeOptions.prefix === "probe_");
+            check("rpc_resize запазва legacy стойността no", probeOptions.resize === "no");
+            check("rpc_action_script може да се презапише от контейнера", probeOptions.actionScript === "api/probe.php");
+            check("edit и invoice toolbar флаговете се предават", probeOptions.editReport === "on" && probeOptions.invoiceToolbar === "on" && probeOptions.adminInvoiceToolbar === "on" && probeOptions.invoiceServicesToolbar === "on");
+            check("rpc_transfer_objects се определя по наличие на атрибута", probeOptions.transferObjects === "on");
+            check("rpc_offset се запазва", probeOptions.offset === "25");
+            check("default export панелът съдържа EXCEL и PDF", defaultContainer.querySelectorAll("#default_result_foother button").length === 2);
+            check("default paging панелът е показан", !!defaultContainer.querySelector("#default_paging"));
+            check("default autonumber добавя колона #", defaultContainer.querySelectorAll("#default_main th").length === 3);
+            check("rpc_excel_panel=off скрива и двата export бутона", offContainer.querySelectorAll("#off_result_foother button").length === 0);
+            check("rpc_paging=off не създава paging панел", !offContainer.querySelector("#off_paging"));
+            check("rpc_autonumber=off премахва колоната #", offContainer.querySelectorAll("#off_main th").length === 2);
+            check("checkbox контролата е възстановена", offContainer.querySelectorAll('input[type="checkbox"]').length === 1);
+            check("празният резултат показва съобщение", emptyContainer.textContent.indexOf("Няма намерени резултати") !== -1);
+            check("rpc_paging=on работи независимо от rpc_excel_panel=off", !!pagingOnlyContainer.querySelector("#paging_only_paging") && pagingOnlyContainer.querySelectorAll("#paging_only_result_foother button").length === 0);
+            check("rpc_excel_panel=on работи независимо от rpc_paging=off", exportButtons.length === 2 && !exportOnlyContainer.querySelector("#export_only_paging"));
+            check("глобалните off стойности се използват без container override", globalOffContainer.querySelectorAll("#global_off_result_foother button").length === 0 && !globalOffContainer.querySelector("#global_off_paging"));
+            check("EXCEL и PDF бутоните изпращат legacy export действията", directCalls.length === 2 && directCalls[0].action === "export_to_xls" && directCalls[1].action === "export_to_pdf");
+            check("export действията възстановяват RPC контекста на справката", directCalls[0].prefix === "export_only_" && directCalls[0].resultArea === "export_only_result" && directCalls[0].actionScript === "api/export_probe.php");
+            check("rpc_resize=off не презаписва размерите на result контейнера", offContainer.style.height === "365px");
+            check("обикновените справки зареждат без светъл inline фон", defaultInitialBackground === "");
+            check("hover цветът е видим и mouseout възстановява тъмната тема", defaultHoverBackground === "rgb(53, 92, 125)" && defaultRestoredBackground === "");
+            check("tech planning редът записва реалното id_request при клик", document.getElementById("id_request").value === "17");
+            check("tech planning избраният ред запазва legacy маркирането", techRequestRow.style.backgroundColor === "rgb(44, 44, 97)" && techRequestRow.cells[0].style.color === "rgb(255, 255, 255)");
+            check("tech planning rpc_excel_panel=off и rpc_paging=off скриват двата панела", !techRequestContainer.querySelector("#tech_request_result_foother") && !techRequestContainer.querySelector("#tech_request_paging"));
+            check("tech planning rpc_resize=off оразмерява data зоната спрямо result контейнера", techRequestContainer.querySelector("#tech_request_result_data").style.height !== "" && techRequestContainer.querySelector("#tech_request_result_data").style.overflow === "auto");
+            check("schedule DOM profile запазва специализираните table класове", techScheduleContainer.querySelector("#tech_schedule_tbl_result").className === "result table-sm w-100 table-borderless mt-1");
+            check("schedule редовете не получават generic row-selection handlers", techScheduleContainer.querySelector('[data-rpc-report-row="1"]').onmousedown === null);
+            check("schedule клетките запазват planning onclick и id атрибутите", schedulePlanningCall && schedulePlanningCall.join(",") === "17,16,1");
+            check("schedule избраната клетка получава видимия legacy цвят с приоритет", techScheduleCell.style.backgroundColor === "rgb(97, 44, 44)" && techScheduleCell.style.getPropertyPriority("background-color") === "important");
+            check("schedule запазва API фоновете на вече планираните задачи", techScheduleContainer.querySelectorAll('[data-rpc-report-row="1"]')[1].cells[2].style.getPropertyPriority("background") === "important");
+            check("schedule total редът запазва legacy класа", !!techScheduleContainer.querySelector("tr.total"));
+            check("limit card persons запазва специализираните table и cell идентификатори", !!limitCardPersonsContainer.querySelector("#lc_tableResult") && !!limitCardPersonsContainer.querySelector('[id="c[n8][2544]"]'));
+            check("limit card persons няма autonумерация, paging/export панел или generic row handlers", limitCardPersonsContainer.querySelectorAll("th").length === 3 && !limitCardPersonsContainer.querySelector("nav") && limitCardPersonsContainer.querySelector("tr[data-rpc-report-row='1']").onmousedown === null);
+            check("limit card persons запазва API цвета, празните клетки и link id", limitCardPersonsContainer.querySelector('[id="c[n8][2544]"]').style.backgroundColor === "rgb(240, 158, 147)" && limitCardPersonsContainer.querySelector('[id="c[n9][2544]"]').textContent === "\u00a0" && limitCardPersonCall === "1,2544");
+
+            document.getElementById("summary").className = passed === total ? "pass" : "fail";
+            document.getElementById("summary").textContent = passed + "/" + total + " успешни проверки";
+        };
+    </script>
+</body>
+</html>
