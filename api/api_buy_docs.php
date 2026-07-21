@@ -1,5 +1,5 @@
 <?php
-require_once("../include/adodb/adodb-exceptions.inc.php");
+require_once dirname(__DIR__) . "/include/adodb/adodb-exceptions.inc.php";
 	class ApiBuyDocs {
 		
 		public function load(DBResponse $oResponse) {

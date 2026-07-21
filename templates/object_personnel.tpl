@@ -98,7 +98,7 @@
 			<td class="header_buttons">
 			<span id="head_window">Служители в обект {$object}</span> 
 				<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
-				{include file=object_tabs.tpl}
+				{include file="object_tabs.tpl"}
 			</td>
 		</tr>
 		

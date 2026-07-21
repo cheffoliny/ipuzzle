@@ -87,7 +87,7 @@
 			
 			
 			$nEarning = round($nEarning,2);
-			$sEarning .= $nEarning." лв.";
+			$sEarning .= $nEarning." €";
 			
 			if( !empty($nEarning) ) {
 				$oResponse -> setFormElement('form1','nEarning',array(),$nEarning);
@@ -96,7 +96,7 @@
 			
 			if( $aLimitCard['type'] == 'create' || $aLimitCard['type'] == 'arrange') {
 				if(!empty($aEarnings['price2']))
-				$oResponse -> setFormElement('form1','sEarningLimitCard',array(),"Лимитна карта: ".$aEarnings['price2']."лв. / ".$aEarnings['price1']."лв." );
+				$oResponse -> setFormElement('form1','sEarningLimitCard',array(),"Лимитна карта: ".$aEarnings['price2']."€ / ".$aEarnings['price1']."€" );
 			}
 			
 			$aLimitCardOperations = $oDBLimitCardOperations -> getReport($aLimitCard,$oResponse);
@@ -121,7 +121,7 @@
 			
 			$aParams = Params::getAll();
 			
-			$aOperations =  Params::get('chk','');
+			$aOperations = (array) Params::get('chk', array());
 			
 			$oDBLimitCardOperation = new DBLimitCardOperations();
 			

@@ -11,9 +11,9 @@
 			$aBuyDoc = array();
 			$oDBBuyDocs->getRecord($nID,$aBuyDoc);
 			
-			$oResponse->setFormElement('form1','total_sum',array(),sprintf('%0.2f лв.',$aBuyDoc['total_sum']));
-			$oResponse->setFormElement('form1','orders_sum',array(),sprintf('%0.2f лв.',$aBuyDoc['orders_sum']));
-			$oResponse->setFormElement('form1','rest_sum',array(),sprintf('%0.2f лв.',$aBuyDoc['total_sum'] - $aBuyDoc['orders_sum']));
+			$oResponse->setFormElement('form1','total_sum',array(),sprintf('%0.2f €',$aBuyDoc['total_sum']));
+			$oResponse->setFormElement('form1','orders_sum',array(),sprintf('%0.2f €',$aBuyDoc['orders_sum']));
+			$oResponse->setFormElement('form1','rest_sum',array(),sprintf('%0.2f €',$aBuyDoc['total_sum'] - $aBuyDoc['orders_sum']));
 			
 			$oDBOrders->getReport($oResponse,$nID,'buy');
 			

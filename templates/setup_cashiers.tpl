@@ -19,14 +19,14 @@
 	{/literal}
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Касиери</td>
 			<td class="buttons">
-				<button onclick="openCashier( 0 );"><img src="images/plus.gif"> Добави </button>
+				<button onclick="openCashier( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 			</td>
 		</tr>
 	</table>

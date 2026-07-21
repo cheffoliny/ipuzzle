@@ -43,8 +43,12 @@ class Executive {
 	 */
 	var $_arguments;
 
-	function Executive() {
+	function __construct() {
 	} 
+
+	function Executive() {
+		$this->__construct();
+	}
 
 	/**
 	 * The main method of the executive class.
@@ -52,13 +56,13 @@ class Executive {
 	 * @param array $a Arguments to pass to the method
 	 * @return mixed The results from the method operation
 	 */
-	function doMethodCall(&$bodyObj, &$object, $method, $args) 
+	static function doMethodCall(&$bodyObj, &$object, $method, $args) 
 	{
 		try
 		{
 			$output = Executive::deferredMethodCall($bodyObj, $object, $method, $args);
 		}
-		catch(Exception $fault)
+		catch(Throwable $fault)
 		{
 			if(get_class($fault) == "VerboseException")
 			{
@@ -83,7 +87,7 @@ class Executive {
 	 * Builds a class using a class name
 	 * If there is a failure, catch the error and return to caller
 	 */
-	function buildClass(&$bodyObj, $className)
+	static function buildClass(&$bodyObj, $className)
 	{
 		global $amfphp;
 		if(isset($amfphp['classInstances'][$className]))
@@ -96,7 +100,7 @@ class Executive {
 			$construct = new $className($className);
 			$amfphp['classInstances'][$className] = & $construct;
 		}
-		catch(Exception $fault)
+		catch(Throwable $fault)
 		{
 			//When constructing a class, getLine and getFile don't refer to the appropriate thing,
 			//hence this hack
@@ -114,7 +118,7 @@ class Executive {
 	 * an error handler which seems to break the convential rule for working with exceptions
 	 * Nesting function calls seems to solve the problem, but not nesting try...catch
 	 */
-	function deferredMethodCall(&$bodyObj, &$object, $method, $args)
+	static function deferredMethodCall(&$bodyObj, &$object, $method, $args)
 	{
 		try
 		{
@@ -127,7 +131,7 @@ class Executive {
 				$output = call_user_func_array (array(&$object, $method), $args);
 			}
 		}
-		catch(Exception $fault)
+		catch(Throwable $fault)
 		{
 			if(get_class($fault) == "VerboseException")
 			{
@@ -154,7 +158,7 @@ class Executive {
 	 * Include a class
 	 * If there is an error, catch and return to caller
 	 */
-	function includeClass(&$bodyObj, $location)
+	static function includeClass(&$bodyObj, $location)
 	{
 		$included = false;
 		try
@@ -162,7 +166,7 @@ class Executive {
 			include_once($location);
 			$included = true;
 		}
-		catch(Exception $fault)
+		catch(Throwable $fault)
 		{
 			$included = false;
 			if(get_class($fault) == "VerboseException")

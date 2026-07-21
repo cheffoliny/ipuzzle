@@ -14,7 +14,7 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-person-assets-attach" onsubmit="return false;">
 <input type="hidden" id="id" name="id" value="{$id|default:0}" />
 <input type="hidden" id="id_person" name="id_person" value="{$id_person|default:0}" />
 
@@ -26,10 +26,10 @@
 	<td id="filter_result">
 	<!-- начало на работната част -->
 	<center>
-		<table class="search">
+		<table class="search ui-contract-toolbar">
 			<tr>
 				<td valign="top" align="right" width="690px">
-					<button id="b100" onClick="setPPP(0);"><img src="images/plus.gif" />Добави</button>
+					<button type="button" id="b100" class="search" onClick="setPPP(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 				</td>
 			</tr>
 
@@ -38,7 +38,7 @@
 
 	<hr>
 	
-	<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:330px;overflow: auto;"></div>
+	<div id="result" class="ui-contract-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:330px;overflow: auto;"></div>
 
  	<!-- край на работната част -->
 	</td>
@@ -46,11 +46,11 @@
 </table>
 
 
-<div id="search"  style="padding-top:10px;width:700px;">
-	<table width="100%" cellspacing=1px>
+<div id="search" class="ui-contract-actions-wrap" style="padding-top:10px;width:700px;">
+	<table class="ui-nomenclature-actions ui-contract-actions" width="100%" cellspacing=1px>
 		<tr valign="top">
 			<td valign="top" align="right" width="700px">
-				<button id="b100" onClick="parent.window.close();" ><img src="images/cancel.gif" />Затвори</button>
+				<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

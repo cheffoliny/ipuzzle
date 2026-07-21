@@ -176,43 +176,43 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-access-rights" onSubmit="return false;">
 	<input type="hidden" id="sResultType" name="sResultType" value="">			<!-- Типа на последно-генерирания резултат -->
 	<input type="hidden" id="sMadeChanges" name="sMadeChanges" value="">		<!-- Направени до момента промени в правата -->
 	
 	<div class="page_caption">Права на Достъп</div>
 	
-	<table width="100%">
+	<table class="ui-access-rights-toolbar" width="100%">
 		<tr>
 			<td align="right">
-				<button type="button" style="width: 30px;" onClick="showFilters();"><img src="images/search2.gif"></button>
+				<button type="button" style="width: 30px;" title="Покажи/скрий филтрите" onClick="showFilters();"><span class="ui-icon ui-icon-filter" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 	</table>
 	
-	<div id="filters">
+	<div id="filters" class="ui-access-rights-filters">
 		<center>
-			<table border="0" width="100%">
+			<table class="ui-access-rights-layout" border="0" width="100%">
 				<tr>
 					<td align="right">
-				  		<table class="search" cellspacing="3">
+				  		<table class="search ui-access-rights-selector" cellspacing="3">
 							<tr>
 								<td valign="top" align="center">
-									<fieldset style="width: 750px;">
+									<fieldset class="ui-access-selection" style="width: 750px;">
 									<legend>Изобразени права:</legend>
-										<table>
+										<table class="ui-dual-list">
 											<tr style="height: 5px;"><td colspan="3"></td></tr>
 											<tr class="even">
 												<td>
-													<select name="all_rights" id="all_rights" size="10"  style="width: 350px;" ondblclick="move_option_to( 'all_rights', 'search_rights', 'right' );" multiple>
+													<select name="all_rights" id="all_rights" class="form-control ui-dual-list-select" size="10" style="width: 350px;" ondblclick="move_option_to( 'all_rights', 'search_rights', 'right' );" multiple>
 													</select>
 												</td>
 												<td>
-													<button class="search" style="width: 50px;" name="button" title="Добави" onClick="move_option_to( 'all_rights', 'search_rights', 'right' ); return false;"><img src="images/mright.gif" /></button></br>
-													<button name="button" style="width: 50px;" title="Премахни" onClick="move_option_to( 'all_rights', 'search_rights', 'left' ); return false;"><img src="images/mleft.gif" /></button>
+													<button class="search" style="width: 50px;" name="button" title="Добави" onClick="move_option_to( 'all_rights', 'search_rights', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+													<button name="button" style="width: 50px;" title="Премахни" onClick="move_option_to( 'all_rights', 'search_rights', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 												</td>
 												<td>
-													<select name="search_rights[]" id="search_rights" size="10" style="width: 350px;" ondblclick="move_option_to( 'all_rights', 'search_rights', 'left' );" multiple>
+													<select name="search_rights[]" id="search_rights" class="form-control ui-dual-list-select" size="10" style="width: 350px;" ondblclick="move_option_to( 'all_rights', 'search_rights', 'left' );" multiple>
 													</select>
 												</td>
 											</tr>
@@ -231,7 +231,7 @@
 							</tr>
 						</table>
 						
-						<table class="search">
+						<table class="search ui-access-mode-selector">
 							<tr>
 								<td>
 									<input type="radio" id="nByPerson" name="nByPerson" class="clear" onclick="clickPerson();" checked="checked" />&nbsp;По Служители
@@ -243,23 +243,23 @@
 						</table>
 						
 						<div id="firmregion">
-							<table class="search">
+							<table class="search ui-access-scope-fields">
 								<tr>
 									<td align="right">Фирма:&nbsp;</td>
 									<td>
-										<select class="default" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'getOffices' )" />
+										<select class="default form-control" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'getOffices' )" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">Регион:&nbsp;</td>
 									<td>
-										<select class="default" name="nIDOffice" id="nIDOffice" />
+										<select class="default form-control" name="nIDOffice" id="nIDOffice" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">Длъжност:&nbsp;</td>
 									<td>
-										<select class="default" name="nIDPosition" id="nIDPosition" />
+										<select class="default form-control" name="nIDPosition" id="nIDPosition" />
 									</td>
 								</tr>
 						  	</table>
@@ -281,9 +281,9 @@
 					  	<br />
 					  	
 					  	{if $right_edit}
-						<div id="saveButton" style="display: none;"><button name="Button" onclick="saveLevels();"><img src="images/confirm.gif"> Запази Промените </button></div>
+						<div id="saveButton" style="display: none;"><button name="Button" onclick="saveLevels();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази Промените </button></div>
 						{/if}
-					  	<button name="Button" onclick="processResult();"><img src="images/confirm.gif"> Търси </button>
+					  	<button name="Button" onclick="processResult();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button>
 					</td>
 				</tr>
 			</table>

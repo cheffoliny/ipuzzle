@@ -37,15 +37,15 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onsubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onsubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0" />
 	<input type="hidden" name="nIsInOffice" id="nIsInOffice" value="0" />
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Направления</td>
 			<td class="buttons">
-				{if $right_edit}<button onclick="openDirection( 0 );"><img src="images/plus.gif"> Добави </button>
+				{if $right_edit}<button onclick="openDirection( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>

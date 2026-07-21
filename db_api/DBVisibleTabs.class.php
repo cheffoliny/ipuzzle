@@ -4,7 +4,6 @@
 			
 		public function __construct() {
 			global $db_personnel;
-			$db_personnel->debug=true;
 			
 			parent::__construct($db_personnel, 'visible_tabs');
 		}

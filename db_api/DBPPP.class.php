@@ -693,7 +693,7 @@
 							1,
 							0
 						) AS sending,
-						CONCAT( p.price, ' лв.' ) AS price,
+						CONCAT( p.price, ' €' ) AS price,
 						IF( p.status = 'confirm', 1, 0 ) AS is_closed
 					FROM ppp p
 						LEFT JOIN {$db_name_sod}.objects ob ON p.id_source = ob.id
@@ -794,8 +794,8 @@
 					n.name as nomenclature,
 					s.count as nomenclature_count,
 					s.client_own,
-					CONCAT( s.count * n.last_price, ' лв.' ) AS nomenclature_price,
-					CONCAT( s.count * n.support_price, ' лв.' ) AS support_price
+					CONCAT( s.count * n.last_price, ' €' ) AS nomenclature_price,
+					CONCAT( s.count * n.support_price, ' €' ) AS support_price
 				FROM states s
 				LEFT JOIN nomenclatures n ON n.id = s.id_nomenclature
 				LEFT JOIN nomenclature_types nt ON nt.id = n.id_type

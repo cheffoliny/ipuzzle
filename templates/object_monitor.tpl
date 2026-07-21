@@ -149,8 +149,8 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
-	<div class="page_caption">МОНИТОРИНГ за обект с номер: {$nID}</div>
+<form action="" name="form1" id="form1" class="ui-monitor-report ui-object-monitor-report" onSubmit="return false;">
+	<div class="page_caption ui-monitor-heading">МОНИТОРИНГ за обект с номер: {$nID}</div>
 	
 	<input type="hidden" id="nID" name="nID" value="0" />
 	<input type="hidden" id="lastID" name="lastID" value="0" />
@@ -158,15 +158,15 @@
 	<input type="hidden" id="flag" name="flag" value="0" />
 	
 	<center>
-		<table class="search">
+		<table class="search ui-monitor-filter">
 			<tr>
 				<td style="width: 350px; text-align: right;" >Номер на обект:&nbsp;</td>
 				<td>
 					<input type="text" class="default" name="nObject" id="nObject" value="{$nID}" style="width: 75px; text-align: right;" readonly />
 				</td>
-				<td align="right"><button name="Button" class="search" onclick="stopStart();"><img src="images/assign.gif">Мониторинг</button></td>
+				<td align="right"><button type="button" name="Button" class="search" onclick="stopStart();"><span class="ui-icon ui-icon-monitor" aria-hidden="true"></span>Мониторинг</button></td>
 				<td style="width: 300px; text-align: right;">
-					<button onclick="monitor('once');"> Обнови </button> 
+					<button type="button" onclick="monitor('once');"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
 				</td>			
 			</tr>
 	  	</table>
@@ -174,25 +174,25 @@
 
 	<hr>
 	
-	<div id="result" style="width: 800px; height: 380px; overflow: auto;" >
+	<div id="result" class="ui-monitor-result ui-live-monitor-result" style="width: 800px; height: 380px; overflow: auto;" >
 		<table class="result" id="okoto" >
 			<tr>
-				<th style="width: 130px;" >час</td>
-				<th style="width: 70px;" >номер</td>
-				<th >обект</td>
-				<th >сигнал</td>
-				<th style="width: 80px;">тип</td>
-				<th style="width: 30px;">%</td>
+				<th style="width: 130px;" >час</th>
+				<th style="width: 70px;" >номер</th>
+				<th>обект</th>
+				<th>сигнал</th>
+				<th style="width: 80px;">тип</th>
+				<th style="width: 30px;">%</th>
 			</tr>
 			<tbody id="tbl1"></tbody>
 		</table>
 	</div>
 
-	<div id="search"  style="padding-top:10px;width:800px;">
+	<div id="search" class="ui-monitor-actions" style="padding-top:10px;width:800px;">
 		<table width="100%" cellspacing=1px>
 			<tr valign="top">
 				<td valign="top" align="right" width="800px">
-					<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
+					<button type="button" id="b100" class="btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 			</tr>
 		</table>

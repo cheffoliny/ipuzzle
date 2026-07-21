@@ -1,11 +1,14 @@
 <?php
 	require_once('include/ufpdf/fpdf.php');
 
-    if( !FPDF_FONTPATH ) {
+    if( !defined('FPDF_FONTPATH') ) {
         define('FPDF_FONTPATH', $_SESSION['BASE_DIR'] . '/include/ufpdf/font/');
     }
 	
 	class PDFC extends FPDF	{
+		var $_PageWidth;
+		var $_PageHeight;
+
         function __construct($orientation='P') {
             parent::__construct($orientation);
 
@@ -82,7 +85,7 @@
 				$this->Ln(4);
 				$this->moveX(10);
 				$this->Cell(65,'',$value['user_name']." ".$value['user_gsm']);	
-				$this->Cell(10,'',$price." лв");	
+				$this->Cell(10,'',$price." €");
 				$this->Ln(2);
 				$this->moveX(71);
 				$this->dottedLine(20);
@@ -102,7 +105,7 @@
 				$this->Ln(4);
 				$this->moveX(10);
 				$this->Cell(65,'',$value['name']);	
-				$this->Cell(10,'',$value['price']." лв");	
+				$this->Cell(10,'',$value['price']." €");
 				$this->Ln(2);
 				$this->moveX(71);
 				$this->dottedLine(20);

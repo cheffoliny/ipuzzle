@@ -138,7 +138,7 @@
 	{
 		event = event || window.event;
 		
-		var oButton = event.srcElement;
+		var oButton = event.srcElement || event.target;
 		
 		var oClassNames = new Framework.ClassNames();
 		
@@ -157,7 +157,7 @@
 		
 		oClassNames.addClass( oButton, sClassName );
 		
-		$('selectedShift').value = oButton.firstChild ? oButton.firstChild.nodeValue : "#0";
+		$('selectedShift').value = oButton.getAttribute("data-shift-code") || (oButton.firstChild ? oButton.firstChild.nodeValue : "#0");
 		
 		// BEGIN CODE : Person Shift Hours Limit ( Часове смени за служител към края и началото на месеца )
 		var sIDShiftDuration = oButton.id.replace( /btnShift/, "shiftCoefDuration" );
@@ -182,7 +182,7 @@
 	{
 		event = event || window.event;
 		
-		var oTd = event.srcElement;
+		var oTd = event.srcElement || event.target;
 		
 		var oClassNames = new Framework.ClassNames();
 		
@@ -326,24 +326,27 @@
 			oReal.value = sNewTime;
 			//End Sum Real Hours
 			
-			aValues = oCell.innerHTML.split( " / " );
-			aTotals = oTotl.innerHTML.split( " / " );
+			var aValues = oCell.textContent.split( "/" );
+			var aTotals = oTotl.textContent.split( "/" );
+			var nOldEnd = parseInt( aValues[1], 10 ) || 0;
+			var nNewEnd = getRoundTime( oReal.value );
 			
-			aTotals[1] = parseInt( aTotals[1] );
-			aTotals[0] = parseInt( aTotals[0] );
+			aTotals[0] = parseInt( aTotals[0], 10 ) || 0;
+			aTotals[1] = ( parseInt( aTotals[1], 10 ) || 0 ) - nOldEnd + nNewEnd;
 			
-			aTotals[1] -= parseInt( aValues[1] );
-			aValues[1] = getRoundTime( oReal.value );
-			aTotals[1] += parseInt( aValues[1] );
-			
-			//Coloring
-			if( parseInt( aValues[1] ) < 0 )oCell.style.color = "0000FF";
-			if( parseInt( aValues[1] ) == 0 )oCell.style.color = "00BB00";
-			if( parseInt( aValues[1] ) > 0 )oCell.style.color = "FF0000";
-			//End Coloring
-			
-			oCell.innerHTML = aValues.join( " / " );
-			oTotl.innerHTML = aTotals.join( " / " );
+			var oEndSpan = document.getElementById( "shift_hours_span[" + nIDPerson + "][1]" );
+			var sEndColor = nNewEnd < 0 ? "#0000FF" : ( nNewEnd == 0 ? "#00BB00" : "#FF0000" );
+			if( oEndSpan )
+			{
+				oEndSpan.textContent = nNewEnd;
+				oEndSpan.style.color = sEndColor;
+			}
+			else
+			{
+				oCell.textContent = ( parseInt( aValues[0], 10 ) || 0 ) + " / " + nNewEnd;
+				oCell.style.color = sEndColor;
+			}
+			oTotl.textContent = aTotals.join( " / " );
 		}
 		
 		return true;
@@ -564,7 +567,7 @@
 
 {/literal}
 
-<form action="" name="form1" id="form1" onsubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-schedule-report ui-person-schedule-report" onsubmit="return false;">
 
 	<input type="hidden" id="nIDSelectObject" name="nIDSelectObject" value="{$nIDSelectObject|default:0}"/>
 	<input type="hidden" id="nCustomDate" name="nCustomDate" value="{$nCustomDate|default:0}"/>
@@ -580,7 +583,7 @@
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма..."></span>
+						<span class="ui-icon ui-icon-tag" title="Фирма..." aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="nIDFirm" id="nIDFirm" onchange="onChangeFirm();">
 						<option value="0"> -- Избери фирма -- </option>
@@ -591,7 +594,7 @@
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
 						{*Администрация:&nbsp;*}
-						<span class="fas fa-tags fa-fw" data-fa-transform="right-22 down-10" title="Офис..."></span>
+						<span class="ui-icon ui-icon-tags" title="Офис..." aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="nIDOffice" id="nIDOffice" onchange="onChangeOffice();"></select>
 				</div>
@@ -599,7 +602,7 @@
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="far fa-home-alt fa-fw" data-fa-transform="right-22 down-10" title="Статус..."></span>
+						<span class="ui-icon ui-icon-home" title="Обект..." aria-hidden="true"></span>
 					</div>
 					<select class="form-control" id="nIDObject" name="nIDObject" onchange="onChangeObject();"></select>
 				</div>
@@ -607,7 +610,7 @@
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fas fa-calendar-alt fa-fw" data-fa-transform="right-20 down-10" title="Месец..."></span>
+						<span class="ui-icon ui-icon-calendar" title="Месец..." aria-hidden="true"></span>
 					</div>
 					<select class="form-control" id="sYearMonth" name="sYearMonth">
 						<option value="0"> -- Изберете -- </option>
@@ -618,18 +621,18 @@
 				<div class="input-group input-group-sm">
 					<input class="inp25 py-1" type="text" id="max_hours" name="max_hours" style="font-weight: bold; height: 26px; color: red;" title="Норма часове" readonly/>
 					<input class="inp25 py-1" type="text" id="max_shifts" name="max_shifts" style="font-weight: bold; height: 26px; color: red;" title="Норма смени" readonly/>
-					<button class="btn btn-sm btn-info mx-1" type="button" name="viewHours" onClick="getHours();" title="Брой часове"><i class="far fa-clock"></i></button>
-					<button class="btn btn-sm btn-success" type="button" onClick="return loadXMLDoc2( 'result' );" name="Button"><i class="far fa-search"></i> График</button>
-					<!-- <button type="button" onClick="return loadXMLDoc2( 'correctAllShiftHours' );" name="Button"><img src="images/confirm.gif">Часове</button> -->
+					<button class="btn btn-sm btn-info mx-1" type="button" name="viewHours" onClick="getHours();" title="Брой часове"><span class="ui-icon ui-icon-clock" aria-hidden="true"></span></button>
+					<button class="btn btn-sm btn-success" type="button" onClick="return loadXMLDoc2( 'result' );" name="Button"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> График</button>
+					<!-- Legacy correctAllShiftHours action remains intentionally disabled. -->
 {*					{if $auto_schedule}*}
-{*					<button type="button" name="Validate" onClick="return autoValidate();" class="search"><img src="images/reload.gif">Валидация</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*}
+{*					Legacy automatic validation action remains intentionally disabled.*}
 {*					{/if}*}
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="result"></div>
+	<div id="result" class="ui-schedule-result"></div>
 </form>
 
 <script>

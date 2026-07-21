@@ -6,8 +6,6 @@
 	switch ( $aParams['api_action'] )
 	{
 		case "update" : 
-			$db_system->debug=true;
-			
 			if( empty($aParams['name']) )
 			{
 				$oResponse->setError( DBAPI_ERR_INVALID_PARAM, "Не е въведено наименование на профила !" );

@@ -84,7 +84,7 @@
 	
 </style>
 {/literal}
-<form id="form1" onsubmit="return false;">
+<form id="form1" class="ui-nomenclature-dialog ui-asset-dialog ui-asset-info-dialog" onsubmit="return false;">
 <dlcalendar click_element_id="img_date_from" input_element_id="invoice_date" tool_tip="Изберете дата"></dlcalendar>
   <input type="hidden" id="iframe_id" name=frame_id/>	
   <input type="hidden" id="nID" name="nID" value="{$nID|default:0}">
@@ -95,13 +95,14 @@
   	<table  cellspacing="0" cellpadding="0" width="100%"  border="0" id="filter" >
   		<tr>
   			<td>
-  				{include file=asset_info_tabs.tpl}
+  				{include file="asset_info_tabs.tpl"}
   				<br>
   			</td>
   		</tr>
   	</table>
   	
-	<table class="input" border="0"  style="width:600px;float:left;">
+	<div class="ui-asset-info-main">
+	<table class="input ui-nomenclature-form ui-asset-info-summary" border="0">
 		<tr>
 			<td colspan="4">
 						
@@ -133,10 +134,10 @@
 			</td>
 			<td>
 				&nbsp;
-			<td>
+			</td>
 		</tr>
 	</table>
-	<fieldset style="float:right;margin-bottom:20px;margin-top:0px;margin-right:10px;width:370px;height:170px;" >
+	<fieldset class="ui-nomenclature-fieldset ui-asset-attributes">
 		<legend>Допълнителни атрибути </legend>
 	
 			<div id="me" style="height:160px;width:100%;overflow:auto;">
@@ -144,7 +145,7 @@
 				
 			</div>
 	</fieldset>
-	<table class="input" style="width:600px;" >
+	<table class="input ui-nomenclature-form ui-asset-info-details">
 		<tr class="even">
 			<td style="text-align:right;">
 				Група :
@@ -218,7 +219,7 @@
 				Дата&nbsp;на&nbsp;фактура:
 			
 				<input type="text"  onkeypress="return formatDate(event, '.');" name="invoice_date" id="invoice_date" size="10" maxlength="10" title="ДД.ММ.ГГГГ">
-				<img src="images/cal.gif" id="img_date_from">
+				<button type="button" id="img_date_from" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 		<tr>
@@ -234,6 +235,7 @@
 		</tr>
 		
 	</table>
+	</div>
 	<!--<p style="margin-top:30px;">Атрибути на актива :</p>-->
 	<!--<fieldset style="float:right;margin-bottom:20px;" ><!--<style="width:40%;" >
 		<legend>Допълнителни атрибути </legend>
@@ -245,13 +247,13 @@
 	</fieldset>-->
 		<!--<iframe width="100%" scrolling="auto" id="attributes" name="attributes" frameborder="0">
 	</iframe>-->
-	<table  class="input" style="margin-top:40px;">
+	<table class="input ui-nomenclature-actions ui-asset-info-actions">
 						<tr valign="top" class="odd">
 							<td valign="top" align="right" width="900px">
-								<button class="search" onclick="return submit_form();"><img src="images/confirm.gif"/>Потвърди</button>&nbsp;
+								<button type="button" class="search" onclick="return submit_form();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>&nbsp;
 							</td>
 							<td valign="top" align="right" width="100px">
-								<button id="b100" onclick="close_form();"><img src="images/cancel.gif" />Затвори</button>
+								<button type="button" id="b100" onclick="close_form();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 							</td>
 							
 						</tr>

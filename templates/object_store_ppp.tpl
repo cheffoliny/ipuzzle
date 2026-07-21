@@ -10,17 +10,18 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;" class="w-100 h-100 p-o m-0" style="background: none;">
-	<input type="hidden" id="nID" name="nID" value="6005553" />
+<form name="form1" id="form1" onsubmit="return false;" class="w-100 h-100 p-0 m-0" style="background: none;">
+	<input type="hidden" id="nID" name="nID" value="0" />
 
 	<div class="w-100" id="result" rpc_excel_panel="off" rpc_paging="off"></div>
 </form>
 
 <script>
 	{literal}
-		if( parent.document.getElementById( 'nID' ).value )
+		var oParentID = parent.document.getElementById( 'nID' );
+		if( oParentID && oParentID.value )
 		{
-			$("nID").value = parent.document.getElementById( 'nID' ).value;
+			$("nID").value = oParentID.value;
 		}
 	{/literal}
 	

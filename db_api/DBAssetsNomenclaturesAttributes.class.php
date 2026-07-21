@@ -66,7 +66,6 @@
 //					$sQuery.=" OR a.id={$aIDs[$i]['id_attribute']}";
 //				else return;
 //			}
-			APILog::Log(0,$sQuery);
 			$aRs= $this->selectAssoc($sQuery);
 			if($aRs==false) throw new Exception();
 			return $aRs;
@@ -113,7 +112,6 @@
 //					$sQuery.=" OR a.id={$aIDs[$i]['id_attribute']}";
 //				else return;
 //			}
-			APILog::Log(0,$sQuery);
 			$aRs= $this->select($sQuery);
 			if($aRs==false) throw new Exception();
 			return $aRs;

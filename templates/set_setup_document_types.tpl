@@ -4,12 +4,12 @@
 	var my_action = '';
 </script>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-personnel-dialog ui-document-type-dialog" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		
 		<div class="page_caption">{if $id}Редактиране на Документ{else}Нов Документ{/if}</div>
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd"><td colspan="2" style="height: 8px;">&nbsp;</td></tr>
 			
 			<tr class="even">
@@ -20,12 +20,12 @@
 			<tr class="odd"><td colspan="2" style="height: 5px;">&nbsp;</td></tr>			
 		</table>
 
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

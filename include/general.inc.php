@@ -664,10 +664,10 @@ function debug($value,$play=true){
 	 
 	function discountDDS($dSum, $dDDS) 
 	{
-		$dSum = (double)$dSum;
-		$dDDS = (double)$dDDS;
+		$dSum = (float)$dSum;
+		$dDDS = (float)$dDDS;
 		
-		return (double)($dSum / (1 + $dDDS / 100 ));
+		return (float)($dSum / (1 + $dDDS / 100 ));
 	}
 	
 	/**
@@ -789,12 +789,12 @@ function debug($value,$play=true){
 		}
 		
 		
-		$start = split('[- :]', $start);
+		$start = preg_split('/[- :]/', $start);
 		
 		$start = mktime( 0,	0, 0, $start[1], $start[2], $start[0] );
 					  
 
-		$stop = split('[- :]', $stop);
+		$stop = preg_split('/[- :]/', $stop);
 		
 		$stop = mktime( 0, 0, 0, $stop[1], $stop[2], $stop[0] );
 		

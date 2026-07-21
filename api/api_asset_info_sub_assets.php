@@ -10,7 +10,6 @@
 				
 				//$aData=$oAsset->getSubAssetInfo($nID,$aSubAssets);
 				$this->getSubAssetsIds($nID,$aSubAssets);
-				APILog::Log(0,$aSubAssets);
 				$sSubAssets = implode(', ',$aSubAssets);
 				$sSubAssetsIds = $nID;
 				if(!empty($sSubAssets)){
@@ -26,7 +25,6 @@
 				
 				$oAsset = new DBAssets();
 				$aIDs=$oAsset->getSubAssetsIDs($nID);
-				APILog::Log(0,$aIDs);
 				if(count($aIDs)){
 					for($i=0;$i<count($aIDs);$i++){
 					array_push( $aId22,$aIDs[$i]["id"]);

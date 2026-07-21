@@ -274,9 +274,7 @@ class code128 extends BarCode {
 				$this->lastX = $this->positionX;
 				$this->lastY = $this->maxHeight + $this->positionY;
 				// Removing Special Code
-				$this->text = ereg_replace(chr(128), '', $this->text);
-				$this->text = ereg_replace(chr(129), '', $this->text);
-				$this->text = ereg_replace(chr(130), '', $this->text);
+				$this->text = str_replace(array(chr(128), chr(129), chr(130)), '', $this->text);
 				if ($this->textfont instanceof Font) {
 					$this->textfont->setText($this->text);
 				}

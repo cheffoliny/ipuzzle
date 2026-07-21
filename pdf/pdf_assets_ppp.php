@@ -100,7 +100,7 @@
 					$this->Cell(30,'','---');
 				}
 				$this->Cell(30,'',$value['amortization_months_left'],0,0,'R');
-				$this->Cell(35,'',round($value['price_left'],2).' лв.',0,0,'R');
+				$this->Cell(35,'',round($value['price_left'],2).' €',0,0,'R');
 				if($this->GetY()>270) {
 					$this->AddPage();
 					$this->SetY(20);

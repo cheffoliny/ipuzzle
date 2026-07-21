@@ -263,11 +263,17 @@
 					$oResponse->setDataAttributes( $nFinalDataIndex, 'objects_over', 				array( "align" => "right" ) );
 					
 					//Update Data
-					$nNineteenPercentSum = round( ( $aOfficeElement['objects_price_sum'] * 90 ) / 100, 2 );
-					$nObjectPriceSum = ( int ) $aOfficeElement['objects_price_sum'];
+					$nCurrentObjectCount = (int) $aOfficeElement['objects_count'];
+					$nCurrentObjectPriceSum = (float) $aOfficeElement['objects_price_sum'];
+					$nCurrentObjectPricePaid = (float) $aOfficeElement['objects_price_paid'];
+					$nObjectCountChange = empty( $nPreviousObjectCount ) ? 0 : ( $nCurrentObjectCount - $nPreviousObjectCount );
+					$nObjectPriceSumChange = empty( $nPreviousObjectPriceSum ) ? 0 : ( $nCurrentObjectPriceSum - $nPreviousObjectPriceSum );
+					$nObjectAverage = !empty( $nObjectCountChange ) ? ( $nObjectPriceSumChange / $nObjectCountChange ) : 0;
+					$nNineteenPercentSum = round( ( $nCurrentObjectPriceSum * 90 ) / 100, 2 );
+					$nObjectPriceSum = ( int ) $nCurrentObjectPriceSum;
 					if( !empty( $nObjectPriceSum ) )
 					{
-						$nPaidSumPercent = round( ( $aOfficeElement['objects_price_paid'] / $aOfficeElement['objects_price_sum'] ) * 100, 2 );
+						$nPaidSumPercent = round( ( $nCurrentObjectPricePaid / $nCurrentObjectPriceSum ) * 100, 2 );
 					}
 					else $nPaidSumPercent = 0;
 					
@@ -278,22 +284,22 @@
 					//--End Unpaid Objects Count
 					
 					$aFinalData[$nFinalDataIndex]['stat_date'] 					= $aOfficeElement['stat_date'];
-					$aFinalData[$nFinalDataIndex]['objects_count'] 				= $aOfficeElement['objects_count'];
+					$aFinalData[$nFinalDataIndex]['objects_count'] 				= $nCurrentObjectCount;
 					$aFinalData[$nFinalDataIndex]['count_unpaid']				= isset( $aUnpaid['count_unpaid'] ) ? $aUnpaid['count_unpaid'] : 0;
 					$aFinalData[$nFinalDataIndex]['objects_count_chbars'] 		= "";
-					$aFinalData[$nFinalDataIndex]['objects_count_change'] 		= empty( $nPreviousObjectCount ) ? 0 : ( $aOfficeElement['objects_count'] - $nPreviousObjectCount );
-					$aFinalData[$nFinalDataIndex]['objects_price_sum'] 			= round( $aOfficeElement['objects_price_sum'], 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_price_sum_change'] 	= round( empty( $nPreviousObjectPriceSum ) ? 0 : ( $aOfficeElement['objects_price_sum'] - $nPreviousObjectPriceSum ), 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_average'] 			= round( !empty( $aFinalData[$nFinalDataIndex]['objects_count_change'] ) ? $aFinalData[$nFinalDataIndex]['objects_price_sum_change'] / $aFinalData[$nFinalDataIndex]['objects_count_change'] : 0, 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_price_paid'] 		= round( $aOfficeElement['objects_price_paid'], 2 ) . " лв. ( {$nPaidSumPercent}% )";
+					$aFinalData[$nFinalDataIndex]['objects_count_change'] 		= $nObjectCountChange;
+					$aFinalData[$nFinalDataIndex]['objects_price_sum'] 			= round( $nCurrentObjectPriceSum, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_price_sum_change'] 	= round( $nObjectPriceSumChange, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_average'] 			= round( $nObjectAverage, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_price_paid'] 		= round( $nCurrentObjectPricePaid, 2 ) . " € ( {$nPaidSumPercent}% )";
 					$aFinalData[$nFinalDataIndex]['objects_overbars'] 			= "";
-					$aFinalData[$nFinalDataIndex]['objects_over'] 				= round( $aOfficeElement['objects_price_paid'] - $nNineteenPercentSum, 2 ) . " лв.";
+					$aFinalData[$nFinalDataIndex]['objects_over'] 				= round( $nCurrentObjectPricePaid - $nNineteenPercentSum, 2 ) . " €";
 					
 					$nFinalDataIndex++;
 					//End Update Data
 					
-					$nPreviousObjectCount 		= $aOfficeElement['objects_count'];
-					$nPreviousObjectPriceSum 	= $aOfficeElement['objects_price_sum'];
+					$nPreviousObjectCount 		= $nCurrentObjectCount;
+					$nPreviousObjectPriceSum 	= $nCurrentObjectPriceSum;
 				}
 				//End Get Previous Months
 				
@@ -439,11 +445,17 @@
 					$oResponse->setDataAttributes( $nFinalDataIndex, 'objects_over', 				array( "align" => "right" ) );
 					
 					//Update Data
-					$nNineteenPercentSum = round( ( $aCurrentData['objects_price_sum'] * 90 ) / 100, 2 );
-					$nObjectPriceSum = ( int ) $aCurrentData['objects_price_sum'];
+					$nCurrentObjectCount = (int) $aCurrentData['objects_count'];
+					$nCurrentObjectPriceSum = (float) $aCurrentData['objects_price_sum'];
+					$nCurrentObjectPricePaid = (float) $aCurrentData['objects_price_paid'];
+					$nObjectCountChange = empty( $nPreviousObjectCount ) ? 0 : ( $nCurrentObjectCount - $nPreviousObjectCount );
+					$nObjectPriceSumChange = empty( $nPreviousObjectPriceSum ) ? 0 : ( $nCurrentObjectPriceSum - $nPreviousObjectPriceSum );
+					$nObjectAverage = !empty( $nObjectCountChange ) ? ( $nObjectPriceSumChange / $nObjectCountChange ) : 0;
+					$nNineteenPercentSum = round( ( $nCurrentObjectPriceSum * 90 ) / 100, 2 );
+					$nObjectPriceSum = ( int ) $nCurrentObjectPriceSum;
 					if( !empty( $nObjectPriceSum ) )
 					{
-						$nPaidSumPercent = round( ( $aCurrentData['objects_price_paid'] / $aCurrentData['objects_price_sum'] ) * 100, 2 );
+						$nPaidSumPercent = round( ( $nCurrentObjectPricePaid / $nCurrentObjectPriceSum ) * 100, 2 );
 					}
 					else $nPaidSumPercent = 0;
 					
@@ -454,19 +466,19 @@
 					//--End Unpaid Objects Count
 					
 					$aFinalData[$nFinalDataIndex]['stat_date'] 					= $sCDateWord;
-					$aFinalData[$nFinalDataIndex]['objects_count'] 				= $aCurrentData['objects_count'];
+					$aFinalData[$nFinalDataIndex]['objects_count'] 				= $nCurrentObjectCount;
 					$aFinalData[$nFinalDataIndex]['count_unpaid']				= isset( $aUnpaid['count_unpaid'] ) ? $aUnpaid['count_unpaid'] : 0;
 					$aFinalData[$nFinalDataIndex]['objects_count_chbars'] 		= "";
-					$aFinalData[$nFinalDataIndex]['objects_count_change'] 		= empty( $nPreviousObjectCount ) ? 0 : ( $aCurrentData['objects_count'] - $nPreviousObjectCount );
-					$aFinalData[$nFinalDataIndex]['objects_price_sum'] 			= round( $aCurrentData['objects_price_sum'], 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_price_sum_change'] 	= round( empty( $nPreviousObjectPriceSum ) ? 0 : ( $aCurrentData['objects_price_sum'] - $nPreviousObjectPriceSum ), 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_average'] 			= round( !empty( $aFinalData[$nFinalDataIndex]['objects_count_change'] ) ? $aFinalData[$nFinalDataIndex]['objects_price_sum_change'] / $aFinalData[$nFinalDataIndex]['objects_count_change'] : 0, 2 ) . " лв.";
-					$aFinalData[$nFinalDataIndex]['objects_price_paid'] 		= round( $aCurrentData['objects_price_paid'], 2 ) . " лв. ( {$nPaidSumPercent}% )";
+					$aFinalData[$nFinalDataIndex]['objects_count_change'] 		= $nObjectCountChange;
+					$aFinalData[$nFinalDataIndex]['objects_price_sum'] 			= round( $nCurrentObjectPriceSum, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_price_sum_change'] 	= round( $nObjectPriceSumChange, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_average'] 			= round( $nObjectAverage, 2 ) . " €";
+					$aFinalData[$nFinalDataIndex]['objects_price_paid'] 		= round( $nCurrentObjectPricePaid, 2 ) . " € ( {$nPaidSumPercent}% )";
 					$aFinalData[$nFinalDataIndex]['objects_overbars'] 			= "";
-					$aFinalData[$nFinalDataIndex]['objects_over'] 				= round( $aCurrentData['objects_price_paid'] - $nNineteenPercentSum, 2 ) . " лв.";
+					$aFinalData[$nFinalDataIndex]['objects_over'] 				= round( $nCurrentObjectPricePaid - $nNineteenPercentSum, 2 ) . " €";
 					
-					$nPreviousObjectCount 		= $aFinalData[$nFinalDataIndex]['objects_count'];
-					$nPreviousObjectPriceSum 	= $aFinalData[$nFinalDataIndex]['objects_price_sum'];
+					$nPreviousObjectCount 		= $nCurrentObjectCount;
+					$nPreviousObjectPriceSum 	= $nCurrentObjectPriceSum;
 					
 					$nFinalDataIndex++;
 					//End Update Data

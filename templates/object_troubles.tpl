@@ -22,11 +22,11 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-troubles" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDTrouble" name="nIDTrouble" value="0" />
 
-<table class="search" style="width:100%;">
+<table class="search ui-object-troubles-shell" style="width:100%;">
 	<tr>
 		<td class="header_buttons" style="height: 33px;">
 		<span id="head_window">Проблеми при обект {$object}</span> 
@@ -38,13 +38,13 @@
 		
 	<!-- начало на работната част -->
 	
-		<table class="page_data">
+		<table class="page_data ui-object-troubles-filter">
 			<tr>
 			<td style="width: 280px; text-align: left; padding: 2px;">
 			
 				<div class="input-group" style="width: 270px;">
-					<span class="input-group-addon-warning"><img src="images/glyphicons/tech.png" style="width: 12px; height: 12px;" title="Неотстранени" /></span>
-					<select id="sTroubleType" name="sTroubleType" class="inp150" onChange="load();">
+					<span class="input-group-addon-warning" title="Неотстранени"><span class="ui-icon ui-icon-settings" aria-hidden="true"></span></span>
+					<select id="sTroubleType" name="sTroubleType" class="inp150 form-control" onChange="load();">
 						<option value="all">Всички</option>
 						<option value="tech">Технически</option>
 						<option value="operativ">Оперативни</option>
@@ -55,7 +55,7 @@
 			</td>
 			<td style="text-align: left;">
 			
-				<input type="checkbox" id="nService" name="nService" class="clear" onClick="load();" />
+				<input type="checkbox" id="nService" name="nService" class="clear ui-nomenclature-checkbox" onClick="load();" />
 				Неотстранени
 				
 			</td>
@@ -79,16 +79,16 @@
 </tr>
 </table>
 
-<div id="search"  style="padding-top:10px;width:800px;">
-	<table class="page_data" >
+<div id="search" class="ui-object-troubles-actions" style="padding-top:10px;width:800px;">
+	<table class="page_data ui-nomenclature-actions" >
 		<tr>
 			<td style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
 				&nbsp;
 			</td>
 			<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
 				
-				<button class="btn btn-xs btn-success" onClick="editTrouble(0);" title="Докладвай проблем към обекта"><i class="fa fa-plus"></i> Проблем</button>
-				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори</button>
+				<button class="btn btn-xs btn-success" onClick="editTrouble(0);" title="Докладвай проблем към обекта"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Проблем</button>
+				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
 			</td>
 		</tr>
 	</table>

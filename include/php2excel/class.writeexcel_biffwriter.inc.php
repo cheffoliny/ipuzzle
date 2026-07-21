@@ -53,7 +53,7 @@ class writeexcel_biffwriter {
      * recalculating it for each call to new().
      */
     function _set_byte_order() {
-        $this->byteorder=0;
+        $this->byte_order = 0;
         // Check if "pack" gives the required IEEE 64bit float
         $teststr = pack("d", 1.2345);
         $number  = pack("C8", 0x8D, 0x97, 0x6E, 0x12, 0x83, 0xC0, 0xF3, 0x3F);

@@ -55,7 +55,7 @@
 					$sum_total += $sum;
 					
 					if(!empty($sum)) {
-						$aData[$keyFirmFrom][$keyFirmTo] = $sum.' лв.';
+						$aData[$keyFirmFrom][$keyFirmTo] = $sum.' €';
 						$nID = $keyFirmFrom.','.$keyFirmTo;
 						$oResponse->setDataAttributes($keyFirmFrom,$keyFirmTo, array( 'style' => 'background: #eeeeee; 
 																								  text-align:right;
@@ -68,7 +68,7 @@
 					}
 				}
 				
-				if(!empty($sum_total)) $sum_total .= " лв.";
+				if(!empty($sum_total)) $sum_total .= " €";
 				$aData[$keyFirmFrom]['total'] = $sum_total;	
 				$oResponse->setDataAttributes($keyFirmFrom,'total', array( 'style' => '	background: #cfedc6; 
 																						text-align:right;
@@ -87,7 +87,7 @@
 				$the_total += $aTotals[$keyFirmTo];
 				
 				if(!empty($aTotals[$keyFirmTo])) {
-					$aData['dolen_total'][$keyFirmTo] = $aTotals[$keyFirmTo].' лв.';
+					$aData['dolen_total'][$keyFirmTo] = $aTotals[$keyFirmTo].' €';
 				} else {
 					$aData['dolen_total'][$keyFirmTo] = '';
 				}
@@ -98,7 +98,7 @@
 			}
 			
 			if( !empty( $the_total ) ) {
-				$aData['dolen_total']['total'] = $the_total.' лв.';
+				$aData['dolen_total']['total'] = $the_total.' €';
 				$oResponse->setDataAttributes('dolen_total','total', array( 'style' => 'background: #cfedc6;
 																						text-align:right;
 																						border-bottom:1px solid #91D67C;

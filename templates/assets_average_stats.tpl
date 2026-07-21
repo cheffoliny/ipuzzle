@@ -2,21 +2,19 @@
 	rpc_debug = true;
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-assets-report ui-assets-average-report" onSubmit="return false;">
 	<div class="page_caption">Активи - Средни Стойности</div>
 	
-	<br />
+	<center class="ui-nomenclature-filter-wrap">
 	
-	<center>
-	
-		<table class="search" border="0">
+		<table class="search ui-nomenclature-filter ui-assets-report-filter" border="0">
 			<tr>
 				<td>Група:&nbsp;</td>
 				<td>
 					<select name="nGroup" id="nGroup" class="select150" />
 				</td>
 				<td>&nbsp;</td>
-				<td style="padding-left: 50px" align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif"> Търси </button></td>
+				<td class="ui-assets-search-cell" align="right"><button type="button" name="Button" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button></td>
 			</tr>
 		</table>
 	

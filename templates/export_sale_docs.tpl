@@ -74,39 +74,39 @@
 <dlcalendar click_element_id="imgPeriodFrom" input_element_id="sPeriodFrom" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="imgPeriodTo" input_element_id="sPeriodTo" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1">
+<form action="" name="form1" id="form1" class="ui-export-docs">
 	<input type="hidden" name="nID" id="nID" value="0">
 	<input type="hidden" name="sFile" id="sFile" value="">
 
-    <table class="page_data" id="capt" name="capt">
+    <table class="page_data ui-legacy-report-heading" id="capt" name="capt">
         <tr>
             <td class="page_name">Експорт на Документи за продажба [приход]</td>
         </tr>
         <tr>
-            <td style="color: #fff;">{include file=finance_instruments_tabs.tpl}</td>
+            <td style="color: #fff;">{include file="finance_instruments_tabs.tpl"}</td>
 		</tr>
 	</table>
 
-    <table class="search" style="margin-top: 4px;">
+    <table class="search table-secondary ui-legacy-report-filter">
 		<tr>
 			<td>
 
-                <div class="input-group" >
+                <div class="input-group input-group-sm ui-export-docs-filter">
                     <span class="input-group-addon">
 					    <img id="imgPeriodFrom" src="images/glyphicons/forw_right.png" style="width: 10px; height: 12px; cursor:pointer;" title="Начало на периода" /></span>
-					<input type="text" name="sPeriodFromH" id="sPeriodFromH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" />
-					<input type="text" name="sPeriodFrom" id="sPeriodFrom" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$date_first}" />
+					<input type="text" name="sPeriodFromH" id="sPeriodFromH" class="form-control" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" />
+					<input type="text" name="sPeriodFrom" id="sPeriodFrom" class="form-control inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$date_first}" />
                     &nbsp;
-					<input type="text" name="sPeriodToH" id="sPeriodToH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" value="{$time_now}" />
-					<input type="text" name="sPeriodTo" id="sPeriodTo" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$date_now}" />
+					<input type="text" name="sPeriodToH" id="sPeriodToH" class="form-control" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" value="{$time_now}" />
+					<input type="text" name="sPeriodTo" id="sPeriodTo" class="form-control inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$date_now}" />
 					<span class="input-group-addon">
 						<img id="imgPeriodTo" src="images/glyphicons/forw_left.png" style="width: 10px; height: 12px; cursor:pointer;" /></span>
                     &nbsp;
-				    <select name="nIDFirm" id="nIDFirm" onChange="formChange();" class="select150" ></select>
+				    <select name="nIDFirm" id="nIDFirm" onChange="formChange();" class="form-control select150" ></select>
                     &nbsp;
-				    <select name="nIDOffice" id="nIDOffice" class="select150" ></select>
+				    <select name="nIDOffice" id="nIDOffice" class="form-control select150" ></select>
                     &nbsp;
-                    <button class="btn btn-xs btn-primary" onClick="formSubmit(); return false;" title="Приложи шаблона"> Експорт </button>
+                    <button class="btn btn-sm btn-primary" onClick="formSubmit(); return false;" title="Приложи шаблона"><i class="far fa-file-export"></i> Експорт </button>
                 </div>
 			</td>
 		</tr>

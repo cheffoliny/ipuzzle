@@ -16,7 +16,7 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-shift-history-dialog" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 
 	<div class="page_caption">Видове смени - ИСТОРИЯ</div>
@@ -28,7 +28,7 @@
 		<!-- начало на работната част -->
 		<hr>
 		
-		<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 650px; height: 260px; overflow: auto;"></div>
+		<div id="result" class="ui-schedule-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 650px; height: 260px; overflow: auto;"></div>
 
  		<!-- край на работната част -->
 		</td>
@@ -36,11 +36,11 @@
 	</table>
 
 
-	<div id="search"  style="padding-top: 10px; width: 650px;">
-		<table width="100%" cellspacing="1px">
+	<div id="search" class="ui-schedule-actions-wrap" style="padding-top: 10px; width: 650px;">
+		<table class="ui-nomenclature-actions ui-schedule-actions" width="100%" cellspacing="1px">
 			<tr valign="top">
 				<td valign="top" align="right" width="650px">
-					<button id="b100" onClick="parent.window.close();" ><img src="images/cancel.gif" />Затвори</button>
+					<button type="button" id="b100" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 			</tr>
 		</table>

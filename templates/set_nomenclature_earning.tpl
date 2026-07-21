@@ -11,12 +11,12 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-money-nomenclature-dialog" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 	
 	<div class="page_caption">{if $nID}Редактиране{else}Добавяне{/if} на номенклатура приход</div>
 	
-	<table class="input" style="margin-top:20px;">
+	<table class="input ui-nomenclature-form" style="margin-top:20px;">
 		<tr>
 			<td align="right">
 				Код
@@ -28,7 +28,7 @@
 				Системен
 			</td>
 			<td>
-				<input type="checkbox" class="clear" id="is_system" name="is_system">
+				<input type="checkbox" class="clear ui-nomenclature-checkbox" id="is_system" name="is_system">
 			</td>
 		</tr>
 		<tr>
@@ -40,9 +40,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="4" align="right" style="padding-top:20px;">
-				<button onclick="loadXMLDoc2('save',3);"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+			<td colspan="4" align="right" class="ui-inline-dialog-actions" style="padding-top:20px;">
+				<button onclick="loadXMLDoc2('save',3);"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+				<button onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	

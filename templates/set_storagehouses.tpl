@@ -34,22 +34,22 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-asset-dialog ui-storagehouse-dialog" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 	
 		<div class="page_caption">{if $nID}Редакция на{else}Нов{/if} склад</div>
 		
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
+		<table cellspacing="0" cellpadding="0" width="100%" id="filter" class="ui-storagehouse-layout">
 			<tr>
-				<td>{include file=set_storagehouses_tabs.tpl}</td>
+				<td>{include file="set_storagehouses_tabs.tpl"}</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>
-					<table class="input">
+					<table class="input ui-nomenclature-form">
 						<tr class="even">
 							<td align="right">Име:</td>
 							<td>
@@ -96,10 +96,9 @@
 							</td>
 						</tr>
 								
-						<table class="input">
-							<tr>
-								<td>
-									<fieldset>
+						<tr class="odd">
+							<td colspan="4">
+								<fieldset class="ui-nomenclature-fieldset ui-storagehouse-address">
 										<legend>Адрес</legend>
 										<table class="input">
 											<tr class="even">
@@ -133,20 +132,19 @@
 											</tr>
 											
 										</table>
-									</fieldset>
-								</td>
-							</tr>
-						</table>
+								</fieldset>
+							</td>
+						</tr>
 						
 					</table>
 					
 					<br />
-					<table class="input">
+					<table class="input ui-nomenclature-actions">
 						<tr class="odd">
 							<td width="250">&nbsp;</td>
 							<td style="text-align:right;">
-								<button type="submit" class="search" onclick="formSubmit();"> Запиши </button>
-								<button onClick="parent.window.close();"> Затвори </button>
+								<button type="submit" class="search" onclick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+								<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 							</td>
 						</tr>
 					</table>

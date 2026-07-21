@@ -21,7 +21,7 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-schedule-report ui-schedule-hours-report" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0" />
 	<input type="hidden" name="nIDFirm2" id="nIDFirm2" value="{$nIDFirm}" />
 	<input type="hidden" name="nIDOffice2" id="nIDOffice2" value="{$nIDOffice}" />
@@ -29,8 +29,8 @@
 	
 	<div class="page_caption">Отработени часове</div>
 	
-	<center>
-		<table class="search" cellspacing="3">
+	<center class="ui-nomenclature-filter-wrap ui-schedule-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-schedule-filter ui-schedule-hours-filter" cellspacing="3">
 			<tr>
 			
 				<td align="right">Фирма</td>
@@ -64,7 +64,7 @@
 				<td>&nbsp;</td>
 				
 				<td align="right">
-					<button type="button" onClick="return loadXMLDoc2('result');" name="Button"><img src="images/new_win.gif">Покажи</button>
+					<button type="button" onClick="return loadXMLDoc2('result');" name="Button"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Покажи</button>
 				</td>
 			
 			</tr>
@@ -73,24 +73,24 @@
 		
 	<hr>
 	
-	<div id="result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off" style="width: 900px; height: 370px; overflow: auto;"></div>
+	<div id="result" class="ui-schedule-result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off" style="width: 900px; height: 370px; overflow: auto;"></div>
 	
 	<hr />
 	
-	<div id="search"  style="padding-top: 10px;width: 900px;">
-		<table width="100%" cellspacing="1px" >
+	<div id="search" class="ui-schedule-actions-wrap" style="padding-top: 10px;width: 900px;">
+		<table class="ui-nomenclature-actions ui-schedule-actions" width="100%" cellspacing="1px" >
 			<tr valign="top">
 
 				<td valign="bottom" align="right" width="750px">
-					<a href="#" onclick="onPrint('export_to_xls');"><img src="images/excel.gif" border="0" title="Експорт към EXCEL" /></a>
+					<button type="button" class="ui-schedule-export" title="Експорт към EXCEL" onclick="onPrint('export_to_xls');"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span> Excel</button>
 				</td>
 
 				<td valign="bottom" align="center" width="50px">
-					<a href="#" onclick="onPrint('export_to_pdf');"><img src="images/pdf2.gif" border="0" title="Експорт към PDF" /></a>
+					<button type="button" class="ui-schedule-export" title="Експорт към PDF" onclick="onPrint('export_to_pdf');"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> PDF</button>
 				</td>
 				
 				<td valign="top" align="right" width="100px">
-					<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
+					<button type="button" id="b100" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 				
 			</tr>

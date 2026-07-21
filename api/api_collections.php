@@ -398,33 +398,33 @@
 			
 			// Форматиране
 			foreach ( $aStorm as $nRootIndex => $aRootThread ) {
-				$aStorm[$nRootIndex]['sum'] = sprintf("%01.0f лв.", $aRootThread['sum']);
+				$aStorm[$nRootIndex]['sum'] = sprintf("%01.0f €", $aRootThread['sum']);
 				
 				foreach ( $aRootThread as $sRootkey => $aRootValues ) {
 					foreach ( $aMonths as $sPopulateMonth ) {
 						if ( !isset($aRootThread[$sPopulateMonth]) ) {
-							$aStorm[$nRootIndex][$sPopulateMonth] = sprintf("%01.0f лв.", 0);
+							$aStorm[$nRootIndex][$sPopulateMonth] = sprintf("%01.0f €", 0);
 						}
 					}
 														
 					if ( in_array($sRootkey, $aMonths) ) {
-						$aStorm[$nRootIndex][$sRootkey] = sprintf("%01.0f лв.", $aRootValues);
+						$aStorm[$nRootIndex][$sRootkey] = sprintf("%01.0f €", $aRootValues);
 					}
 					
 					// Преминаване на второ ниво в дървото
 					if ( $sRootkey == "children" ) {
 						foreach ( $aRootValues as $sChildOneKey => $aChildOneValues ) {
 							if ( $sChildOneKey == "sum" ) {
-								$aStorm[$nRootIndex]['children']['sum'] = sprintf("%01.0f лв.", $aChildOneValues);
+								$aStorm[$nRootIndex]['children']['sum'] = sprintf("%01.0f €", $aChildOneValues);
 							} else {
 								// По номенклатури - първо ниво
 								foreach ( $aChildOneValues as $nChildNomenclatureOne => $aChildNomenclatureOne ) {
 									if ( $nChildNomenclatureOne == "sum" ) {
-										$aStorm[$nRootIndex]['children'][$sChildOneKey]['sum'] = sprintf("%01.0f лв.", $aChildNomenclatureOne);
+										$aStorm[$nRootIndex]['children'][$sChildOneKey]['sum'] = sprintf("%01.0f €", $aChildNomenclatureOne);
 									}									
 
 									if ( in_array($nChildNomenclatureOne, $aMonths) ) {
-										$aStorm[$nRootIndex]['children'][$sChildOneKey][$nChildNomenclatureOne] = sprintf("%01.0f лв.", $aChildNomenclatureOne);
+										$aStorm[$nRootIndex]['children'][$sChildOneKey][$nChildNomenclatureOne] = sprintf("%01.0f €", $aChildNomenclatureOne);
 									}	
 
 									// Преминаване на трето ниво в дървото
@@ -432,11 +432,11 @@
 										foreach ( $aChildNomenclatureOne as $sChildTwoKey => $aChildTwoValues ) {
 											foreach ( $aChildTwoValues as $sChildTwoIndex => $aChildTwoStore ) {
 												if ( $sChildTwoIndex == "sum" ) {
-													$aStorm[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey]['sum'] = sprintf("%01.0f лв.", $aChildTwoStore);
+													$aStorm[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey]['sum'] = sprintf("%01.0f €", $aChildTwoStore);
 												}
 												
 												if ( in_array($sChildTwoIndex, $aMonths) ) {
-													$aStorm[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey][$sChildTwoIndex] = sprintf("%01.0f лв.", $aChildTwoStore);
+													$aStorm[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey][$sChildTwoIndex] = sprintf("%01.0f €", $aChildTwoStore);
 												}												
 											}
 
@@ -461,7 +461,7 @@
 
 			$oResponse->SetFlexVar("arr_earnings", $aFinal);		
 			
-			$oResponse->SetFlexVar("total_earning", round($total_earning, 0)." лв.");							
+			$oResponse->SetFlexVar("total_earning", round($total_earning, 0)." €");
 			
 			$oResponse->printResponse();	
 		}
@@ -530,12 +530,12 @@
 		
 			foreach ( $arr_earnings as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum'])." лв.";
+					$aPrice['sum'] = sprintf("%01.0f €", $aPrice['sum']);
 				}
 						
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum'])." лв.";
+						$aPriceChild['sum'] = sprintf("%01.0f €", $aPriceChild['sum']);
 					}					
 				}
 						
@@ -543,9 +543,9 @@
 						
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
+						$aPrice[$aMo] = sprintf("%01.0f €", 0);
 					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo])." лв.";
+						$aPrice[$aMo] = sprintf("%01.0f €", $aPrice[$aMo]);
 					}
 				}
 						
@@ -554,9 +554,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
+							$aChil[$aMo] = sprintf("%01.0f €", 0);
 						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo])." лв.";
+							$aChil[$aMo] = sprintf("%01.0f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -924,7 +924,7 @@
 						
 			$sFileName	= "collect.xls";
 		  	$sFileNameTemp = tempnam("\tmp", $sFileName);
-			$oWorkbook = &new writeexcel_workbook($sFileNameTemp);
+			$oWorkbook = new writeexcel_workbook($sFileNameTemp);
 			 // Създване на worksheet
 			$oWorksheet = &$oWorkbook->addworksheet( iconv("UTF-8", "CP1251", "Събираемост") );
 			

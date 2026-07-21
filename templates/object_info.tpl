@@ -208,12 +208,12 @@
         }
 	</script>
 {/literal}
-{if $isSOD & $isSOD.checked == true}
+{if $isSOD}
     {assign var=labelSOD value='btn btn-compact btn-light active'}
 {else}
     {assign var=labelSOD value='btn btn-compact btn-light'}
 {/if}
-{if $isFO & $isFO.checked == true}
+{if $isFO}
     {assign var=labelFO value='btn btn-compact btn-light active'}
 {else}
     {assign var=labelFO value='btn btn-compact btn-light'}

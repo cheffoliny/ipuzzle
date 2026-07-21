@@ -24,7 +24,7 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-subview-dialog" onsubmit="return false">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
 	<input type="hidden" id="sDocStatus" name="sDocStatus" value="{$sDocStatus}">
 	
@@ -75,7 +75,7 @@
 				</table>
 			</td>
 			<td align="right" valign="top" style="width:150px;">
-				<button id="b_order" onclick="openOrder(0);" disabled><img src="images/confirm.gif">Ордер</button>
+				<button type="button" id="b_order" onclick="openOrder(0);" disabled><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Ордер</button>
 			</td>
 		</tr>
 	

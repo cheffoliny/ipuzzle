@@ -196,7 +196,7 @@
 					
 					$nEarning = $oDBSalary->getTechEarning($nIDPerson,date('Ym',$nDate));
 					if(!empty($nEarning)) {
-						$sEarning = $nEarning.' лв.';
+						$sEarning = $nEarning.' €';
 					} else {
 						$sEarning = '';
 					}
@@ -296,7 +296,7 @@
 			}
 			
 			$nHoursTotal .= ' ч.';
-			$nEarningTotal .= ' лв.';
+			$nEarningTotal .= ' €';
 			$nStakeTotal = number_format($nEarningTotal/$nHoursTotal,2);
 			
 			$oResponse->addTotal('hours',$nHoursTotal);
@@ -406,7 +406,7 @@
 				
 				$nEarning = $oDBSalary->getTechEarning($nIDPerson,date('Ym',$nDate));
 				if(!empty($nEarning)) {
-					$sEarning = $nEarning.' лв.';
+					$sEarning = $nEarning.' €';
 				} else {
 					$sEarning = '';
 				}
@@ -430,7 +430,7 @@
 					
 					$nDayEarning = $oDBSalary->getTechEarningForDay($nIDPerson,date('Y-m-',$nDate).zero_padding($i,2));
 					
-					if(!empty($nDayEarning))$aData[$nIDPerson]['day_'.$i.'_earning'] .= $nDayEarning." лв.";	
+					if(!empty($nDayEarning))$aData[$nIDPerson]['day_'.$i.'_earning'] .= $nDayEarning." €";
 					
 					$oResponse->setDataAttributes($nIDPerson,'day_'.$i.'_hours',array('style' => 'text-align:right;padding-left:10px;'));			
 					$oResponse->setDataAttributes($nIDPerson,'day_'.$i.'_earning',array('style' => 'text-align:right;padding-left:10px;'));	
@@ -454,7 +454,7 @@
 			$oResponse->addTotal('arrange',$nArrangeTotal);
 			
 			$nHoursTotal .= ' ч.';
-			$nEarningTotal .= ' лв.';
+			$nEarningTotal .= ' €';
 			$nStakeTotal = number_format($nEarningTotal/$nHoursTotal,2);
 			
 			$oResponse->addTotal('hours',$nHoursTotal);

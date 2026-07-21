@@ -87,7 +87,7 @@
 			
 			//Невалидни потребители са вече добавените и титулярно МОЛ
 			$aMOL = $oStoragehouse->getMOL( $nID );
-			$aPersonList = split( ",", $sPersonList );
+			$aPersonList = explode( ",", $sPersonList );
 			
 			$aResponsible = $oDBPersonnel->getPersonnelsByIDOffice3( $nOffice );
 			$oResponse->setFormElement( 'form1', 'all_persons' );

@@ -12,9 +12,10 @@
 
 <script>
 	{literal}
-		if( parent.document.getElementById( 'nID' ).value )
+		var oParentID = parent.document.getElementById( 'nID' );
+		if( oParentID && oParentID.value )
 		{
-			$("nID").value = parent.document.getElementById( 'nID' ).value;
+			$("nID").value = oParentID.value;
 		}
 	{/literal}
 	

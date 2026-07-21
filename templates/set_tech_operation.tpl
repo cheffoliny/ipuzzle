@@ -41,9 +41,9 @@
 	</script>
 {/literal}
 
-<div class="page_caption">{if $nID>0}Редактиране на Операция{else}Нова Операция{/if}</div>
-
-<form id="form1" onSubmit="return false;">
+<div class="content ui-nomenclature-dialog-shell">
+<form id="form1" class="ui-nomenclature-dialog ui-configuration-dialog ui-tech-operation-dialog" onSubmit="return false;">
+	<div class="page_caption">{if $nID>0}Редактиране на Операция{else}Нова Операция{/if}</div>
 	<input type="hidden" name="nID" id="nID" value="{$nID|default:0}">
 	<input type="hidden" name="id" id="id" value="{$id|default:0}">
 	
@@ -51,7 +51,7 @@
 	<input type="hidden" name="toList" id="toList" value="">
 	
 	<div id="builder">
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr>
 				<td align="left">Наименование:</td>
 				<td align="left">
@@ -66,29 +66,29 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="checkbox" class="clear" name="nToContract" id="nToContract" />&nbsp; Използва се при изграждане на обект от ел. договор
+					<input type="checkbox" class="clear ui-nomenclature-checkbox" name="nToContract" id="nToContract" />&nbsp; Използва се при изграждане на обект от ел. договор
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" class="clear" name="nToArrange" id="nToArrange" />&nbsp; Използва се при изграждане/аранжиране
+					<input type="checkbox" class="clear ui-nomenclature-checkbox" name="nToArrange" id="nToArrange" />&nbsp; Използва се при изграждане/аранжиране
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="checkbox" class="clear" name="nCableOperation" id="nCableOperation" />&nbsp; Операция окабеляване
+					<input type="checkbox" class="clear ui-nomenclature-checkbox" name="nCableOperation" id="nCableOperation" />&nbsp; Операция окабеляване
 				</td>
 			</tr>
 			<tr>
 				<td colspan=2 id=fieldset>
-					<fieldset style="border: 1px solid black">
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Номенклатури</legend>
-						<table>
+						<table class="ui-nomenclature-transfer">
 							<tr>
 								<td>
 									<select name="nomenclatures_all" id="nomenclatures_all" style="width:300px" size="10" ondblclick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' );" multiple="multiple">
 									</select>
 								</td>
 								<td>
-									<button id=b25 name="button" title="Добави Номенклатура" onClick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' );"><img src=images/mright.gif /></button></br>
-									<button id=b25 name="button" title="Премахни Номенклатура" onClick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' );"><img src=images/mleft.gif /></button>
+									<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Добави Номенклатура" onClick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+									<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Премахни Номенклатура" onClick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="nomenclatures_current[]" id="nomenclatures_current" style="width:300px" size="10" ondblclick="move_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' );" multiple="multiple">
@@ -103,15 +103,16 @@
 	</div>
 	
 	<div id="search">
-		<table width="100%" cellspacing=5px>
+		<table class="ui-nomenclature-actions" width="100%" cellspacing=5px>
 			<tr><td align="right" valign="bottom">
-				<button id=b100 onclick="return update();"><img src=images/confirm.gif />Потвърди</button>&nbsp;
-				<button id=b100 onClick="parent.window.close();"><img src="images/cancel.gif" />Затвори</button>
+				<button id=b100 onclick="return update();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Потвърди</button>&nbsp;
+				<button id=b100 onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td></tr>
 		</table>
 	</div>
 	
 </form>
+</div>
 
 <script>
 	 onInit();

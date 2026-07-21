@@ -25,13 +25,13 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" class="ui-nomenclature-dialog ui-account-mapping-dialog" action="" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 
 	<div class="page_caption">Номенклатури фирми - Редакция</div>
 	
 	<center>
-	<table class="input" style="margin:20px 0px 20px 0px;width:400px;">
+	<table class="input ui-nomenclature-form" style="margin:20px 0px 20px 0px;width:400px;">
 		<tr>
 			<td align="right">
 				Фирма:
@@ -45,17 +45,17 @@
 	<table class="input">
 		<tr>
 			<td align="center">
-				<fieldset>
+				<fieldset class="ui-nomenclature-fieldset">
 				<legend>Номенклатури приходи</legend>
-				<table>
+				<table class="ui-nomenclature-transfer">
 					<tr>
 						<td>
 							<select name="all_earnings" id="all_earnings" size="10"  style="width: 350px;" ondblclick="move_option_to( 'all_earnings', 'account_earnings', 'right');" multiple>
 							</select>
 						</td>
 						<td>
-							<button class="search" style="width: 50px;" name="button" title="Добави номенклатура приход" onClick="move_option_to( 'all_earnings', 'account_earnings', 'right'); return false;"><img src="images/mright.gif" /></button></br>
-							<button name="button" style="width: 50px;" title="Премахни номенклатура приход" onClick="move_option_to( 'all_earnings', 'account_earnings', 'left'); return false;"><img src="images/mleft.gif" /></button>
+							<button class="search ui-nomenclature-transfer-button" name="button" title="Добави номенклатура приход" onClick="move_option_to( 'all_earnings', 'account_earnings', 'right'); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+							<button class="ui-nomenclature-transfer-button" name="button" title="Премахни номенклатура приход" onClick="move_option_to( 'all_earnings', 'account_earnings', 'left'); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 						</td>
 						<td>
 							<select name="account_earnings[]" id="account_earnings" size="10" style="width: 350px;" ondblclick="move_option_to( 'all_earnings', 'account_earnings', 'left');" multiple>
@@ -67,17 +67,17 @@
 		</tr>
 		<tr>
 			<td align="center">
-				<fieldset>
+				<fieldset class="ui-nomenclature-fieldset">
 				<legend>Номенклатури разходи</legend>
-				<table>
+				<table class="ui-nomenclature-transfer">
 					<tr>
 						<td>
 							<select name="all_expenses" id="all_expenses" size="10"  style="width: 350px;" ondblclick="move_option_to( 'all_expenses', 'account_expenses', 'right');" multiple>
 							</select>
 						</td>
 						<td>
-							<button class="search" style="width: 50px;" name="button" title="Добави номенклатура разход" onClick="move_option_to( 'all_expenses', 'account_expenses', 'right'); return false;"><img src="images/mright.gif" /></button></br>
-							<button name="button" style="width: 50px;" title="Премахни номенклатура разход" onClick="move_option_to( 'all_expenses', 'account_expenses', 'left'); return false;"><img src="images/mleft.gif" /></button>
+							<button class="search ui-nomenclature-transfer-button" name="button" title="Добави номенклатура разход" onClick="move_option_to( 'all_expenses', 'account_expenses', 'right'); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+							<button class="ui-nomenclature-transfer-button" name="button" title="Премахни номенклатура разход" onClick="move_option_to( 'all_expenses', 'account_expenses', 'left'); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 						</td>
 						<td>
 							<select name="account_expenses[]" id="account_expenses" size="10" style="width: 350px;" ondblclick="move_option_to( 'all_expenses', 'account_expenses', 'left');" multiple>
@@ -89,11 +89,11 @@
 		</tr>
 	</table>
 	</center>
-	<table style="margin-top:20px;width:100%;">
+	<table class="ui-nomenclature-actions" style="margin-top:20px;width:100%;">
 		<tr>
 			<td align="right">
-				<button onclick="formSubmit();"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+				<button onclick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+				<button onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

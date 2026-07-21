@@ -57,74 +57,74 @@
 	
 	// Формат за Заглавие
 	$formatCaption = $oWorkbook->addformat(array(
-										bold    => 1,
-										italic  => 0,
-										size    => 12,
-										font    => 'MS Sans Serif',
-										color 	=> 'blue' 
+										'bold'    => 1,
+										'italic'  => 0,
+										'size'    => 12,
+										'font'    => 'MS Sans Serif',
+										'color' 	=> 'blue'
 									));
 
 
 	// Формат за заглавията на колоните
 	$formatFields = $oWorkbook->addformat(array(
-										bold    => 1,
-										italic  => 0,
-										size    => 9,
-										font    => 'MS Sans Serif',
-										color 	=> 'black', 
-										border 	=> 1,
-										pattern => 1, 
-										fg_color=> 'silver'
+										'bold'    => 1,
+										'italic'  => 0,
+										'size'    => 9,
+										'font'    => 'MS Sans Serif',
+										'color' 	=> 'black',
+										'border' 	=> 1,
+										'pattern' => 1,
+										'fg_color'=> 'silver'
 									));
 
 	
 	// Формат за сборовете
 	$formatTotals = $oWorkbook->addformat(array(
-										color 	=> 'red', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'color' 	=> 'red',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 									
 	// Формат за информацията
 	$formatData = $oWorkbook->addformat(array(
-										size 	=> 9,
-										color 	=> 'black', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'size' 	=> 9,
+										'color' 	=> 'black',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 	//Формати
 	$formatNum = $oWorkbook->addformat(array(
-										size 	=> 9,
-										color 	=> 'black', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'size' 	=> 9,
+										'color' 	=> 'black',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 	$formatNum->set_align('right');
 	$formatNum->set_num_format('0');
 	
 	$formatFloat = $oWorkbook->addformat(array(
-										size 	=> 9,
-										color 	=> 'black', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'size' 	=> 9,
+										'color' 	=> 'black',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 	$formatFloat->set_align('right');
 	$formatFloat->set_num_format('0.000');
 	
 	$formatDigit = $oWorkbook->addformat(array(
-										size 	=> 9,
-										color 	=> 'black', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'size' 	=> 9,
+										'color' 	=> 'black',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 	$formatDigit->set_align('right');
 	$formatDigit->set_num_format('0.00');
 	
 	$formatCurrency = $oWorkbook->addformat(array(
-										size 	=> 9,
-										color 	=> 'black', 
-										font    => 'MS Sans Serif',
-										border 	=> 1,
+										'size' 	=> 9,
+										'color' 	=> 'black',
+										'font'    => 'MS Sans Serif',
+										'border' 	=> 1,
 									));
 	$formatCurrency->set_align('right');
 	$formatCurrency->set_num_format('0.00 '.iconv( "UTF-8", "CP1251", $_SESSION['system']['currency']) );

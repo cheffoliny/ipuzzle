@@ -106,11 +106,15 @@ class SimpleUnzip {
      *  @uses   SimpleUnzip::ReadFile() Opens file on new if specified
      *  @since  1.0
      */
-    function SimpleUnzip($in_FileName = '') {
+    function __construct($in_FileName = '') {
         if($in_FileName !== '') {
-            SimpleUnzip::ReadFile($in_FileName);
+            $this->ReadFile($in_FileName);
         }
     } // end of the 'SimpleUnzip' constructor
+
+    function SimpleUnzip($in_FileName = '') {
+        $this->__construct($in_FileName);
+    }
 
     /**
      *  Counts the entries
@@ -475,7 +479,7 @@ class SimpleUnzipEntry {
      *  @access public
      *  @since  1.0
      */
-    function SimpleUnzipEntry($in_Entry) {
+    function __construct($in_Entry) {
         $this->Data     = $in_Entry['D'];
         $this->Error    = $in_Entry['E'];
         $this->ErrorMsg = $in_Entry['EM'];
@@ -483,5 +487,9 @@ class SimpleUnzipEntry {
         $this->Path     = $in_Entry['P'];
         $this->Time     = $in_Entry['T'];
     } // end of the 'SimpleUnzipEntry' constructor
+
+    function SimpleUnzipEntry($in_Entry) {
+        $this->__construct($in_Entry);
+    }
 } // end of the 'SimpleUnzipEntry' class
 ?>

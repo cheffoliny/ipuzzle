@@ -14,7 +14,7 @@
 </script>
 
 <div>
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-limit-card-ppp" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 		<input type="hidden" id="nIDObject" name="nIDObject" value="0" />
 		
@@ -22,27 +22,27 @@
 		
 		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 			<tr>
-				<td>{include file=limit_card_tabs.tpl}</td>
+				<td>{include file="limit_card_tabs.tpl"}</td>
 			</tr>
 		</table>
 		
-		<table class = "page_data">
+		<table class="page_data ui-nomenclature-heading ui-technical-heading">
 			<tr>
 				<td class="buttons">
-					<button onclick="openPPP( 0 );"><img src="images/plus.gif"> Нов </button>
+					<button type="button" class="search" onclick="openPPP( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нов </button>
 				</td>
 			</tr>
 			<tr>
 				<td align="center">
 					<input type="text" name="nIDPPPLink" id="nIDPPPLink" class="inp50" onkeypress="return formatDigits(event);"> &nbsp;
-					<button onclick="loadXMLDoc( 'linkppp', 1 );"><img src="images/plus.gif"> Добави ППП </button>
+					<button type="button" class="search" onclick="loadXMLDoc( 'linkppp', 1 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави ППП </button>
 				</td>
 			</tr>
 		</table>
 		
 		<hr />
 		
-		<div id="result"></div>
+		<div id="result" class="ui-technical-result"></div>
 	</form>
 </div>
 

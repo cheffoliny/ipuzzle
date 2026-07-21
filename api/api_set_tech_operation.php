@@ -81,7 +81,7 @@
 			$nToContract = Params::get( 'nToContract' );
 			$nToArrange = Params::get( 'nToArrange' );
 			$nCableOperation = Params::get( 'nCableOperation' );
-			$aNomenclatures_current = Params::get( 'nomenclatures_current' );
+			$aNomenclatures_current = (array) Params::get( 'nomenclatures_current', array() );
 			
 			if( empty( $sName ) )
 			{

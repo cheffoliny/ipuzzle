@@ -29,7 +29,7 @@
 				$value['name'] = iconv('cp1251','utf-8',$value['name']);
 				$value['price'] = iconv('cp1251','utf-8',$value['price']);
 				
-				$sTaxes .= $value['name']."  ".round($value['price']*1.20,1)." лв.\n";
+				$sTaxes .= $value['name']."  ".round($value['price']*1.20,1)." €\n";
 			}
 
 			$oldTax = round(($aObject['price'] - $nSumTaxes)*1.20,1);
@@ -45,7 +45,7 @@
 			$oResponse->setFormElement('form1','tax',array(),$oldTax);
 			$oResponse->setFormElement('form1','nOldTax',array(),$oldTax);
 			$oResponse->setFormElement('form1','taxes',array(),$sTaxes);
-			$oResponse->setFormElement('form1','price',array(),$nPrice." лв.");
+			$oResponse->setFormElement('form1','price',array(),$nPrice." €");
 			$oResponse->setFormElement('form1','nOldPrice',array(),$nPrice);
 			
 			
@@ -66,7 +66,7 @@
 			if( $nOldTax != $nNewTax ) {
 				
 				$oDBObjects2 = new DBObjects2();
-				$nNewPrice = (double) ($nOldPrice - $nOldTax + $nNewTax)*(5/6);
+				$nNewPrice = (float) ($nOldPrice - $nOldTax + $nNewTax)*(5/6);
 				$oDBObjects2->setPrice($nID,$nNewPrice);
 			}
 			

@@ -258,7 +258,7 @@ class ApiPersonSchedule
         $aShifts = $oShifts->getObjectShifts($nIDObject);
 
         $oResponse->setFormElement("form1", "nIDObject", array("value" => $nIDObject));
-        $oResponse->setFormElement("form1", "object_shifts", $aShifts);
+        $oResponse->setFormElement("form1", "object_shifts", array());
 
         // BEGIN CODE : Person Shift Hours Limit ( Часове смени за служител към края и началото на месеца )
         $oDBObjectScheduleSettings = new DBObjectScheduleSettings();

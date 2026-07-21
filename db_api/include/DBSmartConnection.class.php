@@ -62,6 +62,16 @@
 			$this->factory();
 
 			$db_class = $this->oDB;
+			$referenceValue = NULL;
+
+			// AdoDB keeps the recordset parameter of these legacy helpers by reference.
+			// Magic __call() receives argument values, so restore the reference explicitly
+			// before forwarding the call under PHP 8.x.
+			if( ($sMethodName === 'GetInsertSQL' || $sMethodName === 'GetUpdateSQL') && array_key_exists(0, $aArguments) )
+			{
+				$referenceValue = $aArguments[0];
+				$aArguments[0] =& $referenceValue;
+			}
 
 			//return call_user_func_array( array(&$this->oDB, $sMethodName), $aArguments);
 			return call_user_func_array( array($db_class, $sMethodName), $aArguments );

@@ -9,14 +9,14 @@
 </script>
 {/literal}
 
-<div class="content">
-	<form method="POST" name="form1" id="form1" onsubmit="return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-asset-dialog ui-asset-settings-dialog" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}" />
 		
 		<div class="page_caption">{if $nID}Редактиране на Настройки{else}Нова Настройка{/if}</div>
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>Коефициенти: </legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				
 				<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
 				
@@ -35,12 +35,12 @@
 			</table>
 		</fieldset>
 
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align: right;">
-					<button type="button" onClick="formSubmit();" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="button" onClick="formSubmit();" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

@@ -255,7 +255,7 @@
 
 <dlcalendar click_element_id="editDocDate" 	input_element_id="sDocDate" start_date="{$nMinusSevenDays}"	tool_tip="Изберете дата"></dlcalendar>
 
-<form id="form1" action="" onsubmit="return false">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-sale-document-dialog" onsubmit="return false">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 	<input type="hidden" id="sViewType" name="sViewType" value="">
 	<input type="hidden" id="sDocStatus" name="sDocStatus" value="{$sDocStatus}">
@@ -407,7 +407,7 @@
 							Дата:&nbsp;
 						</td>
 						<td align="left">
-							<input type="text" name="sDocDate" id="sDocDate" class="inp100" onkeypress="return formatDate(event, '.');" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDocDate" />
+							<input type="text" name="sDocDate" id="sDocDate" class="inp100" onkeypress="return formatDate(event, '.');" />&nbsp;<button type="button" id="editDocDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на документа"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td>
 							&nbsp;
@@ -550,19 +550,19 @@
 				</select>
 			</td>
 			<td style="width:100px;">
-				<button style="width:20px;" name="b_print" id="b_print" onclick="printPDF();"><img src="images/pdf2.gif"></button>
+				<button type="button" name="b_print" id="b_print" class="ui-document-icon-button" title="PDF" onclick="printPDF();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span></button>
 			</td>
 			<td>
-				<button onclick="delDoc();" id="b_del"><img src="images/bin.gif">Анулирай</button>
+				<button type="button" onclick="delDoc();" id="b_del" class="ui-document-danger"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span>Анулирай</button>
 			</td>
 			<td>
-				<button onclick="finalDoc();" id="b_confirm"><img src="images/confirm.gif">Потвърди</button>
+				<button type="button" onclick="finalDoc();" id="b_confirm"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>
 			</td>
 			<td>
 				<div id="izvestie"></div>
 			</td>
 			<td align="right">
-				<button onclick="formClose();"><img src="images/cancel.gif">Затвори</button>
+				<button type="button" onclick="formClose();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

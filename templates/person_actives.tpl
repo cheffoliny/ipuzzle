@@ -40,7 +40,7 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-person-assets" onsubmit="return false;">
 	<input type="hidden" id="id" name="id" value="{$id|default:0}" />
 	<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 	<input type="hidden" id="id_document" name="id_document" value="0" />
@@ -49,13 +49,13 @@
 	
 	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 		<tr>
-			<td>{include file=person_tabs.tpl}</td>
+			<td>{include file="person_tabs.tpl"}</td>
 		</tr>
 		<tr>
 			<td id="filter_result">
 				<!-- начало на работната част -->
 				<center>
-					<table class="search">
+					<table class="search ui-contract-toolbar">
 						<tr>
 							<td valign="top" align="left" style="width: 830px;">
 								Тип:&nbsp;
@@ -65,7 +65,7 @@
 								</select>
 							</td>
 							<td valign="top" align="right">
-								<button id="b100" class="search" onClick="editPPP();"><img src="images/plus.gif" />ППП Зачисляване</button>
+								<button type="button" id="b100" class="search" onClick="editPPP();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>ППП Зачисляване</button>
 							</td>
 						</tr>
 					</table>
@@ -73,18 +73,18 @@
 				
 				<hr />
 				
-				<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 1000px; height: 350px; overflow: auto;"></div>
+				<div id="result" class="ui-contract-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 1000px; height: 350px; overflow: auto;"></div>
 				
 			 	<!-- край на работната част -->
 			</td>
 		</tr>
 	</table>
 	
-	<div id="search" style="padding-top: 10px; width: 1000px;">
-		<table width="100%" cellspacing=1px>
+	<div id="search" class="ui-contract-actions-wrap" style="padding-top: 10px; width: 1000px;">
+		<table class="ui-nomenclature-actions ui-contract-actions" width="100%" cellspacing=1px>
 			<tr valign="top">
 				<td valign="top" align="right" width="1000px">
-					<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
+					<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 			</tr>
 		</table>

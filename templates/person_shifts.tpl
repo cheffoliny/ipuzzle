@@ -1,6 +1,6 @@
 <script>
 {literal}
-	//rpc_debug = true;
+	rpc_debug = true;
 	
 	function editShifts(id) {
 		dialogSetSetupPersonShifts( id )
@@ -15,13 +15,13 @@
 {/literal}	
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-schedule-list ui-person-shifts-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Номенклатури - СМЕНИ</td>
 			<td class="buttons">
-				{if $right_edit}<button onclick="editShifts( 0 );"><img src="images/plus.gif"> Добави </button>
+				{if $right_edit}<button type="button" onclick="editShifts( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>

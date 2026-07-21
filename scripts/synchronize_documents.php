@@ -267,7 +267,7 @@
 				$nIDSaleDoc	= 0;	
 				//$nIDSer		= isset($rowPay['id_service']) && is_numeric($rowPay['id_service']) ? ($rowPay['id_service']) : 0;		
 
-				getClient($ein, &$aClient);
+				getClient($ein, $aClient);
 
 				$nIDClient	= isset($aClient['id'])			? $aClient['id']		: 0;
 

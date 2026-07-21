@@ -87,8 +87,8 @@
 
 <dlcalendar click_element_id="imgsAlarmD" input_element_id="sAlarmD" tool_tip="Изберете дата"></dlcalendar>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<div class="content ui-technical-content">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-technical-dialog ui-working-card-movement-add" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard}">
 		<input type="hidden" id="nObject" name="nObject" value="0" />
@@ -106,7 +106,7 @@
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нов{/if} СИГНАЛ</div>
 
-		<table class="input">
+		<table class="input ui-technical-fields">
 			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
 			
 			<tr class="even">
@@ -149,21 +149,21 @@
 				<td style="width: 180px;">
 					<input type="text" name="sAlarmH" id="sAlarmH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" />&nbsp;
 					<input type="text" name="sAlarmD" id="sAlarmD" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="imgsAlarmD" />
+					<button type="button" id="imgsAlarmD" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на алармата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 			
 			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
 		</table>
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions ui-technical-actions">
 			<tr class="odd">
 				<td width="250">
 					&nbsp;
 				</td>
 				<td style="text-align:right;">
-					<button type="button" onClick="formSubmit();" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Откажи </button>
+					<button type="button" onClick="formSubmit();" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button type="button" class="btn btn-xs btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Откажи </button>
 				</td>
 			</tr>
 		</table>

@@ -647,10 +647,11 @@
 				$aParams['sName'] = addslashes( $aParams['sName'] );
 				$aWhere[] = sprintf( " t.name LIKE '%%%s%%' ", $aParams['sName'] );
 			}
-            $nStatus = $_POST['aStatus'];
-            APILog::Log(0,$aWhere);
+            $nStatus = isset( $aParams['aStatus'] ) ? $aParams['aStatus'] : array( 0 );
+            if( !is_array( $nStatus ) )
+                $nStatus = array( $nStatus );
             $aStatus = array();
-            if(!($nStatus[0]=='0') && !empty($nStatus) )
+            if( !empty( $nStatus ) && (string) reset( $nStatus ) !== '0' )
             {
                 foreach ($nStatus as $k=> $v)
                 {

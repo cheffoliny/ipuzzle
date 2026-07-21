@@ -16,14 +16,14 @@
 		
 	</script>
 {/literal}
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="0" />
 
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Автомобили - МАРКИ</td>
 			<td class="buttons"> 
-				{if $right_edit}<button class="search" onclick="editAutoMark(0);"><img src="images/plus.gif"> Добави </button> 
+				{if $right_edit}<button class="search" onclick="editAutoMark(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button> 
 				{else}&nbsp;
 				{/if}
 			</td>

@@ -650,7 +650,7 @@
 			$oResponse->setField( "owed_singles", 	"Др.такси",     "Сортирай по сума на други дължими задължения", NULL, NULL, NULL, array( "DATA_FORMAT" => DF_CURRENCY ) );
 //			$oResponse->setField( '', 				'', 			'',                                             'delete', 'detachObject', '' );
 			
-			$oResponse->addTotal( "owed_tax", $nTotalSum . " лв." );
+			$oResponse->addTotal( "owed_tax", $nTotalSum );
 			
 			$oResponse->setFieldLink( "num", "viewObject" );
 			$oResponse->setFieldLink( "name", "viewObject" );

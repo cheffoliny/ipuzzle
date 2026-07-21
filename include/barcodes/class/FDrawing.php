@@ -33,9 +33,13 @@ class FDrawing {
 	 * @param string filename
 	 * @param FColor $color
 	 */
-	function FDrawing($filename, &$color) {
+	function __construct($filename, &$color) {
 		$this->filename = $filename;
 		$this->color =& $color;
+	}
+
+	function FDrawing($filename, &$color) {
+		$this->__construct($filename, $color);
 	}
 
 	/**

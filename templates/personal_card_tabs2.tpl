@@ -35,14 +35,14 @@ function tab_href( page )
        <tr>
           <td width="1" id="passive"></td>
 
-              {if $page eq personal_card_operations}
+              {if $page eq 'personal_card_operations'}
                     <td id="active" style="width:150px;" nowrap="nowrap" >Операции</td>
               {else}
                     <td id="inactive" style="width:150px;" nowrap="nowrap"><a href="#" onclick="return tab_href('personal_card_operations');" id='personal_card_operations'>Операции</a></td>
               {/if}
               <td width="1" id="passive"></td>
               			  
-              {if $page eq personal_card_ppp}
+              {if $page eq 'personal_card_ppp'}
                    <td id="active" style="width:150px;">ППП</td>
               {else}
                    <td id="inactive" style="width:150px;"><a href="#" onclick="return tab_href('personal_card_ppp');" id='personal_card_ppp'>ППП</a></td>

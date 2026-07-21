@@ -25,7 +25,7 @@
 // име на <DIV> където щте се визуализира резултата
 	var rpc_result_area = "result";
 
-// префикс на за ID-тата на елементите в XSL-а
+// префикс за ID-тата на елементите в DOM резултата
 	var rpc_prefix = "";
 
 // Дали да се ресайзва резултата в DIV-а или не 
@@ -52,7 +52,7 @@
 // Дали да се визуализира номерация в резултата
 	var rpc_autonumber = "on";
 	
-// име на XSL файла за резултата
+// Legacy име на stylesheet-а; използва се само като ключ за DOM renderer profile
 	var rpc_xsl = "xsl/general_result.xsl";
 
 // Метод за обръщение към API функция
@@ -72,9 +72,6 @@
 	
 // Да се прави ли опит за запис на файл ( използва се от SaveFile( framework_general.js ) )
 	var rpc_is_save_file = "c:\\temp\\";
-	
-// Спира изкарването XSL в дебъг прозореца
-	var rpc_xls_debug = false;
 	
 // Спира изкарването HTML в дебъг прозореца
 	var rpc_html_debug = false;
@@ -290,23 +287,6 @@ function form2POST()
 	}
 	
 	
-// Обхожда HTML резултата след трансформацията между XML i XSL и изпълнява JS в нея
-	function  ecxecuteXML(div){
-		
-		var aScripts = div.getElementsByTagName('script');
-		var aChildScripts = new Array();
-		
-		for(var i=0;i<aScripts.length;i++)
-		{
-			aChildScripts[i] = document.createElement('script');
-			aChildScripts[i].text = aScripts[i].text;
-		}
-		//Pavel
-		for(var i=0;i<aChildScripts.length;i++){
-			div.appendChild( aChildScripts[i] );
-		}
-	}
-
 // Извиква директно API 
 	function loadDirect( api_action ) {
 		var form = document.getElementById(rpc_form);
@@ -355,20 +335,25 @@ function form2POST()
 			_rpc_obj_loader = document.getElementById('loading');
 
 			if( !_rpc_obj_loader ){
-                _rpc_obj_loader = document.createElement("i");
-                _rpc_obj_loader.appendChild(document.createTextNode(''));
+                _rpc_obj_loader = document.createElement("div");
                 _rpc_obj_loader.id = 'loading';
-                _rpc_obj_loader.className = 'fas fa-puzzle-piece fa-pulse fa-3x';
-                _rpc_obj_loader.style.fontSize = '200px !important';
-                _rpc_obj_loader.style.right = '50%';
-                _rpc_obj_loader.style.bottom = '50%';
-                _rpc_obj_loader.style.color = '#2e8cb8';
-                _rpc_obj_loader.style.textShadow = '1px 1px 1px #eeeeee';
-                _rpc_obj_loader.style.position = 'absolute';
-                _rpc_obj_loader.style.zIndex = 1000;
+                _rpc_obj_loader.className = 'rpc-loading';
+                _rpc_obj_loader.setAttribute('role', 'status');
+                _rpc_obj_loader.setAttribute('aria-live', 'polite');
+                _rpc_obj_loader.setAttribute('aria-label', 'Зареждане');
+
+                var loaderIcon = document.createElement("i");
+                loaderIcon.className = 'fas fa-puzzle-piece fa-pulse rpc-loading__icon';
+                loaderIcon.setAttribute('aria-hidden', 'true');
+                _rpc_obj_loader.appendChild(loaderIcon);
+
+                var loaderText = document.createElement("span");
+                loaderText.className = 'rpc-loading__text';
+                loaderText.appendChild(document.createTextNode('Зареждане...'));
+                _rpc_obj_loader.appendChild(loaderText);
 				document.body.appendChild(_rpc_obj_loader);				
 			}
-			if( _rpc_obj_loader ) _rpc_obj_loader.style.display = 'block';
+			if( _rpc_obj_loader ) _rpc_obj_loader.style.display = 'flex';
 			
 			if( rpc_debug && rpc_eol_debug )
 			{ 
@@ -450,155 +435,67 @@ function form2POST()
 										
 										var xml=xmlhttp.responseXML;
 										// обработка на XML файла
-										FormProcessing(xml); 					
+										FormProcessing(xml);
 										//alert(_rpc_play_result);
-										// запитване за XSL
-										if ( rpc_xsl && (_rpc_result != null) && (!_rpc_error_value) && (_rpc_play_result) ){
-											var xslhttp = getXMLHTTP();
-											if(xslhttp){
-												xslhttp.open('GET', rpc_xsl, true);
-												xslhttp.onreadystatechange=
+										var renderedByDOM = false;
+										var domRenderError = null;
+										if (
+											typeof RpcResultRenderer != 'undefined' &&
+											RpcResultRenderer.isSupportedStylesheet(rpc_xsl) &&
+											(_rpc_result != null) &&
+											(!_rpc_error_value) &&
+											(_rpc_play_result)
+										) {
+											try {
+												var renderOptions = RpcResultRenderer.getOptions(_rpc_result, {
+													profile: RpcResultRenderer.getStylesheetProfile(rpc_xsl),
+													prefix: rpc_prefix,
+													resultArea: rpc_result_area,
+													resize: rpc_resize,
+													actionScript: rpc_action_script,
+													excelPanel: rpc_excel_panel,
+													paging: rpc_paging,
+													editReport: rpc_edit_report,
+													invoiceToolbar: rpc_invoice_toolbar,
+													adminInvoiceToolbar: rpc_admin_invoice_toolbar,
+													invoiceServicesToolbar: rpc_invoice_services_toolbar,
+													autonumber: rpc_autonumber,
+													offset: rpc_offset
+												});
+												renderedByDOM = RpcResultRenderer.render(xml, _rpc_result, renderOptions);
+											} catch (renderError) {
+												domRenderError = renderError;
+											}
+										}
 
-												// *************** Извличане на XSL данни ***************
-														function GetXSL(aEvt){
-															if(xslhttp.readyState == 4) {
-																if (isIE && xslhttp.responseXML.parseError.errorCode !=0){ 
-																	// Проблем в структурата на XSL файла
-																	if( rpc_debug && rpc_eol_debug ) _debug_win.document.write("<p><font class='header'>XSL error :  </font>"+xslhttp.responseXML.parseError.reason+"</p><hr>");	
-																} else {
-																	// XSL файла е ОК
-																	var xsl=xslhttp.responseXML;																								
-																	
-																	var tag1 = xsl.getElementsByTagName('xsl:param'	);
-																	var tag2 = xsl.getElementsByTagName('param'		);
-																	
-																	if( tag1.length > tag2.length )
-																		params = tag1;
-																	else
-																		params = tag2;
-																	
-																	if( params ){
-																		//alert(params.length);
-																		for (var i=0; i<params.length; i++){
-																			if( params.item(i).firstChild )
-																			{
-																				if ( params.item(i).getAttribute('name') == 'rpc_result_area' )
-																				{
-																					params.item(i).firstChild.nodeValue = rpc_result_area;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_prefix' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_prefix") ?  _rpc_result.getAttribute("rpc_prefix") : rpc_prefix;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_resize' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_resize") ?  _rpc_result.getAttribute("rpc_resize") : rpc_resize;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_action_script' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_action_script") ?  _rpc_result.getAttribute("rpc_action_script") : rpc_action_script;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_excel_panel' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_excel_panel") ?  _rpc_result.getAttribute("rpc_excel_panel") : rpc_excel_panel;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_paging' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_paging") ?  _rpc_result.getAttribute("rpc_paging") : rpc_paging;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_edit_report' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_edit_report") ?  _rpc_result.getAttribute("rpc_edit_report") : rpc_edit_report;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_invoice_toolbar' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_invoice_toolbar") ?  _rpc_result.getAttribute("rpc_invoice_toolbar") : rpc_invoice_toolbar;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_admin_invoice_toolbar' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_admin_invoice_toolbar") ?  _rpc_result.getAttribute("rpc_admin_invoice_toolbar") : rpc_admin_invoice_toolbar;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_invoice_services_toolbar' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_invoice_services_toolbar") ?  _rpc_result.getAttribute("rpc_invoice_services_toolbar") : rpc_invoice_services_toolbar;
-																					params.item(i).firstChild.nodeValue = param;
-																				}
-																				if ( params.item(i).getAttribute('name') == 'rpc_transfer_objects' )
-																				{
-																					param = _rpc_result.getAttribute("rpc_transfer_objects") ?  'on' : 'off';																					
-																					params.item(i).firstChild.nodeValue = param;
-																				}
+										if (renderedByDOM) {
+											FormProcessing_action(xml);
+											DisableLoader();
+										}
+										// DOM-only runtime: browser XSLT fallback is intentionally removed.
+										else if ( rpc_xsl && (_rpc_result != null) && (!_rpc_error_value) && (_rpc_play_result) ){
+											var domRenderMessage;
+											if (typeof RpcResultRenderer == 'undefined') {
+												domRenderMessage = "DOM renderer is not loaded.";
+											} else if (!RpcResultRenderer.isSupportedStylesheet(rpc_xsl)) {
+												domRenderMessage = "No DOM renderer profile is registered for " + rpc_xsl + ".";
+											} else if (domRenderError) {
+												domRenderMessage = domRenderError.message || String(domRenderError);
+											} else {
+												domRenderMessage = "The DOM renderer did not render " + rpc_xsl + ".";
+											}
 
-                                                                                if ( params.item(i).getAttribute('name') == 'rpc_autonumber' )
-                                                                                {
-                                                                                    param = _rpc_result.getAttribute("rpc_autonumber") ?  _rpc_result.getAttribute("rpc_autonumber") : rpc_autonumber;
-                                                                                    params.item(i).firstChild.nodeValue = param;
-                                                                                }
+											_rpc_result.innerHTML = "";
+											var domRenderAlert = document.createElement("div");
+											domRenderAlert.className = "alert alert-danger m-2";
+											domRenderAlert.appendChild(document.createTextNode(domRenderMessage));
+											_rpc_result.appendChild(domRenderAlert);
 
-                                                                                if ( params.item(i).getAttribute('name') == 'rpc_offset' )
-                                                                                {
-                                                                                    param = _rpc_result.getAttribute("rpc_offset") ?  _rpc_result.getAttribute("rpc_offset") : rpc_offset;
-                                                                                    params.item(i).firstChild.nodeValue = param;
-                                                                                }
-																			}
-																		}
-																	}
-																	
-																			
-																	if( rpc_debug && rpc_eol_debug && rpc_xls_debug ) 
-																		_debug_win.document.write("<p><font class='header'>XSL Response:</font></p><p>"+htmlspecialchars(xslhttp.responseText)+'</p><hr>\n');
-																	
-																	if (isIE) {
-																	// За Internet Explore
-																		
-																		try {
-																			var innerHTML_string = 	xml.transformNode(xsl);
-																		}
-																		catch( e )
-																		{
-																			alert( e.message );
-																		}
-																		
-																		_rpc_result.innerHTML = '';
-																		_rpc_result.innerHTML = innerHTML_string;
-																		
-																		// eval-ва JS в резултата
-																		ecxecuteXML(_rpc_result);
-																		
-																		if( rpc_debug && rpc_eol_debug && rpc_html_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");
-
-																	} else {
-																		// За Мозила
-																		var xsltProcessor = new XSLTProcessor();
-																		xsltProcessor.importStylesheet(xsl);
-																		var fragment = xsltProcessor.transformToFragment(xml, document);
-
-																		_rpc_result.innerHTML = "";
-																		_rpc_result.appendChild(fragment);
-
-																		// eval-ва JS в резултата
-																		ecxecuteXML(_rpc_result);
-
-																		if( rpc_debug && rpc_eol_debug ) _debug_win.document.write("<p><font class='header'>HTML :  </font></p>"+htmlspecialchars(_rpc_result.innerHTML)+"</p><hr>");
-																	}
-																	FormProcessing_action(xml);
-																}
-																// Скриване на панела за зареждане
-																DisableLoader();
-															} 
-														}
-													// ******************************
-													
-												xslhttp.send(null);
-											} else DisableLoader(); 
+											if (rpc_debug && rpc_eol_debug) {
+												_debug_win.document.write("<p><font class='header'>DOM renderer error:</font></p><p>" + htmlspecialchars(domRenderMessage) + "</p><hr>\n");
+											}
+											FormProcessing_action(xml);
+											DisableLoader();
 										} else {
 											FormProcessing_action(xml);
 											DisableLoader(); 

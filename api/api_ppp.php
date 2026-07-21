@@ -780,7 +780,7 @@
 		function deleteAll( DBResponse $oResponse )
 		{
 			$oPPPElements = new DBPPPElements();
-			$chk = Params::get( 'chk', 0 );
+			$chk = (array) Params::get( 'chk', array() );
 			
 			foreach( $chk as $k => $v )
 			{

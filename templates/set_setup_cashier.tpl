@@ -69,19 +69,19 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="update(); return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog ui-cashier-dialog" onsubmit="update(); return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Добавяне на{/if} касиер</div>
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Служител:</legend>
-						<table class="input">
+						<table class="input ui-nomenclature-form">
 							<tr class="odd">
 								<td align="left" width="80px;">Фирма:&nbsp;&nbsp;</td>
 								<td>
@@ -108,17 +108,17 @@
 			</tr>
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Право за разходи по номенклатури:</legend>
-						<table>
+						<table class="ui-nomenclature-transfer">
 							<tr>
 								<td>
 									<select name="nomenclatures_all" id="nomenclatures_all" style="width:300px" size="10" ondblclick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' );" multiple="multiple">
 									</select>
 								</td>
 								<td>
-									<button id=b25 name="button" title="Добави Номенклатура" style="width: 20px;" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-									<button id=b25 name="button" title="Премахни Номенклатура" style="width: 20px;" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="nomenclatures_current[]" id="nomenclatures_current" style="width:300px" size="10" ondblclick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' );" multiple="multiple">
@@ -131,9 +131,9 @@
 			</tr>
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Банкови сметки:</legend>
-						<table class="input">
+						<table class="input ui-nomenclature-transfer ui-nomenclature-transfer-vertical">
 							<tr>
 								<td>
 									Оперира със сметки:<br />
@@ -151,15 +151,15 @@
 							</tr>
 							<tr>
 								<td align="center">
-									<button id=b25 name="button" title="Добави" style="width: 20px;" onClick="copy_option_to( 'account_opperate_all', 'account_opperate_current', 'right' ); return false;"><img src=images/adown.gif /></button>
-									<button id=b25 name="button" title="Премахни" style="width: 20px;" onClick="copy_option_to( 'account_opperate_all', 'account_opperate_current', 'left' ); return false;"><img src=images/aup.gif /></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави" onClick="copy_option_to( 'account_opperate_all', 'account_opperate_current', 'right' ); return false;"><span class="ui-icon ui-icon-down" aria-hidden="true"></span></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни" onClick="copy_option_to( 'account_opperate_all', 'account_opperate_current', 'left' ); return false;"><span class="ui-icon ui-icon-up" aria-hidden="true"></span></button>
 								</td>
 								<td width="35px">
 									&nbsp;
 								</td>
 								<td align="center">
-									<button id=b25 name="button" title="Добави" style="width: 20px;" onClick="copy_option_to( 'account_watch_all', 'account_watch_current', 'right' ); return false;"><img src=images/adown.gif /></button>
-									<button id=b25 name="button" title="Премахни" style="width: 20px;" onClick="copy_option_to( 'account_watch_all', 'account_watch_current', 'left' ); return false;"><img src=images/aup.gif /></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави" onClick="copy_option_to( 'account_watch_all', 'account_watch_current', 'right' ); return false;"><span class="ui-icon ui-icon-down" aria-hidden="true"></span></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни" onClick="copy_option_to( 'account_watch_all', 'account_watch_current', 'left' ); return false;"><span class="ui-icon ui-icon-up" aria-hidden="true"></span></button>
 								</td>
 							</tr>
 							<tr>
@@ -183,12 +183,12 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align: right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

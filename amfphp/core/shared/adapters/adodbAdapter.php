@@ -22,8 +22,8 @@ class adodbAdapter extends RecordSetAdapter	{
 	 * @param resource $d The datasource resource
 	 */
 	
-	function adodbAdapter($d) {
-		parent::RecordSetAdapter($d);
+	function __construct($d) {
+		parent::__construct($d);
 		$fieldcount	= $d->FieldCount();	// grab	the	number of fields
 		
 		for($i = 0;	$i < $fieldcount; $i++)	{ // loop over all of the fields
@@ -34,6 +34,10 @@ class adodbAdapter extends RecordSetAdapter	{
 		$d->MoveFirst();
 		$this->rows = $d->GetArray();
 	} 
+
+	function adodbAdapter($d) {
+		$this->__construct($d);
+	}
 } 
 
 ?>

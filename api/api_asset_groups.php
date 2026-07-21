@@ -4,6 +4,10 @@
 			
 			public function result( DBResponse $oResponse)
 			{	
+				global $nBr, $space;
+				$nBr = 0;
+				$space = "";
+
 				$sKeys="";
 				$sValues="";
 				$sPaddings="";
@@ -29,7 +33,6 @@
 				}
 				
 				
-				APILog::Log(0,count($aData));
 				$oResponse->setField("group", "Група");
 				$oResponse->setField("delete_group","","","images/cancel.gif","deleteGroup","");
 				//$oResponse->setPaging($nRowLimit,count($aData),1);

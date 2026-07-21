@@ -15,13 +15,14 @@
  */
 
 class PageAbleResult {
+	var $methodTable;
 	/**
 	 * Constructor function.
 	 * 
 	 * Contains the methodTable data and sets getRecords to return a record set page
 	 * instead of a normal array.
 	 */
-	function PageAbleResult() {
+	function __construct() {
 		$this->methodTable = array("getRecords" => array("access" => "remote",
 				"returns" => "__RECORDSETPAGE__"
 				),
@@ -29,6 +30,10 @@ class PageAbleResult {
 				)
 			);
 	} 
+
+	function PageAbleResult() {
+		$this->__construct();
+	}
 	/**
 	 * Collects the page of the recordset from the session and returns it along
 	 * with the cursor position of the first record.

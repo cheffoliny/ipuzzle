@@ -60,6 +60,7 @@ class Gateway {
 	var $incomingMessagesFolder = NULL;
 	var $useSslFirstMethod = true;
 	var $_enableGzipCompression = false;
+	var $_gzipCompressionThreshold = 25600;
 	
 	/**
 	 * The Gateway constructor method.
@@ -67,7 +68,7 @@ class Gateway {
 	 * The constructor method initializes the executive object so any configurations
 	 * can immediately propogate to the instance.  
 	 */
-	function Gateway() {
+	function __construct() {
 		//Include right executive for php version
 		//Try catch are not syntactically correct in PHP4, so we can't even include
 		//them in PHP 4.
@@ -89,6 +90,10 @@ class Gateway {
 		$this->actions = array();
 		$this->registerFilterChain();
 		$this->registerActionChain();
+	}
+
+	function Gateway() {
+		$this->__construct();
 	}
 
 	/**
@@ -339,7 +344,7 @@ class Gateway {
 	 * @param $php The internal encoding that is assumed for PHP (typically ISO-8859-1)
 	 * @param $sql The internal encoding that is assumed for SQL resources
 	 */
-	function setCharsetHandler($method = "none", $php, $sql) {
+	function setCharsetHandler($method = "none", $php = "", $sql = "") {
 		$this->_charsetMethod = $method;
 		$this->_charsetPhp = $php;
 		$this->_charsetSql = $sql;

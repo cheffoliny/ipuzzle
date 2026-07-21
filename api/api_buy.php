@@ -731,7 +731,7 @@
 			$sLastPtime		= "0000-00-00 00:00:00";
 					
 			if ( !$this->isValidID($nID) ) {
-				continue;
+				return;
 			}
 			
 			$aBuyRows = $oBuyDocRows->getByIDBuyDoc( $nID );
@@ -797,7 +797,7 @@
 			Params::set("id", $nID);	
 			
 			if ( !$this->isValidID($nID) ) {
-				continue;
+				return;
 			}			
 			
 			$oBuyDoc->getRecord( $nID, $aBuyDoc );
@@ -839,7 +839,7 @@
 				$this->delRows($nDDS, 0, $oResponse);			
 			} elseif ( !empty($sLastOrder) && !empty($nDDS) ) {
 				if ( !$grant_right ) {
-					continue;
+					return;
 				} else {
 					$this->delRows($nDDS, 0, $oResponse);
 				}
@@ -1733,7 +1733,7 @@
 		}
 		
 	
-		public function delRows( $sRows, $no_dds = 1, DBResponse $oResponse ) {
+		public function delRows( $sRows, $no_dds, DBResponse $oResponse ) {
 			global $db_finance, $db_system, $db_name_finance, $db_name_system, $db_name_sod; 
 			
 			$nIDUser		= isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person']  : 0;

@@ -4,13 +4,13 @@
 	var my_action = '';
 </script>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-financial-dialog" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		
 		<div class="page_caption">{if $id}Редактиране на Наработка{else}Нов Запис{/if}</div>
 
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="even">
 				<td width="120">Код на Наработката:</td>
 				<td style="padding-left: 15px;">
@@ -48,19 +48,19 @@
 			<tr class="odd">
 				<td>Обезщетение:</td>
 				<td style="padding-left: 10px;">
-					<input type="checkbox" id="nIsCompensation" name="nIsCompensation" class="clear" />
+					<input type="checkbox" id="nIsCompensation" name="nIsCompensation" class="clear ui-nomenclature-checkbox" />
 				</td>
 			</tr>
 			<tr class="even">
 				<td>Болнични:</td>
 				<td style="padding-left: 10px;">
-					<input type="checkbox" id="nIsHospital" name="nIsHospital" class="clear" />
+					<input type="checkbox" id="nIsHospital" name="nIsHospital" class="clear ui-nomenclature-checkbox" />
 				</td>
 			</tr>
 			<tr><td colspan="2" style="height: 5px;"></td></tr>
 		</table>
 
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -68,8 +68,8 @@
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

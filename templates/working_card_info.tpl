@@ -19,15 +19,15 @@
 	function formClose() {
 		if ( document.getElementById('isLOCK').value == 'no' ) {
 			loadXMLDoc2('close', 1);
-			document.getElementById('capt').style.background = 'red';
+			document.getElementById('capt').style.background = '#d85252';
 		} else alert('Работната карта е затворена!');
 	}	
 	
 	function formLoad() {
 		if ( document.getElementById('locked').value == 1 ) {
-			document.getElementById('capt').style.background = 'red';
+			document.getElementById('capt').style.background = '#d85252';
 		} else {
-			document.getElementById('capt').style.background = 'green';
+			document.getElementById('capt').style.background = '#209653';
 		}
 
 	}
@@ -36,7 +36,7 @@
 
 {if !$nIDCard}
 
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-nomenclature-dialog ui-technical-dialog ui-working-card-empty" onsubmit="return false;">
 		<table width="100%" height="100%">
 			<tr>
 				<td align="center" valign="middle">
@@ -68,20 +68,20 @@
 </script>
 
 <div>
-	<form name="form1" id="form1" onsubmit="return false;" >
+	<form name="form1" id="form1" class="ui-nomenclature-dialog ui-technical-dialog ui-working-card-info" onsubmit="return false;">
 		<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard|default:0}" />
 		<input type="hidden" id="isLOCK" name="isLOCK" value="no" />
 		<input type="hidden" id="locked" name="locked" value="{$locked|default:0}" />
 		
 		<div class="page_caption" id="capt" name="capt">{if $nIDCard > 0}Работна карта № {$nIDCard}, Диспечер: {$sDispName}, Застъпване: {$sFrom}{if $sTo}, Отстъпване: {$sTo}{/if} {if $locked}[ПРИКЛЮЧЕНА!]{/if}{else}Нова работна карта{/if}</div>
 		
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
+		<table cellspacing="0" cellpadding="0" width="100%" id="filter" class="ui-technical-shell">
 			<tr>
-				<td>{include file=working_card_tabs.tpl}</td>
+				<td>{include file="working_card_tabs.tpl"}</td>
 			</tr>
 			<tr class="odd">
 				<td>
-		  		    <table class="input">
+		  		    <table class="input ui-technical-form">
 		  		    	<tr style="height: 20px;">
 		  		    		<td>&nbsp;</td>
 		  		    	</tr>
@@ -121,11 +121,11 @@
 											</td>
 											<td>
 												{if $locked}
-												<button class="search" style="width: 50px;" name="button" title="Добави регион" disabled><img src="images/mright.gif" /></button></br>
-												<button name="button" style="width: 50px;" title="Премахни регион" disabled><img src="images/mleft.gif" /></button>
+												<button type="button" class="search ui-nomenclature-transfer-button" name="button" title="Добави регион" disabled><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br>
+												<button type="button" class="ui-nomenclature-transfer-button" name="button" title="Премахни регион" disabled><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 												{else}
-												<button class="search" style="width: 50px;" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;"><img src="images/mright.gif" /></button></br>
-												<button name="button" style="width: 50px;" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;"><img src="images/mleft.gif" /></button>
+												<button type="button" class="search ui-nomenclature-transfer-button" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br>
+												<button type="button" class="ui-nomenclature-transfer-button" name="button" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 												{/if}
 											</td>
 											<td>
@@ -140,15 +140,15 @@
 						</tr>
 						<tr valign="top">
 							<td valign="top" align="center">
-								<table style="width: 850px;" cellspacing="0" cellpadding="0" >
+								<table class="ui-nomenclature-actions ui-technical-actions" style="width: 850px;" cellspacing="0" cellpadding="0">
 									<tr valign="top">
 										<td valign="top" align="right">
 											{if $locked}
-											<button type="button" class="search" disabled><img src="images/disk.gif"/>Запази</button>&nbsp;
-											<button type="button" id="b100" disabled><img src="images/confirm.gif" />Приключи</button>
+											<button type="button" class="search" disabled><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запази</button>&nbsp;
+											<button type="button" id="b100" disabled><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Приключи</button>
 											{else}
-											<button type="button" class="search" onclick="formSave();"><img src="images/disk.gif"/>Запази</button>&nbsp;
-											<button type="button" id="b100" onClick="formClose();"><img src="images/confirm.gif" />Приключи</button>
+											<button type="button" class="search" onclick="formSave();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запази</button>&nbsp;
+											<button type="button" id="b100" onClick="formClose();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Приключи</button>
 											{/if}
 										</td>
 									</tr>

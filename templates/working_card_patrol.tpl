@@ -30,9 +30,9 @@
 	
 	function formLoad() {
 		if ( document.getElementById('locked').value == 1 ) {
-			document.getElementById('capt').style.background = 'red';
+			document.getElementById('capt').style.background = '#d85252';
 		} else {
-			document.getElementById('capt').style.background = 'green';
+			document.getElementById('capt').style.background = '#209653';
 		}
 	}
 	
@@ -40,7 +40,7 @@
 {/literal}
 
 <div>
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-working-card-patrol" onsubmit="return false;">
 	<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard|default:0}" />
 	<input type="hidden" id="isLOCK" name="isLOCK" value="no" />
 	<input type="hidden" id="locked" name="locked" value="{$locked|default:0}" />
@@ -49,15 +49,15 @@
 	
 	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 		<tr>
-			<td>{include file=working_card_tabs.tpl}</td>
+			<td>{include file="working_card_tabs.tpl"}</td>
 		</tr>
 		<tr>
 			<td>
 				<center>
-					<table class="page_data" style="width:100%">
+					<table class="page_data ui-nomenclature-heading ui-technical-heading" style="width:100%">
 						<tr>
 							<td valign="top" align="right" class="buttons">
-								<button onclick="editPatrol(0);" class="search" id="Add" {if $locked}disabled{/if}><img src="images/plus.gif"> Добави </button>
+								<button type="button" onclick="editPatrol(0);" class="search" id="Add" {if $locked}disabled{/if}><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 							</td>
 						</tr>
 					</table>
@@ -66,8 +66,8 @@
 		</tr>
 	</table>
 	
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap ui-technical-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-technical-filter">
 			<tr>
 				<td align="right">Регион:&nbsp;</td>
 				<td align="left">
@@ -75,14 +75,14 @@
 						<option value="0">Всички</option>
 					</select>
 				</td>
-				<td align="right"><button type="button" name="Button" class="search" onClick="formSearch();" {if $locked}disabled{/if}><img src="images/confirm.gif">Търси</button></td>
+				<td align="right"><button type="button" name="Button" class="search" onClick="formSearch();" {if $locked}disabled{/if}><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 	  	</table>
 	</center>
 
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-technical-result"></div>
 
 </form>
 </div>

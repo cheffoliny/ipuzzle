@@ -75,23 +75,23 @@
 				
 				switch ($val['type']) {
 					case 'create':
-						$val['price'] = number_format( $aOperation * ($val['percent']/100) * $val['factor'], 2, '.', '')." лв.";
+						$val['price'] = number_format( $aOperation * ($val['percent']/100) * $val['factor'], 2, '.', '')." €";
 					break;
 					
 					case 'destroy':
-						$val['price'] = number_format( $priceDestroy * ($val['percent']/100) * $val['factor'], 2, '.', '')." лв.";
+						$val['price'] = number_format( $priceDestroy * ($val['percent']/100) * $val['factor'], 2, '.', '')." €";
 					break;
 					
 					case 'holdup':
-						$val['price'] = number_format( $priceHoldup * ($val['percent']/100) * $val['factor'], 2, '.', '')." лв.";
+						$val['price'] = number_format( $priceHoldup * ($val['percent']/100) * $val['factor'], 2, '.', '')." €";
 					break;
 					
 					case 'arrange':
-						$val['price'] = number_format( $priceArrange * $nArrangeCount * ($val['percent']/100) * $val['factor'], 2, '.', '')." лв.";
+						$val['price'] = number_format( $priceArrange * $nArrangeCount * ($val['percent']/100) * $val['factor'], 2, '.', '')." €";
 					break;
 					
 					default:
-						$val['price'] = "0.00 лв.";
+						$val['price'] = "0.00 €";
 					break;
 				}
 				
@@ -125,19 +125,16 @@
 //			$id_office = isset( $aData['id_office'] ) ? $aData['id_office'] : 0;
 			//debug($aData);
 			
-			$oLock = new DBTechLimitCards();
 			$aLock = array();
-			
-			$aLock = $oLock->getStatus($nID);
+			$nID = isset($aData['id']) ? preg_replace('/[^0-9,]/', '', (string) $aData['id']) : '0';
+			$nID = $nID !== '' ? $nID : '0';
+			$start = isset($aData['start']) ? (string) $aData['start'] : '';
 			
 			if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
 				if ( in_array('tech_support', $_SESSION['userdata']['access_right_levels']) ) {
 					$right_edit = true;
 				}
 			}
-			
-			$nID = $aData['id'];
-			$start = $aData['start'];
 			
 			$sQuery = "
 				SELECT 
@@ -204,12 +201,6 @@
 			}
 						
 			foreach( $oResponse->oResult->aData as $key => &$val ) {
-				$person = array();
-				$data = array();
-				$data['id'] = $val; //$val['id_person'];
-				
-				$person = $this->getPersonsByDate($data);
-				
 				for ( $i = 8; $i <= 18; $i++ ) {
 					
 					//if ( ($i >= $val) && ($i <= $val) ) {
@@ -320,6 +311,7 @@
 					t.id AS _id,
 					IFNULL(lp.id_person, 0) AS id_person,
 					lp.percent,
+					o.num AS object_num,
 					CONCAT('[', o.num,'] ', o.name) AS object_name,
 					ROUND(
 						( UNIX_TIMESTAMP( t.planned_start ) - UNIX_TIMESTAMP( DATE( t.planned_start ) ) ) / 60 
@@ -360,6 +352,7 @@
 					t.id AS _id,
 					IFNULL(lp.id_person, 0) AS id_person,
 					lp.percent,
+					o.num AS object_num,
 					CONCAT('[', o.num,'] ', o.name) AS object_name,
 					ROUND(
 						( UNIX_TIMESTAMP( t.planned_start ) - UNIX_TIMESTAMP( DATE( t.planned_start ) ) ) / 60 
@@ -423,6 +416,7 @@
 					t.id AS _id,
 					IFNULL(lp.id_person, 0) AS id_person,
 					lp.percent,
+					o.num AS object_num,
 					CONCAT('[', o.num,'] ', o.name) AS object_name,
 					ROUND(
 						( UNIX_TIMESTAMP( t.planned_start ) - UNIX_TIMESTAMP( DATE( t.planned_start ) ) ) / 60 

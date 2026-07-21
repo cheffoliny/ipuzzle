@@ -147,7 +147,7 @@
 
 <dlcalendar id="calender" click_element_id="editDocDate" 	input_element_id="sDocDate" start_date="{$nMinusSevenDays}"	tool_tip="Изберете дата"></dlcalendar>
 
-<form id="form1" action="" onsubmit="return false">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-buy-document-dialog" onsubmit="return false">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 	<input type="hidden" id="sViewType" name="sViewType" value="">
 	<input type="hidden" id="sDocStatus" name="sDocStatus" value="{$sDocStatus}">
@@ -284,7 +284,7 @@
 							Дата:&nbsp;
 						</td>
 						<td align="left">
-							<input type="text" name="sDocDate" id="sDocDate" class="inp100" onkeypress="return formatDate(event, '.');" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDocDate" />
+							<input type="text" name="sDocDate" id="sDocDate" class="inp100" onkeypress="return formatDate(event, '.');" />&nbsp;<button type="button" id="editDocDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на документа"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td align="right">
 							Плащане:&nbsp;
@@ -353,17 +353,17 @@
 	<table class="input">
 		<tr>
 			<td>
-				<button id="b_del" onclick="delDoc();"><img src="images/bin.gif">Анулирай</button>
+				<button type="button" id="b_del" class="ui-document-danger" onclick="delDoc();"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span>Анулирай</button>
 			</td>
 			<td align="right">
-				<button id="b_confirm" onclick="finalDoc();"><img src="images/confirm.gif">Потвърди</button>
+				<button type="button" id="b_confirm" onclick="finalDoc();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>
 			</td>
 			<td>
 				<div id="izvestie"></div>
 			</td>
 			<td align="right">
-				<button id="b_save" onclick="saveForm();" class="search"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+				<button type="button" id="b_save" onclick="saveForm();" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+				<button type="button" onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

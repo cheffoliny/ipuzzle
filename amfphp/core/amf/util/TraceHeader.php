@@ -11,17 +11,34 @@
  */
  
 class TraceHeader {
-	function TraceHeader($traceStack) {
+	var $EventType;
+	var $Time;
+	var $Source;
+	var $Date;
+	var $messages;
+
+	function __construct($traceStack) {
 		$this->EventType = "trace";
 		$this->Time = time();
 		$this->Source = "Server";
 		$this->Date = array(date("D M j G:i:s T O Y"));
 		$this->messages = $traceStack;
 	} 
+
+	function TraceHeader($traceStack) {
+		$this->__construct($traceStack);
+	}
 } 
 
 class ProfilingHeader {
-	function ProfilingHeader() {
+	var $EventType;
+	var $includeTime;
+	var $decodeTime;
+	var $callTime;
+	var $totalTime;
+	var $frameworkTime;
+
+	function __construct() {
 		global $amfphp;
 		$this->EventType = "profiling";
 		
@@ -33,6 +50,10 @@ class ProfilingHeader {
 							- $this->includeTime
 							- $this->decodeTime
 							- $this->callTime;
+	}
+
+	function ProfilingHeader() {
+		$this->__construct();
 	}
 }
 ?>

@@ -34,7 +34,7 @@
 		
 		<tr>
 			<td width="1" class="inactive"></td>
-			{if $page eq asset_info}
+			{if $page eq 'asset_info'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					Информация
 				</td>
@@ -44,7 +44,7 @@
 				</td>
 			{/if}
 			 <td width="1" id="passive"></td>
-			{if $page eq asset_info_ppp}
+			{if $page eq 'asset_info_ppp'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					ППП
 				</td>
@@ -54,7 +54,7 @@
 				</td>
 			{/if}
 				<td width="1" id="passive"></td>
-			{if $page eq asset_info_sub_assets}
+			{if $page eq 'asset_info_sub_assets'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					Подчинени активи
 				</td>

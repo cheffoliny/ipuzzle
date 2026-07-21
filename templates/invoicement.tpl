@@ -21,7 +21,7 @@
 	
 	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 		<tr>
-			<td>{include file=finance_operations_tabs.tpl}</td>
+			<td>{include file="finance_operations_tabs.tpl"}</td>
 		</tr>
 	</table>
 	

@@ -87,15 +87,15 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return update();">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog" onsubmit="return update();">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="cash" name="cash" value="0">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нова{/if} <span id="sCapt">банкова</span> сметка</div>
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td width="200">Наименование:</td>
 				<td>
@@ -132,17 +132,17 @@
 		<div id="sBank2">
 			<br />
 			
-			<fieldset>
+			<fieldset class="ui-nomenclature-fieldset">
 			<legend>Фирми, за които е характерна сметката:</legend>
-				<table>
+				<table class="ui-nomenclature-transfer">
 					<tr>
 						<td>
 							<select name="firms_all" id="firms_all" style="width:200px" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'right' );" multiple="multiple">
 							</select>
 						</td>
 						<td>
-							<button id=b25 name="button" title="Добави Фирма" style="width: 20px;" onClick="copy_option_to( 'firms_all', 'firms_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-							<button id=b25 name="button" title="Премахни Фирма" style="width: 20px;" onClick="copy_option_to( 'firms_all', 'firms_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+							<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави Фирма" onClick="copy_option_to( 'firms_all', 'firms_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
+							<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни Фирма" onClick="copy_option_to( 'firms_all', 'firms_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 						</td>
 						<td>
 							<select name="firms_current[]" id="firms_current" style="width:200px" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'left' );" multiple="multiple">
@@ -156,14 +156,14 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">
-					<input type="checkbox" id="bank" name="bank" class="clear" onclick="changeType();" checked />&nbsp; Банкова сметка
+					<input type="checkbox" id="bank" name="bank" class="clear ui-nomenclature-checkbox" onclick="changeType();" checked />&nbsp; Банкова сметка
 				</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

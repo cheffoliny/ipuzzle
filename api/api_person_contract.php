@@ -115,21 +115,21 @@
 //					if (empty($br) && !empty($val['min_cost'])) {
 //							$old_min_cost	= $val['min_cost'];
 //							if($aInfo[$key+1]['min_cost']!=$val['min_cost'] ) {
-//								$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+//								$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 //								$br++;
 //							}
 //							continue;
 //						}
 						
 					if(isset($aInfo[$key+1]) && $aInfo[$key+1]['min_cost']!=$val['min_cost']) {
-						$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+						$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 						$br++;
 						$old_min_cost	= $val['min_cost'];
 						if ($br == 5) break;
 					}
 				} else {
 						if(isset($aInfo[$key+1]) && $aInfo[$key+1]['min_cost']!=$val['min_cost'] && $aInfo[0]['min_cost']!=$val['min_cost']) {
-						$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+						$sTitleMinSalary.= "\nЗаплата - ".$val['min_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 						$br++;
 						$old_min_cost	= $val['min_cost'];
 						if ($br == 5) break;
@@ -145,20 +145,20 @@
 //					if (empty($br) && !empty($val['fix_cost'])) {
 //							$old_fix_cost	= $val['fix_cost'];
 //							if($aInfo[$key+1]['fix_cost']!=$val['fix_cost']) {
-//								$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+//								$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 //								$br++;
 //							}
 //							continue;
 //					}
 					if(isset($aInfo[$key+1]) && $aInfo[$key+1]['fix_cost']!=$val['fix_cost']) {
-						$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+						$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 						$br++;
 						$old_fix_cost	= $val['fix_cost'];
 						if ($br == 5) break;
 					}
 				} else {
 						if(isset($aInfo[$key+1]) && $aInfo[$key+1]['fix_cost']!=$val['fix_cost'] && $aInfo[0]['fix_cost']!=$val['fix_cost']) {
-							$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+							$sTitleFixSalary.= "\nЗаплата - ".$val['fix_cost']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 							$br++;
 							$old_fix_cost	= $val['fix_cost'];
 							if ($br == 5) break;
@@ -174,20 +174,20 @@
 //					if (empty($br)  && !empty($val['insurance'])) {
 //							$old_insurance	= $val['insurance'];
 //							if($aInfo[$key+1]['insurance']!=$val['insurance']) {
-//								$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+//								$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 //								$br++;
 //							}
 //							continue;
 //					}
 					if (isset($aInfo[$key+1]) && $aInfo[$key+1]['insurance']!=$val['insurance']){
-						$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+						$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 						$br++;
 						$old_insurance	= $val['insurance'];
 						if ($br == 5) break;
 					}
 				} else {
 					if (isset($aInfo[$key+1]) && $aInfo[$key+1]['insurance']!=$val['insurance'] && $aInfo[0]['insurance']!=$val['insurance']){
-						$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." лв.\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
+						$sTitleInsurance.= "\nМин.осиг.праг - ".$val['insurance']." €\nДата: ".$val['updated_time_']."\nПроменил: ".$val['updated_user']."\n";
 						$br++;
 						$old_insurance	= $val['insurance'];
 						if ($br == 5) break;

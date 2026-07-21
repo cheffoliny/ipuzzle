@@ -128,8 +128,6 @@
 				//	SUM( IF(is_earning = 1, total_sum, (total_sum * -1)) ) AS total,
 				//echo $sQuery;
 				
-				APILog::Log(0, $sQuery);
-				
 				$nRowCount = $_SESSION['userdata']['row_limit'];
 				$_SESSION['userdata']['row_limit'] = 200;
 				

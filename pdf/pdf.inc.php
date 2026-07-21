@@ -190,7 +190,7 @@
 								$sAllign = 'R';
 								break;
 				case DF_CURRENCY : 
-								$sContent = sprintf("%01.2f лв.", $sContent);
+								$sContent = sprintf("%01.2f €", $sContent);
 								$sAllign = 'R';
 								break;
 				case DF_DATE : 

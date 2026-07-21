@@ -28,15 +28,15 @@
 	</script>
 {/literal}
 
-<form action="" id="form1" name="form1" onSubmit="return false">
+<form action="" id="form1" name="form1" class="ui-access-list" onSubmit="return false">
 	<input type=hidden name="id" id="id"value="">
 
-	<div id="search">
-		<table class = "page_data">
+	<div id="search" class="ui-access-list-shell">
+		<table class = "page_data ui-access-heading">
 			<tr>
 				<td class="page_name">Номенклатури - ПОТРЕБИТЕЛСКИ ПРОФИЛИ</td>
 				<td class="buttons"> 
-					{if $right_edit}<button id="b70" onClick="profile_new()"><img src="images/plus.gif">Добави</button>
+					{if $right_edit}<button id="b70" onClick="profile_new()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 					{else}&nbsp;
 					{/if}
 				</td>

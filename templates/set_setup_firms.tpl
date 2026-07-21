@@ -4,12 +4,12 @@
 	var my_action = '';
 </script>
 
-<div class="content">
-	<form name="form1" id="form1" action="" method="POST" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
+<div class="content ui-nomenclature-dialog-shell">
+	<form name="form1" id="form1" action="" method="POST" class="ui-nomenclature-dialog ui-organization-dialog" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		
 		<div class="page_caption">{if $id}Редактиране на фирма{else}Нова фирма{/if}</div>
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td width="220">Код на Фирмата:</td>
 				<td><input id="code" name="code" type="text" class="inp50" onkeypress="return formatDigits(event);" /></td>
@@ -24,9 +24,9 @@
 			</tr>
 		</table>
 		
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>Юридическо Лице:</legend><br />
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				<tr class="odd">
 					<td width="220">Наименование:</td>
 					<td><input id="jur_name" name="jur_name" type="text" class="inp200" /></td>
@@ -50,9 +50,9 @@
 			</table><br />
 		</fieldset>
 		
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>ДДС:</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				<tr class="odd">
 					<td	width="220">Фирма:</td>
 					<td>
@@ -70,7 +70,7 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form ui-nomenclature-section">
 			<tr class="odd">
 				<td width="225">Банкова сметка:</td>
 				<td>
@@ -81,12 +81,12 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

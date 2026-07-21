@@ -29,7 +29,7 @@
 		
 		<tr>
 			<td width="1" class="inactive"></td>
-			{if $page eq buy_doc_info}
+			{if $page eq 'buy_doc_info'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					Информация
 				</td>
@@ -39,7 +39,7 @@
 				</td>
 			{/if}
 			 <td width="1" id="passive"></td>
-			{if $page eq buy_doc_orders}
+			{if $page eq 'buy_doc_orders'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					Ордери
 				</td>
@@ -49,7 +49,7 @@
 				</td>
 			{/if}
 			<td width="1" id="passive"></td>
-			{if $page eq buy_doc_inventory}
+			{if $page eq 'buy_doc_inventory'}
 				<td id="active" style="width:150px;" nowrap="nowrap">
 					Опис
 				</td>

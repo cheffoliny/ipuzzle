@@ -64,7 +64,7 @@
 	
 	$db_name_telepol = 'telepol';
 
-    $db_telepol = &ADONewConnection('mysql');
+    $db_telepol = &ADONewConnection('mysqli');
     $db_telepol->SetFetchMode(ADODB_FETCH_ASSOC);
     $db_telepol->NConnect($db_host2,$db_user2,$db_pass2,$db_name_telepol);
 	//$db_telepol = $db_sod;

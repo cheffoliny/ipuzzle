@@ -19,31 +19,31 @@
 	{/literal}
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Касови апарати</td>
 			<td class="buttons">
-				<button onclick="openPayDesk( 0 );"><img src="images/plus.gif"> Добави </button>
+				<button onclick="openPayDesk( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 			</td>
 		</tr>
 	</table>
 	
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap">
+		<table class="search table-secondary ui-nomenclature-filter ui-nomenclature-filter-wide">
 			<tr>
 				<td align="right">Фирма:&nbsp;</td>
 				<td align="left">
-					<select class="default" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'loadOffices' );" />
+					<select class="default form-control" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'loadOffices' );" />
 				</td>
 				
 				<td>&nbsp;</td>
 				
 				<td align="right">Регион:&nbsp;</td>
 				<td align="left">
-					<select class="default" name="nIDOffice" id="nIDOffice" onchange="loadXMLDoc2( 'loadPersons' );" />
+					<select class="default form-control" name="nIDOffice" id="nIDOffice" onchange="loadXMLDoc2( 'loadPersons' );" />
 				</td>
 				
 				<td colspan="2">&nbsp;</td>
@@ -51,20 +51,20 @@
 			<tr>
 				<td align="right">Служител:&nbsp;</td>
 				<td align="left">
-					<select class="default" name="nIDPerson" id="nIDPerson" />
+					<select class="default form-control" name="nIDPerson" id="nIDPerson" />
 				</td>
 				
 				<td>&nbsp;</td>
 				
 				<td align="right">Номер:&nbsp;</td>
 				<td align="left">
-					<input type="text" class="inp150" id="sNum" name="sNum" />
+					<input type="text" class="inp150 form-control" id="sNum" name="sNum" />
 				</td>
 				
 				<td>&nbsp;</td>
 				
 				<td align="right">
-					<button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button>
+					<button name="Button" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 				</td>
 			</tr>
 	  	</table>

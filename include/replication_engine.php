@@ -1,13 +1,13 @@
-<?
+<?php
     ini_set("display_errors", 1);
 	require_once("adodb/adodb.inc.php");
 
 	$nDayHour = date("H", time());
 	
 	// По подразбиране - 6 часа между 9 и 18, 9 часа в извън работно време
-	$nDeltaTime = !empty( $_GET['delta'] ) ? 
-					$_GET['delta'] : 
-					( $nDayHour > 17) || ( $nDayHour < 9 ) ? 9 : 6 ;
+	$nDeltaTime = !empty( $_GET['delta'] ) ?
+					$_GET['delta'] :
+					( ( $nDayHour > 17 ) || ( $nDayHour < 9 ) ? 9 : 6 );
 	
 	// настройки на параметрите за достъп до сървърите
 	$db_name = "eol_system";
@@ -20,11 +20,11 @@
     $db_slave_user = 'plamen';
     $db_slave_pass = 'Plamen0S';
 	
-	$oDB_master = &ADONewConnection('mysqlt');
+	$oDB_master = &ADONewConnection('mysqli');
     $oDB_master->NConnect($db_master_host, $db_master_user, $db_master_pass, $db_name);
     //$oDB_master->debug=true;
 
-    $oDB_slave = &ADONewConnection('mysqlt');
+    $oDB_slave = &ADONewConnection('mysqli');
     $oDB_slave->NConnect($db_slave_host, $db_slave_user, $db_slave_pass, $db_name);
     //$oDB_slave->debug=true;
     

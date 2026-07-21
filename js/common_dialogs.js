@@ -169,7 +169,7 @@ function dialogSalesPayOrders(id) {
 		str = '&simplify=' +arguments[1];
 	}
 	
-	dialog_win('sales_pay_orders&id='+id+str,400,180,1,'sales_pay_orders');
+	dialog_win('sales_pay_orders&id='+id+str,400,260,1,'sales_pay_orders');
 }
 
 function dialogBuyDocsFilter(id) {
@@ -358,7 +358,7 @@ function dialogSetApplication( id, person ) {
 }
 
 function dialogAttestation( id, person ) {
-	dialog_win('set_setup_attestation&id='+id+'&person='+person,500,300,1,'set_setup_attestation');
+	dialog_win('set_setup_attestation&id='+id+'&person='+person,500,380,1,'set_setup_attestation');
 }
 
 function dialogHospital( id, person ) {
@@ -464,7 +464,7 @@ function dialogSetObjectPerson(params, winname) {
 }
 
 function dialogSetSetupObjectShifts(id, obj) {
-	dialog_win('set_setup_object_shifts&id='+id+'&obj='+obj, 390, 380, 1, 'set_setup_object_shifts');
+	dialog_win('set_setup_object_shifts&id='+id+'&obj='+obj, 390, 440, 1, 'set_setup_object_shifts');
 }
 
 function dialogPatrulParking(id) {
@@ -702,7 +702,7 @@ function dialogPersonalCard( id ) {
 }
 
 function dialogStopMovement( id ) {
-	dialog_win('stop_movement&id='+id,300,240,1,'stop_movement');
+	dialog_win('stop_movement&id='+id,380,300,1,'stop_movement');
 }
 
 function dialogMovementScheme( id ) {
@@ -855,11 +855,11 @@ function dialogGroupSalesPayOrders(id, bank) {
 //		str = '&simplify=' +arguments[1];
 //	}
 	
-	dialog_win('group_sales_pay_orders&id='+id+'&bank='+bank,400,180,1,'group_sales_pay_orders');
+	dialog_win('group_sales_pay_orders&id='+id+'&bank='+bank,400,260,1,'group_sales_pay_orders');
 }
 
 function dialogGroupBuyesPayOrders(id, bank) {
-	dialog_win('group_buyes_pay_orders&id='+id+'&bank='+bank,400,180,1,'group_buyes_pay_orders');
+	dialog_win('group_buyes_pay_orders&id='+id+'&bank='+bank,400,260,1,'group_buyes_pay_orders');
 }
 
 function dialogSummaryFinancesRegionsStat (params) {

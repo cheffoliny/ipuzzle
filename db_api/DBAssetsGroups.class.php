@@ -72,7 +72,6 @@
 						FROM assets_groups
 						WHERE id= (SELECT parent_id FROM assets_groups WHERE id={$nIDGroup})";
 			
-			APILog::Log(0,$this->selectOne($sQuery));
 			return $this->selectOne($sQuery);
 		}
 		

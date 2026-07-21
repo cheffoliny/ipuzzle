@@ -63,11 +63,11 @@
     <input type="hidden" id="noTest" name="noTest" value="0" />
     <input type="hidden" id="num" name="num" value="{$num}" />
 
-    {include file=object_tabs.tpl}
+    {include file="object_tabs.tpl"}
 
     <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 
-    {*{include file=object_tabs_sot.tpl}*}
+    {*{include file="object_tabs_sot.tpl}*}
 
     {*<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>*}
 

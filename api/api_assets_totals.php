@@ -56,7 +56,6 @@
 				}
 			}
 			
-			APILog::Log(0, $total);
 			//$oAssets->getReport2( $aParams, $oResponse );
 			
 			$oResponse->printResponse( "Активи - ОБОБЩЕНА", "assets_totals", false );

@@ -183,7 +183,7 @@
     <nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
         <div class="col-12 col-sm-12 col-lg-12">
             <div class="input-group input-group-sm text-right">
-                <button class="btn btn-block btn-sm btn-primary" onClick="formSubmit();"><i class="fa fa-plus"></i> Добави</button>
+                    <button class="btn btn-block btn-sm btn-primary" onClick="formSubmit();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
             </div>
         </div>
     </nav>

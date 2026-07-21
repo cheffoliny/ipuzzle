@@ -73,7 +73,7 @@
 		}
 
 		function delete( DBResponse $oResponse ) {
-			$chk = Params::get('chk', 0);
+			$chk = (array) Params::get('chk', array());
 			$bla = array();
 			$oTechRequests = new DBTechRequests();
 			
@@ -92,7 +92,7 @@
 		}
 
 		function limit( DBResponse $oResponse ) {
-			$chk = Params::get('chk', 0);
+			$chk = (array) Params::get('chk', array());
 			$bla = array();
 			$oTechRequests = new DBTechRequests();
 			

@@ -385,7 +385,7 @@ class SaleDocPDF extends PDFC {
                     $sData = sprintf('%0.3f лв.', $sType != "kreditno izvestie" ? $aRow[$sFieldKey] : $aRow[$sFieldKey] * -1);
                 } else {
                     if ($sFieldKey == 'month'){
-                        list($yr,$mon,$day) = split('-', $aRow[$sFieldKey]);
+						list($yr,$mon,$day) = explode('-', $aRow[$sFieldKey]);
                         $display_date = date('m.Y', mktime(0,0,0,$mon,$day,$yr));
                         $sData = $display_date;
                     } else

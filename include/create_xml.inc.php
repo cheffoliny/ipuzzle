@@ -46,11 +46,15 @@ class xml_child {
 	* @param string $name name of the node
 	* @desc creates a new node. Constructor
 	*/
-	function xml_child($name){
+	function __construct($name){
 		
 		$this->name = $name;
 		$this->startTag();
 		$this->endTag();
+	}
+
+	function xml_child($name){
+		$this->__construct($name);
 	}
 
 
@@ -175,7 +179,7 @@ class xml_child {
 	function addNode($node){
 		
 		if(is_object($node)){
-			array_push($this->childs, &$node);
+			array_push($this->childs, $node);
 			
 			if(strlen($this->xml_node['data']) > 0)
 				trigger_error('If you have child nodes the data in your node won\'t be shown!!!', E_USER_WARNING);

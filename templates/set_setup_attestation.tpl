@@ -49,15 +49,15 @@
 <dlcalendar click_element_id="img_date_start" input_element_id="date_start" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="img_date_end" input_element_id="date_end" tool_tip="Изберете дата"></dlcalendar>
 
-<div class="content">
-	<form action="" method="POST" name="form1" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 2 );">
+<div class="content ui-contract-content">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-attestation-dialog" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 2 );">
 		<input type="hidden" id="id" name="id" value="{$nID}">
 		<input type="hidden" id="id_person" name="id_person" value="{$nIDPerson}">
 		<input type="hidden" id="first_day_of_month" name="first_day_of_month" value="{$first_day_of_month}" />
 		
 		<div class="page_caption">{if $id}Редактиране на атестация{else}Нова атестация{/if}</div>
 		
-		<table class="input">
+		<table class="input ui-contract-fields">
 			<tr class="odd">
 				<td colspan="2">&nbsp;</td>
 			</tr>
@@ -81,14 +81,14 @@
 				<td> Дата от: </td>
 				<td>	
 					<input type="text"  id="date_start" name="date_start" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ"  />	
-					&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_start" />	
+					&nbsp;<button type="button" id="img_date_start" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 			<tr>
 				<td> Дата до: </td>
 				<td>	
 					<input type="text"  id="date_end" name="date_end"/>		
-					&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_end" />	
+					&nbsp;<button type="button" id="img_date_end" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 			<tr class="odd">
@@ -102,12 +102,12 @@
 			</tr>
 		</table>
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions ui-contract-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align: right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button type="button" class="btn btn-xs btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

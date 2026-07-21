@@ -119,7 +119,7 @@
 			$nIDCard	= Params::get("nIDCard", 0);	
 			$nRegion	= Params::get("nRegion", 0);	
 			
-			$aPersons	= Params::get("choice_persons", '');
+			$aPersons	= (array) Params::get("choice_persons", array());
 			$sPersons	= implode( ',',$aPersons);
 			$nIDPatrul	= Params::get("nIDPatrul", 0);
 			$nAuto		= Params::get("nAuto", 0);

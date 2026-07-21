@@ -4,7 +4,6 @@
 			public function __construct()
 			{
 				global $db_storage;
-				$db_storage->debug=true;
 				parent::__construct( $db_storage, 'assets_attributes' );
 			}
 				

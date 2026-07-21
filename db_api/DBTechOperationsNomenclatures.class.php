@@ -4,7 +4,6 @@
 		
 		public function __construct() {
 			global $db_sod;
-			$db_sod->debug=true;
 			parent::__construct($db_sod,'tech_operations_nomenclatures');
 			
 		}

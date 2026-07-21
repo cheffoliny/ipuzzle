@@ -53,15 +53,15 @@
 	</style>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
-	<table class = "page_data">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-personnel-report ui-leave-graph-report" onSubmit="return false;">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Персонал - Отпуски</td>
 		</tr>
 	</table>
 	
 	<center>
-		<table class="input">
+		<table class="input ui-leave-graph-layout">
 			<tr>
 				<td>
 					<div id="legend">
@@ -95,7 +95,7 @@
 					</div>
 				</td>
 				<td>
-					<table class="input" style="width: 705px;">
+					<table class="input ui-personnel-report-filter" style="width: 705px;">
 						<tr>
 							<td align="right">Тип:&nbsp;</td>
 							<td align="left">
@@ -141,7 +141,7 @@
 							</td>
 							
 							<td align="right">
-								<button id="btnSearch" onClick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button>
+								<button id="btnSearch" onClick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 							</td>
 						</tr>
 					</table>

@@ -15,7 +15,7 @@
             return isset($_SESSION['userdata']['id_person']) ? $_SESSION['userdata']['id_person'] : 0;
         }
 		
-		public function getReport( $aParams, DBResponse $oResponse = NULL ) {
+		public function getReport( $aParams, ?DBResponse $oResponse = NULL ) {
 			global $db_finance_backup, $db_name_sod, $db_name_personnel;
 			
 			$oFirms 	= new DBFirms();

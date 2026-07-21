@@ -51,17 +51,15 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-assets-report ui-assets-stock-report" onSubmit="return false;">
 	<input type="hidden" id="nIDCustomGroup" name="nIDCustomGroup" value="0" />
 	<input type="hidden" id="nIDCustomNomenclature" name="nIDCustomNomenclature" value="0" />
 	
 	<div class="page_caption">Активи - Инвентаризация</div>
 	
-	<br />
+	<center class="ui-nomenclature-filter-wrap ui-assets-stock-filter-wrap">
 	
-	<center>
-	
-		<table class="search" border="0" width="850">
+		<table class="search ui-nomenclature-filter ui-assets-stock-filter" border="0" width="850">
 			<tr>
 				<td align="left" width="130">Тип на Справката:&nbsp;</td>
 				<td align="left" width="235">
@@ -86,12 +84,12 @@
 					</select>
 				</td>
 				
-				<td style="padding-left: 50px" align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif"> Търси </button></td>
+				<td class="ui-assets-search-cell" align="right"><button type="button" name="Button" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button></td>
 			</tr>
 		</table>
 		
 		<div id="attached" style="display: block;">
-			<table class="search" border="0" width="850">
+			<table class="search ui-nomenclature-filter ui-assets-stock-filter" border="0" width="850">
 				<tr>
 					<td align="left" width="130">Фирма:&nbsp;</td>
 					<td align="left" width="230">
@@ -118,7 +116,7 @@
 			</table>
 		</div>
 		<div id="entered" style="display: none;">
-			<table class="search" border="0" width="850">
+			<table class="search ui-nomenclature-filter ui-assets-stock-filter" border="0" width="850">
 				<tr>
 					<td align="left" width="130">Склад:&nbsp;</td>
 					<td align="left" width="720">
@@ -127,7 +125,7 @@
 				</tr>
 			</table>
 		</div>
-		<table class="search" border="0" width="850">
+		<table class="search ui-nomenclature-filter ui-assets-stock-filter" border="0" width="850">
 			<tr>
 				<td align="left" width="130">Група:&nbsp;</td>
 				<td align="left" width="230">

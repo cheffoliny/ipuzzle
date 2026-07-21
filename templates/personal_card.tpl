@@ -7,7 +7,7 @@
 	
 	<table  cellspacing="0" cellpadding="0" width="100%" height="4%" id="filter" >
 		<tr>
-			<td>{include file=personal_card_tabs.tpl}</td>
+			<td>{include file="personal_card_tabs.tpl"}</td>
 		</tr>
 	</table>
 	

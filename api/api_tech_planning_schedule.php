@@ -200,8 +200,8 @@ class ApiTechPlanningSchedule {
         $nRowNum = 0;
 
 
-        $nHoursTotal = '';
-        $nEarningTotal = '';
+        $nHoursTotal = 0.0;
+        $nEarningTotal = 0.0;
         $nStakeTotal = '';
         //APILog::Log(100, ArrayToString($aPersonLimitCards));
         foreach ($aPersonLimitCards as $nIDPerson => $aCards) {
@@ -270,7 +270,8 @@ class ApiTechPlanningSchedule {
 
                 $sHoursHint = "";
                 $nHours = $oDBTechLimitCards->getHours($nIDPerson, date('Y-m', $nDate), $sHoursHint);
-                if (!empty($nHours)) {
+                $nHoursValue = is_numeric($nHours) ? (float) $nHours : 0.0;
+                if ($nHoursValue != 0) {
                     $sHours = $nHours . " ч.";
                 } else {
                     $sHours = '';
@@ -280,10 +281,11 @@ class ApiTechPlanningSchedule {
 
                 $sSalaryHint = "";
                 $nEarning = $oDBSalary->getTechEarning($nIDPerson, date('Ym', $nDate), $sSalaryHint);
+                $nEarningValue = is_numeric($nEarning) ? (float) $nEarning : 0.0;
                 //$oResponse->setAlert(ArrayToString($sSalaryHint));
                 //$sSalaryHint = str_replace("@@", "\n", $sSalaryHint);
-                if (!empty($nEarning)) {
-                    $sEarning = $nEarning . ' лв.';
+                if ($nEarningValue != 0) {
+                    $sEarning = $nEarning . ' €';
                 } else {
                     $sEarning = '';
                 }
@@ -291,14 +293,14 @@ class ApiTechPlanningSchedule {
                 $d = date('Ym', $nDate);
                 $oResponse->setDataAttributes($sPersonCellID, 'earning', array('onclick' => "show_hint('{$sPersonCellID}', '{$d}')", 'style' => 'text-align:right', "title" => "Подробно..."));
 
-                if (!empty($nHours)) {
-                    $nStake = $nEarning / $nHours;
+                if ($nHoursValue != 0) {
+                    $nStake = $nEarningValue / $nHoursValue;
                 } else {
                     $nStake = 0;
                 }
 
                 if (!empty($nStake)) {
-                    $nStake = number_format($nEarning / $nHours, 2);
+                    $nStake = number_format($nEarningValue / $nHoursValue, 2);
                 } else {
                     $nStake = '';
                 }
@@ -366,16 +368,27 @@ class ApiTechPlanningSchedule {
                     }
                 }
 
-                $nHoursTotal += $nHours;
-                $nEarningTotal += $nEarning;
+                $nHoursTotal += $nHoursValue;
+                $nEarningTotal += $nEarningValue;
 //              APILog::Log(0,  ArrayToString($aCards));
-                APILog::Log("1111", $nDate);
-                APILog::Log("123231", $aCards);
                 foreach ($aCards as $nIDCard => $aCard) {
 
                     $bBegin = true;
+                    $nCardStartMinutes = isset($aCard['planned_start_mins']) ? (int) $aCard['planned_start_mins'] : 0;
+                    $nCardEndMinutes = isset($aCard['planned_end_mins']) ? (int) $aCard['planned_end_mins'] : 0;
+                    $sCardStartDate = substr((string) ($aCard['planned_start'] ?? ''), 0, 10);
+                    $sCardEndDate = substr((string) ($aCard['planned_end'] ?? ''), 0, 10);
+
+                    if ($sCardStartDate !== '' && $sCardStartDate < $sDateMysql) {
+                        $nCardStartMinutes = 0;
+                    }
+                    if ($sCardEndDate !== '' && $sCardEndDate > $sDateMysql) {
+                        $nCardEndMinutes = 24 * 60;
+                    }
+
                     for ($i = 16; $i < 36; $i++) {
-                        if (($nDate + 30 * $i * 60 >= $aCard['p_start']) && ($nDate + 30 * $i * 60 < $aCard['p_end'])) {
+                        $nSlotMinutes = 30 * $i;
+                        if ($nSlotMinutes >= $nCardStartMinutes && $nSlotMinutes < $nCardEndMinutes) {
                             //if( ( ( 30 * $i ) >= $aCard['planned_start_mins']  ) &&	( ( 30 * $i ) < $aCard['planned_end_mins']  ))
                             if (date('d', $nDate) != date('d', $aCard['p_start']))
                                 $bBegin = false;
@@ -401,9 +414,13 @@ class ApiTechPlanningSchedule {
 //                                    break;
 //                            }
 
-                            $sType = $aTechTiming[$aCard['id_tech_timing']]['description'];
-                            $sBackgroundColor = $aTechTiming[$aCard['id_tech_timing']]['color'];
-                            $sBackgroundColorCloseCard = $aTechTiming[$aCard['id_tech_timing']]['color'];
+                            $nTechTiming = isset($aCard['id_tech_timing']) ? (int) $aCard['id_tech_timing'] : 0;
+                            $aTiming = isset($aTechTiming[$nTechTiming]) && is_array($aTechTiming[$nTechTiming])
+                                ? $aTechTiming[$nTechTiming]
+                                : array();
+                            $sType = !empty($aTiming['description']) ? $aTiming['description'] : 'Планирана задача';
+                            $sBackgroundColor = !empty($aTiming['color']) ? $aTiming['color'] : '#476f95';
+                            $sBackgroundColorCloseCard = $sBackgroundColor;
 
                             if ($aCard['r_start'] != '0' && $aCard['r_end'] == '0') {
                                 $sBackgroundColor = "#dddd00";
@@ -524,13 +541,12 @@ class ApiTechPlanningSchedule {
             }
         }
 
-        $nHoursTotal .= ' ч.';
-        $nEarningTotal .= ' лв.';
-        if ($nHoursTotal != 0)
+        if ($nHoursTotal != 0) {
             $nStakeTotal = number_format($nEarningTotal / $nHoursTotal, 2);
+        }
 
-        $oResponse->addTotal('hours', $nHoursTotal);
-        $oResponse->addTotal('earning', $nEarningTotal);
+        $oResponse->addTotal('hours', $nHoursTotal . ' ч.');
+        $oResponse->addTotal('earning', $nEarningTotal . ' €');
 //        $oResponse->addTotal('stake', $nStakeTotal);
 
         $oResponse->setData($aData);
@@ -539,10 +555,10 @@ class ApiTechPlanningSchedule {
 
     public function planning(DBResponse $oResponse) {
 
-        $nIDRequest = Params::get('id_request', '');
-        $sData = Params::get('date', '');
-        $sStart = Params::get('start', '');
-        $sEnd = Params::get('end', '');
+        $nIDRequest = (int) Params::get('id_request', 0);
+        $sData = trim((string) Params::get('date', ''));
+        $sStart = trim((string) Params::get('start', ''));
+        $sEnd = trim((string) Params::get('end', ''));
 
         if (empty($nIDRequest)) {
             throw new Exception('Изберете заявка');
@@ -551,31 +567,43 @@ class ApiTechPlanningSchedule {
             throw new Exception('Маркирайте планировка');
         }
 
-        $aHours = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-            '08:00:00', '08:30:00', '09:00:00', '09:30:00', '10:00:00', '10:30:00', '11:00:00', '11:30:00', '12:00:00', '12:30:00', '13:00:00', '13:30:00'
-        , '14:00:00', '14:30:00', '15:00:00', '15:30:00', '16:00:00', '16:30:00', '17:00:00', '17:30:00', '18:00:00', '18:30:00');
-
         $aStart = explode(',', $sStart);
         $aEnd = explode(',', $sEnd);
 
-        $sPlanStart = substr($sData, 6, 4) . '-' . substr($sData, 3, 2) . '-' . substr($sData, 0, 2) . ' ' . $aHours[$aStart[1]];
-        $sPlanEnd = substr($sData, 6, 4) . '-' . substr($sData, 3, 2) . '-' . substr($sData, 0, 2) . ' ' . $aHours[$aEnd[1] + 1];
+        if (count($aStart) !== 3 || count($aEnd) !== 3 || !ctype_digit($aStart[0]) || !ctype_digit($aStart[1]) || !ctype_digit($aEnd[0]) || !ctype_digit($aEnd[1])) {
+            throw new Exception('Невалиден избор за планиране');
+        }
+
+        $nIDPerson = (int) $aStart[0];
+        $nStartSlot = (int) $aStart[1];
+        $nEndSlot = (int) $aEnd[1];
+        if ($nIDPerson <= 0 || (int) $aEnd[0] !== $nIDPerson || $nStartSlot < 16 || $nEndSlot > 35 || $nEndSlot < $nStartSlot) {
+            throw new Exception('Невалиден интервал за планиране');
+        }
+
+        if (!preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $sData, $aDateParts) || !checkdate((int) $aDateParts[2], (int) $aDateParts[1], (int) $aDateParts[3])) {
+            throw new Exception('Невалидна дата за планиране');
+        }
+
+        $sPlanDate = $aDateParts[3] . '-' . $aDateParts[2] . '-' . $aDateParts[1];
+        $sPlanStart = $sPlanDate . ' ' . $this->planningSlotToTime($nStartSlot);
+        $sPlanEnd = $sPlanDate . ' ' . $this->planningSlotToTime($nEndSlot + 1);
 
         $oDBTechRequests = new DBTechRequests();
         $oDBTechLimitCards = new DBTechLimitCards();
         $oDBLimitCardPersons = new DBLimitCardPersons();
-        $oDBContracts = new DBContracts();
         $oDBPPP = new DBPPP();
         $oDBStoragehouses = new DBStoragehouses();
         $oDBPPPElements = new DBPPPElements();
-        $oDBContractsGuardedRoomsNomenclatures = new DBContractsGuardedRoomsNomenclatures();
         $oDBPersonLeaves = new DBPersonLeaves();
 
 
 
         $aRequest = $oDBTechRequests->getRecord($nIDRequest);
-        $aContract = $oDBContracts->getRecord($aRequest['id_contract']);
-        $nIDObject = $aRequest['id_object'];
+        if (empty($aRequest)) {
+            throw new Exception('Избраната заявка не е намерена');
+        }
+        $nIDObject = isset($aRequest['id_object']) ? (int) $aRequest['id_object'] : 0;
 
 
         // ako zaqvkata e ot dogovor i se znae obekta, proverqvame dali obekta ima zadyljeniq
@@ -602,8 +630,8 @@ class ApiTechPlanningSchedule {
             $aData = array();
 
             $aData['status'] = 'active';
-            $aData['id_tech_timing'] = $aRequest['id_tech_timing'];
-            $aData['id_object'] = $aRequest['id_object'];
+            $aData['id_tech_timing'] = isset($aRequest['id_tech_timing']) ? $aRequest['id_tech_timing'] : 0;
+            $aData['id_object'] = $nIDObject;
             $aData['id_request'] = $nIDRequest;
             $aData['planned_start'] = $sPlanStart;
             $aData['planned_end'] = $sPlanEnd;
@@ -663,14 +691,14 @@ class ApiTechPlanningSchedule {
 
 
 
-        if ($aRequest['tech_type'] == 'contract' && $aRequest['id_tech_timing'] == 1) {    //Ако заявката е от електроннен договор, създаваме ППП
+        if (($aRequest['tech_type'] ?? '') == 'contract' && (int) ($aRequest['id_tech_timing'] ?? 0) == 1) {    //Ако заявката е от електроннен договор, създаваме ППП
             //$nIDStoragehouse 	= $oDBStoragehouses->getIDNova($aContracts['id_office']);
             $nIDTechnic = $oDBLimitCardPersons->getFirstPersonByLimitCard($aRequest['id_limit_card']);
             $nIDStoragehouse = $oDBStoragehouses->getIDReady($nIDTechnic);
 
             $aPPP = array();
             $aPPP['id_limit_card'] = $aRequest['id_limit_card'];
-            $aPPP['created_user'] = $_SESSION['userdata']['id_person'];
+            $aPPP['created_user'] = isset($_SESSION['userdata']['id_person']) ? (int) $_SESSION['userdata']['id_person'] : 0;
             $aPPP['source_date'] = time();
             $aPPP['source_type'] = 'storagehouse';
             $aPPP['dest_type'] = 'object';
@@ -681,7 +709,11 @@ class ApiTechPlanningSchedule {
 
             $oDBPPP->update($aPPP);
 
-            $aContractNomenclatures = $oDBContractsGuardedRoomsNomenclatures->getContractNomenclaturesWithPrices($aRequest['id_contract']);
+            $aContractNomenclatures = array();
+            if (class_exists('DBContractsGuardedRoomsNomenclatures')) {
+                $oDBContractsGuardedRoomsNomenclatures = new DBContractsGuardedRoomsNomenclatures();
+                $aContractNomenclatures = $oDBContractsGuardedRoomsNomenclatures->getContractNomenclaturesWithPrices($aRequest['id_contract']);
+            }
 
             $aPPPElementsMulti = array();
             foreach ($aContractNomenclatures as $aContractNomenclature) {
@@ -697,7 +729,9 @@ class ApiTechPlanningSchedule {
 
                 $aPPPElementsMulti[] = $aPPPElements;
             }
-            $oDBPPPElements->multiInsert($aPPPElementsMulti);
+            if (!empty($aPPPElementsMulti)) {
+                $oDBPPPElements->multiInsert($aPPPElementsMulti);
+            }
         }
 
         /*
@@ -771,6 +805,11 @@ class ApiTechPlanningSchedule {
      * 102 часа и 30 мин = 102*60+30
      * връща минути
      */
+    public function planningSlotToTime($nSlot) {
+        $nSlot = (int) $nSlot;
+        return sprintf('%02d:%02d:00', intdiv($nSlot, 2), ($nSlot % 2) * 30);
+    }
+
     public function timeFormatToMinutes($sTimeFormat) {
 
         if(empty($sTimeFormat)) {
@@ -780,7 +819,7 @@ class ApiTechPlanningSchedule {
         $aTmp = explode(':',$sTimeFormat);
 
         if(!isset($aTmp[1])) {
-            return (int)$aTmp[1];
+            return (int)$aTmp[0] * 60;
         } else {
             return (int)$aTmp[0]*60+(int)$aTmp[1];
         }
@@ -853,13 +892,13 @@ class ApiTechPlanningSchedule {
 
         $aData = array();
 
-        $nCreateTotal = '';
-        $nDestroyTotal = '';
-        $nHoldupTotal = '';
-        $nArrangeTotal = '';
+        $nCreateTotal = 0;
+        $nDestroyTotal = 0;
+        $nHoldupTotal = 0;
+        $nArrangeTotal = 0;
 
-        $nHoursTotal = '';
-        $nEarningTotal = '';
+        $nHoursTotal = 0.0;
+        $nEarningTotal = 0.0;
         $nStakeTotal = '';
 
         foreach ($aPersons as $nIDPerson => $sPersonName) {
@@ -878,10 +917,10 @@ class ApiTechPlanningSchedule {
             isset($aCountServices['holdup']) ? $aData[$nIDPerson]['holdup'] = $aCountServices['holdup'] : $aData[$nIDPerson]['holdup'] = '';
             isset($aCountServices['arrange']) ? $aData[$nIDPerson]['arrange'] = $aCountServices['arrange'] : $aData[$nIDPerson]['arrange'] = '';
 
-            $nCreateTotal += $aData[$nIDPerson]['create'];
-            $nDestroyTotal += $aData[$nIDPerson]['destroy'];
-            $nHoldupTotal += $aData[$nIDPerson]['holdup'];
-            $nArrangeTotal += $aData[$nIDPerson]['arrange'];
+            $nCreateTotal += is_numeric($aData[$nIDPerson]['create']) ? (int) $aData[$nIDPerson]['create'] : 0;
+            $nDestroyTotal += is_numeric($aData[$nIDPerson]['destroy']) ? (int) $aData[$nIDPerson]['destroy'] : 0;
+            $nHoldupTotal += is_numeric($aData[$nIDPerson]['holdup']) ? (int) $aData[$nIDPerson]['holdup'] : 0;
+            $nArrangeTotal += is_numeric($aData[$nIDPerson]['arrange']) ? (int) $aData[$nIDPerson]['arrange'] : 0;
 
             $nHours = $oDBTechLimitCards->getHours($nIDPerson, date('Y-m', $nDate));
             if (!empty($nHours)) {
@@ -898,7 +937,7 @@ class ApiTechPlanningSchedule {
 
             if (!empty($nMinutes)) {
                 $nEarning = round( ($nMinutes/60) * $aPersonInfo['tech_support_factor'], 2 ) ;
-                $sEarning = round( (($nMinutes/60) * $aPersonInfo['tech_support_factor']) , 2 ) . ' лв.';
+                $sEarning = round( (($nMinutes/60) * $aPersonInfo['tech_support_factor']) , 2 ) . ' €';
             } else {
                 $nEarning = 0;
                 $sEarning = '';
@@ -927,7 +966,7 @@ class ApiTechPlanningSchedule {
                 $nDayEarning = $oDBSalary->getTechEarningForDay($nIDPerson, date('Y-m-', $nDate) . zero_padding($i, 2));
 
                 if (!empty($nDayEarning))
-                    $aData[$nIDPerson]['day_' . $i . '_earning'] .= $nDayEarning . " лв.";
+                    $aData[$nIDPerson]['day_' . $i . '_earning'] .= $nDayEarning . " €";
 
                 $oResponse->setDataAttributes($nIDPerson, 'day_' . $i . '_hours', array('style' => 'text-align:right;padding-left:10px;'));
                 $oResponse->setDataAttributes($nIDPerson, 'day_' . $i . '_earning', array('style' => 'text-align:right;padding-left:10px;'));
@@ -950,11 +989,12 @@ class ApiTechPlanningSchedule {
         $oResponse->addTotal('arrange', $nArrangeTotal);
 
 //        $nHoursTotal .= ' ч.';
-        $nEarningTotal .= ' лв.';
-        $nStakeTotal = number_format($nEarningTotal / $nHoursTotal, 2);
+        if ($nHoursTotal != 0) {
+            $nStakeTotal = number_format($nEarningTotal / $nHoursTotal, 2);
+        }
 
         $oResponse->addTotal('hours', sprintf("%02d:%02d ч." , floor($nHoursTotal/60) ,  ($nHoursTotal%60)) );
-        $oResponse->addTotal('earning', $nEarningTotal);
+        $oResponse->addTotal('earning', $nEarningTotal . ' €');
 //        $oResponse->addTotal('stake', $nStakeTotal);
 
         $oResponse->setData($aData);

@@ -164,13 +164,13 @@
 <dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
 <div>
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-tech-support-requests" onsubmit="return false;">
 	<input type="hidden" id="nObject" name="nObject" value="0" />
 	<input type="hidden" id="id_contract" name="id_contract" value = "0">
 	
 	<div class="page_caption">Задачи за техническо облужване</div>
 
-		<table class="input">
+		<table class="input ui-technical-toolbar">
 			
 			<tr>
 				<td>
@@ -187,41 +187,41 @@
 				</td> 
 				
 				<td>
-					<button style="width: 30px" id=b25 title="Нов филтър" name="Button5" onClick="openFilter(1);" ><img src="images/plus.gif" /></button>&nbsp;
-					<button style="width: 30px" name="Button4" id=b25 title="Редактиране на филтър" onClick="openFilter(2);"><img src=images/edit.gif /></button>&nbsp;
-					<button style="width: 30px" name="Button3" id=b25 title="Премахване на филтър" onClick="deleteFilter(schemes);"><img src=images/erase.gif /></button>
+					<button type="button" class="ui-technical-icon-button" id="tech_filter_add" title="Нов филтър" name="Button5" onClick="openFilter(1);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>&nbsp;
+					<button type="button" class="ui-technical-icon-button" name="Button4" id="tech_filter_edit" title="Редактиране на филтър" onClick="openFilter(2);"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>&nbsp;
+					<button type="button" class="ui-technical-icon-button" name="Button3" id="tech_filter_delete" title="Премахване на филтър" onClick="deleteFilter(schemes);"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span></button>
 				</td>
 				<td>
 					&nbsp;
 				</td>
 				<td class="buttons" align="right">
-					<button onclick="editRequest(0)"><i class="far fa-plus"></i> Нова Задача </button>
+					<button type="button" class="search" onclick="editRequest(0)"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нова Задача </button>
 				</td>
 			</tr>
 		</table>
-		<table class="input">
+		<table class="input ui-nomenclature-filter ui-technical-filter ui-tech-request-filter">
 			<tr>
 				<td align="right" style="width: 112px;">от дата:&nbsp;</td>
 				<td style="width: 100px;">
 					<input type="text" id="date_from" name="date_from" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_from" />
+					<button type="button" id="img_date_from" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 				<td align="right" style="width: 50px;">до дата:</td>
 				<td style="width: 110px;">
 					<input type="text" id="date_to" name="date_to" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_to" />
+					<button type="button" id="img_date_to" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 				<td align="right" style="width: 50px;">
 					Задачи
 				</td>
 				<td style="width: 20px;">
-					<input type="radio" class="clear" id="type" name="type" value="requests" checked="checked" onClick = "onClickRequests();" />
+					<input type="radio" class="clear" id="type_requests" name="type" value="requests" checked="checked" onClick="onClickRequests();" />
 				</td>
 				<td align="right" style="width: 80px;">
 					Ел. договори
 				</td>
 				<td>
-					<input type="radio" class="clear" id="type" name="type" value="contracts" onClick = "onClickContracts();"/>
+					<input type="radio" class="clear" id="type_contracts" name="type" value="contracts" onClick="onClickContracts();"/>
 				</td>
 				<td class="buttons">&nbsp;</td>
 			</tr>
@@ -229,7 +229,7 @@
 		
 		<div id="panel1">
 		
-			<table class = "page_data" style="width:100%">
+			<table class="page_data ui-nomenclature-filter ui-technical-filter" style="width:100%">
 
 				<tr>
 					<td style="width: 110px;" align="right">фирма:&nbsp;</td>
@@ -280,7 +280,7 @@
 						Неотработени Л.К.&nbsp;
 					</td>
 					<td align="left">
-						<button type="button" name="Button" class="search" onClick="result();"><img src="images/confirm.gif">Търси</button>
+						<button type="button" name="Button" class="search" onClick="result();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 					</td>
 				</tr>		
 					
@@ -288,7 +288,7 @@
 		</div>
 	
 		<div id="panel2">
-			<table class="search">
+			<table class="search ui-nomenclature-filter ui-technical-filter">
 				<tr>
 					<td style="width: 300px;">
 						&nbsp;
@@ -311,13 +311,13 @@
 					<td colspan="4">
 						&nbsp;
 					</td>
-					<td align="right"><button name="Button" class="search" onclick="result();"><img src="images/confirm.gif">Търси</button></td>
+					<td align="right"><button type="button" name="Button" class="search" onclick="result();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 				</tr>
 		  	</table>
 		</div>
 <hr>
 
-<div id="result" rpc_resize="yes" style="overflow: auto;"></div>
+<div id="result" class="ui-technical-result" rpc_resize="yes" style="overflow: auto;"></div>
 
 </form>
 </div>

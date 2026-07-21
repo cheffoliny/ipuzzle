@@ -98,7 +98,7 @@
 				
 			for($i=0;$i<count( $aTables ); )
 			{
-				if( !ereg("^{$sPrefix}([0-9]){4}(([0][0-9])|([1][0-2]))$", $aTables[ $i ]) )
+				if( !preg_match("~^{$sPrefix}([0-9]){4}(([0][0-9])|([1][0-2]))$~", $aTables[ $i ]) )
 					array_splice($aTables, $i, 1);
 				else
 					$i++;

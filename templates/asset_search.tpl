@@ -59,7 +59,7 @@
 
 
 
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2('save', 3);return false;">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-asset-dialog ui-asset-search-dialog" onsubmit="loadXMLDoc2('save', 3);return false;">
 	<input type="hidden" id="sTypeTo" name="sTypeTo" value="{$sTypeTo}">
 	
 	<input type="hidden" id="nIDFirmS" name="nIDFirmS" value="{$nIDFirm|default:0}">
@@ -69,7 +69,7 @@
 	<input type="hidden" id="nIDSource" name="nIDSource">
 	<input type="hidden" id="nIDDest" name="nIDDest">
 	
-		<table class="input" border="0">
+		<table class="input ui-asset-search-caption" border="0">
 			<tr>
 				<td>
 					<div class="page_caption">Търсене на актив</div>
@@ -77,7 +77,7 @@
 			</tr>
 		</table>
 
-		<table class="input">
+		<table class="input ui-nomenclature-form ui-asset-search-filter">
 			<tr>
 				<td align="right">Фирма</td>
 				<td>
@@ -101,12 +101,12 @@
 					<select class="default" name="nIDGroup" id="nIDGroup" />
 				</td>
 				<td>
-					<button name="Button" onclick="getResult();"><img src="images/confirm.gif">Търси</button>
+					<button type="button" name="Button" class="search" onclick="getResult();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 				</td>
 			</tr>
 		</table>
 		
-		<table class="input" width="100%" border="0">
+		<table class="input ui-asset-search-result" width="100%" border="0">
 			<tr>
 				<td>
 					<div id="result" rpc_excel_panel="off" rpc_autonumber="off" rpc_resize="off"  style="height: 370px; overflow: auto;"></div>

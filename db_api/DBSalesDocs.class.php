@@ -9,7 +9,7 @@
 			parent::__construct($db_name_finance,PREFIX_SALES_DOCS,$db_finance);
 		}
 		
-		public function getReport( $aParams, DBResponse $oResponse = NULL ) {
+		public function getReport( $aParams, ?DBResponse $oResponse = NULL ) {
 			global $db_finance, $db_finance_backup;
 			
 			$oFirms 	= new DBFirms();

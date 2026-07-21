@@ -303,8 +303,6 @@ class MyHandler
         //	SUM( IF(is_earning = 1, total_sum, (total_sum * -1)) ) AS total,
         //echo $sQuery;
 
-        APILog::Log(0, $sQuery);
-
         $nRowCount = $_SESSION['userdata']['row_limit'];
         $_SESSION['userdata']['row_limit'] = 10000;
 
@@ -392,8 +390,8 @@ class MyHandler
         $oResponse->addTotal('count', $quantity);
         $oResponse->addTotal('code', $rows);
 
-        $oResponse->setFormElement( 'form1', 'plus_price', array(), sprintf("%01.2f лв.", $earning) );
-        $oResponse->setFormElement( 'form1', 'minus_price', array(), sprintf("%01.2f лв.", $expense) );
+        $oResponse->setFormElement( 'form1', 'plus_price', array(), sprintf("%01.2f €", $earning) );
+        $oResponse->setFormElement( 'form1', 'minus_price', array(), sprintf("%01.2f €", $expense) );
         //debug($oResponse->oResult->aData);
     }
 

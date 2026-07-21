@@ -67,7 +67,7 @@ function __construct($filename) {
 
     $this->_filename          = $filename;
     $this->_parser            = $parser;
-//?    $this->_tempdir           = undef;
+    $this->_tempdir           = sys_get_temp_dir();
     $this->_1904              = 0;
     $this->_activesheet       = 0;
     $this->_firstsheet        = 0;

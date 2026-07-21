@@ -34,7 +34,7 @@
 		
 		<tr>
 			<td width="1" class="inactive"></td>
-			{if $page eq states_filter}
+			{if $page eq 'states_filter'}
 				<td id="active" style="width:100px;" nowrap="nowrap">
 					Информация
 				</td>
@@ -44,7 +44,7 @@
 				</td>
 			{/if}
 			 <td width="1" id="passive"></td>
-			{if $page eq states_filter_fields}
+			{if $page eq 'states_filter_fields'}
 				<td id="active" style="width:100px;" nowrap="nowrap">
 					Видими&nbsp;полета
 				</td>
@@ -54,7 +54,7 @@
 				</td>
 			{/if}
 				<td width="1" id="passive"></td>
-			{if $page eq states_filter_totals}
+			{if $page eq 'states_filter_totals'}
 				<td id="active" style="width:100px;" nowrap="nowrap">
 					Автоматичен
 				</td>

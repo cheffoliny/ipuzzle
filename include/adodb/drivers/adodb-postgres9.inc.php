@@ -1,57 +1,40 @@
 <?php
-/*
- V5.14 8 Sept 2011  (c) 2000-2011 John Lim (jlim#natsoft.com). All rights reserved.
-  Released under both BSD license and Lesser GPL library license. 
-  Whenever there is any discrepancy between the two licenses, 
-  the BSD license will take precedence.
-  Set tabs to 4.
-  
-  Postgres9 support.
-  01 Dec 2011: gherteg added support for retrieving insert IDs from tables without OIDs
-*/
+/**
+ * ADOdb PostgreSQL 9+ driver
+ *
+ * This file is part of ADOdb, a Database Abstraction Layer library for PHP.
+ *
+ * @package ADOdb
+ * @link https://adodb.org Project's web site and documentation
+ * @link https://github.com/ADOdb/ADOdb Source code and issue tracker
+ *
+ * The ADOdb Library is dual-licensed, released under both the BSD 3-Clause
+ * and the GNU Lesser General Public Licence (LGPL) v2.1 or, at your option,
+ * any later version. This means you can use it in proprietary products.
+ * See the LICENSE.md file distributed with this source code for details.
+ * @license BSD-3-Clause
+ * @license LGPL-2.1-or-later
+ *
+ * @copyright 2000-2013 John Lim
+ * @copyright 2014 Damien Regad, Mark Newnham and the ADOdb community
+ */
 
 // security - hide paths
 if (!defined('ADODB_DIR')) die();
 
-include_once(ADODB_DIR."/drivers/adodb-postgres7.inc.php");
+include_once(ADODB_DIR."/drivers/adodb-postgres8.inc.php");
 
-class ADODB_postgres9 extends ADODB_postgres7 {
-	var $databaseType = 'postgres9';	
-	
-	function ADODB_postgres9() 
-	{
-		$this->ADODB_postgres7();
-	}
-
-	// Don't use OIDs, as they typically won't be there, and
-	// they're not what the application wants back, anyway.
-	function _insertid($table,$column)
-	{
-		return empty($table) || empty($column)
-			? $this->GetOne("SELECT lastval()")
-			: $this->GetOne("SELECT currval(pg_get_serial_sequence('$table','$column'))");
-	}
+class ADODB_postgres9 extends ADODB_postgres8
+{
+	var $databaseType = 'postgres9';
 }
 
-/*--------------------------------------------------------------------------------------
-	 Class Name: Recordset
---------------------------------------------------------------------------------------*/
-
-class ADORecordSet_postgres9 extends ADORecordSet_postgres7{
+class ADORecordSet_postgres9 extends ADORecordSet_postgres8
+{
 	var $databaseType = "postgres9";
-	
-	function ADORecordSet_postgres9($queryID,$mode=false) 
-	{
-		$this->ADORecordSet_postgres7($queryID,$mode);
-	}
 }
 
-class ADORecordSet_assoc_postgres9 extends ADORecordSet_postgres7{
+class ADORecordSet_assoc_postgres9 extends ADORecordSet_assoc_postgres8
+{
 	var $databaseType = "postgres9";
-	
-	function ADORecordSet_assoc_postgres9($queryID,$mode=false) 
-	{
-		$this->ADORecordSet_postgres7($queryID,$mode);
-	}
 }
-?>

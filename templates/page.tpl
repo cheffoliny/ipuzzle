@@ -28,14 +28,25 @@
     <script type="text/javascript" language="javascript" src="js/framework_general.js"></script>
     <script type="text/javascript" language="javascript" src="js/common_dialogs.js?version=2"></script>
     <script type="text/javascript" language="javascript" src="js/autoselect.js"></script>
-    <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=2"></script>
+      <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=8"></script>
+      <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=4"></script>
     <script type="text/javascript" language="javascript" src="js/format.js"></script>
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="css/ui-fa7-icons.css?version=4" rel="stylesheet" type="text/css">
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}
-    <link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-content.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-results.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-report-controls.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-dialogs.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-feedback.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-actions.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-legacy-reports.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-access.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-nomenclatures.css?version=14" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 
     <script type="text/javascript" language="javascript">
@@ -58,29 +69,23 @@
     </script>
 
 </head>
-<body>
+<body class="ui-refresh-content">
 
 
 <div id="systemMessageBG" style="display:none;"></div>
-<div class="canvasModal2" id="systemMessageDialog" style="width:300px;display:none;">
-	<div style="width:300px;height:20px;position:relative;background-color:#cacaca;">
-		<div style="width:280px;float:left;font-size:14px;">
-		Системно съобщение
-		</div>
-		<div class="closeDialog" onclick="closeSystemMessage();">
-			<span   style="float:right;"></span>
-		</div>
+<div class="canvasModal2 system-message" id="systemMessageDialog" role="alertdialog" aria-modal="true" aria-labelledby="systemMessageTitle" style="width:300px;display:none;">
+	<div class="system-message__header">
+		<div id="systemMessageTitle" class="system-message__title">Системно съобщение</div>
+		<button type="button" class="closeDialog system-message__close" onclick="closeSystemMessage();" aria-label="Затвори">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
-	<div style="height:50px;padding-top:10px;position:relative;">
-		<div style="float:left;">
-            <i class="fa fa-warning fa-2x text-red"></i>
-		</div>
-		<div style="float:left;width:230px;padding-top:10px;" id="sytemMessageValue">
-			Некоректно въведени данни
-		</div>
+	<div class="system-message__body">
+        <i class="fa fa-warning fa-2x text-red system-message__icon" aria-hidden="true"></i>
+		<div id="sytemMessageValue">Некоректно въведени данни</div>
 	</div>
-	<div style="text-align: center;">
-		<button class="search" onclick="closeSystemMessage();return false;">Добре</button>
+	<div class="system-message__footer">
+		<button type="button" class="btn btn-sm btn-primary" onclick="closeSystemMessage();return false;">Добре</button>
 	</div>
 </div>
 	

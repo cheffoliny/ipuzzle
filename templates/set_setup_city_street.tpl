@@ -2,15 +2,15 @@
 	rpc_debug = true;
 </script>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2( 'save', 3 )">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-location-dialog" onsubmit="loadXMLDoc2( 'save', 3 )">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="nIDCityTrans" name="nIDCityTrans" value="{$nIDCity}">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нова{/if} улица</div>
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td width="100">Наименование:</td>
 				<td>
@@ -27,12 +27,12 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

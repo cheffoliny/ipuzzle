@@ -67,7 +67,7 @@
 			$this->Output();
 		}
 		
-		private function printMonth( $nLocX, $nLocY, $nMonth, $nYear, $nCellSizeX = 10, $nCellSizeY = 5, $aData )
+		private function printMonth( $nLocX, $nLocY, $nMonth, $nYear, $nCellSizeX, $nCellSizeY, $aData )
 		{
 			$oDBHolidays = new DBHolidays();
 			

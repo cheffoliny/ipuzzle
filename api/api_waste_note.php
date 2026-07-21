@@ -15,7 +15,7 @@
 			
 			//throw new Exception($nIDAsset);
 			
-			$oResponse->setFormElement('form1','sAssetName',array(),$aAsset['name']." ".$nPriceLeft." лв.");
+			$oResponse->setFormElement('form1','sAssetName',array(),$aAsset['name']." ".$nPriceLeft." €");
 			$oResponse->printResponse();
 		}
 		

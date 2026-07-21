@@ -163,16 +163,16 @@
 
     </script>
 
-    <form name="form1" id="form1" action="page.php?page={$page}" method="POST">
+    <form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-tech-analytics" action="page.php?page={$page}" method="POST">
 	
-	<table class = "page_data">
+	<table class="page_data ui-nomenclature-heading ui-technical-heading">
 		<tr>
 			<td class="page_name">АНАЛИТИК</td>
 		</tr>
 	</table>
 	
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap ui-technical-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-technical-filter">
 			<tr>
 				<td style="width: 150px;" align="right">Тип на справката:&nbsp;</td>
 				<td style="width: 220px;">
@@ -196,7 +196,7 @@
 						{/foreach}
 					</select>
 				</td>
-				<td align="right"><button type="submit" name="Button"><img src="images/confirm.gif">Покажи</button></td>
+				<td align="right"><button type="submit" name="Button" class="search"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Покажи</button></td>
 			</tr>
 	  	</table>
 	</center>
@@ -228,7 +228,7 @@
  <span><a href="javascript:unconfirmedObjects();">Списък обекти</a></span>
 <fieldset >
 <legend>Обект</legend>
-<form id="form2" name="form2" onSubmit="return( false );" >
+<form id="form2" name="form2" class="ui-nomenclature-dialog ui-technical-dialog ui-tech-analytics-side" onSubmit="return( false );">
 		<input type="hidden" id="nIDObject" name="nIDObject" value="0" />
 		<input type="hidden" id="nIDOffice" name="nIDOffice" value="0" />
 		
@@ -270,7 +270,7 @@
 </fieldset>
  </form>
 
- <div id="result"> </div>
+ <div id="result" class="ui-technical-result"> </div>
  
  </div>
  

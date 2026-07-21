@@ -2,14 +2,14 @@
 	rpc_debug = true;
 </script>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2('save', 3)">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-financial-dialog ui-month-charge-dialog" onsubmit="loadXMLDoc2('save', 3)">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		
 		<div class="page_caption">{if $nID}Редакция{else}Добавяне{/if}</div>
 		<br />
 
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td>
 					Тип:&nbsp;
@@ -25,10 +25,10 @@
 			</tr>
 			<tr class="even">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Месечни Такси:</legend>
 						
-						<table class="input">
+						<table class="input ui-nomenclature-form ui-month-charge-fields">
 							<tr class="odd">
 								<td width="330">Такса за 1 детектор:</td>
 								<td>
@@ -88,10 +88,10 @@
 			</tr>
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Еднократни Такси:</legend>
 						
-						<table class="input">
+						<table class="input ui-nomenclature-form ui-month-charge-fields">
 							<tr class="odd">
 								<td width="330">Цена за Експресна поръчка:</td>
 								<td>
@@ -112,12 +112,12 @@
 		</table>
 		
 		<br />
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

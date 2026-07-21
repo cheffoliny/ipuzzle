@@ -15,23 +15,38 @@ class VerboseException extends Exception
 {
 	public $description;
 	public $level;
-	public $file;
-	public $line;
-	public $code;
-	public $message;
+	private $amfFile;
+	private $amfLine;
+	private $amfCode = "AMFPHP_RUNTIME_ERROR";
 	
-	function VerboseException($string, $level, $file, $line)
+	function __construct($string, $level, $file, $line)
 	{
 		$this->description = $string;
 		$this->level = $level;
-		$this->code = "AMFPHP_RUNTIME_ERROR";
-		$this->file = $file;
-		$this->line = $line;
-		Exception::__construct($string);
+		$this->amfFile = $file;
+		$this->amfLine = $line;
+		parent::__construct($string);
+	}
+
+	function VerboseException($string, $level, $file, $line)
+	{
+		$this->__construct($string, $level, $file, $line);
+	}
+
+	function __get($name)
+	{
+		switch ($name)
+		{
+			case 'code': return $this->amfCode;
+			case 'file': return $this->amfFile;
+			case 'line': return $this->amfLine;
+		}
+
+		return null;
 	}
 }
 
-function amfErrorHandler($level, $string, $file, $line, $context)
+function amfErrorHandler($level, $string, $file, $line, $context = null)
 {
 	//forget about errors not defined at reported
 	$amfphpErrorLevel = $GLOBALS['amfphp']['errorLevel'];

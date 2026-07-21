@@ -138,7 +138,7 @@
 
 <dlcalendar click_element_id="editRobotFromDate" 	input_element_id="sRobotFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 
-<form id="form1">
+<form id="form1" class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-filter-dialog" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 	
 	<div class="page_caption">{if $nID}Редактиране{else}Създаване{/if} на филтър</div>
@@ -216,12 +216,12 @@
 						<td align="left">
 							<input type="text" name="sDocDateFrom" id="sDocDateFrom" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDocDateFrom" />
+							<button type="button" id="editDocDateFrom" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на документа от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							&nbsp;
 							до&nbsp;
 							<input type="text" name="sDocDateTo" id="sDocDateTo" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDocDateTo" />
+							<button type="button" id="editDocDateTo" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на документа до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td align="right">Период :&nbsp;</td>
 						<td align="left">
@@ -255,12 +255,12 @@
 						<td align="left">
 							<input type="text" name="sLastOrderFrom" id="sLastOrderFrom" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editLastOrderFrom" />
+							<button type="button" id="editLastOrderFrom" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Последно плащане от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							&nbsp;
 							до&nbsp;
 							<input type="text" name="sLastOrderTo" id="sLastOrderTo" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editLastOrderTo" />
+							<button type="button" id="editLastOrderTo" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Последно плащане до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td align="right">Период :&nbsp;</td>
 						<td align="left">
@@ -292,12 +292,12 @@
 						<td align="left">
 							<input type="text" name="sCreateDateFrom" id="sCreateDateFrom" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editCreateDateFrom" />
+							<button type="button" id="editCreateDateFrom" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Генериран от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							&nbsp;
 							до&nbsp;
 							<input type="text" name="sCreateDateTo" id="sCreateDateTo" class="inp75" onkeypress="return formatDate(event, '.');" onchange="onDatesChange( 0 );" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editCreateDateTo" />
+							<button type="button" id="editCreateDateTo" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Генериран до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td align="right">Период :&nbsp;</td>
 						<td align="left">
@@ -488,7 +488,7 @@
 						<td align="left">
 							<input type="text" name="sRobotFromDate" id="sRobotFromDate" class="inp75" onkeypress="return formatDate(event, '.');" disabled/>
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editRobotFromDate"/>
+							<button type="button" id="editRobotFromDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на пускане"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 					<tr class="even" height="22px">
@@ -516,7 +516,7 @@
 	<table class="input" style="margin-top:10px;">
 		<tr>
 			<td style="width: 500px;">
-				<fieldset style="padding-left: 5px; padding-right: 5px;">
+				<fieldset class="ui-document-filter-transfer">
 				<legend>Номенклатури :</legend>
 					<table>
 						<tr>
@@ -525,8 +525,8 @@
 								</select>
 							</td>
 							<td>
-								<button id=b25 name="button" title="Добави Номенклатура" style="width: 20px;" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-								<button id=b25 name="button" title="Премахни Номенклатура" style="width: 20px;" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+								<button type="button" name="button" class="ui-nomenclature-transfer-button" title="Добави Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+								<button type="button" name="button" class="ui-nomenclature-transfer-button" title="Премахни Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 							</td>
 							<td>
 								<select name="nomenclatures_current[]" id="nomenclatures_current" style="width: 250px; height: 70px;" size="10" ondblclick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'left' );" multiple="multiple">
@@ -540,8 +540,8 @@
 				&nbsp;
 			</td>
 			<td align="right" valign="bottom">
-				<button onclick="onSave();" class="search"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+				<button type="button" onclick="onSave();" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+				<button type="button" onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

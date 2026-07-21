@@ -1,6 +1,6 @@
 {literal}
 	<script>
-		//rpc_debug = true;
+		rpc_debug = true;
 		
 		function submit_form() {
 			loadXMLDoc( 'save', 0 );
@@ -21,7 +21,7 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-personnel-list ui-personnel-modal-list" onsubmit="return false;">
 <input type="hidden" id="id" name="id" value="{$id|default:0}" />
 <input type="hidden" id="id_person" name="id_person" value="{$id_person|default:0}" />
 
@@ -33,16 +33,16 @@
 	<td id="filter_result">
 	<!-- начало на работната част -->
 	<center>
-		<table class="search">
+		<table class="search ui-personnel-toolbar">
 			<tr>
 				<td align="right" width="300px">
 					Преглед по години&nbsp;<input style="width:40px; text-align:right" onkeypress="return formatDigits(event);" maxlength="4" name="year" id="year" type="text" value="{$year}"/>&nbsp;&nbsp;
 				</td>
 				<td align="center">
-					<button type="button" onClick="loadXMLDoc('result'); return false;" name="Button"><img src="images/confirm.gif">Търси</button>
+					<button type="button" onClick="loadXMLDoc('result'); return false;" name="Button"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 				</td>
 				<td valign="top" align="right" width="300px">
-					<button id="b100" onClick="setHospital(0);"><img src="images/plus.gif" />Добави</button>
+					<button id="b100" onClick="setHospital(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 				</td>
 			</tr>
 
@@ -51,7 +51,7 @@
 
 	<hr>
 	
-	<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:330px;overflow: auto;"></div>
+	<div id="result" class="ui-personnel-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:330px;overflow: auto;"></div>
 
  	<!-- край на работната част -->
 	</td>
@@ -59,11 +59,11 @@
 </table>
 
 
-<div id="search"  style="padding-top:10px;width:700px;">
+<div id="search" class="ui-personnel-list-actions" style="padding-top:10px;width:700px;">
 	<table width="100%" cellspacing=1px>
 		<tr valign="top">
 			<td valign="top" align="right" width="700px">
-				<button id="b100" onClick="parent.window.close();" ><img src="images/cancel.gif" />Затвори</button>
+				<button id="b100" onClick="parent.window.close();" ><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

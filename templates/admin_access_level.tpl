@@ -42,36 +42,36 @@
 	</script>
 {/literal}
 
-<form action="" id="form1" name="form1" onSubmit="return false;">
+<form action="" id="form1" name="form1" class="ui-access-list" onSubmit="return false;">
 	<input type=hidden name="id" id="id"value="">
 
-	<div id="search">
-		<table class = "page_data">
+	<div id="search" class="ui-access-list-shell">
+		<table class = "page_data ui-access-heading">
 			<tr>
 				<td class="page_name">Номенклатури - НИВА НА ДОСТЪП</td>
 				<td class="buttons">
-					{if $right_edit}<button id="b70" onClick="return level_new(level_group)"><img src="images/plus.gif">Добави</button>
+					{if $right_edit}<button id="b70" onClick="return level_new(level_group)"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 					{else}&nbsp;
 					{/if}
 				</td>
 			</tr>
 		</table>
 
-		<center>
+		<center class="ui-access-filter-wrap">
 			<br />
-			<table>
+			<table class="table-secondary ui-access-filter-table">
 				<tr>
 					<td>Група</td>
 					<td>
-						<select name="level_group"  id="level_group">
+						<select name="level_group" id="level_group" class="form-control">
 						</select>
 						&nbsp;
-						<button title='Търси' onclick="loadXMLDoc('result'); return false;" style='width:70px;'><img src='images/confirm.gif' alt='' />Търси</button>
+						<button title='Търси' onclick="loadXMLDoc('result'); return false;" style='width:70px;'><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 						&nbsp;
 						{if $right_edit}
-							<button style="width: 30px" id=b25 title="Нова група" name="Button" onClick="dialog_win('set_setup_access_group&id=0',400,140,0,'set_setup_access_group')" ><img src="images/plus.gif" /></button>&nbsp;
-							<button style="width: 30px" name="Button" id=b25 title="Редактиране на група" onClick="return group_update(level_group); return false;"><img src=images/edit.gif /></button>&nbsp;
-							<button style="width: 30px" name="Button" id=b25 title="Премахване на група" onClick="return group_delete(level_group); return false;"><img src=images/erase.gif /></button>
+							<button style="width: 30px" id=b25 title="Нова група" name="Button" onClick="dialog_win('set_setup_access_group&id=0',400,140,0,'set_setup_access_group')" ><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>&nbsp;
+							<button style="width: 30px" name="Button" id=b25 title="Редактиране на група" onClick="return group_update(level_group); return false;"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>&nbsp;
+							<button style="width: 30px" name="Button" id=b25 title="Премахване на група" onClick="return group_delete(level_group); return false;"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span></button>
 						{else}
 							&nbsp;
 						{/if}

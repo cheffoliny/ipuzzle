@@ -239,8 +239,6 @@
 			{
 				global $db_name_personnel, $db_personnel, $oPersonData, $oResponse;
 				
-				$db->debug = true;
-				
 				$oPositionsNC 	 	= new DBPositionsNC();
 				$oPersonContract 	= new DBPersonContract();
 				$oDBPersonLeaves 	= new DBPersonLeaves();

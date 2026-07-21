@@ -100,8 +100,8 @@
 	<dlcalendar click_element_id="img_sToday" input_element_id="sToday" tool_tip="Изберете дата"></dlcalendar>
 	<dlcalendar click_element_id="img_sStartDate" input_element_id="sStartDate" tool_tip="Изберете дата"></dlcalendar>
 	
-	<div class="content" style="width: 640px; height: 700px; overflow-y: auto;">
-		<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+	<div class="content ui-contract-print-content" style="width: 640px; height: 700px; overflow-y: auto;">
+		<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-contract-print-form" onsubmit="return false;">
 			<input type="hidden" name="nID" id="nID" value="{$nID}">
 			<input type="hidden" name="nType" id="nType" value="{$nType}">
 			<!--<input type="hidden" name="sEducation" id="sEducation" value="">-->
@@ -136,7 +136,7 @@
 						<td>Дата:</td>
 						<td>
 							<input name="sDate" id="sDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sDate" />
+							&nbsp;<button type="button" id="img_sDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на договора"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						
 						<td>&nbsp;&nbsp;&nbsp;</td>
@@ -144,7 +144,7 @@
 						<td>Днес:</td>
 						<td>
 							<input name="sToday" id="sToday" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sToday" />
+							&nbsp;<button type="button" id="img_sToday" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Днешна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 				</table>
@@ -301,7 +301,7 @@
 						<td width="420">Постъпил на работа:</td>
 						<td>
 							<input name="sStartDate" id="sStartDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sStartDate" />
+							&nbsp;<button type="button" id="img_sStartDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 					
@@ -342,7 +342,7 @@
 				<tr class="odd">
 					<td width="250">&nbsp;</td>
 					<td style="text-align: right;">
-						<button class="search" onclick="confirmPrint();"><img src="images/pdf.gif"/>&nbsp;Печат</button>
+						<button type="button" class="search ui-contract-print-button" onclick="confirmPrint();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span>&nbsp;Печат</button>
 					</td>
 				</tr>
 			</table>
@@ -356,8 +356,8 @@
 	<dlcalendar click_element_id="img_sStartDate" input_element_id="sStartDate" tool_tip="Изберете дата"></dlcalendar>
 	<dlcalendar click_element_id="img_sToday" input_element_id="sToday" tool_tip="Изберете дата"></dlcalendar>
 	
-	<div class="content" style="width: 640px; height: 700px; overflow-y: auto;">
-		<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+	<div class="content ui-contract-print-content" style="width: 640px; height: 700px; overflow-y: auto;">
+		<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-contract-print-form" onsubmit="return false;">
 			<input type="hidden" name="nID" id="nID" value="{$nID}">
 			<input type="hidden" name="nType" id="nType" value="{$nType}">
 			<input type="hidden" name="sEducation" id="sEducation" value="">
@@ -392,7 +392,7 @@
 						<td>Днес:</td>
 						<td>
 							<input name="sToday" id="sToday" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sToday" />
+							&nbsp;<button type="button" id="img_sToday" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Днешна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						
 						<td>&nbsp;&nbsp;&nbsp;</td>
@@ -400,7 +400,7 @@
 						<td>Считано от:</td>
 						<td>
 							<input name="sStartDate" id="sStartDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sStartDate" />
+							&nbsp;<button type="button" id="img_sStartDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 					
@@ -408,7 +408,7 @@
 						<td>Дата:</td>
 						<td>
 							<input name="sDate" id="sDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sDate" />
+							&nbsp;<button type="button" id="img_sDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на договора"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						
 						<td colspan="3">&nbsp;</td>
@@ -574,7 +574,7 @@
 				<tr class="odd">
 					<td width="250">&nbsp;</td>
 					<td style="text-align: right;">
-						<button class="search" onclick="confirmPrint();"><img src="images/pdf.gif"/>&nbsp;Печат</button>
+						<button type="button" class="search ui-contract-print-button" onclick="confirmPrint();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span>&nbsp;Печат</button>
 					</td>
 				</tr>
 			</table>
@@ -587,8 +587,8 @@
 	<dlcalendar click_element_id="img_sDate" input_element_id="sDate" tool_tip="Изберете дата"></dlcalendar>
 	<dlcalendar click_element_id="img_sStartDate" input_element_id="sStartDate" tool_tip="Изберете дата"></dlcalendar>
 	
-	<div class="content" style="width: 640px; height: 700px; overflow-y: auto;">
-		<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+	<div class="content ui-contract-print-content" style="width: 640px; height: 700px; overflow-y: auto;">
+		<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-contract-print-form" onsubmit="return false;">
 			<input type="hidden" name="nID" id="nID" value="{$nID}">
 			<input type="hidden" name="nType" id="nType" value="{$nType}">
 			<input type="hidden" name="sEducation" id="sEducation" value="">
@@ -623,7 +623,7 @@
 						<td>Дата:</td>
 						<td>
 							<input name="sDate" id="sDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sDate" />
+							&nbsp;<button type="button" id="img_sDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на заповедта"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						
 						<td>&nbsp;&nbsp;&nbsp;</td>
@@ -631,7 +631,7 @@
 						<td>Считано от:</td>
 						<td>
 							<input name="sStartDate" id="sStartDate" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_sStartDate" />
+							&nbsp;<button type="button" id="img_sStartDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 				</table>
@@ -796,7 +796,7 @@
 				<tr class="odd">
 					<td width="250">&nbsp;</td>
 					<td style="text-align: right;">
-						<button class="search" onclick="confirmPrint();"><img src="images/pdf.gif"/>&nbsp;Печат</button>
+						<button type="button" class="search ui-contract-print-button" onclick="confirmPrint();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span>&nbsp;Печат</button>
 					</td>
 				</tr>
 			</table>

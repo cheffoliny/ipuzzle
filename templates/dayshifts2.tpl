@@ -32,23 +32,23 @@
 		}
 	</style>
 {/literal}
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-schedule-report ui-day-shifts-report" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	<input type="hidden" name="first" id="first" value="1">
-	<table class = "page_data">
+	<table class = "page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Смени</td>
 		
 			<td valign="top" align="right" width="160px" >
 			{if $auto_schedule}
-				<button type="button" name="Validate" onClick="autoValidate(); return false;" class="search"><img src="images/reload.gif">Валидация</button>
+				<button type="button" id="Validate" name="Validate" onClick="autoValidate(); return false;" class="search"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span>Валидация</button>
 			{/if}
 			</td>
 		
 		</tr>		
 	</table>
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap ui-schedule-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-schedule-filter">
 			<tr>
 				<td align="right">Фирма</td>
 				<td>
@@ -58,7 +58,7 @@
 				<td>
 					<select class="default" name="nIDOffice" id="nIDOffice" />
 				</td>
-				<td align="right"><button name="Button" onclick="loadXMLDoc2('result');"><img src="images/confirm.gif">Опресни</button></td>
+				<td align="right"><button type="button" name="Button" onclick="loadXMLDoc2('result');"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span>Опресни</button></td>
 			</tr>
 		</table>
 	</center>

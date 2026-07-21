@@ -100,10 +100,10 @@
 					</td>
 					<td>
 						<button class="btn btn-sm btn-success h-100" name="button" title="Добави наработка" onClick="move_option_to( 'all_earnings', 'account_earnings', 'right'); return false;">
-							<i class="far fa-plus"></i>
+							<span class="ui-icon ui-icon-right" aria-hidden="true"></span>
 						</button></br>
 						<button class="btn btn-sm btn-danger h-50" name="button" title="Премахни наработка" onClick="move_option_to( 'all_earnings', 'account_earnings', 'left'); return false;">
-							<i class="far fa-minus"></i>
+							<span class="ui-icon ui-icon-left" aria-hidden="true"></span>
 						</button>
 					</td>
 					<td>
@@ -129,10 +129,10 @@
 					</td>
 					<td>
 						<button class="btn btn-sm btn-success h-100" name="button" title="Добави удръжка" onClick="move_option_to( 'all_expenses', 'account_expenses', 'right'); return false;">
-							<i class="far fa-plus"></i>
+							<span class="ui-icon ui-icon-right" aria-hidden="true"></span>
 						</button></br>
 						<button class="btn btn-sm btn-danger h-50" name="button" title="Премахни удръжка" onClick="move_option_to( 'all_expenses', 'account_expenses', 'left'); return false;">
-							<i class="far fa-minus"></i>
+							<span class="ui-icon ui-icon-left" aria-hidden="true"></span>
 						</button>
 					</td>
 					<td>
@@ -149,7 +149,7 @@
 	<nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1">
 		<div class="col-12 col-sm-12 col-lg-12">
 			<div class="input-group input-group-sm text-right">
-				<button class="btn btn-block btn-sm btn-primary" type="button" onClick="getResult();"><i class="fa fa-plus"></i> Добави</button>
+				<button class="btn btn-block btn-sm btn-primary" type="button" onClick="getResult();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
 			</div>
 		</div>
 	</nav>

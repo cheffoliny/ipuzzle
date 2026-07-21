@@ -76,22 +76,22 @@
 <dlcalendar click_element_id="img_date_from" input_element_id="date_from" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-schedule-report ui-shifts-count-report" onSubmit="return false;">
 	<input type="hidden" name="show_filters" id="show_filters" value="show" />
 	<input type="hidden" name="nID" id="nID" value="0" />
 	<input type="hidden" name="nRadio" id="nRadio" value="1" />
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Брой Смени</td>
 			<td align="right">
-				<button type="button" style="width: 30px;" onClick="showFilters();"><img src="images/search2.gif"></button>
+				<button type="button" class="ui-schedule-icon-button" title="Покажи или скрий филтрите" onClick="showFilters();"><span class="ui-icon ui-icon-filter" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 	</table>
 	
-	<div id="filters">
-		<table class="search">
+	<div id="filters" class="ui-nomenclature-filter-wrap ui-schedule-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-schedule-filter ui-shifts-count-filter">
 			<tr>
 				<td style="width: 30px">&nbsp;</td>
 				<td align="right">Филтри</td>
@@ -99,9 +99,9 @@
 					<select name="nIDScheme" id="nIDScheme"></select>
 				</td>
 				<td align="left" colspan="8">
-					<button style="width: 30px" id=b25 title="Нов филтър" name="Button5" onClick="openFilter( 1 );" ><img src="images/plus.gif" /></button>&nbsp;
-					<button style="width: 30px" name="Button4" id=b25 title="Редактиране на филтър" onClick="openFilter( 2 );"><img src=images/edit.gif /></button>&nbsp;
-					<button style="width: 30px" name="Button3" id=b25 title="Премахване на филтър" onClick="deleteFilter();"><img src=images/erase.gif /></button>
+					<button type="button" class="ui-schedule-icon-button" title="Нов филтър" name="Button5" onClick="openFilter( 1 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>&nbsp;
+					<button type="button" class="ui-schedule-icon-button" name="Button4" title="Редактиране на филтър" onClick="openFilter( 2 );"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>&nbsp;
+					<button type="button" class="ui-schedule-icon-button" name="Button3" title="Премахване на филтър" onClick="deleteFilter();"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 			<tr>
@@ -166,9 +166,9 @@
 				
 				<td colspan="2" align="right">
 				&nbsp;&nbsp;от дата&nbsp;<input type="text" id="date_from" name="date_from" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_from" />&nbsp;
+							<button type="button" id="img_date_from" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>&nbsp;
 				до дата&nbsp;<input type="text" id="date_to" name="date_to" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_to" />
+							<button type="button" id="img_date_to" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 				
 				<td>&nbsp;&nbsp;</td>
@@ -182,7 +182,7 @@
 				<td>&nbsp;</td>
 				
 				<td align="right">
-					<button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button>
+					<button type="button" name="Button" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 				</td>
 			</tr>
 		</table>

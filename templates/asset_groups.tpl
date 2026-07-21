@@ -20,13 +20,13 @@
 {/literal}
 </script>
 
-	<form id="form1">
+	<form id="form1" class="ui-nomenclature-list ui-assets-list" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID"/>
-		<table class="page_data">
+		<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Активи-ГРУПИ</td>
 			<td class="buttons"> 
-				<button class="search" onclick="modifyGroup(0);"><img src="images/plus.gif"> Добави </button> 
+				<button type="button" class="search" onclick="modifyGroup(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button> 
 				
 			</td>
 		</tr>

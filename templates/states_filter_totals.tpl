@@ -29,28 +29,28 @@
 
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-dialog ui-monitor-dialog ui-states-filter-dialog" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
-	<div class="page_caption">
+	<div class="page_caption ui-monitor-heading">
 		Редактиране на филтър
 	</div>
 
 	<table  cellspacing="0" cellpadding="0" width="100%"  border="0" id="filter" >
   		<tr>
   			<td>
-  				{include file=states_filter_tabs.tpl}
+  				{include file="states_filter_tabs.tpl"}
   				<br>
   			</td>
   		</tr>
   	</table>
 	
-	<table border="0" class="input">
+	<table border="0" class="input ui-monitor-dialog-fields">
 		<tr class="even">
 			<td>
 				&nbsp;
 			</td>
 			<td style="width:100px;" align="right">
-				<input type="checkbox" class="clear" name="auto" id="auto" onclick="onclickCheck(this.checked);"/>
+				<input type="checkbox" class="clear ui-nomenclature-checkbox" name="auto" id="auto" onclick="onclickCheck(this.checked);"/>
 			</td>
 			<td>
 				Автоматичен филтър
@@ -63,7 +63,7 @@
 				<table class="input">
 					<tr class="even">
 						<td style="width:20px;">
-							<input type="checkbox" class="clear" name="total_count" id="total_count" />
+							<input type="checkbox" class="clear ui-nomenclature-checkbox" name="total_count" id="total_count" />
 						</td>
 						<td>
 							Количество
@@ -71,7 +71,7 @@
 					</tr>
 					<tr class="odd">
 						<td style="width:20px;">
-							<input type="checkbox" class="clear" name="total_price" id="total_price"/>
+							<input type="checkbox" class="clear ui-nomenclature-checkbox" name="total_price" id="total_price"/>
 						</td>
 						<td>
 							Цена
@@ -91,7 +91,7 @@
 			<td align="left">
 				<input type="text" name="sFromDate" id="sFromDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 				&nbsp;
-				<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editFromDate" />
+				<button type="button" id="editFromDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на пускане"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 		<tr class="odd">
@@ -111,10 +111,9 @@
 		</tr>
 		<tr class="odd">
 			<td colspan="2" style="width:100px;">&nbsp;</td>
-			<td style="text-align:right;" valign="bottom">
-				<br><br><br><br><br><br><br><br>
-				<button type="button" class="search" onClick="saveData();"> Запиши </button>
-				<button type="button" onClick="window.opener.loadXMLDoc2('load');parent.window.close();"> Затвори </button>
+			<td class="ui-monitor-dialog-action-cell" valign="bottom">
+				<button type="button" class="search" onClick="saveData();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+				<button type="button" class="btn-danger" onClick="window.opener.loadXMLDoc2('load');parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 			</td>
 		</tr>
 	</table>

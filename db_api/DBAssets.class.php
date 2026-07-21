@@ -473,7 +473,7 @@
 			return $sAttributes;
 		}
 		
-		public function getAssets( $nStartLevel = 0, $nIDAsset, $aData, $aParams, $oResponse, $bSearchDeep = true )
+		public function getAssets( $nStartLevel, $nIDAsset, $aData, $aParams, $oResponse, $bSearchDeep = true )
 		{
 			global $db_name_personnel, $db_name_sod, $db_storage_backup, $nOrder, $nPriceTotal, $nPriceLeftTotal;
 			
@@ -1991,7 +1991,6 @@
 				";
 				
 				if( $oParams->get( "sfield" ) == "actives_count" )$oParams->set( "sfield", "num" );
-				APILog::Log(0, $sQuery);
 				$this->getResult( $sQuery, "num", DBAPI_SORT_ASC, $oResponse );
 				$aTotal = $this->selectOnce( $sTotalQuery );
 				
@@ -2192,7 +2191,6 @@
 						WHERE s.id = {$aResult[0]['id_storage']}
 						
 						";
-					APILog::Log(0,$sQuery);	
 					$aData = $this->oDB->GetOne($sQuery);
 					//if($aData == false)throw new Exception($this->oDB->ErrorMsg());
 					break;

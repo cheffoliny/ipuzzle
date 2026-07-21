@@ -161,7 +161,7 @@
 			$nIDPerson = Params::get( "nIDPerson", 0 );
 			$nNextNum = Params::get( "nNextNum", 0 );
 			
-			$aSelectedOffices = Params::get( "selected_offices" );
+			$aSelectedOffices = (array) Params::get( "selected_offices", array() );
 			
 			if( empty( $nIDPerson ) || empty( $nNextNum ) )
 				throw new Exception("Въведена е невалидна стойност!", DBAPI_ERR_INVALID_PARAM);

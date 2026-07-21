@@ -45,7 +45,7 @@
 				
 				if( !empty( $sMOLList ) )
 				{
-					$aPersonList = split( ",", $sMOLList );
+					$aPersonList = explode( ",", $sMOLList );
 					foreach( $aPersonList as $nIDMol )
 					{
 						$aData = array();

@@ -103,6 +103,9 @@ class AMFBaseDeserializer {
 	var $amf0storedObjects;
 	
 	var $native;
+	var $isBigEndian;
+	var $charsetHandler;
+	var $decodeFlags;
 
 	/**
 	 * Constructor method for the deserializer.  Constructing the deserializer converts the input stream
@@ -110,7 +113,7 @@ class AMFBaseDeserializer {
 	 * 
 	 * @param object $is The referenced input stream
 	 */
-	function AMFBaseDeserializer($rd) {
+	function __construct($rd) {
 		$this->isBigEndian = AMFPHP_BIG_ENDIAN;
 		$this->current_byte = 0;
 		$this->raw_data = $rd;  // store the stream in this object
@@ -122,6 +125,10 @@ class AMFBaseDeserializer {
 		$this->native = $GLOBALS['amfphp']['native'] && function_exists('amf_decode');
 		$this->decodeFlags = (AMFPHP_BIG_ENDIAN*2) | 4;
 	} 
+
+	function AMFBaseDeserializer($rd) {
+		$this->__construct($rd);
+	}
 
 	/**
 	 * deserialize invokes this class to transform the raw data into valid object

@@ -66,7 +66,6 @@
 		
 		public function getDispecherName() {
 			global $db_name_personnel, $db_personnel;
-			$db_personnel->debug=true;
 			
 			$sQuery = "
 				SELECT
@@ -75,7 +74,7 @@
 				FROM {$db_name_personnel}.personnel dp
 				WHERE 1
 					AND dp.status = 'active'
-					AND dp.id_position IN (SELECT id FROM {$db_name_personnel}.positions WHERE function = 'dispatcher' AND to_arc = 0)
+					AND dp.id_position IN (SELECT id FROM {$db_name_personnel}.positions WHERE position_function = 'dispatcher' AND to_arc = 0)
 				ORDER BY dName
 			";
 			

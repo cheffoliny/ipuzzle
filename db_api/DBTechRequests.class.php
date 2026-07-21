@@ -432,7 +432,7 @@ class DBTechRequests extends DBBase2 {
                         tr.id_contract,
                         hr.name AS holdup_reason,
                         '' as obj_distance,
-                        tr.time,
+                        COALESCE(tr.time, 0) AS timing,
                         tr.note AS some_info,
                         tr.id_object,
                         CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS created_person,
@@ -534,7 +534,7 @@ class DBTechRequests extends DBBase2 {
                         tr.id_contract,
                         hr.name AS holdup_reason,
                         c.obj_distance,
-                        tr.time,
+                        COALESCE(tr.time, 0) AS timing,
                         c.info_tehnics AS some_info,
                         tr.id_object,
                         CONCAT_WS( ' ', per.fname, per.mname, per.lname ) AS created_person,
@@ -603,9 +603,10 @@ class DBTechRequests extends DBBase2 {
 
             $i++;
             $val['num'] = zero_padding($val['num']);
-            $pic_num = $val['timing'] / 30;
+            $nTiming = isset($val['timing']) && is_numeric($val['timing']) ? (float) $val['timing'] : 0.0;
+            $pic_num = $nTiming / 30;
 
-            $nDistance = $val['obj_distance'];
+            $nDistance = isset($val['obj_distance']) && is_numeric($val['obj_distance']) ? (float) $val['obj_distance'] : 0.0;
 
             //проверка за неплатени фактури
 
@@ -628,7 +629,7 @@ class DBTechRequests extends DBBase2 {
             if ($pic_num > 16)
                 $pic_num = 16;
 
-            $pad = ($val['timing'] / 30) * 30;
+            $pad = ($nTiming / 30) * 30;
             $val['timing'] = '';
             $row_color = $i % 2 ? '#FFFFFF' : '#F0F0F0';
             $oResponse->setDataAttributes($key, 'timing', array('style' => "background: {$row_color} url(images/time/red{$pic_num}.gif) no-repeat; padding-left: {$pad}px; "));

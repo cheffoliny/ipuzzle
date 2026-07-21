@@ -5,10 +5,6 @@
 	$oRegions = 			New DBBase( $db_sod, 		'offices' );
 	$account_office =		New DBBase( $db_system, 	'account_office' );
 	
-	$db_personnel->debug=true;
-	$db_system->debug=true;
-	$db_sod->debug=true;
-	
 	class MyHandler 
 		extends APIHandler {
 			
@@ -65,7 +61,7 @@
 								return $nResult;
 							}
 							
-							$CP = each( $aCurrentPerson );
+							$CP = array( 'value' => reset( $aCurrentPerson ) );
 							
 							$nIDFirm = !empty($aParams['nIDFirm']) ? $aParams['nIDFirm'] : $CP['value']['id_firm'];
 

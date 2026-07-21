@@ -585,7 +585,10 @@ class DBObjectShifts extends DBBase2 {
 
         $aDataTemp = $this->selectAssoc($sQuery);
 
-        $aRowTotal = array_pop($aDataTemp);
+        $aRowTotal = !empty($aDataTemp) ? array_pop($aDataTemp) : array();
+        if (!is_array($aRowTotal)) {
+            $aRowTotal = array();
+        }
         $aRowTotal['id'] = '__TOTAL__';
         $aRowTotal['shift_hours'] = "";
         $aRowTotal['personName'] = "";

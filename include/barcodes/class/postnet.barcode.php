@@ -122,7 +122,7 @@ class postnet extends BarCode {
 			$c = strlen($code);
 			$c2 = 3 * $this->res;
 			for ($i = 0; $i < $c; $i++) {
-				if ($code{$i} === '0') {
+				if ($code[$i] === '0') {
 					$this->positionY = ($first_posY + $this->maxHeight) / 2;
 					$height = $this->positionY + ($first_posY + $this->maxHeight) / 2;
 				} else {

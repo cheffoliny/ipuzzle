@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>.: iPuzzle - ERP & BPM System :.</title>
@@ -17,29 +17,32 @@
     <link href="css/index.css" 				        type="text/css" rel="stylesheet" />
 
     <link href="css/bootstrap-intelli.css"  rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-shell.css?version=1" rel="stylesheet" type="text/css">
 </head>
 
-<body class="text-center">
+<body class="text-center ui-refresh-login">
 
     <form class="form-signin" action="index.php?do=login" name=form method="POST" target="_self">
 
-        <img class="mb-4" src="images/logo.png" alt="" /><br />
+        <img class="mb-4" src="images/logo.png" alt="iPuzzle" /><br />
         {if $message}{$message}
         {elseif $message eq "incorectAcceptOfiices"}<h5 class="mb-3 font-weight-normal text-danger">Потребителят няма достъп!</h5>
         {else}<h5 class="mb-3">Въведете потребителско име и парола за достъп!</h5>{/if}
 
         <div class="input-group input-group-sm mb-3">
+            <label class="sr-only" for="name">Потребителско име</label>
             <div class="input-group-prepend">
-                <span class="fas fa-user fa-lg fa-fw" data-fa-transform="right-22 down-6"></span>
+                <span class="fas fa-user fa-lg fa-fw"></span>
             </div>
             <input class="form-control pl-5 mr-3" type="text" value="" id="name" name="username" placeholder="Потребителско име"  required="" autofocus="" />
         </div>
 
         <div class="input-group input-group-sm mb-3">
+            <label class="sr-only" for="password">Парола</label>
             <div class="input-group-prepend">
-                <span class="fa fa-key fa-lg  fa-fw" data-fa-transform="right-22 down-6"></span>
+                <span class="fa fa-key fa-lg  fa-fw"></span>
             </div>
-            <input class="form-control pl-5 mr-3" type="password" value="" name="password" placeholder="Парола за достъп..." required="" />
+            <input class="form-control pl-5 mr-3" type="password" value="" id="password" name="password" placeholder="Парола за достъп..." required="" />
         </div>
         {*<div class="input-group input-group-sm btn-block">*}
             {*<input type="text" value="" id="code" name="code" style="width: 85px; height: 26px; border: 1px solid #fefefe; background: rgba(255,255,255,0.5);" autocomplete="off"/>*}

@@ -4,12 +4,12 @@
 	var my_action = '';
 </script>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog" onsubmit="my_action = 'save'; return loadXMLDoc( 'save', 3 );">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		
 		<div class="page_caption">{if $id}Редактиране на Длъжности по НКИД{else}Нова Длъжност по НКИД{/if}</div>
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="even">
 				<td width="80">Шифър:</td>
 				<td><input type="text" name="cipher" id="cipher" style="width: 80px;" onkeypress="return formatDigits(event);" /></td>
@@ -25,7 +25,7 @@
 			</tr>
 		</table>
 
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -33,8 +33,8 @@
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

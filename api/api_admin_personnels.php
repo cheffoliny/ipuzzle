@@ -22,8 +22,6 @@
 					$aData = unserialize($aTabs[0]['data']);
 				}
 				
-				APILog::Log(0, $aData);
-
 				if ( !empty($_SESSION['userdata']['access_right_levels']) ) {
 					if ( in_array('person_data_view', $_SESSION['userdata']['access_right_levels']) ) {
 

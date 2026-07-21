@@ -11,35 +11,18 @@
 		}
 	</script>
 	
-	<style>
-		th {
-			background-color: #D3D3D3;
-			border-top: 1px outset white;
-			border-bottom: 1px outset white;
-			border-left: 1px outset white;
-		}
-
-		.bla {
-			background-color: D8DCD8;
-			border-top: 1px solid #FFFFFF;
-			border-bottom: 1px solid #FFFFFF;
-			border-left: 1px solid #FFFFFF;			
-		}
-	</style>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-assets-report ui-assets-totals-report" onSubmit="return false;">
 	<input type ="hidden" id="srch_period" name="srch_period" value="{$search.period}" />
 	<input type ="hidden" id="srch_firm" name="srch_firm" value="{$search.nIDFirm}" />
 	
 	<div class="page_caption">Активи - Обобщена</div>
 	
-	<br />
-	
-	<center>
+	<center class="ui-nomenclature-filter-wrap">
 	
 		<div>
-			<table class="search" border="0" width="850">
+			<table class="search ui-nomenclature-filter ui-assets-totals-filter" border="0" width="850">
 				<tr align="center">
 					<td align="right" width="130">Фирма:&nbsp;</td>
 					<td align="left" width="260">
@@ -56,7 +39,7 @@
 					</td>
 
 					<td align="left">
-						<button name="Button" onclick="formSearch();"><img src="images/confirm.gif"> Търси </button>
+						<button type="button" name="Button" onclick="formSearch();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button>
 					</td>
 				</tr>
 			</table>
@@ -67,9 +50,9 @@
 	<hr />
 
 
-	<div id="result" name="result" style="height: 360px; overflow: auto;">
+	<div id="result" name="result" class="ui-assets-totals-result" style="height: 360px; overflow: auto;">
 
-		<table class="search" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<table class="search ui-assets-totals-table" cellspacing="0" cellpadding="0" border="0" width="100%">
 			<tr>
 				<th rowspan="2">Име на фирма</th>
 				<th rowspan="2">Месец</th>
@@ -93,18 +76,18 @@
 				<tr >
 					<td class="bla" align="left" nowrap>{$asset.firm}</td>
 					<td class="bla" align="left" nowrap>{$asset.date}</td>
-					<td class="bla" style="width: 110px; text-align: right;">{if $asset.wasted<0}<img src="images/red_bar.gif" height="10" width="{$asset.wasted*-1/$max*100}" />{/if}</td>
-					<td class="bla" style="width: 110px; text-align: left;">{if $asset.wasted>0}<img src="images/blue_bar.gif" height="10" width="{$asset.wasted/$max*100}" />{/if}</td>
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.wasted|string_format:"%.2f"} лв.</td>
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.sum_wasted|string_format:"%.2f"} лв.</td>
-					<td class="bla" style="width: 110px; text-align: right;">{if $asset.entered<0}<img src="images/red_bar.gif" height="10" width="{$asset.entered*-1/$max2*100}" />{/if}</td>
-					<td class="bla" style="width: 110px; text-align: left;">{if $asset.entered>0}<img src="images/blue_bar.gif" height="10" width="{$asset.entered/$max2*100}" />{/if}</td>
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.entered|string_format:"%.2f"} лв.</td>
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.sum_entered|string_format:"%.2f"} лв.</td>
-					<td class="bla" style="width: 110px; text-align: right;">{if $asset.attached<0}<img src="images/red_bar.gif" height="10" width="{$asset.attached*-1/$max3*100}" />{/if}</td>
-					<td class="bla" style="width: 110px; text-align: left;">{if $asset.attached>0}<img src="images/blue_bar.gif" height="10" width="{$asset.attached/$max3*100}" />{/if}</td>					
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.attached|string_format:"%.2f"} лв.</td>
-					<td class="bla" style="text-align: right; width: 100px !mportant;" nowrap>{$asset.sum_attached|string_format:"%.2f"} лв.</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-left">{if $asset.wasted<0}<span class="ui-asset-bar ui-asset-bar-negative" style="width: {$asset.wasted*-1/$max*100}px;"></span>{/if}</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-right">{if $asset.wasted>0}<span class="ui-asset-bar ui-asset-bar-positive" style="width: {$asset.wasted/$max*100}px;"></span>{/if}</td>
+					<td class="bla ui-asset-value" nowrap>{$asset.wasted|string_format:"%.2f"} €</td>
+					<td class="bla ui-asset-value" nowrap>{$asset.sum_wasted|string_format:"%.2f"} €</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-left">{if $asset.entered<0}<span class="ui-asset-bar ui-asset-bar-negative" style="width: {$asset.entered*-1/$max2*100}px;"></span>{/if}</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-right">{if $asset.entered>0}<span class="ui-asset-bar ui-asset-bar-positive" style="width: {$asset.entered/$max2*100}px;"></span>{/if}</td>
+					<td class="bla ui-asset-value" nowrap>{$asset.entered|string_format:"%.2f"} €</td>
+					<td class="bla ui-asset-value" nowrap>{$asset.sum_entered|string_format:"%.2f"} €</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-left">{if $asset.attached<0}<span class="ui-asset-bar ui-asset-bar-negative" style="width: {$asset.attached*-1/$max3*100}px;"></span>{/if}</td>
+					<td class="bla ui-asset-bar-cell ui-asset-bar-right">{if $asset.attached>0}<span class="ui-asset-bar ui-asset-bar-positive" style="width: {$asset.attached/$max3*100}px;"></span>{/if}</td>					
+					<td class="bla ui-asset-value" nowrap>{$asset.attached|string_format:"%.2f"} €</td>
+					<td class="bla ui-asset-value" nowrap>{$asset.sum_attached|string_format:"%.2f"} €</td>
 				</tr>
 				
 				{/foreach}

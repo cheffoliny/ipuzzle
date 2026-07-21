@@ -42,11 +42,11 @@ require('class/FDrawing.php');
 $font = null;
 
 if ($text)
-	$font =& new Font(sprintf('./class/font/%s', $font_name), $font_size);
+	$font = new Font(sprintf('./class/font/%s', $font_name), $font_size);
 
 // Дефиниране на цвят от  (аргументи R, G, B)
-$color_black =& new FColor(0,0,0);  
-$color_white =& new FColor(255,255,255);
+$color_black = new FColor(0,0,0);  
+$color_white = new FColor(255,255,255);
 
 /* Параметри:
 1 - Височина на линиите в пиксели
@@ -61,70 +61,70 @@ $color_white =& new FColor(255,255,255);
 switch ($code) {
 	case 'code11':
 		include('class/code11.barcode.php');
-		$oCode =& new code11($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new code11($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 'code39':
 		include('class/code39.barcode.php');
-		$oCode =& new code39($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
+		$oCode = new code39($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
 		break;
 	case 'code93':
 		include('class/code93.barcode.php');
-		$oCode =& new code93($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new code93($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;	
 	case 'ean13':
 		include('class/ean13.barcode.php');
-		$oCode =& new ean13($height, $color_black, $color_white, $resolution, $pcode, $font, $book);
+		$oCode = new ean13($height, $color_black, $color_white, $resolution, $pcode, $font, $book);
 		break;
 	case 'ean8':
 		include('class/ean8.barcode.php');
-		$oCode =& new ean8($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new ean8($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 'i25':
 		include('class/i25.barcode.php');
-		$oCode =& new i25($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
+		$oCode = new i25($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
 		break;
 	case 'msi':
 		include('class/msi.barcode.php');
-		$oCode =& new msi($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
+		$oCode = new msi($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
 		break;
 	case 'postnet':
 		include('class/postnet.barcode.php');
-		$oCode =& new postnet($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new postnet($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 's25':
 		include('class/s25.barcode.php');
-		$oCode =& new s25($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
+		$oCode = new s25($height, $color_black, $color_white, $resolution, $pcode, $font, $checksum);
 		break;
 	case 'upca':
 		include('class/upca.barcode.php');
-		$oCode =& new upca($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new upca($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 'upce':
 		include('class/upce.barcode.php');
-		$oCode =& new upce($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new upce($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 'code11':
 		include('class/code11.barcode.php');
-		$oCode =& new code11($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new code11($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	case 'othercode':
 		include('class/othercode.barcode.php');
-		$oCode =& new othercode($height, $color_black, $color_white, $resolution, $pcode, $font);
+		$oCode = new othercode($height, $color_black, $color_white, $resolution, $pcode, $font);
 		break;
 	default:
 		include('class/code128.barcode.php');
-		$oCode =& new code128($height, $color_black, $color_white, $resolution, $pcode, $font, $start);
+		$oCode = new code128($height, $color_black, $color_white, $resolution, $pcode, $font, $start);
 }
 
 
 
 
-//$oCode =& new code39($height, $color_black, $color_white, $resolution, $pcode, $font);
+//$oCode = new code39($height, $color_black, $color_white, $resolution, $pcode, $font);
 
 /* 
 1 - Име на файл (default : директно ще се визуализира на екрана)
 2 - Цвят на фона */
-$drawing =& new FDrawing('',$color_white);
+$drawing = new FDrawing('',$color_white);
 $drawing->setBarcode($oCode);
 $drawing->draw();
 

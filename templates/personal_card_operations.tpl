@@ -108,7 +108,7 @@
 	
 	<table  cellspacing="0" cellpadding="0" style="width:400px;height:100%" border="0" id="filter" >
 		<tr>
-			<td colspan="2" height="30px;">{include file=personal_card_tabs2.tpl}</td>
+			<td colspan="2" height="30px;">{include file="personal_card_tabs2.tpl}</td>
 		</tr>
 		<tr>
 			{if $nIDLimitCard}

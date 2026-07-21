@@ -26,19 +26,19 @@
 
 <ul class="nav nav-tabs navbar-dark bg-faded mb-1">
 
-    {if $page eq client_info}
+    {if $page eq 'client_info'}
         <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-info fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
     {else}
         <li class="nav-item text-center" title="Информация"><a class="nav-link" href="#" onclick="return tab_href( 'client_info' );" id="client_info">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-info fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
     {/if}
 
-    {if $page eq client_objects}
+    {if $page eq 'client_objects'}
         <li class="nav-item text-center" title="Обекти"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-home fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
     {else}
         <li class="nav-item text-center" title="Обекти"><a class="nav-link" href="#" onclick="return tab_href( 'client_objects' );" id="client_objects">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-home fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
     {/if}
 
-    {if $page eq client_payments}
+    {if $page eq 'client_payments'}
         <li class="nav-item text-center" title="Плащания"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
     {else}
         <li class="nav-item text-center" title="Плащания"><a class="nav-link" href="#" onclick="return tab_href( 'client_payments' );" id="client_payments">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>

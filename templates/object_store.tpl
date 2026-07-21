@@ -49,7 +49,7 @@
 				</h5>
 			</div>
 			<div id="collapseTwo" class="collapse p-0 m-0" aria-labelledby="headingTwo" data-parent="#accordion">
-				<iframe class="w-100 h-100 p-0 m-0" id="object_ppp" name="object_ppp" frameborder=0 src='page.php?page=object_store_ppp'style="min-height: 350px !important;"></iframe>
+				<iframe class="w-100 h-100 p-0 m-0" id="object_ppp" name="object_ppp" frameborder="0" src="page.php?page=object_store_ppp" style="min-height: 350px !important;"></iframe>
 			</div>
 
 	</div>

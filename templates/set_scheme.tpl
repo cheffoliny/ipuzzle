@@ -175,9 +175,9 @@
 	</script>
 {/literal}
 
-<div class="page_caption">{if $nID>0}Редактиране на Шаблон{else}Нов шаблон{/if}</div>
-
-<form id="form1" onSubmit="return false;">
+<div class="content ui-nomenclature-dialog-shell">
+<form id="form1" class="ui-nomenclature-dialog ui-configuration-dialog ui-scheme-dialog" onSubmit="return false;">
+	<div class="page_caption">{if $nID>0}Редактиране на Шаблон{else}Нов шаблон{/if}</div>
 	<input type="hidden" name="nID" id="nID" value="{$nID|default:0}">
 	<input type="hidden" name="id" id="id" value="{$id|default:0}">
 	
@@ -185,7 +185,7 @@
 	<input type="hidden" name="toList" id="toList" value="">
 	
 	<div id="builder">
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr>
 				<td colspan=2>
 					Наименование:&nbsp;
@@ -194,17 +194,17 @@
 			</tr>
 			<tr>
 				<td colspan=2 id=fieldset>
-					<fieldset style="border: 1px solid black">
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Номенклатури</legend>
-						<table>
+						<table class="ui-nomenclature-transfer">
 							<tr>
 								<td>
 									<select name="nomenclatures_all" id="nomenclatures_all" style="width:300px" size="10" ondblclick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); changeNomenclatures();" multiple="multiple">
 									</select>
 								</td>
 								<td>
-									<button id=b25 name="button" title="Добави Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); changeNomenclatures(); return false;"><img src=images/mright.gif /></button></br>
-									<button id=b25 name="button" title="Премахни Номенклатура" onClick="remove_selected( 'nomenclatures_all', 'nomenclatures_current', 'left' ); changeNomenclatures(); return false;"><img src=images/mleft.gif /></button>
+									<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Добави Номенклатура" onClick="copy_option_to( 'nomenclatures_all', 'nomenclatures_current', 'right' ); changeNomenclatures(); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+									<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Премахни Номенклатура" onClick="remove_selected( 'nomenclatures_all', 'nomenclatures_current', 'left' ); changeNomenclatures(); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="nomenclatures_current[]" id="nomenclatures_current" style="width:300px" size="10" ondblclick="remove_selected( 'nomenclatures_all', 'nomenclatures_current', 'left' ); changeNomenclatures();" multiple="multiple">
@@ -220,7 +220,7 @@
 			</tr>
 			<tr>
 				<td align="left">
-					<input type="checkbox" id="nDefault" name="nDefault" class="clear" onclick="changeDefault();">&nbsp;Шаблон за ел. договори
+					<input type="checkbox" id="nDefault" name="nDefault" class="clear ui-nomenclature-checkbox" onclick="changeDefault();">&nbsp;Шаблон за ел. договори
 				</td>
 				<td align="right">
 					Номенклатура Детектор:&nbsp;
@@ -234,15 +234,16 @@
 	</div>
 	
 	<div id="search">
-		<table width="100%" cellspacing=5px>
+		<table class="ui-nomenclature-actions" width="100%" cellspacing=5px>
 			<tr><td align="right" valign="bottom">
-				<button id=b100 onclick="return update();"><img src=images/confirm.gif />Потвърди</button>&nbsp;
-				<button id=b100 onClick="parent.window.close();"><img src="images/cancel.gif" />Затвори</button>
+				<button id=b100 onclick="return update();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Потвърди</button>&nbsp;
+				<button id=b100 onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td></tr>
 		</table>
 	</div>
 	
 </form>
+</div>
 
 <script>
 	 onInit();

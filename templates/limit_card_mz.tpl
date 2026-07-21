@@ -10,7 +10,7 @@
 		
 		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 			<tr>
-				<td>{include file=limit_card_tabs.tpl}</td>
+				<td>{include file="limit_card_tabs.tpl"}</td>
 			</tr>
 		</table>
 		

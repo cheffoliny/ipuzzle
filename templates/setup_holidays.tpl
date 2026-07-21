@@ -77,16 +77,16 @@
 	</style>
 {/literal}
 
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-holidays" onSubmit="return false;">
 	<input type="hidden" name="sInfo" id="sInfo" value=""/>
 	<input type="hidden" name="sWorkdays" id="sWorkdays" value=""/>
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading ui-holidays-heading">
 		<tr>
 			<td class="page_name">Номенклатури - Празнични / Работни Дни</td>
 			
 			<td align="right">
-				<table class="input" cellpadding="0" cellspacing="0" style="width: 480px;" border="0">
+				<table class="input ui-holidays-controls" cellpadding="0" cellspacing="0" style="width: 480px;" border="0">
 					<tr class="odd">
 						<td align="left">
 							<table class="input" cellpadding="0" cellspacing="0" style="width: 170px;" border="0">
@@ -112,17 +112,17 @@
 									<td align="center">Година:&nbsp;</td>
 									
 									<td align="center">
-										<button onclick="shiftYear( -1 );" style="width: 20px;"><img src="images/mleft.gif"></button>
+										<button onclick="shiftYear( -1 );" class="ui-holidays-shift" title="Предходна година"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 									</td>
 									<td valign="middle" align="center">
 										<input type="text" name="nYear" id="nYear" class="inp75" value="{$nYear}" style="text-align: center;" readonly/>
 									</td>
 									<td align="center">
-										<button onclick="shiftYear( 1 );" style="width: 20px;"><img src="images/mright.gif"></button>
+										<button onclick="shiftYear( 1 );" class="ui-holidays-shift" title="Следваща година"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 									</td>
 									<td align="right">
 										<button class="btn btn-xs btn-info" onclick="printPDF();">
-                                            <i class="fa fa-file-pdf-o"></i> PDF</button>
+                                            <span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> PDF</button>
 									</td>
 								</tr>
 							</table>

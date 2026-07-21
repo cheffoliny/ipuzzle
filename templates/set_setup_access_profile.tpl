@@ -35,20 +35,20 @@
 
 <div class="page_caption">{if $id}Редактиране на профил{else}Нов профил{/if}</div>
 
-<form action="" id="form1" onSubmit="update(); return false">
+<form action="" id="form1" class="ui-access-dialog ui-access-profile-dialog" onSubmit="update(); return false">
 	<input type="hidden" name="id" id="id" value="{$id|default:0}">
 	<input type="hidden" name="selall" id="selall" value="{$selall|default:0}" />
 	<input type="hidden" name="save_like_new" id="save_like_new" value="no">
 	
-	<div class="content" id="builder">
-		<table class="input">
+	<div class="content ui-access-dialog-body" id="builder">
+		<table class="input ui-access-form-table">
 			<tr>
 				<td align="right">Име</td>
-				<td><input type="text" name="name" id="name" size="53" /></td>
+				<td><input type="text" name="name" id="name" class="form-control" size="53" /></td>
 			</tr>
 			<tr>
 				<td align="right">Описание</td>
-				<td><input type="text" name="description" id="description" size="125" /></td>
+				<td><input type="text" name="description" id="description" class="form-control" size="125" /></td>
 			</tr>
 			</tr>
 			<tr>
@@ -59,8 +59,8 @@
 				</td>
 			<tr>
 				<td colspan=2>
-					<div style="height:400px; width:100%; overflow:auto">
-						<table class="input">
+					<div class="ui-access-level-grid" style="height:400px; width:100%; overflow:auto">
+						<table class="input ui-access-rights-table">
 							{foreach from=$level_groups item=group}
 								<tr bgcolor="#DBE7FF">
 									<td colspan=4 align="left"><strong>{$group.name|escape:"html"}</strong></td>
@@ -82,16 +82,16 @@
 			</tr>
 		</table>
 
-        <table width="100%">
+        <table class="ui-access-profile-actions" width="100%">
             <tr>
                 {if $id}
                     <td>
-                        <button class="btn btn-xs btn-primary" name="Button"  onclick="$('save_like_new').value='yes';update();"><i class="fa fa-check"></i> Запиши като нов</button>
+                        <button class="btn btn-xs btn-primary" name="Button"  onclick="$('save_like_new').value='yes';update();"><span class="ui-icon ui-icon-copy" aria-hidden="true"></span> Запиши като нов</button>
                     </td>
                 {/if}
                 <td align="right" valign="bottom">
-                    <button type=submit class="btn btn-xs btn-success" id="b100" onclick="update();"><i class="fa fa-plus"></i> Добави </button>
-                    <button type=submit class="btn btn-xs btn-success" id="b100" onClick="parent.window.close()"><img src="images/cancel.gif" />Затвори</button>
+                    <button type=submit class="btn btn-xs btn-success" id="b100" onclick="update();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span> Добави </button>
+                    <button type=submit class="btn btn-xs btn-secondary" id="b100" onClick="parent.window.close()"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
                 </td>
             </tr>
         </table>

@@ -8,12 +8,12 @@
 	</script>
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-money-nomenclature-dialog ui-service-dialog" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID}">
 	
 	<div class="page_caption">{if $nID}Редактиране{else}Добавяне{/if} на номенклатура услуга</div>
 
-	<table class="input" style="margin-top:20px;" border="0">
+	<table class="input ui-nomenclature-form" style="margin-top:20px;" border="0">
 		<tr>
 			<td align="right" style="padding-bottom:5px;">
 				Код
@@ -39,12 +39,12 @@
 				&nbsp;
 			</td>
 			<td colspan="1" rowspan="3" style="width:100px;">
-				<fieldset>
+				<fieldset class="ui-nomenclature-fieldset">
 				<legend>Позволяват се корекции за:</legend>
 				<table class="input">	
 					<tr>
 						<td align="right">
-							<input type="checkbox" class="clear" name="name_edit" id="name_edit">
+							<input type="checkbox" class="clear ui-nomenclature-checkbox" name="name_edit" id="name_edit">
 						</td>
 						<td>
 							Име
@@ -52,7 +52,7 @@
 					</tr>
 					<tr>
 						<td align="right">
-							<input type="checkbox" class="clear" name="quantity_edit" id="quantity_edit">
+							<input type="checkbox" class="clear ui-nomenclature-checkbox" name="quantity_edit" id="quantity_edit">
 						</td>
 						<td colspan="3">
 							Количество
@@ -60,7 +60,7 @@
 					</tr>
 					<tr>
 						<td align="right">
-							<input type="checkbox" class="clear" name="price_edit" id="price_edit">
+							<input type="checkbox" class="clear ui-nomenclature-checkbox" name="price_edit" id="price_edit">
 						</td>
 						<td>
 							Цена
@@ -99,15 +99,15 @@
 		</tr>
 		<tr>
 			<td style="padding-top:20px; text-align: right;">
-				<input type="checkbox" class="clear" name="for_trans" id="for_trans" />
+				<input type="checkbox" class="clear ui-nomenclature-checkbox" name="for_trans" id="for_trans" />
 			</td>
 			<td style="padding-top:20px; width: 85px;">
 				ТРАНСФЕР
 			</td>
 						
-			<td colspan="2" style="padding-top:20px;" align="right">
-				<button onclick="loadXMLDoc2('save',3);"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+			<td colspan="2" style="padding-top:20px;" align="right" class="ui-inline-dialog-actions">
+				<button onclick="loadXMLDoc2('save',3);"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+				<button onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 		

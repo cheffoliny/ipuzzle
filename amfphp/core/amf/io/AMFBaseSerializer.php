@@ -25,6 +25,12 @@ class AMFBaseSerializer {
    var $encounteredStrings = 0;
    
    var $native = false;
+   var $isBigEndian;
+   var $charsetHandler;
+   var $rsCharsetHandler;
+   var $resourceObjects;
+   var $encodeFlags;
+   var $currentBody;
 
 	/**
 	 * AMFSerializer is the constructor function.  You must pass the
@@ -32,7 +38,7 @@ class AMFBaseSerializer {
 	 * 
 	 * @param object $stream The AMFOutputStream
 	 */
-	function AMFBaseSerializer() {
+	function __construct() {
 		$this->isBigEndian = AMFPHP_BIG_ENDIAN;
 		$this->outBuffer = ""; // the buffer
 		$this->charsetHandler = new CharsetHandler('phptoflash');
@@ -42,6 +48,10 @@ class AMFBaseSerializer {
 		$this->encodeFlags = (AMFPHP_BIG_ENDIAN?2:0) | 
 							  ($GLOBALS['amfphp']['encoding'] == 'amf3' ? 1:0);
 	} 
+
+	function AMFBaseSerializer() {
+		$this->__construct();
+	}
 
 	/**
 	 * serialize is the run method of the class.  When serialize is called

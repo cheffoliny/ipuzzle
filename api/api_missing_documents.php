@@ -69,7 +69,7 @@
 			$nIDFirm = Params::get('nIDFirm','0');
 			$nIDOffice = Params::get('nIDOffice','0');
 	
-			$aAccountDocuments = Params::get("account_documents", '');
+			$aAccountDocuments = (array) Params::get("account_documents", array());
 
 			if( empty($nIDFirm) ) {
 				throw new Exception("Изберете фирма!", DBAPI_ERR_INVALID_PARAM);

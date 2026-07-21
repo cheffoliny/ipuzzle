@@ -13,11 +13,11 @@ require('class/FDrawing.php');
 include('class/code39.barcode.php');
 
 // Loading Font
-$font =& new Font('./class/font/Arial.ttf', 18);
+$font = new Font('./class/font/Arial.ttf', 18);
 
 // Creating some Color (arguments are R, G, B)
-$color_black =& new FColor(0,0,0);
-$color_white =& new FColor(255,255,255);
+$color_black = new FColor(0,0,0);
+$color_white = new FColor(255,255,255);
 
 /* Here is the list of the arguments:
 1 - Thickness
@@ -26,12 +26,12 @@ $color_white =& new FColor(255,255,255);
 4 - Resolution
 5 - Text
 6 - Text Font */
-$code =& new code39(60,$color_black,$color_white,2,'HELLO',$font);
+$code = new code39(60,$color_black,$color_white,2,'HELLO',$font);
 
 /* Here is the list of the arguments
 1 - Filename (empty : display on screen)
 2 - Background color */
-$drawing =& new FDrawing('',$color_white);
+$drawing = new FDrawing('',$color_white);
 $drawing->setBarcode($code);
 $drawing->draw();
 

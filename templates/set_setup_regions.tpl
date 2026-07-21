@@ -69,15 +69,15 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return update();">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog ui-region-dialog" onsubmit="return update();">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		<input type="hidden" id="id_f" name="id_f" value="{$id_f}">
 		
 		<div class="page_caption">{if $id}Редактиране на Регион{else}Нов Регион{/if}</div>
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td width="400">Име на Фирмата:</td>
 				<td>
@@ -127,23 +127,23 @@
 			</tr>
 			<tr class="even">
 				<td width="400">Регион-администрация:</td>
-				<td><input type="checkbox" name="nIsAdmin" id="nIsAdmin" class="clear" /></td>
+				<td><input type="checkbox" name="nIsAdmin" id="nIsAdmin" class="clear ui-nomenclature-checkbox" /></td>
 			</tr>
 			<tr class="odd">
 				<td width="400">Регион Техническа Поддръжка:</td>
-				<td><input type="checkbox" name="nIsTech" id="nIsTech" class="clear" /></td>
+				<td><input type="checkbox" name="nIsTech" id="nIsTech" class="clear ui-nomenclature-checkbox" /></td>
 			</tr>
 			<tr class="even">
 				<td width="400">Регион-реакция:</td>
-				<td><input type="checkbox" name="nIsReaction" id="nIsReaction" class="clear" /></td>
+				<td><input type="checkbox" name="nIsReaction" id="nIsReaction" class="clear ui-nomenclature-checkbox" /></td>
 			</tr>
 		</table>
 		
 		<br />
 		
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 		<legend>Адрес:</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				<tr class="odd">
 					<td>Град:</td>
 					<td><select name="nAddressCity" id="nAddressCity" class="select200" onchange="loadXMLDoc( 'updateareas' );" /></td>
@@ -167,17 +167,17 @@
 		
 		<br />
 		
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 		<legend>Направления:</legend>
-			<table>
+			<table class="ui-nomenclature-transfer">
 				<tr>
 					<td>
 						<select name="directions_all" id="directions_all" style="width:293px" size="4" ondblclick="copy_option_to( 'directions_all', 'directions_current', 'right' );" multiple="multiple">
 						</select>
 					</td>
 					<td>
-						<button id=b25 name="button" title="Добави Направление" style="width: 20px;" onClick="copy_option_to( 'directions_all', 'directions_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-						<button id=b25 name="button" title="Премахни Направление" style="width: 20px;" onClick="copy_option_to( 'directions_all', 'directions_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+						<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави Направление" onClick="copy_option_to( 'directions_all', 'directions_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
+						<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни Направление" onClick="copy_option_to( 'directions_all', 'directions_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 					</td>
 					<td>
 						<select name="directions_current[]" id="directions_current" style="width:293px" size="4" ondblclick="copy_option_to( 'directions_all', 'directions_current', 'left' );" multiple="multiple">
@@ -189,12 +189,12 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

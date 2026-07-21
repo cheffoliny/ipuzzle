@@ -102,10 +102,10 @@
 	</div>
 	
 {/if}
-<form id="form1">
+<form id="form1" class="ui-nomenclature-dialog ui-attribute-dialog">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
 	<input type="hidden" name="inserted_values" id="inserted_values">
-	<table class="input" style="margin-top:50px;">
+	<table class="input ui-nomenclature-form" style="margin-top:50px;">
 		<tr class="even">
 			<td align="right">
 				Име на атрибута :
@@ -131,7 +131,7 @@
 	
 	
 </div>
-	<table class="input">
+	<table class="input ui-nomenclature-form">
 		<tr class="odd">
 			<td align="right">
 				Задължителен:
@@ -150,14 +150,14 @@
 		</tr>
 	</table>
 
-	<table class="input" style="margin-top:50px;">
+	<table class="input ui-nomenclature-actions" style="margin-top:50px;">
 		<tr>
 			<td style="width:150px">
 				&nbsp;
 			</td>
 			<td>
-				<button class="search" onclick="save();">Запази</button>
-				<button onclick="window.close();" >Затвори</button>
+				<button class="search" onclick="save();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запази</button>
+				<button onclick="window.close();" ><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

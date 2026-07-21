@@ -28,17 +28,65 @@ require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
  * @return string|void
  * @uses smarty_make_timestamp()
  */
+function smarty_date_format_php_pattern($format)
+{
+    $tokens = array(
+        '%' => '%',
+        'a' => 'D',
+        'A' => 'l',
+        'b' => 'M',
+        'B' => 'F',
+        'd' => 'd',
+        'D' => 'm/d/y',
+        'e' => 'j',
+        'F' => 'Y-m-d',
+        'h' => 'M',
+        'H' => 'H',
+        'I' => 'h',
+        'm' => 'm',
+        'M' => 'i',
+        'p' => 'A',
+        'P' => 'a',
+        'r' => 'h:i:s A',
+        'R' => 'H:i',
+        's' => 'U',
+        'S' => 's',
+        'T' => 'H:i:s',
+        'u' => 'N',
+        'V' => 'W',
+        'w' => 'w',
+        'x' => 'm/d/y',
+        'X' => 'H:i:s',
+        'y' => 'y',
+        'Y' => 'Y',
+        'z' => 'O',
+        'Z' => 'T'
+    );
+    $phpFormat = '';
+    $length = strlen($format);
+
+    for ($index = 0; $index < $length; $index++) {
+        $character = $format[$index];
+
+        if ($character === '%' && $index + 1 < $length) {
+            $token = $format[++$index];
+            $phpFormat .= isset($tokens[$token]) ? $tokens[$token] : '\\%' . $token;
+        } else {
+            $phpFormat .= ctype_alpha($character) || $character === '\\' ? '\\' . $character : $character;
+        }
+    }
+
+    return $phpFormat;
+}
+
 function smarty_modifier_date_format($string, $format="%b %e, %Y", $default_date=null)
 {
-    if (substr(PHP_OS,0,3) == 'WIN') {
-           $_win_from = array ('%e',  '%T',       '%D');
-           $_win_to   = array ('%#d', '%H:%M:%S', '%m/%d/%y');
-           $format = str_replace($_win_from, $_win_to, $format);
-    }
+    $phpFormat = smarty_date_format_php_pattern($format);
+
     if($string != '') {
-        return strftime($format, smarty_make_timestamp($string));
+        return date($phpFormat, smarty_make_timestamp($string));
     } elseif (isset($default_date) && $default_date != '') {
-        return strftime($format, smarty_make_timestamp($default_date));
+        return date($phpFormat, smarty_make_timestamp($default_date));
     } else {
         return;
     }

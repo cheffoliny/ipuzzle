@@ -153,7 +153,7 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-personnel-schedule" onsubmit="return false;">
 
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDPerson" name="nIDPerson" value="0" />
@@ -162,8 +162,8 @@
 			<tr>
 				<td class="header_buttons">
 				<span id="head_window">Служители в обект {$object}</span> 
-				<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
-				{include file=object_tabs.tpl}
+				<button type="button" class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><span class="ui-icon ui-icon-wrench" aria-hidden="true"></span> Oбслужване</button>
+				{include file="object_tabs.tpl"}
 				</td>
 			</tr>
 	
@@ -186,7 +186,7 @@
 					
 						<div class="input-group">
 							<span class="input-group-addon">
-							<i class="far fa-user"></i></span>
+							<span class="ui-icon ui-icon-user" aria-hidden="true"></span></span>
 							<input type="text" id="nPersonCode" name="nPersonCode" class="inp100" placeholder="Търсене по код..." suggest="suggest" queryType="suggestObjectPerson" onkeypress="formatDigits( event )" onkeyup="onKeyPressPersonCode()" maxlength="12"/>
 							<input type="text" id="sPersonName" name="sPersonName" class="inp300" placeholder="Търсене по име..." suggest="suggest" queryType="suggestObjectPerson" onkeyup="onKeyPressPersonName()"/>
 						</div>
@@ -199,7 +199,7 @@
 					
 					<div class="input-group">
 							<span class="input-group-addon">
-								<img src="images/glyphicons/hand_left.png" onclick="nextMonth('prev','dateFrom');" style="width: 12px; height: 12px; cursor:pointer;">
+								<button type="button" class="ui-schedule-addon-button" title="Предишен месец" onclick="nextMonth('prev','dateFrom');"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 							</span>					
 							<input 
 								style="width:50px;" 
@@ -213,13 +213,13 @@
 								value={$smarty.now|date_format:'%m.%Y'}
 							>
 							<span class="input-group-addon">
-								<img src="images/glyphicons/hand_right.png" onclick="nextMonth('next','dateFrom');" style="width: 12px; height: 12px; cursor:pointer;">
+								<button type="button" class="ui-schedule-addon-button" title="Следващ месец" onclick="nextMonth('next','dateFrom');"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 							</span>					
 						</div>
 						</div>
 					</td>
 					<td style="text-align: right; padding-right: 2px;">
-						<button id="b100" class="btn btn-xs btn-success" onClick="addPerson()"><i class="fa fa-plus"></i> Добави</button>
+						<button type="button" id="b100" class="btn btn-xs btn-success" onClick="addPerson()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
 					</td>
 				</tr>
 			</table>
@@ -237,14 +237,14 @@
 
 
 	<div id="search"  style="padding-top:10px;width:800px;">
-		<table class="page_data" >
+		<table class="page_data ui-nomenclature-actions ui-schedule-actions" >
 			<tr valign="top">
 				<td valign="top" style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
-					<button id="b100" class="btn btn-xs btn-info" onClick="goSort();" class="search"><img src="images/glyphicons/bullets.png" />Подреди</button>
+					<button type="button" id="b100" class="btn btn-xs btn-info search" onClick="goSort();"><span class="ui-icon ui-icon-sort" aria-hidden="true"></span>Подреди</button>
 				</td>
 				<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
-					<button id="b100" class="btn btn-xs btn-primary" onClick="openSchedule();"><img src="images/glyphicons/list.png" > График </button>
-					<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" > Затвори </button>
+					<button type="button" id="b100" class="btn btn-xs btn-primary" onClick="openSchedule();"><span class="ui-icon ui-icon-list" aria-hidden="true"></span> График </button>
+					<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

@@ -328,7 +328,7 @@
 		   // APILog::Log(0, $content);
 		}		
 		
-		public function getReport( $buy = 0, DBResponse $oResponse )	{
+		public function getReport( $buy, DBResponse $oResponse )	{
 
 			
 			$dir_name = "../export_docs/";

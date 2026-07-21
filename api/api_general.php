@@ -40,11 +40,39 @@ switch( $nRpcVersion )
         {
             $oResponse = new DBResponse();
 
-            if(	isset( $aParams['action_script'] ) ) { //action_script -> параметъра който в който се съдържа името на скрипта за изпълнение
+            try
+            {
+                if(	isset( $aParams['action_script'] ) ) { //action_script -> параметъра който в който се съдържа името на скрипта за изпълнение
 
-                require_once ($aParams['action_script']);
+                    require_once ($aParams['action_script']);
+                }
+            }
+            catch( Throwable $e )
+            {
+                printRpcThrowableResponse($oResponse, $e);
             }
         }
+}
+
+function printRpcThrowableResponse( DBResponse $oResponse, Throwable $e )
+{
+    $nCode = $e->getCode();
+    $sMessage = $e->getMessage();
+
+    if( class_exists('ADODB_Exception', false) && $e instanceof ADODB_Exception )
+    {
+        $oResponse->setDebug( $e->getMessage() );
+        $nCode = DBAPI_ERR_SQL_QUERY;
+        $sMessage = "";
+    }
+    elseif( empty( $nCode ) )
+    {
+        $nCode = DBAPI_ERR_UNKNOWN;
+    }
+
+    $oResponse->setError($nCode, $sMessage, $e->getFile(), $e->getLine());
+    $oResponse->setDebug( $e->getTraceAsString() );
+    print $oResponse->toXML();
 }
 
 function rpc2()
@@ -91,25 +119,9 @@ function rpc2()
             $oMethod = $oClass->getMethod( $sApiAction );
             $oMethod->invoke($oHandler, $oResponse);
         }
-        catch( Exception $e )
+        catch( Throwable $e )
         {
-            $nCode = $e->getCode();
-            $sMessage = $e->getMessage();
-
-            if( $e instanceof ADODB_Exception )
-            {
-                $oResponse->setDebug( $e->getMessage() );
-                $nCode = DBAPI_ERR_SQL_QUERY;
-                $sMessage = "";
-            }
-            elseif( empty( $nCode ) )
-            {
-                $nCode = DBAPI_ERR_UNKNOWN;
-            }
-
-            $oResponse->setError($nCode, $sMessage, $e->getFile(), $e->getLine());
-            $oResponse->setDebug( $e->getTraceAsString() );
-            print $oResponse->toXML();
+            printRpcThrowableResponse($oResponse, $e);
         }
     }
 }

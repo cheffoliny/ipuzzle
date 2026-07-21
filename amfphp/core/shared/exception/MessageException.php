@@ -23,6 +23,11 @@ require_once(AMFPHP_BASE . "shared/app/Constants.php");
 @ini_set("html_errors", 0);
 
 class MessageException {
+	var $code;
+	var $description;
+	var $details;
+	var $level;
+	var $line;
 	/**
 	 * Constructor for the Exception class. This is how you build a new
 	 * error instance.
@@ -32,12 +37,16 @@ class MessageException {
 	 * @param string $file The file name that the error occured
 	 * @param int $line The line number where the error was detected
 	 */
-	function MessageException ($code, $description, $file, $line, $detailCode = 'AMFPHP_RUNTIME_ERROR') {
+	function __construct ($code, $description, $file, $line, $detailCode = 'AMFPHP_RUNTIME_ERROR') {
 		$this->code = $detailCode;
 		$this->description = $description; // pass the description    
 		$this->details = $file; // pass the details
 		$this->level = MessageException::getFriendlyError($code); 
 		$this->line = $line; // pass the line number
+	}
+
+	function MessageException ($code, $description, $file, $line, $detailCode = 'AMFPHP_RUNTIME_ERROR') {
+		$this->__construct($code, $description, $file, $line, $detailCode);
 	}
 	
 	/**
@@ -54,7 +63,7 @@ class MessageException {
 	 * @param AMFException @exception The exception object to throw
 	 * @see AMFBody
 	 */ 
-	function throwException (&$body, $exception) {
+	static function throwException (&$body, $exception) {
 		$body->responseURI = $body->responseIndex . "/onStatus";
 		$results = &$body->getResults();
 
@@ -82,7 +91,7 @@ class MessageException {
 		}
 	} 
 	
-	function getFriendlyError ($err) {
+	static function getFriendlyError ($err) {
 		$errortype = array (1 => "Error",
 			2 => "Warning",
 			4 => "Parsing Error",

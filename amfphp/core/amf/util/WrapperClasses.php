@@ -3,9 +3,14 @@ class ByteArray
 {
 	var $data;
 	
-	function ByteArray($data)
+	function __construct($data)
 	{
 		$this->data = $data;
+	}
+
+	function ByteArray($data)
+	{
+		$this->__construct($data);
 	}
 }
 
@@ -13,9 +18,14 @@ class RecordSet
 {
 	var $data;
 	
-	function RecordSet($data)
+	function __construct($data)
 	{
 		$this->data = $data;
+	}
+
+	function RecordSet($data)
+	{
+		$this->__construct($data);
 	}
 }
 
@@ -25,18 +35,31 @@ class PageableRecordSet
 	var $data;
 	var $limit;
 	
-	function PageableRecordSet($data, $limit = 15)
+	function __construct($data, $limit = 15)
 	{
 		$this->data = $data;
 		$this->limit = $limit;
+	}
+
+	function PageableRecordSet($data, $limit = 15)
+	{
+		$this->__construct($data, $limit);
 	}
 }
 
 class AcknowledgeMessage
 {
 	var $_explicitType = "flex.messaging.messages.AcknowledgeMessage";
+	var $messageId;
+	var $clientId;
+	var $destination;
+	var $body;
+	var $timeToLive;
+	var $timestamp;
+	var $headers;
+	var $correlationId;
 	
-	function AcknowledgeMessage($messageId = NULL, $clientId = NULL)
+	function __construct($messageId = NULL, $clientId = NULL)
 	{
 	    $this->messageId = $this->generateRandomId();
 	    $this->clientId = $clientId != NULL ? $clientId : $this->generateRandomId();
@@ -46,6 +69,11 @@ class AcknowledgeMessage
 	    $this->timestamp = (int) (time() . '00');
 	    $this->headers = new stdClass();
 	    $this->correlationId = $messageId;	
+	}
+
+	function AcknowledgeMessage($messageId = NULL, $clientId = NULL)
+	{
+		$this->__construct($messageId, $clientId);
 	}
 	
 	function generateRandomId()

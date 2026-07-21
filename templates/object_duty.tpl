@@ -27,17 +27,30 @@
 			var butt = document.getElementById('butShift');
 			
 			if ( step == 1 ) {
-				butt.value = '<img src=\"images/cancel.gif\" />Изтрий';
+				setDutyButton(butt, 'Изтрий', 'ui-icon-delete');
 				butt.disabled = false;
 			} else if ( step > 1 ) {
-				butt.value = '<img src=\"images/cancel.gif\" />Изтрий';
+				setDutyButton(butt, 'Изтрий', 'ui-icon-delete');
 				butt.disabled = true;
 			} else {
-				butt.value = '<img src=\"images/confirm.gif\" />Смяна';
+				setDutyButton(butt, 'Смяна', 'ui-icon-plus');
 				butt.disabled = false;
 			}
 		}
 	}	
+
+	function setDutyButton(button, label, iconClass) {
+		if (!button) return;
+		button.value = label;
+		if (button.tagName && button.tagName.toLowerCase() == 'button') {
+			while (button.firstChild) button.removeChild(button.firstChild);
+			var icon = document.createElement('span');
+			icon.className = 'ui-icon ' + iconClass;
+			icon.setAttribute('aria-hidden', 'true');
+			button.appendChild(icon);
+			button.appendChild(document.createTextNode(' ' + label));
+		}
+	}
 
 	function goDuty() {
 		var step = document.getElementById('nStep');
@@ -98,7 +111,7 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-duty-dialog" onsubmit="return false;">
 <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 <input type="hidden" id="sAct" name="sAct" value="cur" />
 <input type="hidden" id="nTime" name="nTime" value="0" />
@@ -113,10 +126,10 @@
 
 					<div class="input-group" style="width:175px;">
 						<span class="input-group-addon">
-						<img src="images/glyphicons/cal.png" onClick="goTime();" style="width: 12px; height: 12px;"></span>
+						<button type="button" class="ui-schedule-addon-button" title="Текущи дата и час" onClick="goTime();"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button></span>
 						<input type="text" name="sShift" id="sShift" value="" style="width: 72px; text-align: center;" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
 						<input type="text" name="sShiftT" id="sShiftT" value="" style="width: 45px; text-align: center;" onkeypress="return formatTime(event);" maxlength="10" title="ЧЧ:ММ" />
-						<span class="input-group-addon"><img src="images/glyphicons/clock.png" onClick="goTime();" style="width: 12px; height: 12px;"></span>
+						<span class="input-group-addon"><button type="button" class="ui-schedule-addon-button" title="Текущи дата и час" onClick="goTime();"><span class="ui-icon ui-icon-clock" aria-hidden="true"></span></button></span>
 					</div>
 
 				</td>
@@ -132,19 +145,19 @@
 	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
 		<div class="col-6 pl-0">
 			<div class="input-group input-group-sm">
-				<button class="btn btn-sm btn-primary mr-1" onClick="dutyNext('prev');" ><i class="far fa-angle-left"></i> Предишна </button>
-				<button class="btn btn-sm btn-primary" onClick="dutyNext('next');" >Следваща <i class="far fa-angle-right"></i> </button>
+				<button type="button" class="btn btn-sm btn-primary mr-1" onClick="dutyNext('prev');"><span class="ui-icon ui-icon-left" aria-hidden="true"></span> Предишна </button>
+				<button type="button" class="btn btn-sm btn-primary" onClick="dutyNext('next');">Следваща <span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 			</div>
 		</div>
 		<div class="col">
 			<div class="input-group input-group-sm ml-1">
 				{if $auto_schedule}
-					<button class="btn btn-sm btn-success mr-1" name="Validate" onClick="autoValidate(); return false;" title="Валидирай всички смени"><img src="images/glyphicons/refresh.png" style="width: 14px; height: 14px;"> Валидация </button>
+					<button type="button" class="btn btn-sm btn-success mr-1" id="Validate" name="Validate" onClick="autoValidate(); return false;" title="Валидирай всички смени"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Валидация </button>
 				{/if}
 
-				<button class="btn btn-sm btn-success mr-1"	onClick="goDuty();"         ><i class="fa fa-plus"></i> Смяна </button>
-				<button class="btn btn-sm btn-light mr-1"	onClick="openSchedule();"       ><i class="fas fa-calendar"  ></i> График </button>
-				<button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+				<button type="button" class="btn btn-sm btn-success mr-1" id="butShift" onClick="goDuty();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Смяна </button>
+				<button type="button" class="btn btn-sm btn-light mr-1" onClick="openSchedule();"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span> График </button>
+				<button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 			</div>
 		</div>
 	</nav>

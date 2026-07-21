@@ -1,7 +1,25 @@
 <?php
 
 	class ApiAdminSalaryTotal
-	{	
+	{
+		private function normalizeIDSelection( $value )
+		{
+			if( is_string( $value ) )
+				$value = explode( ',', $value );
+			elseif( !is_array( $value ) )
+				$value = array( $value );
+
+			$aIDs = array();
+			foreach( $value as $nID )
+			{
+				$nID = (int) $nID;
+				if( $nID > 0 )
+					$aIDs[] = $nID;
+			}
+
+			return array_values( array_unique( $aIDs ) );
+		}
+
 		public function load( DBResponse $oResponse ) {
 			
 			$oDBFirms = new DBFirms();
@@ -68,9 +86,9 @@
 		
 		public function result1( DBResponse $oResponse )	{
 			
-			$account_firms 		= Params::get('account_firms','');
-			$account_regions 	= Params::get('account_regions', '');
-			$account_objects 	= Params::get('account_objects', '');
+			$account_firms 		= $this->normalizeIDSelection( Params::get('account_firms', array()) );
+			$account_regions 	= $this->normalizeIDSelection( Params::get('account_regions', array()) );
+			$account_objects 	= $this->normalizeIDSelection( Params::get('account_objects', array()) );
 			$nIDObject 			= Params::get('nIDObject','');
 			$nType 				= Params::get('type','1');
 			$nRadio 			= Params::get('nRadio','1');
@@ -128,8 +146,8 @@
 		
 		public function result2(DBResponse $oResponse) {
 			
-			$account_firms 		= Params::get('account_firms','');
-			$account_regions 	= Params::get('account_regions', '');
+			$account_firms 		= $this->normalizeIDSelection( Params::get('account_firms', array()) );
+			$account_regions 	= $this->normalizeIDSelection( Params::get('account_regions', array()) );
 			$nYear 				= Params::get('year','');
 			$nMonth 			= Params::get('month','');
 			$nScheme 			= Params::get('schemes','');
@@ -151,16 +169,8 @@
 			$oDBSalary = new DBSalary();
 			$oDBOffices = new DBOffices();
 
-			APILog::Log(154, $account_firms);
-
 			$sIDFirms = implode(',',$account_firms);
-
-			APILog::Log( 158, "<pre>".print_r($sIDFirms)."<pre>");
-
-			APILog::Log(158, $account_regions);
 			$sIDOfficesFrom = implode(",",$account_regions);
-
-			APILog::Log( 161, "<pre>".print_r($sIDOfficesFrom)."<pre>");
 
 			$aData 					= array();
 			$aData['nMonth'] 		= $nMonth;

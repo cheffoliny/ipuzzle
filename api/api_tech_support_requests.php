@@ -168,7 +168,7 @@ require_once("pdf/pdf_contract.php");
 		}
 		
 		function delete( DBResponse $oResponse ) {
-			$chk = Params::get('chk', 0);
+			$chk = (array) Params::get('chk', array());
 			$bla = array();
 			$oTechRequests = new DBTechRequests();
 			
@@ -187,7 +187,7 @@ require_once("pdf/pdf_contract.php");
 		}
 
 		function limit( DBResponse $oResponse ) {
-			$chk = Params::get('chk', 0);
+			$chk = (array) Params::get('chk', array());
 			$bla = array();
 			$oTechRequests = new DBTechRequests();
 			

@@ -116,7 +116,7 @@
 			
 			$nIDnomenclatures	=	$nID;
 			$nIDAttributes 		= 	array();
-			$nIDAttributes	 	=	Params::get('account_attributes');
+			$nIDAttributes	 	=	(array) Params::get('account_attributes', array());
 
 			foreach ($nIDAttributes as $value)
 				{	

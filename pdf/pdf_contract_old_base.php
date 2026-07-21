@@ -486,7 +486,7 @@
 			$this->Cell(74,'','Месечна такса:');
 			$this->SetFont('FreeSans', '', 8);
 			if ( !empty( $nPrice ) ) {
-				$this->Cell(10,'',$nPrice." лв");
+				$this->Cell(10,'',$nPrice." €");
 			}
 			$this->Ln(2);
 			$this->moveX(71);

@@ -9,7 +9,9 @@
 		session_start();
 	}
 	
-	restore_include_path();
+	if (function_exists('restore_include_path')) {
+		restore_include_path();
+	}
 	$aPath = pathinfo( $_SERVER["SCRIPT_FILENAME"] );
 	set_include_path( get_include_path() . PATH_SEPARATOR . $aPath["dirname"] . "/../" . PATH_SEPARATOR . $aPath["dirname"] . "/../../" );
 	

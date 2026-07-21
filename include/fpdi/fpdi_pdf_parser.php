@@ -66,11 +66,11 @@ class fpdi_pdf_parser extends pdf_parser {
      * @param string $filename  Source-Filename
      * @param object $fpdi      Object of type fpdi
      */
-    function fpdi_pdf_parser($filename,&$fpdi) {
+    function __construct($filename,&$fpdi) {
         $this->fpdi =& $fpdi;
 		$this->filename = $filename;
 		
-        parent::pdf_parser($filename);
+        parent::__construct($filename);
 
         // resolve Pages-Dictonary
         $pages = $this->pdf_resolve_object($this->c, $this->root[1][1]['/Pages']);
@@ -80,6 +80,10 @@ class fpdi_pdf_parser extends pdf_parser {
         
         // count pages;
         $this->page_count = count($this->pages);
+    }
+
+    function fpdi_pdf_parser($filename,&$fpdi) {
+        $this->__construct($filename, $fpdi);
     }
     
     /**
@@ -327,7 +331,7 @@ class fpdi_pdf_parser extends pdf_parser {
     			return false;
     		} else {
                 $res = $this->_getPageRotation($obj[1][1]['/Parent']);
-                if ($res[0] == PDF_TYPE_OBJECT)
+                if (is_array($res) && isset($res[0]) && $res[0] == PDF_TYPE_OBJECT)
                     return $res[1];
                 return $res;
     		}

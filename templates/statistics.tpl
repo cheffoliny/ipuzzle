@@ -14,8 +14,8 @@
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="editToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form id="form1" onsubmit="return false;">
-	<table class="input">
+<form id="form1" class="ui-monitor-report ui-statistics-report" onsubmit="return false;">
+	<table class="input ui-monitor-heading">
 		<tr>
 			<td class="page_name">
 				Статистики
@@ -23,7 +23,7 @@
 		</tr>	
 	</table>
 	<center>
-	<table class="input" style="width:800px;">
+	<table class="input ui-monitor-filter" style="width:800px;">
 		<tr>
 			<td align="right">
 				Филтър
@@ -36,20 +36,20 @@
 			<td align="left">
 				<input type="text" name="sFromDate" id="sFromDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 				&nbsp;
-				<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editFromDate" />
+				<button type="button" id="editFromDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>	
 			<td align="right">До:&nbsp;</td>
 			<td align="left">
 				<input type="text" name="sToDate" id="sToDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 				&nbsp;
-				<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editToDate" />
+				<button type="button" id="editToDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>
-			<td style="padding-left: 50px" align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button></td>
+			<td class="ui-monitor-search-cell" align="right"><button type="button" name="Button" class="search" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 		</tr>
 	</table>
 	</center>
 	<hr>
-	<div id="result"></div>
+	<div id="result" class="ui-monitor-result"></div>
 </form>
 
 

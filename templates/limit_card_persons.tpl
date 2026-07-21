@@ -28,34 +28,50 @@
 			if ( document.getElementById('lock').value != 'closed' ) {
 				if ( confirm('Наистина ли желаете да премахнете служитела?') ) {
 					document.getElementById('nIDPerson').value = idLc[0];
-					loadXMLDoc2('delete', 0);
-					rpc_on_exit = function() {
-						test();
-						document.getElementById('nIDPerson').value = 0;
+					rpc_on_exit = function(nCode) {
 						rpc_on_exit = function() {};
-					}
+						document.getElementById('nIDPerson').value = 0;
+						if (parseInt(nCode, 10) === 0) {
+							window.setTimeout(loadLimitCardReports, 0);
+						}
+					};
+					loadXMLDoc2('delete', 0);
 				}
 			}
 		}
 		
-		function test() {
-			rpc_result_area='result'
-			loadXMLDoc2('result');
-			
-			rpc_on_exit = function() {
-				rpc_result_area = 'dresult';
+		function loadLimitCardAvailability() {
+			rpc_result_area = 'dresult';
+			rpc_method = 'POST';
+			rpc_xsl = 'xsl/limit_card_persons.xsl';
+			rpc_html_debug = true;
 
-				rpc_method = 'post';
-				rpc_xsl = 'xsl/limit_card_persons.xsl';
-				rpc_html_debug = true;
-				
-				loadXMLDoc2('result2');
+			rpc_on_exit = function() {
+				rpc_on_exit = function() {};
 				rpc_result_area = 'result';
 				rpc_xsl = 'xsl/general_result.xsl';
-				rpc_method = 'get';
-				
+				rpc_method = 'POST';
+				rpc_html_debug = false;
+			};
+			loadXMLDoc2('result2');
+		}
+
+		function loadLimitCardReports() {
+			rpc_result_area = 'result';
+			rpc_xsl = 'xsl/general_result.xsl';
+			rpc_method = 'POST';
+			rpc_html_debug = false;
+			rpc_on_exit = function(nCode) {
 				rpc_on_exit = function() {};
-			}	
+				if (parseInt(nCode, 10) === 0) {
+					window.setTimeout(loadLimitCardAvailability, 0);
+				}
+			};
+			loadXMLDoc2('result');
+		}
+
+		function test() {
+			loadLimitCardReports();
 		}
 		
 		function formClose() {
@@ -101,7 +117,7 @@
 {/literal}
 
 <div>
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-nomenclature-dialog ui-technical-dialog ui-limit-card-persons" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDPerson" name="nIDPerson" value="0" />
 	<input type="hidden" id="lock" name="lock" value="{$lock}" />
@@ -110,16 +126,16 @@
 
 	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 	<tr>
-		<td>{include file=limit_card_tabs.tpl}</td>
+		<td>{include file="limit_card_tabs.tpl"}</td>
 	</tr>
 	<tr>
 		<td id="filter_result">
 			<!-- начало на работната част -->
 			<center>
-				<table class="search">
+				<table class="search ui-technical-toolbar">
 					<tr>
 						<td valign="top" align="right" style="width: 700px;">
-							<button id="b100" onClick="editLimitCardPersons('0,0');"><img src="images/plus.gif" />Добави</button>
+							<button type="button" id="b100" class="search" onClick="editLimitCardPersons('0,0');"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 						</td>
 					</tr>
 
@@ -128,22 +144,22 @@
 
 			<hr>
 			
-			<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:175px; overflow-x: auto; overflow-y: auto;"></div>
+			<div id="result" class="ui-technical-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width:700px; height:175px; overflow-x: auto; overflow-y: auto;"></div>
 		</td>
 	</tr>
 	<tr>
 		<td >		
-			<div id="dresult"  rpc_excel_panel="off" rpc_paging="off"  style="width:700px; height:175px; overflow: none;"></div>
+			<div id="dresult" class="ui-technical-result ui-limit-card-availability" rpc_excel_panel="off" rpc_paging="off" style="width:700px; height:175px; overflow: auto;"></div>
 		</td>
  		<!-- край на работната част -->
 	</tr>
 	</table>
 
-	<div id="search"  style="padding-top: 10px; width:700px;">
-		<table  class="input">
+	<div id="search" class="ui-technical-actions-wrap" style="padding-top: 10px; width:700px;">
+		<table class="input ui-nomenclature-actions ui-technical-actions">
 			<tr valign="top" class="odd">
 				<td valign="top" align="right" width="800px">
-					<button id="b100" onClick="formClose();"><img src="images/cancel.gif" />Затвори</button>
+					<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="formClose();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 				
 			</tr>
@@ -155,25 +171,7 @@
 
 {literal}
 <script>
-	loadXMLDoc2('result');
-	
-	rpc_on_exit = function() {
-		//rpc_prefix = 'dresult';
-		rpc_result_area = 'dresult';
-
-		//rpc_debug = true;
-		rpc_method = 'post';
-		rpc_xsl = 'xsl/limit_card_persons.xsl';
-		rpc_html_debug = true;
-		
-		loadXMLDoc2('result2');
-		rpc_prefix = '';
-		rpc_result_area = 'result';
-		rpc_xsl = 'xsl/general_result.xsl';
-		rpc_method = 'get';
-		
-		rpc_on_exit = function() {};
-	}
+	loadLimitCardReports();
 </script>
 {/literal}
 

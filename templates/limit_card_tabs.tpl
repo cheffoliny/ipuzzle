@@ -41,7 +41,7 @@
           <td width="1" id="passive"></td>
 
           	  {* Информация *}	
-              {if $page eq limit_card_info}
+              {if $page eq 'limit_card_info'}
                     <td id="active">Информация</td>
               {else}
                     <td id="inactive">
@@ -52,7 +52,7 @@
               <td width="1" id="passive"></td>
               
               {* Служители *}	
-              {if $page eq limit_card_persons}
+              {if $page eq 'limit_card_persons'}
                     <td id="active">Служители</td>
               {else}
                     <td id="inactive">
@@ -63,7 +63,7 @@
               <td width="1" id="passive"></td>
               
               {* ППП *}
-              {if $page eq limit_card_ppp}
+              {if $page eq 'limit_card_ppp'}
                     <td id="active">ППП</td>
               {else}
                     <td id="inactive">
@@ -74,7 +74,7 @@
               <td width="1" id="passive"></td>
               
               {* Материални запаси *}
-              {if $page eq limit_card_mz}
+              {if $page eq 'limit_card_mz'}
                     <td id="active">Материални запаси</td>
               {else}
                     <td id="inactive">
@@ -85,7 +85,7 @@
               <td width="1" id="passive"></td>
 
               {* Операции *}
-              {if $page eq limit_card_operations}
+              {if $page eq 'limit_card_operations'}
                     <td id="active">Операции</td>
               {else}
                     <td id="inactive">

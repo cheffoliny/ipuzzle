@@ -56,7 +56,7 @@
     <input type="hidden" id="bEditStatuses" name="bEditStatuses" value="{$bEditStatuses|default:true}"/>
     <input type="hidden" id="isService" name="isService" value="{$isService|default:0}"/>
 
-    {include file=object_tabs.tpl}
+    {include file="object_tabs.tpl"}
 
     <!-- начало на работната част -->
     <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>

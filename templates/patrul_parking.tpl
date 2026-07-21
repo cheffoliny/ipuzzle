@@ -30,16 +30,16 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-monitor-report ui-patrol-parking-report" onSubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="0" />
 	<input type="hidden" id="nIDRegion" name="nIDRegion" value="0" />
 	<input type="hidden" id="id_firm" name="id_firm" value="1" />
 	
-	<table class="page_data">
+	<table class="page_data ui-monitor-heading">
 		<tr>
 			<td class="page_name">Патрули - СТОЯНКИ</td>
 			<td class="buttons">
-				{if $right_edit}<button class="search" onclick="editParking(0);"><img src="images/plus.gif"> Добави </button>
+				{if $right_edit}<button type="button" class="search" onclick="editParking(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>
@@ -47,7 +47,7 @@
 	</table>
 	
 	<center>
-		<table class="search">
+		<table class="search ui-monitor-filter">
 			<tr>
 				<td align="right">Фирма</td>
 				<td>
@@ -57,14 +57,14 @@
 				<td>
 					<select class="default" name="nIDOffice" id="nIDOffice" />
 				</td>
-				<td align="right"><button name="Button" onclick="formSubmit();"><img src="images/confirm.gif">Търси</button></td>
+				<td align="right"><button type="button" name="Button" class="search" onclick="formSubmit();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 	  	</table>
 	</center>
 
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-monitor-result"></div>
 </form>
 
 <script> onInit();</script>

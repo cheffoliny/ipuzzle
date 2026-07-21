@@ -14,26 +14,26 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-list" onsubmit="return false;">
 
-	<table class="input">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">
 				Услуги фирми
 			</td>
 		</tr>
 	</table>
-	<center>
-	<table class="input">
+	<center class="ui-nomenclature-filter-wrap">
+	<table class="input table-secondary ui-nomenclature-filter">
 		<tr>
 			<td align="right">
 				Фирма	
 			</td>
 			<td style="width:200px;">
-				<select name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2('result');"></select>
+				<select name="nIDFirm" id="nIDFirm" class="form-control" onchange="loadXMLDoc2('result');"></select>
 			</td>
 			<td>
-				<button onclick="editFirmServices();" style="width:20px;"><img src="images/edit.gif"></button>
+				<button onclick="editFirmServices();" title="Редакция на услугите"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 	</table>

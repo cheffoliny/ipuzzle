@@ -28,28 +28,28 @@ function tab_href (page) {
 </div>
 <ul class="nav nav-tabs navbar-dark bg-faded mb-1">
 
-    {if $page eq personInfo}
+    {if $page eq 'personInfo'}
         <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#">&nbsp; Инфо &nbsp;&nbsp;</a></li>
     {else}
         <li class="nav-item text-center" title="Информация">{if $tabs.info}<a class="nav-link" href="#" onclick="return tab_href('personInfo');" id='personInfo'> Инфо </a>{else}<a class="nav-link disabled" href="#"> Инфо </a>{/if}</li>
     {/if}
 
     {* Служебни данни *}
-    {if $page eq person_data}
+    {if $page eq 'person_data'}
         <li class="nav-item text-center" title="Служебна информация"><a class="nav-link active" href="#">&nbsp; Служебни </a></li>
     {else}
         <li class="nav-item text-center" title="Служебна информация">{if $tabs.data}<a class="nav-link" href="#" onclick="return tab_href('person_data');" id='person_data'>&nbsp;&nbsp; Служебни </a>{else}<a class="nav-link disabled" href="#">&nbsp;&nbsp; Служебни</a>{/if}</li>
     {/if}
 
     {* Документи *}
-    {if $page eq person_docs}
+    {if $page eq 'person_docs'}
         <li class="nav-item text-center" title="Документи"><a class="nav-link active" href="#">&nbsp; Документи </a></li>
     {else}
         <li class="nav-item text-center" title="Документи">{if $tabs.docs}<a class="nav-link" href="#" onclick="return tab_href('person_docs');" id='person_docs'>&nbsp;&nbsp; Документи </a>{else}<a class="nav-link disabled" href="#">&nbsp;&nbsp; Документи</a>{/if}</li>
     {/if}
 
     {* Трудов договор *}
-    {if $page eq person_contract}
+    {if $page eq 'person_contract'}
         <li class="nav-item text-center" title="Трудов договор"><a class="nav-link active" href="#"> Договор </a></li>
     {else}
         <li class="nav-item text-center" title="Договор">
@@ -59,7 +59,7 @@ function tab_href (page) {
     {/if}
 
     {* Отпуск *}
-    {if $page eq person_leave}
+    {if $page eq 'person_leave'}
         <li class="nav-item text-center" title="Отпуск"><a class="nav-link active" href="#">&nbsp; Отпуск </a></li>
     {else}
         <li class="nav-item text-center" title="Отпуск">
@@ -69,7 +69,7 @@ function tab_href (page) {
     {/if}
 
     {* Работна заплата *}
-    {if $page eq person_salary}
+    {if $page eq 'person_salary'}
         <li class="nav-item text-center" title="Заплата"><a class="nav-link active" href="#">&nbsp; Заплата </a></li>
     {else}
         <li class="nav-item text-center" title="Заплата">

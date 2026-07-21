@@ -15,16 +15,16 @@
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="editToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onsubmit="return false">
+<form action="" name="form1" id="form1" class="ui-monitor-report ui-states-statistics-report" onsubmit="return false">
 	
 
-	<div class="page_caption">Наличности - Статистика</div>
+	<div class="page_caption ui-monitor-heading">Наличности - Статистика</div>
 
 	<br>
 	
 	<center>
 	
-	<table class="input" align="center" style="width:900px;" border="0">
+	<table class="input ui-monitor-filter" align="center" style="width:900px;" border="0">
 		<tr align="center">
 			<td>
 				Филтър
@@ -37,21 +37,21 @@
 			<td align="left">
 				<input type="text" name="sFromDate" id="sFromDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 				&nbsp;
-				<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editFromDate" />
+				<button type="button" id="editFromDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>	
 			<td align="right">До:&nbsp;</td>
 			<td align="left">
 				<input type="text" name="sToDate" id="sToDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 				&nbsp;
-				<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editToDate" />
+				<button type="button" id="editToDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 			</td>
-			<td style="padding-left: 50px" align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button></td>
+			<td class="ui-monitor-search-cell" align="right"><button type="button" name="Button" class="search" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 		</tr>
 	</table>
 
 	</center>
 	<hr>
-	<div id="result"></div>
+	<div id="result" class="ui-monitor-result"></div>
 </form>
 
 <script>

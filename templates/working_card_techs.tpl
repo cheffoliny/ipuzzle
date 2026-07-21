@@ -13,7 +13,7 @@
 			
 			<table cellspacing="0" cellpadding="0" width="100%">
 				<tr>
-					<td valign="top" align="left">{include file=working_card_tabs.tpl}</td>
+					<td valign="top" align="left">{include file="working_card_tabs.tpl"}</td>
 				</tr>
 			</table>
 			

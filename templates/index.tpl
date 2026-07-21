@@ -33,6 +33,7 @@
     <link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
     <link href="css/bootstrap-intelli.css"  rel="stylesheet" type="text/css">
     <link href="css/menu.css"                   rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-shell.css?version=2" rel="stylesheet" type="text/css">
 
     <title>.: iPuzzle - ERP & BPM System :.</title>
 
@@ -50,7 +51,7 @@
 	</script>
 </head>
 
-<body>
+<body class="ui-refresh-shell">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-faded z-1" id="main-menu">
         <a class="navbar-brand" href="#"><label class="label-danger"><i class="fa fa-puzzle-piece"></i></label></a>

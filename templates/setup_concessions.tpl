@@ -31,20 +31,20 @@
 	</script>
 {/literal}
 
-<div>
-	<form name="form1" id="form1" onsubmit="return false;">
+<div class="ui-finance-list-shell">
+	<form name="form1" id="form1" class="ui-nomenclature-list ui-finance-list" onsubmit="return false;">
 		<div class="page_caption">Отстъпки</div>
 
 		<table cellspacing="0" cellpadding="0" width="100%" id="filter">
 			<tr>
-				<td>{include file=finance_instruments_tabs.tpl}</td>
+				<td>{include file="finance_instruments_tabs.tpl"}</td>
 			</tr>
 		</table>
 
-		<table class="input">
+		<table class="input ui-finance-list-actions">
 			<tr>
 				<td align="right">
-					{if $right_edit}<button onclick="openConcession( 0 );"><img src="images/plus.gif"> Добави </button>{else}&nbsp;{/if}
+					{if $right_edit}<button onclick="openConcession( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>{else}&nbsp;{/if}
 				</td>
 			</tr>
 		</table>

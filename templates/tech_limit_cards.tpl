@@ -46,29 +46,29 @@
 <dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
 <div>
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-limit-cards-report" onsubmit="return false;">
 	<input type="hidden" id="sAct" name="sAct" value="load" />
 	<input type="hidden" id="nObject" name="nObject" value="0" />
 	
 	<div class="page_caption">Лимитни КАРТИ</div>
 
-	<table class = "page_data" style="width:100%">
+	<table class="page_data ui-nomenclature-heading ui-technical-heading" style="width:100%">
 		<tr>
 			<td><br></td>
-			<!-- <td class="buttons"> <button onclick="editLimitCard(0)"><img src="images/plus.gif"> Добави </button> </td> -->
+			<!-- Добавянето на лимитна карта от този екран е временно изключено. -->
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<table class="input" style="text-align:middle;" align="center">
+				<table class="input ui-nomenclature-filter ui-technical-filter" style="text-align:middle;" align="center">
 				
 					<tr>
 						<td align="right">от дата:&nbsp;</td>
 						<td colspan="2">
 							<input type="text" id="date_from" name="date_from" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_from" />
+							&nbsp;<button type="button" id="img_date_from" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="vertical-align: top;">до дата:</span>&nbsp;
 							<input type="text" id="date_to" name="date_to" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_to" />
+							&nbsp;<button type="button" id="img_date_to" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td align="left">статус: &nbsp;
 							<select name="sStatus" id="sStatus" style="width: 150px;" >
@@ -119,7 +119,7 @@
 					    <input type="text" name="nNumber" id="nNumber" style="width: 50px; text-align:right;" onkeypress="return formatDigits(event);" />
 					  </td>
 					  <td>
-						<button type="button" name="Button" class="search" onClick="formSearch();"><img src="images/confirm.gif">Търси</button>
+						<button type="button" name="Button" class="search" onClick="formSearch();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button>
 					  </td>
 					</tr>
 				</table>
@@ -128,7 +128,7 @@
 	</table>
 <hr />
 
-<div id="result" rpc_resize="no" style="overflow: auto;"></div>
+<div id="result" class="ui-technical-result" rpc_resize="no" style="overflow: auto;"></div>
 
 </form>
 </div>

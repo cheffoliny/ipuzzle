@@ -6,8 +6,6 @@
 			$oAssetsSettings = new DBAssetsSettings();
 			$oAssetsSettings->getReport( $oResponse );				
 			
-			APILog::Log(0,$_SESSION);
-			
 			$oResponse->printResponse( "Настройки Активи", "assets_settings" );
 		}
 

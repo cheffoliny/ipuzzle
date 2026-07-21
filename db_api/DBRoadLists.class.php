@@ -4,7 +4,6 @@
 			
 		public function __construct() {
 			global $db_auto;
-			$db_auto->debug=true;
 			
 			parent::__construct($db_auto, 'road_lists');
 		}

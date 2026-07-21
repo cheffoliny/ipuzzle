@@ -413,16 +413,16 @@
 							if ( isset($aEar['id_group']) && ($aEar['id_group'] == $nFormatKey) && ($aEar['id_office'] == $aVal2) ) {
 								
 								if ( isset($arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'])) {
-									$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved']) + $aEar['sum']);
+									$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", floatval($arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved']) + $aEar['sum']);
 								} else {
 									//$oResponse->setAlert(ArrayToString($aEar));
-									$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+									$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 								}
 							}
 						}
 						
 						if ( !isset($arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved']) ) {
-							//$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+							//$arr_earnings[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", 0);
 						}
 						
 						if ( is_array($aFormatVal) ) {
@@ -432,17 +432,17 @@
 										foreach ( $aBudgetEA as $aEar ) {
 											if ( isset($aEar['id_nomenclature']) && ($aEar['id_nomenclature'] == $k)  && ($aEar['id_office'] == $aVal2) ) {
 												if ( isset($arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'])) {
-													$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) + $aEar['sum']);
+													$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", floatval($arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) + $aEar['sum']);
 													$t_save1 += $aEar['sum'];
 												} else {
-													$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+													$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 													$t_save1 += $aEar['sum'];
 												}
 											}
 										}
 		
 										if ( !isset($arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) ) {
-											$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+											$arr_earnings[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", 0);
 										}															
 									}
 								}
@@ -450,9 +450,9 @@
 						}
 						
 						if ( isset($arr_earnings[$aVal2]['sum_saved']) ) {
-							$arr_earnings[$aVal2]['sum_saved'] =  sprintf("%01.0f лв.", floatval($arr_earnings[$aVal2]['sum_saved']) + $t_save1);
+							$arr_earnings[$aVal2]['sum_saved'] =  sprintf("%01.0f €", floatval($arr_earnings[$aVal2]['sum_saved']) + $t_save1);
 						} else {
-							$arr_earnings[$aVal2]['sum_saved'] =  sprintf("%01.0f лв.", $t_save1);
+							$arr_earnings[$aVal2]['sum_saved'] =  sprintf("%01.0f €", $t_save1);
 						}	
 						
 						$total1_save	+= $t_save1;
@@ -543,16 +543,16 @@
 							if ( isset($aEar['id_group']) && ($aEar['id_group'] == $nFormatKey) && ($aEar['id_office'] == $aVal2) ) {
 								
 								if ( isset($arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'])) {
-									$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved']) + $aEar['sum']);
+									$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", floatval($arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved']) + $aEar['sum']);
 								} else {
 									//$oResponse->setAlert(ArrayToString($aEar));
-									$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+									$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 								}
 							}
 						}
 						
 						if ( !isset($arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved']) ) {
-							//$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+							//$arr_expenses[$aVal2]['children'][$nFormatKey]['sum_saved'] = sprintf("%01.0f €", 0);
 						}
 						
 						if ( is_array($aFormatVal) ) {
@@ -562,17 +562,17 @@
 										foreach ( $aBudgetEX as $aEar ) {
 											if ( isset($aEar['id_nomenclature']) && ($aEar['id_nomenclature'] == $k)  && ($aEar['id_office'] == $aVal2) ) {
 												if ( isset($arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'])) {
-													$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) + $aEar['sum']);
+													$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", floatval($arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) + $aEar['sum']);
 													$t_save2 += $aEar['sum'];
 												} else {
-													$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+													$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 													$t_save2 += $aEar['sum'];
 												}
 											}
 										}
 		
 										if ( !isset($arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved']) ) {
-											$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+											$arr_expenses[$aVal2]['children'][$nFormatKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", 0);
 										}															
 									}
 								}
@@ -580,9 +580,9 @@
 						}
 						
 						if ( isset($arr_expenses[$aVal2]['sum_saved']) ) {
-							$arr_expenses[$aVal2]['sum_saved'] =  sprintf("%01.0f лв.", floatval($arr_expenses[$aVal2]['sum_saved']) + $t_save2);
+							$arr_expenses[$aVal2]['sum_saved'] =  sprintf("%01.0f €", floatval($arr_expenses[$aVal2]['sum_saved']) + $t_save2);
 						} else {
-							$arr_expenses[$aVal2]['sum_saved'] =  sprintf("%01.0f лв.", $t_save2);
+							$arr_expenses[$aVal2]['sum_saved'] =  sprintf("%01.0f €", $t_save2);
 						}	
 						
 						$total2_save	+= $t_save2;
@@ -590,17 +590,20 @@
 					}									
 				}
 				
-				$arr_earnings[-100]['sum_saved'] =  sprintf("%01.0f лв.", $total1_save);
-				$arr_expenses[-100]['sum_saved'] =  sprintf("%01.0f лв.", $total2_save);
+				$arr_earnings[-100]['sum_saved'] =  sprintf("%01.0f €", $total1_save);
+				$arr_expenses[-100]['sum_saved'] =  sprintf("%01.0f €", $total2_save);
 				
 				foreach ( $arr_earnings as $k => $v ) {
-					$arr_earnings[$k]['result'] =  sprintf("%01.0f лв.", floatval($arr_earnings[$k]['sum']) - floatval($arr_expenses[$k]['sum']));
+					$nExpenseSum = isset($arr_expenses[$k]['sum']) ? floatval($arr_expenses[$k]['sum']) : 0;
+					$nEarningSaved = isset($arr_earnings[$k]['sum_saved']) ? floatval($arr_earnings[$k]['sum_saved']) : 0;
+					$nExpenseSaved = isset($arr_expenses[$k]['sum_saved']) ? floatval($arr_expenses[$k]['sum_saved']) : 0;
+					$arr_earnings[$k]['result'] = sprintf("%01.0f €", floatval($arr_earnings[$k]['sum']) - $nExpenseSum);
 					
-					$arr_earnings[$k]['result_saved'] =  sprintf("%01.0f лв.", $arr_earnings[$k]['sum_saved'] - $arr_expenses[$k]['sum_saved']);
+					$arr_earnings[$k]['result_saved'] = sprintf("%01.0f €", $nEarningSaved - $nExpenseSaved);
 //					if ( isset($arr_expenses[$k]['result_saved']) ) {
-//						$arr_earnings[$k]['result_saved'] =  sprintf("%01.0f лв.", $arr_earnings[$k]['sum_saved'] - $arr_expenses[$k]['sum_saved']);
+//						$arr_earnings[$k]['result_saved'] =  sprintf("%01.0f €", $arr_earnings[$k]['sum_saved'] - $arr_expenses[$k]['sum_saved']);
 //					} else {
-//						$arr_earnings[$k]['result_saved'] =  sprintf("%01.0f лв.", $arr_earnings[$k]['sum_saved']);
+//						$arr_earnings[$k]['result_saved'] =  sprintf("%01.0f €", $arr_earnings[$k]['sum_saved']);
 //					}					
 				}				
 				
@@ -627,15 +630,15 @@
 					foreach ( $aBudgetEA as $aEar ) {
 						if ( isset($aEar['id_group']) && ($aEar['id_group'] == $nIDKey) ) {
 							if ( isset($arr_earnings[$nIDKey]['sum_saved'])) {
-								$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_earnings[$nIDKey]['sum_saved']) + $aEar['sum']);
+								$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f €", floatval($arr_earnings[$nIDKey]['sum_saved']) + $aEar['sum']);
 							} else {
-								$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+								$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 							}
 						}
 					}
 					
 					if ( !isset($arr_earnings[$nIDKey]['sum_saved']) ) {
-						$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+						$arr_earnings[$nIDKey]['sum_saved'] = sprintf("%01.0f €", 0);
 					}
 					
 					
@@ -645,17 +648,17 @@
 								foreach ( $aBudgetEA as $aEar ) {
 									if ( isset($aEar['id_nomenclature']) && ($aEar['id_nomenclature'] == $k) ) {
 										if ( isset($arr_earnings[$nIDKey]['children'][$k]['sum_saved'])) {
-											$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_earnings[$nIDKey]['children'][$k]['sum_saved']) + $aEar['sum']);
+											$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", floatval($arr_earnings[$nIDKey]['children'][$k]['sum_saved']) + $aEar['sum']);
 											$t_save += $aEar['sum'];
 										} else {
-											$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+											$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 											$t_save += $aEar['sum'];
 										}
 									}
 								}
 
 								if ( !isset($arr_earnings[$nIDKey]['children'][$k]['sum_saved']) ) {
-									$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+									$arr_earnings[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", 0);
 								}															
 							}
 						}
@@ -665,8 +668,8 @@
 				$arr_earnings[-100]['id'] 			= 0;
 				$arr_earnings[-100]['label'] 		= "Всичко: ";
 				$arr_earnings[-100]['is_total'] 	= 1;
-				$arr_earnings[-100]['sum'] 			= sprintf("%01.0f лв.", $total_earning);
-				$arr_earnings[-100]['sum_saved']	= sprintf("%01.0f лв.", $t_save);
+				$arr_earnings[-100]['sum'] 			= $total_earning;
+				$arr_earnings[-100]['sum_saved']	= sprintf("%01.0f €", $t_save);
 				
 				$aTemp		= array();
 				$aTotals	= array();
@@ -691,15 +694,15 @@
 					foreach ( $aBudgetEX as $aEar ) {
 						if ( isset($aEar['id_group']) && ($aEar['id_group'] == $nIDKey) ) {
 							if ( isset($arr_expenses[$nIDKey]['sum_saved'])) {
-								$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_expenses[$nIDKey]['sum_saved']) + $aEar['sum']);
+								$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f €", floatval($arr_expenses[$nIDKey]['sum_saved']) + $aEar['sum']);
 							} else {
-								$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+								$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 							}
 						}
 					}
 					
 					if ( !isset($arr_expenses[$nIDKey]['sum_saved']) ) {
-						$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+						$arr_expenses[$nIDKey]['sum_saved'] = sprintf("%01.0f €", 0);
 					}
 					
 					
@@ -709,17 +712,17 @@
 								foreach ( $aBudgetEX as $aEar ) {
 									if ( isset($aEar['id_nomenclature']) && ($aEar['id_nomenclature'] == $k) ) {
 										if ( isset($arr_expenses[$nIDKey]['children'][$k]['sum_saved'])) {
-											$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", floatval($arr_expenses[$nIDKey]['children'][$k]['sum_saved']) + $aEar['sum']);
+											$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", floatval($arr_expenses[$nIDKey]['children'][$k]['sum_saved']) + $aEar['sum']);
 											$t_save2 += $aEar['sum'];
 										} else {
-											$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", $aEar['sum']);
+											$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", $aEar['sum']);
 											$t_save2 += $aEar['sum'];
 										}
 									}
 								}
 
 								if ( !isset($arr_expenses[$nIDKey]['children'][$k]['sum_saved']) ) {
-									$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f лв.", 0);						
+									$arr_expenses[$nIDKey]['children'][$k]['sum_saved'] = sprintf("%01.0f €", 0);
 								}															
 							}
 						}
@@ -729,9 +732,9 @@
 				$arr_expenses[-100]['id'] 				= 0;
 				$arr_expenses[-100]['label'] 			= "Всичко: ";
 				$arr_expenses[-100]['is_total'] 		= 1;
-				$arr_expenses[-100]['sum'] 				= sprintf("%01.0f лв.", $total_expense);
-				$arr_expenses[-100]['sum_saved']		= sprintf("%01.0f лв.", $t_save2);
-				$arr_earnings[-100]['result_saved']		= sprintf("%01.0f лв.", $t_save - $t_save2);
+				$arr_expenses[-100]['sum'] 				= $total_expense;
+				$arr_expenses[-100]['sum_saved']		= sprintf("%01.0f €", $t_save2);
+				$arr_earnings[-100]['result_saved']		= sprintf("%01.0f €", $t_save - $t_save2);
 								
 				ksort($arr_earnings);
 				reset($arr_earnings);					
@@ -740,7 +743,10 @@
 				reset($arr_expenses);					
 			}
 			
-			$arr_earnings[-100]['result'] 				=  sprintf("%01.0f лв.", $arr_earnings[-100]['sum'] - $arr_expenses[-100]['sum']);
+			$arr_earnings[-100]['result'] = sprintf(
+				"%01.0f €",
+				floatval($arr_earnings[-100]['sum']) - floatval($arr_expenses[-100]['sum'])
+			);
 
 			$arr_earnings = $this->formatData($arr_earnings, $aMonths);
 			$arr_expenses = $this->formatData($arr_expenses, $aMonths);
@@ -755,33 +761,33 @@
 		public function formatData( $aData, $aMonths ) {
 
 			foreach ( $aData as $nRootIndex => $aRootThread ) {
-				$aData[$nRootIndex]['sum'] = sprintf("%01.0f лв.", $aRootThread['sum']);
+				$aData[$nRootIndex]['sum'] = sprintf("%01.0f €", $aRootThread['sum']);
 				
 				foreach ( $aRootThread as $sRootkey => $aRootValues ) {
 					foreach ( $aMonths as $sPopulateMonth ) {
 						if ( !isset($aRootThread[$sPopulateMonth]) ) {
-							$aData[$nRootIndex][$sPopulateMonth] = sprintf("%01.0f лв.", 0);
+							$aData[$nRootIndex][$sPopulateMonth] = sprintf("%01.0f €", 0);
 						}
 					}
 														
 					if ( in_array($sRootkey, $aMonths) ) {
-						$aData[$nRootIndex][$sRootkey] = sprintf("%01.0f лв.", $aRootValues);
+						$aData[$nRootIndex][$sRootkey] = sprintf("%01.0f €", $aRootValues);
 					}
 					
 					// Преминаване на второ ниво в дървото
 					if ( $sRootkey == "children" ) {
 						foreach ( $aRootValues as $sChildOneKey => $aChildOneValues ) {
 							if ( $sChildOneKey == "sum" ) {
-								$aData[$nRootIndex]['children']['sum'] = sprintf("%01.0f лв.", $aChildOneValues);
+								$aData[$nRootIndex]['children']['sum'] = sprintf("%01.0f €", $aChildOneValues);
 							} else {
 								// По номенклатури - първо ниво
 								foreach ( $aChildOneValues as $nChildNomenclatureOne => $aChildNomenclatureOne ) {
 									if ( $nChildNomenclatureOne == "sum" ) {
-										$aData[$nRootIndex]['children'][$sChildOneKey]['sum'] = sprintf("%01.0f лв.", $aChildNomenclatureOne);
+										$aData[$nRootIndex]['children'][$sChildOneKey]['sum'] = sprintf("%01.0f €", $aChildNomenclatureOne);
 									}									
 
 									if ( in_array($nChildNomenclatureOne, $aMonths) ) {
-										$aData[$nRootIndex]['children'][$sChildOneKey][$nChildNomenclatureOne] = sprintf("%01.0f лв.", $aChildNomenclatureOne);
+										$aData[$nRootIndex]['children'][$sChildOneKey][$nChildNomenclatureOne] = sprintf("%01.0f €", $aChildNomenclatureOne);
 									}	
 
 									// Преминаване на трето ниво в дървото
@@ -789,11 +795,11 @@
 										foreach ( $aChildNomenclatureOne as $sChildTwoKey => $aChildTwoValues ) {
 											foreach ( $aChildTwoValues as $sChildTwoIndex => $aChildTwoStore ) {
 												if ( $sChildTwoIndex == "sum" ) {
-													$aData[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey]['sum'] = sprintf("%01.0f лв.", $aChildTwoStore);
+													$aData[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey]['sum'] = sprintf("%01.0f €", $aChildTwoStore);
 												}
 												
 												if ( in_array($sChildTwoIndex, $aMonths) ) {
-													$aData[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey][$sChildTwoIndex] = sprintf("%01.0f лв.", $aChildTwoStore);
+													$aData[$nRootIndex]['children'][$sChildOneKey]['children'][$sChildTwoKey][$sChildTwoIndex] = sprintf("%01.0f €", $aChildTwoStore);
 												}												
 											}
 
@@ -873,44 +879,6 @@
 				}
 			}	
 		
-			foreach ( $arr_earnings as &$aPrice ) {
-				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum'])." лв.";
-				}
-						
-				foreach ( $aPrice['children'] as &$aPriceChild ) {
-					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum'])." лв.";
-					}					
-				}
-						
-				unset($aPriceChild);
-						
-				foreach ( $aMonths as $aMo ) {
-					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
-					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo])." лв.";
-					}
-				}
-						
-				unset($aMo);
-						
-				foreach ( $aPrice['children'] as &$aChil ) {
-					foreach ( $aMonths as $aMo ) {
-						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
-						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo])." лв.";
-						}
-					}					
-				}
-					
-				unset($aChil);
-			}
-	
-			unset($aPrice);	
-			
 			return $arr_earnings;
 		}
 		
@@ -1487,12 +1455,12 @@
 
 			foreach ( $arr_earnings as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum']);
+					$aPrice['sum'] = sprintf("%01.0f €", $aPrice['sum']);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum']);
+						$aPriceChild['sum'] = sprintf("%01.0f €", $aPriceChild['sum']);
 					}					
 				}
 				
@@ -1500,9 +1468,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
+						$aPrice[$aMo] = sprintf("%01.0f €", 0);
 					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = sprintf("%01.0f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -1511,9 +1479,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
+							$aChil[$aMo] = sprintf("%01.0f €", 0);
 						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo]);
+							$aChil[$aMo] = sprintf("%01.0f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -1525,12 +1493,12 @@
 			
 			foreach ( $arr_expenses as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum']);
+					$aPrice['sum'] = sprintf("%01.0f €", $aPrice['sum']);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum']);
+						$aPriceChild['sum'] = sprintf("%01.0f €", $aPriceChild['sum']);
 					}					
 				}
 				
@@ -1538,9 +1506,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
+						$aPrice[$aMo] = sprintf("%01.0f €", 0);
 					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = sprintf("%01.0f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -1549,9 +1517,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
+							$aChil[$aMo] = sprintf("%01.0f €", 0);
 						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo]);
+							$aChil[$aMo] = sprintf("%01.0f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -1563,7 +1531,7 @@
 						
 			$sFileName	= "budget.xls";
 		  	$sFileNameTemp = tempnam("\tmp", $sFileName);
-			$oWorkbook = &new writeexcel_workbook($sFileNameTemp);
+			$oWorkbook = new writeexcel_workbook($sFileNameTemp);
 			 // Създване на worksheet
 			$oWorksheet = &$oWorkbook->addworksheet( iconv("UTF-8", "CP1251", "Бюджет") );
 			
@@ -1623,10 +1591,10 @@
 			  
 			// Тотали :)
 			$oWorksheet->write_string(2, 0, iconv("UTF-8", "CP1251", "Общо приход: "), $formatTotal );	
-			$oWorksheet->write_string(2, 1, iconv("UTF-8", "CP1251", sprintf("%01.0f лв.", $total_earning)), $formatCap );
+			$oWorksheet->write_string(2, 1, iconv("UTF-8", "CP1251", sprintf("%01.0f €", $total_earning)), $formatCap );
 
 			$oWorksheet->write_string(3, 0, iconv("UTF-8", "CP1251", "Общо разход: "), $formatTotal );	
-			$oWorksheet->write_string(3, 1, iconv("UTF-8", "CP1251", sprintf("%01.0f лв.", $total_expense)), $formatCap );			
+			$oWorksheet->write_string(3, 1, iconv("UTF-8", "CP1251", sprintf("%01.0f €", $total_expense)), $formatCap );
 			
 			// Начални координати ПРИХОДИ
 			$y = 7;

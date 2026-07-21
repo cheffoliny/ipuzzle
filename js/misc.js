@@ -415,20 +415,25 @@ function show_hide_loader (func) {
 	loader = $('loading');
 
 	if( !loader ){
-		loader = document.createElement("i");
-		loader.appendChild(document.createTextNode(''));
+		loader = document.createElement("div");
 		loader.id = 'loading';
-		loader.className = 'fas fa-puzzle-piece fa-pulse fa-3x';
-		loader.style.fontSize = '200px !important';
-		loader.style.right = '50%';
-		loader.style.bottom = '50%';
-		loader.style.color = '#2e8cb8';
-		loader.style.textShadow = '1px 1px 1px #eeeeee';
-		loader.style.position = 'absolute';
-		loader.style.zIndex = 1000;
+		loader.className = 'rpc-loading';
+		loader.setAttribute('role', 'status');
+		loader.setAttribute('aria-live', 'polite');
+		loader.setAttribute('aria-label', 'Зареждане');
+
+		var loaderIcon = document.createElement("i");
+		loaderIcon.className = 'fas fa-puzzle-piece fa-pulse rpc-loading__icon';
+		loaderIcon.setAttribute('aria-hidden', 'true');
+		loader.appendChild(loaderIcon);
+
+		var loaderText = document.createElement("span");
+		loaderText.className = 'rpc-loading__text';
+		loaderText.appendChild(document.createTextNode('Зареждане...'));
+		loader.appendChild(loaderText);
 		document.body.appendChild(loader);
 	}
-	if( loader ) loader.style.display = (func == 1) ? 'block' : 'none';
+	if( loader ) loader.style.display = (func == 1) ? 'flex' : 'none';
 }
 
 /**

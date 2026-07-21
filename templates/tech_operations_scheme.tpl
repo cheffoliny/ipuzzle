@@ -10,9 +10,9 @@
 	
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-tech-operations-scheme" onSubmit="return false;">
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Шаблон за използване при изграждане от ел. договор</td>
 		</tr>

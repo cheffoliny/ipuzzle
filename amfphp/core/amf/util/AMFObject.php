@@ -45,13 +45,14 @@ class AMFObject {
 	var $_bodys;
 	
 	var $outputStream;
+	var $rawData;
 
 	/**
 	 * The constructor function for a new amf object.
 	 * 
 	 * All the constructor does is initialize the headers and bodys containers
 	 */
-	function AMFObject($rawData = NULL) {
+	function __construct($rawData = NULL) {
 		$this->rawData = $rawData;
 		$this->outputStream = "";
 		$this->_incomingHeaders = array();
@@ -59,6 +60,10 @@ class AMFObject {
 		$this->_bodys = array();
 		$this->_headerTable = array();
 	} 
+
+	function AMFObject($rawData = NULL) {
+		$this->__construct($rawData);
+	}
 
 	/**
 	 * addHeader places a new header into the pool of headers.

@@ -25,9 +25,14 @@ class UFPDF extends FPDF
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
+function __construct($orientation='P',$unit='mm',$format='A4')
+{
+  parent::__construct($orientation, $unit, $format);
+}
+
 function UFPDF($orientation='P',$unit='mm',$format='A4')
 {
-  FPDF::FPDF($orientation, $unit, $format);
+  $this->__construct($orientation, $unit, $format);
 }
 
 function GetStringWidth($s)
@@ -76,7 +81,7 @@ function Text($x,$y,$txt)
   //Output a string
   $s=sprintf('BT %.2f %.2f Td %s Tj ET',$x*$this->k,($this->h-$y)*$this->k,$this->_escapetext($txt));
   if($this->underline and $txt!='')
-    $s.=' '.$this->_dounderline($x,$y,$this->GetStringWidth($txt),$txt);
+    $s.=' '.$this->_dounderline($x,$y,$txt);
   if($this->ColorFlag)
     $s='q '.$this->TextColor.' '.$s.' Q';
   $this->_out($s);
@@ -148,7 +153,7 @@ function Cell($w,$h=0,$txt='',$border=0,$ln=0,$align='',$fill=0,$link='')
     $txtstring=$this->_escapetext($txt);
     $s.=sprintf('BT %.2f %.2f Td %s Tj ET',($this->x+$dx)*$k,($this->h-($this->y+.5*$h+.3*$this->FontSize))*$k,$txtstring);
     if($this->underline)
-      $s.=' '.$this->_dounderline($this->x+$dx,$this->y+.5*$h+.3*$this->FontSize,$width,$txt);
+      $s.=' '.$this->_dounderline($this->x+$dx,$this->y+.5*$h+.3*$this->FontSize,$txt);
     if($this->ColorFlag)
       $s.=' Q';
     if($link)
@@ -236,12 +241,12 @@ function _puttruetypeunicode($font) {
   $this->_out('endobj');
 }
 
-function _dounderline($x,$y,$width,$txt)
+function _dounderline($x,$y,$txt)
 {
   //Underline text
   $up=$this->CurrentFont['up'];
   $ut=$this->CurrentFont['ut'];
-  $w=$width+$this->ws*substr_count($txt,' ');
+  $w=$this->GetStringWidth($txt)+$this->ws*substr_count($txt,' ');
   return sprintf('%.2f %.2f %.2f %.2f re f',$x*$this->k,($this->h-($y-$up/1000*$this->FontSize))*$this->k,$w*$this->k,-$ut/1000*$this->FontSizePt);
 }
 
@@ -321,10 +326,10 @@ function utf8_to_utf16be(&$txt, $bom = true) {
   $l = strlen($txt);
   $out = $bom ? "\xFE\xFF" : '';
   for ($i = 0; $i < $l; ++$i) {
-    $c = ord($txt{$i});
+    $c = ord($txt[$i]);
     // ASCII
     if ($c < 0x80) {
-      $out .= "\x00". $txt{$i};
+      $out .= "\x00". $txt[$i];
     }
     // Lost continuation byte
     else if ($c < 0xC0) {
@@ -345,14 +350,14 @@ function utf8_to_utf16be(&$txt, $bom = true) {
       // 5/6 byte sequences not possible for Unicode.
       else {
         $out .= "\xFF\xFD";
-        while (ord($txt{$i + 1}) >= 0x80 && ord($txt{$i + 1}) < 0xC0) { ++$i; }
+        while ($i + 1 < $l && ord($txt[$i + 1]) >= 0x80 && ord($txt[$i + 1]) < 0xC0) { ++$i; }
         continue;
       }
 
       $q = array($c);
       // Fetch rest of sequence
       $l = strlen($txt);
-      while ($i + 1 < $l && ord($txt{$i + 1}) >= 0x80 && ord($txt{$i + 1}) < 0xC0) { ++$i; $q[] = ord($txt{$i}); }
+      while ($i + 1 < $l && ord($txt[$i + 1]) >= 0x80 && ord($txt[$i + 1]) < 0xC0) { ++$i; $q[] = ord($txt[$i]); }
 
       // Check length
       if (count($q) != $s) {
@@ -371,7 +376,7 @@ function utf8_to_utf16be(&$txt, $bom = true) {
             $out .= chr($cp >> 8);
             $out .= chr($cp & 0xFF);
           }
-          continue;
+          continue 2;
 
         case 3:
           $cp = (($q[0] ^ 0xE0) << 12) | (($q[1] ^ 0x80) << 6) | ($q[2] ^ 0x80);
@@ -387,7 +392,7 @@ function utf8_to_utf16be(&$txt, $bom = true) {
             $out .= chr($cp >> 8);
             $out .= chr($cp & 0xFF);
           }
-          continue;
+          continue 2;
 
         case 4:
           $cp = (($q[0] ^ 0xF0) << 18) | (($q[1] ^ 0x80) << 12) | (($q[2] ^ 0x80) << 6) | ($q[3] ^ 0x80);
@@ -410,7 +415,7 @@ function utf8_to_utf16be(&$txt, $bom = true) {
             $out .= chr($s2 >> 8);
             $out .= chr($s2 & 0xFF);
           }
-          continue;
+          continue 2;
       }
     }
   }
@@ -423,10 +428,10 @@ function utf8_to_codepoints(&$txt) {
   $l = strlen($txt);
   $out = array();
   for ($i = 0; $i < $l; ++$i) {
-    $c = ord($txt{$i});
+    $c = ord($txt[$i]);
     // ASCII
     if ($c < 0x80) {
-      $out[] = ord($txt{$i});
+      $out[] = ord($txt[$i]);
     }
     // Lost continuation byte
     else if ($c < 0xC0) {
@@ -447,14 +452,14 @@ function utf8_to_codepoints(&$txt) {
       // 5/6 byte sequences not possible for Unicode.
       else {
         $out[] = 0xFFFD;
-        while (ord($txt{$i + 1}) >= 0x80 && ord($txt{$i + 1}) < 0xC0) { ++$i; }
+        while ($i + 1 < $l && ord($txt[$i + 1]) >= 0x80 && ord($txt[$i + 1]) < 0xC0) { ++$i; }
         continue;
       }
 
       $q = array($c);
       // Fetch rest of sequence
       $l = strlen($txt);
-      while ($i + 1 < $l && ord($txt{$i + 1}) >= 0x80 && ord($txt{$i + 1}) < 0xC0) { ++$i; $q[] = ord($txt{$i}); }
+      while ($i + 1 < $l && ord($txt[$i + 1]) >= 0x80 && ord($txt[$i + 1]) < 0xC0) { ++$i; $q[] = ord($txt[$i]); }
 
       // Check length
       if (count($q) != $s) {
@@ -472,7 +477,7 @@ function utf8_to_codepoints(&$txt) {
           else {
             $out[] = $cp;
           }
-          continue;
+          continue 2;
 
         case 3:
           $cp = (($q[0] ^ 0xE0) << 12) | (($q[1] ^ 0x80) << 6) | ($q[2] ^ 0x80);
@@ -487,7 +492,7 @@ function utf8_to_codepoints(&$txt) {
           else {
             $out[] = $cp;
           }
-          continue;
+          continue 2;
 
         case 4:
           $cp = (($q[0] ^ 0xF0) << 18) | (($q[1] ^ 0x80) << 12) | (($q[2] ^ 0x80) << 6) | ($q[3] ^ 0x80);
@@ -502,7 +507,7 @@ function utf8_to_codepoints(&$txt) {
           else {
             $out[] = $cp;
           }
-          continue;
+          continue 2;
       }
     }
   }

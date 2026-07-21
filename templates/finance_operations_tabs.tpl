@@ -14,7 +14,7 @@
 <ul class="nav nav-tabs nav-intelli">
 
 	{* Справка приходи *}
-	{if $page eq sales_docs}
+	{if $page eq 'sales_docs'}
 		<li class="nav-item text-center" title="Приходи">
 			<a class="nav-link active" href="#">Приходи</a>
 		</li>
@@ -25,7 +25,7 @@
 	{/if}
 
 	{* Справка разходи *}
-	{if $page eq buy_docs}
+	{if $page eq 'buy_docs'}
 		<li class="nav-item text-center" title="Разходи">
 			<a class="nav-link active" href="#">Разходи</a>
 		</li>
@@ -36,7 +36,7 @@
 	{/if}
 
 	{* Отчети *}
-	{if $page eq currency_movement}
+	{if $page eq 'currency_movement'}
 		<li class="nav-item text-center" title="Отчети">
 			<a class="nav-link active" href="#">Отчети</a>
 		</li>
@@ -47,7 +47,7 @@
 	{/if}
 
 	{*Online Payment*}
-	{if $page eq online_payments}
+	{if $page eq 'online_payments'}
 		<li class="nav-item text-center" title="Онлайн плащания">
 			<a class="nav-link active" href="#">iPay</a>
 		</li>
@@ -58,7 +58,7 @@
 	{/if}
 
 	{* Салда - Фирми *}
-	{if $page eq view_firm_balances}
+	{if $page eq 'view_firm_balances'}
 		<li class="nav-item text-center" title="Салда">
 			<a class="nav-link active" href="#">Салда</a>
 		</li>
@@ -69,7 +69,7 @@
 	{/if}
 
 	{* Наличности *}
-	{if $page eq view_balance}
+	{if $page eq 'view_balance'}
 		<li class="nav-item text-center" title="Наличности">
 			<a class="nav-link active" href="#">Наличности</a>
 		</li>
@@ -80,7 +80,7 @@
 	{/if}
 
 	{* Парични Потоци – Подробна *}
-	{if $page eq view_money_nomenclatures_detail}
+	{if $page eq 'view_money_nomenclatures_detail'}
 		<li class="nav-item text-center" title="Извлечения">
 			<a class="nav-link active" href="#">Извлечения</a>
 		</li>

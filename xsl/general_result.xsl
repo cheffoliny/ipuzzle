@@ -31,13 +31,14 @@
             report_rows[theRowNum]=false;
 
             if (theAction=='over') {
-                theRow.setAttribute('style','background: rgba(247,247,250,0)', 0);
+                if ( !report_rows[theRowNum] ) {
+                    theRow.setAttribute('style','background-color: #355c7d !important', 0);
+                }
                 } else if (theAction=='out') {
-                    var row_color = theRowNum % 2 ? 'background: rgba(255,255,255,0)' : 'background: rgba(240,240,240,0)';
                     if ( !report_rows[theRowNum] ) {
-                        theRow.setAttribute('style', row_color, 0);
+                        theRow.removeAttribute('style');
                     } else {
-                        theRow.setAttribute('style', 'background: rgba(40,5,10,0.4)', 0);
+                        theRow.setAttribute('style', 'background-color: #612c2c !important', 0);
                     }
                 } else if (theAction=='click') {
                     if (report_rows[theRowNum]) {
@@ -45,7 +46,7 @@
                         <xsl:value-of select="$rpc_prefix"/>setPointer(theRow,theRowNum, 'out');
                     } else {
                         report_rows[theRowNum]=true;
-                        theRow.setAttribute('style','background: rgba(245,245,220,0)', 0);
+                        theRow.setAttribute('style','background-color: #612c2c !important', 0);
                     }
 
                 }
@@ -526,15 +527,6 @@
                                     <xsl:for-each select="./@*">
                                         <xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute>
                                     </xsl:for-each>
-
-                                    <xsl:choose>
-                                        <xsl:when test="(position() mod 2) = 0">
-                                            <xsl:attribute name="style">rgba(240,240,240,0.8)</xsl:attribute>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:attribute name="style">rgba(255,255,255,0.8)</xsl:attribute>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
 
                                     <xsl:if test="$rpc_autonumber = 'on'">
                                         <td align="right"><xsl:value-of select="position() + $page_start"/><xsl:if test="$rpc_edit_report = 'on'"><input type="hidden" value="old"><xsl:attribute name="name"><xsl:value-of select="$rpc_prefix"/>status[<xsl:value-of select="@id"/>]</xsl:attribute></input></xsl:if></td>

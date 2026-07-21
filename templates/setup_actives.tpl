@@ -15,13 +15,13 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" name="id" id="id" value="0">
-	<table class = "page_data">
+	<table class = "page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Номенклатури - АКТИВИ</td>
 			<td class="buttons">
-			{if $right_edit}<button onclick="editActives( 0 );"><img src="images/plus.gif"> Добави </button>
+			{if $right_edit}<button onclick="editActives( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 			{else}&nbsp;
 			{/if}
 			</td>

@@ -15,7 +15,7 @@ class DateWrapper
 	/** 
 	 * Contructor
 	 */
-	function DateWrapper($input = "")
+	function __construct($input = "")
 	{
 		if(is_int($input) || is_float($input))
 		{
@@ -25,6 +25,11 @@ class DateWrapper
 		{
 			$this->_date = time();
 		}
+	}
+
+	function DateWrapper($input = "")
+	{
+		$this->__construct($input);
 	}
 	
 	/**
@@ -62,7 +67,7 @@ class DateWrapper
 	/**
 	 * Get timezone
 	 */
-	function getTimezone($val=NULL)
+	static function getTimezone($val=NULL)
 	{
 		static $timezone = 0;
 		if($val != NULL)
@@ -75,7 +80,7 @@ class DateWrapper
 	/**
 	 * Set timezone
 	 */
-	function setTimezone($val=0){
+	static function setTimezone($val=0){
 		return DateWrapper::getTimezone($val);
 	}
 } 

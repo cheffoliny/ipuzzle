@@ -54,7 +54,7 @@
 			if($('date_from').value != '') {
 				Params += '&sDateFrom=' + $('date_from').value;
 			}
-			if($('date_to').vlaue != '') {
+			if($('date_to').value != '') {
 				Params += '&sDateTo=' + $('date_to').value;
 			}
 			
@@ -102,20 +102,20 @@
 <dlcalendar click_element_id="img_date_from" input_element_id="date_from" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
-			<form name="form1" id="form1" onsubmit="return false;">	
+			<form name="form1" id="form1" class="ui-monitor-report ui-patrol-movement-report" onsubmit="return false;">
 				<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard|default:0}" />
 				
-				<div class="page_caption" id="capt" name="capt">РК: Движение на патрули</div>
+				<div class="page_caption ui-monitor-heading" id="capt" name="capt">РК: Движение на патрули</div>
 				
 				<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 					<tr>
-						<td>{include file=working_card_tabs.tpl}</td>
+						<td>{include file="working_card_tabs.tpl"}</td>
 					</tr>
 				</table>
 				<br>
 				
 				
-					<table class="search">
+					<table class="search ui-monitor-toolbar">
 						<tr>
 							<td height="30px" valign="top" align="left">
 								<button type="button" name="Button" onClick="toObjects();" class="search">Към Обекти</button>
@@ -131,14 +131,14 @@
 							</td> 
 							
 							<td colspan="7">
-								<button style="width: 30px" id=b25 title="Нова група" name="Button5" onClick="openFilter(1);" ><img src="images/plus.gif" /></button>&nbsp;
-								<button style="width: 30px" name="Button4" id=b25 title="Редактиране на филтър" onClick="openFilter(2);"><img src=images/edit.gif /></button>&nbsp;
-								<button style="width: 30px" name="Button3" id=b25 title="Премахване на филтър" onClick="deleteFilter(schemes);"><img src=images/erase.gif /></button>
+								<button type="button" class="ui-monitor-icon-button" title="Нова група" name="Button5" onClick="openFilter(1);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>&nbsp;
+								<button type="button" class="ui-monitor-icon-button" name="Button4" title="Редактиране на филтър" onClick="openFilter(2);"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>&nbsp;
+								<button type="button" class="ui-monitor-icon-button ui-monitor-danger" name="Button3" title="Премахване на филтър" onClick="deleteFilter(schemes);"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span></button>
 							</td>
 						</tr>
 					</table>
 				<center>
-					<table class="search" border="0">	
+					<table class="search ui-monitor-filter" border="0">
 						<tr>
 							<td align="right">Тип:</td>
 							<td>
@@ -170,16 +170,16 @@
 							<td align="right">от дата:</td>
 							<td>
 								<input type="text" id="date_from" name="date_from" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-								<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_from" />
+								<button type="button" id="img_date_from" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							</td>
 							<td align="right">до дата:</td>
 							<td>
 								<input type="text" id="date_to" name="date_to" class="inp75" onkeypress="return formatDate(event, '.');" size="10" maxlength="10" title="ДД.ММ.ГГГГ" />
-								<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_to" />
+								<button type="button" id="img_date_to" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							</td>	
 							<td align="right" colspan="2">
 								<button type="button" name="Button" onClick="formSearch();" class="search">
-									<img src="images/confirm.gif">
+									<span class="ui-icon ui-icon-search" aria-hidden="true"></span>
 									Търси
 								</button>
 							</td>	
@@ -188,7 +188,7 @@
 				</center>
 				
 				<hr>	
-				<div id="result"></div>
+				<div id="result" class="ui-monitor-result"></div>
 			</form>
 
 <script>

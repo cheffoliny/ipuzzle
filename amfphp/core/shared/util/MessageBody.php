@@ -19,6 +19,7 @@ class MessageBody {
 	var $methodName = "";
 	var $responseTarget = "null";
 	var $noExec = false;
+	var $responseIndex = "";
 	
 	var $_value = NULL;
 	var $_results = NULL;
@@ -29,12 +30,16 @@ class MessageBody {
 	/**
 	 * AMFBody is the Contstructor method for the class
 	 */
-	function MessageBody ($targetURI = "", $responseIndex = "", $value = "") {
+	function __construct ($targetURI = "", $responseIndex = "", $value = "") {
 		$GLOBALS['amfphp']['lastMethodCall'] = $responseIndex;
 		$this->responseIndex = $responseIndex;
 		$this->targetURI = $targetURI;
 		$this->responseURI = $this->responseIndex . "/onStatus"; // default to the onstatus method
 		$this->setValue($value);
+	}
+
+	function MessageBody ($targetURI = "", $responseIndex = "", $value = "") {
+		$this->__construct($targetURI, $responseIndex, $value);
 	}
 	
 	/**

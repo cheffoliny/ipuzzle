@@ -68,15 +68,15 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="update();">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog" onsubmit="update();">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Добавяне на{/if} касов апарат</div>
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td>
 					Номер:&nbsp;
@@ -88,17 +88,17 @@
 			</tr>
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Зачислен на:</legend>
-						<table class="input">
+						<table class="input ui-nomenclature-transfer">
 							<tr class="odd">
 								<td>
 									<select name="persons_all" id="persons_all" style="width:270px" size="10" ondblclick="copy_option_to( 'persons_all', 'persons_current', 'right' );" multiple="multiple">
 									</select>
 								</td>
 								<td>
-									<button id=b25 name="button" title="Добави Служител" style="width: 20px;" onClick="copy_option_to( 'persons_all', 'persons_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-									<button id=b25 name="button" title="Премахни Служител" style="width: 20px;" onClick="copy_option_to( 'persons_all', 'persons_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави Служител" onClick="copy_option_to( 'persons_all', 'persons_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни Служител" onClick="copy_option_to( 'persons_all', 'persons_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="persons_current[]" id="persons_current" style="width:270px" size="10" ondblclick="copy_option_to( 'persons_all', 'persons_current', 'left' );" multiple="multiple">
@@ -113,12 +113,12 @@
 		
 		<br />
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

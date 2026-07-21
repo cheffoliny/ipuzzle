@@ -35,7 +35,7 @@
 <dlcalendar click_element_id="calFrom" input_element_id="sFrom" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="calTo" input_element_id="sTo" tool_tip="Изберете дата"></dlcalendar>
 
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-working-cards-report" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0" />
 	<input type="hidden" name="sAct" id="sAct" value="load" />
 	<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard|default:0}" />		
@@ -44,21 +44,21 @@
 	
 	<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 		<tr>
-			<td>{include file=working_card_tabs.tpl}</td>
+			<td>{include file="working_card_tabs.tpl"}</td>
 		</tr>
 
 	</table>
 			
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading ui-technical-heading">
 		<tr>
 			<td class="buttons">
-				{if $right_edit}<button onclick="openWorkCard(0);" class="search"><img src="images/plus.gif"> Текуща РК </button>{else}&nbsp;{/if}
+				{if $right_edit}<button type="button" onclick="openWorkCard(0);" class="search"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Текуща РК </button>{else}&nbsp;{/if}
 			</td>
 		</tr>
 	</table>
 	
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap ui-technical-filter-wrap">
+		<table class="search ui-nomenclature-filter ui-technical-filter">
 			<tr>
 				<td align="right">Номер</td>
 				<td align="left" style="width: 120px;">
@@ -75,12 +75,12 @@
 				<td align="right">от</td>
 				<td align="left">
 					<input name="sFrom" type="text" id="sFrom" style="width: 80px;" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$sSevenDaysBefore}" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="calFrom" />&nbsp;&nbsp;&nbsp;
+					<button type="button" id="calFrom" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата от"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;
 				</td>
 				<td align="right">до</td>
 				<td align="left">
 					<input name="sTo" type="text" id="sTo" style="width: 80px;" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="calTo" />
+					<button type="button" id="calTo" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата до"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr><tr>	
 				<td align="right">Диспечер</td>
@@ -90,14 +90,14 @@
 					</select>
 				</td>
 						
-				<td align="right"><button type="button" name="Button" class="search" onClick="formSearch();" ><img src="images/confirm.gif">Търси</button></td>
+				<td align="right"><button type="button" name="Button" class="search" onClick="formSearch();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 	  	</table>
 	</center>
 
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-technical-result"></div>
 
 </form>
 

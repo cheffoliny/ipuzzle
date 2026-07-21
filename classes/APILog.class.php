@@ -12,8 +12,11 @@
 		
 		static function ErrorHandler($nCode, $sMsg, $sFile, $nLine, $aContext = NULL)
 		{
-			if( $nCode != E_STRICT )
-				array_push( APILog::$aLogs, new APIError( DBAPI_ERR_PHP_INTERNAL, $sMsg.' ('.$nCode.')', $sFile, $nLine, $aContext));
+			if (PHP_VERSION_ID < 80400 && defined('E_STRICT') && $nCode === constant('E_STRICT'))
+				return true;
+
+			array_push( APILog::$aLogs, new APIError( DBAPI_ERR_PHP_INTERNAL, $sMsg.' ('.$nCode.')', $sFile, $nLine, $aContext));
+			return true;
 		}
 		
 		static function Log( $nCode, $sMsg = NULL, $sFile = NULL, $nLine = NULL )

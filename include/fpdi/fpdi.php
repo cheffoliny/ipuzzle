@@ -19,7 +19,9 @@
 
 define('FPDI_VERSION','1.2');
 
-ini_set('auto_detect_line_endings',1); // Strongly required!
+if (PHP_VERSION_ID < 80100) {
+    ini_set('auto_detect_line_endings', '1');
+}
 
 require_once("fpdf_tpl.php");
 require_once("fpdi_pdf_parser.php");
@@ -78,8 +80,12 @@ class FPDI extends FPDF_TPL {
      * Constructor
      * See FPDF-Manual
      */
+    function __construct($orientation='P',$unit='mm',$format='A4') {
+        parent::__construct($orientation,$unit,$format);
+    }
+
     function FPDI($orientation='P',$unit='mm',$format='A4') {
-        parent::FPDF_TPL($orientation,$unit,$format);
+        $this->__construct($orientation,$unit,$format);
     }
     
     /**
@@ -203,7 +209,7 @@ class FPDI extends FPDF_TPL {
         if (is_array($this->parsers) && count($this->parsers) > 0) {
             foreach($this->parsers AS $filename => $p) {
                 $this->current_parser =& $this->parsers[$filename];
-                if (is_array($this->_obj_stack[$filename])) {
+                if (isset($this->_obj_stack[$filename]) && is_array($this->_obj_stack[$filename])) {
                     while($n = key($this->_obj_stack[$filename])) {
                         $nObj = $this->current_parser->pdf_resolve_object($this->current_parser->c,$this->_obj_stack[$filename][$n][1]);
 						
@@ -362,12 +368,10 @@ class FPDI extends FPDF_TPL {
     			// A dictionary.
     			$this->_out("<<",false);
 
-    			reset ($value[1]);
-
-    			while (list($k, $v) = each($value[1])) {
-    				$this->_out($k . " ",false);
-    				$this->pdf_write_value($v);
-    			}
+			foreach ($value[1] as $k => $v) {
+				$this->_out($k . " ",false);
+				$this->pdf_write_value($v);
+			}
 
     			$this->_out(">>");
     			break;

@@ -18,15 +18,15 @@
 </script>
 {/literal}
 
-<form id="form1" name="form1" onsubmit="return( false );">
+<form id="form1" name="form1" class="ui-nomenclature-list ui-technical-list ui-tech-analytics-objects" onsubmit="return( false );">
 
-<table class = "page_data">
+<table class="page_data ui-nomenclature-heading ui-technical-heading">
 	<tr>
 		<td class="page_name">Обекти</td>
 	</tr>
 </table>
 	
-<table class="search" style="margin-left = 30px;">
+<table class="search ui-nomenclature-filter ui-technical-filter">
 	
 	 <tr align="left">
 		<td> Фирма:
@@ -55,7 +55,7 @@
 			<select type="text" id="nStatus" name="nStatus" onchange = " loadXMLDoc2( 'loadStatuses' );" />
 		</td>
 		<td align="right">
-			<button id="b70" name="Button" onClick="return loadXMLDoc2( 'result' );" ><img src="images/confirm.gif"> Търси </button>
+			<button type="button" id="b70" name="Button" class="search" onClick="return loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button>
 		</td>
 	</tr>
 	
@@ -63,7 +63,7 @@
 
 <hr/>
 
-<div id="result"> </div>
+<div id="result" class="ui-technical-result"> </div>
 
 </form>
 

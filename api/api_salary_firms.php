@@ -84,8 +84,9 @@
 			$aData = array();
 			$aData['nIDFirmFrom'] = $nIDFirmFrom;
 			$aData['nIDFirmTo'] = $nIDFirmTo;
-			$aData['nMonth'] = $nYear . LPAD( $nMonth, 2, 0 );
 			$nMonth = ( int ) $nMonth;
+			$aData['nMonth'] = (int) sprintf( '%04d%02d', $nYear, $nMonth );
+			$aData['nPrevMonth'] = (int) date( 'Ym', mktime( 0, 0, 0, $nMonth - 1, 1, $nYear ) );
 			$aData['sMonth'] = $aMonths[$nMonth];
 			$nMonth += 1; if( $nMonth > 12 ){ $nMonth = 1; $nYear++; }
 			$aData['nNextMonth'] = $nYear . LPAD( $nMonth, 2, 0 );

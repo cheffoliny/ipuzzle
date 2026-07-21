@@ -30,7 +30,7 @@ function tab_href( page ) {
 		{foreach key=key item=item from=$view name=rights}
 
 			{if $key == 'personInfo_view'}
-				{if $page eq personInfo}
+				{if $page eq 'personInfo'}
                     <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#"><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a></li>
 				{else}
 					<li class="nav-item text-center" title="Информация">{if $view.personInfo_view}<a class="nav-link" href="#" onclick="return tab_href('personInfo_view');" id='personInfo'><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{else}<a class="nav-link disabled" href="#"><i class="fa fa-info fa-lg ml-3 mr-3"></i><br/>&nbsp;&nbsp; Инфо &nbsp;&nbsp;</a>{/if}</li>
@@ -38,7 +38,7 @@ function tab_href( page ) {
 			{/if}
 
 			{if $key == 'object_contract_view'}
-                {if $page eq object_contract}
+                {if $page eq 'object_contract'}
                     <li class="nav-item text-center" title="Договор..."><a class="nav-link active"><i class="fa fa-certificate fa-lg"></i><br />Договор</a></li>
 				{else}
                     <li class="nav-item text-center" title="Договор..." >{if $view.object_contract_view}<a class="nav-link" href="#" onclick="return tab_href('object_contract');" id='object_contract'><i class="fa fa-certificate fa-lg"></i><br />Договор</a>{else}<a class="nav-link disabled"><i class="fa fa-certificate fa-lg"></i><br />Договор</a>{/if}</li>
@@ -48,7 +48,7 @@ function tab_href( page ) {
 
 			{if $key == 'object_taxes_view'}
                 {*Такси 	  *}
-                {if $page eq object_taxes}
+                {if $page eq 'object_taxes'}
                     <li class="nav-item text-center" title="Такси"><a class="nav-link active"><i class="fas fa-euro-sign fa-lg ml-3 mr-3"></i><br/>&nbsp; Такси &nbsp;</a></li>
 				{else}
                     <li class="nav-item text-center" title="Такси" >{if $view.object_taxes_view}<a class="nav-link" href="#" onclick="return tab_href('object_taxes');" id='object_taxes'><i class="fas fa-euro-sign fa-lg ml-3 mr-3"></i><br/>&nbsp; Такси &nbsp;</a>{else}<a class="nav-link disabled" href="#"><i class="fas fa-euro-sign fa-lg ml-3 mr-3"></i><br/>&nbsp; Такси &nbsp;</a>{/if}</li>
@@ -60,11 +60,11 @@ function tab_href( page ) {
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-                        {if $page eq object_archiv}<i class="fab fa-stack-overflow fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp; Събития &nbsp;&nbsp;&nbsp;
-                        {elseif $page eq object_messages} <i class="fas fa-signal fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Сигнали &nbsp;&nbsp;
-                        {elseif $page eq object_sectors} <i class="fas fa-cube fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Сектори &nbsp;&nbsp;
-                        {elseif $page eq object_zones} <i class="fas fa-cubes fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp;&nbsp; Зони &nbsp;&nbsp;&nbsp;&nbsp;
-                        {elseif $page eq object_users} <i class="far fa-user fa-lg ml-2 mr-2"></i><br/> Потребители
+                        {if $page eq 'object_archiv'}<i class="fab fa-stack-overflow fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp; Събития &nbsp;&nbsp;&nbsp;
+                        {elseif $page eq 'object_messages'} <i class="fas fa-signal fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Сигнали &nbsp;&nbsp;
+                        {elseif $page eq 'object_sectors'} <i class="fas fa-cube fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp; Сектори &nbsp;&nbsp;
+                        {elseif $page eq 'object_zones'} <i class="fas fa-cubes fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp;&nbsp; Зони &nbsp;&nbsp;&nbsp;&nbsp;
+                        {elseif $page eq 'object_users'} <i class="far fa-user fa-lg ml-2 mr-2"></i><br/> Потребители
                         {else} <i class="fa fa-rss fa-lg ml-2 mr-2"></i><br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; СОД &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {/if}
                     </a>

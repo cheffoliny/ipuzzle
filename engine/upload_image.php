@@ -21,10 +21,10 @@
 						
 					fclose($handle);
 					
-					$tmp_file = mysql_real_escape_string($tmp_file);
+					$tmp_file = $db_personnel->qstr($tmp_file);
 
 					if ( $rs = $db_personnel->Execute("DELETE FROM person_images WHERE id_person = '{$nID}'") !== FALSE ) {
-						$rs = $db_personnel->Execute("INSERT INTO person_images (id_person, image) VALUES ('{$nID}', '{$tmp_file}')");
+						$rs = $db_personnel->Execute("INSERT INTO person_images (id_person, image) VALUES ('{$nID}', {$tmp_file})");
 					}
 					
 				} catch (Exception $err) {

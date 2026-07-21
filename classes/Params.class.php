@@ -62,23 +62,23 @@
 			return $oParams->aParams;
 		}
 		
-		public function rewind() {
+		public function rewind(): void {
 		   reset( $this->aParams );
 		}
 		
-		public function current() {
+		public function current(): mixed {
 		   return current( $this->aParams );
 		}
 		
-		public function key() {
+		public function key(): mixed {
 			return key( $this->aParams );
 		}
 		
-		public function next() {
-			return next( $this->aParams );
+		public function next(): void {
+			next( $this->aParams );
 		}
 
-		public function valid() {
+		public function valid(): bool {
 		   return ( $this->current() !== false );
 		}
 		

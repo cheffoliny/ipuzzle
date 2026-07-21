@@ -30,7 +30,7 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-subview-dialog" onsubmit="return false">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
 	<input type="hidden" id="sDocStatus" name="sDocStatus" value="{$sDocStatus}">
 	<input type="hidden" id="id_row_to_del" name="id_row_to_del" value="">
@@ -51,7 +51,7 @@
 				Опис
 			</td>
 			<td align="right">
-				<button id="b_edit_row" onclick="editRow(0);"><img src="images/confirm.gif">Нов ред</button>
+				<button type="button" id="b_edit_row" onclick="editRow(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Нов ред</button>
 			</td>
 		</tr>
 	

@@ -18,10 +18,10 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-assets-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0" />
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Настройки - Активи</td>
 		</tr>

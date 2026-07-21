@@ -57,8 +57,12 @@ class FPDF_TPL extends FPDF2 {
      * @param string $unit
      * @param mixed $format
      */
+    function __construct($orientation='P',$unit='mm',$format='A4') {
+        parent::__construct($orientation,$unit,$format);
+    }
+
     function fpdf_tpl($orientation='P',$unit='mm',$format='A4') {
-        parent::fpdf($orientation,$unit,$format);
+        $this->__construct($orientation,$unit,$format);
     }
     
     /**

@@ -94,8 +94,8 @@
 
 			$nID = Params::get('nID','0');
 			$sName = Params::get('name','');
-			$aEarnings = Params::get('account_earnings','');
-			$aExpenses = Params::get('account_expenses','');
+			$aEarnings = (array) Params::get('account_earnings', array());
+			$aExpenses = (array) Params::get('account_expenses', array());
 			
 			$ear_exp = Params::get('ear_exp','');
 			

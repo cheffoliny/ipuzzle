@@ -6,6 +6,8 @@ include_once(AMFPHP_BASE . "shared/util/MethodTable.php");
  */
 class DiscoveryService
 {
+	var $_omit = array();
+	var $_path = '';
 	/**
 	 * Get the list of services
 	 * @returns An array of array ready to be bound to a Tree
@@ -89,7 +91,7 @@ class DiscoveryService
 								$loc = str_replace(DIRECTORY_SEPARATOR,'.', substr($suffix, 0, -1));
 							}
 							
-							if($services[$loc] == NULL)
+							if(!isset($services[$loc]))
 							{
 								$services[$loc] = array();
 							}

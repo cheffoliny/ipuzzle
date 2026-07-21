@@ -64,7 +64,7 @@
 	<table cellspacing="0" cellpadding="0" width="100%"  border="0" id="filter">
   		<tr>
   			<td>
-  				{include file=states_filter_tabs.tpl}
+  				{include file="states_filter_tabs.tpl"}
   				<br>
   			</td>
   		</tr>

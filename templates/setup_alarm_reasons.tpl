@@ -19,13 +19,13 @@
 {/literal}
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
-	<table class = "page_data">
+	<table class = "page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Причини за аларма</td>
 			<td class="buttons">
-				{if $right_edit}<button onclick="openReason( 0 );"><img src="images/plus.gif"> Добави </button>
+				{if $right_edit}<button onclick="openReason( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>

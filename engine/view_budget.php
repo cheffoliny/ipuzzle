@@ -255,7 +255,7 @@
 	
 	$sFileName	= "budgets.xls";
 	$sFileNameTemp = tempnam("/tmp", $sFileName);
-	$oWorkbook = &new writeexcel_workbook($sFileNameTemp);
+	$oWorkbook = new writeexcel_workbook($sFileNameTemp);
 
 	// Създване на worksheet
 	$oWorksheet = &$oWorkbook->addworksheet( iconv("UTF-8", "CP1251", "Budget") );

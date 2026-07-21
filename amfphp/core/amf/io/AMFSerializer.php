@@ -36,9 +36,13 @@ class AMFSerializer extends AMFBaseSerializer {
 	 * 
 	 * @param object $stream The AMFOutputStream
 	 */
-	function AMFSerializer() {
-		AMFBaseSerializer::AMFBaseSerializer();
+	function __construct() {
+		parent::__construct();
 	} 
+
+	function AMFSerializer() {
+		$this->__construct();
+	}
 
 	/**
 	 * writeBoolean writes the boolean code (0x01) and the data to the output stream

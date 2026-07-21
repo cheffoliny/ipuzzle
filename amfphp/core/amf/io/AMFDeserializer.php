@@ -105,9 +105,13 @@ class AMFDeserializer extends AMFBaseDeserializer {
 	 * 
 	 * @param object $is The referenced input stream
 	 */
-	function AMFDeserializer($rd) {
-		AMFBaseDeserializer::AMFBaseDeserializer($rd);
+	function __construct($rd) {
+		parent::__construct($rd);
 	} 
+
+	function AMFDeserializer($rd) {
+		$this->__construct($rd);
+	}
 
 	/**
 	 * readObject reads the name/value properties of the amf message and converts them into

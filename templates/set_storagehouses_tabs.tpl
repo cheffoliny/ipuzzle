@@ -40,7 +40,7 @@
 			<td width="1" id="passive"></td>
 				
 				{* Информация *}
-				{if $page eq set_storagehouses}
+				{if $page eq 'set_storagehouses'}
 					<td id="active" style="width:100px;">Информация</td>
 				{else}
 					<td id="inactive" style="width:100px;">
@@ -51,7 +51,7 @@
 				<td width="1" id="passive"></td>
 				
 				{* Материално-отговорни Лица *}
-				{if $page eq set_storagehouses_mols}
+				{if $page eq 'set_storagehouses_mols'}
 					<td id="active" style="width:180px;">Материално-отговорни Лица</td>
 				{else}
 					<td id="inactive" style="width:180px;">

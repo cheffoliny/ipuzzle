@@ -366,7 +366,7 @@ require_once('include/db_include.inc.php');
 			}
 		}
 		
-		public function getReport($aParams, DBResponse $oResponse = NULL )
+		public function getReport($aParams, ?DBResponse $oResponse = NULL )
 		{			
 			$sQuery = $this->prepareStatesQuery( 0, $aParams );
 			$sQueryTotal = $this->prepareStatesQuery( 1, $aParams );
@@ -755,7 +755,7 @@ require_once('include/db_include.inc.php');
 			return ceil( (string) ( $value * 100 ) ) / 100;
 		}
 
-		public function getReport2($aParams, DBResponse $oResponse = NULL) {
+		public function getReport2($aParams, ?DBResponse $oResponse = NULL) {
 			$sQuery = $this->prepareStatesQuery2(0, $aParams);
 			$sQueryTotal = $this->prepareStatesQuery2(1, $aParams);
 

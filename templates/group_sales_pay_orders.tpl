@@ -63,7 +63,7 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-payment-dialog" onsubmit="return false;">
 	<input type="hidden" name="sIDs" id="sIDs" value="{$sIDs}" />
 	<input type="hidden" name="sBank" id="sBank" value="{$sBank}" />
 	<input type="hidden" name="sTypeAccount" id="sTypeAccount" value="" />
@@ -77,7 +77,7 @@
 				Сума
 			</td>
 			<td>
-				<input type="text" name="sum" id="sum" style="width:60px;text-align:right;" onkeypress="return formatMoney(event)" onkeyup="sumResto();"  readonly />&nbsp;лв.
+				<input type="text" name="sum" id="sum" style="width:60px;text-align:right;" onkeypress="return formatMoney(event)" onkeyup="sumResto();"  readonly />&nbsp;€
 			</td>
 		</tr>
 		<tr class="odd">
@@ -93,7 +93,7 @@
 				Платено в брой
 			</td>
 			<td>
-				<input type="text" id="cash_sum" name="cash_sum" style="width:60px;text-align:right;" onkeypress="return formatMoney(event)" onkeyup="sumResto();" > лв.
+				<input type="text" id="cash_sum" name="cash_sum" style="width:60px;text-align:right;" onkeypress="return formatMoney(event)" onkeyup="sumResto();" > €
 			</td>
 		</tr>
 		<tr class="odd">
@@ -101,14 +101,14 @@
 				Ресто
 			</td>
 			<td>
-				<input type="text" id="resto" name="resto" style="width:60px;text-align:right;" readonly> лв.
+				<input type="text" id="resto" name="resto" style="width:60px;text-align:right;" readonly> €
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="right">
 				<br>
-				<button class="search" onclick="confirmBUGGGG(); return false;" id="sbm"><img src="images/confirm.gif">Потвърди</button>
-				<button onclick="parent.window.close();"><img src="images/cancel.gif">Затвори</button>
+				<button type="button" class="search" onclick="confirmBUGGGG(); return false;" id="sbm"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>
+				<button type="button" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 		

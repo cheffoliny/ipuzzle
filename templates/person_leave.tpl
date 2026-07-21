@@ -53,7 +53,7 @@
 {/literal}
 
 <div>
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-personnel-list ui-person-leave-list" onsubmit="return false;">
 		<input type="hidden" id="id" name="id" value="{$id|default:0}" />
 		<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 		<input type="hidden" id="idc" name="idc" value="0" />
@@ -67,7 +67,7 @@
 						<input type="checkbox"
 							   id="nIsSubstituteNeeded"
 							   name="nIsSubstituteNeeded"
-							   class="clear"
+							   class="clear ui-nomenclature-checkbox"
 							   title="Иска ли се посочване на заместник."
 							   onclick="loadXMLDoc( 'save' );">
 						<span class="input-group-addon">Посочва се заместник</span>
@@ -75,18 +75,17 @@
 				</div>
 			</div>
 			<div class="col">
-				<button class="btn btn-sm btn-success" id="new_leave" name="new_leave" onclick="return openPersonLeave( 0 );"><i class="far fa-plus"></i>&nbsp;Нова Молба</button>
-				<!-- <button class="search" onclick="return openLeave(0);"><img src="images/plus.gif"/>Отпуск</button> -->
-				<button class="btn btn-sm btn-success" id="e_leave" name="e_leave"  onclick="return openApplication(0);">Молби за Отпуск</button>
-				<button class="btn btn-sm btn-success" id="e_hospital" name="e_hospital" onclick="return openHospital(0);"><i class="far fa-plus"></i>&nbsp;Болничен</button>
-				<button class="btn btn-sm btn-success" id="e_quittance" name="e_quittance" onclick="return openQuittance(0);"><i class="far fa-plus"></i>&nbsp;Обезщетение</button>
+				<button class="btn btn-sm btn-success" id="new_leave" name="new_leave" onclick="return openPersonLeave( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>&nbsp;Нова Молба</button>
+				<button class="btn btn-sm btn-success" id="e_leave" name="e_leave"  onclick="return openApplication(0);"><span class="ui-icon ui-icon-list" aria-hidden="true"></span>&nbsp;Молби за Отпуск</button>
+				<button class="btn btn-sm btn-success" id="e_hospital" name="e_hospital" onclick="return openHospital(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>&nbsp;Болничен</button>
+				<button class="btn btn-sm btn-success" id="e_quittance" name="e_quittance" onclick="return openQuittance(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>&nbsp;Обезщетение</button>
 			</div>
 		</div>
-		<div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 370px; overflow: auto;"></div>
+		<div id="result" class="ui-personnel-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 370px; overflow: auto;"></div>
 		<nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
 			<div class="col align-right">
 				<div class="input-group input-group-sm">
-					<button class="btn btn-sm btn-danger float-right" onClick="window.close();"><i class="far fa-times"></i>&nbsp;Затвори</button>
+					<button class="btn btn-sm btn-danger float-right" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>&nbsp;Затвори</button>
 				</div>
 			</div>
 		</nav>

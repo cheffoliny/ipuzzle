@@ -24,7 +24,7 @@ function tab_href( sPageID )
           <td width="1" id="passive"></td>
 
           	  {* Информация *}	
-              {if $page eq working_card_info}
+              {if $page eq 'working_card_info'}
                     <td id="active" style="width:100px;">Информация</td>
               {else}
                     <td id="inactive" style="width:100px;">
@@ -35,7 +35,7 @@ function tab_href( sPageID )
               <td width="1" id="passive"></td>
               
               {* Автопатрули *}	
-              {if $page eq working_card_patrol}
+              {if $page eq 'working_card_patrol'}
                     <td id="active" style="width:100px;">Автопатрули</td>
               {else}
                     <td id="inactive" style="width:100px;">
@@ -46,7 +46,7 @@ function tab_href( sPageID )
               <td width="1" id="passive"></td>
               
               {* Движение *}
-              {if $page eq working_card_movement}
+              {if $page eq 'working_card_movement'}
                     <td id="active" style="width:100px;">Движение</td>
               {else}
                     <td id="inactive" style="width:100px;">
@@ -57,7 +57,7 @@ function tab_href( sPageID )
               <td width="1" id="passive"></td>
 			  
               {* Техници *}
-              {if $page eq working_card_techs}
+              {if $page eq 'working_card_techs'}
                     <td id="active" style="width:100px;">Техници</td>
               {else}
                     <td id="inactive" style="width:100px;">
@@ -73,7 +73,7 @@ function tab_href( sPageID )
               <td width="1" id="passive"></td>
 
               {* Справка Работни карти *}
-              {if $page eq working_cards}
+              {if $page eq 'working_cards'}
                     <td id="active" style="width: 100px;">Справка РК</td>
               {else}
                     <td id="inactive" style="width: 100px;">
@@ -84,7 +84,7 @@ function tab_href( sPageID )
               <td width="1" id="passive"></td>
 
               {* Движение Работни карти *}
-              {if $page eq patruls_movement}
+              {if $page eq 'patruls_movement'}
                     <td id="active" style="width: 100px;">Движение РК</td>
               {else}
                     <td id="inactive" style="width: 100px;">

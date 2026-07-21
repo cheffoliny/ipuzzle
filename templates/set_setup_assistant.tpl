@@ -18,15 +18,15 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="select_all_options('selected_offices'); loadXMLDoc2('save', 3)">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-operational-dialog ui-assistant-dialog" onsubmit="select_all_options('selected_offices'); loadXMLDoc2('save', 3)">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="sOfficesParam" name="sOfficesParam" value="{$sOfficesParam}">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нов{/if} РС</div>
 		<br />
 
-		<table class="input">
+		<table class="input ui-nomenclature-form">
 			<tr class="odd">
 				<td align="right">Фирма:</td>
 				<td>
@@ -61,17 +61,17 @@
 			</tr>
 			<tr class="odd">
 				<td colspan=2 id=fieldset>
-					<fieldset style="border: 1px solid black">
+					<fieldset class="ui-nomenclature-fieldset">
 					<legend>Населени места, в които работи сътрудника:</legend>
-						<table>
+						<table class="ui-nomenclature-transfer">
 							<tr>
 								<td>
 									<select name="Offices" id="Offices" style="width:200px" size="10" ondblclick="move_option_to( 'Offices', 'selected_offices', 'right');" multiple="multiple">
 									</select>
 								</td>
 								<td>
-									<button id=b25 name="button" title="Добави Файл" onClick="move_option_to( 'Offices', 'selected_offices', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-									<button id=b25 name="button" title="Премахни файл" onClick="move_option_to( 'Offices', 'selected_offices', 'left' ); return false;"><img src=images/mleft.gif /></button>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави населено място" onClick="move_option_to( 'Offices', 'selected_offices', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
+									<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни населено място" onClick="move_option_to( 'Offices', 'selected_offices', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="selected_offices[]" id="selected_offices"  style="width:200px" size="10" ondblclick="move_option_to( 'Offices', 'selected_offices', 'left');" multiple="multiple">
@@ -86,12 +86,12 @@
 		</table>
 		
 		<br />
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

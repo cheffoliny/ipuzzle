@@ -534,8 +534,8 @@
 				$aSalary['is_earning'] 		= $bIsEarning;
 				$aSalary['id_office'] 		= $aRegion['id'];
 				$aSalary['id_object'] 		= $aObject['id'];
-				$aSalary['sum'] 			= (double) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['ед.цена'] ] );
-				$aSalary['count'] 			= (double) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['кол.'] ] );
+				$aSalary['sum'] 			= (float) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['ед.цена'] ] );
+				$aSalary['count'] 			= (float) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['кол.'] ] );
 				$aSalary['total_sum'] 		= $aSalary['sum'] * $aSalary['count'];
 				$aSalary['created_time'] 	= time();
 				$aSalary['created_user'] 	= $_SESSION['userdata']['id'];
@@ -667,7 +667,7 @@
 				}
 				
 				// Сума
-				$dPrice = (double) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['Такса (лв.)'] ] );
+				$dPrice = (float) str_replace( ",", ".", $aData['cells'][$i][ $aHeader['Такса (€)'] ] );
 				
 				// Запис на оддръжката
 				$aSalary = array();

@@ -133,8 +133,8 @@
 {/literal}
 
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2('save',3);return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-asset-dialog ui-assets-ppp-dialog" onsubmit="loadXMLDoc2('save',3);return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="nIDAssetToDel" name="nIDAssetToDel" value="0">
 		<input type="hidden" id="nIDAssetSource" name="nIDAssetSource" value="0">
@@ -153,7 +153,7 @@
 		
 		<input type="hidden" id="refreshPage" name="refreshPage" value="no">
 		
-		<table class="input" border="0">
+		<table class="input ui-assets-ppp-caption" border="0">
 			<tr>
 				<td>
 					<div class="page_caption">{if $nID}Редакция на ППП {$sNum} {else}Ново ППП{/if}</div>
@@ -163,11 +163,11 @@
 		
 
 		
-		<center>
-			<table class="search" border="0" style="width:100%;">
+		<center class="ui-assets-ppp-toolbar-wrap">
+			<table class="search ui-assets-ppp-toolbar" border="0" style="width:100%;">
 				<tr>
 					<td style="width:100px;">
-						<button name="bAssetSource" id="bAssetSource" class="search" onClick="openAssetSearch('to_source');"> Актив </button>
+						<button type="button" name="bAssetSource" id="bAssetSource" class="search" onClick="openAssetSearch('to_source');"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Актив </button>
 					</td>
 					<td style="width:210px;">
 						<input type="text" style="width:200px;" id="sAssetSource" name="sAssetSource"  readonly/>
@@ -176,7 +176,7 @@
 					{if $sPPPType eq 'enter'}
 					
 					<td>
-						<button name="bNewAsset" id="bNewAsset" onclick="openAssetInfo('0,0');"> Нов Актив </button>
+						<button type="button" name="bNewAsset" id="bNewAsset" onclick="openAssetInfo('0,0');"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нов Актив </button>
 					</td>
 					
 					<td style="width:120px;text-align:right;">
@@ -196,7 +196,7 @@
 					{elseif $sPPPType eq 'attach'}
 					
 					<td>
-						<button name="bNewAsset" id="bNewAsset" onclick="openAssetInfo('0,0');"> Нов Актив </button>
+						<button type="button" name="bNewAsset" id="bNewAsset" onclick="openAssetInfo('0,0');"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нов Актив </button>
 					</td>
 					
 					<td style="width:100px;text-align:right;">
@@ -219,7 +219,7 @@
 					</td>
 					<td align="left">
 						<div name="pAssetDestButton" id="pAssetDestButton" style="display:none;">
-							<button name="bAssetDest" id="bAssetDest" class="search" onClick="openAssetSearch('to_dest');"> Актив </button>
+							<button type="button" name="bAssetDest" id="bAssetDest" class="search" onClick="openAssetSearch('to_dest');"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Актив </button>
 						</div>
 					</td>
 
@@ -231,7 +231,7 @@
 					
 					{/if}
 					<td style="width: 100px;">
-						<button name="bAddAsset" id="bAddAsset" class="search" onClick="addAsset();"> Добави </button>
+						<button type="button" name="bAddAsset" id="bAddAsset" class="search" onClick="addAsset();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 					</td>
 				</tr>
 			</table>
@@ -240,20 +240,20 @@
 		
 		<div id="result" rpc_excel_panel="off" rpc_resize="off" style="height: 370px; overflow: auto;"></div>
 
-		<table class="input" border="0">
+		<table class="input ui-nomenclature-actions ui-assets-ppp-actions" border="0">
 			<tr class="odd">
 				<td>
 					<input type="checkbox" name="confirmed" id="confirmed" class="clear">&nbsp;Потвърден
 				</td>
 				<td class="export">
-					<button class="btn btn-xs btn-info" onclick="loadDirect('export_to_pdf');">
-                        <i class="fa fa-file-pdf-o"></i>
+					<button type="button" class="btn btn-xs btn-info" onclick="loadDirect('export_to_pdf');">
+                        <span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span>
 						PDF
 					</button>
 				</td>
 				<td style="text-align:right;">
-					<button name="save" id="save" type="submit" class="search">Запиши</button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button name="save" id="save" type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+					<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

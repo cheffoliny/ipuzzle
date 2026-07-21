@@ -43,14 +43,14 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-dialog ui-configuration-dialog ui-status-mapping-dialog" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	
 	<div class="page_caption">Обобщена справка - Настройка на статуси</div>
 	
 	<center>
-		<div style="width: 300px;">
-			<table class="input">
+		<div class="ui-status-firm-filter">
+			<table class="input ui-nomenclature-form">
 				<tr>
 					<td align="right">Фирма:&nbsp;</td>
 					<td align="left">
@@ -61,31 +61,36 @@
 		</div>
 	</center>
 	
-	<hr>
-	
+
 	<center>
-		<div style="width: 780px;">
-			<table class="input">
+		<fieldset class="ui-nomenclature-fieldset ui-status-transfer-wrap">
+			<legend>Статуси</legend>
+			<table class="input ui-nomenclature-transfer">
 				<tr>
 					<td align="center">
 						<select name="statuses_all" id="statuses_all" style="width: 300px" size="10" ondblclick="move_option_to( 'statuses_all', 'statuses_current', 'right' );" multiple="multiple">
 						</select>
 					</td>
 					<td align="center">
-						<button id=b25 name="button" title="Добави Статус" onClick="move_option_to( 'statuses_all', 'statuses_current', 'right' ); return false;"><img src=images/mright.gif /></button></br>
-						<button id=b25 name="button" title="Премахни Статус" onClick="move_option_to( 'statuses_all', 'statuses_current', 'left' ); return false;"><img src=images/mleft.gif /></button>
+						<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Добави Статус" onClick="move_option_to( 'statuses_all', 'statuses_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+						<button id=b25 class="ui-nomenclature-transfer-button" name="button" title="Премахни Статус" onClick="move_option_to( 'statuses_all', 'statuses_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 					</td>
 					<td align="center">
 						<select name="statuses_current[]" id="statuses_current" style="width: 300px" size="10" ondblclick="move_option_to( 'statuses_all', 'statuses_current', 'left' );" multiple="multiple">
 						</select>
 					</td>
-					<td>
-						<button id=b100 onclick="onStatus();"><img src=images/confirm.gif />Потвърди</button>&nbsp;
-					</td>
 				</tr>
 			</table>
-		</div>
+		</fieldset>
 	</center>
+
+	<table class="ui-nomenclature-actions">
+		<tr>
+			<td align="right">
+				<button id=b100 onclick="onStatus();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Потвърди</button>
+			</td>
+		</tr>
+	</table>
 
 </form>
 

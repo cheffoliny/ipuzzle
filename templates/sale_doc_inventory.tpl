@@ -45,7 +45,7 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-subview-dialog" onsubmit="return false">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
 	<input type="hidden" name="id_new_sale_doc" id="id_new_sale_doc" value="0">
 	<input type="hidden" name="sDocStatus" id="sDocStatus" value="{$sDocStatus}">
@@ -66,7 +66,7 @@
 			</td>
 			<td align="right">
 				<div id="div_button">
-					<button onclick="izvestie();"><img src="images/confirm.gif">Кредитно известие</button>
+					<button type="button" onclick="izvestie();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Кредитно известие</button>
 				</div>
 			</td>
 		</tr>

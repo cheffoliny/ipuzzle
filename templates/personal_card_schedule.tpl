@@ -43,19 +43,19 @@
 	</script>
 
 {/literal}
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-schedule-report ui-personal-card-schedule" onSubmit="return false;">
 	<input type="hidden" name="id_person" id="id_person" value="0">
 
-	<table class="page_data" width="100%">
+	<table class="page_data ui-schedule-date-nav" width="100%">
 		<tr style="height:35px;">
 			<td valign="middle" >
-				<button onclick="nextDate('prev');"style="width:10px"><img src="images/mleft.gif" /></button>
+				<button type="button" class="ui-schedule-icon-button" title="Предишен ден" onclick="nextDate('prev');"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 			</td>
 			<td valign="middle" align="center">
 				<input style="width:100px; font-size:15px;font-weight: bold; " id="date" name="date" type="text" class="clear" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" value="{$sDate}" />
 			</td>
 			<td valign="middle" align="right">
-				<button onclick="nextDate('next');" style="width:10px"><img src="images/mright.gif" /></button>
+				<button type="button" class="ui-schedule-icon-button" title="Следващ ден" onclick="nextDate('next');"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 			</td>
 			
 		</tr>

@@ -2,7 +2,6 @@
 	<script>
 		rpc_debug = true;
 		rpc_html_debug = true;
-		rpc_xls_debug = true;
 		
 		function openMonitor() {
 			nCode = $('nObjectCode').value;

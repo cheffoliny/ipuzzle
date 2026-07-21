@@ -332,7 +332,7 @@
 		*	@param mixed mValue value на нода
 		*	@return void
 		*/
-		function setFieldDataChild($sField, $nParent, $sTagName, $aAttributes = NULL, $mValue)
+		function setFieldDataChild($sField, $nParent, $sTagName, $aAttributes, $mValue)
 		{
 			if( array_key_exists($sField, $this->oResult->aFields) )
 			{
@@ -454,7 +454,7 @@
 			if( !isset( $this->oAction->aForms[ $mIDForm ]->aFormElements[ $mID ] ) )
 				$this->oAction->aForms[ $mIDForm ]->aFormElements[ $mID ] = new DBFormElement();
 
-			$this->oAction->aForms[ $mIDForm ]->aFormElements[ $mID ]->mValue = htmlspecialchars($mValue);
+			$this->oAction->aForms[ $mIDForm ]->aFormElements[ $mID ]->mValue = htmlspecialchars((string) ($mValue ?? ''));
 
 			if( is_array( $aAttributes ) )
 				$this->setFormElementAttributes($mIDForm, $mID, $aAttributes);
@@ -525,7 +525,7 @@
 			
 			$oElement = new DBFormElement();
 			$oElement->aAttributes = $aAttributes;
-			$oElement->mValue = htmlspecialchars($mValue);
+			$oElement->mValue = htmlspecialchars((string) ($mValue ?? ''));
 
 			array_push($this->oAction->aForms[ $mIDForm ]->aFormElements[ $mIDParent ]->aChilds, $oElement);
 		}
@@ -774,6 +774,32 @@
 			Export_XLS($data, $filename, $caption);
 		}
 		
+		/**
+		 * Converts legacy report values such as "-1839.88 лв." or
+		 * "-1839.88 €" to a number without throwing a PHP 8 TypeError.
+		 * Invalid or empty values are returned as NULL and stay unchanged.
+		 */
+		function numericValue( $mContent )
+		{
+			if( is_int( $mContent ) || is_float( $mContent ) )
+				return (float) $mContent;
+
+			if( !is_string( $mContent ) )
+				return NULL;
+
+			$sValue = trim( str_replace( array( "\xC2\xA0", ' ' ), '', $mContent ) );
+			if( $sValue === '' )
+				return NULL;
+
+			if( is_numeric( $sValue ) )
+				return (float) $sValue;
+
+			if( preg_match( '/^[+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+)/u', $sValue, $aMatches ) )
+				return (float) str_replace( ',', '.', $aMatches[0] );
+
+			return NULL;
+		}
+
 		function dataFormat( $oField, $nRowKey, $sField, $sContent )
 		{
 			$aAttribute = array();
@@ -789,30 +815,42 @@
 									break;
 	
 					case DF_DIGIT : 
-									$sContent = sprintf("%01.2f", $sContent);
+									$nContent = $this->numericValue( $sContent );
+									if( !is_null( $nContent ) )
+										$sContent = sprintf("%01.2f", $nContent);
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_FLOAT : 
-									$sContent = sprintf("%01.3f", $sContent);
+									$nContent = $this->numericValue( $sContent );
+									if( !is_null( $nContent ) )
+										$sContent = sprintf("%01.3f", $nContent);
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_NUMBER : 
-									$sContent = sprintf("%01.0f", $sContent);
+									$nContent = $this->numericValue( $sContent );
+									if( !is_null( $nContent ) )
+										$sContent = sprintf("%01.0f", $nContent);
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_CURRENCY : 
 //									$sContent = sprintf("%01.2f лв.", $sContent);
-									$sContent = number_format($sContent, 2 , '.' , ' ' )." € ";
+									$nContent = $this->numericValue( $sContent );
+									if( !is_null( $nContent ) )
+										$sContent = number_format($nContent, 2 , '.' , ' ' )." € ";
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_CURRENCY4 : 
 //									$sContent = sprintf("%01.4f лв.", $sContent);
-                                    $sContent = number_format($sContent, 4 , '.' , ' ' )." € ";
+                                    $nContent = $this->numericValue( $sContent );
+                                    if( !is_null( $nContent ) )
+                                        $sContent = number_format($nContent, 4 , '.' , ' ' )." € ";
 									$aAttribute = array( 'align' => 'right' );
 									break;
                     case DF_CURRENCY6 :
 //                                    $sContent = sprintf("%01.6f лв.", $sContent);
-                                    $sContent = number_format($sContent, 6 , '.' , ' ' )." € ";
+                                    $nContent = $this->numericValue( $sContent );
+                                    if( !is_null( $nContent ) )
+                                        $sContent = number_format($nContent, 6 , '.' , ' ' )." € ";
                                     $aAttribute = array( 'align' => 'right' );
                                     break;
 					case DF_DATE : 
@@ -838,12 +876,14 @@
 									$aAttribute = array( 'align' => 'right' );
 									break;
 					case DF_PERCENT :
-									$sContent = sprintf("%01.2f %%", $sContent);
+									$nContent = $this->numericValue( $sContent );
+									if( !is_null( $nContent ) )
+										$sContent = sprintf("%01.2f %%", $nContent);
 									$aAttribute = array( 'align' => 'center' );
 									break;
 				}
 			
-			if( !empty($aAttribute) )
+			if( !empty($aAttribute) && !is_null($nRowKey) )
 			{
 				if( empty( $this->oResult->aDataAttributes[ $nRowKey ][ $sField ] ) )
 				{
@@ -1169,7 +1209,7 @@
 							$oElCell = $oDoc->createElement('c');
 							
 							if( isset( $r[ $sField ] ) )
-								$oElCell->nodeValue = htmlspecialchars($this->dataFormat( $oField, $r_key, $sField, $r[ $sField ] ));
+								$oElCell->nodeValue = htmlspecialchars((string) ($this->dataFormat( $oField, $r_key, $sField, $r[ $sField ] ) ?? ''));
 
 							if(
 								isset( $this->oResult->aDataAttributes[ $r_key ][ $sField ] ) &&

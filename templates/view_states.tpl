@@ -115,10 +115,10 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-monitor-report ui-states-report" onSubmit="return false;">
 	<input type="hidden" name="nIDStoragehouse" id="nIDStoragehouse" value="0">
 	
-	<table class = "page_data">
+	<table class="page_data ui-monitor-heading ui-monitor-toolbar">
 		<tr>
 			<td class="page_name">Наличности</td>
 			
@@ -130,15 +130,15 @@
 			</td> 
 			
 			<td>
-				<button style="width: 30px" id=b25 title="Нов филтър" name="Button5" onClick="openFilter(1);" ><img src="images/plus.gif" /></button>&nbsp;
-				<button style="width: 30px" name="Button4" id=b25 title="Редактиране на филтър" onClick="openFilter(2);"><img src=images/edit.gif /></button>&nbsp;
-				<button style="width: 30px" name="Button3" id=b25 title="Премахване на филтър" onClick="deleteFilter(schemes);"><img src=images/erase.gif /></button>
+				<button type="button" class="ui-monitor-icon-button" title="Нов филтър" name="Button5" onClick="openFilter(1);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>&nbsp;
+				<button type="button" class="ui-monitor-icon-button" name="Button4" title="Редактиране на филтър" onClick="openFilter(2);"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span></button>&nbsp;
+				<button type="button" class="ui-monitor-icon-button ui-monitor-danger" name="Button3" title="Премахване на филтър" onClick="deleteFilter(schemes);"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 	</table>
 	
 	<center>
-		<table class="search">
+		<table class="search ui-monitor-filter ui-states-filter">
 			<tr>
 				<td align="right">Фирма</td>
 				<td>
@@ -214,14 +214,14 @@
 			
 			<tr>
 				<td colspan="10">&nbsp;</td>
-				<td align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button></td>
+				<td align="right"><button type="button" name="Button" class="search" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 		</table>
 	</center>
 	
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-monitor-result"></div>
 
 </form>
 

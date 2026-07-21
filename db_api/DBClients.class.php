@@ -138,7 +138,7 @@
 			}
 		}
 		
-		public function getReport( $aParams, DBResponse $oResponse = NULL )
+		public function getReport( $aParams, ?DBResponse $oResponse = NULL )
 		{
 			global $db_name_personnel, $db_name_sod;
 			

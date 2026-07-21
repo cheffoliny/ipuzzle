@@ -28,8 +28,14 @@ if (!defined("ORD_tilde"))
 
 class ASCII85Decode {
 
-    function ASCII85Decode(&$fpdi) {
+    var $fpdi;
+
+    function __construct(&$fpdi) {
         $this->fpdi =& $fpdi;
+    }
+
+    function ASCII85Decode(&$fpdi) {
+        $this->__construct($fpdi);
     }
 
 

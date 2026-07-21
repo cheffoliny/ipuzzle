@@ -18,14 +18,14 @@
 </script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-scheme-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Типове Номенклатури</td>
 			<td class="buttons">
-				{if $right_edit}<button onclick="openNomenclatureType( 0 );" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Добави </button>
+				{if $right_edit}<button onclick="openNomenclatureType( 0 );" class="btn btn-xs btn-success"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>

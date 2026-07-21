@@ -1149,7 +1149,7 @@ function write_number() {
     $col     = $_[1];                         # Zero indexed column
     $num     = $_[2];
 //!!!
-    $xf      = $this->_XF($row, $col, $_[3]); # The cell format
+    $xf      = $this->_XF($row, $col, $_[3] ?? false); # The cell format
 
     # Check that row and col are valid and store max and min values
     if ($row >= $this->_xls_rowmax) { return -2; }
@@ -1206,7 +1206,7 @@ function write_string() {
     $col     = $_[1];                         # Zero indexed column
     $strlen  = strlen($_[2]);
     $str     = $_[2];
-    $xf      = $this->_XF($row, $col, $_[3]); # The cell format
+    $xf      = $this->_XF($row, $col, $_[3] ?? false); # The cell format
 
     $str_error = 0;
 
@@ -1331,7 +1331,7 @@ function write_formula() {
     # we set $num to zero and set the option flags in $grbit to ensure
     # automatic calculation of the formula when the file is opened.
     #
-    $xf        = $this->_XF($row, $col, $_[3]); # The cell format
+    $xf        = $this->_XF($row, $col, $_[3] ?? false); # The cell format
     $num       = 0x00;                          # Current value of formula
     $grbit     = 0x03;                          # Option flags
     $chn       = 0x0000;                        # Must be zero
@@ -1657,7 +1657,7 @@ function _write_url_external() {
     if (isset($sheet)) {
         $link_type |= 0x08;
         $sheet_len  = pack("V", length($sheet) + 0x01);
-        $sheet      = join("\0", explode('', $sheet)); //split('', $sheet)
+        $sheet      = implode("\0", str_split($sheet));
         $sheet     .= "\0\0\0";
     } else {
         $sheet_len   = '';

@@ -28,7 +28,10 @@
 				my_action = 'save'; 
 				return loadXMLDoc('save', 3); //3
 			}
-		} else return loadXMLDoc('save', 3); //3
+		} else {
+			my_action = 'save';
+			return loadXMLDoc('save', 3); //3
+		}
 	}
 	
 </script>
@@ -38,17 +41,17 @@
 <dlcalendar click_element_id="img_valid_from" input_element_id="valid_from" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="img_valid_to" input_element_id="valid_to" tool_tip="Изберете дата"></dlcalendar>
 
-<div class="content">
-	<form action="" method="POST" name="form1" onsubmit="form_submit(); return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-personnel-dialog ui-person-document-dialog" onsubmit="form_submit(); return false;">
 		<input type="hidden" id="id" name="id" value="{$id}">
 		<input type="hidden" id="id_person" name="id_person" value="{$id_person}">
 		<input type="hidden" id="id_document" name="id_document" value="0">
 		
 		<div class="page_caption">{if $id}Редактиране на документ{else}Нов документ{/if}</div>
 
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>Съпътващи документи</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				<tr class="odd">
 					<td colspan="2" style="width: 5px;"></td>
 				</tr>
@@ -60,22 +63,22 @@
 					<td>Дата на издаване:</td>
 					<td>
 						<input name="date_in" id="date_in" type="text" style="width: 104px;" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-						&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date_in" />
+						&nbsp;<button type="button" class="ui-inline-calendar-trigger" id="img_date_in" title="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						&nbsp;&nbsp;№ : &nbsp;<input name="doc_num" id="doc_num" type="text" style="width: 80px;" />
 					</td>
 				</tr>
 				<tr class="even">
 					<td>Валидност:</td>
-					<td><table class="input"><tr class="even">
+					<td><table class="input ui-person-document-validity"><tr class="even">
 						<td>от:</td>
 						<td>
 							<input name="valid_from" id="valid_from" type="text" style="width: 80px;" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_valid_from" />											
+							&nbsp;<button type="button" class="ui-inline-calendar-trigger" id="img_valid_from" title="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>									
 						</td>
 						<td>до:</td>
 						<td>
 							<input name="valid_to" id="valid_to" type="text" style="width: 80px;" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />
-							&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_valid_to" />											
+							&nbsp;<button type="button" class="ui-inline-calendar-trigger" id="img_valid_to" title="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>									
 						</td>
 					</tr></table></td>
 				</tr>
@@ -85,9 +88,9 @@
 			</table>
 		</fieldset>
 
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>Допълнителна информация</legend>
-			<table class="input">
+			<table class="input ui-personnel-notes">
 				<tr class="odd">
 					<td style="width: 5px;"></td>
 				</tr>
@@ -101,12 +104,12 @@
 				</tr>
 			</table>
 		</fieldset>
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align: right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

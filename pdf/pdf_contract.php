@@ -477,7 +477,7 @@
 			$this->Cell('5','',$aContract['panic_stat_count']);
 			$this->Cell('65','','броя стационарни бутона');
 			if ( !empty( $aContract['panic_stat_count'] ) ) {
-				$this->Cell('10','',$aContract['panic_stat_price']." лв");
+				$this->Cell('10','',$aContract['panic_stat_price']." €");
 			}
 			$this->Ln(2);
 			$this->moveX(5);
@@ -489,7 +489,7 @@
 			$this->Cell('5','',$aContract['panic_radio_count']);
 			$this->Cell('65','','броя радио бутона');
 			if ( !empty ( $aContract['panic_radio_count'] ) ) {
-				$this->Cell('10','',$aContract['panic_radio_price']." лв");
+				$this->Cell('10','',$aContract['panic_radio_price']." €");
 			}
 			$this->Ln(2);
 			$this->moveX(5);
@@ -501,7 +501,7 @@
 			$this->moveX(5);
 			$this->Cell('70','','от клавиатура');
 			if (!empty($aContract['panic_kbd_count'])) {
-				$this->Cell('10','',$aContract['panic_kbd_price']." лв");
+				$this->Cell('10','',$aContract['panic_kbd_price']." €");
 			} else {
 				$this->Cell('10','','не');
 			}
@@ -526,7 +526,7 @@
 				$this->ln(4);
 				$this->moveX(5);
 				$this->Cell('70','','ВЕСТ online');
-				$this->Cell('10','',$nOnlinePrice." лв");
+				$this->Cell('10','',$nOnlinePrice." €");
 				$this->Ln(2);
 				$this->moveX(71);
 				$this->dottedLine(20);
@@ -546,7 +546,7 @@
 			$this->Cell(74,'','Месечна такса:');
 			$this->SetFont('FreeSans', '', 8);
 			if ( !empty( $nMonthAccount ) ) {
-				$this->Cell(10,'',$nMonthAccount." лв");
+				$this->Cell(10,'',$nMonthAccount." €");
 			}
 			$this->Ln(2);
 			$this->moveX(71);
@@ -561,9 +561,9 @@
 			$this->Cell('20','','Вид поръчка:');
 			
 			switch ($aContract['build_type']) {
-				case 'normal': 	$this->Cell('49','','Нормална'); 	$this->Cell('10','','0.00 лв');break;
-				case 'fast':	$this->Cell('49','','Бърза');		$this->Cell('10','',$aContract['fast_order_price']." лв");break;
-				case 'expres':	$this->Cell('49','','Експресна');	$this->Cell('10','',$aContract['expres_order_price']." лв");break;
+				case 'normal': 	$this->Cell('49','','Нормална'); 	$this->Cell('10','','0.00 €');break;
+				case 'fast':	$this->Cell('49','','Бърза');		$this->Cell('10','',$aContract['fast_order_price']." €");break;
+				case 'expres':	$this->Cell('49','','Експресна');	$this->Cell('10','',$aContract['expres_order_price']." €");break;
 				default: $this->moveX(49);
 			}
 			$this->Ln(2);
@@ -576,7 +576,7 @@
 			$this->Cell(69,'','Други:');
 			
 			if( !empty($nOtherPrice) ) {
-				$this->Cell(10,'',$nOtherPrice." лв");
+				$this->Cell(10,'',$nOtherPrice." €");
 			}
 			$this->Ln(2);
 			$this->moveX(71);
@@ -587,7 +587,7 @@
 			$this->Cell(73,'','Цена за техника:');
 			$this->SetFont('FreeSans', '', 8);
 			if ( $aContract['technics_price'] != '0.00' ) {
-				$this->Cell('','',$aContract['technics_price']." лв");
+				$this->Cell('','',$aContract['technics_price']." €");
 			}
 			$this->Ln(2);
 			$this->moveX(71);

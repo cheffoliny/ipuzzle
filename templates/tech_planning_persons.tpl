@@ -32,7 +32,7 @@
 			
 			var newDD = newDate.getDate();
 			var newMM = newDate.getMonth()+1;
-			var newYY = newDate.getYear();
+			var newYY = newDate.getFullYear();
 			
 			if( newDD < 10 ) newDD = "0" + newDD;
 			if( newMM < 10 ) newMM = "0" + newMM;
@@ -133,13 +133,13 @@
 
 <dlcalendar click_element_id="imgDate" input_element_id="date" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-technical-list ui-tech-planning-persons" onSubmit="return false;">
 	<input type="hidden" name="start" id="start" value="0">
 	<input type="hidden" name="end" id="end" value="0">
 	<input type="hidden" name="id_request" id="id_request" value="0">
 	<input type="hidden" name="id_request_from_contract" id="id_request_from_contract" value="{$nIDRequest|default:0}">
 	
-	<table class="page_data">
+	<table class="page_data ui-nomenclature-heading ui-technical-planning-toolbar">
 		<tr style="height:35px;">
 			<td width="200px" class="page_caption">График</td>
 			<td align="right" valign="middle" width="100px">Фирма</td>
@@ -158,16 +158,16 @@
 					<table>
 						<tr>
 							<td valign="middle" width="15px">
-								<button onclick="nextDate('prev');" style="width:10px"><img src="images/mleft.gif" /></button>
+								<button type="button" class="ui-technical-icon-button" onclick="nextDate('prev');" title="Предишен ден"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 							</td>
 							<td valign="middle" align="center" width="75px">
 								<input style="width:70px;" id="date" name="date" type="text" class="clear" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
 							</td>
 							<td valign="middle" width="15px">
-								<button onclick="nextDate('next');" style="width:10px"><img src="images/mright.gif" /></button>
+								<button type="button" class="ui-technical-icon-button" onclick="nextDate('next');" title="Следващ ден"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 							</td>
 							<td>
-								<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgDate" />
+								<button type="button" id="imgDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							</td>
 						</tr>
 					</table>
@@ -179,13 +179,13 @@
 					<table>
 						<tr>
 							<td valign="middle" width="15px">
-								<button onclick="nextMonth('prev');" style="width:10px"><img src="images/mleft.gif" /></button>
+								<button type="button" class="ui-technical-icon-button" onclick="nextMonth('prev');" title="Предишен месец"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 							</td>
 							<td valign="middle" align="center" width="75px">
 								<input style="width:70px;" id="dateM" name="dateM" type="text" class="clear" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
 							</td>
 							<td valign="middle" width="15px">
-								<button onclick="nextMonth('next');" style="width:10px"><img src="images/mright.gif" /></button>
+								<button type="button" class="ui-technical-icon-button" onclick="nextMonth('next');" title="Следващ месец"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 							</td>
 						</tr>
 					</table>
@@ -215,7 +215,7 @@
 				затворени карти
 			</td>
 			<td colspan="4" align="center" width="105px">
-				<button type="button" onClick="getResult();" class="search"><img src="images/reload.gif" />Обнови</button>
+				<button type="button" onClick="getResult();" class="search"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span>Обнови</button>
 			</td>
 		<!--	<td colspan="3" width="200px" align="center">
 				<button class="saveplan" type="button" name="button" onClick="save();" ><b>Запази</b></button>
@@ -230,7 +230,7 @@
 	
 	<hr>
 	
-	<div id="result" rpc_excel_panel="off"></div>
+	<div id="result" class="ui-technical-result" rpc_excel_panel="off"></div>
 
 </form>
 

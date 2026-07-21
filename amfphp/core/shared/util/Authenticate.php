@@ -19,7 +19,7 @@ class Authenticate {
 	 * 
 	 * @return bool Whether the current user has been authenticated
 	 */
-	function isAuthenticated () {
+	static function isAuthenticated () {
 		if (isset($_SESSION['amfphp_username'])) {
 			return true;
 		} else {
@@ -31,7 +31,7 @@ class Authenticate {
 	 * getAuthUser returns the current user name of the user that is logged in with the session.
 	 * @return string the name of the authenticated user
 	 */
-	function getAuthUser () 
+	static function getAuthUser () 
 	{
 		if(isset($_SESSION['amfphp_username']))
 		{
@@ -54,7 +54,7 @@ class Authenticate {
 	 * @param string $roles comma delimited list of the methods roles
 	 * @return bool Whether the user is in the proper role.
 	 */
-	function isUserInRole($roles) {
+	static function isUserInRole($roles) {
 		$methodRoles = explode(",", $roles); // split the method roles into an array
 		foreach($methodRoles as $key => $role) {
 			$methodRoles[$key] = strtolower(trim($role));
@@ -83,7 +83,7 @@ class Authenticate {
 	 * @param string $name The user name
 	 * @param string $roles The comma delimited list of roles for the user
 	 */
-	function login($name, $roles) {
+	static function login($name, $roles) {
 		if(!session_id())
 		{
 			session_start();
@@ -95,7 +95,7 @@ class Authenticate {
 	/**
 	 * logout kills the user session and terminates the login properties
 	 */
-	function logout() {
+	static function logout() {
 		$_SESSION['amfphp_username'] = null;
 		$_SESSION['amfphp_roles'] = null;
 		if(isset($_SESSION['amfphp_username']))

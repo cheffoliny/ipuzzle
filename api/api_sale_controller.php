@@ -35,7 +35,7 @@ class NoticeException extends Exception{
     }
 }
 
-set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
     $levels = [2 , 8, 32, 128, 512, 1024, 8192, 16384];
 
     if ( 0 === error_reporting() ) {
@@ -46,7 +46,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
         return true;
     }
 
-    throw new NoticeException($errstr, $errno, $errno, $errfile, $errline);
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 });
 
 if ( !isset($_SESSION['telenet_valid_session']) || $_SESSION['telenet_valid_session'] !== true ) {
@@ -123,8 +123,14 @@ function castBankOrders($data) {
 
     foreach ($data as $key => $value) {
         $data[$key]['id'] = intval($data[$key]['id']);
-        $data[$key]['is_paid'] = intval($data[$key]['is_paid']);
-        $data[$key]['tax'] = floatval($data[$key]['tax']);
+
+        if (array_key_exists('is_paid', $data[$key])) {
+            $data[$key]['is_paid'] = intval($data[$key]['is_paid']);
+        }
+
+        if (array_key_exists('tax', $data[$key])) {
+            $data[$key]['tax'] = floatval($data[$key]['tax']);
+        }
     }
     
     return $data;
@@ -136,8 +142,14 @@ function castBankAccounts($data) {
 
     foreach ($data as $key => $value) {
         $data[$key]['id'] = intval($data[$key]['id']);
-        $data[$key]['is_paid'] = intval($data[$key]['is_paid']);
-        $data[$key]['tax'] = floatval($data[$key]['tax']);
+
+        if (array_key_exists('is_paid', $data[$key])) {
+            $data[$key]['is_paid'] = intval($data[$key]['is_paid']);
+        }
+
+        if (array_key_exists('tax', $data[$key])) {
+            $data[$key]['tax'] = floatval($data[$key]['tax']);
+        }
     }
 
     return $data;

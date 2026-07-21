@@ -19,6 +19,7 @@
 
 class LZWDecode {
 
+    var $fpdi;
     var $sTable = array();
     var $data = null;
     var $tIdx;
@@ -29,8 +30,12 @@ class LZWDecode {
     var $nextBits = 0;
     var $andTable = array(511, 1023, 2047, 4095);
 
-    function LZWDecode(&$fpdi) {
+    function __construct(&$fpdi) {
         $this->fpdi =& $fpdi;
+    }
+
+    function LZWDecode(&$fpdi) {
+        $this->__construct($fpdi);
     }
 
     /**

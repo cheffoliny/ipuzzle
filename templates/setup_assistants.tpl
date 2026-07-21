@@ -19,33 +19,33 @@
 {/literal}
 </script>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
-	<table class = "page_data">
+	<table class = "page_data ui-nomenclature-heading">
 		<tr>
 			<td class="page_name">Електронен договор - РЕКЛАМНИ СЪТРУДНИЦИ</td>
 			<td class="buttons">
-				{if $right_edit}<button onclick="openAssistant( 0 );"><img src="images/plus.gif"> Добави </button>
+				{if $right_edit}<button onclick="openAssistant( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 				{else}&nbsp;
 				{/if}
 			</td>
 		</tr>
 	</table>
 	
-	<center>
-		<table class="search">
+	<center class="ui-nomenclature-filter-wrap">
+		<table class="search table-secondary ui-nomenclature-filter ui-nomenclature-filter-wide">
 			<tr>
 				<td align="right">Фирма</td>
 				<td>
-					<select class="default" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'genregions' );" />&nbsp;&nbsp;
+					<select class="default form-control" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'genregions' );" />&nbsp;&nbsp;
 				</td>
 				<td>&nbsp;</td>
 				<td align="right">Регион</td>
 				<td>
-					<select class="default" name="nIDRegion" id="nIDRegion" />
+					<select class="default form-control" name="nIDRegion" id="nIDRegion" />
 				</td>
 				<td>&nbsp;</td>
-				<td align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><img src="images/confirm.gif">Търси</button></td>
+				<td align="right"><button name="Button" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 	  	</table>
 	</center>

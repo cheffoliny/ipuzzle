@@ -3,7 +3,6 @@
 		
 		public function result( DBResponse $oResponse ) {
 			global $db_sod;
-			$db_sod->debug=true;
 			$Time = array();
 			
 			$nID = Params::get("nID", 0);

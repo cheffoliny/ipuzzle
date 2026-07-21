@@ -144,7 +144,7 @@
 
 {/literal}
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-dialog ui-finance-document-dialog ui-document-row-dialog" onsubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="{$nID}">
 	<input type="hidden" name="nIDBuyDoc" id="nIDBuyDoc" value="{$nIDBuyDoc}">
 	<input type="hidden" name="id_object" id="id_object" value="">
@@ -256,7 +256,7 @@
 							Ед. цена&nbsp;
 						</td>
 						<td>
-							<input type="text" name="single_price" id="single_price" onkeypress="return formatMoney(event);" onkeyup="countSum();" style="text-align:right;width:80px;"> лв.
+							<input type="text" name="single_price" id="single_price" onkeypress="return formatMoney(event);" onkeyup="countSum();" style="text-align:right;width:80px;"> €
 						</td>
 					</tr>
 					<tr class="odd">
@@ -272,13 +272,13 @@
 							Обща сума&nbsp;
 						</td>
 						<td>
-							<input type="text" name="total_sum" id="total_sum" style="text-align:right;width:80px;" readonly> лв.
+							<input type="text" name="total_sum" id="total_sum" style="text-align:right;width:80px;" readonly> €
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" align="right" style="padding-top:10px;">
-							<button onclick="addRow();" class="search"><img src="images/confirm.gif">Добави</button>
-							<button onclick="parent.window.close();"><img src="images/cancel.gif">Затвори</button>
+							<button type="button" onclick="addRow();" class="search"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
+							<button type="button" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 						</td>
 					</tr>
 				</table>

@@ -74,6 +74,12 @@ class pdf_parser {
      * @var array
      */
     var $root;
+
+    /**
+     * Object currently being resolved. Declared explicitly for PHP 8.2+.
+     * @var array
+     */
+    var $actual_obj;
 	
     
     /**
@@ -81,7 +87,7 @@ class pdf_parser {
      *
      * @param string $filename  Source-Filename
      */
-	function pdf_parser($filename) {
+    function __construct($filename) {
         $this->filename = $filename;
         
         $this->f = @fopen($this->filename, "rb");
@@ -100,6 +106,10 @@ class pdf_parser {
 
         // Read root
         $this->pdf_read_root();
+    }
+
+	function pdf_parser($filename) {
+        $this->__construct($filename);
     }
     
     /**

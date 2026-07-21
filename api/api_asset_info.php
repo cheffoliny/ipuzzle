@@ -31,7 +31,7 @@
 				$oAsset->getAssetInfo($nID,$aInfo);
 				$sMOL =$aInfo[0]['storage_type']=='asset'? $this->getMOLForAsset($aInfo[0]['id'],$oAsset):$aInfo[0]['mol'];
 				
-				$aInfo[0]['rest_price'] = round($nPriceLeft,2).' лв.';
+				$aInfo[0]['rest_price'] = round($nPriceLeft,2).' €';
 				$aNomenclatures = $oNomenclatures->getNomenclaturesByGroup($aInfo[0]["id_group"]);
 				
 				//grupi

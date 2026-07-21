@@ -52,7 +52,7 @@
 
 <table cellspacing="0" cellpadding="0" width="100%" id="filter" >
 <tr>
-	<td>{include file=personal_card_tabs.tpl}</td>
+	<td>{include file="personal_card_tabs.tpl"}</td>
 </tr>
 <tr>
 	<td id="filter_result">

@@ -29,62 +29,62 @@
 </script>
 {/literal}
 
-<form id="form1" name="form1" onSubmit="return false;">
+<form id="form1" name="form1" class="ui-access-dialog ui-access-account-dialog" onSubmit="return false;">
 	<input type="hidden" name="id" id="id" value="{$id|default:0}" />
 	<input type="hidden" name="selall" id="selall" value="{$selall|default:0}" />
 	<input type="hidden" name="id_person" id="id_person" value="0" />
 	<div class="page_caption">{if $id>0}Редактиране на потребител{else}Добавяне на потребител{/if}</div>
 
-	<div id="search">
-		<table  class="input">
+	<div id="search" class="ui-access-dialog-body">
+		<table class="input ui-access-form-table">
 			<tr>
 				<td align="right">Потр. име:&nbsp;</td>
-				<td><input type="text" name="username" id="username" style="width: 200px;" /></td>
+				<td><input type="text" name="username" id="username" class="form-control" style="width: 200px;" /></td>
 			</tr>
 			
 			<tr>
 				<td align="right">Фирма:&nbsp;</td>
 				<td>
-					<select name="nIDFirm" id="nIDFirm" style="width: 350px;" onChange="loadXMLDoc('result');"></select>
+					<select name="nIDFirm" id="nIDFirm" class="form-control" style="width: 350px;" onChange="loadXMLDoc('result');"></select>
 				</td>
 			</tr>
 
 			<tr>
 				<td align="right">Служител:&nbsp;</td>
 				<td>
-					<input name="person" id="person" type="text" suggest="suggest" queryType="person" queryParams="nIDFirm" style="width: 350px;" />&nbsp;&nbsp;
+					<input name="person" id="person" type="text" class="form-control" suggest="suggest" queryType="person" queryParams="nIDFirm" style="width: 350px;" />&nbsp;&nbsp;
 				</td>
 			</tr>
 			
 			<tr>
 				<td align="right">Профил:&nbsp;</td>
 				<td>
-					<select name="id_profile" id="id_profile" style="width: 350px;" >
+					<select name="id_profile" id="id_profile" class="form-control" style="width: 350px;" >
 					</select>
 				</td>
 			</tr>
 			
 			<tr>
 				<td align="right">Лимит:&nbsp;</td>
-				<td><input type="text" name="row_limit" id="row_limit" style="width: 200px;" value="20" /> реда в резултат от справка</td>
+				<td><input type="text" name="row_limit" id="row_limit" class="form-control ui-access-inline-control" style="width: 200px;" value="20" /> реда в резултат от справка</td>
 			</tr>
 			
 			<tr>
 				<td colspan="4">
-					<fieldset>
+					<fieldset class="ui-access-selection">
 					<legend>Достъп до фирма/регион</legend>
-						<table>
+						<table class="ui-dual-list">
 							<tr>
 								<td>
-									<select name="all_regions" id="all_regions" size="10" ondblclick="move_option_to( 'all_regions', 'account_regions', 'right');" multiple>
+									<select name="all_regions" id="all_regions" class="form-control ui-dual-list-select" size="10" ondblclick="move_option_to( 'all_regions', 'account_regions', 'right');" multiple>
 									</select>
 								</td>
 								<td>
-									<button class="search" style="width: 50px;" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;"><img src="images/mright.gif" /></button></br>
-									<button name="button" style="width: 50px;" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;"><img src="images/mleft.gif" /></button>
+									<button class="search" style="width: 50px;" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br />
+									<button name="button" style="width: 50px;" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
-									<select name="account_regions[]" id="account_regions" size="10" ondblclick="move_option_to( 'all_regions', 'account_regions', 'left');" multiple>
+									<select name="account_regions[]" id="account_regions" class="form-control ui-dual-list-select" size="10" ondblclick="move_option_to( 'all_regions', 'account_regions', 'left');" multiple>
 									</select>
 								</td>
 							</tr>
@@ -96,11 +96,11 @@
 		</table>
 	</div>
 
-	<div id="search">
+	<div id="search" class="ui-access-dialog-actions">
 		<table width="100%" cellspacing="5px">
 			<tr><td align="right" valign="bottom">
-				<button type="button" onClick="submit_form();" class="search"> Запиши </button>
-				<button onClick="parent.window.close();"> Затвори </button>
+				<button type="button" onClick="submit_form();" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+				<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 			</td></tr>
 		</table>
 	</div>

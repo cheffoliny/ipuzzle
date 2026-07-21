@@ -18,7 +18,7 @@ else
  */
 class BasicGateway
 {
-	function BasicGateway()
+	function __construct()
 	{
 		if(AMFPHP_PHP5)
 		{
@@ -33,6 +33,11 @@ class BasicGateway
 			include_once(AMFPHP_BASE . "shared/exception/php4Exception.php");
 		}
 		$this->registerActionChain();
+	}
+
+	function BasicGateway()
+	{
+		$this->__construct();
 	}
 	
 	/**

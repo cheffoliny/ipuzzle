@@ -43,7 +43,7 @@
 					$sViewType = $aBuyDoc['view_type'];
 				}
 				
-				$oResponse->setFormElement('form1','sum_total',array(),sprintf('%0.2f лв.',$aBuyDoc['total_sum']));
+				$oResponse->setFormElement('form1','sum_total',array(),sprintf('%0.2f €',$aBuyDoc['total_sum']));
 				
 				$oResponse->setFormElement('form1','sDocDate',array(),mysqlDateToJsDate($aBuyDoc['doc_date']));
 					

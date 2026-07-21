@@ -19,7 +19,7 @@
 	  	<table  cellspacing="0" cellpadding="0" width="100%"  border="0" id="filter" >
   		<tr>
   			<td>
-  				{include file=asset_info_tabs.tpl}
+  				{include file="asset_info_tabs.tpl"}
   				<br>
   			</td>
   		</tr>

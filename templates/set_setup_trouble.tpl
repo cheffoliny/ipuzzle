@@ -13,14 +13,14 @@
 </script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-trouble-dialog" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="nIDObject" name="nIDObject" value="{$nIDObj}">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нов{/if} проблем</div>
 
-		<table class="input" width="100%">
+		<table class="input ui-nomenclature-form" width="100%">
 			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
 			<tr class="even">
 				<td style="width: 140px; text-align: right;">Тип:</td>
@@ -32,7 +32,7 @@
 			
 			<tr class="odd" align="center">
 				<td style="width: 400px;" colspan="2" >
-					<fieldset style="border: 1px solid black; vertical-align: top;" >
+					<fieldset class="ui-nomenclature-fieldset" style="vertical-align: top;" >
 					<legend>Проблем</legend>
 						<table class="input">
 							<tr>
@@ -56,7 +56,7 @@
 			
 			<tr class="odd">
 				<td style="width: 400px;" colspan="2">
-					<fieldset style="border: 1px solid black; vertical-align: top;" >
+					<fieldset class="ui-nomenclature-fieldset" style="vertical-align: top;" >
 					<legend>Причина</legend>
 						<table class="input">
 							<tr>
@@ -81,12 +81,12 @@
 			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
 		</table>
 		
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td width="250">&nbsp;</td>
 				<td style="text-align:right;">
-					<button type="button" onClick="formSubmit()" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
+					<button type="button" onClick="formSubmit()" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

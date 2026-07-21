@@ -59,8 +59,8 @@
 
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return submit_form();">
+<div class="content ui-nomenclature-dialog-shell">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-operational-dialog ui-request-dialog" onsubmit="return submit_form();">
 		<input type="hidden" name="nID" id="nID" value="{$nID}">
 		<input type="hidden" name="nForRead" id="nForRead" value="0">
 		<input type="hidden" name="nIDElement" id="nIDElement" value="0">
@@ -70,9 +70,9 @@
 		<br />
 
 		
-		<fieldset>
+		<fieldset class="ui-nomenclature-fieldset">
 			<legend>От Склад:</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form">
 				<tr class="odd">
 					<td width="80px">Регион:</td>
 					<td>
@@ -94,7 +94,7 @@
 			</table>
 		</fieldset>
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form ui-nomenclature-section">
 			<tr class="even">
 				<td width="80px">Към Склад:</td>
 				<td>
@@ -103,15 +103,15 @@
 			</tr>
 		</table>
 		
-		<table class="input">
+		<table class="input ui-nomenclature-form ui-request-sections">
 			<tr class="even">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 						<legend>Номенклатури:</legend>
-						<table class="page_data">
+						<table class="page_data ui-request-items-toolbar">
 							<tr>
 								<td class="buttons">
-									<button id="add" onclick="setRequestElement( 0 );" style="width: 20px;"><img src="images/plus.gif"></button>
+									<button id="add" class="ui-nomenclature-transfer-button" onclick="setRequestElement( 0 );" title="Добави номенклатура"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></button>
 								</td>
 							</tr>
 						</table>
@@ -124,7 +124,7 @@
 			</tr>
 			<tr class="odd">
 				<td>
-					<fieldset>
+					<fieldset class="ui-nomenclature-fieldset">
 						<legend>Коментар:</legend>
 						<textarea cols="80" rows="3" id="sComment" name="sComment"></textarea>
 					</fieldset>
@@ -133,11 +133,11 @@
 		</table>
 		
 		<br />
-		<table class="input">
+		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
 				<td style="text-align:right;">
-					<button id="send" type="submit" class="search">{if $nID} Потвърди {else} Запиши {/if}</button>
-					<button onClick="opener.loadXMLDoc2( 'result' ); parent.window.close();"> Затвори </button>
+					<button id="send" type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>{if $nID} Потвърди {else} Запиши {/if}</button>
+					<button onClick="opener.loadXMLDoc2( 'result' ); parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

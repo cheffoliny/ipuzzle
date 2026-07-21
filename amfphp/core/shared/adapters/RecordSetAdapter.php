@@ -28,6 +28,10 @@ class RecordSetAdapter {
 	 * @var int 
 	 */
 	var $numRows = -1;
+	var $_resultResource;
+	var $_charsetHandler;
+	var $_directCharsetHandler;
+	var $isBigEndian;
 
 	/**
 	 * Dummy constructor function.
@@ -35,12 +39,16 @@ class RecordSetAdapter {
 	 * @param resource $d The result resource
 	 */
 
-	function RecordSetAdapter ($d) {
+	function __construct ($d) {
 		$this->_resultResource = $d;
 		$this->_charsetHandler = new CharsetHandler('sqltophp');
 		$this->_directCharsetHandler = new CharsetHandler('sqltoflash');
 		$this->isBigEndian = AMFPHP_BIG_ENDIAN;
 	} 
+
+	function RecordSetAdapter ($d) {
+		$this->__construct($d);
+	}
 
 	/**
 	 * getter for the number of rows

@@ -5,7 +5,6 @@
 		{
 			$oDBAssetsNomenclatures= new DBAssetsNomenclatures();
 			$oDBAssetsNomenclatures->getREPORT($oResponse);
-			APILog::Log(0,$oDBAssetsNomenclatures);
 			$oResponse->printResponse();
 		}
 		

@@ -11,8 +11,6 @@
 
             $('pMonth').style.display = "none";
             hideData();
-            loadXMLDoc2('load');
-
             rpc_on_exit = function() {
 
                 jQuery.each(jQuery(".in_team"),function(index, value){
@@ -24,18 +22,20 @@
                 });
 
 //                jQuery.each(jQuery(".real_graph"),function(index, value){
-//                    jQuery(value).append('<i class="glyphicon glyphicon-info-sign"></i>');
+//                    An optional information marker was previously rendered here.
 //                });
 //                jQuery(".in_team").append('<span class="glyphicon glyphicon-user pull-right" color="#'+jQuery(this).parent().data('color')+'"></span>');
                 rpc_on_exit = function() {};
-            }
+            };
+            loadXMLDoc2('load');
         }
 
         function getResult() {
             if( $('nIDOffice').value != 0 ) {
                 $('start').value = '0';
                 $('end').value = '0';
-                loadXMLDoc2('result');
+            } else {
+                return;
             }
 
             rpc_on_exit = function() {
@@ -50,13 +50,14 @@
                 });
 
 //                jQuery.each(jQuery(".real_graph"),function(index, value){
-//                    jQuery(value).append('<i class="glyphicon glyphicon-info-sign"></i>');
+//                    An optional information marker was previously rendered here.
 //                });
 //                jQuery(".in_team").append('<span class="glyphicon glyphicon-user pull-right" color="#'+jQuery(this).parent().data('color')+'"></span>');
 
 //                jQuery(".in_team").append('<span class="glyphicon glyphicon-user"></span>');
                 rpc_on_exit = function() {};
-            }
+            };
+            loadXMLDoc2('result');
         }
 
         function open_tech_teams() {
@@ -149,12 +150,21 @@
 //			}
         }
 
+        function setPlanningCellColor(id, color) {
+            var cell = document.getElementById(String(id));
+            if (cell) {
+                cell.style.setProperty('background-color', color, 'important');
+            }
+        }
+
         function planning(person,col,row_num) {
-            id_this = person + ',' + col + ',' +row_num;
+            var id_this = person + ',' + col + ',' +row_num;
+            var id;
+            var i;
 
             if( $('start').value == '0' ) {     // Ако за пръв път маркирваме квадратче
 
-                $(id_this).style.backgroundColor = '#612c2c';
+                setPlanningCellColor(id_this, '#612c2c');
                 $('start').value = id_this;
                 $('end').value = id_this;
             } else {
@@ -170,9 +180,9 @@
                         for( i = aStart[1] ; i <= aEnd[1] ; i++ ) { 			//изчистваме ги,
                             id = aStart[0] + ',' + i + ',' + row_num;
                             var row_color = row_num % 2 ? '#FFFFFF' : '#F0F0F0';
-                            $(id).style.backgroundColor = row_color;
+                            setPlanningCellColor(id, row_color);
                         }
-                        $(id_this).style.backgroundColor = '#612c2c';         // и маркираме само едно квадратче
+                        setPlanningCellColor(id_this, '#612c2c');         // и маркираме само едно квадратче
                         $('start').value = id_this;
                         $('end').value = id_this;
 
@@ -201,14 +211,14 @@
                         if( bad == 0 ) {			// ако е свободно чертая
                             for( i = start ; i <= end ; i++ ) {
                                 id = person + ',' + i + ',' + row_num;
-                                $(id).style.backgroundColor = '#612c2c';
+                                setPlanningCellColor(id, '#612c2c');
                             }
                         } else { 					// ако не е, изтривам старото и маркирам само новото
                             var row_color = row_num % 2 ? '#FFFFFF' : '#F0F0F0';
-                            $(aStart).style.backgroundColor = row_color;
+                            setPlanningCellColor(aStart.join(','), row_color);
 
                             $('start').value = $('end').value = id_this;
-                            $(id_this).style.backgroundColor = '#612c2c';
+                            setPlanningCellColor(id_this, '#612c2c');
                         }
                     }
                 } else {			// ако маркираме квадратче на друг ред от реда на последната маркировка
@@ -216,9 +226,9 @@
                     for( i = aStart[1] ; i <= aEnd[1] ; i++ ) {			// изчистваме последната маркировка
                         id = aStart[0] + ',' + i + ',' + aStart[2];
                         var row_color = aStart[2] % 2 ? '#FFFFFF' : '#F0F0F0';
-                        $(id).style.backgroundColor = row_color;
+                        setPlanningCellColor(id, row_color);
                     }
-                    $(id_this).style.backgroundColor = '#612c2c';      // и маркираме квадратчето
+                    setPlanningCellColor(id_this, '#612c2c');      // и маркираме квадратчето
                     $('start').value = id_this;
                     $('end').value = id_this;
                 }
@@ -234,11 +244,23 @@
                 $('id_request').value = $('id_request_from_contract').value;
             }
 
-            loadXMLDoc2('planning', 1);
-            rpc_on_exit = function() {
-                parent.document.getElementById('tech_plannig_requests').contentWindow.loadXMLDoc2('result');
-                getResult();
+            rpc_on_exit = function(nCode) {
+                rpc_on_exit = function() {};
+                if (parseInt(nCode, 10) !== 0) {
+                    return;
+                }
+
+                // FormProcessing_action() invokes rpc_on_exit before xmlrpc.js
+                // releases its request lock. Refresh on the next event-loop turn.
+                window.setTimeout(function() {
+                    var requestsFrame = parent.document.getElementById('tech_plannig_requests');
+                    if (requestsFrame && requestsFrame.contentWindow && requestsFrame.contentWindow.loadXMLDoc2) {
+                        requestsFrame.contentWindow.loadXMLDoc2('result');
+                    }
+                    getResult();
+                }, 0);
             };
+            loadXMLDoc2('planning', 0);
 
         }
 
@@ -466,10 +488,10 @@
             text-align: center;
             color: #FD9C28;
         }
-        .real_graph i.glyphicon {
+        .real_graph .ui-icon {
             width: 15px;
         }
-        .real_graph i:hover {
+        .real_graph .ui-icon:hover {
             cursor: pointer;
             font-size: 14px;
         }
@@ -509,27 +531,27 @@
 
 <dlcalendar click_element_id="imgDate" input_element_id="date" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal" role="form">
+<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal ui-nomenclature-list ui-technical-list ui-tech-planning-schedule" role="form">
     <input type="hidden" name="start" id="start" value="0" />
     <input type="hidden" name="end" id="end" value="0" />
     <input type="hidden" name="id_request" id="id_request" value="0" />
     <input type="hidden" name="id_request_from_contract" id="id_request_from_contract" value="{$nIDRequest|default:0}" />
 
-    <div class="row bg-light pt-1"  id="row">
+    <div class="row bg-light pt-1 ui-technical-planning-toolbar" id="row">
         <div class="col-auto">
             <h6 class="mt-1 ml-1 d-none d-lg-block">Планиране</h6>
         </div>
 
         <div class="col-2">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon"><i class="far fa-file-alt"></i></span>
+                <span class="input-group-addon"><span class="ui-icon ui-icon-document" aria-hidden="true"></span></span>
                 <select class="form-control form-control-select100" id="nIDOffice" name="nIDOffice" onchange="getResult();" title="Регион за техническа поддръжка" ></select>
             </div>
         </div>
 
         <div class="col-2">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon"><i class="far fa-list-alt"></i></span>
+                <span class="input-group-addon"><span class="ui-icon ui-icon-list" aria-hidden="true"></span></span>
                 <select class="form-control form-control-select100" name="type" id="type" onchange="changeType(this.value)" title="Изглед...">
                     <option value="day">Дневен</option>
                     <option value="month">Месечен</option>
@@ -539,23 +561,23 @@
         <div class="col-auto " id="pDay">
 
             <div class="input-group input-group-sm">
-                <span class="input-group-addon" onclick="nextDate('prev');" ><i class="far fa-chevron-left"></i></span>
-                <span class="input-group-addon" id="imgDate" ><i class="far fa-calendar-alt"></i></span>
+                <button type="button" class="input-group-addon ui-technical-addon-button" onclick="nextDate('prev');" title="Предишен ден"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
+                <button type="button" class="input-group-addon ui-technical-addon-button" id="imgDate" title="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
                 <input class="form-control form-control-inp75" id="date" name="date" type="text" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
-                <span class="input-group-append" onclick="nextDate('next');"><i class="far fa-chevron-right"></i></span>
+                <button type="button" class="input-group-append ui-technical-addon-button" onclick="nextDate('next');" title="Следващ ден"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
             </div>
         </div>
         <div class="col-auto "  id="pMonth">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon"  onclick="nextMonth('prev');"><i class="far fa-chevron-left"></i></span>
+                <button type="button" class="input-group-addon ui-technical-addon-button" onclick="nextMonth('prev');" title="Предишен месец"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
                 <input class="form-control form-control-inp75" id="dateM" name="dateM" type="text" onkeypress="return formatDate(event, '.');" maxlength="7" readonly title="ММ.ГГГГ" />
-                <span class="input-group-append" onclick="nextMonth('next');"><i class="far fa-chevron-right"></i></span>
+                <button type="button" class="input-group-append ui-technical-addon-button" onclick="nextMonth('next');" title="Следващ месец"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
             </div>
 
         </div>
         <div class="col-auto">
             <div class="input-group input-group-sm">
-                <span class="input-group-addon" title="Само техници"><i class="far fa-users"></i></span>
+                <span class="input-group-addon" title="Само техници"><span class="ui-icon ui-icon-users" aria-hidden="true"></span></span>
                 <span class="input-group-append">
                     <input type="checkbox" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick="getResult();" placeholder="Само техници.." />
                 </span>
@@ -563,14 +585,14 @@
         </div>
         <div class="col-auto text-right pr-3">
             {if $right_edit}
-                <button class="btn btn-sm btn-info" type="search" name="button" onClick="save();" ><i class="far fa-save"></i>  Запази &nbsp;</button>
+                <button class="btn btn-sm btn-info" type="button" name="button" onClick="save();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази &nbsp;</button>
             {else}
             {/if}
-            <button class="btn btn-sm btn-info" type="button" onClick="open_tech_teams();"><i class="far fa-users"></i> Екипи &nbsp; </button>
-            <button class="btn btn-sm btn-success" type="button" onClick="getResult();"><i class="far fa-redo-alt"></i> Обнови </button>
+            <button class="btn btn-sm btn-info" type="button" onClick="open_tech_teams();"><span class="ui-icon ui-icon-users" aria-hidden="true"></span> Екипи &nbsp; </button>
+            <button class="btn btn-sm btn-success" type="button" onClick="getResult();"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
 
             {* INFO: 26.07.2016 - Скриваме временно бутона за да видим дали ще липсва на някой :) *}
-            {*<button class="btn btn-sm btn-primary" onclick="parent.window.location='page.php?page=tech_support_requests';" id="to_tech_request"><span class="far fa-reply"></span> Заявки </button>*}
+            {* Бутонът за връщане към заявките е временно изключен. *}
             <!-- Затворени карти
                 <td align="right" valign="middle" width="50px">
                     <input type="checkbox" class="clear" checked="checked" name="closedLimitCards" id="closedLimitCards" onClick = "getResult();">
@@ -580,7 +602,7 @@
         </div>
     </div>
 
-    <div id="result" style="height: 90%;" rpc_excel_panel="off" rpc_resize="off"></div>
+    <div id="result" class="ui-technical-result ui-tech-planning-result" style="height: 90%;" rpc_excel_panel="off" rpc_resize="off"></div>
 
     {if $nIDRequest}
         {if $nPicNum}
@@ -588,7 +610,7 @@
             {if $nMinute}
                 и {$nMinute} минути
             {/if}
-            <img src="images/time/red{$nPicNum}.gif" />
+            <span class="ui-tech-time-bar ui-tech-time-bar-{$nPicNum}" title="{$nHours} часа{if $nMinute} и {$nMinute} минути{/if}" aria-hidden="true"></span>
         {else}
             {$sObjectName} {$sTechType}
         {/if}

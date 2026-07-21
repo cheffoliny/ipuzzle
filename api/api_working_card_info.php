@@ -58,7 +58,7 @@
 			APILog::Log(0, $sFrom);
 			//$sFrom = jsDateToTimestamp( Params::get("sFrom", '') );
 				
-			$account_regions = Params::get("account_regions", '');
+			$account_regions = (array) Params::get("account_regions", array());
 			
 			if ( !empty($nIDCard) && empty($sTo) ) {	
 				$db_sod->StartTrans();

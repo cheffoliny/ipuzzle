@@ -74,7 +74,7 @@
 
 <dlcalendar click_element_id="img_lk_date" input_element_id="lk_date" tool_tip="Изберете дата"></dlcalendar>
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-person-info" onsubmit="return false;">
 	<input type="hidden" id="id" name="id" value="{$id|default:0}" />
 	<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 
@@ -86,33 +86,33 @@
 			<div class="col-2 col-sm-2 col-lg-2 pl-3">
 				<div class="input-group input-group-sm">
 					<picture class="w-100">
-						<img src="{$image}" class="rounded mx-auto d-block" alt="...">
-						<button class="btn btn-sm btn-info btn-block" type="button" onclick="return update_image();"><i class="far fa-refresh"></i> Промени</button>
+						<img src="{$image}" class="rounded mx-auto d-block ui-person-photo" alt="Снимка на служителя">
+						<button class="btn btn-sm btn-info btn-block" type="button" onclick="return update_image();"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Промени</button>
 					</picture>
 				</div>
 			</div>
 			<div class="col-3 col-sm-3 col-lg-3">
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-signature fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+						<span class="ui-icon ui-icon-name" title="Име..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="fname" type="text" id="fname" placeholder="Име..." />
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-signature fa-fw" data-fa-transform="right-22 down-10" title="Презиме..."></span>
+						<span class="ui-icon ui-icon-name" title="Презиме..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="mname" type="text" id="mname" placeholder="Презиме..." />
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-signature fa-fw" data-fa-transform="right-22 down-10" title="Фамилия..."></span>
+						<span class="ui-icon ui-icon-name" title="Фамилия..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="lname" type="text" id="lname" placeholder="Фамилия..." />
 				</div>
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕГН..."></span>
+						<span class="ui-icon ui-icon-barcode" title="ЕГН..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="egn" type="text" id="egn" maxlength="10" onkeypress="return formatNumber(event);" placeholder="ЕГН" title="ЕГН"/>
 				</div>
@@ -120,19 +120,19 @@
 			<div class="col">
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+						<span class="ui-icon ui-icon-location" title="Град" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="addr_city" type="text" id="addr_city" placeholder="Град" title="град"/>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+						<span class="ui-icon ui-icon-location" title="Улица" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="addr_street" type="text" id="addr_street" placeholder="Улица" title="Улица"/>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+						<span class="ui-icon ui-icon-location" title="Адрес" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="addr_num" type="text" id="addr_num" placeholder="№" title="№" />
 					<input class="form-control" name="addr_floor" type="text" id="addr_floor" placeholder="ет." title="ет." onkeypress="return formatNumber(event);" />
@@ -142,25 +142,25 @@
 			<div class="col-3 col-sm-3 col-lg-3">
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-phone-alt fa-fw" data-fa-transform="right-22 down-10" title="Телефон..."></span>
+						<span class="ui-icon ui-icon-phone" title="Телефон..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="home_phone" id="home_phone" type="text" onkeypress="return formatDigits(event);" placeholder="Телефон..." /></td>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-phone-office fa-fw" data-fa-transform="right-22 down-10" title="Служебен..."></span>
+						<span class="ui-icon ui-icon-phone" title="Служебен..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="business_phone" id="business_phone" type="text" onkeypress="return formatDigits(event);" placeholder="Служебен..." /></td>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-mobile-android fa-fw" data-fa-transform="right-22 down-10" title="Мобилен..."></span>
+						<span class="ui-icon ui-icon-mobile" title="Мобилен..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="mobile_phone" id="mobile_phone" type="text" onkeypress="return formatDigits(event);" placeholder="Мобилен..." /></td>
 				</div>
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fa fa-phone-plus fa-fw" data-fa-transform="right-22 down-10" title="Други..."></span>
+						<span class="ui-icon ui-icon-phone" title="Други..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="mphones" id="mphones" type="text" title="Телефонни номера, започващи с префикс 088 и разделени със запетая!" placeholder="08ххх...,08ххх..." />
 				</div>
@@ -172,19 +172,19 @@
 				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служебни данни </div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+						<span class="ui-icon ui-icon-barcode" title="Код" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" type="text" name="EIC" id="EIC" onkeypress="return formatDigits(event);" placeholder="КОД"/>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+						<span class="ui-icon ui-icon-barcode" title="Служебна карта" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" type="text" name="skn" id="skn" onkeypress="return formatDigits(event);" placeholder="СК №&nbsp;"/>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-mailbox fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+						<span class="ui-icon ui-icon-mail" title="Email" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="email" id="email" type="text" onkeypress="return formatDigits(event);" placeholder="Еmail"/>
 				</div>
@@ -193,7 +193,7 @@
 				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Други </div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="far fa-users fa-fw" data-fa-transform="right-22 down-10" title="Семейно положение..."></span>
+						<span class="ui-icon ui-icon-users" title="Семейно положение..." aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="family_status" id="family_status">
 						<option value="none"	>неопределено</option>
@@ -204,7 +204,7 @@
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="far fa-badge-dollar fa-fw" data-fa-transform="right-22 down-10" title="IBAN..."></span>
+						<span class="ui-icon ui-icon-card" title="IBAN..." aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="iban" type="text" id="iban" title="Перонална банкова сметка" placeholder="IBAN"/>
 				</div>
@@ -213,19 +213,19 @@
 				<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Лична карта </div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-passport fa-fw" data-fa-transform="right-22 down-10" title="ЛК номер"></span>
+						<span class="ui-icon ui-icon-id-card" title="ЛК номер" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="lkn" type="text" id="lkn" maxlength="15" onkeypress="return formatNumber(event);" placeholder="ЛК номер" />
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Дата на издаване"></span>
+						<span class="ui-icon ui-icon-calendar" title="Дата на издаване" aria-hidden="true"></span>
 					</div>
-					<input class="form-control" name="lk_date" type="text" id="lk_date" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_lk_date" />
+					<input class="form-control" name="lk_date" type="text" id="lk_date" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;<button type="button" id="img_lk_date" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Дата на издаване"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</div>
 				<div class="input-group input-group-sm mb-1">
 					<div class="input-group-prepend">
-						<span class="fa fa-map-marked-alt fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+						<span class="ui-icon ui-icon-location" title="Място на издаване" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="lk_pub" type="text" id="lk_pub" />
 				</div>
@@ -242,19 +242,19 @@
 		<div class="col p-2">
 			<div class="input-group input-group-sm">
 				<div class="input-group-prepend">
-					<span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Трудов Договор..."></span>
+					<span class="ui-icon ui-icon-contract" title="Трудов договор..." aria-hidden="true"></span>
 				</div>
 				<select class="form-control" name="sPrintType" id="sPrintType">
 					<option value="contract">Трудов Договор</option>
 					<option value="contract_addition">Доп. споразумение към Трудов Договор</option>
 					<option value="order">Прекрат. на трудово правоотношение</option>
 				</select>
-				<button class="btn btn-sm btn-info" onclick="printContract();"><i class="far fa-file-pdf-o"></i></button>&nbsp;
+				<button type="button" class="btn btn-sm btn-info" onclick="printContract();" title="Печат в PDF"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span></button>&nbsp;
 			</div>
 		</div>
 		<div class="col text-right p-2">
-			<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
-			<button class="btn btn-sm btn-danger"	    onClick="close_form();"			><i class="far fa-window-close" ></i> Затвори </button>
+			<button type="button" class="btn btn-sm btn-success mr-1" onClick="return submit_form();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+			<button type="button" class="btn btn-sm btn-danger" onClick="close_form();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 		</div>
 	</nav>
 </form>

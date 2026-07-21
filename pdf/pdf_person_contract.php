@@ -641,7 +641,7 @@
 			$this->SetFont( 'FreeSans', 'B', 9 );
 			if( !empty( $aParams['nSalary'] ) )
 			{
-				$this->Cell( '', '', $aParams['nSalary'] . " лв." );														//Value
+				$this->Cell( '', '', $aParams['nSalary'] . " €" );														//Value
 			}
 			$this->Line( 175, 190, 200, 190 );
 			

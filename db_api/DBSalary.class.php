@@ -60,8 +60,6 @@ class DBSalary
 	{
 		global $db_personnel, $db_name_sod,$db_name_personnel;
 		
-		$db_personnel->debug = true;
-		
 		if( empty( $nIDObject ) || !is_numeric( $nIDObject ) )
 			throw new Exception(NULL, DBAPI_ERR_INVALID_PARAM);
 			
@@ -1747,7 +1745,6 @@ class DBSalary
 			$sQuery .= sprintf( "LIMIT %s, %s", $nRowOffset , $nRowCount );
 		}
 		//End Paging
-		APILog::Log(0, $sQuery);
 		$rs = $db_personnel->Execute( $sQuery );
 		
 		$aData = array();

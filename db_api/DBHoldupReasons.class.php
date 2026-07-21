@@ -137,7 +137,7 @@ class DBHoldupReasons extends DBBase2 {
 						tr.id,
 						tr.name,
 						tr.from_tech_signals,
-						CONCAT(tr.price, ' лв') as price,
+						CONCAT(tr.price, ' €') as price,
 						tr.operations_affect,
                         CONCAT(tr.warranty_time, ' месеца') as warranty_time,
                         tr.is_warranty,

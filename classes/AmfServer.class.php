@@ -35,8 +35,8 @@ class AmfServer extends Zend_Amf_Server
 	        $sClassName = $source;
 	        $sClassName = preg_replace('/.*?\//', "", $sClassName);
 	        $sClassName = preg_replace('/\.php/', "", $sClassName);
-	        $sClassName = preg_replace('/(\_)(.)/e', "strtoupper('\\2')", $sClassName);
-	        $sClassName = preg_replace('/(^.)/e', "strtoupper('\\1')", $sClassName);
+	        $sClassName = preg_replace_callback('/(\_)(.)/', function ($matches) { return strtoupper($matches[2]); }, $sClassName);
+	        $sClassName = preg_replace_callback('/(^.)/', function ($matches) { return strtoupper($matches[1]); }, $sClassName);
 	        
             if( defined('EOL_DEBUG') && EOL_DEBUG ) {
                 $sMsg = sprintf("PROTOCOL: AMF\nMETHOD: %s\nPARAMS: %s\n", $method, var_export( $params, true ));

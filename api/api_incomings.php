@@ -198,12 +198,12 @@
 
 			foreach ( $arr_earnings as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum']);
+					$aPrice['sum'] = sprintf("%01.0f €", $aPrice['sum']);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum']);
+						$aPriceChild['sum'] = sprintf("%01.0f €", $aPriceChild['sum']);
 					}					
 				}
 				
@@ -211,9 +211,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
+						$aPrice[$aMo] = sprintf("%01.0f €", 0);
 					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = sprintf("%01.0f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -222,9 +222,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
+							$aChil[$aMo] = sprintf("%01.0f €", 0);
 						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo]);
+							$aChil[$aMo] = sprintf("%01.0f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -299,12 +299,12 @@
 
 			foreach ( $arr_expenses as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = sprintf("%01.0f лв.", $aPrice['sum']);
+					$aPrice['sum'] = sprintf("%01.0f €", $aPrice['sum']);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = sprintf("%01.0f лв.", $aPriceChild['sum']);
+						$aPriceChild['sum'] = sprintf("%01.0f €", $aPriceChild['sum']);
 					}					
 				}
 				
@@ -312,9 +312,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", 0);
+						$aPrice[$aMo] = sprintf("%01.0f €", 0);
 					} else {
-						$aPrice[$aMo] = sprintf("%01.0f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = sprintf("%01.0f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -323,9 +323,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = sprintf("%01.0f лв.", 0);
+							$aChil[$aMo] = sprintf("%01.0f €", 0);
 						} else {
-							$aChil[$aMo] = sprintf("%01.0f лв.", $aChil[$aMo]);
+							$aChil[$aMo] = sprintf("%01.0f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -339,9 +339,9 @@
 			
 			$total_change	= $total_earning - $total_expense;
 				
-			$oResponse->SetFlexVar("total_earning", sprintf("%01.0f лв.", $total_earning));		
-			$oResponse->SetFlexVar("total_expense", sprintf("%01.0f лв.", $total_expense));		
-			$oResponse->SetFlexVar("total_change", sprintf("%01.0f лв.", $total_change));		
+			$oResponse->SetFlexVar("total_earning", sprintf("%01.0f €", $total_earning));
+			$oResponse->SetFlexVar("total_expense", sprintf("%01.0f €", $total_expense));
+			$oResponse->SetFlexVar("total_change", sprintf("%01.0f €", $total_change));
 				
 			
 			$oResponse->printResponse();
@@ -782,13 +782,13 @@
 
 			foreach ( $arr_earnings as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					//$aPrice['sum'] = sprintf("%01.2f лв.", $aPrice['sum']);
+					//$aPrice['sum'] = sprintf("%01.2f €", $aPrice['sum']);
 					$aPrice['sum'] = round($aPrice['sum'], 0);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						//$aPriceChild['sum'] = sprintf("%01.2f лв.", $aPriceChild['sum']);
+						//$aPriceChild['sum'] = sprintf("%01.2f €", $aPriceChild['sum']);
 						$aPriceChild['sum'] = round($aPriceChild['sum'], 0);
 					}					
 				}
@@ -797,9 +797,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = 0;	//sprintf("%01.2f лв.", 0);
+						$aPrice[$aMo] = 0;	//sprintf("%01.2f €", 0);
 					} else {
-						$aPrice[$aMo] = round($aPrice[$aMo], 0);	//sprintf("%01.2f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = round($aPrice[$aMo], 0);	//sprintf("%01.2f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -808,9 +808,9 @@
 				foreach ( $aPrice['children'] as &$aChil ) {
 					foreach ( $aMonths as $aMo ) {
 						if ( !isset($aChil[$aMo]) ) {
-							$aChil[$aMo] = 0;	//sprintf("%01.2f лв.", 0);
+							$aChil[$aMo] = 0;	//sprintf("%01.2f €", 0);
 						} else {
-							$aChil[$aMo] = round($aChil[$aMo]);	//sprintf("%01.2f лв.", $aChil[$aMo]);
+							$aChil[$aMo] = round($aChil[$aMo]);	//sprintf("%01.2f €", $aChil[$aMo]);
 						}
 					}					
 				}
@@ -886,12 +886,12 @@
 
 			foreach ( $arr_expenses as &$aPrice ) {
 				if ( isset($aPrice['sum']) ) {
-					$aPrice['sum'] = round($aPrice['sum'], 0); //sprintf("%01.2f лв.", $aPrice['sum']);
+					$aPrice['sum'] = round($aPrice['sum'], 0); //sprintf("%01.2f €", $aPrice['sum']);
 				}
 				
 				foreach ( $aPrice['children'] as &$aPriceChild ) {
 					if ( isset($aPriceChild['sum']) ) {
-						$aPriceChild['sum'] = round($aPriceChild['sum'], 0);	//sprintf("%01.2f лв.", $aPriceChild['sum']);
+						$aPriceChild['sum'] = round($aPriceChild['sum'], 0);	//sprintf("%01.2f €", $aPriceChild['sum']);
 					}					
 				}
 				
@@ -899,9 +899,9 @@
 				
 				foreach ( $aMonths as $aMo ) {
 					if ( !isset($aPrice[$aMo]) ) {
-						$aPrice[$aMo] = 0;		//sprintf("%01.2f лв.", 0);
+						$aPrice[$aMo] = 0;		//sprintf("%01.2f €", 0);
 					} else {
-						$aPrice[$aMo] = round($aPrice[$aMo], 0);	//sprintf("%01.2f лв.", $aPrice[$aMo]);
+						$aPrice[$aMo] = round($aPrice[$aMo], 0);	//sprintf("%01.2f €", $aPrice[$aMo]);
 					}
 				}
 				
@@ -926,7 +926,7 @@
 						
 			$sFileName	= "buy.xls";
 		  	$sFileNameTemp = tempnam("\tmp", $sFileName);
-			$oWorkbook = &new writeexcel_workbook($sFileNameTemp);
+			$oWorkbook = new writeexcel_workbook($sFileNameTemp);
 			 // Създване на worksheet
 			$oWorksheet = &$oWorkbook->addworksheet( iconv("UTF-8", "CP1251", "Постъпления") );
 			

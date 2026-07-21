@@ -119,7 +119,7 @@
 {/if}
 
 <div>
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-nomenclature-dialog ui-technical-dialog ui-limit-card-info" onsubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 		<input type="hidden" id="nIDObject" name="nIDObject" value="0" />
 		<input type="hidden" id="nIDContract" name="nIDContract" value="0" />
@@ -130,14 +130,14 @@
 
 		<div class="page_caption">Информация за лимитна карта № {$nNum}</div>
 		
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
+		<table cellspacing="0" cellpadding="0" width="100%" id="filter" class="ui-technical-shell">
 			<tr>
-				<td>{include file=limit_card_tabs.tpl}</td>
+				<td>{include file="limit_card_tabs.tpl"}</td>
 			</tr>
 			<tr class="odd">
 				<td>
 				<!-- начало на работната част -->
-		  		    <table class="input">
+		  		    <table class="input ui-technical-form">
 		  		    	<tr style="height: 20px;">
 		  		    		<td colspan="8">&nbsp;</td>
 		  		    	</tr>
@@ -146,7 +146,7 @@
 		               <td colspan=6 valign="top">
 						<fieldset>
 							<legend>Задача за лимитна карта:</legend>
-							<table class="input">
+							<table class="input ui-technical-fields">
 
 {if $type eq 'contract'}
 								<tr style="font-size: 0px; height: 5px;" class="odd"><td colspan="4"></td></tr>
@@ -211,7 +211,7 @@
 		            <td colspan="6" valign="top">
 					<fieldset>
 						<legend>Основна информация:</legend>
-						<table class="input">
+						<table class="input ui-technical-fields">
 													
 							<tr class="even">
 								<td style="width: 50px;" align="right">номер:&nbsp;</td>
@@ -276,20 +276,20 @@
 		               <td colspan=6 valign="top">
 						<fieldset>
 							<legend>Планиране/изпълнение:</legend>
-							<table class="input">
+							<table class="input ui-technical-fields ui-limit-card-timing">
 								
 								<tr class="even">
 									<td align="right" style="width: 100px;">планиран старт:&nbsp;</td>
 									<td style="width: 180px;">
 										<input type="text" name="sPlannedStartH" id="sPlannedStartH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" onChange="changeTrigger();" readonly />&nbsp;
 										<input type="text" name="sPlannedStart" id="sPlannedStart" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" onChange="changeTrigger();" readonly />&nbsp;
-										<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgPlannedStart" />
+										<button type="button" id="imgPlannedStart" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Планиран старт"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 									</td>
 									<td align="right" style="width: 100px;">планиран край:&nbsp;</td>
 									<td>
 										<input type="text" name="sPlannedEndH" id="sPlannedEndH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" onChange="changeTrigger();" readonly />&nbsp;									
 										<input type="text" name="sPlannedEnd" id="sPlannedEnd" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" onChange="changeTrigger();" readonly />&nbsp;
-										<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgPlannedEnd" />
+										<button type="button" id="imgPlannedEnd" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Планиран край"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 									</td>
 									<td align="right">
 										<input type="text" name="nArrangeCount" id="nArrangeCount" style="width: 50px; text-align: right;" onkeypress="return formatDigits(event);" maxlength="2" onChange="changeTrigger();" readonly />&nbsp;									
@@ -301,13 +301,13 @@
 									<td>
 										<input type="text" name="sRealStartH" id="sRealStartH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" onChange="changeTrigger();" readonly />&nbsp;																											
 										<input type="text" name="sRealStart" id="sRealStart" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" onChange="changeTrigger();" readonly />&nbsp;
-										<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgRealStart" />
+										<button type="button" id="imgRealStart" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Реален старт"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 									</td>
 									<td align="right">реален край:&nbsp;</td>
 									<td>
 										<input type="text" name="sRealEndH" id="sRealEndH" style="width: 40px;" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" onChange="changeTrigger();" readonly />&nbsp;																		
 										<input type="text" name="sRealEnd" id="sRealEnd" class="inp75" onkeypress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" onChange="changeTrigger();" readonly />&nbsp;
-										<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="imgRealEnd"  />
+										<button type="button" id="imgRealEnd" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Реален край"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 									</td>
 									<td align="right">бр. аранжировка&nbsp;</td>
 								</tr>
@@ -324,7 +324,7 @@
 		               <td colspan=6 valign="top">
 						<fieldset>
 							<legend>Допълнителна информация:</legend>
-							<table class="input">
+						<table class="input ui-technical-fields">
 							
 								<tr class="odd">
 									<td align="center">
@@ -340,32 +340,32 @@
 
 					</table>
 					
-					<table  class="input">
+					<table class="input ui-nomenclature-actions ui-technical-actions ui-limit-card-actions">
 						<tr valign="top" class="odd">
 						{if $work && $lock eq 'active'}
 							<td valign="top" align="left" width="100px">
-								<button class="search" style="background: #F09E93;" onclick="return cancel();" title="Анулиране на лимитна карта" disabled><img src="images/cancel.gif"/>Анулирай</button>&nbsp;
+								<button type="button" class="search ui-technical-danger" onclick="return cancel();" title="Анулиране на лимитна карта" disabled><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Анулирай</button>&nbsp;
 							</td>
 						{/if}
 
 						{if $lock eq 'cancel'}
 							<td valign="top" align="left" width="100px">
-								<button class="search" style="background: #F09E93;" onclick="return cancel();" title="{$person}" disabled><img src="images/cancel.gif"/>Анулирана</button>&nbsp;
+								<button type="button" class="search ui-technical-danger" onclick="return cancel();" title="{$person}" disabled><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Анулирана</button>&nbsp;
 							</td>
 						{/if}
 
 						{if not $work && $lock eq 'active'}
 							<td valign="top" align="left" width="100px">
-								<button class="search" style="background: #F09E93;" onclick="return cancel();" title="Анулиране на лимитна карта"><img src="images/cancel.gif"/>Анулирай</button>&nbsp;
+								<button type="button" class="search ui-technical-danger" onclick="return cancel();" title="Анулиране на лимитна карта"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Анулирай</button>&nbsp;
 							</td>
 						{/if}
 												
 							<td valign="top" align="right" width="600px">
-								<button class="search" onclick="return submit_form();" on><img src="images/confirm.gif"/>Потвърди</button>&nbsp;
+								<button type="button" class="search" onclick="return submit_form();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>&nbsp;
 							</td>
 						
 							<td valign="top" align="right" width="100px">
-								<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
+								<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 							</td>
 							
 						</tr>
