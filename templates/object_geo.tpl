@@ -20,11 +20,11 @@
         }
     }
 
-    function initialize(mapConfig) {
-        var objectId = parseInt(mapConfig.objectId, 10);
-        var latitude = parseFloat(mapConfig.lat);
-        var longitude = parseFloat(mapConfig.lng);
-        var zoom = parseInt(mapConfig.zoom, 10);
+    function initialize(objectIdValue, latitudeValue, longitudeValue, zoomValue) {
+        var objectId = parseInt(objectIdValue, 10);
+        var latitude = parseFloat(latitudeValue);
+        var longitude = parseFloat(longitudeValue);
+        var zoom = parseInt(zoomValue, 10);
 
         if (!isFinite(objectId) || objectId <= 0) {
             showMapError('Няма привързан обект.');
@@ -108,10 +108,10 @@
 </form>
 
 <script>
-    initialize({
-        objectId: {$nID|default:0},
-        lat: {$mapCenter.lat|default:42.7339},
-        lng: {$mapCenter.lng|default:25.4858},
-        zoom: {$mapCenter.zoom|default:7}
-    });
+    initialize(
+        {$nID|default:0},
+        {$mapCenter.lat|default:42.7339},
+        {$mapCenter.lng|default:25.4858},
+        {$mapCenter.zoom|default:7}
+    );
 </script>
