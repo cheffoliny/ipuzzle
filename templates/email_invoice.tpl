@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function onInit() {
 			loadXMLDoc2('result');
@@ -23,9 +24,6 @@
 
 {/literal}
 
-<dlcalendar click_element_id="imgPeriodFrom" input_element_id="sPeriodFrom" tool_tip="Изберете дата"></dlcalendar>
-<dlcalendar click_element_id="imgPeriodTo" input_element_id="sPeriodTo" tool_tip="Изберете дата"></dlcalendar>
-
 <form action="" name="form1" id="form1" onSubmit="return false;">
 	<input type="hidden" name="nID" id="nID" value="0">
 	<input type="hidden" name="sFile" id="sFile" value="">
@@ -47,13 +45,13 @@
 
 						<tr>
 							<td>
-								<button name="Send" id="b100" name="b100" title="Разпрати" type="button" onclick="send_data()" ><img src="images/confirm.gif" />Разпрати</button>
+								<button name="Send" id="b100" title="Разпрати" type="button" class="ui-final-action" onclick="send_data()" ><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Разпрати</button>
 							</td>
 							<td>
-								<button name="Settings" id="b100" name="b100" title="Настройки" type="button" onclick="settings()" ><img src="images/setup.gif" />Настройки</button>
+								<button name="Settings" id="b100" title="Настройки" type="button" class="ui-final-action" onclick="settings()" ><span class="ui-icon ui-icon-settings" aria-hidden="true"></span>Настройки</button>
 							</td>
 							<td>
-								<button name="Refresh" id="b100" name="b100" title="Опресни" type="button" onclick="onInit()" ><img src="images/refresh_ppp.gif" />Опресни</button>
+								<button name="Refresh" id="b100" title="Опресни" type="button" class="ui-final-action" onclick="onInit()" ><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span>Опресни</button>
 							</td>
 						</tr>
 

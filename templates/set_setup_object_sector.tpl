@@ -1,8 +1,9 @@
 <script>
     rpc_debug = true;
+    rpc_html_debug = true;
 </script>
-<div class="modal-content pb-5">
-    <form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2( 'save', 3 )">
+<form action="" method="POST" name="form1" id="form1" class="ui-sod-editor ui-sector-editor" onsubmit="loadXMLDoc2( 'save', 3 ); return false;">
+    <div class="modal-content ui-sod-editor-content">
 
         <div class="modal-header">
             <h6 class="modal-title text-white" id="exampleModalLabel">{if $nID}Редакция{else}Добавяне{/if} на сектор</h6>
@@ -10,7 +11,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body pb-5">
+        <div class="modal-body ui-sod-editor-body">
 
             <input type="hidden" id="nID"       name="nID"          value="{$nID}"      />
             <input type="hidden" id="nIDObject" name="nIDObject"    value="{$nIDObject}"/>
@@ -19,7 +20,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-cube fa-fw" data-fa-transform="right-22 down-10" title="Наименование на сектор"></span>
+                            <span class="ui-icon ui-icon-cube" aria-hidden="true" title="Наименование на сектор"></span>
                         </div>
                         <input class="form-control" type="text" name="sName" id="sName" placeholder="Наименование..." />
                     </div>
@@ -30,23 +31,19 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Номер на сектор"></span>
+                            <span class="ui-icon ui-icon-barcode" aria-hidden="true" title="Номер на сектор"></span>
                         </div>
                         <input class="form-control" type="text" name="nSector" id="nSector" placeholder="Номер на сектор..." onkeypress="return formatDigits(event);" />
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-5">
-            <div class="col-12 pl-1">
-              &nbsp;
-            </div>
-        </div>
-        <div id="search" class="modal-footer fixed-bottom mb-1 py-0">
-            <button class="btn btn-sm btn-block btn-primary" type="submit"><i class="fas fa-check"></i> Запази</button>
-        </div>
-    </form>
-</div>
+        <nav id="search" class="modal-footer fixed-bottom ui-sod-editor-actions" aria-label="Действия със сектора">
+            <button class="btn btn-sm btn-primary" type="submit"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази</button>
+            <button class="btn btn-sm btn-danger" type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+        </nav>
+    </div>
+</form>
 
 <script>
     loadXMLDoc2( 'get' );

@@ -134,82 +134,74 @@
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="editToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form id="form1" action="" onsubmit="return false;">
+<form id="form1" action="" class="ui-nomenclature-list ui-finance-docs-list ui-sales-docs-list" onsubmit="return false;">
 	<input type="hidden" id="subm" name="subm" value="no" />
 	<input type="hidden" id="nIDClient" name="nIDClient" value="0" />
 
 	{include file='finance_operations_tabs.tpl'}
 
-	<div>
-		<div class="row justify-content-start pl-3 py-2 table-secondary">
-			<div class="col-6 col-sm-4 col-lg-2">
+	<div class="ui-finance-docs-filters">
+		<div class="row justify-content-start table-secondary ui-finance-docs-toolbar ui-sales-docs-toolbar">
+			<div class="col-6 col-sm-4 col-lg-2 ui-sales-docs-firm">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
 						{*Администрация:&nbsp;*}
-						<span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></span>
+						<span class="ui-icon ui-icon-tag" title="Фирма на административно обслужване" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="nIDFirm" id="nIDFirm" title="Фирма на административно обслужване"></select>
 				</div>
 			</div>
-			<div class="col-6 col-sm-4 col-lg-2 pl-0">
-				<div class="input-group input-group-sm" title="Период...">
-					<div class="input-group-prepend">
-						<i id="editFromDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></i>
-					</div>
+			<div class="col-6 col-sm-4 col-lg-2 pl-0 ui-sales-docs-period">
+				<div class="input-group input-group-sm ui-finance-docs-period" title="Период...">
+					<button type="button" id="editFromDate" class="ui-finance-date-trigger" title="Начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 					<input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
-					<div class="input-group-prepend">
-						<i class="fas fa-arrows-h"></i>
-					</div>
+					<span class="ui-finance-date-separator"><span class="ui-icon ui-icon-exchange" aria-hidden="true"></span></span>
 					<input type="text" name="sToDate" id="sToDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
-					<div class="input-group-append">
-						<i id="editToDate" class="fas fa-calendar-alt"></i>
-					</div>
+					<button type="button" id="editToDate" class="ui-finance-date-trigger" title="Крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</div>
 			</div>
-			<div class="col-6 col-sm-4 col-lg-2 pl-0">
+			<div class="col-6 col-sm-4 col-lg-2 pl-0 ui-sales-docs-client">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fa fa-barcode fa-fw"  data-fa-transform="right-22 down-10" title="Търсене по клиент - част от име или директно избран"></span>
+						<span class="ui-icon ui-icon-user" title="Търсене по клиент - част от име или директно избран" aria-hidden="true"></span>
 					</div>
 					<input class="form-control suggest" type="text" id="sClientName" name="sClientName" suggest="suggest" queryType="ClientName" onchange="resetClient()" onpast="resetClient()" placeholder="Клиент..." title="Търсене по клиент - част от име или директно избран" />
 				</div>
 			</div>
-			<div class="col-6 col-sm-4 col-lg-2">
+			<div class="col-6 col-sm-4 col-lg-2 ui-sales-docs-number">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fa fa-barcode fa-fw"  data-fa-transform="right-22 down-10" title="Търсене по част от номер"></i>
+						<span class="ui-icon ui-icon-document" title="Търсене по част от номер" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" type="text" id="nNum" name="nNum" onkeypress="return formatNumber(event);" onkeyup="enterConfirm();" placeholder="№ на документ..." title="Търсене по част от номер" />
 				</div>
 			</div>
-			<div class="col-6 col-sm-4 col-lg-2 pl-0">
+			<div class="col-6 col-sm-4 col-lg-2 pl-0 ui-sales-docs-filter">
 				<div class="btn-group input-group-sm">
 					<div class="input-group-prepend">
-						<span class="fas fa-filter fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></span>
+						<span class="ui-icon ui-icon-filter" title="Филтър" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="schemes" id="schemes" ></select>
 					<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-						<a class="dropdown-item dropdown-item-menu" name="Button5"	id="b25" title="Нов филтър" 			onClick="openFilter( 1 );" 			>
-							<i class="fas fa-plus"></i> &nbsp; Добави </a>
-						<a class="dropdown-item dropdown-item-menu" name="Button4"	id="b25" title="Редактиране на филтър" 	onClick="openFilter( 2 );"			>
-							<i class="far fa-edit"></i> &nbsp; Редактирай </a>
-						<a class="dropdown-item dropdown-item-menu" name="Button3"	id="b25" title="Премахване на филтър"	onClick="deleteFilter( schemes );"	>
-							<i class="far fa-trash-alt"></i> &nbsp; Изтрий </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button5" id="salesFilterAdd" title="Нов филтър" onClick="openFilter( 1 ); return false;">
+							<span class="ui-icon ui-icon-plus" aria-hidden="true"></span> &nbsp; Добави </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button4" id="salesFilterEdit" title="Редактиране на филтър" onClick="openFilter( 2 ); return false;">
+							<span class="ui-icon ui-icon-edit" aria-hidden="true"></span> &nbsp; Редактирай </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button3" id="salesFilterDelete" title="Премахване на филтър" onClick="deleteFilter( schemes ); return false;">
+							<span class="ui-icon ui-icon-delete" aria-hidden="true"></span> &nbsp; Изтрий </a>
 					</div>
 				</div>
 			</div>
-			<div class="col-6 col-sm-4 col-lg-2 pl-3">
+			<div class="col-6 col-sm-4 col-lg-2 pl-3 ui-sales-docs-actions">
 				<div class="input-group input-group-sm">
-					{*<button type="button" id="hide"  onclick="hideDiv(0);" class="btn btn-sm btn-light mr-2"  style="display: none;"><i class="fa fa-compress fa-lg"></i></button>*}
-					{*<button type="button" id="show"  onclick="fixFilter();" class="btn btn-sm btn-light mr-2"><i class="fa fa-expand fa-lg"></i></button>*}
-					<button class="btn btn-sm btn-success ml-2 mr-2" onclick="openSales();"><i class="fa fa-plus fa-lg"></i> Добави </button>
-					<button class="btn btn-sm btn-primary" onclick="formSubmit();"><i class="fa fa-search fa-lg"></i> Търси</button>
+					<button type="button" class="btn btn-sm btn-success ml-2 mr-2" onclick="openSales();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
+					<button type="button" class="btn btn-sm btn-primary" onclick="formSubmit();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="result"></div>
+	<div id="result" class="ui-finance-docs-result"></div>
 
 </form>
 

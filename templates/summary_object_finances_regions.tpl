@@ -6,10 +6,10 @@
 		rpc_on_exit = function()
 		{
 			var text = $('result').innerHTML;
-			text = text.replace( /posbaro/g, "<img src=\"images/progress_blue.png\" style=\"width: " );
-			text = text.replace( /posbarc/g, "px; height: 12px;\" />" );
-			text = text.replace( /negbaro/g, "<img src=\"images/progress_red.gif\" style=\"width: " );
-			text = text.replace( /negbarc/g, "px; height: 12px;\" />" );
+			text = text.replace( /posbaro/g, '<span class="ui-finance-progress ui-finance-progress-positive" style="width: ' );
+			text = text.replace( /posbarc/g, 'px;"></span>' );
+			text = text.replace( /negbaro/g, '<span class="ui-finance-progress ui-finance-progress-negative" style="width: ' );
+			text = text.replace( /negbarc/g, 'px;"></span>' );
 			$('result').innerHTML = text;
 		}
 		
@@ -39,11 +39,11 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-finance-summary-child" onSubmit="return false;">
 	<input type="hidden" id="nIDFirm" name="nIDFirm" value="0">
 	<input type="hidden" id="nInterval" name="nInterval" value="6">
 	
-	<div id="result" rpc_excel_panel="off" rpc_paging="off"></div>
+	<div id="result" class="ui-finance-summary-result ui-finance-summary-child-result" rpc_excel_panel="off" rpc_paging="off"></div>
 </form>
 
 {literal}

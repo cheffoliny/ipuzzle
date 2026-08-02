@@ -43,6 +43,7 @@ class ApiSetSetupObjectZone
 
         $oSignalZone = new DBSignalZones();
         $oSignalZone->update( $aData );
+        $oResponse->printResponse();
     }
 }
 

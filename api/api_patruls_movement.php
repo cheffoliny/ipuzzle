@@ -69,11 +69,12 @@
 			
 		}
 		
-		public function deleteFilter() {
+		public function deleteFilter( DBResponse $oResponse ) {
 			$nID = Params::get('schemes','');
 			
 			$oDBMovementSchemes = new DBMovementSchemes();
 			$oDBMovementSchemes->delete($nID);
+			$oResponse->printResponse();
 		}
 	}
 ?>

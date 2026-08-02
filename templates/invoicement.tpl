@@ -1,6 +1,7 @@
 <script>
 {literal}
 	rpc_debug = true;
+	rpc_html_debug = true;
 		
 	function formSubmit() {
 		loadXMLDoc2('result');
@@ -11,8 +12,6 @@
 	}	
 {/literal}
 </script>
-
-<dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
 <form name="form1" id="form1" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="0" />
@@ -37,7 +36,7 @@
 
 						<td align="right">
 						{if $invoicement}
-							<button type="button" id="btnRecord" name="btnRecord" onClick="formSubmit(); return false;" ><img src="images/history.gif" />Фактуриране</button>
+							<button type="button" id="btnRecord" name="btnRecord" class="ui-final-action" onClick="formSubmit(); return false;" ><span class="ui-icon ui-icon-document" aria-hidden="true"></span>Фактуриране</button>
 						{/if}
 						</td>
 					</tr>

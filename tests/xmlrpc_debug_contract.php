@@ -10,15 +10,16 @@ if ($source === false) {
 $requestLog = strpos($source, 'Request to:');
 $responseLog = strpos($source, 'XML Response:');
 $processing = strpos($source, 'FormProcessing(xml);');
-$renderer = strpos($source, 'RpcResultRenderer.isSupportedStylesheet');
-$domOnly = strpos($source, 'DOM-only runtime: browser XSLT fallback is intentionally removed.');
+$renderer = strpos($source, 'RpcResultRenderer.isSupportedProfile');
+$domOnly = strpos($source, '// DOM-only runtime.');
 $domError = strpos($source, 'DOM renderer error:');
 $loaderAfterDomError = strpos($source, 'DisableLoader();', $domError === false ? 0 : $domError);
 $forbiddenXsltRuntime = array(
     'XSLTProcessor',
     'transformToFragment',
     'transformNode(xsl)',
-    "xslhttp.open('GET', rpc_xsl",
+    "xslhttp.open('GET'",
+    'rpc_xsl',
     'XSL renderer error:',
     'ecxecuteXML'
 );

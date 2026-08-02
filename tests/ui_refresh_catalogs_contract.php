@@ -102,6 +102,6 @@ foreach (array('.ui-catalog-dialog', '.ui-money-nomenclature-dialog', '.ui-inlin
 }
 
 catalogsAssert(strpos($icons, '.ui-icon-file-import') !== false, 'file import icon mapping is missing');
-catalogsAssert(is_file($root . '/css/fa7/regular/file-import.svg'), 'file import SVG asset is missing');
+catalogsAssert(is_file($root . '/css/fa7/solid/file-import.svg'), 'file import SVG asset is missing');
 
 echo 'UI_REFRESH_CATALOGS=PASS' . PHP_EOL;

@@ -301,18 +301,10 @@ function dlcalendar_isCompatible()
 
 function dlcalendar_parseCalendarTags()
 {
-    var aCalendarTagsUPPER = document.getElementsByTagName( 'DLCALENDAR' );
-    var aCalendarTagsLower = document.getElementsByTagName( 'dlcalendar' );
-
-    if( aCalendarTagsUPPER == aCalendarTagsLower )
-    {
-        var aCalendarTags = aCalendarTagsUPPER;
-    }
-    else
-    {
-        var aCalendarTags = new Array();
-        aCalendarTags.dlcalendar_mAppendArray( aCalendarTagsUPPER, aCalendarTagsLower );
-    }
+    // HTML tag lookup is case-insensitive in modern browsers. Querying both
+    // variants creates every calendar twice because the returned collections
+    // are different objects containing the same nodes.
+    var aCalendarTags = document.getElementsByTagName( 'dlcalendar' );
     var nCalendarTags = aCalendarTags.length;
     var mParseAttributes = window.dlcalendar_bIE ? window.dlcalendar_bIE5 ? dlcalendar_parseAttributesIE5 : dlcalendar_parseAttributesIE6 : dlcalendar_parseAttributesDOM;
 

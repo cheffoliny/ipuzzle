@@ -1,82 +1,61 @@
 {literal}
 <script>
 	rpc_debug = true;
-	
-	function onInit()
-	{
+	rpc_html_debug = true;
+
+	function onInit() {
 		loadXMLDoc2('load');
 	}
-	
-	function onChangeOffice()
-	{
+
+	function onChangeOffice() {
 		loadXMLDoc2('getPatruls');
 	}
-	function formSubmit()
-	{
-		var P = window.opener.document.getElementById('nIDFirm').value;
-		
-		if(P > 0)
-		{
+
+	function formSubmit() {
+		var openerFirm = window.opener && window.opener.document
+			? window.opener.document.getElementById('nIDFirm')
+			: null;
+
+		if (openerFirm && parseInt(openerFirm.value, 10) > 0) {
 			loadXMLDoc2('save');
-		}
-		else
-		{
-			loadXMLDoc2('save',2);
+		} else {
+			loadXMLDoc2('save', 2);
 		}
 	}
-			
 </script>
 {/literal}
 
-<div class="content ui-nomenclature-dialog-shell">
-	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-operational-dialog ui-patruls-dialog" onsubmit="formSubmit();return false">
-	
-		<input type="hidden" id="nID" name="nID" value="{$nID}">
-		
-		<div class="page_caption">Редакция на позивна</div>
+<form action="" method="POST" name="form1" id="form1" class="ui-patrol-editor ui-patruls-editor ui-nomenclature-dialog ui-operational-dialog" onsubmit="formSubmit(); return false;">
+	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}">
 
-		<table class="input ui-nomenclature-form">
-		
-			<tr class="odd">
-				<td width="100">Фирма:</td>
-				<td>
-					<select name="nIDFirm" id="nIDFirm" style="width: 240px;" onchange="loadXMLDoc2('loadOffices')"></select>
-				</td>
-			</tr>
-		
-			<tr class="even">
-				<td width="100">Регион:</td>
-				<td>
-					<select name="nIDOffice" id="nIDOffice" style="width: 240px;" onchange="onChangeOffice()"></select>
-				</td>
-			</tr>
-			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr> 
-		</table>
-		
-		<fieldset class="ui-nomenclature-fieldset">
-			<legend>Патрули към този регион</legend>
-			<table class="input ui-nomenclature-form">
-				<tr class="even">
-					<td align="center">
-						<textarea name="sPatruls" id="sPatruls" style="width: 325px; height: 80px;" /></textarea>
-					</td>
-				</tr>
-				<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-			</table>
-		</fieldset>
-		
-		<table class="input ui-nomenclature-actions">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
-					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
-				</td>
-			</tr>
-		</table>
-		
-	</form>
-</div>
+	<div class="modal-content ui-patrol-editor-content">
+		<div class="modal-header">
+			<strong>Редакция на позивни</strong>
+			<button type="button" class="close" onclick="parent.window.close();" aria-label="Затвори">×</button>
+		</div>
+
+		<div class="modal-body ui-patrol-editor-body">
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-building" aria-hidden="true" title="Фирма"></span></div>
+				<select name="nIDFirm" id="nIDFirm" class="form-control" onchange="loadXMLDoc2('loadOffices')"></select>
+			</div>
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-location" aria-hidden="true" title="Регион"></span></div>
+				<select name="nIDOffice" id="nIDOffice" class="form-control" onchange="onChangeOffice();"></select>
+			</div>
+			<label class="ui-patrol-field-label" for="sPatruls">
+				<span class="ui-icon ui-icon-radio" aria-hidden="true"></span> Позивни към региона
+			</label>
+			<textarea name="sPatruls" id="sPatruls" class="form-control ui-patrol-callsigns" placeholder="Въведете позивните, разделени със запетая..."></textarea>
+			<small class="form-text text-muted">Позивните се въвеждат като числа, разделени със запетая.</small>
+		</div>
+	</div>
+
+	<nav class="modal-footer fixed-bottom ui-patrol-editor-actions ui-nomenclature-actions" aria-label="Действия с позивните">
+		<button type="submit" class="btn btn-success"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+		<button type="button" class="btn btn-danger" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+	</nav>
+</form>
 
 <script>
 	onInit();

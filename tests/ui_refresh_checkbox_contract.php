@@ -24,8 +24,8 @@ foreach (array(
     checkboxAssert(strpos($css, $selector) !== false, 'missing checkbox state ' . $selector);
 }
 
-checkboxAssert(strpos($css, 'fa7/regular/check.svg') !== false, 'checked state does not use the FA7 icon');
-checkboxAssert(is_file($root . '/css/fa7/regular/check.svg'), 'FA7 check.svg is missing');
+checkboxAssert(strpos($css, 'fa7/solid/check.svg') !== false, 'checked state does not use the FA7 icon');
+checkboxAssert(is_file($root . '/css/fa7/solid/check.svg'), 'FA7 check.svg is missing');
 
 foreach (array(
     'is_default', 'nMonthTax', 'nUnpaidSingle', 'nLastPaid', 'nObjectFunction',

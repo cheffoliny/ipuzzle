@@ -186,17 +186,15 @@
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
-				<div class="input-group input-group-sm" title="Период...">
-					<div class="input-group-prepend">
-						<i id="editFromDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></i>
+				<div class="input-group input-group-sm ui-calendar-input-period" title="Период...">
+					<div class="ui-calendar-input-field">
+						<span class="ui-calendar-input-icon"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
+						<input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
 					</div>
-					<input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
-					<div class="input-group-prepend">
-						<i class="fas fa-arrows-h"></i>
-					</div>
-					<input type="text" name="sToDate" id="sToDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
-					<div class="input-group-append">
-						<i id="editToDate" class="fas fa-calendar-alt"></i>
+					<span class="ui-calendar-input-separator" aria-hidden="true"><span class="ui-icon ui-icon-exchange"></span></span>
+					<div class="ui-calendar-input-field">
+						<span class="ui-calendar-input-icon"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
+						<input type="text" name="sToDate" id="sToDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
 					</div>
 				</div>
 			</div>

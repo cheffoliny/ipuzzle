@@ -228,7 +228,7 @@
 {/literal}
 
 
-<form name="form1" id="form1" onSubmit="getResult();return false;">
+<form name="form1" id="form1" class="ui-nomenclature-list ui-salary-report ui-salary-total-report" onSubmit="getResult();return false;">
 	<input type="hidden" name="show_filters" id="show_filters" value="show" />
 	<input type="hidden" name="sIDOffices" id="sIDOffices" value="" />
 	<input type="hidden" id="nIDObject" name="nIDObject" value="0" />
@@ -239,12 +239,12 @@
 
 	{include file='tabs_setup_personnel.tpl'}
 
-	<div class="table-secondary">
-		<div class="row justify-content-start pl-3 pb-1 pt-2">
+	<div class="table-secondary ui-salary-report-filters">
+		<div class="row justify-content-start ui-salary-report-toolbar">
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-user" title="Длъжност" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="positions" id="positions"></select>
 				</div>
@@ -252,7 +252,7 @@
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-users" title="Тип" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" id="type" name="type" onchange="onChangeType()">
 						<option value="1"> Служители от... </option>
@@ -263,68 +263,68 @@
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="btn-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-filter fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></i>
+						<span class="ui-icon ui-icon-filter" title="Филтър" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="schemes" id="schemes" ></select>
 					<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 					</button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-						<a class="dropdown-item dropdown-item-menu" name="Button5"	id="b25" title="Нов филтър" 			onClick="openFilter( 1 );" 			>
-							<i class="fas fa-plus"></i> &nbsp; Добави </a>
-						<a class="dropdown-item dropdown-item-menu" name="Button4"	id="b25" title="Редактиране на филтър" 	onClick="openFilter( 2 );"			>
-							<i class="far fa-edit"></i> &nbsp; Редактирай </a>
-						<a class="dropdown-item dropdown-item-menu" name="Button3"	id="b25" title="Премахване на филтър"	onClick="deleteFilter( schemes );"	>
-							<i class="far fa-trash-alt"></i> &nbsp; Изтрий </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button5" id="salaryFilterAdd" title="Нов филтър" onClick="openFilter( 1 ); return false;">
+							<span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button4" id="salaryFilterEdit" title="Редактиране на филтър" onClick="openFilter( 2 ); return false;">
+							<span class="ui-icon ui-icon-edit" aria-hidden="true"></span> Редактирай </a>
+						<a href="#" class="dropdown-item dropdown-item-menu" name="Button3" id="salaryFilterDelete" title="Премахване на филтър" onClick="deleteFilter( schemes ); return false;">
+							<span class="ui-icon ui-icon-delete" aria-hidden="true"></span> Изтрий </a>
 					</div>
 				</div>
 			</div>
 			<div class="col">
 				<div class="btn-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></i>
+						<span class="ui-icon ui-icon-calendar" title="Период" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" size="2" onkeypress="return formatDigits(event);" name="month" id="month" type="number" min="1" max="12" step="1" value="{$month}"/>
 					<input class="form-control" size="4" onkeypress="return formatDigits(event);" name="year" id="year" type="number" min="2016" max="2040" step="1" value="{$year}"/>
 				</div>
 				<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
 					<label class="btn btn-compact btn-light mr-1" title="Фирми" onClick="onClickRadioFirms(); showFilters();">
-						<input type="radio" id="type" name="types" value="rFirms" checked="checked" />
-						<i class="fas fa-tag fa-lg text-primary pt-1 pr-1"></i>
+						<input type="radio" id="reportTypeFirms" name="types" value="rFirms" checked="checked" />
+						<span class="ui-icon ui-icon-tag" aria-hidden="true"></span>
 					</label>
 					<label class="btn btn-compact btn-light mr-1" title="Региони" onClick="onClickRadioRegions(); showFilters();" >
-						<input type="radio" id="type" name="types" value="rRegions" />
-						<i class="fas fa-tags fa-lg text-primary pt-1 pr-1"></i>
+						<input type="radio" id="reportTypeRegions" name="types" value="rRegions" />
+						<span class="ui-icon ui-icon-tags" aria-hidden="true"></span>
 					</label>
 					<label class="btn btn-compact btn-light mr-2" title="Обекти" onClick="onClickRadioObjects(); showFilters();">
-						<input type="radio" id="type" name="types" value="rObjects" />
-						<i class="fas fa-home fa-lg text-primary pt-1 pr-1"></i>
+						<input type="radio" id="reportTypeObjects" name="types" value="rObjects" />
+						<span class="ui-icon ui-icon-home" aria-hidden="true"></span>
 					</label>
 				</div>
 			</div>
 			<div class="col">
 				<div class="input-group input-group-sm">
 
-					<button type="button" class="btn btn-sm btn-primary mr-1" onClick="getResult(2);" name="Button2" id="button2"><i class="far fa-tags"></i> По региони</button>
-					<button type="button" class="btn btn-sm btn-primary mr-1" onClick="getResult(1);" name="Button1" id="button1"><i class="far fa-users"></i> По служители</button>
-					<button type="button"  class="btn btn-sm btn-light mr-2" onClick="showFilters();"><i class="fa fa-compress fa-lg"></i></button>
+					<button type="button" class="btn btn-sm btn-primary mr-1" onClick="getResult(2);" name="Button2" id="button2"><span class="ui-icon ui-icon-tags" aria-hidden="true"></span> По региони</button>
+					<button type="button" class="btn btn-sm btn-primary mr-1" onClick="getResult(1);" name="Button1" id="button1"><span class="ui-icon ui-icon-users" aria-hidden="true"></span> По служители</button>
+					<button type="button" class="btn btn-sm btn-light mr-2" onClick="showFilters();" title="Покажи или скрий филтрите"><span class="ui-icon ui-icon-compress" aria-hidden="true"></span></button>
 				</div>
 			</div>
 		</div>
-		<div id="filters" class="table-responsive pt-2 pb-2 mb-2">
+	<div id="filters" class="table-responsive ui-salary-transfer-panel">
 
-		<div id="filters_center" class="col-4">
+		<div id="filters_center" class="ui-salary-transfer-content">
 			<div id="pFirms">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-tag" title="Фирми" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="all_firms" id="all_firms" style="height: 87px !important;" ondblclick="move_option_to( 'all_firms', 'account_firms', 'right');" multiple></select>
-					<button class="btn btn-sm btn-success py-5" name="button" title="Добави фирма" onClick="move_option_to( 'all_firms', 'account_firms', 'right'); return false;">
-						<i class="far fa-angle-right"></i>
+					<button type="button" class="btn btn-sm btn-success ui-salary-transfer-button" name="button" title="Добави фирма" onClick="move_option_to( 'all_firms', 'account_firms', 'right'); return false;">
+						<span class="ui-icon ui-icon-right" aria-hidden="true"></span>
 					</button>
-					<button class="btn btn-sm btn-danger py-5" name="button" title="Премахни фирма" onClick="move_option_to( 'all_firms', 'account_firms', 'left'); return false;">
-						<i class="far fa-angle-left"></i>
+					<button type="button" class="btn btn-sm btn-danger ui-salary-transfer-button" name="button" title="Премахни фирма" onClick="move_option_to( 'all_firms', 'account_firms', 'left'); return false;">
+						<span class="ui-icon ui-icon-left" aria-hidden="true"></span>
 					</button>
 					<select class="form-control" name="account_firms[]" id="account_firms" style="height: 87px !important;" ondblclick="move_option_to( 'all_firms', 'account_firms', 'left');" multiple></select>
 				</div>
@@ -333,14 +333,14 @@
 			<div id="pRegions">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-tags" title="Региони" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="all_regions" id="all_regions" style="height: 87px !important;"  ondblclick="move_option_to( 'all_regions', 'account_regions', 'right');" multiple></select>
-					<button class="btn btn-sm btn-success py-5" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;">
-						<i class="far fa-angle-right"></i>
+					<button type="button" class="btn btn-sm btn-success ui-salary-transfer-button" name="button" title="Добави регион" onClick="move_option_to( 'all_regions', 'account_regions', 'right'); return false;">
+						<span class="ui-icon ui-icon-right" aria-hidden="true"></span>
 					</button>
-					<button class="btn btn-sm btn-danger py-5" name="button" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;">
-						<i class="far fa-angle-left"></i>
+					<button type="button" class="btn btn-sm btn-danger ui-salary-transfer-button" name="button" title="Премахни регион" onClick="move_option_to( 'all_regions', 'account_regions', 'left'); return false;">
+						<span class="ui-icon ui-icon-left" aria-hidden="true"></span>
 					</button>
 					<select class="form-control" name="account_regions[]" id="account_regions" style="height: 87px !important;" ondblclick="move_option_to( 'all_regions', 'account_regions', 'left');" multiple></select>
 				</div>
@@ -349,16 +349,16 @@
 			<div id="pObjects">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-home" title="Обекти" aria-hidden="true"></span>
 					</div>
 					<input class="form-control suggest inp50" type="number" size="6" min="0" step="1" name="sNum" id="sNum" suggest="suggest" queryParams="sIDOffices" queryType="objByNum" onkeypress="return formatDigits(event);" placeholder="N: обект"/>
 
 					<input class="form-control suggest inp75" type="text" name="sName" id="sName"  suggest="suggest" queryParams="sIDOffices" queryType="objByName" placeholder="Име на обект" />
-					<button class="btn btn-sm btn-success py-5" name="button" title="Добави обект" onClick="addObject()" >
-						<i class="far fa-angle-right"></i>
+					<button type="button" class="btn btn-sm btn-success ui-salary-transfer-button" name="button" title="Добави обект" onClick="addObject()">
+						<span class="ui-icon ui-icon-right" aria-hidden="true"></span>
 					</button>
-					<button class="btn btn-sm btn-danger py-5" name="button" title="Премахни обект" onClick="removeObject()">
-						<i class="far fa-angle-left"></i>
+					<button type="button" class="btn btn-sm btn-danger ui-salary-transfer-button" name="button" title="Премахни обект" onClick="removeObject()">
+						<span class="ui-icon ui-icon-left" aria-hidden="true"></span>
 					</button>
 
 					<select class="form-control" name="account_objects[]" id="account_objects" style="height: 87px !important;" ondblclick="removeObject()" multiple></select>
@@ -373,7 +373,7 @@
 		</div>
 	</div>
 
-	<div id="result"></div>
+	<div id="result" class="ui-salary-report-result"></div>
 
 </form>
 

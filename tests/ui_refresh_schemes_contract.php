@@ -111,6 +111,6 @@ foreach (array('.ui-configuration-dialog', '.ui-nomenclature-type-dialog', '.ui-
 }
 
 schemesAssert(strpos($icons, '.ui-icon-tag') !== false, 'tag icon mapping is missing');
-schemesAssert(is_file($root . '/css/fa7/regular/tag.svg'), 'tag SVG asset is missing');
+schemesAssert(is_file($root . '/css/fa7/solid/tag.svg'), 'tag SVG asset is missing');
 
 echo 'UI_REFRESH_SCHEMES=PASS' . PHP_EOL;

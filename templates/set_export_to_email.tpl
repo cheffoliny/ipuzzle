@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function onInit() {
 			loadXMLDoc2('load');
@@ -31,8 +32,8 @@
 		
 		<tr>
 			<td colspan="2" align="right" style="padding-top: 10px; padding-right: 10px;">
-				<button onclick="save(); return false;"><img src="images/confirm.gif">Запиши</button>
-				<button onclick="window.close();"><img src="images/cancel.gif">Затвори</button>
+					<button onclick="save(); return false;" class="ui-final-action"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>
+					<button onclick="window.close();" class="ui-final-action"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	

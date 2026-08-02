@@ -99,7 +99,7 @@ foreach (array('.ui-organization-dialog', '.ui-nomenclature-transfer', '.ui-nome
 
 organizationAssert(strpos($icons, '.ui-icon-up') !== false, 'up icon class is missing');
 organizationAssert(strpos($icons, '.ui-icon-down') !== false, 'down icon class is missing');
-organizationAssert(is_file($root . '/css/fa7/regular/chevron-up.svg'), 'up icon asset is missing');
-organizationAssert(is_file($root . '/css/fa7/regular/chevron-down.svg'), 'down icon asset is missing');
+organizationAssert(is_file($root . '/css/fa7/solid/chevron-up.svg'), 'up icon asset is missing');
+organizationAssert(is_file($root . '/css/fa7/solid/chevron-down.svg'), 'down icon asset is missing');
 
 echo 'UI_REFRESH_ORGANIZATION=PASS' . PHP_EOL;

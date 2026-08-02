@@ -174,7 +174,7 @@
 
 	<hr>
 	
-	<div id="result" class="ui-monitor-result ui-live-monitor-result" style="width: 800px; height: 380px; overflow: auto;" >
+	<div id="result" class="ui-monitor-result ui-live-monitor-result">
 		<table class="result" id="okoto" >
 			<tr>
 				<th style="width: 130px;" >час</th>

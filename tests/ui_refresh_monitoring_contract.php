@@ -73,6 +73,7 @@ monitoringAssert(strpos($sources['states_filter_totals.tpl'], "loadXMLDoc2('save
 monitoringAssert(strpos($sources['object_monitor.tpl'], 'onclick="stopStart();"') !== false, 'live monitor toggle action changed');
 monitoringAssert(strpos($sources['object_monitor.tpl'], "onclick=\"monitor('once');\"") !== false, 'live monitor refresh action changed');
 monitoringAssert(strpos($sources['object_monitor.tpl'], 'ui-live-monitor-result') !== false, 'live monitor result sizing marker is missing');
+monitoringAssert(strpos($sources['object_monitor.tpl'], 'style="width: 800px; height: 380px;') === false, 'live monitor retains fixed inline result dimensions');
 monitoringAssert(substr_count($sources['object_monitor.tpl'], '</th>') === 6, 'live monitor table headers are malformed');
 
 foreach (array('view_states.tpl', 'patruls_movement.tpl') as $filterTemplate) {
@@ -97,10 +98,10 @@ foreach (array(
 $icons = file_get_contents($root . '/css/ui-fa7-icons.css');
 monitoringAssert(strpos($icons, '.ui-icon-monitor') !== false, 'monitor icon mapping is missing');
 monitoringAssert(strpos($icons, 'radar.svg') !== false, 'monitor icon asset mapping changed');
-monitoringAssert(is_file($root . '/css/fa7/regular/radar.svg'), 'monitor icon asset is missing');
+monitoringAssert(is_file($root . '/css/fa7/solid/radar.svg'), 'monitor icon asset is missing');
 
 $page = file_get_contents($root . '/templates/page.tpl');
-monitoringAssert(strpos($page, 'css/ui-fa7-icons.css?version=4') !== false, 'FA7 icon cache version is stale');
-monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=14') !== false, 'monitor stylesheet cache version is stale');
+monitoringAssert(strpos($page, 'css/ui-fa7-icons.css?version=16') !== false, 'FA7 icon cache version is stale');
+monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'monitor stylesheet cache version is stale');
 
 echo 'UI_REFRESH_MONITORING=PASS' . PHP_EOL;

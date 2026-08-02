@@ -1,34 +1,24 @@
 <div class="content">
-	<form action="page.php?page=import_salary_gsm" method="POST" name="form1" enctype="multipart/form-data" onsubmit="">
+	<form action="page.php?page=import_salary_gsm" method="POST" name="form1" class="ui-nomenclature-dialog ui-salary-import-dialog" enctype="multipart/form-data">
 		<input type="hidden" name="MAX_FILE_SIZE" value="2097152">
 		<input type="hidden" name="page" value="import_salary">
 		
 		<div class="page_caption">Импортиране на фактура МТЕЛ</div>
-		</br>
-		<table class="input">
-			<tr class="even">
-				<td>За месец</td>
-				<td>
-					Г&nbsp;
-					<input style="width:40px; text-align:right" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>&nbsp;&nbsp;
-					М&nbsp;
-					<input style="width:30px; text-align:right" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;&nbsp;
-				</td>
-			</tr>
-			<tr class="edd">
-				<td width="220">Файл</td>
-				<td><input id="browse_file" name="browse_file" type="file" class="fixed" size="30"></td>
-			</tr>
-		</table>
-		</br>
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
+		<div class="ui-salary-import-body">
+			<div class="ui-salary-import-period">
+				<label for="year"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span> Година</label>
+				<input onkeypress="return formatDigits(event);" name="year" id="year" type="number" min="2007" max="2050" value="{$year}" required>
+				<label for="month">Месец</label>
+				<input onkeypress="return formatDigits(event);" name="month" id="month" type="number" min="1" max="12" value="{$month}" required>
+			</div>
+			<label class="ui-salary-import-field" for="browse_file">
+				<span class="ui-salary-import-label"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span> Файл с фактура</span>
+				<input id="browse_file" name="browse_file" type="file" class="fixed" required>
+			</label>
+		</div>
+		<div class="ui-nomenclature-actions ui-salary-import-actions">
+			<button type="submit" class="search"><span class="ui-icon ui-icon-file-import" aria-hidden="true"></span> Импортирай</button>
+			<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+		</div>
 	</form>
 </div>

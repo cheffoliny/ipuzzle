@@ -11,7 +11,7 @@ if (in_array(false, array($css, $page, $xmlrpc), true)) {
 }
 
 $checks = array(
-    strpos($page, 'css/ui-refresh-dialogs.css?version=1') !== false,
+    strpos($page, 'css/ui-refresh-dialogs.css?version=2') !== false,
     strpos($css, 'body.ui-refresh-content .modal-content') !== false,
     strpos($css, 'body.ui-refresh-content .modal-header') !== false,
     strpos($css, 'body.ui-refresh-content .modal-header .close') !== false,

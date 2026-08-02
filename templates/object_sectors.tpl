@@ -3,8 +3,14 @@
         rpc_debug = true;
         rpc_html_debug = true;
 		
-		function submit_form() {
-			loadXMLDoc( 'save', 0 );
+		function runSectorAction(action) {
+			rpc_on_exit = function(errorCode) {
+				rpc_on_exit = function() {};
+				if (!errorCode) {
+					loadXMLDoc2('result');
+				}
+			};
+			loadXMLDoc2(action);
 		}
 
         function editSector(id) {
@@ -16,7 +22,7 @@
         function deleteSector(id) {
             if ( confirm('Наистина ли желаете да премахнете сектора?') ) {
                 $('nIDSector').value = id;
-                loadXMLDoc2('delete', 1);
+                runSectorAction('delete');
             }
         }
 
@@ -27,6 +33,12 @@
         }
 
         function ServiceStatus() {
+			rpc_on_exit = function(errorCode) {
+				rpc_on_exit = function() {};
+				if (!errorCode) {
+					window.location.reload(true);
+				}
+			};
 
             if(intval(jQuery('#isService').val()) )
             {
@@ -38,18 +50,13 @@
                 //пускаме го в сервизен
                 loadXMLDoc2('setServiceStatus');
             }
-
-            rpc_on_exit = function() {
-                window.location.reload( true );
-            }
-
         }
 
 	</script>
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-sod-list ui-object-sectors ui-sod-list-screen" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
     <input type="hidden" id="nIDObject" name="nIDObject" value="{$nIDObj}"	/>
     <input type="hidden" id="nIDSector" name="nIDSector" value="0" />
@@ -58,17 +65,15 @@
 
     {include file="object_tabs.tpl"}
 
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" ></div>
+    <div id="result" class="ui-object-result ui-object-sod-result ui-sod-list-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 
-    <nav class="navbar fixed-bottom flex-row mb-0 py-0 navbar-expand-lg py-md-1" id="search">
-        <div class="col-6 col-sm-8 col-lg-8" title="">
-        </div>
-        <div class="col-6 col-sm-4 col-lg-4">
-            <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-success mr-1" onClick="editSector(0);"><i class="fa fa-plus"></i> Добави</button>
-                <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+    <nav class="navbar fixed-bottom ui-object-actions ui-object-sod-actions ui-sod-list-actions" id="search" aria-label="Действия със сектори">
+            <div class="input-group input-group-sm">
+                {if $edit.object_messages_edit}
+                <button type="button" class="btn btn-sm btn-success mr-1" onClick="editSector(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
+                {/if}
+                <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
             </div>
-        </div>
     </nav>
     <div id="NoDisplay" style="display:none"></div>
 </form>
@@ -77,9 +82,4 @@
 <script>
     loadXMLDoc2('result');
 
-    {if !$edit.object_messages_edit}{literal}
-    if ( form=document.getElementById('form1') ) {
-        for(i=0;i<form.elements.length-1;i++) form.elements[i].setAttribute('disabled','disabled');
-    }{/literal}
-    {/if}
 </script>

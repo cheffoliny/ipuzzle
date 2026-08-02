@@ -24,7 +24,7 @@
 			{
 				
 				$oAsset = new DBAssets();
-				$aIDs=$oAsset->getSubAssetsIDs($nID);
+				$aIDs = (array) $oAsset->getSubAssetsIDs($nID);
 				if(count($aIDs)){
 					for($i=0;$i<count($aIDs);$i++){
 					array_push( $aId22,$aIDs[$i]["id"]);

@@ -170,15 +170,15 @@
                 paging: "off"
             }));
             RpcResultRenderer.render(reportXml, techRequestContainer, RpcResultRenderer.getOptions(techRequestContainer, {
-                profile: RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_request.xsl"),
+                profile: RpcResultRenderer.getProfile("techPlanningRequest"),
                 resultArea: "tech_request_result"
             }));
             RpcResultRenderer.render(scheduleXml, techScheduleContainer, RpcResultRenderer.getOptions(techScheduleContainer, {
-                profile: RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_schedule.xsl"),
+                profile: RpcResultRenderer.getProfile("techPlanningSchedule"),
                 resultArea: "tech_schedule_result"
             }));
             RpcResultRenderer.render(limitCardPersonsXml, limitCardPersonsContainer, RpcResultRenderer.getOptions(limitCardPersonsContainer, {
-                profile: RpcResultRenderer.getStylesheetProfile("xsl/limit_card_persons.xsl"),
+                profile: RpcResultRenderer.getProfile("limitCardPersons"),
                 resultArea: "limit_card_persons_result"
             }));
 
@@ -205,11 +205,11 @@
                 if (assert(name, condition)) { passed++; }
             }
 
-            check("general_result.xsl се разпознава", RpcResultRenderer.isGeneralResultStylesheet("xsl/general_result.xsl"));
-            check("специализиран XSL не се прихваща", !RpcResultRenderer.isGeneralResultStylesheet("xsl/person_schedule.xsl"));
-            check("tech_planning_request.xsl се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedStylesheet("xsl/tech_planning_request.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_request.xsl") === "techPlanningRequest");
-            check("tech_planning_schedule.xsl се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedStylesheet("xsl/tech_planning_schedule.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/tech_planning_schedule.xsl") === "techPlanningSchedule");
-            check("limit_card_persons.xsl се обслужва без browser XSLT", RpcResultRenderer.isSupportedStylesheet("xsl/limit_card_persons.xsl") && RpcResultRenderer.getStylesheetProfile("xsl/limit_card_persons.xsl") === "limitCardPersons");
+            check("general профилът се разпознава", RpcResultRenderer.isSupportedProfile("general") && RpcResultRenderer.getProfile("general") === "general");
+            check("непознат профил не се прихваща", !RpcResultRenderer.isSupportedProfile("unknown"));
+            check("techPlanningRequest се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedProfile("techPlanningRequest") && RpcResultRenderer.getProfile("techPlanningRequest") === "techPlanningRequest");
+            check("techPlanningSchedule се обслужва от специализиран DOM profile", RpcResultRenderer.isSupportedProfile("techPlanningSchedule") && RpcResultRenderer.getProfile("techPlanningSchedule") === "techPlanningSchedule");
+            check("limitCardPersons се обслужва от DOM renderer", RpcResultRenderer.isSupportedProfile("limitCardPersons") && RpcResultRenderer.getProfile("limitCardPersons") === "limitCardPersons");
             check("атрибутът rpc_excel_panel=off има приоритет", offOptions.excelPanel === "off");
             check("boolean false за rpc_autonumber се запазва", booleanOptions.autonumber === false);
             check("rpc_prefix се чете от текущия result контейнер", probeOptions.prefix === "probe_");

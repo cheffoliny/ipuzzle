@@ -18,7 +18,7 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-support" onsubmit="return false;">
 <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 <input type="hidden" id="nIDSupport" name="nIDSupport" value="0" />
 
@@ -50,19 +50,13 @@
 	{*{/if}*}
 {*{/if}*}
 	
-	<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" class="w-100 h-100" style="overflow-x: auto; overflow-y: auto; !important"></div>
+	<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" class="w-100 h-100 ui-object-result" style="overflow-x: auto; overflow-y: auto;"></div>
 
-	</div>
- 	<!-- край на работната част -->
-	</td>
-</tr>
-</table>
-
-	<div id="search" class="navbar fixed-bottom flex-row navbar-expand-lg">
+	<div id="search" class="navbar fixed-bottom flex-row navbar-expand-lg ui-object-actions">
 		<div class="col ">
 		</div>
 		<div class="col text-right py-2">
-			<button id="b100" class="btn btn-sm btn-danger" onClick="window.close();"><i class="fa fa-times"></i> Затвори </button>
+			<button type="button" class="btn btn-sm btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 		</div>
 </div>
 

@@ -111,7 +111,7 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-duty-dialog" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-core ui-object-duty-dialog" onsubmit="return false;">
 <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 <input type="hidden" id="sAct" name="sAct" value="cur" />
 <input type="hidden" id="nTime" name="nTime" value="0" />
@@ -119,8 +119,8 @@
 
 	{include file='object_tabs.tpl'}
 
-	<div class="container-fluid mb-4" id="filter_result">
-		<table class="page_data">
+	<div class="container-fluid ui-object-duty-content" id="filter_result">
+		<table class="page_data ui-object-duty-toolbar">
 			<tr>
 				<td style="text-align: left; padding: 2px;">
 
@@ -138,11 +138,11 @@
 				</td>
 			</tr>
 		</table>
-		<div class="row clearfix mt-2 h-75" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
+		<div class="ui-object-result ui-object-duty-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 
 	</div>
 
-	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg ui-object-actions ui-object-duty-actions" id="search">
 		<div class="col-6 pl-0">
 			<div class="input-group input-group-sm">
 				<button type="button" class="btn btn-sm btn-primary mr-1" onClick="dutyNext('prev');"><span class="ui-icon ui-icon-left" aria-hidden="true"></span> Предишна </button>

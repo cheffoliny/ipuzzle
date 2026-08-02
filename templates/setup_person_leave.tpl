@@ -1,6 +1,7 @@
 {literal}
     <script>
         rpc_debug = true;
+        rpc_html_debug = true;
 
 
         var onLoad = function () {
@@ -127,8 +128,8 @@
 {/if}
 <dlcalendar click_element_id="btnResCalendar" input_element_id="sLeaveFrom" tool_tip="Изберете дата"
             id="dlCalendarForLeaveRes"></dlcalendar>
-<form method="POST" name="form1" id="form1" onsubmit="return false;">
-    <div class="modal-content pb-3">
+<form method="POST" name="form1" id="form1" class="ui-person-editor ui-person-leave-editor" onsubmit="return false;">
+    <div class="modal-content ui-person-editor-content">
         <div class="modal-header">
             {if $nID}Редакция на{else}Молба за новa{/if} отпуска {if $nID}№ <input type="text" id="nLeaveNum" class="transparent"/>{/if}
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="parent.window.close();">
@@ -153,7 +154,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <i class="fa fa-user-circle fa-fw"  data-fa-transform="right-22 down-10" title="Служител"></i>
+                                <span class="ui-icon ui-icon-user" aria-hidden="true" title="Служител"></span>
                                     </div>
                                     <input type="text" title="Служител" placeholder="Служител" name="sPersonName" id="sPersonName" class="form-control"  readonly="readonly" />
                                 </div>
@@ -165,7 +166,7 @@
                             <div class="col">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <i class="fa fa-refresh fa-fw"  data-fa-transform="right-22 down-10" title="Заместник"></i>
+                                <span class="ui-icon ui-icon-refresh" aria-hidden="true" title="Заместник"></span>
                                     </div>
                                     <select class="form-control"
                                             title="Заместник"
@@ -197,7 +198,7 @@
                             <div class="col">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <i class="fa fa-calendar-day fa-fw"  data-fa-transform="right-22 down-10" title="Брой дни"></i>
+                                        <span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Брой дни"></span>
                                     </div>
                                     <input class="form-control" type="text" title="Дни" placeholder="Дни" name="nApplicationDaysOffer" id="nApplicationDaysOffer" value="1" />
                                 </div>
@@ -208,7 +209,7 @@
                             <div class="col">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <i class="fa fa-tag fa-fw"  data-fa-transform="right-22 down-10" title="Брой дни"></i>
+                                    <span class="ui-icon ui-icon-tag" aria-hidden="true" title="Тип отпуск"></span>
                                     </div>
                                     <select class="form-control"
                                             title="Тип"
@@ -232,26 +233,23 @@
                         <div class="row">
                             <div class="col">
                                 <div class="input-group input-group-sm">
-                                    <div class="input-group-prepend">
-                                        <i class="fa fa-tag fa-fw"  data-fa-transform="right-22 down-10" title="Брой дни"></i>
-                                    </div>
                                     <input type="text" title="От" placeholder="От" name="sLeaveFromOffer" id="sLeaveFromOffer" readonly class="form-control" />
-                                    <span class="input-group-append"  id="leaveFromBtn"><i class="far fa-calendar-alt"></i></span>
+                                    <span class="input-group-append ui-person-date-trigger" id="leaveFromBtn"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
                                 </div>
                                 {*<label>От</label>*}
                                 {*<div class="input-group">*}
                                 {*<input type="text" class="form-control input-sm" id="sLeaveFromOffer"*}
                                 {*name="sLeaveFromOffer"*}
                                 {*readonly>*}
-                                {*<span class="input-group-append"  id="leaveFromBtn"><i class="far fa-calendar-alt"></i></span>*}
+                                {* Старият календарен trigger е заменен от ui-person-date-trigger. *}
                             </div>
                             <div class="col">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <i class="fa fa-calendar-check-o fa-fw"  data-fa-transform="right-22 down-10" title="Брой дни"></i>
+                                    <span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Година"></span>
                                     </div>
                                     <select class="form-control" title="Година" id="forYear" name="forYear"></select>
-                                    <span class="input-group-append"><i class="far fa-calendar-alt"></i></span>
+                                    <span class="input-group-append ui-person-date-trigger"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
                                 </div>
                             </div>
                             <div class="col-6"></div>
@@ -259,7 +257,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button id="saveLeave" type="submit" class="btn btn-sm btn-success float-right">Запази</button>
+                            <button id="saveLeave" type="submit" class="btn btn-sm btn-success float-right"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази</button>
                         </div>
                     </div>
             </fieldset>
@@ -288,10 +286,8 @@
                     <div class="form-group resolution-section">
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control" id="sLeaveFrom" name="sLeaveFrom">
-                            <span class="input-group-append">
-                                <i class="far fa-calendar-alt"
-                                   id="btnResCalendar">
-                                </i>
+                            <span class="input-group-append ui-person-date-trigger" id="btnResCalendar">
+                                <span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
                             </span>
                         </div>
                     </div>
@@ -299,11 +295,11 @@
                 <div class="col">
                     {if $bRightResolute}
                         <button type="button" class="btn btn-sm btn-success float-right" style="display: none;" id="saveResLeave">
-                            <i class="far fa-check"></i> Потвърди
+                            <span class="ui-icon ui-icon-check" aria-hidden="true"></span> Потвърди
                         </button>
                     {/if}
                     <button type="button" class="btn btn-sm btn-info float-right mx-1" style="display: none;" id="printLeave">
-                        <i class="far fa-print "></i> Печат
+                        <span class="ui-icon ui-icon-print" aria-hidden="true"></span> Печат
                     </button>
                 </div>
             </div>

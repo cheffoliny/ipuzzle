@@ -502,6 +502,7 @@ class ApiSetupPersonLeave
         $_SESSION['leave_tmp']['id'] = $nID;
         $_SESSION['leave_tmp']['id_person'] = $nIDPerson;
 
+        $oResponse->printResponse();
     }
 
     public function saveFlex(DBResponse $oResponse)

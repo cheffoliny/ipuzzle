@@ -42,7 +42,7 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-salary-report ui-personal-card-salary-report" onsubmit="return false;">
 <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 <input type="hidden" id="idc" name="idc" value="0" />
 <input type="hidden" id="sAct" name="sAct" value="1" />
@@ -58,7 +58,7 @@
 	<td id="filter_result">
 	<!-- начало на работната част -->
 	<center>
-		<table class="search" width="100%">
+		<table class="search ui-salary-legacy-filter" width="100%">
 			<tr>
 				<td align="center"></td>
 			
@@ -69,13 +69,13 @@
 					<input style="width:30px; text-align:right" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;&nbsp;
 				</td>
 				<td align="center" style="width: 100px;">
-					<button type="button" onClick="formSubmit(1); return false;" name="Button"><img src="images/confirm.gif">Подробна</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="formSubmit(1); return false;" name="Button"><span class="ui-icon ui-icon-list" aria-hidden="true"></span> Подробна</button>
 				</td>
 				<td align="center" style="width: 100px;">
-					<button type="button" onClick="formSubmit(2); return false;" name="Button"><img src="images/confirm.gif">Обобщена</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="formSubmit(2); return false;" name="Button"><span class="ui-icon ui-icon-layout" aria-hidden="true"></span> Обобщена</button>
 				</td>
 				<td align="center" style="width: 100px;">
-					<button type="button" onClick="formSubmit(3); return false;" name="Button"><img src="images/confirm.gif">Обекти</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="formSubmit(3); return false;" name="Button"><span class="ui-icon ui-icon-home" aria-hidden="true"></span> Обекти</button>
 				</td>
 			</tr>
 
@@ -91,7 +91,7 @@
 </tr>
 </table>
 
-	<div id="result"  rpc_excel_panel="on" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
+	<div id="result" class="ui-salary-report-result" rpc_excel_panel="on" rpc_paging="off" rpc_resize="on"></div>
 
 <div id="NoDisplay" style="display:none"></div>
 </form>

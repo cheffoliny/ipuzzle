@@ -42,9 +42,9 @@
 			rpc_on_exit = function()
 			{
 				var text = $('result').innerHTML;
-				text = text.replace( /btns/g, "<button onclick=\"" );
+				text = text.replace( /btns/g, "<button type=\"button\" class=\"btn btn-sm btn-success\" onclick=\"" );
 				text = text.replace( /btnm/g, "\" " );
-				text = text.replace( /btne/g, "><img src=\"images/confirm.gif\">Прехвърли</button>" );
+				text = text.replace( /btne/g, "><span class=\"ui-icon ui-icon-check\" aria-hidden=\"true\"></span> Прехвърли</button>" );
 				$('result').innerHTML = text;
 			}
 			
@@ -88,26 +88,26 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
-	<table class="page_data">
+<form action="" name="form1" id="form1" class="ui-salary-report ui-salary-vouchers-report" onSubmit="return false;">
+	<table class="page_data ui-salary-report-heading">
 		<tr>
 			<td class="page_name">Работни Заплати - Ваучери</td>
 		</tr>
 	</table>
 	
 	<center>
-		<table class="input" style="width: 800px;">
+		<table class="input ui-salary-voucher-filter">
 			<tr>
 				<td align="right">Фирма:&nbsp;</td>
 				<td align="left">
-					<select id="nIDFirm" name="nIDFirm" class="select200" onchange="loadXMLDoc2( 'loadOffices' );"/>
+					<select id="nIDFirm" name="nIDFirm" class="select200" onchange="loadXMLDoc2( 'loadOffices' );"></select>
 				</td>
 				
 				<td>&nbsp;</td>
 				
 				<td align="right">Регион:&nbsp;</td>
 				<td align="left">
-					<select id="nIDOffice" name="nIDOffice" class="select200" onchange="loadXMLDoc2( 'loadObjects' );"/>
+					<select id="nIDOffice" name="nIDOffice" class="select200" onchange="loadXMLDoc2( 'loadObjects' );"></select>
 				</td>
 				
 				<td colspan="2">&nbsp;</td>
@@ -116,7 +116,7 @@
 			<tr>
 				<td align="right">Обект:&nbsp;</td>
 				<td align="left">
-					<select id="nIDObject" name="nIDObject" style="width: 350px;" />
+					<select id="nIDObject" name="nIDObject"></select>
 				</td>
 				
 				<td>&nbsp;</td>
@@ -131,7 +131,7 @@
 				<td>&nbsp;</td>
 				
 				<td align="right">
-					<button onclick="getResult();" name="Button"><img src="images/confirm.gif"> Търси </button>
+					<button type="button" class="btn btn-sm btn-primary" onclick="getResult();" name="Button"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси </button>
 				</td>
 			</tr>
 		</table>
@@ -139,7 +139,7 @@
 	
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-salary-report-result"></div>
 </form>
 
 {literal}

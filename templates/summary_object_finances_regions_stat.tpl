@@ -1,7 +1,5 @@
-<form id="form1" action="">
-	<center>
-		<div style="width: 720px; height: 500px; overflow: auto;" />
-			{$sOutput}
-		</div>
-	</center>
+<form id="form1" class="ui-finance-summary-stat" action="">
+	<div class="ui-finance-summary-stat-content">
+		{$sOutput}
+	</div>
 </form>

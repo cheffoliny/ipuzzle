@@ -111,7 +111,7 @@
 
 	rpc_debug = true;
 	rpc_method = 'post';
-	rpc_xsl = 'xsl/person_schedule.xsl';
+	rpc_renderer_profile = 'personSchedule';
 	rpc_html_debug = true;
 	
 	function onChangeFirm()

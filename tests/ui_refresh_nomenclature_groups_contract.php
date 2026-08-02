@@ -60,11 +60,14 @@ foreach ($dialogs as $template => $fields) {
 }
 
 $troubles = file_get_contents($root . '/templates/object_troubles.tpl');
-nomenclatureGroupsAssert(strpos($troubles, 'class="ui-object-troubles"') !== false, 'object troubles marker is missing');
+nomenclatureGroupsAssert(strpos($troubles, 'ui-object-core ui-object-troubles') !== false, 'object troubles marker is missing');
 nomenclatureGroupsAssert(strpos($troubles, 'rpc_excel_panel="off"') !== false, 'object troubles Excel panel setting changed');
 nomenclatureGroupsAssert(strpos($troubles, 'rpc_paging="on"') !== false, 'object troubles paging setting changed');
 nomenclatureGroupsAssert(strpos($troubles, 'rpc_resize="off"') !== false, 'object troubles resize setting changed');
-nomenclatureGroupsAssert(strpos($troubles, 'height: 400px') !== false, 'object troubles working height changed');
+nomenclatureGroupsAssert(strpos($troubles, 'ui-object-troubles-result') !== false, 'object troubles flexible result marker is missing');
+nomenclatureGroupsAssert(strpos($troubles, 'height: 400px') === false, 'object troubles retains a fixed working height');
+nomenclatureGroupsAssert(substr_count($troubles, 'id="search"') === 0, 'object troubles retains duplicate search ids');
+nomenclatureGroupsAssert(preg_match('/\.ui-object-troubles-result\s*\{[^}]*max-height:\s*none\s*!important/s', $css) === 1, 'object troubles result is still constrained by legacy max-height');
 nomenclatureGroupsAssert(strpos($troubles, 'images/glyphicons/tech.png') === false, 'object troubles technical icon was not migrated');
 nomenclatureGroupsAssert(strpos($troubles, 'images/glyphicons/cancel.png') === false, 'object troubles close icon was not migrated');
 

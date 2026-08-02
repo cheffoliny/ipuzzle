@@ -1,6 +1,7 @@
 <script>
 {literal}
 	rpc_debug = true;
+	rpc_html_debug = true;
 	
 	function openPPP( id )
 	{
@@ -100,15 +101,16 @@
 		</div>
         <div class="row py-1">
             <div class="col">
-                <div class="input-group input-group-sm" title="Период на стартиране на обекта">
-                    <div class="input-group-prepend">
-                        <span id="editFromDate" id="editToDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></span>
+                <div class="input-group input-group-sm ui-calendar-input-period" title="Период на стартиране на обекта">
+                    <div class="ui-calendar-input-field">
+                        <span class="ui-calendar-input-icon"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
+                        <input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
                     </div>
-                    <input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
-                    <input type="text" name="sToDate" id="sToDate" class="form-control input-group-addon" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
-                    {*<div class="input-group-append-r">*}
-                    {*<span id="editToDate" class="fa fa-calendar-plus-o" title="Край на периода"></span>*}
-                    {*</div>*}
+                    <span class="ui-calendar-input-separator" aria-hidden="true"><span class="ui-icon ui-icon-exchange"></span></span>
+                    <div class="ui-calendar-input-field">
+                        <span class="ui-calendar-input-icon"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></span>
+                        <input type="text" name="sToDate" id="sToDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
+                    </div>
                 </div>
             </div>
             <div class="col">

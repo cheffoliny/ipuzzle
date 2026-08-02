@@ -396,7 +396,7 @@
 										<input type="text" name="client_eik" id="client_eik" style="width:210px;" suggest="suggest" queryType="client" queryParams="client_eik">
 									</td>
 									<td style="width: 20px; text-align: center;">
-										&nbsp;&nbsp;<img src="images/history.gif" style="cursor: hand;" onclick="openClient();" title="Картон на клиент" border="0">
+										&nbsp;&nbsp;<span class="ui-icon ui-icon-document ui-clickable-icon" role="button" tabindex="0" onclick="openClient();" title="Картон на клиент"></span>
 									</td>
 								</tr>
 							</tbody>
@@ -446,7 +446,7 @@
 									</td>
 									
 									<td style="width: 20px; text-align: center;">
-										&nbsp;&nbsp;<img src="images/history.gif" style="cursor: hand;" onclick="openObject();" border="0" title="Картон на обект" />&nbsp;&nbsp;
+										&nbsp;&nbsp;<span class="ui-icon ui-icon-document ui-clickable-icon" role="button" tabindex="0" onclick="openObject();" title="Картон на обект"></span>&nbsp;&nbsp;
 									</td>
 									
 									<td>
@@ -518,7 +518,7 @@
 				</table>
 				</fieldset>
 				<span style="font-weight:normal;vertical-align:4px;width:65px;">до&nbsp;месец:</span>
-				<img src="images/mleft.gif" onclick="nextMonth('prev');" style="cursor:pointer;">
+				<span class="ui-icon ui-icon-left ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('prev');" title="Предходен месец"></span>
 				<input 
 					style="width:50px;" 
 					id="dateM" 
@@ -530,10 +530,10 @@
 					title="ММ.ГГГГ" 
 					value={$smarty.now|date_format:'%m.%Y'}
 				/>
-				<img src="images/mright.gif" onclick="nextMonth('next');" style="cursor:pointer;">
+				<span class="ui-icon ui-icon-right ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('next');" title="Следващ месец"></span>
 				<span style="width:40px;">&nbsp;</span>
-				<button id="button_search" onclick="formSubmit();">
-					<img id="search_image" src="images/confirm.gif">Търси
+				<button id="button_search" class="ui-final-action" onclick="formSubmit();">
+					<span id="search_image" class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси
 				</button>
 			</td>
 		</tr>
@@ -542,11 +542,11 @@
 	<table class="input" border="0">
 		<tr>
 			<td>
-				<div id="result" rpc_resize="off" rpc_excel_panel="off" rpc_paging="off" style="height:330px;overflow:auto;"></div>
+				<div id="result" class="ui-final-result" rpc_resize="off" rpc_excel_panel="off" rpc_paging="off" style="height:330px;overflow:auto;"></div>
 			</td>
 		</tr>
 	</table>
-	<table class="input">
+	<table class="input ui-final-actions">
 		<tr>
 			<td>
 				<div id="buttons">

@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 
 		InitSuggestForm = function() {
 			for(var i = 0; i < suggest_elements.length; i++) {
@@ -264,8 +265,8 @@
 
 				<div class="w-100 pb-1">
 					<div class="input-group input-group-sm">
-						<div class="input-group-prepend">
-							<span class="fas fa-clock fa-fw" data-fa-transform="right-22 down-10" title="Задача" id="imgPlannedStart" title="Планиран старт"></span>
+						<div class="input-group-prepend" id="imgPlannedStart" title="Планиран старт">
+							<span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
 						</div>
 						<input type="text" name="sPlannedStartH" id="sPlannedStartH" class="form-control" readonly onkeypress="return formatTime(event);" maxlength="5" title="Планиран старт" placeholder="Планиран час" readonly="readonly" disabled="disabled" />
 						<input type="text" name="sPlannedStart" id="sPlannedStart" class="form-control" readonly onkeypress="return formatDate(event, '.');" maxlength="10" title="Планиран старт" placeholder="Планиран старт" readonly="readonly" disabled="disabled" />

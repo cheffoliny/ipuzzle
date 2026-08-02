@@ -1,7 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
-		rpc_xsl = "xsl/tech_planning_schedule.xsl";
+		rpc_renderer_profile = "techPlanningSchedule";
 			
 		function onInit() {
 			$('pMonth').style.display = "none";

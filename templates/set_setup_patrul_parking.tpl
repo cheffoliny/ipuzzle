@@ -1,63 +1,48 @@
 {literal}
 <script>
-	//rpc_debug = true;
-	
+	rpc_debug = true;
+	rpc_html_debug = true;
+
+	function saveParking() {
+		loadXMLDoc2('save', 3);
+	}
 </script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2('save', 3)">
-		<input type="hidden" id="nID" name="nID" value="{$nID}">
-	
-		<div class="page_caption">{if $nID}Редакция на{else}Нова{/if} стоянка</div>
+<form action="" method="POST" name="form1" id="form1" class="ui-patrol-editor ui-patrol-parking-editor" onsubmit="saveParking(); return false;">
+	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}">
 
-		<table class="input">
-			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-			<tr class="even">
-				<td width="100">Наименование:</td>
-				<td>
-					<input type="text" name="sName" id="sName" style="width: 240px;" />
-				</td>
-			</tr>
-			<tr class="odd">
-				<td width="100">Фирма:</td>
-				<td>
-					<select name="nIDFirm" id="nIDFirm" style="width: 240px;" onchange="loadXMLDoc2('loadOffices')"></select>
-				</td>
-			</tr>
-			<tr class="even">
-				<td width="100">Регион:</td>
-				<td>
-					<select name="nIDOffice" id="nIDOffice" style="width: 240px;" ></select>
-				</td>
-			</tr>
-			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-		</table>
-		
-		<fieldset>
-			<legend>Допълнителна информация</legend>
-			<table class="input">
-				<tr class="even">
-					<td align="center">
-						<textarea name="sDescription" id="sDescription" style="width: 325px; height: 80px;" /></textarea>
-					</td>
-				</tr>
-				<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-			</table>
-		</fieldset>
-		
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-		
-	</form>
-</div>
+	<div class="modal-content ui-patrol-editor-content">
+		<div class="modal-header">
+			<strong>{if $nID}Редакция на{else}Нова{/if} стоянка</strong>
+			<button type="button" class="close" onclick="parent.window.close();" aria-label="Затвори">×</button>
+		</div>
+
+		<div class="modal-body ui-patrol-editor-body">
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-name" aria-hidden="true" title="Наименование"></span></div>
+				<input type="text" name="sName" id="sName" class="form-control" placeholder="Наименование на стоянката..." />
+			</div>
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-building" aria-hidden="true" title="Фирма"></span></div>
+				<select name="nIDFirm" id="nIDFirm" class="form-control" onchange="loadXMLDoc2('loadOffices')"></select>
+			</div>
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-location" aria-hidden="true" title="Регион"></span></div>
+				<select name="nIDOffice" id="nIDOffice" class="form-control"></select>
+			</div>
+			<label class="ui-patrol-field-label" for="sDescription">
+				<span class="ui-icon ui-icon-info" aria-hidden="true"></span> Допълнителна информация
+			</label>
+			<textarea name="sDescription" id="sDescription" class="form-control ui-patrol-description" placeholder="Описание..."></textarea>
+		</div>
+	</div>
+
+	<nav class="modal-footer fixed-bottom ui-patrol-editor-actions" aria-label="Действия със стоянката">
+		<button type="submit" class="btn btn-success"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+		<button type="button" class="btn btn-danger" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+	</nav>
+</form>
 
 <script>
 	loadXMLDoc2('load');

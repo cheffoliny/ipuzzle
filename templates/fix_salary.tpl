@@ -3,33 +3,23 @@
 </script>
 
 <div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2('save', 2)">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-salary-import-dialog ui-fix-salary-dialog" onsubmit="loadXMLDoc2('save', 2); return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		
 		<div class="page_caption">Добавяне на фиксирани заплати</div>
-		<br />
-
-		<table class="input">
-			<tr class="odd">
-			<td align="center">
-					Год
-					<input style="width:40px; text-align:right" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>&nbsp;&nbsp;
-					Мес
-					<input style="width:30px; text-align:right" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;&nbsp;
-				</td>
-			</tr>
-		</table>
-		
-		<br />
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
+		<div class="ui-salary-import-body">
+			<div class="ui-salary-import-period">
+				<label for="year"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span> Година</label>
+				<input onkeypress="return formatDigits(event);" name="year" id="year" type="number" min="2007" max="2050" value="{$year}" required>
+				<label for="month">Месец</label>
+				<input onkeypress="return formatDigits(event);" name="month" id="month" type="number" min="1" max="12" value="{$month}" required>
+			</div>
+			<p class="ui-salary-import-note"><span class="ui-icon ui-icon-info" aria-hidden="true"></span> Ще бъдат преизчислени фиксираните и минималните заплати за избрания период.</p>
+		</div>
+		<div class="ui-nomenclature-actions ui-salary-import-actions">
+			<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+			<button type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+		</div>
 		
 	</form>
 </div>

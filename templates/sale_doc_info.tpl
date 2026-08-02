@@ -360,7 +360,7 @@
 	<table style="width:100%;" border="0">
 		<tr>
 			<td valign="top">
-				<div id="result" rpc_resize="off" rpc_excel_panel="off" style="height:115px;overflow:auto;"></div>
+				<div id="result" class="ui-finance-document-result" rpc_resize="off" rpc_excel_panel="off"></div>
 			</td>
 		</tr>
 	</table>

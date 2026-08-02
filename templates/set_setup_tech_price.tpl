@@ -28,7 +28,7 @@
 				<td>
 					<input type="text" name="sPriceListDate" id="sPriceListDate" class="inp100" onkeypress="return formatDate(event, '.');" />
 					&nbsp;
-					<span id="editPriceListDate" class="ui-icon ui-icon-calendar ui-inline-calendar-trigger" role="button" tabindex="0" title="Изберете дата" aria-label="Изберете дата"></span>
+					<button type="button" id="editPriceListDate" class="ui-inline-calendar-trigger" title="Изберете дата" aria-label="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 		</table>

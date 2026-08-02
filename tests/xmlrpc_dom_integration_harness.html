@@ -5,7 +5,7 @@
     <title>XMLRPC DOM integration harness</title>
     <script>
         var bowser = { msie: false };
-        var xslRequests = 0;
+        var stylesheetRequests = 0;
         var apiRequests = 0;
         var debugWrites = [];
 
@@ -52,8 +52,8 @@
         };
         MockXMLHttpRequest.prototype.send = function () {
             if (this.url.indexOf(".xsl") !== -1) {
-                xslRequests++;
-                throw new Error("General report attempted to load XSL");
+                stylesheetRequests++;
+                throw new Error("DOM report attempted to load a stylesheet");
             }
 
             apiRequests++;
@@ -85,17 +85,17 @@
         rpc_debug = true;
         var unsupportedProfile = window.location.search.indexOf("unsupported=1") !== -1;
         if (unsupportedProfile) {
-            rpc_xsl = "xsl/object_storage.xsl";
+            rpc_renderer_profile = "unsupported";
         } else if (window.location.search.indexOf("person_schedule=1") !== -1) {
-            rpc_xsl = "xsl/person_schedule.xsl";
+            rpc_renderer_profile = "personSchedule";
         } else if (window.location.search.indexOf("limit_card_persons=1") !== -1) {
-            rpc_xsl = "xsl/limit_card_persons.xsl";
+            rpc_renderer_profile = "limitCardPersons";
         } else if (window.location.search.indexOf("tech_planning_schedule=1") !== -1) {
-            rpc_xsl = "xsl/tech_planning_schedule.xsl";
+            rpc_renderer_profile = "techPlanningSchedule";
         } else if (window.location.search.indexOf("tech_planning_request=1") !== -1) {
-            rpc_xsl = "xsl/tech_planning_request.xsl";
+            rpc_renderer_profile = "techPlanningRequest";
         } else {
-            rpc_xsl = "xsl/general_result.xsl";
+            rpc_renderer_profile = "general";
         }
         rpc_on_exit = function () {};
 
@@ -104,11 +104,11 @@
 
             var resultText = document.getElementById("result").textContent;
             var rendered = unsupportedProfile
-                ? resultText.indexOf("No DOM renderer profile is registered for xsl/object_storage.xsl.") !== -1
+                ? resultText.indexOf("No DOM renderer profile is registered for unsupported.") !== -1
                 : resultText.indexOf("Интеграционен тест") !== -1;
             var noExport = document.querySelectorAll("#result_foother button").length === 0;
             var noPaging = !document.getElementById("paging");
-            var noXsl = xslRequests === 0;
+            var noStylesheetRequest = stylesheetRequests === 0;
             var oneApi = apiRequests === 1;
             var debugOutput = debugWrites.join("");
             var requestPosition = debugOutput.indexOf("Request to:");
@@ -117,16 +117,16 @@
             var rawResponseLogged = debugOutput.indexOf("&lt;response&gt;") !== -1;
             var debugOrder = requestPosition !== -1 && responsePosition > requestPosition && processPosition > responsePosition;
             var domErrorLogged = !unsupportedProfile || debugOutput.indexOf("DOM renderer error:") !== -1;
-            var passed = rendered && noExport && noPaging && noXsl && oneApi && rawResponseLogged && debugOrder && domErrorLogged;
+            var passed = rendered && noExport && noPaging && noStylesheetRequest && oneApi && rawResponseLogged && debugOrder && domErrorLogged;
             var summary = document.getElementById("summary");
 
             summary.className = passed ? "pass" : "fail";
             summary.textContent = (passed ? "PASS" : "FAIL") +
-                ": profile=" + RpcResultRenderer.getStylesheetProfile(rpc_xsl) +
+                ": profile=" + RpcResultRenderer.getProfile(rpc_renderer_profile) +
                 ": rendered=" + rendered +
                 ", noExport=" + noExport +
                 ", noPaging=" + noPaging +
-                ", noXsl=" + noXsl +
+                ", noStylesheetRequest=" + noStylesheetRequest +
                 ", apiRequests=" + apiRequests +
                 ", rawXmlDebug=" + rawResponseLogged +
                 ", debugBeforeProcessing=" + debugOrder +

@@ -22,13 +22,13 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" class="ui-object-troubles" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-troubles" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDTrouble" name="nIDTrouble" value="0" />
 
-<table class="search ui-object-troubles-shell" style="width:100%;">
+<table class="search ui-object-troubles-shell">
 	<tr>
-		<td class="header_buttons" style="height: 33px;">
+		<td class="header_buttons">
 		<span id="head_window">Проблеми при обект {$object}</span> 
 		</td>
 	</tr>
@@ -42,7 +42,7 @@
 			<tr>
 			<td style="width: 280px; text-align: left; padding: 2px;">
 			
-				<div class="input-group" style="width: 270px;">
+				<div class="input-group">
 					<span class="input-group-addon-warning" title="Неотстранени"><span class="ui-icon ui-icon-settings" aria-hidden="true"></span></span>
 					<select id="sTroubleType" name="sTroubleType" class="inp150 form-control" onChange="load();">
 						<option value="all">Всички</option>
@@ -64,22 +64,13 @@
 	
 	<hr>
 	
-{if $mobile}
-	{if $cnt>6}
-		<div id="search" style="padding-top: 10px; width: 800px; height: 220px; overflow-y: auto">
-	{else}
-		<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto">
-	{/if}
-		</div>
-{/if}
-	
-	<div id="result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off" style="padding: 1px; width: 100%; height: 400px; overflow: auto !important;"></div>	
+	<div id="result" class="ui-object-result ui-object-troubles-result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off"></div>
  	<!-- край на работната част -->
 	</td>
 </tr>
 </table>
 
-<div id="search" class="ui-object-troubles-actions" style="padding-top:10px;width:800px;">
+<div class="fixed-bottom ui-object-troubles-actions ui-object-actions">
 	<table class="page_data ui-nomenclature-actions" >
 		<tr>
 			<td style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
@@ -87,8 +78,8 @@
 			</td>
 			<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
 				
-				<button class="btn btn-xs btn-success" onClick="editTrouble(0);" title="Докладвай проблем към обекта"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Проблем</button>
-				<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+				<button type="button" class="btn btn-xs btn-success" onClick="editTrouble(0);" title="Докладвай проблем към обекта"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Проблем</button>
+				<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
 			</td>
 		</tr>
 	</table>

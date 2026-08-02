@@ -15,8 +15,11 @@ $page = file_get_contents($root . '/templates/page.tpl');
 $css = file_get_contents($root . '/css/ui-fa7-icons.css');
 $map = legacyIconMap();
 
-fa7Assert(strpos($page, 'css/ui-fa7-icons.css?version=4') !== false, 'FA7 icon stylesheet is not loaded');
+fa7Assert(strpos($page, 'css/ui-fa7-icons.css?version=16') !== false, 'FA7 icon stylesheet is not loaded');
 fa7Assert(strpos($css, '-webkit-mask-image: var(--ui-icon-source)') !== false, 'SVG icons are not color-aware masks');
+fa7Assert(strpos($css, 'fa7/solid/') !== false, 'FA7 solid icon package is not used');
+fa7Assert(strpos($css, 'fa7/regular/') === false, 'FA7 regular icon reference remains active');
+fa7Assert(strpos($css, '.ui-icon-chart') !== false, 'chart icon mapping is missing');
 
 foreach (array_unique(array_values($map)) as $icon) {
     $class = '.ui-icon-' . $icon;
@@ -27,9 +30,9 @@ foreach (array(
     'plus.svg', 'magnifying-glass.svg', 'pen-to-square.svg', 'trash-can.svg',
     'check.svg', 'xmark.svg', 'chevron-left.svg', 'chevron-right.svg',
     'floppy-disk.svg', 'copy.svg', 'filter.svg', 'calendar.svg',
-    'file-pdf.svg', 'rotate.svg', 'gear.svg',
+    'file-pdf.svg', 'file-export.svg', 'right-left.svg', 'rotate.svg', 'gear.svg',
 ) as $asset) {
-    fa7Assert(is_file($root . '/css/fa7/regular/' . $asset), 'missing FA7 asset ' . $asset);
+    fa7Assert(is_file($root . '/css/fa7/solid/' . $asset), 'missing FA7 asset ' . $asset);
 }
 
 $accessTemplates = array(

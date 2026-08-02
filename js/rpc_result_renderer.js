@@ -119,47 +119,20 @@
         };
     }
 
-    function isGeneralResultStylesheet(stylesheet) {
-        return /(^|\/)general_result\.xsl(?:[?#].*)?$/i.test(stylesheet || "");
+    var supportedProfiles = {
+        general: true,
+        techPlanningRequest: true,
+        techPlanningSchedule: true,
+        limitCardPersons: true,
+        personSchedule: true
+    };
+
+    function getProfile(profile) {
+        return supportedProfiles[profile] ? profile : null;
     }
 
-    function isTechPlanningRequestStylesheet(stylesheet) {
-        return /(^|\/)tech_planning_request\.xsl(?:[?#].*)?$/i.test(stylesheet || "");
-    }
-
-    function isTechPlanningScheduleStylesheet(stylesheet) {
-        return /(^|\/)tech_planning_schedule\.xsl(?:[?#].*)?$/i.test(stylesheet || "");
-    }
-
-    function isLimitCardPersonsStylesheet(stylesheet) {
-        return /(^|\/)limit_card_persons\.xsl(?:[?#].*)?$/i.test(stylesheet || "");
-    }
-
-    function isPersonScheduleStylesheet(stylesheet) {
-        return /(^|\/)person_schedule\.xsl(?:[?#].*)?$/i.test(stylesheet || "");
-    }
-
-    function getStylesheetProfile(stylesheet) {
-        if (isGeneralResultStylesheet(stylesheet)) {
-            return "general";
-        }
-        if (isTechPlanningRequestStylesheet(stylesheet)) {
-            return "techPlanningRequest";
-        }
-        if (isTechPlanningScheduleStylesheet(stylesheet)) {
-            return "techPlanningSchedule";
-        }
-        if (isLimitCardPersonsStylesheet(stylesheet)) {
-            return "limitCardPersons";
-        }
-        if (isPersonScheduleStylesheet(stylesheet)) {
-            return "personSchedule";
-        }
-        return null;
-    }
-
-    function isSupportedStylesheet(stylesheet) {
-        return getStylesheetProfile(stylesheet) !== null;
+    function isSupportedProfile(profile) {
+        return getProfile(profile) !== null;
     }
 
     function setRequestId(id) {
@@ -1326,10 +1299,8 @@
 
     global.RpcResultRenderer = {
         getOptions: getOptions,
-        getStylesheetProfile: getStylesheetProfile,
-        isGeneralResultStylesheet: isGeneralResultStylesheet,
-        isPersonScheduleStylesheet: isPersonScheduleStylesheet,
-        isSupportedStylesheet: isSupportedStylesheet,
+        getProfile: getProfile,
+        isSupportedProfile: isSupportedProfile,
         render: render
     };
 }(window));

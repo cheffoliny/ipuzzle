@@ -1,5 +1,6 @@
 <script>
 	rpc_debug = true;
+	rpc_html_debug = true;
 </script>
 
 <form action="" name="form1" id="form1" class="ui-nomenclature-list ui-assets-report ui-assets-average-report" onSubmit="return false;">

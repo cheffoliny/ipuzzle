@@ -2,72 +2,38 @@
 <script>
 	rpc_debug = true;
 
-	function getResize() {
-		var sheight = (document.body.clientHeight)-80;
-
-		$('result').style.height = sheight;
-	}	
 </script>
 {/literal}
 
-<dlcalendar click_element_id="sFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
-<dlcalendar click_element_id="sToDate" 	input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
+<dlcalendar click_element_id="editFromDate" input_element_id="sFromDate" tool_tip="Изберете дата"></dlcalendar>
+<dlcalendar click_element_id="editToDate" input_element_id="sToDate" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-finance-summary-report ui-firm-balances-report" onSubmit="return false;">
 
 	{include file='finance_operations_tabs.tpl'}
 
-	<div>
-		<div class="row justify-content-start pl-3 py-2 table-secondary">
-			<div class="col-5 col-sm-5 col-lg-4">
-				<div class="input-group input-group-sm" title="Период...">
-					<div class="input-group-prepend">
-						<span id="editFromDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></span>
-					</div>
+	<div class="ui-finance-summary-filters">
+		<div class="row justify-content-start table-secondary ui-finance-summary-toolbar">
+			<div class="col-12 col-md-8 col-lg-5">
+				<div class="input-group input-group-sm ui-finance-summary-period" title="Период...">
+					<button type="button" id="editFromDate" class="ui-finance-date-trigger" title="Начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 					<input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
-					<div class="input-group-prepend">
-						<i class="fas fa-arrows-h"></i>
-					</div>
-					<input type="text" name="sToDate" id="sToDate" class="form-control input-group-addon" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
-					<div class="input-group-append">
-						<i id="editToDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="" ></i>
-					</div>
+					<span class="ui-finance-date-separator"><span class="ui-icon ui-icon-exchange" aria-hidden="true"></span></span>
+					<input type="text" name="sToDate" id="sToDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
+					<button type="button" id="editToDate" class="ui-finance-date-trigger" title="Крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</div>
 			</div>
-			<div class="col-5 col-sm-5 col-lg-2 pl-0">
+			<div class="col-12 col-md-4 col-lg-2">
 				<div class="btn-group input-group-sm">
-					<button class="btn btn-sm btn-primary" type="button" name="Button" onClick="loadXMLDoc2( 'result' );"><i class="fa fa-search fa-lg"></i> Търси &nbsp;</button>
-
-				</div>
-			</div>
-			<div class="col-0 col-sm-0 col-lg-2">
-				<div class="input-group input-group-sm">
-
-				</div>
-			</div>
-			<div class="col-1 col-sm-1 col-lg-2">
-				<div class="input-group input-group-sm">
-
-				</div>
-			</div>
-			<div class="col-1 col-sm-1 col-lg-2 pl-0">
-				<div class="btn-group input-group-sm">
-
-				</div>
-			</div>
-			<div class="col-0 col-sm-0 col-lg-2 pl-3">
-				<div class="input-group input-group-sm">
-
+					<button class="btn btn-sm btn-primary" type="button" name="Button" onClick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="result" rpc_paging="off" rpc_resize="off" style="overflow: auto;" ></div>
+	<div id="result" class="ui-finance-summary-result" rpc_paging="off" rpc_resize="off"></div>
 </form>
 
 <script>
-	getResize();
-
 	loadXMLDoc2( 'result' );
 </script>

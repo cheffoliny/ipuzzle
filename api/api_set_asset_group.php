@@ -84,11 +84,12 @@
 				$nBr=$nBr-1;
 			}
 			
-		public function update()
+		public function update( DBResponse $oResponse )
 		{
 			$aParams = Params::getAll();
 			$oDB =new DBAssetsGroups();
 			$oDB->update($aParams);
+			$oResponse->printResponse();
 		}
 	}
 

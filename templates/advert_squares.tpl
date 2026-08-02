@@ -2,6 +2,7 @@
 	<script>
 	
 		rpc_debug = true;
+		rpc_html_debug = true;
 		rpc_autonumber = "off";
 		
 		function addAdvertSquare()
@@ -69,7 +70,7 @@
 		<table width="100%">
 			<tr>
 				<td align="right">
-					{if $right_edit}<button onclick="addAdvertSquare();"><img src="images/plus.gif"> Добави </button>{/if}
+			{if $right_edit}<button onclick="addAdvertSquare();" class="ui-final-action"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>{/if}
 				</td>
 			</tr>
 		</table>

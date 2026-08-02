@@ -1,33 +1,26 @@
+{literal}
 <script>
-	rpc_debug=true;
-	
-	{literal}
-		function viewPPP(id)
-		{
-			dialogAssetsPPP(id);
-		}
-	{/literal}
-</script>
-<form id="form1" name="form1" onsubmit="return false">
+	rpc_debug = true;
+	rpc_html_debug = true;
 
-	<input type="hidden" id="nID" name="nID" value="{$nID}" />
-	
-	<div class="page_caption">ППП за актив №{$nID} </div>
-	
-	 <table  cellspacing="0" cellpadding="0" width="100%"  border="0" id="filter" >
-  		<tr>
-  			<td>
-  				{include file="asset_info_tabs.tpl"}
-  				<br>
-  			</td>
-  		</tr>
-  	</table>
-	
-	<div id="result">
-	
-	</div>
-	
+	function viewPPP(id) {
+		dialogAssetsPPP(id);
+	}
+</script>
+{/literal}
+
+<form id="form1" name="form1" class="ui-asset-subview ui-asset-ppp-subview" onsubmit="return false;">
+	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
+
+	<header class="ui-asset-subview-heading">
+		<h1><span class="ui-icon ui-icon-document" aria-hidden="true"></span> ППП за актив №{$nID|default:0}</h1>
+	</header>
+
+	{include file="asset_info_tabs.tpl"}
+
+	<div id="result" class="ui-asset-subview-result"></div>
 </form>
+
 <script>
 	loadXMLDoc2('result');
 </script>

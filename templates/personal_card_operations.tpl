@@ -1,7 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
-		//rpc_html_debug = true;
+		rpc_html_debug = true;
 	
 		function onInit() {
 			$('id_person').value = parent.$('nID').value;
@@ -97,7 +97,7 @@
 	
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-personal-card-subview ui-personal-card-operations" onsubmit="return false;">
 	<input type="hidden" name="id_person" id="id_person" value="0">
 	<input type="hidden" name="id_log_person" id="id_log_person" value="{$nIDLogPerson|default:0}">
 	<input type="hidden" name="nIDLimitCard" id="nIDLimitCard" value="{$nIDLimitCard|default:0}">
@@ -106,38 +106,34 @@
 	<input type="hidden" name="sRealEnd" id="sRealEnd" value="{$sRealEnd}">
 	<input type="hidden" name="nIDLimitCardOperation" id="nIDLimitCardOperation" value="0">
 	
-	<table  cellspacing="0" cellpadding="0" style="width:400px;height:100%" border="0" id="filter" >
-		<tr>
-			<td colspan="2" height="30px;">{include file="personal_card_tabs2.tpl}</td>
-		</tr>
-		<tr>
-			{if $nIDLimitCard}
-			<td height="30px;">
-				<button onclick="saveOperations();">Запази</button>
-			</td>
+	{include file="personal_card_tabs2.tpl"}
+
+	{if $nIDLimitCard}
+		<div class="ui-personal-card-toolbar" role="toolbar" aria-label="Операции по лимитна карта">
+			<button type="button" class="btn btn-success" onclick="saveOperations();">
+				<span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази
+			</button>
 			{if $sTechRequstType != 'contract'}
-			<td align="left" height="30px;">
-				<button onclick="editOperation(0);"><img src="images/plus.gif"> Добави </button>
-			</td>
+				<button type="button" class="btn btn-primary" onclick="editOperation(0);">
+					<span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави
+				</button>
 			{/if}
-			{/if}
-		</tr>
-		<tr>
-			<td colspan="2" valign="top" >
-				<div style="width:390px;height:150px;" rpc_excel_panel="off" rpc_resize="off" rpc_paging="off" rpc_autonumber="off" id="result"></div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" height="30px;" align="right" >
-				<input type="text" name="sEarningLimitCard" id="sEarningLimitCard" style="font-weight:bold;width:100%;text-align:left;" class="clear" readonly>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" height="30px;" align="right" >
-				<input type="text" name="sEarning" id="sEarning" style="font-weight:bold;color:#569457;width:100%;text-align:left;" class="clear" readonly>
-			</td>
-		</tr>
-	</table>
+		</div>
+	{/if}
+
+	<div class="ui-personal-card-result"
+		rpc_excel_panel="off"
+		rpc_resize="off"
+		rpc_paging="off"
+		rpc_autonumber="off"
+		id="result"></div>
+
+	<div class="ui-personal-card-summary">
+		<label for="sEarningLimitCard">Начисление по лимитна карта</label>
+		<input type="text" name="sEarningLimitCard" id="sEarningLimitCard" class="form-control" readonly>
+		<label for="sEarning">Общо начисление</label>
+		<input type="text" name="sEarning" id="sEarning" class="form-control ui-personal-card-summary-total" readonly>
+	</div>
 	
 </form>
 

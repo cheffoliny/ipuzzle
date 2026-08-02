@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		//var my_action = '';
 				
 		function roundNumber(num, dec) {
@@ -268,7 +269,7 @@
 
 
 <div id="mainDiv" name="mainDiv">
-	<form name="form1" id="form1" onsubmit="return false;">
+	<form name="form1" id="form1" class="ui-person-detail ui-person-data-detail" onsubmit="return false;">
 		<input type="hidden" id="id" name="id" value="{$id|default:0}" />
 		<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 		<input type="hidden" id="idc" name="idc" value="0" />
@@ -298,19 +299,19 @@
 					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служителя е зачислен към </div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Фирма..."></span>
+							<span class="ui-icon ui-icon-building" aria-hidden="true" title="Фирма..."></span>
 						</div>
 						<select class="form-control" name="nIDFirm" id="nIDFirm" onChange="formChange('firm');" ></select>
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="Регион..."></span>
+							<span class="ui-icon ui-icon-location" aria-hidden="true" title="Регион..."></span>
 						</div>
 						<select class="form-control" name="nIDOffice" id="nIDOffice" ></select>
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="fa fa-mailbox fa-fw" data-fa-transform="right-22 down-10" title="Име..."></span>
+							<span class="ui-icon ui-icon-home" aria-hidden="true" title="Обект..."></span>
 						</div>
 						<input class="form-control" name="obj" type="text" id="obj" suggest="suggest" queryType="obj" queryParams="id_firm;nIDOffice" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" />
 					</div>
@@ -319,13 +320,13 @@
 					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Длъжност </div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="far fa-badge-check fa-fw" data-fa-transform="right-22 down-10" title="Семейно положение..."></span>
+							<span class="ui-icon ui-icon-id-card" aria-hidden="true" title="Длъжност по НКПД..."></span>
 						</div>
 						<select class="form-control" name="nPositionNKID" id="nPositionNKID" ></select>
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="far fa-badge-check fa-fw" data-fa-transform="right-22 down-10" title="IBAN..."></span>
+							<span class="ui-icon ui-icon-user" aria-hidden="true" title="Длъжност..."></span>
 						</div>
 						<input class="form-control" name="position" id="position" type="text" suggest="suggest" queryType="position" queryParams="id_position" onchange="onPositionChange()" onpast="onPositionChange()" />
 					</div>
@@ -334,20 +335,20 @@
 					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2"> Служебни данни </div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend" id="img_date_in">
-							<span class="fa fa-calendar-check fa-fw" data-fa-transform="right-22 down-10" title="Дата на постъпване"></span>
+							<span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Дата на постъпване"></span>
 						</div>
 						<input class="form-control" type="text" name="date_in" id="date_in" onkeypress="return formatDate(event, '.');" maxlength="10" title="Дата на постъпване [ДД.ММ.ГГГГ]" />
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend" id="img_date_out">
-							<span class="fa fa-calendar-times fa-fw" data-fa-transform="right-22 down-10" title="Дата на напускане"></span>
+							<span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Дата на напускане"></span>
 						</div>
 						<input class="form-control" type="text" name="date_out" id="date_out" onkeypress="return formatDate(event, '.');" maxlength="10" title="Дата на напускане [ДД.ММ.ГГГГ]" />
 						<input class="form-control bg-dark ml-1 pr-0" name="length_service" type="text" id="length_service" maxlength="3" onkeypress="return formatNumber(event);" title="Прослужено време..." readonly/>
 					</div>
 					<div class="input-group input-group-sm mb-1">
 						<div class="input-group-prepend">
-							<span class="fa fa-toggle-off fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+							<span class="ui-icon ui-icon-toggle" aria-hidden="true" title="Състояние"></span>
 						</div>
 						<select class="form-control" id="status" name="status" >
 							<option value="active">активен</option>
@@ -368,15 +369,15 @@
 			<div class="row mt-2">
 				<div class="col">
 					<div class="input-group input-group-sm mb-1 text-white bg-dark p-2">История на назначенията</div>
-					<div class="w-100" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 160px; overflow: auto;"></div>
+					<div class="w-100 ui-person-detail-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 				</div>
 			</div>
 		</div>
-		<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
+		<nav class="navbar fixed-bottom ui-person-detail-actions" id="search" aria-label="Действия със служебните данни">
 			<div class="col text-right p-2">
 
-					<button class="btn btn-sm btn-success mr-1"	onClick="return submit_form();" ><i class="fas fa-check" ></i> Запиши </button>
-					<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
+					{if $personnel_edit}<button class="btn btn-sm btn-success mr-1" onClick="return submit_form();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>{/if}
+					<button class="btn btn-sm btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
 
 			</div>
 		</nav>
@@ -473,9 +474,16 @@
 
 <script>
 	loadXMLDoc('result');
-	{if !$personnel_edit}
-		
-		if( form=document.getElementById('form1') )  
-			for(i=0;i<form.elements.length-1;i++) form.elements[i].setAttribute('disabled','disabled');
-	{/if}	
 </script>
+
+{if !$personnel_edit}
+{literal}
+<script>
+	var form = document.getElementById('form1');
+	if (form) {
+		var fields = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
+		for (var i = 0; i < fields.length; i++) fields[i].setAttribute('disabled', 'disabled');
+	}
+</script>
+{/literal}
+{/if}

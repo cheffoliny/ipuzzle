@@ -89,15 +89,15 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-personnel" onsubmit="return false;">
 
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	
-	<table class="search" style="width:100%;">
+	<table class="search ui-object-personnel-shell">
 		<tr>
 			<td class="header_buttons">
 			<span id="head_window">Служители в обект {$object}</span> 
-				<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>
+				<button type="button" class="btn btn-xs btn-primary ui-object-personnel-service" onClick="techSupport();"><span class="ui-icon ui-icon-wrench" aria-hidden="true"></span> Oбслужване</button>
 				{include file="object_tabs.tpl"}
 			</td>
 		</tr>
@@ -105,30 +105,21 @@
 		<tr class="odd">
 			<td id="filter_result">
 				
-			{if $mobile}
-				{if $cnt>6}
-					<div id="search" style="padding-top: 10px; width: 800px; height: 275px; overflow-y: auto">
-				{else}
-					<div id="search" style="padding-top: 10px; width: 800px; height: 290px; overflow-y: auto">
-				{/if}
-			{/if}
-			
-			
-			<table class="page_data">
+			<table class="page_data ui-object-personnel-toolbar">
 			<!-- начало на работната част -->
 			
 				<tr>
 					<td style="text-align: left; padding: 2px;">
 						<div class="input-group">
 							<span class="input-group-addon">
-							<i class="far fa-user"></i></span>
-							<input type="text" id="nPersonCode" name="nPersonCode" style="width: 100px; text-align: right;" suggest="suggest" queryType="suggestFreeObjectPerson" onkeypress="formatDigits( event )" maxlength="12" />
-							<input type="text" id="sPersonName" name="sPersonName" style="width: 200px" suggest="suggest" queryType="suggestFreeObjectPerson" />
+							<span class="ui-icon ui-icon-user" aria-hidden="true"></span></span>
+							<input type="text" id="nPersonCode" name="nPersonCode" class="ui-object-personnel-code" suggest="suggest" queryType="suggestFreeObjectPerson" onkeypress="formatDigits( event )" maxlength="12" />
+							<input type="text" id="sPersonName" name="sPersonName" class="ui-object-personnel-name" suggest="suggest" queryType="suggestFreeObjectPerson" />
 							
 						</div>		
 					</td>
 					<td style="text-align: right; padding-right: 2px;">
-						<button id="b100" class="btn btn-xs btn-success" onClick="addPerson()"><i class="fa fa-plus"></i> Добави</button>
+						<button type="button" class="btn btn-xs btn-success" onClick="addPerson()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
 					</td>
 				</tr>
 		  </table>
@@ -136,30 +127,20 @@
 		
 		<hr>
 	
-		<div id="result" rpc_excel_panel="off" rpc_resize="off" style="width: 780px; height: 360px;overflow: auto;"></div>
-	
-		</div>
+		<div id="result" class="ui-object-result ui-object-personnel-main-result" rpc_excel_panel="off" rpc_resize="off"></div>
 	 	<!-- край на работната част -->
 		</td>
 	</tr>
 </table>
 
-	{if $mobile}
-		{if $cnt>6}
-			<div id="search" style="padding-top: 10px; width: 800px; height: 220px; overflow-y: auto">
-		{else}
-			<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto">
-		{/if}
-	{/if}
-		
-	<div id="search"  style="padding-top:10px;width:800px;">
-		<table class="page_data" >
+	<div id="search" class="fixed-bottom ui-object-actions ui-object-personnel-actions">
+		<table class="page_data ui-nomenclature-actions" >
 			<tr valign="top">
 				<td valign="top" style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
 					&nbsp;
 				</td>
 				<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
-					<button id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори</button>
+					<button type="button" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
 				</td>
 			</tr>
 		</table>
@@ -174,6 +155,5 @@
 		if ( form=document.getElementById('form1') ) {
 			for(i=0;i<form.elements.length-1;i++) form.elements[i].setAttribute('disabled','disabled');
 		}{/literal}
-	{/if}	
+	{/if}
 </script>
-	

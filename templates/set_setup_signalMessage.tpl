@@ -3,7 +3,12 @@
 	rpc_debug = true;
 
 	function testSignal(obj) {
-		var test 	= obj.options[obj.selectedIndex].id.split(',');
+		if (!obj || obj.selectedIndex < 0 || !obj.options[obj.selectedIndex]) {
+			return;
+		}
+
+		var optionMeta = obj.options[obj.selectedIndex].id || '';
+		var test 	= optionMeta.split(',');
 		var notTest = document.getElementById('nIDTest');
         var isZone  = document.getElementById('is_zone');
         var isSector= document.getElementById('is_sector');
@@ -11,22 +16,22 @@
 		var sAlarm 	= document.getElementById('sAlarmName');
 		var sRest 	= document.getElementById('sRestoreName');
 		
-		document.getElementById('is_test').value = test[0];
+		document.getElementById('is_test').value = test[0] || 0;
 
-		if ( test[0] == 1 ) {
+		if ( test[0] == '1' ) {
 			notTest.disabled = false;
-            isZone.style.display = 'none';
-            isSector.style.display = 'none';
+            isZone.closest('.ui-message-toggle').style.display = 'none';
+            isSector.closest('.ui-message-toggle').style.display = 'none';
         } else {
 			notTest.value = 0;
 			notTest.disabled = true;
-            isZone.style.display = 'block';
-            isSector.style.display = 'block';
+            isZone.closest('.ui-message-toggle').style.display = 'inline-flex';
+            isSector.closest('.ui-message-toggle').style.display = 'inline-flex';
 		}
 
 		if ( nID == 0 ) {
-			sAlarm.value = test[1];
-			sRest.value = test[2];
+			sAlarm.value = test[1] || '';
+			sRest.value = test[2] || '';
 		}
 	}
 	
@@ -39,25 +44,18 @@
 		var cid1 = document.getElementById('sIDAlarmRadio');
 		var cid2 = document.getElementById('sIDRestoreRadio');
 
-		var rCode1 = $('sIDSignalAlarm').value;
-		var rCode2 = $('sIDSignalRest').value;
-		
+		if (!obj) {
+			return;
+		}
+
 		if ( (obj.value == 'phone') || (obj.value == 'cid') ) {
 			span1.style.display = 'none';
 			span2.style.display = 'block';
 			span3.style.display = 'none';
 			span4.style.display = 'block';
 			
-			//if (obj.value == 'cid') {
-				cid1.disabled = false;
-				cid2.disabled = false;
-			//} else {
-			//	cid1.disabled = false;
-			//	cid2.disabled = false;
-				
-			//	cid1.value = rCode1;
-			//	cid2.value = rCode2;
-			//}
+			cid1.disabled = false;
+			cid2.disabled = false;
 		} else {
 			span1.style.display = 'block';
 			span2.style.display = 'none';
@@ -68,13 +66,17 @@
 		}
 
 	}
-	
+
+	function syncSignalMessageForm() {
+		testRadio(document.getElementById('sIDChannel'));
+		testSignal(document.getElementById('nIDSignal'));
+	}
 
 </script>
 {/literal}
 
-<form action="" method="POST" name="form1" id="form1" onsubmit="loadXMLDoc2( 'save', 3 ); return false">
-    <div class="modal-content pb-3">
+<form action="" method="POST" name="form1" id="form1" class="ui-message-dialog" onsubmit="loadXMLDoc2( 'save', 3 ); return false;">
+    <div class="modal-content ui-message-dialog-content">
         <div class="modal-header">
             <h6 class="modal-title text-white" id="exampleModalLabel">{if $nID}Редакция на{else}Добавяне на{/if} сигнал</h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="parent.window.close();">
@@ -82,7 +84,7 @@
             </button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body ui-message-dialog-body">
 
             <input type="hidden" id="nID" name="nID" value="{$nID}"					/>
             <input type="hidden" id="nIDObject" name="nIDObject" value="{$nIDObj}"	/>
@@ -93,7 +95,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fa fa-signal fa-fw" data-fa-transform="right-22 down-10" title="Избери сигнал..."></span>
+                            <span class="ui-icon ui-icon-signal" aria-hidden="true" title="Избери сигнал..."></span>
                         </div>
                         <select class="form-control" name="nIDSignal" id="nIDSignal" onChange="testSignal(this);" title="Избери сигнал..."></select>
                     </div>
@@ -104,7 +106,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fa fa-random fa-fw" data-fa-transform="right-22 down-10" title="Избери канал за комуникация..."></span>
+                            <span class="ui-icon ui-icon-exchange" aria-hidden="true" title="Избери канал за комуникация..."></span>
                         </div>
                         <select class="form-control" name="sIDChannel" id="sIDChannel" onChange="testRadio(this);" >
                             <option value="cid"	 >Комуникация - CID</option>
@@ -119,7 +121,7 @@
                 <div class="col-12 pl-1 mt-3" id="selAlarm1" name="selAlarm1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend top-20 left-10 z-1" title="Алармиращ код...">
-                            <i class="far fa-bell fa-fw" data-fa-transform="right-22 down-10" title="Алармиращ код..."></i>
+                            <span class="ui-icon ui-icon-bell" aria-hidden="true" title="Алармиращ код..."></span>
                         </div>
                         <select class="form-control" name="sIDSignalAlarm" id="sIDSignalAlarm" >
                             <option value="0">Изберете</option>
@@ -173,7 +175,7 @@
                 <div class="col-12 pl-1 mt-3" id="selAlarm2" name="selAlarm2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend top-20 left-10 z-1" title="Алармиращ код...">
-                            <i class="far fa-bell fa-fw" data-fa-transform="right-22 down-10" title="Алармиращ код..."></i>
+                            <span class="ui-icon ui-icon-bell" aria-hidden="true" title="Алармиращ код..."></span>
                         </div>
                         <input class="form-control" type="text" id="sIDAlarmRadio" name="sIDAlarmRadio" />
                     </div>
@@ -184,7 +186,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="far fa-bell fa-fw" data-fa-transform="right-22 down-10" title="Алармено съобщение..."></span>
+                            <span class="ui-icon ui-icon-bell" aria-hidden="true" title="Алармено съобщение..."></span>
                         </div>
                         <input class="form-control" type="text" id="sAlarmName" name="sAlarmName" placeholder="Алармено съобщение" />
                     </div>
@@ -196,7 +198,7 @@
                 <div class="col-12 pl-1 mt-3" id="selRestore1" name="selRestore1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend top-20 left-10 z-1" title="Възстановяващ код...">
-                            <i class="far fa-bell-slash fa-fw" data-fa-transform="right-22 down-10" title="Възстановяващ код..."></i>
+                            <span class="ui-icon ui-icon-bell-off" aria-hidden="true" title="Възстановяващ код..."></span>
                         </div>
                         <select class="form-control" name="sIDSignalRest" id="sIDSignalRest">
                             <option value="0">Изберете</option>
@@ -252,7 +254,7 @@
                 <div class="col-12 pl-1 mt-3" id="selRestore2" name="selRestore2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend top-20 left-10 z-1" title="Възстановяващ код...">
-                            <i class="far fa-bell-slash fa-fw" data-fa-transform="right-22 down-10" title="Възстановяващ код..."></i>
+                            <span class="ui-icon ui-icon-bell-off" aria-hidden="true" title="Възстановяващ код..."></span>
                         </div>
 
                         <input class="form-control" type="text" id="sIDRestoreRadio" name="sIDRestoreRadio" />
@@ -264,7 +266,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="far fa-bell-slash fa-fw" data-fa-transform="right-22 down-10" title="Възстановяващо съобщение..."></span>
+                            <span class="ui-icon ui-icon-bell-off" aria-hidden="true" title="Възстановяващо съобщение..."></span>
                         </div>
                         <input class="form-control" type="text" id="sRestoreName" name="sRestoreName" placeholder="Възстановяващо съобщение" title="Възстановяващо съобщение" />
                     </div>
@@ -276,10 +278,10 @@
                 <div class="col-sm-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fa fa-cube fa-fw" data-fa-transform="right-22 down-10" title="Охраняван сектор..."></span>
+                            <span class="ui-icon ui-icon-cube" aria-hidden="true" title="Охраняван сектор..."></span>
                         </div>
                         <input class="form-control w-75 mr-1" name="sName" id="sName" disabled="disabled" placeholder=" Охраняван сектор..."/>
-                        <input class="input-group-addon form-control text-primary" type="checkbox" id="is_sector" name="is_sector" />
+                        <label class="ui-message-toggle" for="is_sector"><input type="checkbox" id="is_sector" name="is_sector" /><span>Сектор</span></label>
                     </div>
                 </div>
             </div>
@@ -287,18 +289,18 @@
             <div class="col-sm-12 pl-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-cubes fa-fw" data-fa-transform="right-22 down-10" title="Охранявана зона..."></span>
+                        <span class="ui-icon ui-icon-cubes" aria-hidden="true" title="Охранявана зона..."></span>
                     </div>
                     <input class="form-control w-75 mr-1" name="zName" id="zName" disabled="disabled" placeholder="Охранявана зона..."/>
-                    <input class="input-group-addon form-control" type="checkbox" id="is_zone" name="is_zone" />
+                    <label class="ui-message-toggle" for="is_zone"><input type="checkbox" id="is_zone" name="is_zone" /><span>Зона</span></label>
                 </div>
             </div>
         </div>
-        <div class="row mb-5 pb-5">
+        <div class="row mb-1">
             <div class="col-sm-12 pl-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-text-width fa-fw" data-fa-transform="right-22 down-10" title="Избери период на повторение..."></span>
+                        <span class="ui-icon ui-icon-clock" aria-hidden="true" title="Избери период на повторение..."></span>
                     </div>
                     <select class="form-control w-75 mr-1" name="nIDTest" id="nIDTest" disabled="disabled" >
                         <option value="0">Не е тестов</option>
@@ -313,19 +315,16 @@
                         <option value="1440">24 часа</option>
                         <option value="2880">48 часа</option>
                     </select>
-                    <input class="input-group-addon form-control" type="checkbox" id="active" name="active" />
+                    <label class="ui-message-toggle" for="active"><input type="checkbox" id="active" name="active" /><span>Активен</span></label>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-0" id="search">
-        <div class="col-12">
-            <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-block btn-primary" type="submit"><i class="fas fa-check"></i> Запази</button>
-            </div>
-        </div>
+    <nav class="navbar fixed-bottom ui-message-dialog-actions" id="search" aria-label="Действия със съобщението">
+        <button class="btn btn-sm btn-primary" type="submit"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази</button>
+        <button class="btn btn-sm btn-danger" type="button" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
     </nav>
 
 </form>
@@ -333,6 +332,7 @@
 {literal}
 <script>
 
+    rpc_on_exit = syncSignalMessageForm;
     loadXMLDoc2('load');
 
 </script>

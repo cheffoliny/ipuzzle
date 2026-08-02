@@ -247,11 +247,11 @@ function dialogStatesFilter(id) {
 }
 
 function dialogSetSalaryTicketImport() {
-	dialog_win('set_salary_ticket_import',500,200,1,'set_salary_import_ticket');
+	dialog_win('set_salary_ticket_import',560,360,1,'set_salary_import_ticket');
 }
 
 function dialogAssetInfo( id ) {
-	dialog_win('asset_info&id='+id,1000,380,1,'asset_info');
+	dialog_win('asset_info&id='+id,1000,700,1,'asset_info');
 }
 
 function dialogFirm( id ) {
@@ -291,17 +291,17 @@ function dialogObject( id, id_f, id_r ) {
 }
 
 function dialogObjectArchiv(id) {
-	dialog_win('object_archiv&nID='+id,800,540,1,'object_archiv');
+	dialog_win('object_archiv&nID='+id,920,640,1,'object_archiv');
 }
 
 function dialogObjectMessages(id) {
-    dialog_win('object_messages&nID='+id,800,540,1,'object_messages');
+    dialog_win('object_messages&nID='+id,1040,720,1,'object_messages');
 }
 
 
 function dialogObjectStore( params, winname)
 {
-	dialogWinHelper('object_store', params, 800, 540, 1, winname);
+	dialogWinHelper('object_store', params, 920, 640, 1, winname);
 }
 
 
@@ -310,7 +310,7 @@ function dialogUpload( id ) {
 }
 
 function dialogImportSlary( ) {
-	dialog_win('import_salary',400,130,1,'import_salary');
+	dialog_win('import_salary',460,230,1,'import_salary');
 }
 
 function dialogNewSalary( id, id_person, month, year, type ) {
@@ -322,11 +322,11 @@ function dialogNewSalary( id, id_person, month, year, type ) {
 	var office 	= argc > 7 ? argv[7] : 0;
 	var code 	= argc > 8 ? argv[8] : '';
 	
-	return dialog_win('set_setup_person_salary_earning&id='+id+'&id_person='+id_person+'&month='+month+'&year='+year+'&type='+type+'&refresh='+refresh+'&firm='+firm+'&office='+office+'&code='+code,460,410,1,'set_setup_person_salary_earning');
+	return dialog_win('set_setup_person_salary_earning&id='+id+'&id_person='+id_person+'&month='+month+'&year='+year+'&type='+type+'&refresh='+refresh+'&firm='+firm+'&office='+office+'&code='+code,620,700,1,'set_setup_person_salary_earning');
 }
 
 function dialogImportSlaryGSM( id ) {
-	dialog_win('import_salary_gsm&id='+id,400,160,1,'set_setup_person_salary_earning');
+	dialog_win('import_salary_gsm&id='+id,460,270,1,'set_setup_person_salary_earning');
 }
 
 function dialogPosition( id ) {
@@ -346,7 +346,7 @@ function dialogLeave( id, person ) {
 }
 
 function dialogSetupPersonLeave( id, person ) {
-	dialog_win('setup_person_leave&id='+id+'&id_person='+person,822,315,1,'setup_person_leave');
+	dialog_win('setup_person_leave&id='+id+'&id_person='+person,760,720,1,'setup_person_leave');
 }
 
 function dialogApplication( id, person ) {
@@ -426,37 +426,37 @@ function dialogSetSetupAlarmReasons(params, winname) {
 }
 
 function dialogSetSetupPersonShifts(id) {
-	dialog_win('set_setup_person_shifts&id='+id, 350, 280, 1, 'set_setup_person_shifts');
+	dialog_win('set_setup_person_shifts&id='+id, 520, 430, 1, 'set_setup_person_shifts');
 }
 
 function dialogObjectInfo(params, winname) {
-	dialogWinHelper('object_info', params,  800, 540, 1, winname);
+	dialogWinHelper('object_info', params,  920, 640, 1, winname);
 }
 
 function dialogObjectTaxes( params, winname)
 {
-	dialogWinHelper('object_taxes', params, 820, 480, 1, winname);
+	dialogWinHelper('object_taxes', params, 920, 640, 1, winname);
 }
 
 function dialogObjectContract( params, winname)
 {
-	dialogWinHelper('object_contract', params, 800, 540, 1, winname);
+	dialogWinHelper('object_contract', params, 920, 640, 1, winname);
 }
 
 function dialogObjectShifts(params, winname) {
-	dialogWinHelper('object_shifts', params,  800, 540, 1, winname);
+	dialogWinHelper('object_shifts', params,  920, 640, 1, winname);
 }
 
 function dialogObjectDuty(params, winname) {
-	dialogWinHelper('object_duty', params,  800, 540, 1, winname);
+	dialogWinHelper('object_duty', params,  920, 640, 1, winname);
 }
 
 function dialogObjectPersonnel(params, winname) {
-	dialogWinHelper('object_personnel', params,  800, 540, 1, winname);
+	dialogWinHelper('object_personnel', params,  920, 640, 1, winname);
 }
 
 function dialogObjectPersonnelSchedule(params, winname) {
-	dialogWinHelper('object_personnel_schedule', params,  800, 540, 1, winname);
+	dialogWinHelper('object_personnel_schedule', params,  920, 640, 1, winname);
 }
 
 function dialogSetObjectPerson(params, winname) {
@@ -468,11 +468,11 @@ function dialogSetSetupObjectShifts(id, obj) {
 }
 
 function dialogPatrulParking(id) {
-	dialog_win('set_setup_patrul_parking&id='+id, 350, 275, 1, 'set_setup_patrul_parking');
+	dialog_win('set_setup_patrul_parking&id='+id, 560, 500, 1, 'set_setup_patrul_parking');
 }
 
 function dialogSetupPatruls(id) {
-	dialog_win('set_setup_patruls&id='+id, 350, 255, 1, 'set_setup_patruls');
+	dialog_win('set_setup_patruls&id='+id, 560, 480, 1, 'set_setup_patruls');
 }
 
 function dialogSetSetupNomenclatureType(params, winname) {
@@ -497,7 +497,7 @@ function dialogPPPElement( params ) {
 }
 
 function dialogPatrol(id, idc) {
-	dialog_win('set_setup_patrol&nID='+id+'&nIDCard='+idc, 700, 430, 1, 'set_setup_patrol');
+	dialog_win('set_setup_patrol&nID='+id+'&nIDCard='+idc, 760, 700, 1, 'set_setup_patrol');
 }
 
 function dialogStopRoadList(id) {
@@ -522,11 +522,11 @@ function dialogWCMoveAdd(id, nIDCard) {
 }
 
 function dialogLimitCardPersons(id,lc) {
-	dialog_win('set_limit_card_persons&nID='+id+'&nIDCard='+lc, 390, 220, 1, 'set_limit_card_persons');
+	dialog_win('set_limit_card_persons&nID='+id+'&nIDCard='+lc, 560, 400, 1, 'set_limit_card_persons');
 }
 
 function dialogChangeAmortization(id) {
-	dialog_win('set_asset_info&nID='+id, 300, 200, 1, 'set_asset_info');
+	dialog_win('set_asset_info&nID='+id, 520, 360, 1, 'set_asset_info');
 }
 
 function dialogRequest( params ) {
@@ -593,11 +593,11 @@ function dialogSetSetupCities(params, winname) {
 }
 
 function dialogFixSalary( ) {
-	dialog_win('fix_salary',400,130,1,'fix_salary');
+	dialog_win('fix_salary',460,230,1,'fix_salary');
 }
 
 function dialogMonitor(nCode) {
-	dialog_win('object_monitor&id='+nCode, 800, 500, 1, 'object_monitor');
+	dialog_win('object_monitor&id='+nCode, 920, 640, 1, 'object_monitor');
 }
 
 function dialogImportNomenclature( ) {
@@ -605,19 +605,19 @@ function dialogImportNomenclature( ) {
 }
 
 function dialogSetSetupSignalMessage(id, obj) {
-	dialog_win('set_setup_signalMessage&nID='+id+'&nIDObj='+obj, 400, 420, 1, 'set_setup_signalMessage');
+	dialog_win('set_setup_signalMessage&nID='+id+'&nIDObj='+obj, 620, 720, 1, 'set_setup_signalMessage');
 }
 
 function dialogSetSetupSignalZone(id, obj) {
-    dialog_win('set_setup_object_zone&nID='+id+'&nIDObject='+obj, 400, 200, 1, 'set_setup_object_zone');
+    dialog_win('set_setup_object_zone&nID='+id+'&nIDObject='+obj, 520, 340, 1, 'set_setup_object_zone');
 }
 
 function dialogSetSetupSignalSector(id, obj) {
-    dialog_win('set_setup_object_sector&nID='+id+'&nIDObject='+obj, 400, 200, 1, 'set_setup_object_sector');
+    dialog_win('set_setup_object_sector&nID='+id+'&nIDObject='+obj, 520, 340, 1, 'set_setup_object_sector');
 }
 
 function dialogSetSetupObjectUsers(id, obj) {
-    dialog_win('set_setup_object_user&nID='+id+'&nIDObject='+obj, 400, 200, 1, 'set_setup_object_user');
+    dialog_win('set_setup_object_user&nID='+id+'&nIDObject='+obj, 440, 420, 1, 'set_setup_object_user');
 }
 
 function dialogSalaryFirms(sMonth,sYear,nIDFirmFrom,nIDFirmTo) {
@@ -694,7 +694,7 @@ function dialogTechInstantSchemes( id ) {
 }
 
 function dialogObjectInfo2(params, winname) {
-	dialogWinHelper('object_info', params,  800, 540, 1, winname);
+	dialogWinHelper('object_info', params,  920, 640, 1, winname);
 }
 
 function dialogPersonalCard( id ) {
@@ -730,7 +730,7 @@ function dialogSetAttribute (id) {
 }
 function dialogSetGroup(id)
 {
-	dialog_win('set_asset_group&id='+id,400,160,'set_asset_group');
+	dialog_win('set_asset_group&id='+id,560,390,1,'set_asset_group');
 }
 function dialogAssetsNomenclatures ( id ) {
 	dialog_win('set_assets_nomenclatures&id='+id,700,380,1,'set_assets_nomenclatures');
@@ -741,7 +741,7 @@ function dialogAssetsNomenclatures ( id ) {
 // }
 
 function dialogObjectSupport( params, winname ) {
-	dialogWinHelper('object_support', params,  800, 540, 1, winname);
+	dialogWinHelper('object_support', params,  920, 640, 1, winname);
 }
 
 function dialogShiftHistory(id) {
@@ -809,7 +809,7 @@ function dialogSetInvoiceMailScheme() {
 }
 
 function dialogSetPayDeskReport() {
-	dialog_win('set_pay_desk_report', 400, 200, 1, 'set_pay_desk_report');
+	dialog_win('set_pay_desk_report', 520, 360, 1, 'set_pay_desk_report');
 }
 
 function dialogOrder (params) {
@@ -837,11 +837,11 @@ function dialogObjectsFilter( id ) {
 }
 
 function dialogOldObjectArchiv(id) {
-	dialog_win('object_archiv&oldOD='+id,800,540,1,'object_archiv');
+	dialog_win('object_archiv&oldOD='+id,920,640,1,'object_archiv');
 }
 
 function dialogTechSupport(id) {
-	dialog_win('object_troubles&nID='+id,800,540,1,'object_troubles');
+	dialog_win('object_troubles&nID='+id,920,640,1,'object_troubles');
 }
 
 function dialogScheduleMonthNorm(id) {

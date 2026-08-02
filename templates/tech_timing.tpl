@@ -2,6 +2,7 @@
 {literal}
 
 	rpc_debug = true;
+	rpc_html_debug = true;
 	
 	function editTiming( id )
 	{

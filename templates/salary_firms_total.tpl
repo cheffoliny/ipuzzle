@@ -22,9 +22,9 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1">
+<form action="" name="form1" id="form1" class="ui-salary-report ui-salary-firms-total-report" onsubmit="return false;">
 	
-	<table class = "page_data">
+	<table class="page_data ui-salary-report-heading">
 		<tr>
 			<td class="page_name">Работни заплати - По фирми (Обобщена) </td>
 
@@ -32,7 +32,7 @@
 	</table>
 	
 	<center>
-		<table class="search">
+		<table class="search ui-salary-legacy-filter">
 			<tr>
 						
 				<td align="center">
@@ -43,7 +43,7 @@
 				</td>
 				
 				<td>
-					<button type="button" onClick="getResult();" name="Button" id="button1"><img src="images/confirm.gif">Покажи</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="getResult();" name="Button" id="button1"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Покажи</button>
 				</td>
 			</tr>
 		</table>
@@ -52,6 +52,6 @@
 
 	<hr>
 	
-	<div id="result" rpc_autonumber = "off"></div>
+	<div id="result" class="ui-salary-report-result" rpc_autonumber="off"></div>
 
 </form>

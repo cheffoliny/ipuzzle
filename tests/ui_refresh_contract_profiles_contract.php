@@ -70,6 +70,10 @@ contractProfilesAssert(strpos($objectContract, "loadXMLDoc2('save')") !== false,
 contractProfilesAssert(strpos($objectContract, "loadXMLDoc2('result')") !== false, 'object contract result action changed');
 contractProfilesAssert(substr_count($objectContract, 'id="tech_info"') === 1, 'object contract retains duplicate tech_info fields');
 contractProfilesAssert(strpos($objectContract, 'id="b100" class=') === false, 'object contract close button retains duplicate class attributes');
+contractProfilesAssert(strpos($objectContract, 'ui-object-contract-result-shell') !== false, 'object contract result shell is missing');
+contractProfilesAssert(substr_count($objectContract, 'ui-object-contract-detail-wide') === 2, 'object contract wide detail fields changed');
+contractProfilesAssert(strpos($objectContract, 'input-group-addon-ok') === false, 'object contract retains the detached legacy icon wrapper');
+contractProfilesAssert(strpos($objectContract, 'style="width:320px;"') === false, 'object contract retains the narrow inline detail width');
 
 $personInfo = file_get_contents($root . '/templates/personInfo.tpl');
 foreach (array("loadXMLDoc( 'save', 0 )", 'dialogUpload( id )', 'dialogPrintContract( 0, nID )', 'dialogPrintContract( 1, nID )', 'dialogPrintContract( 2, nID )') as $behaviour) {
@@ -116,6 +120,11 @@ foreach (array(
 ) as $selector) {
     contractProfilesAssert(strpos($css, $selector) !== false, 'missing contract/profile style ' . $selector);
 }
+contractProfilesAssert(preg_match('/\.ui-object-contract \.fixed-bottom,[^{]+\{[^}]*position:\s*fixed/s', $css) === 1, 'contract/profile action bars are not fixed to the viewport bottom');
+contractProfilesAssert(preg_match('/\.ui-object-contract-details\s*\{[^}]*display:\s*grid/s', $css) === 1, 'object contract details are not responsive grid content');
+contractProfilesAssert(preg_match('/\.ui-object-contract-result-shell\s*\{[^}]*overflow:\s*hidden\s*!important/s', $css) === 1, 'object contract result shell still creates a second scrollbar');
+contractProfilesAssert(preg_match('/\.ui-object-contract-result-shell > \.ui-contract-result\s*\{[^}]*max-height:\s*none\s*!important/s', $css) === 1, 'legacy result max-height still collapses object contract');
+contractProfilesAssert(strpos($css, '.ui-object-contract #result_data.body-content') !== false, 'object contract RPC result layout override is missing');
 
 $iconAssets = array(
     'ui-icon-contract' => 'file-signature.svg',
@@ -131,10 +140,10 @@ $iconAssets = array(
 foreach ($iconAssets as $iconClass => $asset) {
     contractProfilesAssert(strpos($icons, '.' . $iconClass) !== false, 'icon mapping is missing: ' . $iconClass);
     contractProfilesAssert(strpos($icons, $asset) !== false, 'icon asset mapping changed: ' . $asset);
-    contractProfilesAssert(is_file($root . '/css/fa7/regular/' . $asset), 'icon asset is missing: ' . $asset);
+    contractProfilesAssert(is_file($root . '/css/fa7/solid/' . $asset), 'icon asset is missing: ' . $asset);
 }
 
-contractProfilesAssert(strpos($page, 'css/ui-fa7-icons.css?version=4') !== false, 'FA7 icon cache version is stale');
-contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=14') !== false, 'contract/profile stylesheet cache version is stale');
+contractProfilesAssert(strpos($page, 'css/ui-fa7-icons.css?version=16') !== false, 'FA7 icon cache version is stale');
+contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'contract/profile stylesheet cache version is stale');
 
 echo 'UI_REFRESH_CONTRACT_PROFILES=PASS' . PHP_EOL;

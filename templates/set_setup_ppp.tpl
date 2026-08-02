@@ -1,5 +1,6 @@
 <script>
-	//rpc_debug=true;
+	rpc_debug = true;
+	rpc_html_debug = true;
 	
 	var my_action = '';
 </script>
@@ -25,19 +26,19 @@
 				<td align="right">Дата:&nbsp;</td>
 				<td align="left">
 					<input id="date" name="date" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" value="{$date}" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_date" />
+				<button type="button" class="ui-inline-calendar-trigger" id="img_date" title="Избор на дата" aria-label="Избор на дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 			</tr>
 			<tr class="even">
 				<td>От дата:</td>
 				<td align="left">
 					<input id="leave_from" name="leave_from" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_leave_from" />
+				<button type="button" class="ui-inline-calendar-trigger" id="img_leave_from" title="Избор на начална дата" aria-label="Избор на начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>
 				<td align="right">До дата:&nbsp;</td>
 				<td>
 					<input id="leave_to" name="leave_to" type="text" class="inp100" onKeyPress="return formatDate(event, '.');" maxlength="10" title="ДД.ММ.ГГГГ" />&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor:pointer;" width="16" height="16" id="img_leave_to" />
+				<button type="button" class="ui-inline-calendar-trigger" id="img_leave_to" title="Избор на крайна дата" aria-label="Избор на крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 				</td>			
 			</tr>
 			<tr class="odd">

@@ -13,8 +13,8 @@ if ($renderer === false || $xmlrpc === false || $template === false || $database
 }
 
 $checks = array(
-    strpos($renderer, 'person_schedule\\.xsl') !== false,
-    strpos($renderer, 'return "personSchedule"') !== false,
+    strpos($renderer, 'personSchedule: true') !== false,
+    strpos($template, "rpc_renderer_profile = 'personSchedule'") !== false,
     strpos($renderer, 'function renderPersonSchedule(') !== false,
     strpos($renderer, 'id: "tableShifts"') !== false,
     strpos($renderer, 'id: "tableResult"') !== false,
@@ -23,7 +23,7 @@ $checks = array(
     strpos($renderer, '"real_hours[" + rowId + "]"') !== false,
     strpos($renderer, 'data-shift-code') !== false,
     strpos($renderer, 'renderPersonScheduleToolbar') !== false,
-    strpos($xmlrpc, 'RpcResultRenderer.isSupportedStylesheet(rpc_xsl)') !== false,
+    strpos($xmlrpc, 'RpcResultRenderer.isSupportedProfile(rpc_renderer_profile)') !== false,
     strpos($xmlrpc, 'FormProcessing_action(xml);') !== false,
     strpos($xmlrpc, 'XML Response:') !== false,
     strpos($template, 'getAttribute("data-shift-code")') !== false,

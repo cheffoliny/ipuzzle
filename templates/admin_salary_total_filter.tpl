@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		rpc_method = "POST";
 		
 		function onInit() {

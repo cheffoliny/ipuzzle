@@ -19,13 +19,13 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-object-contract" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-contract-dialog ui-object-core ui-object-contract" onsubmit="return false;">
 <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 <input type="hidden" id="nIDContract" name="nIDContract" value="0" />
 
 	{include file='object_tabs.tpl'}
 
-	<div class="container-fluid mb-4">
+	<div class="container-fluid ui-object-contract-summary">
 		<div class="row clearfix mt-2">
 			<div class="col-3 col-sm-3 col-lg-3 pl-0">
 				<div class="input-group input-group-sm">
@@ -138,44 +138,45 @@
 
 
 				
-			<div class="col-sm-6 col-md-2 ui-object-contract-details" style="width:320px;">
+		<div class="ui-object-contract-details">
 
 				
-				<div class="input-group" style="margin: 2px;">	
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-play" aria-hidden="true"></span></span>
-					<input type="text" name="contract_date" id="contract_date" class="clear" readonly />
+				<div class="input-group input-group-sm ui-object-contract-detail">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-play" aria-hidden="true"></span></span>
+					<input type="text" name="contract_date" id="contract_date" class="form-control clear" readonly />
 				</div>
 				
-				<div class="input-group" style="margin: 2px;">	
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-stop" aria-hidden="true"></span></span>
-					<input type="text" name="contract_to" id="contract_to" class="clear" readonly />
+				<div class="input-group input-group-sm ui-object-contract-detail">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-stop" aria-hidden="true"></span></span>
+					<input type="text" name="contract_to" id="contract_to" class="form-control clear" readonly />
 				</div>
 				
-				<div class="input-group" style="margin: 2px;">	
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-document" aria-hidden="true"></span></span>
-					<input type="text" name="contract_rs" id="contract_rs" style="width: 230px; font-weight: bold;" class="clear" readonly />
+				<div class="input-group input-group-sm ui-object-contract-detail">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-document" aria-hidden="true"></span></span>
+					<input type="text" name="contract_rs" id="contract_rs" class="form-control clear ui-object-contract-number" readonly />
 				</div>
 				
-				<div class="input-group" style="margin: 2px;">
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
-					<textarea id="schet_info" name="schet_info" style="width: 355px; height: 40px;" class="clear" readonly ></textarea>
+				<div class="input-group input-group-sm ui-object-contract-detail">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
+					<input type="text" name="tech_plan" id="tech_plan" class="form-control clear" readonly />
+				</div>
+
+				<div class="input-group input-group-sm ui-object-contract-detail ui-object-contract-detail-wide">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
+					<textarea id="schet_info" name="schet_info" class="form-control clear" rows="2" readonly></textarea>
 				</div>
 				
-				<div class="input-group" style="margin: 2px;">
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
-					<textarea id="tech_info" name="tech_info" style="width: 355px; height: 40px;" class="clear" readonly ></textarea>
+				<div class="input-group input-group-sm ui-object-contract-detail ui-object-contract-detail-wide">
+					<span class="input-group-prepend"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
+					<textarea id="tech_info" name="tech_info" class="form-control clear" rows="2" readonly></textarea>
 				</div>
-				
-				<div class="input-group" style="margin: 2px;">
-					<span class="input-group-addon-ok"><span class="ui-icon ui-icon-info" aria-hidden="true"></span></span>
-					<input type="text" name="tech_plan" id="tech_plan" class="clear" readonly />
-				</div>
-			</div>
+		</div>
 					
-		</div>	
+	</div>
 
-
-	<div id="result" class="ui-contract-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow-x: auto; overflow-y: auto;"></div>
+	<div class="ui-object-contract-result-shell">
+		<div id="result" class="ui-contract-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
+	</div>
 
 	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
 		<div class="col-6 col-sm-8 col-lg-8 pl-0">

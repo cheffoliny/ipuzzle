@@ -1,73 +1,41 @@
 {literal}
-	<script>
-		function tab_href( page ) 
-		{
-				var oID = $('nID');
-				if(oID.value==0)
-				{
-					alert("Активът още не е въведен!");
-					return false;
-				}
-				obj = document.getElementById(page);
-				obj.href = "page.php?page=" + page + "&nID=" + oID.value;
-				return true; 	
+<script>
+	function tab_href(page) {
+		var assetId = document.getElementById('nID');
+		var target = document.getElementById(page);
+
+		if (!assetId || parseInt(assetId.value, 10) <= 0) {
+			alert('Активът още не е въведен!');
+			return false;
 		}
-	</script>
-	<style>
-	#active,
-	#inactive
-	{
-		text-align:center !important;
- 		padding: 3px 15px 3px 15px;
+
+		if (!target) return false;
+		target.href = 'page.php?page=' + page + '&nID=' + assetId.value;
+		return true;
 	}
-	
-	#tabs td
-	{
-		white-space:nowrap !important;
-	}
-	</style>
+</script>
 {/literal}
 
-<div id="search">
-
-	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="tabs">
-		
-		<tr>
-			<td width="1" class="inactive"></td>
-			{if $page eq 'asset_info'}
-				<td id="active" style="width:150px;" nowrap="nowrap">
-					Информация
-				</td>
-			{else}
-				<td id="inactive" style="width:150px;" nowrap="nowrap">
-					<a href="#" onclick="return tab_href('asset_info');" id="asset_info">Информация</a>
-				</td>
-			{/if}
-			 <td width="1" id="passive"></td>
-			{if $page eq 'asset_info_ppp'}
-				<td id="active" style="width:150px;" nowrap="nowrap">
-					ППП
-				</td>
-			{else}
-				<td id="inactive" style="width:150px;" nowrap="nowrap">
-					<a href="#" onclick="return tab_href('asset_info_ppp');" id="asset_info_ppp">ППП</a>
-				</td>
-			{/if}
-				<td width="1" id="passive"></td>
-			{if $page eq 'asset_info_sub_assets'}
-				<td id="active" style="width:150px;" nowrap="nowrap">
-					Подчинени активи
-				</td>
-			{else}
-				<td id="inactive" style="width:150px;" nowrap="nowrap">
-					<a href="#" onclick="return tab_href('asset_info_sub_assets')" id="asset_info_sub_assets">Подчинени активи</a>
-				</td>
-			{/if}
-			<td style="width:70%;" id="passive"></td>
-
-          <td id="lpassive"></td>
-		</tr>
-	
-	</table>
-
-</div>
+<ul class="nav nav-tabs ui-asset-tabs ui-asset-info-tabs" aria-label="Досие на актив">
+	<li class="nav-item">
+		{if $page eq 'asset_info'}
+			<a class="nav-link active" href="#" aria-current="page"><span class="ui-icon ui-icon-info" aria-hidden="true"></span> Информация</a>
+		{else}
+			<a class="nav-link" href="#" onclick="return tab_href('asset_info');" id="asset_info"><span class="ui-icon ui-icon-info" aria-hidden="true"></span> Информация</a>
+		{/if}
+	</li>
+	<li class="nav-item">
+		{if $page eq 'asset_info_ppp'}
+			<a class="nav-link active" href="#" aria-current="page"><span class="ui-icon ui-icon-document" aria-hidden="true"></span> ППП</a>
+		{else}
+			<a class="nav-link" href="#" onclick="return tab_href('asset_info_ppp');" id="asset_info_ppp"><span class="ui-icon ui-icon-document" aria-hidden="true"></span> ППП</a>
+		{/if}
+	</li>
+	<li class="nav-item">
+		{if $page eq 'asset_info_sub_assets'}
+			<a class="nav-link active" href="#" aria-current="page"><span class="ui-icon ui-icon-cubes" aria-hidden="true"></span> Подчинени активи</a>
+		{else}
+			<a class="nav-link" href="#" onclick="return tab_href('asset_info_sub_assets');" id="asset_info_sub_assets"><span class="ui-icon ui-icon-cubes" aria-hidden="true"></span> Подчинени активи</a>
+		{/if}
+	</li>
+</ul>

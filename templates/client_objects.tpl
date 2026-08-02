@@ -112,7 +112,7 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-client-core ui-client-objects" onsubmit="return false;">
 
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
     <input type="hidden" id="nIDObject" name="nIDObject" value="0" />
@@ -122,12 +122,12 @@
 
     {include file='client_tabs.tpl'}
 
-    <div class="container-fluid mb-1">
+    <div class="container-fluid mb-1 ui-client-object-toolbar">
         <div class="row clearfix mt-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-home fa-fw" data-fa-transform="right-22 down-10" title="E-mail..."></span>
+                        <span class="ui-icon ui-icon-home" aria-hidden="true" title="Номер на обект..."></span>
                     </div>
                     <input class="form-control" type="text" id="nObjectNum" name="nObjectNum" suggest="suggest" queryType="objByNum" onkeypress="formatDigits( event );" onchange="onChangeObjectNum();" maxlength="12" />
                 </div>
@@ -135,20 +135,20 @@
             <div class="col-7 col-sm-7 col-lg-7">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-home fa-fw" data-fa-transform="right-22 down-10" title="Адрес за кореспонденция..."></span>
+                        <span class="ui-icon ui-icon-home" aria-hidden="true" title="Име на обект..."></span>
                     </div>
                     <input class="form-control" type="text" id="sObjectName" name="sObjectName" suggest="suggest" queryType="objByName" onchange="onChangeObject();" />
                 </div>
             </div>
             <div class="col-2 col-sm-2 col-lg-2">
                 <div class="input-group input-group-sm">
-                    <button class="btn btn-sm btn-primary" onclick="attachObject();"><i class="fas fa-code-branch"></i> Привържи </button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="attachObject();"><span class="ui-icon ui-icon-branch" aria-hidden="true"></span> Привържи </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="result" rpc_resize="off"></div>
+    <div id="result" class="ui-client-result" rpc_resize="off"></div>
 
 </form>
 

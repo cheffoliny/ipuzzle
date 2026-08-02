@@ -579,6 +579,11 @@ class DBOffices
 
     public function getPatrulOfficesByIDFirm( $nIDFirm )
     {
+        $nIDFirm = (int) $nIDFirm;
+        if ( $nIDFirm <= 0 ) {
+            return array();
+        }
+
         $sQuery = "
 				SELECT 
 				id,
@@ -592,7 +597,16 @@ class DBOffices
 
     public function getPatrulOffices()
     {
-        $sAccessRegions = implode(',',$_SESSION['userdata']['access_right_regions']);
+        $aAccessRegions = isset($_SESSION['userdata']['access_right_regions'])
+            && is_array($_SESSION['userdata']['access_right_regions'])
+            ? array_values(array_filter(array_map('intval', $_SESSION['userdata']['access_right_regions'])))
+            : array();
+
+        if ( empty($aAccessRegions) ) {
+            return array();
+        }
+
+        $sAccessRegions = implode(',', $aAccessRegions);
 
         $sQuery = "
 				SELECT 

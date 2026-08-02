@@ -328,8 +328,8 @@
 <dlcalendar click_element_id="sFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="sToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;" onkeyup="getKeyTest();">
-    <select onblur="hideStatusSelect(); onStatSelect();" onchange="onStatSelect();" style="display: none; position: absolute; z-index: 1000;" name="aStatus[]" size="8" id="aStatus" multiple/>
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-setup-objects" onSubmit="return false;" onkeyup="getKeyTest();">
+    <select onblur="hideStatusSelect(); onStatSelect();" onchange="onStatSelect();" class="ui-setup-objects-status-select" name="aStatus[]" size="8" id="aStatus" multiple></select>
     <input type="hidden" name="id" 			id="id" 		value="0"				/>
     {*<input type="hidden" name="nType" id="nType" value="0">*}
     <input type="hidden" name="nIDClient" 	id="nIDClient" 	value="0"				/>
@@ -341,13 +341,13 @@
 
     {include file='tabs_setup_objects.tpl'}
 
-    <div>
-        <div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary">
+    <div class="ui-setup-objects-filters">
+        <div class="row justify-content-start table-secondary ui-setup-objects-toolbar">
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         {*Администрация:&nbsp;*}
-                        <i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+                        <span class="ui-icon ui-icon-tag" title="Фирма на административно обслужване" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="id_firm" id="id_firm" onchange="loadXMLDoc( 'genregions' );" title="Фирма на административно обслужване"></select>
                 </div>
@@ -355,7 +355,7 @@
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <i class="fa fa-tags fa-fw"  data-fa-transform="right-22 down-10" title="Офис на административно обслужване"></i>
+                        <span class="ui-icon ui-icon-tags" title="Офис на административно обслужване" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="id_reg" id="id_reg" ></select>
                 </div>
@@ -363,7 +363,7 @@
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <i class="fa fa-home fa-fw"  data-fa-transform="right-22 down-10" title="Номер на обект"></i>
+                        <span class="ui-icon ui-icon-home" title="Номер на обект" aria-hidden="true"></span>
                     </div>
                     <input class="form-control suggest" name="nNum" id="nNum" suggest="suggest" queryType="objByNumWithStatus" queryParams="" onkeypress="getKeyTest();" onkeyup="return numKeyed( event );" placeholder=" № на обект..." />
 
@@ -372,31 +372,31 @@
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <i class="fa fa-home fa-fw"  data-fa-transform="right-22 down-10" title="Име на обекта"></i>
+                        <span class="ui-icon ui-icon-home" title="Име на обекта" aria-hidden="true"></span>
                     </div>
                     <input class="form-control" name="sName" id="sName" placeholder="Име на обект..." />
                 </div>
             </div>
             <div class="col-12 col-sm-8 col-lg-4">
                 <div class="input-group input-group-sm">
-                    <button type="button" id="hide"  onclick="hideDiv(0);" class="btn btn-sm btn-light mr-2"  style="display: none;"><i class="fa fa-compress fa-lg"></i></button>
-                    <button type="button" id="show"  onclick="fixFilter();" class="btn btn-sm btn-light mr-2"><i class="fa fa-expand fa-lg"></i></button>
+                    <button type="button" id="hide" onclick="hideDiv(0);" class="btn btn-sm btn-light mr-2 ui-setup-objects-filter-toggle" style="display: none;" title="Скрий допълнителните филтри"><span class="ui-icon ui-icon-compress" aria-hidden="true"></span></button>
+                    <button type="button" id="show" onclick="fixFilter();" class="btn btn-sm btn-light mr-2 ui-setup-objects-filter-toggle" title="Покажи допълнителните филтри"><span class="ui-icon ui-icon-expand" aria-hidden="true"></span></button>
                     {if $right_edit}
-                        <button class="btn btn-sm btn-success mr-2" onclick="newObject();"><i class="fa fa-plus fa-lg"></i> Добави </button>
+                        <button type="button" class="btn btn-sm btn-success mr-2" onclick="newObject();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
                     {else}
                     {/if}
-                    <button type="submit" name="Button" class="btn btn-sm btn-primary" onclick="hideDiv(1);"><i class="fa fa-search fa-lg"></i> Търси &nbsp;</button>
+                    <button type="submit" name="Button" class="btn btn-sm btn-primary" onclick="hideDiv(1);"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси &nbsp;</button>
                 </div>
             </div>
         </div>
 
-        <div id="filter" style="display: none;" class="pl-3 pb-1 table-secondary">
+        <div id="filter" style="display: none;" class="table-secondary ui-setup-objects-advanced-filter">
 
             <div class="row clearfix mb-1">
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-map fa-fw" data-fa-transform="right-22 down-10" title="Адрес на обекта"></i>
+                            <span class="ui-icon ui-icon-map" title="Адрес на обекта" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" name="sAddress" id="sAddress" placeholder="Адрес на обекта..." />
                     </div>
@@ -404,7 +404,7 @@
                 <div class="col-6 col-sm-4 col-lg-2 pl-0">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fab fa-whatsapp fa-fw" data-fa-transform="right-22 down-10" title="Телефон на обекта"></i>
+                            <span class="ui-icon ui-icon-phone" title="Телефон на обекта" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" name="sPhone" id="sPhone" placeholder="0ххх..." />
                     </div>
@@ -412,7 +412,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-user fa-fw" data-fa-transform="right-22 down-10" title="МОЛ на обекта"></i>
+                            <span class="ui-icon ui-icon-user" title="МОЛ на обекта" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" name="sMol" id="sMol" placeholder="МОЛ за обекта..." />
                     </div>
@@ -426,19 +426,19 @@
                     {if $right_nap}
                     <div class="btn-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fas fa-filter fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></i>
+                            <span class="ui-icon ui-icon-filter" title="Филтър" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="schemes" id="schemes" ></select>
                         <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item dropdown-item-menu" name="Button5"	id="b25" title="Нов филтър" 			onClick="openFilter( 1 );" 			>
-                                <i class="fas fa-plus"></i> &nbsp; Добави </a>
-                            <a class="dropdown-item dropdown-item-menu" name="Button4"	id="b25" title="Редактиране на филтър" 	onClick="openFilter( 2 );"			>
-                                <i class="far fa-edit"></i> &nbsp; Редактирай </a>
-                            <a class="dropdown-item dropdown-item-menu" name="Button3"	id="b25" title="Премахване на филтър"	onClick="deleteFilter( schemes );"	>
-                                <i class="far fa-trash-alt"></i> &nbsp; Изтрий </a>
+                            <a href="#" class="dropdown-item dropdown-item-menu" name="Button5" id="objectsFilterAdd" title="Нов филтър" onClick="openFilter( 1 ); return false;">
+                                <span class="ui-icon ui-icon-plus" aria-hidden="true"></span> &nbsp; Добави </a>
+                            <a href="#" class="dropdown-item dropdown-item-menu" name="Button4" id="objectsFilterEdit" title="Редактиране на филтър" onClick="openFilter( 2 ); return false;">
+                                <span class="ui-icon ui-icon-edit" aria-hidden="true"></span> &nbsp; Редактирай </a>
+                            <a href="#" class="dropdown-item dropdown-item-menu" name="Button3" id="objectsFilterDelete" title="Премахване на филтър" onClick="deleteFilter( schemes ); return false;">
+                                <span class="ui-icon ui-icon-delete" aria-hidden="true"></span> &nbsp; Изтрий </a>
                         </div>
                     </div>
                     {else}&nbsp;
@@ -451,19 +451,16 @@
                     <div class="input-group input-group-sm" title="Период на стартиране на обекта">
                         <div class="input-group-prepend">
                             {*Администрация:&nbsp;*}
-                            <span id="editFromDate" id="editToDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></span>
+                            <span class="ui-icon ui-icon-calendar" title="Период на стартиране" aria-hidden="true"></span>
                         </div>
                         <input type="text" name="sFromDate" id="sFromDate" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
                         <input type="text" name="sToDate" id="sToDate" class="form-control input-group-addon" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
-                        {*<div class="input-group-append-r">*}
-                        {*<span id="editToDate" class="fa fa-calendar-plus-o" title="Край на периода"></span>*}
-                        {*</div>*}
                     </div>
                 </div>
                 <div class="col-6 col-sm-4 col-lg-2 pl-0">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-tags fa-fw" data-fa-transform="right-22 down-10" title="Неплатен абонамент за месец"></i>
+                            <span class="ui-icon ui-icon-tags" title="Неплатен абонамент за месец" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="sUnpaid" id="sUnpaid"></select>
                     </div>
@@ -471,7 +468,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-hashtag fa-fw" data-fa-transform="right-22 down-10" title="Дейност..."></i>
+                            <span class="ui-icon ui-icon-code" title="Дейност..." aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nFunction" id="nFunction" ></select>
                     </div>
@@ -479,7 +476,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН на клиент"></i>
+                            <span class="ui-icon ui-icon-barcode" title="ЕИН на клиент" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" name="sIDN" id="sIDN" placeholder="ЕИН на клиент..." />
                     </div>
@@ -487,7 +484,7 @@
                 <div class="col-12 col-sm-8 col-lg-4">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-map-signs fa-fw" data-fa-transform="right-22 down-10" title="Населено място..."></i>
+                            <span class="ui-icon ui-icon-location" title="Населено място..." aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nCity" id="nCity" ></select>
                     </div>
@@ -498,7 +495,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="Фирма за реакция"></i>
+                            <span class="ui-icon ui-icon-car" title="Фирма за реакция" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDReactionFirm" id="nIDReactionFirm" onchange="loadXMLDoc( 'genReactionOffices' );" title="Реагираща фирма"></select>
                     </div>
@@ -506,7 +503,7 @@
                 <div class="col-6 col-sm-4 col-lg-2 pl-0">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="Офис на реакция"></i>
+                            <span class="ui-icon ui-icon-car" title="Офис на реакция" aria-hidden="true"></span>
                         </div>
                         <select class="form-control"  name="nIDReactionOffice" id="nIDReactionOffice" title="Офис на реакция"></select>
                     </div>
@@ -514,7 +511,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-cog fa-fw" data-fa-transform="right-22 down-10" title="Сервизна фирма"></i>
+                            <span class="ui-icon ui-icon-settings" title="Сервизна фирма" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDTechFirm" id="nIDTechFirm" onchange="loadXMLDoc( 'genTechOffices' );" title="Сервизна фирма"></select>
                     </div>
@@ -522,7 +519,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <i class="fa fa-cogs fa-fw" data-fa-transform="right-22 down-10" title="Сервизeн офис"></i>
+                            <span class="ui-icon ui-icon-settings" title="Сервизeн офис" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDTechOffice" id="nIDTechOffice" title="Сервизeн офис"></select>
                     </div>
@@ -531,19 +528,19 @@
                     <div class="input-group input-group-sm">
                         <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-compact btn-light mr-2" title="СОД">
-                                <input type="checkbox" name="nIsSOD" id="nIsSOD" autocomplete="off" /><i class="fa fa-car fa-lg"></i>
+                                <input type="checkbox" name="nIsSOD" id="nIsSOD" autocomplete="off" /><span class="ui-icon ui-icon-car" aria-hidden="true"></span>
                             </label>
                             <label class="btn btn-compact btn-light mr-2" title="С работно време">
-                                <input type="checkbox" name="nIsWorkTime" id="nIsWorkTime" /><i class="far fa-clock fa-lg"></i>
+                                <input type="checkbox" name="nIsWorkTime" id="nIsWorkTime" /><span class="ui-icon ui-icon-clock" aria-hidden="true"></span>
                             </label>
                             <label class="btn btn-compact btn-light mr-2" title="Без клиент">
-                                <input type="checkbox" name="nHasNoClient" id="nHasNoClient" /><i class="fa fa-user-times fa-lg"></i>
+                                <input type="checkbox" name="nHasNoClient" id="nHasNoClient" /><span class="ui-icon ui-icon-user-off" aria-hidden="true"></span>
                             </label>
                             <label class="btn btn-compact btn-light mr-2" title="Такси с ДДС">
-                                <input type="checkbox" id="nDDS" name="nDDS" /><i class="fas fa-euro-sign fa-lg"></i>
+                                <input type="checkbox" id="nDDS" name="nDDS" /><span class="ui-icon ui-icon-money" aria-hidden="true"></span>
                             </label>
                             <label class="btn btn-compact btn-light" title="В сервизен режим">
-                                <input type="checkbox" name="nIsServiceMode" id="nIsServiceMode" /><i class="fa fa-wrench fa-lg"></i>
+                                <input type="checkbox" name="nIsServiceMode" id="nIsServiceMode" /><span class="ui-icon ui-icon-wrench" aria-hidden="true"></span>
                             </label>
                         </div>
                     </div>
@@ -552,7 +549,7 @@
 
         </div>
     </div>
-    <div id="result"></div>
+    <div id="result" class="ui-setup-objects-result"></div>
          {*style=" max-height: calc(100% - 100px); margin-top: 0px !important; bottom: 0px; overflow-y: auto !important;  overflow-x: auto !important;"></div>*}
 </form>
 

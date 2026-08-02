@@ -44,11 +44,11 @@
 	</script>
 
 
-<form action="" name="form1" id="form1">
+<form action="" name="form1" id="form1" class="ui-salary-report ui-salary-firms-report" onsubmit="return false;">
 	<input type="hidden" id="nIDSelectFirmFrom" name="nIDSelectFirmFrom"	value="{$nIDSelectFirmFrom}"/>
 	<input type="hidden" id="nIDSelectFirmTo" 	name="nIDSelectFirmTo" 		value="{$nIDSelectFirmTo}"/>
 	<input type="hidden" id="sAct" name="sAct" value="1">
-	<table class = "page_data">
+	<table class="page_data ui-salary-report-heading">
 		<tr>
 			<td class="page_name">Работни заплати - По фирми (Подробна) </td>
 
@@ -56,13 +56,13 @@
 	</table>
 	
 	<center>
-		<table class="search">
+		<table class="search ui-salary-legacy-filter">
 			<tr>
 					
 				
 				<td align="right">Служители от:</td>
 				<td>
-					<select name="nIDFirmFrom" id="nIDFirmFrom" class="select150"/>
+					<select name="nIDFirmFrom" id="nIDFirmFrom" class="select150"></select>
 				</td>
 				
 				<td style="width:50px;">
@@ -70,7 +70,7 @@
 				</td>
 				<td align="right">За сметка на:</td>
 				<td>
-					<select name="nIDFirmTo" id="nIDFirmTo" class="select150" />
+					<select name="nIDFirmTo" id="nIDFirmTo" class="select150"></select>
 				</td>
 				
 				<td style="width:50px;">
@@ -85,10 +85,10 @@
 				</td>
 				
 				<td style="width:150px;">
-					<button type="button" onClick="getResult(1);" name="Button" id="button1"><img src="images/confirm.gif">Служители</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="getResult(1);" name="Button" id="button1"><span class="ui-icon ui-icon-users" aria-hidden="true"></span> Служители</button>
 				</td>
 				<td>
-					<button type="button" onClick="getResult(2);" name="Button" id="button2"><img src="images/confirm.gif">Региони</button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="getResult(2);" name="Button" id="button2"><span class="ui-icon ui-icon-tags" aria-hidden="true"></span> Региони</button>
 				</td>
 			</tr>
 		</table>
@@ -97,7 +97,7 @@
 
 	<hr>
 	
-	<div id="result"></div>
+	<div id="result" class="ui-salary-report-result"></div>
 
 </form>
 

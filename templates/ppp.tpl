@@ -1,7 +1,8 @@
 {literal}
 
 	<script>
-		rpc_debug=true;
+		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		InitSuggestForm = function()
 		{
@@ -387,7 +388,7 @@
 			<div class="col text-right">
 				<button class="btn btn-sm btn-success"	onclick="setPPPElement( 0 );" id="addnom" name="addnom" type="button"><i class="far fa-plus"></i> Добави </button>
 				<button class="btn btn-sm btn-info" type="submit" id="send"><i class="far fa-save"></i> Запиши </button>
-{*				<button class="btn btn-sm btn-danger"	onClick="loadXMLDoc2( 'purgeDatabase', 3 );"><img src="images/glyphicons/cancel.png" style="width: 14px; height: 14px;"> Затвори </button>*}
+{*				<button class="btn btn-sm btn-danger"	onClick="loadXMLDoc2( 'purgeDatabase', 3 );"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>*}
 				<button class="btn btn-sm btn-primary"	onClick="printPDF();"><i class="far fa-file-pdf"></i> Разпечатай </button>
 			</div>
 		</div>

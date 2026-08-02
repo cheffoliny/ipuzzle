@@ -5,13 +5,13 @@ function tab_href (page) {
 		alert ("Служитела все още не съществува в системата!");
 		return false;
 	}
-	obj = document.getElementById(page);
+	var obj = document.getElementById(page);
 	obj.href = "page.php?page="+page+"&id="+document.getElementById('id').value+"&enable_refresh="+document.getElementById('nEnableRefresh').value;
 	return true;
 };
 </script>
 {/literal}
-<div class="row navbar-dark bg-faded py-1">
+<div class="row navbar-dark bg-faded py-1 ui-person-card-header">
     <div class="col-sm-8 col-lg-8">
         <h5>
             {if $id}
@@ -26,55 +26,55 @@ function tab_href (page) {
 
     </div>
 </div>
-<ul class="nav nav-tabs navbar-dark bg-faded mb-1">
+<ul class="nav nav-tabs navbar-dark bg-faded mb-1 ui-person-card-tabs" aria-label="Досие на служител">
 
     {if $page eq 'personInfo'}
-        <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#">&nbsp; Инфо &nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-info" aria-hidden="true"></span><br>Инфо</a></li>
     {else}
-        <li class="nav-item text-center" title="Информация">{if $tabs.info}<a class="nav-link" href="#" onclick="return tab_href('personInfo');" id='personInfo'> Инфо </a>{else}<a class="nav-link disabled" href="#"> Инфо </a>{/if}</li>
+        <li class="nav-item text-center" title="Информация">{if $tabs.info}<a class="nav-link" href="#" onclick="return tab_href('personInfo');" id='personInfo'><span class="ui-icon ui-icon-info" aria-hidden="true"></span><br>Инфо</a>{else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-info" aria-hidden="true"></span><br>Инфо</a>{/if}</li>
     {/if}
 
     {* Служебни данни *}
     {if $page eq 'person_data'}
-        <li class="nav-item text-center" title="Служебна информация"><a class="nav-link active" href="#">&nbsp; Служебни </a></li>
+        <li class="nav-item text-center" title="Служебна информация"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-id-card" aria-hidden="true"></span><br>Служебни</a></li>
     {else}
-        <li class="nav-item text-center" title="Служебна информация">{if $tabs.data}<a class="nav-link" href="#" onclick="return tab_href('person_data');" id='person_data'>&nbsp;&nbsp; Служебни </a>{else}<a class="nav-link disabled" href="#">&nbsp;&nbsp; Служебни</a>{/if}</li>
+        <li class="nav-item text-center" title="Служебна информация">{if $tabs.data}<a class="nav-link" href="#" onclick="return tab_href('person_data');" id='person_data'><span class="ui-icon ui-icon-id-card" aria-hidden="true"></span><br>Служебни</a>{else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-id-card" aria-hidden="true"></span><br>Служебни</a>{/if}</li>
     {/if}
 
     {* Документи *}
     {if $page eq 'person_docs'}
-        <li class="nav-item text-center" title="Документи"><a class="nav-link active" href="#">&nbsp; Документи </a></li>
+        <li class="nav-item text-center" title="Документи"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-document" aria-hidden="true"></span><br>Документи</a></li>
     {else}
-        <li class="nav-item text-center" title="Документи">{if $tabs.docs}<a class="nav-link" href="#" onclick="return tab_href('person_docs');" id='person_docs'>&nbsp;&nbsp; Документи </a>{else}<a class="nav-link disabled" href="#">&nbsp;&nbsp; Документи</a>{/if}</li>
+        <li class="nav-item text-center" title="Документи">{if $tabs.docs}<a class="nav-link" href="#" onclick="return tab_href('person_docs');" id='person_docs'><span class="ui-icon ui-icon-document" aria-hidden="true"></span><br>Документи</a>{else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-document" aria-hidden="true"></span><br>Документи</a>{/if}</li>
     {/if}
 
     {* Трудов договор *}
     {if $page eq 'person_contract'}
-        <li class="nav-item text-center" title="Трудов договор"><a class="nav-link active" href="#"> Договор </a></li>
+        <li class="nav-item text-center" title="Трудов договор"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-contract" aria-hidden="true"></span><br>Договор</a></li>
     {else}
         <li class="nav-item text-center" title="Договор">
-            {if $tabs.contr}<a class="nav-link" href="#" onclick="return tab_href('person_contract');" id='person_contract'>&nbsp;&nbsp;Договор </a>
-            {else}<a class="nav-link disabled" href="#">&nbsp;&nbsp; Договор</a>{/if}
+            {if $tabs.contr}<a class="nav-link" href="#" onclick="return tab_href('person_contract');" id='person_contract'><span class="ui-icon ui-icon-contract" aria-hidden="true"></span><br>Договор</a>
+            {else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-contract" aria-hidden="true"></span><br>Договор</a>{/if}
         </li>
     {/if}
 
     {* Отпуск *}
     {if $page eq 'person_leave'}
-        <li class="nav-item text-center" title="Отпуск"><a class="nav-link active" href="#">&nbsp; Отпуск </a></li>
+        <li class="nav-item text-center" title="Отпуск"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span><br>Отпуск</a></li>
     {else}
         <li class="nav-item text-center" title="Отпуск">
-            {if $tabs.leave}<a class="nav-link" href="#" onclick="return tab_href('person_leave');" id='person_leave'>&nbsp;&nbsp; Отпуск </a>
-            {else}<a class="nav-link disabled" href="#">&nbsp;&nbsp;Отпуск</a>{/if}
+            {if $tabs.leave}<a class="nav-link" href="#" onclick="return tab_href('person_leave');" id='person_leave'><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span><br>Отпуск</a>
+            {else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span><br>Отпуск</a>{/if}
         </li>
     {/if}
 
     {* Работна заплата *}
     {if $page eq 'person_salary'}
-        <li class="nav-item text-center" title="Заплата"><a class="nav-link active" href="#">&nbsp; Заплата </a></li>
+        <li class="nav-item text-center" title="Заплата"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-money" aria-hidden="true"></span><br>Заплата</a></li>
     {else}
         <li class="nav-item text-center" title="Заплата">
-            {if $tabs.salary}<a class="nav-link" href="#" onclick="return tab_href('person_salary');" id='person_salary'>&nbsp;&nbsp; Заплата </a>
-            {else}<a class="nav-link disabled" href="#">&nbsp;&nbsp;Заплата</a>{/if}
+            {if $tabs.salary}<a class="nav-link" href="#" onclick="return tab_href('person_salary');" id='person_salary'><span class="ui-icon ui-icon-money" aria-hidden="true"></span><br>Заплата</a>
+            {else}<a class="nav-link disabled" href="#"><span class="ui-icon ui-icon-money" aria-hidden="true"></span><br>Заплата</a>{/if}
         </li>
     {/if}
 </ul>

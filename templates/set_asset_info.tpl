@@ -1,55 +1,48 @@
 {literal}
- <script>
- 	rpc_debug = true;
-	function SubmitForm() {
-		loadXMLDoc2('save', 0);
-		rpc_on_exit = function() {
-			if ( typeof(window.opener.test) != 'undefined' ) {
-				window.opener.test();	
+<script>
+	rpc_debug = true;
+	rpc_html_debug = true;
+
+	function submitAssetPeriod() {
+		rpc_on_exit = function(nCode) {
+			if (parseInt(nCode, 10)) return;
+
+			if (window.opener && typeof window.opener.test === 'function') {
+				window.opener.test();
 			}
-			window.opener.location.reload();
-			rpc_on_exit = function() {};
+			if (window.opener && window.opener.location) {
+				window.opener.location.reload();
+			}
 			parent.window.close();
-		}
+		};
+		loadXMLDoc2('save', 0);
 	}
-	
- </script>
+</script>
 {/literal}
 
-<div class="content">
-	<form name="form1" id="form1" onsubmit="return false;">
-		<input type="hidden" id="nID" name="nID" value="{$nID|default:0}">
-		
-		<div class="page_caption">Редакция на<br>Амортизационен период</div>
-		<br>
+<form name="form1" id="form1" class="ui-asset-editor ui-asset-period-editor" onsubmit="submitAssetPeriod(); return false;">
+	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}">
 
-		<fieldset>
-		 <table class="input">
-				<tr class="even">
-					<td>Амортизационен период:</td>
-					<td>
-						<input type="text" name="amort_period" id="amort_period" class="input100" onkeypress="return formatDigits(event)"/>&nbsp;
-					</td>
-				</tr>
-		 </table>
-		</fieldset>
-		<div style="height: 10px;"></div>
-		
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="button" class="search" onclick="return SubmitForm();"> Запиши </button>
-					<button onclick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-		
-	</form>
-</div>
+	<div class="modal-content ui-asset-editor-content">
+		<div class="modal-header">
+			<strong>Редакция на амортизационен период</strong>
+			<button type="button" class="close" onclick="parent.window.close();" aria-label="Затвори">×</button>
+		</div>
+		<div class="modal-body ui-asset-editor-body">
+			<div class="input-group input-group-sm">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Амортизационен период"></span></div>
+				<input type="text" name="amort_period" id="amort_period" class="form-control text-right" onkeypress="return formatDigits(event);" placeholder="Период в месеци..." />
+				<div class="input-group-append">месеца</div>
+			</div>
+		</div>
+	</div>
 
-{literal}
+	<nav class="modal-footer fixed-bottom ui-asset-editor-actions" aria-label="Действия с амортизационния период">
+		<button type="submit" class="btn btn-success"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+		<button type="button" class="btn btn-danger" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+	</nav>
+</form>
+
 <script>
 	loadXMLDoc2('load');
 </script>
-{/literal}

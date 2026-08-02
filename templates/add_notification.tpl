@@ -2,6 +2,7 @@
     <script>
 
         rpc_debug = true;
+        rpc_html_debug = true;
 
         function save()
         {
@@ -54,8 +55,6 @@
 {/literal}
 
 <div class="content">
-    <dlcalendar click_element_id="sSendDateImg" input_element_id="sSendDate" tool_tip="Дата на изпращане"></dlcalendar>
-    <dlcalendar click_element_id="sReceiveDateImg" input_element_id="sReceiveDate" tool_tip="Дата на получване"></dlcalendar>
     <form id="form1" name="form1" onsubmit="return false;">
         <div class="page_caption">Добавяне на нотификация</div>
 

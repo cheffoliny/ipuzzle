@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function onInit() {
 			loadXMLDoc2('result');
@@ -53,15 +54,15 @@
 					
 						<tr>
 							<td valign="top" align="right" >
-								<button type="button" onClick="books_add();" title="Добави кочан"><img src="images/plus.gif" />Добави</button>
+								<button type="button" onClick="books_add();" title="Добави кочан" class="ui-final-action"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 							</td>
 							
 							<td valign="top" align="right" >
-								<button type="button" class="search" onClick="books_set(0);" title="промени статус"><img src="images/edit.gif" />Промени</button>
+								<button type="button" class="search ui-final-action" onClick="books_set(0);" title="промени статус"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span>Промени</button>
 							</td>
 						
 							<td valign="top" align="right" >
-								<button type="button" onClick="books_del(0);" title="Изтрий кочан" style="background-color: red;"><img src="images/erase.gif" />Изтрий</button>
+								<button type="button" class="ui-final-action" onClick="books_del(0);" title="Изтрий кочан" style="background-color: red;"><span class="ui-icon ui-icon-delete" aria-hidden="true"></span>Изтрий</button>
 							</td>							
 						</tr>
 

@@ -220,7 +220,7 @@
 {/if}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-info" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
     <input type="hidden" id="FaceID" name="FaceID" value="0" />
     <input type="hidden" id="sName" name="sName" value="" />
@@ -237,12 +237,12 @@
 
     {include file='object_tabs.tpl'}
 
-    <div class="container-fluid mb-4 mx-2">
+    <div class="container-fluid mb-4 mx-2 ui-object-info-fields">
         <div class="row clearfix mt-2">
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-home fa-fw" data-fa-transform="right-22 down-10" title="Номер на обект"></span>
+                        <span class="ui-icon ui-icon-home" title="Номер на обект" aria-hidden="true"></span>
                     </div>
                     <input class="form-control form-control" type="text" name="num" id="num" onkeypress="return formatDigits(event);"  placeholder="Номер на обект..." />
                     <input type="hidden" name="oldNum" id="oldNum"/>
@@ -251,7 +251,7 @@
             <div class="col-7 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-home fa-fw" data-fa-transform="right-22 down-10" title="Номер на обект"></span>
+                        <span class="ui-icon ui-icon-home" title="Име на обекта" aria-hidden="true"></span>
                     </div>
                     <input class="form-control" type="text" name="name" id="name"  placeholder="Име на обекта..." />
                 </div>
@@ -259,7 +259,7 @@
             <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-eye fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+                        <span class="ui-icon ui-icon-eye" title="Състояние" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="statuses" id="statuses" ></select>
                 </div>
@@ -269,9 +269,6 @@
         <div class="row clearfix mt-2">
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
-                    {*<div class="input-group-prepend">*}
-                        {*<span class="fa fa-play" title="Изграден на..."></span>*}
-                    {*</div>*}
                     <input readonly class="form-control-plaintext text-white" name="start_time" id="start_time" />
                 </div>
             </div>
@@ -279,13 +276,13 @@
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="fa fa-map-marker fa-fw" data-fa-transform="right-22 down-10" title="..."></span>
+                            <span class="ui-icon ui-icon-location" title="Населено място" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" name="nIDCity" id="nIDCity" suggest="suggest" queryType="onSuggestCity" onchange="onCityChange()" onpast="onCityChange()" placeholder=" Гр./с..."/>
                     </div>
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="far fa-map fa-fw" data-fa-transform="right-22 down-10" title="Квартал"></span>
+                            <span class="ui-icon ui-icon-map" title="Квартал" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDArea" id="nIDArea" ></select>
                     </div>
@@ -294,7 +291,7 @@
             <div class="col-3">
                 <div class="input-group input-group-sm pl-0">
                     <div class="input-group-prepend">
-                        <span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Телефон на обекта"></span>
+                        <span class="ui-icon ui-icon-tag" title="Тип на обекта" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="objtype" id="objtype" ></select>
                     <input class="form-control" type="hidden" name="phone" id="phone" placeholder=" 0хххх..." />
@@ -305,7 +302,7 @@
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-crop fa-fw" data-fa-transform="right-22 down-10" title="Дистанция..."></span>
+                        <span class="ui-icon ui-icon-crop" title="Дистанция" aria-hidden="true"></span>
                     </div>
                     <input class="form-control form-control-inp50" type=text name="nDistance" id="nDistance" onkeypress="return formatDigits(event);" />
                 </div>
@@ -313,7 +310,7 @@
             <div class="col-7 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-road fa-fw" data-fa-transform="right-22 down-10" title="Ул./№/бл./вх./ет./ап./Местност"></span>
+                        <span class="ui-icon ui-icon-road" title="Ул./№/бл./вх./ет./ап./Местност" aria-hidden="true"></span>
                     </div>
                     <input class="form-control" type=text name="sAddress" id="sAddress" placeholder="Ул./Местност" />
                 </div>
@@ -321,7 +318,7 @@
             <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-hashtag fa-fw" data-fa-transform="right-22 down-10" title="Дейност"></span>
+                        <span class="ui-icon ui-icon-code" title="Дейност" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="functions" id="functions" ></select>
                 </div>
@@ -331,7 +328,7 @@
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="far fa-clock fa-fw" data-fa-transform="right-22 down-10" title="Край на работно време..."></span>
+                        <span class="ui-icon ui-icon-clock" title="Край на работно време" aria-hidden="true"></span>
                     </div>
                     <input class="form-control" type=text name="work_time_alert" id="work_time_alert" onkeypress="return formatTimeS(event);" placeholder="00:00:00" />
                 </div>
@@ -340,13 +337,13 @@
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="fa fa-tag fa-fw" data-fa-transform="right-22 down-10" title="..."></span>
+                            <span class="ui-icon ui-icon-tag" title="Административна фирма" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2('loadOffices')" ></select>
                     </div>
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="..."></span>
+                            <span class="ui-icon ui-icon-car" title="Реакция от фирма" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDReactionFirm" id="nIDReactionFirm" onchange="loadXMLDoc2('loadReactionOffices');"></select>
                     </div>
@@ -355,7 +352,7 @@
             <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-cog fa-fw" data-fa-transform="right-22 down-10" title="Сервизна фирма"></span>
+                        <span class="ui-icon ui-icon-settings" title="Сервизна фирма" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="nIDTechFirm" id="nIDTechFirm" onchange="loadXMLDoc2('loadTechOffices')" ></select>
                 </div>
@@ -365,10 +362,10 @@
             <div class="col-2 px-1">
                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                     <label title="СОД" class="{$labelSOD}">
-                        <input type="checkbox" name="isSOD" id="isSOD" autocomplete="on" /><i class="fa fa-car"></i>
+                        <input type="checkbox" name="isSOD" id="isSOD" autocomplete="on" /><span class="ui-icon ui-icon-car" aria-hidden="true"></span>
                     </label>
                     <label title="ФО" class="{$labelFO}">
-                        <input type="checkbox" name="isFO" id="isFO" value="0" autocomplete="on" /><i class="fa fa-calendar"></i>
+                        <input type="checkbox" name="isFO" id="isFO" value="0" autocomplete="on" /><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
@@ -376,13 +373,13 @@
                 <div class="row clearfix">
                     <div class="input-group input-group-sm col-sm-6">
                          <div class="input-group-prepend">
-                            <span class="fa fa-tags fa-fw" data-fa-transform="right-22 down-10" title="Администрация от..."></span>
+                            <span class="ui-icon ui-icon-tags" title="Администрация от" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDOffice" id="nIDOffice" ></select>
                     </div>
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
-                            <span class="fa fa-car fa-fw" data-fa-transform="right-22 down-10" title="Реакция от..."></span>
+                            <span class="ui-icon ui-icon-car" title="Реакция от" aria-hidden="true"></span>
                         </div>
                         <select class="form-control" name="nIDReactionOffice" id="nIDReactionOffice" ></select>
                     </div>
@@ -391,7 +388,7 @@
             <div class="col-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-cogs fa-fw" data-fa-transform="right-22 down-10" title="Сервизен офис"></span>
+                        <span class="ui-icon ui-icon-settings" title="Сервизен офис" aria-hidden="true"></span>
                     </div>
                     <select class="form-control" name="nIDTechOffice" id="nIDTechOffice" data-alias="id_tech_office"></select>
                 </div>
@@ -402,9 +399,9 @@
             <div class="col-12 pl-1 pr-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
+                        <span class="ui-icon ui-icon-info" title="Информация" aria-hidden="true"></span>
                     </div>
-                    <textarea class="form-control py-0" row="3" id="operativ_info" name="operativ_info" placeholder="Оперативна информация" title="Оперативна информация" ></textarea>
+                    <textarea class="form-control py-0" rows="3" id="operativ_info" name="operativ_info" placeholder="Оперативна информация" title="Оперативна информация" ></textarea>
                 </div>
             </div>
         </div>
@@ -412,34 +409,34 @@
             <div class="col-12 pl-1 pr-3">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fa fa-info fa-fw" data-fa-transform="right-22 down-10" title="Информация"></span>
+                        <span class="ui-icon ui-icon-info" title="Информация" aria-hidden="true"></span>
                     </div>
-                    <textarea class="form-control py-0" row="3" id="tech_info" name="tech_info" placeholder="Информация за сервиз" title="Информация за сервиз" ></textarea>
+                    <textarea class="form-control py-0" rows="3" id="tech_info" name="tech_info" placeholder="Информация за сервиз" title="Информация за сервиз" ></textarea>
                 </div>
             </div>
         </div>
     </div>
-</form>
-<div class="p-0 m-0" style="overflow: auto; position: relative; height: 300px;">
-    <div class="w-100 p-0 m-0" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
+<div class="p-0 m-0 ui-object-result-shell" style="overflow: auto; position: relative; height: 300px;">
+    <div class="w-100 p-0 m-0 ui-object-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on" style="overflow: auto;"></div>
 </div>
-<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg ui-object-actions ui-object-info-actions" id="search">
     <div class="col-6 col-sm-7 col-lg-7 pl-0">
         <div class="input-group input-group-sm">
             <div class="input-group-prepend">
-                <span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Име за фактура..."></span>
+                <span class="ui-icon ui-icon-file" title="Име за фактура" aria-hidden="true"></span>
             </div>
             <input class="form-control" type="text" id="invoice_name" name="invoice_name" placeholder="Име за фактура..." />
         </div>
     </div>
     <div class="col-6 col-sm-5 col-lg-5 my-2 text-right">
         <div class="input-group input-group-sm text-right">
-            <button class="btn btn-sm btn-light mr-1"	onclick="editFace(0)"           ><i class="fas fa-plus"  ></i> Контакт </button>
-            <button class="btn btn-sm btn-success mr-1"	onClick="formSubmit();"         ><i class="fas fa-check" ></i> Запиши </button>
-            <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+            <button type="button" class="btn btn-sm btn-light mr-1" onclick="editFace(0)"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Контакт </button>
+            <button type="button" class="btn btn-sm btn-success mr-1" onClick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+            <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
         </div>
     </div>
 </nav>
+</form>
 
 
 

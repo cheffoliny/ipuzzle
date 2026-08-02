@@ -1,7 +1,8 @@
 {literal}
 <script>
 
-rpc_debug=true;
+rpc_debug = true;
+rpc_html_debug = true;
 rpc_method="POST";
 
 function onInit() {
@@ -92,8 +93,8 @@ function update() {
 		<table width="100%" cellspacing=5px>
 			<tr>
 				<td align="right" valign="bottom">
-					<button id=b100 onClick="update()"><img src=images/confirm.gif />Запиши</button>&nbsp;
-					<button id=b101 onClick="parent.window.close()"><img src="images/cancel.gif" />Затвори</button>
+	<button id="b100" class="ui-final-action" onClick="update()"><span class="ui-icon ui-icon-save" aria-hidden="true"></span>Запиши</button>&nbsp;
+	<button id="b101" class="ui-final-action" onClick="parent.window.close()"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 				</td>
 			</tr>
 		</table>

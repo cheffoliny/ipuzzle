@@ -8,9 +8,11 @@
 			$oOffices = new DBOffices();
 			$aFirms = $oDBFirms->getFirms4();
 
-			$nIDOffice = $_SESSION['userdata']['id_office'];
-			$nIDFirm = $oOffices->getFirmByIDOffice( $nIDOffice );
-			$aOffices = $oOffices->getPatrulOfficesByIDFirm( $nIDFirm );
+			$nIDOffice = isset($_SESSION['userdata']['id_office'])
+				? (int) $_SESSION['userdata']['id_office']
+				: 0;
+			$nIDFirm = $nIDOffice > 0 ? (int) $oOffices->getFirmByIDOffice( $nIDOffice ) : 0;
+			$aOffices = $nIDFirm > 0 ? $oOffices->getPatrulOfficesByIDFirm( $nIDFirm ) : array();
 								
 			$oResponse->setFormElement('form1', 'nIDFirm', array(), '');
 			$oResponse->setFormElementChild('form1', 'nIDFirm', array_merge(array("value"=>'0')), "--Изберете--");

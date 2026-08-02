@@ -12,6 +12,7 @@
 			$nIDPatrul	= 0;	
 			$nAuto		= 0;
 			$nPersons	= array();
+			$aCurrentPersons = array();
 
 			if ( !empty($nID) && $sAct == "list" ) {
 				$aRes = $oRoadLists->getRoadList( $nID );
@@ -57,10 +58,10 @@
 				$aRaodList = array();
 			
 				
-				$aBusyPatruls = $oRoadLists->getBusyPatruls();	
+				$aBusyPatruls = (array) $oRoadLists->getBusyPatruls();
 				$sBusyPatruls = implode(",",$aBusyPatruls);
 				
-				$aBusyAutos = $oRoadLists->getBusyAutos();	
+				$aBusyAutos = (array) $oRoadLists->getBusyAutos();
 				$sBusyAutos = implode(",",$aBusyAutos);
 				
 				$sBusyPersons = $oRoadLists->getBusyPersons();

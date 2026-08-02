@@ -34,19 +34,20 @@
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
-    <link href="css/ui-fa7-icons.css?version=4" rel="stylesheet" type="text/css">
+<link href="css/ui-fa7-icons.css?version=16" rel="stylesheet" type="text/css">
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-content.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-results.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-report-controls.css?version=1" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-dialogs.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-dialogs.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-feedback.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-actions.css?version=1" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-legacy-reports.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=1" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-nomenclatures.css?version=14" rel="stylesheet" type="text/css">
+<link href="css/ui-refresh-nomenclatures.css?version=43" rel="stylesheet" type="text/css">
+    <link href="css/ui-final-migration.css?version=2" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 
     <script type="text/javascript" language="javascript">
@@ -69,7 +70,7 @@
     </script>
 
 </head>
-<body class="ui-refresh-content">
+<body class="ui-refresh-content" data-page="{$page|escape:'html'}">
 
 
 <div id="systemMessageBG" style="display:none;"></div>
@@ -109,7 +110,9 @@
 {*	{/if}*}
 {/if}
 
-<script type="text/javascript" language="javascript"  src="js/dlcalendar.js"></script>
+<script type="text/javascript" language="javascript"  src="js/dlcalendar.js?version=2"></script>
+<script type="text/javascript" src="js/ui_calendar_popup.js?version=1"></script>
+<script type="text/javascript" src="js/ui_final_migration.js?version=3"></script>
 
 </body>
 </html>

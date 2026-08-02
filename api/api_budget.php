@@ -2,7 +2,152 @@
 	class ApiBudget {
 		public function isValidID( $nID ) {
 			return preg_match("/^\d{13}$/", $nID);
-		}	
+		}
+
+		private function setHtmlOffices( DBResponse $oResponse, $nIDFirm ) {
+			$oResponse->setFormElement("form1", "id_office");
+			$oResponse->setFormElementChild("form1", "id_office", array("value" => 0), "-= Всички региони =-");
+
+			if ( !empty($nIDFirm) ) {
+				$oOffices = new DBOffices();
+				$aOffices = $oOffices->getOfficesByFirm($nIDFirm);
+
+				foreach ( $aOffices as $aOffice ) {
+					$sLabel = isset($aOffice['code'])
+						? sprintf("%s [%s]", $aOffice['name'], $aOffice['code'])
+						: $aOffice['name'];
+					$oResponse->setFormElementChild("form1", "id_office", array("value" => $aOffice['id']), $sLabel);
+				}
+			}
+		}
+
+		private function setHtmlControls( DBResponse $oResponse, $aFirms, $aMonths, $aFilters, $nDefaultFilter ) {
+			$oResponse->setFormElement("form1", "id_firm");
+			$aSeenFirms = array();
+
+			foreach ( $aFirms as $aFirm ) {
+				$nIDFirm = isset($aFirm['fcode']) ? (int) $aFirm['fcode'] : 0;
+				if ( isset($aSeenFirms[$nIDFirm]) ) {
+					continue;
+				}
+
+				$aSeenFirms[$nIDFirm] = true;
+				$sFirmName = isset($aFirm['firm']) ? $aFirm['firm'] : "";
+				$oResponse->setFormElementChild("form1", "id_firm", array("value" => $nIDFirm), $sFirmName);
+			}
+
+			$nIDFirm = (int) Params::get("id_firm", 0);
+			$oResponse->setFormElementAttribute("form1", "id_firm", "value", $nIDFirm);
+			$this->setHtmlOffices($oResponse, $nIDFirm);
+
+			$nIDOffice = (int) Params::get("id_office", 0);
+			if ( !empty($nIDOffice) ) {
+				$oResponse->setFormElementAttribute("form1", "id_office", "value", $nIDOffice);
+			}
+
+			if ( empty($aMonths) ) {
+				$aMonths[] = date("Y-m");
+			}
+
+			$sSelectedMonth = Params::get("month_from", Params::get("month", end($aMonths)));
+			if ( !in_array($sSelectedMonth, $aMonths, true) ) {
+				$sSelectedMonth = end($aMonths);
+			}
+
+			foreach ( array("month_from", "month_to") as $sControl ) {
+				$oResponse->setFormElement("form1", $sControl);
+				foreach ( $aMonths as $sMonth ) {
+					$sLabel = substr($sMonth, 5, 2) . "." . substr($sMonth, 0, 4);
+					$oResponse->setFormElementChild("form1", $sControl, array("value" => $sMonth), $sLabel);
+				}
+				$oResponse->setFormElementAttribute("form1", $sControl, "value", $sSelectedMonth);
+			}
+
+			$oResponse->setFormElement("form1", "id_filter");
+			foreach ( $aFilters as $aFilter ) {
+				$oResponse->setFormElementChild(
+					"form1",
+					"id_filter",
+					array("value" => isset($aFilter['id']) ? $aFilter['id'] : 0),
+					isset($aFilter['name']) ? $aFilter['name'] : ""
+				);
+			}
+
+			$nSelectedFilter = (int) Params::get("id_filter", $nDefaultFilter);
+			$oResponse->setFormElementAttribute("form1", "id_filter", "value", $nSelectedFilter);
+		}
+
+		private function htmlAmount( $mValue ) {
+			if ( is_numeric($mValue) ) {
+				return number_format((float) $mValue, 0, ".", " ") . " €";
+			}
+
+			return (string) $mValue;
+		}
+
+		private function appendHtmlRows( &$aRows, $aNodes, $aMonths, $sSection, $nDepth, &$nRowID ) {
+			foreach ( $aNodes as $aNode ) {
+				if ( !is_array($aNode) || !isset($aNode['label']) ) {
+					continue;
+				}
+
+				$aRow = array(
+					"id" => ++$nRowID,
+					"section" => $sSection,
+					"label" => str_repeat("— ", $nDepth) . $aNode['label'],
+				);
+
+				foreach ( $aMonths as $nMonthIndex => $sMonth ) {
+					$aRow["month_" . $nMonthIndex] = $this->htmlAmount(isset($aNode[$sMonth]) ? $aNode[$sMonth] : 0);
+				}
+
+				foreach ( array("sum", "sum_saved", "result", "result_saved") as $sAmountField ) {
+					$aRow[$sAmountField] = $this->htmlAmount(isset($aNode[$sAmountField]) ? $aNode[$sAmountField] : 0);
+				}
+
+				$aRows[] = $aRow;
+
+				if ( isset($aNode['children']) && is_array($aNode['children']) ) {
+					$this->appendHtmlRows($aRows, $aNode['children'], $aMonths, $sSection, $nDepth + 1, $nRowID);
+				}
+			}
+		}
+
+		private function setHtmlReport( DBResponse $oResponse, $aEarnings, $aExpenses, $aMonths ) {
+			$oResponse->setField("section", "Вид");
+			$oResponse->setFieldAttributes("section", array("style" => "min-width:90px;text-align:left;"));
+			$oResponse->setField("label", "Номенклатура");
+			$oResponse->setFieldAttributes("label", array("style" => "min-width:260px;text-align:left;"));
+
+			foreach ( $aMonths as $nMonthIndex => $sMonth ) {
+				$sField = "month_" . $nMonthIndex;
+				$sCaption = substr($sMonth, 5, 2) . "." . substr($sMonth, 0, 4);
+				$oResponse->setField($sField, $sCaption);
+				$oResponse->setFieldAttributes($sField, array("style" => "min-width:105px;text-align:right;"));
+			}
+
+			$aValueFields = array(
+				"sum" => "Общо",
+				"sum_saved" => "Бюджет",
+				"result" => "Резултат",
+				"result_saved" => "Планиран резултат",
+			);
+			foreach ( $aValueFields as $sField => $sCaption ) {
+				$oResponse->setField($sField, $sCaption);
+				$oResponse->setFieldAttributes($sField, array("style" => "min-width:115px;text-align:right;"));
+			}
+
+			$aRows = array();
+			$nRowID = 0;
+			$this->appendHtmlRows($aRows, $aEarnings, $aMonths, "Приходи", 0, $nRowID);
+			$this->appendHtmlRows($aRows, $aExpenses, $aMonths, "Разходи", 0, $nRowID);
+			$oResponse->setData($aRows);
+		}
+
+		public function load_offices( DBResponse $oResponse ) {
+			$this->setHtmlOffices($oResponse, (int) Params::get("id_firm", 0));
+			$oResponse->printResponse();
+		}
 				
 		public function init( DBResponse $oResponse ) {
 			global $db_finance;
@@ -20,6 +165,8 @@
 			$aFilRows	= array();
 			$aFilterEA	= array();
 			$aFilterEX	= array();	
+			$aFilter	= array();
+			$nFilterDef = 0;
 			$sFilter	= "";
 			$sFilterEA	= "";
 			$sFilterEX	= "";					
@@ -64,6 +211,8 @@
 				$oResponse->SetFlexControl("cbFilters");
 				$oResponse->SetFlexControlDefaultValue("cbFilters", "id", $nFilterDef);
 			}
+
+			$this->setHtmlControls($oResponse, $aFirms, $aMonths, $aFilter, $nFilterDef);
 			
 			//$oResponse->SetFlexVar("arr_earnings", $arr_earnings);	
 			
@@ -752,7 +901,8 @@
 			$arr_expenses = $this->formatData($arr_expenses, $aMonths);
 			
 			$oResponse->SetFlexVar("arr_earnings", $arr_earnings);
-			$oResponse->SetFlexVar("arr_expenses", $arr_expenses);								
+			$oResponse->SetFlexVar("arr_expenses", $arr_expenses);
+			$this->setHtmlReport($oResponse, $arr_earnings, $arr_expenses, $aMonths);
 			
 			$oResponse->printResponse();	
 		}

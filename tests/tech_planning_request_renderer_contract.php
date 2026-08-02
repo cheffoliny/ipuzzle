@@ -11,14 +11,15 @@ if ($renderer === false || $xmlrpc === false || $template === false) {
 }
 
 $requirements = [
-    'specialized stylesheet recognition' => strpos($renderer, 'tech_planning_request\\.xsl') !== false,
+    'specialized profile recognition' => strpos($renderer, 'techPlanningRequest: true') !== false,
     'specialized renderer profile' => strpos($renderer, 'techPlanningRequest') !== false,
     'real row id propagation' => strpos($renderer, 'setRequestId(rowId)') !== false,
     'local request id field' => strpos($renderer, 'getElementById("id_request")') !== false,
     'selected row legacy color' => strpos($renderer, '#2c2c61') !== false,
     'specialized resize support' => strpos($renderer, 'installTechPlanningRequestResizer') !== false,
-    'supported stylesheet integration' => strpos($xmlrpc, 'RpcResultRenderer.isSupportedStylesheet(rpc_xsl)') !== false,
-    'renderer profile integration' => strpos($xmlrpc, 'RpcResultRenderer.getStylesheetProfile(rpc_xsl)') !== false,
+    'supported profile integration' => strpos($xmlrpc, 'RpcResultRenderer.isSupportedProfile(rpc_renderer_profile)') !== false,
+    'renderer profile integration' => strpos($xmlrpc, 'RpcResultRenderer.getProfile(rpc_renderer_profile)') !== false,
+    'template profile selection' => strpos($template, 'rpc_renderer_profile = "techPlanningRequest"') !== false,
     'template keeps export panel off' => strpos($template, 'rpc_excel_panel="off"') !== false,
     'template keeps paging off' => strpos($template, 'rpc_paging="off"') !== false,
 ];

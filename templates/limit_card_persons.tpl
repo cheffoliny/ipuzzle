@@ -43,13 +43,13 @@
 		function loadLimitCardAvailability() {
 			rpc_result_area = 'dresult';
 			rpc_method = 'POST';
-			rpc_xsl = 'xsl/limit_card_persons.xsl';
+			rpc_renderer_profile = 'limitCardPersons';
 			rpc_html_debug = true;
 
 			rpc_on_exit = function() {
 				rpc_on_exit = function() {};
 				rpc_result_area = 'result';
-				rpc_xsl = 'xsl/general_result.xsl';
+				rpc_renderer_profile = 'general';
 				rpc_method = 'POST';
 				rpc_html_debug = false;
 			};
@@ -58,7 +58,7 @@
 
 		function loadLimitCardReports() {
 			rpc_result_area = 'result';
-			rpc_xsl = 'xsl/general_result.xsl';
+			rpc_renderer_profile = 'general';
 			rpc_method = 'POST';
 			rpc_html_debug = false;
 			rpc_on_exit = function(nCode) {

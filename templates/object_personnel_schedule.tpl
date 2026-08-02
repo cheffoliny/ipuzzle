@@ -153,34 +153,34 @@
 {/literal}
 
 
-<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-personnel-schedule" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-nomenclature-dialog ui-schedule-dialog ui-object-core ui-object-personnel-schedule" onsubmit="return false;">
 
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDPerson" name="nIDPerson" value="0" />
 	
-		<table class="search" style="width:100%;">
+		<table class="search ui-object-personnel-schedule-shell">
 			<tr>
 				<td class="header_buttons">
 				<span id="head_window">Служители в обект {$object}</span> 
-				<button type="button" class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><span class="ui-icon ui-icon-wrench" aria-hidden="true"></span> Oбслужване</button>
+				<button type="button" class="btn btn-xs btn-primary ui-object-personnel-service" onClick="techSupport();"><span class="ui-icon ui-icon-wrench" aria-hidden="true"></span> Oбслужване</button>
 				{include file="object_tabs.tpl"}
 				</td>
 			</tr>
 	
 			<tr class="odd">
-				<td id="filter_result">
+				<td id="filter_result" class="ui-object-personnel-schedule-content">
 				
 			{if $mobile}
 				{if $cnt>6}
-					<div id="search" style="padding-top: 10px; width: 800px; height: 275px; overflow-y: auto">
+					<div id="personnel_scroll" class="ui-object-personnel-mobile-scroll ui-object-personnel-mobile-scroll-short">
 				{else}
-					<div id="search" style="padding-top: 10px; width: 800px; height: 290px; overflow-y: auto">
+					<div id="personnel_scroll" class="ui-object-personnel-mobile-scroll ui-object-personnel-mobile-scroll-tall">
 				{/if}
 			{/if}
 			
 			<!-- начало на работната част -->
 		
-			<table class="page_data">
+			<table class="page_data ui-object-personnel-toolbar">
 				<tr>
 					<td style="text-align: left; padding: 2px;">
 					
@@ -195,14 +195,14 @@
 					<td width="60">От месец</td>
 					<td align="left">
 					
-					<div class="col-sm-6 col-md-3" style="width:134px;">
+					<div class="ui-object-personnel-month">
 					
 					<div class="input-group">
 							<span class="input-group-addon">
 								<button type="button" class="ui-schedule-addon-button" title="Предишен месец" onclick="nextMonth('prev','dateFrom');"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 							</span>					
 							<input 
-								style="width:50px;" 
+								class="ui-object-personnel-month-value"
 								id="dateDDS" 
 								name="dateFrom" 
 								type="text" 
@@ -219,7 +219,7 @@
 						</div>
 					</td>
 					<td style="text-align: right; padding-right: 2px;">
-						<button type="button" id="b100" class="btn btn-xs btn-success" onClick="addPerson()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
+						<button type="button" id="addPersonButton" class="btn btn-xs btn-success" onClick="addPerson()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
 					</td>
 				</tr>
 			</table>
@@ -227,24 +227,24 @@
 			
 			<hr>
 			
-			<div id="result" rpc_excel_panel="off" rpc_resize="off" rpc_paging="off" style="width:780px; height:360px;overflow: auto;"></div>
+			<div id="result" class="ui-object-result ui-object-personnel-result" rpc_excel_panel="off" rpc_resize="off" rpc_paging="off"></div>
 			
-			</div>
+			{if $mobile}</div>{/if}
 		 	<!-- край на работната част -->
 			</td>
 		</tr>
 	</table>
 
 
-	<div id="search"  style="padding-top:10px;width:800px;">
+	<div class="ui-schedule-actions-wrap ui-object-personnel-actions-wrap">
 		<table class="page_data ui-nomenclature-actions ui-schedule-actions" >
 			<tr valign="top">
 				<td valign="top" style="text-align: left; width: 200px; padding: 10px 0 10px 1px;">
-					<button type="button" id="b100" class="btn btn-xs btn-info search" onClick="goSort();"><span class="ui-icon ui-icon-sort" aria-hidden="true"></span>Подреди</button>
+					<button type="button" id="sortButton" class="btn btn-xs btn-info search" onClick="goSort();"><span class="ui-icon ui-icon-sort" aria-hidden="true"></span>Подреди</button>
 				</td>
 				<td valign="top" style="text-align: right; width: 600px; padding: 10px 1px 10px 0;">
-					<button type="button" id="b100" class="btn btn-xs btn-primary" onClick="openSchedule();"><span class="ui-icon ui-icon-list" aria-hidden="true"></span> График </button>
-					<button type="button" id="b100" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
+					<button type="button" id="scheduleButton" class="btn btn-xs btn-primary" onClick="openSchedule();"><span class="ui-icon ui-icon-list" aria-hidden="true"></span> График </button>
+					<button type="button" id="closeButton" class="btn btn-xs btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

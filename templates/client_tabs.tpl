@@ -18,30 +18,30 @@
 	</script>
 {/literal}
 
-<div class="row navbar-dark bg-faded">
+<div class="row navbar-dark bg-faded ui-client-header">
     <div class="col-sm-12 col-lg-12">
-        <p id="head_window" class="text-white text-truncate text-uppercase pt-2"><i class="fas fa-tag mx-4 "></i> {$client}</p>
+        <p id="head_window" class="text-white text-truncate text-uppercase pt-2"><span class="ui-icon ui-icon-tag" aria-hidden="true"></span> {$client}</p>
     </div>
 </div>
 
-<ul class="nav nav-tabs navbar-dark bg-faded mb-1">
+<ul class="nav nav-tabs navbar-dark bg-faded mb-1 ui-client-tabs">
 
     {if $page eq 'client_info'}
-        <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-info fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Информация"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-info" aria-hidden="true"></span><span class="sr-only">Информация</span></a></li>
     {else}
-        <li class="nav-item text-center" title="Информация"><a class="nav-link" href="#" onclick="return tab_href( 'client_info' );" id="client_info">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-info fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Информация"><a class="nav-link" href="#" onclick="return tab_href( 'client_info' );" id="client_info"><span class="ui-icon ui-icon-info" aria-hidden="true"></span><span class="sr-only">Информация</span></a></li>
     {/if}
 
     {if $page eq 'client_objects'}
-        <li class="nav-item text-center" title="Обекти"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-home fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Обекти"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-home" aria-hidden="true"></span><span class="sr-only">Обекти</span></a></li>
     {else}
-        <li class="nav-item text-center" title="Обекти"><a class="nav-link" href="#" onclick="return tab_href( 'client_objects' );" id="client_objects">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-home fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Обекти"><a class="nav-link" href="#" onclick="return tab_href( 'client_objects' );" id="client_objects"><span class="ui-icon ui-icon-home" aria-hidden="true"></span><span class="sr-only">Обекти</span></a></li>
     {/if}
 
     {if $page eq 'client_payments'}
-        <li class="nav-item text-center" title="Плащания"><a class="nav-link active" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Плащания"><a class="nav-link active" href="#"><span class="ui-icon ui-icon-card" aria-hidden="true"></span><span class="sr-only">Плащания</span></a></li>
     {else}
-        <li class="nav-item text-center" title="Плащания"><a class="nav-link" href="#" onclick="return tab_href( 'client_payments' );" id="client_payments">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="nav-item text-center" title="Плащания"><a class="nav-link" href="#" onclick="return tab_href( 'client_payments' );" id="client_payments"><span class="ui-icon ui-icon-card" aria-hidden="true"></span><span class="sr-only">Плащания</span></a></li>
     {/if}
 
 </ul>

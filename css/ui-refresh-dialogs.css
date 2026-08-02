@@ -130,8 +130,8 @@ body.ui-refresh-content .modal-body .custom-checkbox .custom-control-input:check
 body.ui-refresh-content .modal-body .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
     background-color: #fff;
     background-image: none !important;
-    -webkit-mask: url("fa7/regular/check.svg") center / contain no-repeat;
-    mask: url("fa7/regular/check.svg") center / contain no-repeat;
+    -webkit-mask: url("fa7/solid/check.svg") center / contain no-repeat;
+    mask: url("fa7/solid/check.svg") center / contain no-repeat;
 }
 
 body.ui-refresh-content .modal-body .custom-checkbox .custom-control-input:focus ~ .custom-control-label::before,

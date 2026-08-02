@@ -189,6 +189,7 @@
 			$aData['percent']		= $nPercent;
 			
 			$oLimitCardPersons->update( $aData );
+			$oResponse->printResponse();
 		}
 			
 	}

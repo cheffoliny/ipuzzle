@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 	
 		function onInit() {
 			loadXMLDoc2('result');
@@ -30,7 +31,7 @@
 				Регистрирани имейл адреси за уводомяване при промяна на експортирани документи
 			</td>
 			<td align="right">
-				<button onclick="editEmail(0);"><img src="images/confirm.gif">Добави</button>
+				<button onclick="editEmail(0);" class="ui-final-action"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 			</td>
 		</tr>
 	</table>

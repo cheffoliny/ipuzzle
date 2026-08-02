@@ -135,6 +135,6 @@ foreach (array('.ui-personnel-list', '.ui-personnel-toolbar', '.ui-personnel-res
 }
 
 personnelAssert(strpos($icons, '.ui-icon-list') !== false, 'list icon mapping is missing');
-personnelAssert(is_file($root . '/css/fa7/regular/list.svg'), 'list SVG asset is missing');
+personnelAssert(is_file($root . '/css/fa7/solid/list.svg'), 'list SVG asset is missing');
 
 echo 'UI_REFRESH_PERSONNEL=PASS' . PHP_EOL;

@@ -24,7 +24,7 @@
 	</script>
 {/literal}
 
-<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-setup-objects-filter-dialog" onsubmit="return false;">
     <div class="modal-content pb-3">
         <div class="modal-header">
             <h6 class="modal-title text-white" id="exampleModalLabel">{if $nID} Редакция на{else} Добавяне на{/if} филтър</h6>
@@ -40,7 +40,7 @@
                 <div class="col-6 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-hashtag fa-fw" data-fa-transform="right-22 down-10" title="Име на филтър..."></span>
+                            <span class="ui-icon ui-icon-code" title="Име на филтър..." aria-hidden="true"></span>
                         </div>
                         <input class="form-control" id="filter_name" name="filter_name" type="text"  placeholder="Име на филтър..." />
                     </div>
@@ -183,7 +183,7 @@
     <nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
         <div class="col-12 col-sm-12 col-lg-12">
             <div class="input-group input-group-sm text-right">
-                    <button class="btn btn-block btn-sm btn-primary" onClick="formSubmit();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
+                    <button type="button" class="btn btn-block btn-sm btn-primary" onClick="formSubmit();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
             </div>
         </div>
     </nav>

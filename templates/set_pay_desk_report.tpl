@@ -1,7 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
-		
+
 		function update()
 		{
 			loadXMLDoc2( 'save', 3 );
@@ -12,54 +12,47 @@
 
 <dlcalendar click_element_id="editDate" input_element_id="sDate" tool_tip="Изберете дата"></dlcalendar>
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return update();">
-		
+<div class="content ui-finance-report-dialog ui-pay-desk-report-dialog">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog" onsubmit="return update();">
 		<div class="page_caption">Форма Приключване</div>
-		
-		<br />
-		
-		<table class="input">
-			<tr class="odd">
-				<td align="left">Дата:&nbsp;</td>
-				<td align="left">
-					<input type="text" name="sDate" id="sDate" class="inp100" onkeypress="return formatDate( event, '.' );" />
-					&nbsp;
-					<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDate" />
-				</td>
-			</tr>
-			<tr class="even">
-				<td align="left">Касов Апарат:&nbsp;</td>
-				<td align="left">
-					<select class="select200" name="nIDPayDesk" id="nIDPayDesk" />
-				</td>
-			</tr>
-			<tr class="odd">
-				<td align="left">Сума Оборот:</td>
-				<td align="left">
-					<input type="text" class="inp50" id="nOborot" name="nOborot" onkeypress="return formatMoney( event );" />&nbsp;лв.
-				</td>
-			</tr>
-			<tr class="even">
-				<td align="left">Сума Сторно:</td>
-				<td align="left">
-					<input type="text" class="inp50" id="nStorno" name="nStorno" onkeypress="return formatMoney( event );" />&nbsp;лв.
-				</td>
-			</tr>
-		</table>
-		
-		<br />
-		
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align: right;">
-					<button type="submit" class="search"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-		
+
+		<div class="ui-finance-report-dialog-body">
+			<label class="ui-finance-report-field" for="sDate">
+				<span>Дата:</span>
+				<span class="input-group input-group-sm">
+					<input type="text" name="sDate" id="sDate" class="form-control" onkeypress="return formatDate( event, '.' );" />
+					<span class="input-group-append">
+						<button type="button" id="editDate" class="btn btn-light ui-inline-calendar-trigger" title="Изберете дата" aria-label="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
+					</span>
+				</span>
+			</label>
+
+			<label class="ui-finance-report-field" for="nIDPayDesk">
+				<span>Касов апарат:</span>
+				<select class="form-control form-control-sm" name="nIDPayDesk" id="nIDPayDesk"></select>
+			</label>
+
+			<label class="ui-finance-report-field" for="nOborot">
+				<span>Сума оборот:</span>
+				<span class="input-group input-group-sm">
+					<input type="text" class="form-control" id="nOborot" name="nOborot" onkeypress="return formatMoney( event );" />
+					<span class="input-group-append"><span class="input-group-text">€</span></span>
+				</span>
+			</label>
+
+			<label class="ui-finance-report-field" for="nStorno">
+				<span>Сума сторно:</span>
+				<span class="input-group input-group-sm">
+					<input type="text" class="form-control" id="nStorno" name="nStorno" onkeypress="return formatMoney( event );" />
+					<span class="input-group-append"><span class="input-group-text">€</span></span>
+				</span>
+			</label>
+		</div>
+
+		<div class="ui-dialog-action-bar">
+			<button type="submit" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+			<button type="button" class="btn btn-sm btn-danger" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+		</div>
 	</form>
 </div>
 

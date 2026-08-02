@@ -59,13 +59,13 @@
 {/literal}
 
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-client-core ui-client-payments" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDInvoice" name="nIDInvoice" value="0" />
 
     {include file='client_tabs.tpl'}
 				
-    <div id="result" rpc_resize="off"></div>
+    <div id="result" class="ui-client-result" rpc_resize="off"></div>
 
 </form>
 

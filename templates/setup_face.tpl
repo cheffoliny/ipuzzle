@@ -13,7 +13,7 @@
 	</script>
 {/literal}
 
-<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-setup-face-dialog" onsubmit="return false;">
     <div class="modal-content p-2">
             <div class="modal-header">
             <h6 class="modal-title text-white" id="exampleModalLabel">{if $nID}Редакция{else}Добавяне{/if} на лице за контакт</h6>
@@ -32,7 +32,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="far fa-user fa-fw" data-fa-transform="right-22 down-10" title="Име на контрагент"></span>
+                            <span class="ui-icon ui-icon-user" title="Име на контрагент" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" type="text" name="sName" id="sName" placeholder="Име..." />
                     </div>
@@ -44,7 +44,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fab fa-viber fa-fw" data-fa-transform="right-22 down-10" title="Телефон за връзка..."></span>
+                            <span class="ui-icon ui-icon-phone" title="Телефон за връзка..." aria-hidden="true"></span>
                         </div>
                         <input class="form-control" type="text" name="sPhone" id="sPhone" placeholder="Телефон за връзка..." />
                     </div>
@@ -55,7 +55,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fab fa-viber fa-fw" data-fa-transform="right-22 down-10" title="Име на контрагент"></span>
+                            <span class="ui-icon ui-icon-id-card" title="Длъжност" aria-hidden="true"></span>
                         </div>
                         <input class="form-control" type="text" name="sPost" id="sPost" placeholder="Длъжност..." />
                     </div>
@@ -71,7 +71,7 @@
 
         </div>
         <div class="modal-footer mb-0">
-            <button class="btn btn-sm btn-block btn-primary" onclick="saveForm();"><i class="fas fa-check"></i> Запиши </button>
+            <button type="button" class="btn btn-sm btn-block btn-primary" onclick="saveForm();"><span class="ui-icon ui-icon-check" aria-hidden="true"></span> Запиши </button>
         </div>
     </div>
 </form>

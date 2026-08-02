@@ -2,6 +2,7 @@
 	<script xmlns="http://www.w3.org/1999/html">
 		//
 		rpc_debug = true;
+		rpc_html_debug = true;
 		filterVisible = false;
 
 		function onInit() {
@@ -79,8 +80,6 @@
 	</script>
 
 {/literal}
-<dlcalendar click_element_id="imgDeadlineFrom" input_element_id="sDeadlineFrom" tool_tip="Изберете дата"></dlcalendar>
-<dlcalendar click_element_id="imgDeadlineTo" input_element_id="sDeadlineTo" tool_tip="Изберете дата"></dlcalendar>
 <form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal" role="form">
 	<input type="hidden" name="nIDPerson" id="nIDPerson" value="{$nIDPerson}">
 	<input type="hidden" name="nIDOffice" id="nIDOffice" value="{$nIDOffice}">

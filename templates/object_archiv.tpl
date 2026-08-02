@@ -11,7 +11,7 @@
 			var img = '';
 			for ( i = 0; i < obj.length; i++ ) {
 				var sig = obj[i].split(',');
-				var img = img+'&nbsp;&nbsp;<img src="signal_images/'+sig[0]+'.bmp" title="'+sig[2]+'\n'+sig[1]+'" style="width: 16px; height: 16px;" />';
+				var img = img+'&nbsp;&nbsp;<img class="ui-signal-image" src="signal_images/'+sig[0]+'.bmp" alt="" title="'+sig[2]+'\n'+sig[1]+'" />';
 			}
 			img = img+'&nbsp;&nbsp;';
 			var span = $('images');
@@ -23,7 +23,7 @@
 			var img2 = '&nbsp;&nbsp;|&nbsp;&nbsp;';
 			for ( i = 0; i < obj2.length; i++ ) {
 				var sig2 = obj2[i].split(',');
-				var img2 = img2+'&nbsp;&nbsp;<img src="signal_images/'+sig2[0]+'.bmp" title="'+sig2[2]+'\n'+sig2[1]+'" style="width: 16px; height: 16px;" />';
+				var img2 = img2+'&nbsp;&nbsp;<img class="ui-signal-image" src="signal_images/'+sig2[0]+'.bmp" alt="" title="'+sig2[2]+'\n'+sig2[1]+'" />';
 			}
 			var span2 = $('images2');
 			span2.innerHTML = img2;
@@ -55,7 +55,7 @@
 <dlcalendar click_element_id="sPeriodFrom" input_element_id="sPeriodFrom" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="sPeriodTo" input_element_id="sPeriodTo" tool_tip="Изберете дата"></dlcalendar>
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-archive" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
     <input type="hidden" id="max" name="max" value="" />
     <input type="hidden" id="alarm" name="alarm" value="" />
@@ -65,27 +65,13 @@
 
     {include file="object_tabs.tpl"}
 
-    <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
+    <div id="result" class="ui-object-result ui-object-archive-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 
-    {*{include file="object_tabs_sot.tpl}*}
-
-    {*<button class="btn btn-xs btn-primary" style="float:right; margin-right: 3px;" onClick="techSupport();"><img src="images/glyphicons/tech.png" style="width: 14px; height: 14px;"> Oбслужване</button>*}
-
-
-
-	{*<hr>*}
-{*{if $mobile}*}
-	{*{if $cnt>6}*}
-		{*<div id="search" style="padding-top: 10px; width: 800px; height: 220px; overflow-y: auto">*}
-	{*{else}*}
-		{*<div id="search" style="padding-top: 10px; width: 800px; height: 245px; overflow-y: auto">*}
-	{*{/if}*}
-{*{/if}*}
-    <nav class="navbar fixed-bottom flex-row mb-0 py-0 navbar-expand-lg py-md" id="search">
+    <nav class="navbar fixed-bottom flex-row mb-0 py-0 navbar-expand-lg py-md ui-object-actions ui-object-archive-actions" id="search">
         <div class="col-4 col-sm-4 col-lg-4" title="">
             <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-success ml-1"  onclick="onPrint('export_to_xls');"><i class="fa fa-file-excel"></i> &nbsp; Excel &nbsp;&nbsp;&nbsp; </button>
-                <button class="btn btn-sm btn-danger"   onclick="onPrint('export_to_pdf');"><i class="fa fa-file-pdf"></i> &nbsp; PDF &nbsp;&nbsp;&nbsp;&nbsp; </button>
+                <button type="button" class="btn btn-sm btn-success ml-1" onclick="onPrint('export_to_xls');"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span> Excel</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="onPrint('export_to_pdf');"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> PDF</button>
             </div>
         </div>
         <div id="filter_result" class="col-5 col-sm-5 col-lg-5" title="">
@@ -93,7 +79,7 @@
             <div class="input-group input-group-sm" title="Период на стартиране на обекта">
                 <div class="input-group input-group-sm" title="Период на стартиране на обекта">
                     <div class="input-group-prepend">
-						<span class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10"></span>
+						<span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
                     </div>
                     <input class="form-control"                   type="text" name="sPeriodFromH" id="sPeriodFromH"  onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" placeholder="00:00" />
                     <input class="form-control input-group-addon pl-1" type="text" name="sPeriodFrom" id="sPeriodFrom" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );"  value="{$date_first}" />
@@ -102,26 +88,11 @@
                     <input class="form-control input-group-addon pl-1" type="text" name="sPeriodTo" id="sPeriodTo" maxlength="9" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
                 </div>
             </div>
-            {*<div class="input-group" style="width: 138px;">*}
-            {*<span class="input-group-addon-warning">*}
-            {*<img src="images/glyphicons/alarm.png" style="width: 12px; height: 12px; cursor:pointer;" title="Оповестени сигнали" /></span>*}
-            {*<input type="text" name="announce" id="announce" style="width: 40px; text-align: right;" title="Оповестени сигнали" readonly />*}
-            {*<span class="input-group-addon-ok">*}
-            {*<img src="images/glyphicons/car.png" style="width: 12px; height: 12px; cursor:pointer;" title="Реално посетени" /></span>*}
-            {*<input type="text" name="visited" id="visited" style="width: 40px; text-align: right;" title="Реално посетени" readonly />*}
-            {*</div>*}
-
-            {*<div class="input-group">*}
-            {*<span class="input-group-addon">*}
-            {*<img src="images/glyphicons/car.png" style="width: 12px; height: 12px; cursor:pointer;" title="Само с реакция" /></span>*}
-            {*<input type="checkbox" id="nReact" name="nReact" class="clear" onClick="load();" {if $visited}checked{/if} />*}
-            {*</div>*}
-
         </div>
         <div class="col-3 col-sm-3 col-lg-3">
             <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-success ml-1"  onClick="formRefresh();"><i class="fas fa-sync-alt"></i> Обнови </button>
-                <button class="btn btn-sm btn-danger"   onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+                <button type="button" class="btn btn-sm btn-success ml-1" onClick="formRefresh();"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
+                <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
             </div>
         </div>
     </nav>

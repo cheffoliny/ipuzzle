@@ -1,94 +1,69 @@
 {literal}
 <script>
-	rpc_debug = true;
-	
-	function formChange(type) {
-		if ( type == 'firm' ) {
-			document.getElementById('nIDOffice').value = 0;
-		}
-		loadXMLDoc2('load', 0);
-	}	
-	
-	function formSubmit() {
-		loadXMLDoc2('save', 0);
-		
-		rpc_on_exit = function() {
-			if ( typeof(window.opener.test) != 'undefined' ) {
-				window.opener.test();	
-			}
-			//window.opener.window.reload();
-			
-			rpc_on_exit = function() {};
-			
-			parent.window.close();
-		}
-	}
-		
+    rpc_debug = true;
+    rpc_html_debug = true;
+
+    function formChange(type) {
+        if (type === 'firm') {
+            document.getElementById('nIDOffice').value = 0;
+        }
+        loadXMLDoc2('load', 0);
+    }
+
+    function formSubmit() {
+        rpc_on_exit = function(errorCode) {
+            rpc_on_exit = function() {};
+            if (errorCode) {
+                return;
+            }
+
+            if (window.opener && !window.opener.closed && typeof window.opener.test === 'function') {
+                window.opener.test();
+            }
+            parent.window.close();
+        };
+        loadXMLDoc2('save', 0);
+    }
 </script>
 {/literal}
 
-<div class="content">
-	<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
-		<input type="hidden" id="nID" name="nID" value="{$nID}">
-		<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard}">
+<form action="" method="POST" name="form1" id="form1" class="ui-person-editor ui-limit-card-person-editor" onsubmit="return false;">
+    <input type="hidden" id="nID" name="nID" value="{$nID}">
+    <input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard}">
 
-		<div class="page_caption">{if $nID}Редакция на{else}Нов{/if} СЛУЖИТЕЛ</div>
-
-		<fieldset>
-			<legend>Информация за служител</legend>
-
-			<table class="input">
-				<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-				
-				<tr class="even">
-					<td>фирма:</td>
-					<td>
-						<select name="nIDFirm" id="nIDFirm" style="width: 240px;" onChange="formChange('firm');" ></select>
-					</td>
-				</tr>
-
-				<tr class="even">
-					<td>Регион:</td>
-					<td>
-						<select name="nIDOffice" id="nIDOffice" style="width: 240px;" onChange="formChange('office');" ></select>
-					</td>
-				</tr>
-				
-				<tr class="even">
-					<td>Служител:</td>
-					<td>
-						<select name="nIDPerson" id="nIDPerson" style="width: 240px;" ></select>
-					</td>
-				</tr>
-
-				<tr class="even">
-					<td>Процент:</td>
-					<td>
-						<input type="text" name="nPercent" id="nPercent" style="width: 40px;" maxlength="3" onkeydown="return formatNumber(event);" />
-						&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all" name="all" class="clear" onClick="formChange('office')" />&nbsp Всички служители
-					</td>
-				</tr>
-
-			<tr class="odd"><td colspan="2" style="height: 5px;"></td></tr>
-		</table>
-		
-		</fieldset>
-		
-		<div style="height: 10px;"></div>
-		
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button type="button" class="search" onClick="formSubmit();"> Запиши </button>
-					<button onClick="parent.window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-		
-	</form>
-</div>
+    <div class="modal-content ui-person-editor-content">
+        <div class="modal-header">
+            <h6 class="modal-title text-white">{if $nID}Редакция на{else}Нов{/if} служител</h6>
+            <button type="button" class="close" aria-label="Затвори" onClick="parent.window.close();"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body ui-person-editor-body">
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend"><span class="ui-icon ui-icon-building" aria-hidden="true" title="Фирма"></span></div>
+                <select class="form-control" name="nIDFirm" id="nIDFirm" onChange="formChange('firm');"></select>
+            </div>
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend"><span class="ui-icon ui-icon-location" aria-hidden="true" title="Регион"></span></div>
+                <select class="form-control" name="nIDOffice" id="nIDOffice" onChange="formChange('office');"></select>
+            </div>
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend"><span class="ui-icon ui-icon-user" aria-hidden="true" title="Служител"></span></div>
+                <select class="form-control" name="nIDPerson" id="nIDPerson"></select>
+            </div>
+            <div class="ui-person-editor-inline">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-percent" aria-hidden="true" title="Процент"></span></div>
+                    <input class="form-control" type="text" name="nPercent" id="nPercent" maxlength="3" onkeydown="return formatNumber(event);" placeholder="Процент">
+                </div>
+                <label class="ui-person-toggle" for="all"><input type="checkbox" id="all" name="all" onClick="formChange('office')"><span>Всички служители</span></label>
+            </div>
+        </div>
+        <nav class="modal-footer fixed-bottom ui-person-editor-actions" aria-label="Действия със служителя">
+            <button type="button" class="btn btn-sm btn-primary" onClick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+            <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+        </nav>
+    </div>
+</form>
 
 <script>
-	loadXMLDoc2('load');
+    loadXMLDoc2('load');
 </script>

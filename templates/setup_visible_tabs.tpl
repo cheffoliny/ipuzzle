@@ -1,6 +1,7 @@
 {literal}
 	<script>
-		rpc_debug=true;
+		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		var my_action = '';
 		

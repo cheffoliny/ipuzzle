@@ -1,6 +1,7 @@
 <script>
 {literal}
 	rpc_debug = true;
+	rpc_html_debug = true;
 	
 	//Functions
 	function openObject( id )

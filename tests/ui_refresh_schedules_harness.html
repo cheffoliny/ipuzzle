@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/bootstrap-intelli.css">
     <link rel="stylesheet" href="../css/ui-refresh-content.css">
-    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css">
-    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=8">
-    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=11">
+    <link rel="stylesheet" href="../css/ui-refresh-dialogs.css?version=2">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=10">
+    <link rel="stylesheet" href="../css/ui-refresh-nomenclatures.css?version=22">
     <style>
-        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #aebfce;background:#fff}.shift-preview{width:390px}.report-preview{width:1000px}.duty-preview{width:780px}.person-preview{width:1100px}.result-preview{box-sizing:border-box;width:100%;height:150px;overflow:auto;background:#202529;color:#e6edf3}.result-preview table{width:100%;border-collapse:collapse}.result-preview td,.result-preview th{padding:6px 8px;border-bottom:1px solid #394047;color:#e6edf3!important;text-align:left}.result-preview th{background:#087cf0;color:#fff!important}.person-grid td{text-align:center}.person-grid .planned{background:#476f95!important}.person-grid .absence{background:#87575e!important}
+        html,body{width:100%;min-height:100%;margin:0}.preview{box-sizing:border-box;max-width:calc(100% - 16px);margin:16px auto;border:1px solid #aebfce;background:#fff}.shift-preview{width:390px}.report-preview{width:1000px}.duty-preview{width:780px}.person-preview{width:1100px}.result-preview{box-sizing:border-box;width:100%;height:150px;overflow:auto;background:#202529;color:#e6edf3}.result-preview table{width:100%;border-collapse:collapse}.result-preview td,.result-preview th{padding:6px 8px;border-bottom:1px solid #394047;color:#e6edf3!important;text-align:left}.result-preview th{background:#087cf0;color:#fff!important}.person-grid td{text-align:center}.person-grid .planned{background:#476f95!important}.person-grid .absence{background:#87575e!important}body:has(#object-duty-preview:target) .preview:not(#object-duty-preview){display:none}#object-duty-preview:target{width:100%;max-width:none;margin:0;border:0}
     </style>
 </head>
 <body class="ui-refresh-content">
@@ -39,12 +39,11 @@
     </form>
 </div>
 
-<div class="preview duty-preview">
-    <form class="ui-nomenclature-dialog ui-schedule-dialog ui-object-duty-dialog">
+<div class="preview duty-preview" id="object-duty-preview">
+    <form class="ui-nomenclature-dialog ui-schedule-dialog ui-object-core ui-object-duty-dialog">
         <div class="page_caption">Дежурства на обект</div>
-        <table class="search" style="width:100%"><tr><td>Дата</td><td><div class="input-group"><input value="21.07.2026"><span class="input-group-addon"><button type="button" class="ui-schedule-addon-button"><span class="ui-icon ui-icon-calendar"></span></button></span></div></td><td>Час</td><td><div class="input-group"><input value="08:00"><span class="input-group-addon"><button type="button" class="ui-schedule-addon-button"><span class="ui-icon ui-icon-clock"></span></button></span></div></td></tr></table>
-        <div class="ui-schedule-result result-preview"><table><tr><th>Служител</th><th>Смяна</th><th>От</th><th>До</th><th></th></tr><tr><td>Иван Иванов</td><td>Дневна</td><td>08:00</td><td>20:00</td><td><button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-delete"></span> Изтрий</button></td></tr></table></div>
-        <div class="fixed-bottom"><div id="filter_result"></div><button type="button" class="btn btn-sm btn-primary"><span class="ui-icon ui-icon-left"></span> Предишна</button> <button type="button" class="btn btn-sm btn-primary">Следваща <span class="ui-icon ui-icon-right"></span></button> <span style="float:right"><button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-refresh"></span> Валидация</button> <button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-plus"></span> Смяна</button> <button type="button" class="btn btn-sm btn-light"><span class="ui-icon ui-icon-calendar"></span> График</button> <button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-close"></span> Затвори</button></span></div>
+        <div class="container-fluid ui-object-duty-content" id="filter_result"><table class="page_data ui-object-duty-toolbar"><tr><td>Дата</td><td><div class="input-group"><input value="21.07.2026"><span class="input-group-addon"><button type="button" class="ui-schedule-addon-button"><span class="ui-icon ui-icon-calendar"></span></button></span></div></td><td>Час</td><td><div class="input-group"><input value="08:00"><span class="input-group-addon"><button type="button" class="ui-schedule-addon-button"><span class="ui-icon ui-icon-clock"></span></button></span></div></td></tr></table><div class="ui-object-result ui-object-duty-result"><table><tr><th>Служител</th><th>Смяна</th><th>От</th><th>До</th><th></th></tr><tr><td>Иван Иванов</td><td>Дневна</td><td>08:00</td><td>20:00</td><td><button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-delete"></span> Изтрий</button></td></tr></table></div></div>
+        <div class="fixed-bottom ui-object-actions ui-object-duty-actions"><button type="button" class="btn btn-sm btn-primary"><span class="ui-icon ui-icon-left"></span> Предишна</button> <button type="button" class="btn btn-sm btn-primary">Следваща <span class="ui-icon ui-icon-right"></span></button> <span style="float:right"><button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-refresh"></span> Валидация</button> <button type="button" class="btn btn-sm btn-success"><span class="ui-icon ui-icon-plus"></span> Смяна</button> <button type="button" class="btn btn-sm btn-light"><span class="ui-icon ui-icon-calendar"></span> График</button> <button type="button" class="btn btn-sm btn-danger"><span class="ui-icon ui-icon-close"></span> Затвори</button></span></div>
     </form>
 </div>
 

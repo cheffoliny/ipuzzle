@@ -32,20 +32,47 @@ class SmartyPhp85CompileSmoke extends Smarty
 
 $tabTemplates = array(
     'asset_info_tabs.tpl',
+    'asset_info_ppp.tpl',
+    'asset_info_sub_assets.tpl',
+    'set_asset_group.tpl',
+    'set_asset_info.tpl',
     'buy_doc_tabs.tpl',
     'client_tabs.tpl',
     'finance_instruments_tabs.tpl',
     'finance_operations_tabs.tpl',
     'limit_card_tabs.tpl',
     'object_tabs.tpl',
+    'object_messages.tpl',
+    'object_sectors.tpl',
+    'object_zones.tpl',
     'order_tabs.tpl',
     'person_tabs.tpl',
     'personnel_tabs.tpl',
+    'personal_card.tpl',
+    'personal_card_limit_card.tpl',
+    'personal_card_operations.tpl',
+    'personal_card_ppp.tpl',
     'personal_card_tabs.tpl',
     'personal_card_tabs2.tpl',
+    'person_contract.tpl',
+    'person_data.tpl',
+    'patrul_parking.tpl',
+    'patruls_movement.tpl',
+    'setup_patruls.tpl',
+    'set_setup_patrul_parking.tpl',
+    'set_setup_patruls.tpl',
+    'set_setup_patrol.tpl',
+    'working_card_patrol.tpl',
+    'setup_person_leave.tpl',
+    'set_limit_card_persons.tpl',
+    'set_setup_person_salary_earning.tpl',
+    'set_setup_person_shifts.tpl',
     'sale_doc_tabs.tpl',
     'set_storagehouses_tabs.tpl',
     'states_filter_tabs.tpl',
+    'set_setup_signalMessage.tpl',
+    'set_setup_object_sector.tpl',
+    'set_setup_object_zone.tpl',
     'working_card_tabs.tpl'
 );
 
@@ -77,6 +104,21 @@ foreach ($tabTemplates as $template) {
 }
 
 $objectInfo = $smarty->compileTemplate('object_info.tpl');
+
+$objectLayoutTemplates = array(
+    'object_contract.tpl',
+    'object_duty.tpl',
+    'object_personnel_schedule.tpl',
+    'object_store.tpl',
+    'object_store_ppp.tpl',
+    'object_store_state.tpl',
+    'object_to_contract.tpl',
+    'object_to_limit_card.tpl',
+);
+
+foreach ($objectLayoutTemplates as $objectLayoutTemplate) {
+    $smarty->compileTemplate($objectLayoutTemplate);
+}
 
 if (
     strpos($objectInfo, "\$this->_tpl_vars['isSOD']['checked']") !== false ||
@@ -131,4 +173,4 @@ if (in_array('--write-cache', $argv, true)) {
     echo "SMARTY_CACHE_RECOMPILE=PASS\n";
 }
 
-echo 'SMARTY_PHP85_COMPILE=PASS (' . (count($tabTemplates) + 1) . " templates)\n";
+echo 'SMARTY_PHP85_COMPILE=PASS (' . (count($tabTemplates) + count($objectLayoutTemplates) + 1) . " templates)\n";

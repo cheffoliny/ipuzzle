@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function setPPPElement( id )
 		{
@@ -200,8 +201,7 @@
 	</style>
 {/literal}
 
-<body onresize="resizeHandler();" onload="resizeHandler();">
-	<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-personal-card-subview ui-personal-card-ppp" onSubmit="return false;">
 		<input type="hidden" name="id_person" id="id_person" value="0">
 		<input type="hidden" name="id_log_person" id="id_log_person" value="{$nIDLogPerson|default:0}">
 	
@@ -217,54 +217,34 @@
 		<input type="hidden" name="nLCClosed" id="nLCClosed" value="0">
 		<input type="hidden" name="nLCCreateObject" id="nLCCreateObject" value="0">
 		
-		<table  cellspacing="0" cellpadding="0" width="100%" height="4%" id="filter" >
-			<tr>
-				<td>{include file="personal_card_tabs2.tpl}</td>
-			</tr>
-		</table>
+		{include file="personal_card_tabs2.tpl"}
 		
 		{if $nIDLimitCard}
-			<table width="100%" border="0" class="input">
-				<tr>
-					<td>
-						<input type="text" name="caption" id="caption" class="caption" value="ППП" readonly />
-					</td>
-					<td>&nbsp;</td>
-					
-					<td align="left" class="buttons">
-						Номер на ППП:&nbsp;
-						<input type="text" id="nIDPPP" name="nIDPPP" class="inp50" />
-						&nbsp;
-						<button onclick="processPPP();"><img src="images/plus.gif"> Нов </button>
-					</td>
-				</tr>
-			</table>
-			
-			<hr />
-			
-			<table border="1" cellspacing="0" cellpadding="0" width="100%" id="tabcontainer">
-				<tr>
-					<td width="85%" valign="top" align="left">
-						<table border="0" class="input">
-							<tr>
-								<td>
-									<button onclick="setPPPElement( 0 );" style="width: 20px;"><img src="images/plus.gif"> Добави </button>
-								</td>
-								<td>
-									<div id="sPPPDesc" name="sPPPDesc"></div>
-								</td>
-							</tr>
-						</table>
-						<div rpc_excel_panel="off" rpc_resize="off" id="result"></div>
-					</td>
-					<td width="15%" valign="top" align="right">
-						<div id="ppplist" name="ppplist"></div>
-					</td>
-				</tr>
-			</table>
+			<header class="ui-personal-card-ppp-header">
+				<strong>Приемо-предавателни протоколи</strong>
+				<div class="ui-personal-card-ppp-create">
+					<label for="nIDPPP">Номер на ППП</label>
+					<input type="text" id="nIDPPP" name="nIDPPP" class="form-control" />
+					<button type="button" class="btn btn-primary" onclick="processPPP();">
+						<span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нов
+					</button>
+				</div>
+			</header>
+
+			<div class="ui-personal-card-ppp-workspace" id="tabcontainer">
+				<section class="ui-personal-card-ppp-content">
+					<div class="ui-personal-card-toolbar">
+						<button type="button" class="btn btn-primary" onclick="setPPPElement(0);">
+							<span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави
+						</button>
+						<div id="sPPPDesc" name="sPPPDesc" class="ui-personal-card-ppp-description"></div>
+					</div>
+					<div rpc_excel_panel="off" rpc_resize="off" rpc_paging="off" id="result" class="ui-personal-card-result"></div>
+				</section>
+				<aside id="ppplist" name="ppplist" class="ui-personal-card-ppp-list" aria-label="Списък с протоколи"></aside>
+			</div>
 		{/if}
-	</form>
-</body>
+</form>
 
 {literal}
 	<script>

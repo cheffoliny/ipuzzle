@@ -15,7 +15,10 @@
 				
 				switch( $aParams['api_action']) {
 					case "save" :
-						$this->SaveSalary( $aParams );
+						$nResult = $this->SaveSalary( $aParams );
+						if ( $nResult == DBAPI_ERR_SUCCESS ) {
+							$oResponse->printResponse();
+						}
 					break;
 					default :	
 						$oFirms		= new DBFirms();
@@ -222,7 +225,8 @@
 				$aSalary['month'] 			= $aParams['month'];
 				$aSalary['is_earning'] 		= $aParams['is_earning'];
 				
-				if( $nResult = $oSalary->update( $aSalary ) != DBAPI_ERR_SUCCESS ) {
+				$nResult = $oSalary->update( $aSalary );
+				if( $nResult != DBAPI_ERR_SUCCESS ) {
 					$oResponse->setError( $nResult, "Проблем при съхраняване на информацията!", __FILE__, __LINE__ );
 					print( $oResponse->toXML() );
 					return $nResult;

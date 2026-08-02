@@ -1,7 +1,7 @@
 {literal}
 	<script xmlns="http://www.w3.org/1999/html">
         rpc_debug = true;
-        rpc_xsl = "xsl/tech_planning_request.xsl";
+        rpc_renderer_profile = "techPlanningRequest";
 
         //        InitSuggestForm = function() {
         //            for(var i = 0; i < suggest_elements.length; i++) {

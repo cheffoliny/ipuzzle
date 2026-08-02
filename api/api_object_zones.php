@@ -46,5 +46,15 @@ class ApiObjectZones {
         $oResponse->printResponse();
     }
 
+    public function closeServiceStatus(DBResponse $oResponse){
+        $nIDObject = Params::get('nID', 0);
+        $oDBObjects = new DBObjects();
+
+        if ((int)$nIDObject > 0) {
+            $oDBObjects->closeServiceStatus($nIDObject);
+        }
+        $oResponse->printResponse();
+    }
+
 }
 ?>

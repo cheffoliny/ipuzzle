@@ -1,6 +1,7 @@
 {literal}
 <script type="text/javascript">
 	rpc_debug = true;
+	rpc_html_debug = true;
 
 	rpc_on_exit = function () {
 
@@ -54,43 +55,39 @@
 
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="editToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
-<form name="form1" id="form1" onSubmit="return false;">
+<form name="form1" id="form1" class="ui-online-payments" onSubmit="return false;">
 	<input type="hidden" name="id_param" id="id_param" value="0" />
 
 	{include file="finance_operations_tabs.tpl"}
 
-	<div>
+	<div class="ui-online-payments-toolbar">
 		<div class="row justify-content-start pl-3 py-2 table-secondary">
 
-			<table class="table-sm table-borderless ml-3">
+			<table class="table-sm table-borderless ml-3 ui-online-payments-filter-table">
 				<tr>
 				<td>
-<!--					<div class="input-group">
-						<span class="input-group-prepend" id="editFromDate" title="Изберете дата" style="cursor: pointer;"><i class="far fa-calendar-alt"></i></span>
-						<input class="form-control inp75" type="text" name="sFromDate" id="sFromDate" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
-						<span class="input-group-append"><i class="far fa-arrows-h"></i></span>
-						<input class="form-control inp75" type="text" name="sToDate" id="sToDate" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
-						<span class="input-group-append" id="editToDate" title="Изберете дата" style="cursor: pointer;"><i class="far fa-calendar-alt"></i></span>
-					</div>-->
-					<div class="input-group input-group-sm" title="Период на плащане">
-						<div class="input-group-prepend">
-							{*Администрация:&nbsp;*}
-							<span id="editFromDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></span>
+					<div class="input-group input-group-sm ui-online-payment-period" title="Период на плащане">
+						<div class="ui-online-payment-date-field">
+							<button type="button" id="editFromDate" class="ui-online-payment-calendar" title="Изберете начална дата">
+								<span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
+							</button>
+							<input type="text" name="sFromDate" id="sFromDate" class="form-control inp100" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
 						</div>
-						<input type="text" name="sFromDate" id="sFromDate" class="form-control inp100" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
-						<div class="input-group-append">
-							<i class="fas fa-arrows-alt-h fa-fw" data-fa-transform=""></i>
+						<div class="ui-online-payment-period-separator">
+							<span class="ui-icon ui-icon-exchange" aria-hidden="true"></span>
 						</div>
-						<input type="text" name="sToDate" id="sToDate" class="form-control inp1`00 input-group-addon" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
-						<div class="input-group-append">
-							<i id="editToDate" class="fas fa-calendar-alt fa-fw" data-fa-transform=""></i>
+						<div class="ui-online-payment-date-field">
+							<button type="button" id="editToDate" class="ui-online-payment-calendar" title="Изберете крайна дата">
+								<span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
+							</button>
+							<input type="text" name="sToDate" id="sToDate" class="form-control inp100" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$smarty.now|date_format:"%d.%m.%Y"}" />
 						</div>
 					</div>
 				</td>
 				<td>
 					<div class="input-group input-group-sm">
 						<div class="input-group-prepend">
-							<i class="fa fa-calculator-alt fa-fw"  data-fa-transform="right-22 down-10"></i>
+							<span class="ui-icon ui-icon-money" aria-hidden="true"></span>
 						</div>
 						<select class="form-control" name="payment_type" id="payment_type" title="Избери тип на плащане">
 							<option value="all" selected="selected">Всички плащания</option>
@@ -101,7 +98,7 @@
 				<td>
 					<div class="input-group input-group-sm">
 						<div class="input-group-prepend">
-							<i class="fa fa-tags fa-fw"  data-fa-transform="right-22 down-10"></i>
+							<span class="ui-icon ui-icon-tags" aria-hidden="true"></span>
 						</div>
 						<select class="form-control" name="payment_provider" id="payment_provider" title="Избери провайдър">
 							<option value="all" selected="selected">Всички провайдъри</option>
@@ -112,13 +109,14 @@
 					</div>
 				</td>
 				<td>
-					<button class="btn btn-sm btn-success" name="reload" id="reload" type="button" onclick="loadXMLDoc2('result');"><i class="far fa-redo-alt"></i> Обнови </button>
+					<button class="btn btn-sm btn-success" name="reload" id="reload" type="button" onclick="loadXMLDoc2('result');"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
 				</td>
 			</tr>
 		</table>
 	</div>
+	</div>
 	<div id="line"></div>
-	<div id="result"></div>
+	<div id="result" class="ui-online-payments-result"></div>
 </form>
 <script type="text/javascript">
 	loadXMLDoc2('result');

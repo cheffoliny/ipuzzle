@@ -1,5 +1,6 @@
 <script>
 	rpc_debug = true;
+	rpc_html_debug = true;
 </script>
 
 <div class="content">

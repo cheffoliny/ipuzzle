@@ -5,9 +5,9 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" class="w-100 h-100 p-0 m-0" onsubmit="return false;">
+<form name="form1" id="form1" class="w-100 h-100 p-0 m-0 ui-object-store-frame-form" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="0" />
-	<div id="result" rpc_excel_panel="off" rpc_paging="off"></div>
+	<div id="result" class="ui-object-store-result" rpc_excel_panel="off" rpc_paging="off"></div>
 </form>
 
 <script>

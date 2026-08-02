@@ -2,6 +2,7 @@
 	<script>
 	
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function onInit()
 		{	
@@ -102,23 +103,18 @@
 <dlcalendar click_element_id="img_date_from" input_element_id="date_from" tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="img_date_to" input_element_id="date_to" tool_tip="Изберете дата"></dlcalendar>
 
-			<form name="form1" id="form1" class="ui-monitor-report ui-patrol-movement-report" onsubmit="return false;">
+			<form name="form1" id="form1" class="ui-monitor-report ui-patrol-report ui-patrol-movement-report" onsubmit="return false;">
 				<input type="hidden" id="nIDCard" name="nIDCard" value="{$nIDCard|default:0}" />
 				
 				<div class="page_caption ui-monitor-heading" id="capt" name="capt">РК: Движение на патрули</div>
 				
-				<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-					<tr>
-						<td>{include file="working_card_tabs.tpl"}</td>
-					</tr>
-				</table>
-				<br>
+				<div class="ui-patrol-tabs" id="filter">{include file="working_card_tabs.tpl"}</div>
 				
 				
 					<table class="search ui-monitor-toolbar">
 						<tr>
 							<td height="30px" valign="top" align="left">
-								<button type="button" name="Button" onClick="toObjects();" class="search">Към Обекти</button>
+								<button type="button" name="Button" onClick="toObjects();" class="btn btn-secondary"><span class="ui-icon ui-icon-home" aria-hidden="true"></span> Към обекти</button>
 							</td>
 							<td style="width:200px;">
 								&nbsp;
@@ -188,7 +184,8 @@
 				</center>
 				
 				<hr>	
-				<div id="result" class="ui-monitor-result"></div>
+				<div id="result" class="ui-monitor-result ui-patrol-result"
+					rpc_resize="off"></div>
 			</form>
 
 <script>

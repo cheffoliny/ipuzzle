@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function selectNomenclature()
 		{
@@ -146,7 +147,7 @@
 				var oDataCount = document.createElement( 'td' );
 				oDataCount.innerHTML = nCount;
 				var oDataDelButton = document.createElement( 'td' );
-				oDataDelButton.innerHTML = "<button style=\"width: 20px; height: 20px;\" id=\"Delete" + nID + "\" name=\"" +nID+ "\" onclick=\"deleteNomenclature( this.name );return false;\"><img src=\"images/cancel.gif\" /></button>";
+	oDataDelButton.innerHTML = "<button class=\"ui-final-action\" style=\"width: 28px; height: 28px;\" id=\"Delete" + nID + "\" name=\"" +nID+ "\" onclick=\"deleteNomenclature( this.name );return false;\" aria-label=\"Изтрий\"><span class=\"ui-icon ui-icon-delete\" aria-hidden=\"true\"></span></button>";
 				
 				oNomenclatures.appendChild( oNewRow );
 				oNewRow.appendChild( oDataIDName );
@@ -256,7 +257,7 @@
 								<th style="background-color: #FFFFC8;" width="70%">Номенклатура</th>
 								<th style="background-color: #FFFFC8;">На кл.</th>
 								<th style="background-color: #FFFFC8;">Кол.</th>
-								<th align="center" style="background-color: #FFFFC8;"><img src="images/minus_blue.gif" /></th>
+								<th align="center" style="background-color: #FFFFC8;"><span class="ui-icon ui-icon-minus" aria-hidden="true"></span></th>
 							</tr>
 						</table>
 					</div>

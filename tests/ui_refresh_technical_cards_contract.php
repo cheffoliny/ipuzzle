@@ -87,7 +87,7 @@ foreach (array('imgPlannedStart', 'imgPlannedEnd', 'imgRealStart', 'imgRealEnd')
 $limitPersons = file_get_contents($root . '/templates/limit_card_persons.tpl');
 technicalCardsAssert(strpos($limitPersons, "rpc_result_area = 'dresult'") !== false, 'limit card availability result routing changed');
 technicalCardsAssert(strpos($limitPersons, "rpc_result_area = 'result'") !== false, 'limit card persons result routing changed');
-technicalCardsAssert(strpos($limitPersons, "rpc_xsl = 'xsl/limit_card_persons.xsl'") !== false, 'temporary limit card availability XSL route changed');
+technicalCardsAssert(strpos($limitPersons, "rpc_renderer_profile = 'limitCardPersons'") !== false, 'limit card availability renderer profile changed');
 
 $workingInfo = file_get_contents($root . '/templates/working_card_info.tpl');
 technicalCardsAssert(strpos($workingInfo, "loadXMLDoc2('save')") !== false, 'working card save action changed');
@@ -133,11 +133,16 @@ foreach (array(
 ) as $selector) {
     technicalCardsAssert(strpos($css, $selector) !== false, 'missing technical UI style ' . $selector);
 }
+technicalCardsAssert(
+    preg_match('/\.ui-technical-planning-toolbar \.form-control,[^{]+\{[^}]*height:\s*32px\s*!important/s', $css) === 1,
+    'technical planning controls do not share one height'
+);
+technicalCardsAssert(strpos($css, '.ui-technical-planning-toolbar .form-control-inp75') !== false, 'technical planning date width is not normalized');
 
 technicalCardsAssert(strpos($icons, '.ui-icon-document') !== false, 'document icon mapping is missing');
 technicalCardsAssert(strpos($icons, 'file-lines.svg') !== false, 'document icon asset mapping changed');
-technicalCardsAssert(is_file($root . '/css/fa7/regular/file-lines.svg'), 'document icon asset is missing');
-technicalCardsAssert(strpos($page, 'css/ui-fa7-icons.css?version=4') !== false, 'FA7 icon cache version is stale');
-technicalCardsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=14') !== false, 'technical stylesheet cache version is stale');
+technicalCardsAssert(is_file($root . '/css/fa7/solid/file-lines.svg'), 'document icon asset is missing');
+technicalCardsAssert(strpos($page, 'css/ui-fa7-icons.css?version=16') !== false, 'FA7 icon cache version is stale');
+technicalCardsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'technical stylesheet cache version is stale');
 
 echo 'UI_REFRESH_TECHNICAL_CARDS=PASS' . PHP_EOL;

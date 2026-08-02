@@ -22,14 +22,14 @@ $reportCallback = strpos($template, 'window.setTimeout(loadLimitCardAvailability
 $reportRequest = strpos($template, "loadXMLDoc2('result')");
 
 $checks = array(
-    strpos($renderer, 'limit_card_persons\\.xsl') !== false,
-    strpos($renderer, 'return "limitCardPersons"') !== false,
+    strpos($renderer, 'limitCardPersons: true') !== false,
+    strpos($renderer, 'function isSupportedProfile(profile)') !== false,
     strpos($renderer, 'prefix + "tableResult"') !== false,
     strpos($renderer, '"c[" + childText(cellField, "name")') !== false,
     strpos($renderer, 'if (!limitCardPersons)') !== false,
     strpos($template, 'function loadLimitCardReports()') !== false,
     strpos($template, 'function loadLimitCardAvailability()') !== false,
-    strpos($template, "rpc_xsl = 'xsl/limit_card_persons.xsl'") !== false,
+    strpos($template, "rpc_renderer_profile = 'limitCardPersons'") !== false,
     strpos($template, "rpc_method = 'POST'") !== false,
     $deleteCallback !== false && $deleteRequest !== false && $deleteCallback < $deleteRequest,
     $reportCallback !== false && $reportRequest !== false && $reportCallback < $reportRequest,

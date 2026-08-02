@@ -2,6 +2,7 @@
 	<script>
 	
 		rpc_debug = true;
+		rpc_html_debug = true;
 		rpc_excel_panel = "off";
 
 		
@@ -64,7 +65,7 @@
 			</td>
 			
 			<td align="right" class="buttons">
-				<button id="b70" name="Button" onClick="dialogReceipt( 0 )" ><img src="images/plus.gif"> Добави </button>
+			<button id="b70" name="Button" class="ui-final-action" onClick="dialogReceipt( 0 )" ><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
 			</td>			
 		</tr>
 	</table>

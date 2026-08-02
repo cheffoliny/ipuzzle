@@ -2,7 +2,7 @@
 
     <script>
         rpc_debug = true;
-        rpc_xsl = "xsl/tech_planning_schedule.xsl";
+        rpc_renderer_profile = "techPlanningSchedule";
 
         function onInit() {
             if (parent.document.getElementById('id_request').value > 0) {

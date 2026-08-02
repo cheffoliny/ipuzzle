@@ -19,53 +19,26 @@
 	</script>
 {/literal}
 
-<div>
-	<form name="form1" id="form1" onsubmit="return false;">
-		<input type="hidden" id="id" name="id" value="{$id_person|default:0}" />
-		<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
-		<input type="hidden" name="to_del" id="to_del" value="0" />
-		
-		<div class="page_caption">Атестации за {$person_name}</div>
-		
-		<table cellspacing="0" cellpadding="0" width="100%" id="filter" >
-			<tr>
-				<td>{include file="person_tabs.tpl"}</td>
-			</tr>
-			<tr class="odd">
-				<td>
-		  			<table class="input">
-						<tr class="odd">
-							<td colspan=6 valign="top">
-								<table class="input">
-									<tr>
-										<td valign="top" align="right" style="width: 995px;">
-											{if $personnel_edit}
-												<button class="search" onclick="return openOrder(0);"><img src="images/plus.gif"/> Добави </button>
-											{else}
-												&nbsp;
-											{/if}
-											<hr />
-										</td>
-									<tr>
-									<tr>
-										<td><div id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="width: 985px; height: 350px;overflow: auto;"></div></td>
-									<tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					<table class="input">
-						<tr valign="top" class="odd">
-							<td valign="top" align="right" width="995px">
-								<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</form>
-</div>
+<form name="form1" id="form1" class="ui-personnel-orders" onsubmit="return false;">
+	<input type="hidden" id="id" name="id" value="{$id_person|default:0}" />
+	<input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
+	<input type="hidden" name="to_del" id="to_del" value="0" />
+
+	<div class="page_caption">Атестации за {$person_name}</div>
+	{include file="person_tabs.tpl"}
+
+	<div class="ui-personnel-orders-toolbar">
+		{if $personnel_edit}
+			<button type="button" class="btn btn-sm btn-success" onclick="return openOrder(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
+		{/if}
+	</div>
+
+	<div id="result" class="ui-personnel-result ui-personnel-orders-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 350px; overflow: auto;"></div>
+
+	<div class="ui-personnel-list-actions ui-personnel-orders-actions">
+		<button type="button" class="btn btn-sm btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+	</div>
+</form>
 
 <script>
 	loadXMLDoc( 'result' );

@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		function onInit() {
 			loadXMLDoc2( 'load');
@@ -40,7 +41,7 @@
 	<table width="100%">
 		<tr>
 			<td align="right">
-				<button type="button" style="width: 30px;" onClick="showFilters();"><img src="images/search2.gif"></button>
+						<button type="button" style="width: 34px;" class="ui-final-action" onClick="showFilters();" aria-label="Филтри"><span class="ui-icon ui-icon-filter" aria-hidden="true"></span></button>
 			</td>
 		</tr>
 	</table>
@@ -58,7 +59,7 @@
 				<td>
 					<select class="default" name="nIDOffice" id="nIDOffice" />
 				</td>
-				<td align="right"><button name="Button" onclick="getResult();"><img src="images/confirm.gif">Търси</button></td>
+								<td align="right"><button name="Button" class="ui-final-action" onclick="getResult();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span>Търси</button></td>
 			</tr>
 	  	</table>	  	
   		<table class="search" cellspacing="3">
@@ -74,8 +75,8 @@
 									</select>
 								</td>
 								<td>
-									<button class="search" style="width: 50px;" name="button" title="Добави документ" onClick="move_option_to( 'all_documents', 'account_documents', 'right'); return false;"><img src="images/mright.gif" /></button></br>
-									<button name="button" style="width: 50px;" title="Премахни документ" onClick="move_option_to( 'all_documents', 'account_documents', 'left'); return false;"><img src="images/mleft.gif" /></button>
+							<button class="search ui-final-action" style="width: 50px;" name="button" title="Добави документ" onClick="move_option_to( 'all_documents', 'account_documents', 'right'); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button><br>
+							<button name="button" class="ui-final-action" style="width: 50px;" title="Премахни документ" onClick="move_option_to( 'all_documents', 'account_documents', 'left'); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 								</td>
 								<td>
 									<select name="account_documents[]" id="account_documents" size="10" style="width: 250px;" ondblclick="move_option_to( 'all_documents', 'account_documents', 'left');" multiple>

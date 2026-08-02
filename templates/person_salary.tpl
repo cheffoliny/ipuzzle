@@ -71,67 +71,28 @@
 	}
 
 		function nextMonth(grd, act) {
-			var oldDate;
-
-			if ( grd == 1 ) {
-				oldDate = $('sSearchDate');
-			} else {
-				oldDate = $('sSearchDate');
-			}
-
-			var MM = oldDate.value.substr(0,2);
-			var YY = oldDate.value.substr(3,4);
-
-			if(YY == "0000") {
-				var d = new Date();
-				var m = d.getMonth()+1;
-				var y = d.getFullYear();
-
-				if(m <=9) {
-					m = "0"+m;
-				}
-
-				oldDate.value = m + '.' + y;
-				return
-			}
-
-			if ( act == 'next' ) {
-				MM++;
-
-				if ( MM == '13' ) {
-					MM = '1';
-					YY++;
-				}
-			} else {
-				MM--;
-
-				if ( MM == '0' ) {
-					MM = '12';
-					YY--;
-				}
-			}
-
-			if ( MM < 10 ) {
-				MM = "0" + MM;
-			}
-
-			oldDate.value = MM + '.' + YY;
-
 			var year = $('year');
 			var month = $('month');
+			var MM = parseInt(month.value, 10);
+			var YY = parseInt(year.value, 10);
+
+			if (!MM || !YY) {
+				var currentDate = new Date();
+				MM = currentDate.getMonth() + 1;
+				YY = currentDate.getFullYear();
+			}
+
+			MM += act == 'next' ? 1 : -1;
+			if (MM > 12) { MM = 1; YY++; }
+			if (MM < 1) { MM = 12; YY--; }
 
 			year.value = YY;
-			month.value = MM;
+			month.value = MM < 10 ? '0' + MM : MM;
 		}
 	</script>
-	<style>
-	        .container-fluid {
-            height: 80% !important;
-        }
-    </style>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;" style="margin-bottom: 130px !important;">
+<form name="form1" id="form1" class="ui-salary-report ui-person-salary-report" onsubmit="return false;">
 <input type="hidden" id="id" name="id" value="{$id|default:0}" />
 <input type="hidden" id="nEnableRefresh" name="nEnableRefresh" value="{$enable_refresh|default:1}" />
 <input type="hidden" id="idc" name="idc" value="0" />
@@ -141,65 +102,61 @@
 
 {include file='person_tabs.tpl'}
 
-<div class="container-fluid" id="filter" style="overflow: auto;">
-	<div class="row" id="filter_result">
+<div class="container-fluid ui-person-salary-content" id="filter">
+	<div class="row ui-salary-report-toolbar" id="filter_result">
 		<div class="col-3 p-1 ml-2">
 			<div class="input-group input-group-sm mb-1">
-				<span class="input-group-addon " onclick="nextMonth(1, 'prev');" id="btnLeft">
-							<i class="far fa-chevron-left"></i>
-						</span>
+				<button type="button" class="ui-salary-month-button" onclick="nextMonth(1, 'prev');" id="btnLeft" title="Предходен месец"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
 				<div class="input-group-prepend">
-					<span class="fa fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Състояние"></span>
+					<span class="ui-icon ui-icon-calendar" title="Период" aria-hidden="true"></span>
 				</div>
 				<input class="form-control inp50" onkeypress="return formatDigits(event);" name="month" id="month" type="text" value="{$month}"/>&nbsp;
 				<input class="form-control inp75" onkeypress="return formatDigits(event);" name="year" id="year" type="text" value="{$year}"/>
-				<span class="input-group-append"  onclick="nextMonth(1, 'next');">
-					<i class="far fa-chevron-right"></i>
-				</span>
+				<button type="button" class="ui-salary-month-button" onclick="nextMonth(1, 'next');" title="Следващ месец"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
 			</div>
 		</div>
 		<div class="col p-1">
 			<div class="input-group input-group-sm mb-1">
-				<button class="btn btn-sm btn-info ml-2" type="button" onClick="formSubmit(1); return false;" name="Button"><i class="far fa-list"></i> Подробна</button>
-				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(2); return false;" name="Button"><i class="far fa-list-alt"></i> Обобщена</button>
-				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(3); return false;" name="Button"><i class="far fa-home-alt"></i> Обекти</button>
+				<button class="btn btn-sm btn-info ml-2" type="button" onClick="formSubmit(1); return false;" name="Button"><span class="ui-icon ui-icon-list" aria-hidden="true"></span> Подробна</button>
+				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(2); return false;" name="Button"><span class="ui-icon ui-icon-layout" aria-hidden="true"></span> Обобщена</button>
+				<button class="btn btn-sm btn-info ml-1" type="button" onClick="formSubmit(3); return false;" name="Button"><span class="ui-icon ui-icon-home" aria-hidden="true"></span> Обекти</button>
 			</div>
 		</div>
 		<div class="col-3 text-right p-1">
 			{if $personnel_edit}
-				<button class="btn btn-sm btn-success" id="b100" onClick="editSalary(0,1);"><i class="far fa-plus fa-lg"></i> Наработка</button>
-				<button class="btn btn-sm btn-danger" id="b100" onClick="editSalary(0,0);"><i class="far fa-minus fa-lg"></i> Удръжка</button>
+				<button type="button" class="btn btn-sm btn-success" id="addSalaryEarning" onClick="editSalary(0,1);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Наработка</button>
+				<button type="button" class="btn btn-sm btn-danger" id="addSalaryExpense" onClick="editSalary(0,0);"><span class="ui-icon ui-icon-minus" aria-hidden="true"></span> Удръжка</button>
 			{/if}
 		</div>
 	</div>
 
-	<div class="row w-100 px-0" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
+	<div class="row w-100 px-0 ui-salary-report-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
  	<!-- край на работната част -->
 </div>
-<nav class="navbar fixed-bottom flex-row py-2 navbar-expand-lg p-2" id="search">
+<nav class="navbar fixed-bottom flex-row navbar-expand-lg ui-salary-action-bar" id="search">
 	<div class="col">
 		{if $personnel_edit}
-			<button class="btn btn-sm btn-danger mr-1"	type="button" onclick="openPDF();" > <i class="far fa-file-pdf" ></i> Пл. Фиш</button>
+			<button class="btn btn-sm btn-danger mr-1" type="button" onclick="openPDF();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> Пл. Фиш</button>
 		{/if}
 	</div>
 	<div class="col">
 		<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
 			<label class="btn btn-sm p-2 btn-success" title="Наработки">
-				<input type="checkbox" id="plus" name="plus" onclick="formSubmit(1);" checked /><i class="fas fa-plus-circle fa-lg"></i>
+				<input type="checkbox" id="plus" name="plus" onclick="formSubmit(1);" checked /><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>
 			</label>
 			<input class="form-control inp75 mr-2" type="text" id="plus_price" name="plus_price" style="text-align: right;" readonly />
 			<label class="btn btn-sm p-2 btn-danger" title="Удръжки">
-				<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1); " /><i class="fas fa-minus-circle fa-lg"></i>
+				<input type="checkbox" id="minus" name="minus" class="clear" checked onclick="formSubmit(1);"><span class="ui-icon ui-icon-minus" aria-hidden="true"></span>
 			</label>
 			<input class="form-control inp75" type="text" id="minus_price" name="minus_price" style="text-align: right;" readonly />&nbsp;&nbsp;
 		</div>
 	</div>
 	<div class="col text-right p-2">
 		{if $personnel_edit}
-			<button class="btn btn-sm btn-success mr-1"	onclick="onPrint('export_to_xls');" > <i class="far fa-file-excel" ></i> </button>
-			<button class="btn btn-sm btn-danger mr-1"	 onclick="onPrint('export_to_pdf');" > <i class="far fa-file-pdf" ></i> </button>
+			<button type="button" class="btn btn-sm btn-success mr-1" onclick="onPrint('export_to_xls');" title="Експорт в Excel"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span></button>
+			<button type="button" class="btn btn-sm btn-danger mr-1" onclick="onPrint('export_to_pdf');" title="Експорт в PDF"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span></button>
 		{/if}
-		<button class="btn btn-sm btn-danger"	    onClick="window.close();"		><i class="far fa-window-close" ></i> Затвори </button>
+		<button type="button" class="btn btn-sm btn-danger" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 	</div>
 </nav>
 

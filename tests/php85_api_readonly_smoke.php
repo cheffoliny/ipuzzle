@@ -39,6 +39,30 @@ $clientId = (int) $db_sod->GetOne(
       ORDER BY id_client
       LIMIT 1"
 );
+$messageObjectId = (int) $db_sod->GetOne(
+    "SELECT id
+       FROM objects
+      ORDER BY id
+      LIMIT 1"
+);
+$sectorSmokeRow = $db_sod->GetRow(
+    "SELECT id, id_object
+       FROM objects_sectors
+      WHERE to_arc = 0
+      ORDER BY id
+      LIMIT 1"
+);
+$sectorSmokeId = isset($sectorSmokeRow['id']) ? (int) $sectorSmokeRow['id'] : 0;
+$sectorObjectId = isset($sectorSmokeRow['id_object']) ? (int) $sectorSmokeRow['id_object'] : $messageObjectId;
+$zoneSmokeRow = $db_sod->GetRow(
+    "SELECT id, id_object
+       FROM objects_zones
+      WHERE to_arc = 0
+      ORDER BY id
+      LIMIT 1"
+);
+$zoneSmokeId = isset($zoneSmokeRow['id']) ? (int) $zoneSmokeRow['id'] : 0;
+$zoneObjectId = isset($zoneSmokeRow['id_object']) ? (int) $zoneSmokeRow['id_object'] : $messageObjectId;
 $assetId = (int) $db_storage->GetOne(
     "SELECT id
        FROM assets
@@ -123,6 +147,65 @@ $buyParams = array(
 );
 
 $cases = array(
+    'object_messages_result' => array(
+        'file' => 'api/api_object_messages.php',
+        'class' => 'ApiObjectMessages',
+        'method' => 'result',
+        'params' => array(
+            'nID' => $messageObjectId,
+            'scheme' => 0,
+            'nReact' => 0,
+            'api_action' => 'result'
+        )
+    ),
+    'signal_message_load' => array(
+        'file' => 'api/api_set_setup_signalMessage.php',
+        'class' => 'ApiSetSetupSignalMessage',
+        'method' => 'load',
+        'params' => array(
+            'nID' => 0,
+            'nIDObject' => $messageObjectId,
+            'api_action' => 'load'
+        )
+    ),
+    'object_sectors_result' => array(
+        'file' => 'api/api_object_sectors.php',
+        'class' => 'ApiObjectSectors',
+        'method' => 'result',
+        'params' => array(
+            'nID' => $sectorObjectId,
+            'api_action' => 'result'
+        )
+    ),
+    'object_zones_result' => array(
+        'file' => 'api/api_object_zones.php',
+        'class' => 'ApiObjectZones',
+        'method' => 'result',
+        'params' => array(
+            'nID' => $zoneObjectId,
+            'api_action' => 'result'
+        )
+    ),
+    'object_sector_editor_get' => array(
+        'file' => 'api/api_set_setup_object_sector.php',
+        'class' => 'ApiSetSetupObjectSector',
+        'method' => 'get',
+        'params' => array(
+            'nID' => $sectorSmokeId,
+            'nIDObject' => $sectorObjectId,
+            'api_action' => 'get'
+        )
+    ),
+    'object_zone_editor_get' => array(
+        'file' => 'api/api_set_setup_object_zone.php',
+        'class' => 'ApiSetSetupObjectZone',
+        'method' => 'get',
+        'params' => array(
+            'nID' => $zoneSmokeId,
+            'nIDObject' => $zoneObjectId,
+            'api_action' => 'get'
+        )
+    ),
     'setup_clients_load' => array(
         'file' => 'api/api_setup_clients.php',
         'class' => 'ApiSetupClients',
@@ -450,6 +533,31 @@ $cases = array(
         'method' => 'limit',
         'params' => array('chk' => '', 'api_action' => 'limit')
     ),
+    'set_limit_card_persons_load_empty' => array(
+        'file' => 'api/api_set_limit_card_persons.php',
+        'class' => 'ApiSetLimitCardPersons',
+        'method' => 'load',
+        'params' => array(
+            'nID' => 0,
+            'nIDCard' => 0,
+            'nIDFirm' => 0,
+            'nIDOffice' => 0,
+            'nIDPerson' => 0,
+            'api_action' => 'load'
+        )
+    ),
+    'set_setup_person_shifts_load_empty' => array(
+        'file' => 'api/api_set_setup_person_shifts.php',
+        'class' => 'ApiSetSetupPersonShifts',
+        'method' => 'load',
+        'params' => array('nID' => 0, 'api_action' => 'load')
+    ),
+    'personal_card_limit_card_load_empty' => array(
+        'file' => 'api/api_personal_card_limit_card.php',
+        'class' => 'ApiPersonalCardLimitCard',
+        'method' => 'load',
+        'params' => array('id_limit_card' => 0, 'api_action' => 'load')
+    ),
     'tech_limit_cards_delete_empty_selection' => array(
         'file' => 'api/api_tech_limit_cards.php',
         'class' => 'ApiTechLimitCards',
@@ -619,6 +727,23 @@ function validateXmlResponse($name, $xml)
             throw new RuntimeException("{$name} returned invalid XML: {$message}");
         }
     }
+}
+
+$caseFilter = null;
+foreach ($argv as $argument) {
+    if (strpos($argument, '--case=') === 0) {
+        $caseFilter = substr($argument, strlen('--case='));
+        break;
+    }
+}
+
+if ($caseFilter !== null) {
+    if (!isset($cases[$caseFilter])) {
+        fwrite(STDERR, "Unknown read-only API smoke case: {$caseFilter}\n");
+        exit(1);
+    }
+
+    $cases = array($caseFilter => $cases[$caseFilter]);
 }
 
 $passed = array();

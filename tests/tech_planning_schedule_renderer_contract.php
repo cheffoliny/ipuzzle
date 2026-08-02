@@ -17,7 +17,7 @@ $missingClassGuard = strpos($api, "class_exists('DBContractsGuardedRoomsNomencla
 $missingClassUse = strpos($api, 'new DBContractsGuardedRoomsNomenclatures()', $missingClassGuard === false ? 0 : $missingClassGuard);
 
 $checks = array(
-    strpos($renderer, 'tech_planning_schedule\\.xsl') !== false,
+    strpos($renderer, 'techPlanningSchedule: true') !== false,
     strpos($renderer, 'techPlanningSchedule') !== false,
     strpos($renderer, 'result table-sm w-100 table-borderless mt-1') !== false,
     strpos($renderer, 'planningSchedule ? "total"') !== false,
@@ -25,11 +25,11 @@ $checks = array(
     strpos($renderer, 'prepareTechPlanningScheduleCell') !== false,
     strpos($renderer, 'planning-slot') !== false,
     strpos($renderer, 'setProperty("background-color"') !== false,
-    strpos($xmlrpc, 'RpcResultRenderer.isSupportedStylesheet') !== false,
-    strpos($xmlrpc, 'DOM-only runtime: browser XSLT fallback is intentionally removed.') !== false,
+    strpos($xmlrpc, 'RpcResultRenderer.isSupportedProfile') !== false,
+    strpos($xmlrpc, '// DOM-only runtime.') !== false,
     strpos($xmlrpc, 'XSLTProcessor') === false,
     strpos($xmlrpc, "xslhttp.open('GET', rpc_xsl") === false,
-    strpos($template, 'xsl/tech_planning_schedule.xsl') !== false,
+    strpos($template, 'rpc_renderer_profile = "techPlanningSchedule"') !== false,
     strpos($template, 'rpc_excel_panel="off"') !== false,
     strpos($template, 'rpc_resize="off"') !== false,
     strpos($template, "setProperty('background-color', color, 'important')") !== false,

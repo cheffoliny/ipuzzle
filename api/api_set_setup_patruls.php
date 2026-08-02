@@ -47,7 +47,8 @@
 				}
 
 				$aPatruls = $oPatruls->getAllPatrulsByIDOffice($nIDOffice);
-				$oResponse->setFormElement('form1', 'sPatruls', array('value' => $aPatruls['patruls']) );		
+				$sPatruls = isset($aPatruls['patruls']) ? (string) $aPatruls['patruls'] : '';
+				$oResponse->setFormElement('form1', 'sPatruls', array('value' => $sPatruls) );
 			}
 			else 
 			{
@@ -132,7 +133,7 @@
 			{
 				$oPatruls = new DBPatruls();
 				$aPatruls = $oPatruls->getAllPatrulsByIDOffice( $nIDOffice );
-				$sPatruls = $aPatruls['patruls'];
+				$sPatruls = isset($aPatruls['patruls']) ? (string) $aPatruls['patruls'] : '';
 			}
 			
 			$oResponse->setFormElement('form1', 'sPatruls', array('value' => $sPatruls));

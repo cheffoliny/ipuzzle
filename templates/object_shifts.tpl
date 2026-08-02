@@ -1,6 +1,6 @@
 {literal}
 <script>
-	//rpc_debug = true;
+	rpc_debug = true;
 	
 	function editShifts(id) {
 		var obj = document.getElementById('nID').value;
@@ -33,18 +33,18 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-shifts" onsubmit="return false;">
 	<input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
 	<input type="hidden" id="nIDShift" name="nIDShift" value="0" />
 
 	{include file='object_tabs.tpl'}
 
-	<div class="container-fluid mb-4" id="filter_result">
+	<div class="container-fluid mb-4 ui-object-result-shell" id="filter_result">
 
-		<div class="row clearfix mt-2 h-75" id="result"  rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
+		<div class="row clearfix mt-2 h-75 ui-object-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="overflow: auto;"></div>
 
 	</div>
-	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg" id="search">
+	<nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg ui-object-actions" id="search">
 		<div class="col-6 pl-0">
 			<div class="input-group input-group-sm">
 
@@ -52,9 +52,9 @@
 		</div>
 		<div class="col">
 			<div class="input-group input-group-sm ml-1">
-				<button class="btn btn-sm btn-success mr-1"	onClick="editShifts(0);"         ><i class="fa fa-plus"></i> Смяна </button>
-				<button class="btn btn-sm btn-light mr-1"	onClick="openSchedule();"       ><i class="fas fa-calendar"  ></i> График </button>
-				<button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+				<button type="button" class="btn btn-sm btn-success mr-1" onClick="editShifts(0);"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Смяна </button>
+				<button type="button" class="btn btn-sm btn-light mr-1" onClick="openSchedule();"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span> График </button>
+				<button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 			</div>
 		</div>
 	</nav>

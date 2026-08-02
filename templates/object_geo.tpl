@@ -407,7 +407,7 @@
     //google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 {/literal}
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-geo" onsubmit="return false;">
     <input type="hidden" name="nID" id="nID" value="{$nID|default:0}"/>
     <input type="hidden" name="ppov" id="ppov" value="{$pov|escape}">
     <input type="hidden" name="new_lan" id="new_lan" value="0" />
@@ -416,9 +416,9 @@
 
     {include file="object_tabs.tpl"}
 
-    <div id="map_canvas" style="width:100%; height: 450px;"></div>
-    <div class="fixed-bottom w-100 start-50 my-3 mx-5 text-center">
-        <button class="btn btn-sm btn-success px-5" onclick="setGeoLatLan(); return false;">&nbsp; Запази </button>
+    <div id="map_canvas" class="ui-object-map" style="width:100%; height: 450px;"></div>
+    <div class="fixed-bottom w-100 text-center ui-object-actions ui-object-geo-actions">
+        <button type="button" class="btn btn-sm btn-success px-5" onclick="setGeoLatLan(); return false;"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази </button>
     </div>
 
     {*    <div class="position-relative">*}
@@ -431,16 +431,16 @@
 {*                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">*}
 {*                            <span class="btn btn-sm btn-default">*}
 {*                                <span id="dropdown_text">*}
-{*                                    <i class="far fa-globe"></i>&nbsp;Карта*}
+{*                                    <span class="ui-icon ui-icon-map" aria-hidden="true"></span> Карта*}
 {*                                </span>*}
 {*                                <b class="caret"></b>*}
 {*                            </span>*}
 {*                        </a>*}
 {*                        <ul class="dropdown-menu" role="menu" style="text-align: left;">*}
-{*                        <li onclick="switchTab(this);" id="map_view" class="active"><a href="#"><i class="far fa-globe"></i>&nbsp;Карта</a></li>*}
-{*                        <li onclick="switchTab(this);" id="street_view"><a href="#"><i class="far fa-image"></i>&nbsp;Изглед</a></li>*}
-{*                        <li onclick="switchTab(this);" id="edit"><a href="#"><i class="far fa-pencil-alt"></i></i>&nbsp;Редакция</a></li>*}
-{*                        <li onclick="switchTab(this);" id="pointsEdit"><a href="#"><i class="far fa-map-marker"></i>&nbsp;Точки</a></li>*}
+{*                        <li onclick="switchTab(this);" id="map_view" class="active"><a href="#"><span class="ui-icon ui-icon-map" aria-hidden="true"></span> Карта</a></li>*}
+{*                        <li onclick="switchTab(this);" id="street_view"><a href="#"><span class="ui-icon ui-icon-eye" aria-hidden="true"></span> Изглед</a></li>*}
+{*                        <li onclick="switchTab(this);" id="edit"><a href="#"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span> Редакция</a></li>*}
+{*                        <li onclick="switchTab(this);" id="pointsEdit"><a href="#"><span class="ui-icon ui-icon-location" aria-hidden="true"></span> Точки</a></li>*}
 {*                        </ul>*}
 {*                    </span>*}
 
@@ -449,12 +449,12 @@
                         {*<input type="radio" id="toStreet" name="typeMap" value="toStreet" onchange="toggleStreetView();"/>*}
                         {*Снимка*}
 {*                        <button type="button" id="savePov" name="savePov" disabled="disabled" style="visibility: hidden;" class="btn btn-sm btn-success" onclick="saveLastPov(); return false;">*}
-{*                            <span class="far fa-save"></span>*}
+{*                            <span class="ui-icon ui-icon-save" aria-hidden="true"></span>*}
 {*                            Запази*}
 {*                        </button>*}
 
 {*                        <button type="button" id="clearPov" name="clearPov" class="btn btn-sm btn-danger" style="visibility: hidden;" onclick="clearLastPov(); return false;" >*}
-{*                            <i class="far fa-times"></i>*}
+{*                            <span class="ui-icon ui-icon-close" aria-hidden="true"></span>*}
 {*                            Изчисти*}
 {*                        </button>*}
                         {*&nbsp;&nbsp;&nbsp;&nbsp;*}
@@ -463,12 +463,12 @@
                         {*</button>*}
 {*                        <span id="points" style="display: none;">*}
 {*                    <button type="button" id="clearPoints" name="clearPoints" class="btn btn-sm btn-danger" onclick="clearAsPoints(); return false;">*}
-{*                        <i class="far fa-times"></i>*}
+{*                        <span class="ui-icon ui-icon-close" aria-hidden="true"></span>*}
 {*                        Изтриване на точки*}
 {*                    </button>*}
 
 {*                    <button type="button" id="addPoints" name="addPoints" class="btn btn-sm btn-success" onclick="addAsPoints(); return false;">*}
-{*                        <i class="far fa-plus"></i>*}
+{*                        <span class="ui-icon ui-icon-plus" aria-hidden="true"></span>*}
 {*                        Добавяне на точки*}
 {*                    </button>*}
 {*                </span>*}

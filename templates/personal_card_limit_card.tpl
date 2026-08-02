@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		rpc_method = 'POST';
 		
 		function onInit() {
@@ -168,7 +169,7 @@
 	</style>
 
 {/literal}
-<form action="" name="form1" id="form1" onSubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-personal-card-subview ui-personal-card-limit-card" onSubmit="return false;">
 	<input type="hidden" name="id_person" id="id_person" value="0">
 	<input type="hidden" name="id_log_person" id="id_log_person" value="{$nIDLogPerson|default:0}"> 
 	<input type="hidden" name="id_limit_card" id="id_limit_card" value="{$nIDLimitCard|default:0}">
@@ -181,152 +182,57 @@
 	<input type="hidden" name="finish_him" id="finish_him" value="0">
 	<input type="hidden" name="refreshTheOtherIFrames" id="refreshTheOtherIFrames" value="0">
 	
-	<table class="input" width="100%" border="0">
 	{if $nIDLimitCard}
+		<header class="ui-personal-card-limit-header">
+			<input type="text" name="nNum" id="nNum" class="form-control limit_card_name" readonly value="{$num}" aria-label="Номер на лимитна карта" />
+			<input type="text" name="type" id="type" class="form-control limit_card_name" readonly value="{$type}" aria-label="Тип на лимитната карта" />
+		</header>
 
-		<tr>
-			<td> 
-				<input type="text" name="nNum" id="nNum" class="limit_card_name" readonly value="{$num}"  />
-			</td>
-			<td>
-				<input type="text" name="type" id="type" class="limit_card_name" readonly value="{$type}" >
-			</td>
-		</tr>
-			
-	</table>
-	<table class="input" width="100%" border="0">
-		<tr style="height: 5px;" class="odd"><td colspan="4"></td></tr>
-		
+		<section class="ui-personal-card-fields" aria-label="Данни за задачата и обекта">
 		{if !$nIDContract}
-	
-
-		<tr class="even">
-			<td align="right" style=" width:60px;" >
-				Задача №
-			</td>
-			<td style="width:160px;">
-				<input style="  width:100%;cursor:pointer;" type="text" name="nRequest" id="nRequest" onclick="openRequest({$id_request});" class="clear" readonly value="{$sRequestNumAndDate}" />
-			</td>
-			<td rowspan="2" colspan="2">
-				<textarea style="height:50px;width:100%;" name="sRequestInfo" id="sRequestInfo" readonly>{$sRequstInfo}</textarea>
-			</td>
-		</tr>
-		<tr class="even">
-			<td align="right" style="width:60px;">
-				Причина:
-			</td>
-			<td>
-				<input style="  width:100%;" type="text" name="sHoldupReason" id="sHoldupReason" class="clear" readonly value="{$sHoldupReason}" />
-			</td>
-		</tr>
-
+			<label for="nRequest"><span class="ui-icon ui-icon-clipboard" aria-hidden="true"></span> Задача №</label>
+			<input type="text" name="nRequest" id="nRequest" onclick="openRequest({$id_request});" class="form-control ui-personal-card-link-field" readonly value="{$sRequestNumAndDate}" />
+			<label for="sHoldupReason"><span class="ui-icon ui-icon-info" aria-hidden="true"></span> Причина</label>
+			<input type="text" name="sHoldupReason" id="sHoldupReason" class="form-control" readonly value="{$sHoldupReason}" />
+			<label for="sRequestInfo" class="ui-personal-card-field-wide"><span class="ui-icon ui-icon-document" aria-hidden="true"></span> Информация за задачата</label>
+			<textarea name="sRequestInfo" id="sRequestInfo" class="form-control ui-personal-card-field-wide" readonly>{$sRequstInfo}</textarea>
 		{else}
-
-		<tr class="even">
-			<td align="right" style=" width:80px;">
-				Договор № 
-			</td>
-			<td colspan="3">
-				<input style="  width:100%;cursor:pointer;" type="text" name="$contract_num" id="$contract_num" onclick="openContract();" class="clear" readonly value="{$sContractNumAndData}" />
-			</td>
-		</tr>
-		<tr class="even">
-			<td align="right" style=" width:80px;">
-				Рекл. сътр. :
-			</td>
-			<td colspan="3">
-				<input style="  width:100%;" type="text" name="$contract_rs" id="$contract_rs" class="clear" readonly value="{$contract_rs}" />
-			</td>
-
-		</tr>
-
+			<label for="contract_num"><span class="ui-icon ui-icon-contract" aria-hidden="true"></span> Договор №</label>
+			<input type="text" name="contract_num" id="contract_num" onclick="openContract();" class="form-control ui-personal-card-link-field" readonly value="{$sContractNumAndData}" />
+			<label for="contract_rs"><span class="ui-icon ui-icon-user" aria-hidden="true"></span> Рекл. сътр.</label>
+			<input type="text" name="contract_rs" id="contract_rs" class="form-control" readonly value="{$contract_rs}" />
 		{/if}
-		
-		<tr style="height: 5px;" class="odd"><td colspan="4"></td></tr>
 
-		<tr class="even">
-			
-			<td align="right"  style=" width:60px;" >
-				Обект:
-			</td>
-			<td colspan="3">
+			<label for="sObjName"><span class="ui-icon ui-icon-home" aria-hidden="true"></span> Обект</label>
 			{if $nIDObject}
-				<a href="javascript:openObject();">
-					<input style="  width:100%; cursor:pointer;" type="text" name="sObjName" id="sObjName" class="clear" readonly />
-				</a>	
+				<input type="text" name="sObjName" id="sObjName" class="form-control ui-personal-card-link-field" onclick="openObject();" readonly />
 			{else}
-				<input style="  width:100%; cursor:pointer; color:red;" type="text" name="sObjName" id="sObjName" class="clear" onclick="openObjectNew()" readonly  />
+				<input type="text" name="sObjName" id="sObjName" class="form-control ui-personal-card-link-field ui-personal-card-missing" onclick="openObjectNew();" readonly />
 			{/if}
-			</td>
-	
-		</tr>
-		
-		<tr class="even">
-			<td align="right" style=" width:60px;" >
-				Адрес:
-			</td>
-			<td colspan="3">
-				<input style="width:100%;" type="text" name="sObjAddress" id="sObjAddress" class="clear"  readonly />
-			</td>
-		</tr>
-		
-		<tr class="even">
-			<td align="right" style=" width:60px;" >
-				Телефон:
-			</td>
-			<td colspan="3">
-				<input style=" width:100%;" type="text" name="sPhone" id="sPhone" class="clear" readonly />
-			</td>
-		</tr>
-		
-		<tr class="even">
-		
-			<td align="right" style=" width:60px;" >
-				МОЛ:
-			</td>
-			<td colspan="3">
-				<input style="width:100%;" type="text" name="sMOL" id="sMOL" class="clear" readonly />
-			</td>
-		</tr>
 
-		<tr style="height: 5px;" class="odd"><td colspan="4"></td></tr>
+			<label for="sObjAddress"><span class="ui-icon ui-icon-location" aria-hidden="true"></span> Адрес</label>
+			<input type="text" name="sObjAddress" id="sObjAddress" class="form-control" readonly />
+			<label for="sPhone"><span class="ui-icon ui-icon-phone" aria-hidden="true"></span> Телефон</label>
+			<input type="text" name="sPhone" id="sPhone" class="form-control" readonly />
+			<label for="sMOL"><span class="ui-icon ui-icon-id-card" aria-hidden="true"></span> МОЛ</label>
+			<input type="text" name="sMOL" id="sMOL" class="form-control" readonly />
+		</section>
 
-		</table>
-		<table class="input" width="100%" border="0">
-		<tr class="even">
-			<td align="right" style="width:80px;">
-				План. старт:
-			</td>
-			<td>
-				<input style="width:100%;" type="text" name="planned_start" id="planned_start" class="clear" readonly value="{$planned_start}"/>
-			</td>
-			<td align="right">
-				План. край:
-			</td>
-			<td>
-				<input style="width:100%;" type="text" name="planned_end" id="planned_end" class="clear" readonly value="{$planned_end}"/>
-			</td>
-		</tr>
-		
-		
-		<tr class="even">
-			<td align="right" style="width:80px;">
-				<button class="start" type="button" name="start" id="start" onclick="realStart();">Реал. старт</button>
-			</td>
-			<td >
-				<input style="width:100%;" type="text" name="real_start" id="real_start" class="clear" readonly value="{$real_start}"/>
-			</td>
-			<td align="right">
-				<button class="end" type="button" name="end" id="end" onclick="realEnd();">Реал. край</button>
-			</td>
-			<td>
-				<input style="width:100%;" type="text" name="real_end" id="real_end" class="clear" readonly value="{$real_end}"/>
-			</td>
-			
-		</tr>
-	
-		{/if}
-	</table>	
+		<section class="ui-personal-card-timeline" aria-label="Планирани и реални периоди">
+			<label for="planned_start">План. старт</label>
+			<input type="text" name="planned_start" id="planned_start" class="form-control" readonly value="{$planned_start}" />
+			<label for="planned_end">План. край</label>
+			<input type="text" name="planned_end" id="planned_end" class="form-control" readonly value="{$planned_end}" />
+			<button class="btn btn-success start" type="button" name="start" id="start" onclick="realStart();">
+				<span class="ui-icon ui-icon-play" aria-hidden="true"></span> Реал. старт
+			</button>
+			<input type="text" name="real_start" id="real_start" class="form-control" readonly value="{$real_start}" />
+			<button class="btn btn-danger end" type="button" name="end" id="end" onclick="realEnd();">
+				<span class="ui-icon ui-icon-stop" aria-hidden="true"></span> Реал. край
+			</button>
+			<input type="text" name="real_end" id="real_end" class="form-control" readonly value="{$real_end}" />
+		</section>
+	{/if}
 </form>
 
 <script>

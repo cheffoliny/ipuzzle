@@ -57,7 +57,7 @@
 {/literal}
 
 
-<form action="" method="POST" name="form1" id="form1" onsubmit="return false;">
+<form action="" method="POST" name="form1" id="form1" class="ui-client-dialog ui-set-object-client" onsubmit="return false;">
 
     <div class="modal-content pb-3">
         <div class="modal-header">
@@ -66,7 +66,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body pb-5">
+        <div class="modal-body pb-5 ui-client-dialog-fields">
 
             <input type="hidden" id="nID" name="nID" value="0" />
             <input type="hidden" id="nIDObject" name="nIDObject" value="{$id}" />
@@ -76,7 +76,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-user fa-fw" data-fa-transform="right-22 down-10" title="Име на клиент..."></span>
+                            <span class="ui-icon ui-icon-user" aria-hidden="true" title="Име на клиент..."></span>
                         </div>
                         <input class="form-control" id="ClientName" name="ClientName" type="text" suggest="suggest" queryType="ClientName" queryParams="nIDObject" onchange="onClientNameChange()" onpast="onClientNameChange()" />
                     </div>
@@ -87,7 +87,7 @@
                 <div class="col-12 pl-1">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fab fa-viber fa-fw" data-fa-transform="right-22 down-10" title="Телефон на клиент..."></span>
+                            <span class="ui-icon ui-icon-phone" aria-hidden="true" title="Телефон на клиент..."></span>
                         </div>
                         <input class="form-control" id="ClientPhone" name="ClientPhone" type="text" suggest="suggest" queryType="ClientPhone" onchange="onClientNameChange()" onpast="onClientNameChange()" />
                     </div>
@@ -103,10 +103,10 @@
         </div>
     </div>
 
-    <nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1" id="search">
+    <nav class="navbar fixed-bottom flex-row mb-2 py-0 navbar-expand-lg py-md-1 ui-client-actions" id="search">
         <div class="col-12 col-sm-12 col-lg-12">
             <div class="input-group input-group-sm text-right">
-                <button class="btn btn-sm btn-block btn-primary" onClick="formSubmit();"><i class="fas fa-check"></i> Запази </button>
+                <button type="button" class="btn btn-sm btn-block btn-primary" onClick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази </button>
             </div>
         </div>
     </nav>

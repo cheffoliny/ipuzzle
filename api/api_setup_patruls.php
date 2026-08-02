@@ -30,10 +30,11 @@
 			
 			$oResponse->printResponse("Позивни","setup_patruls");
 		}
-		function delete() {
+		public function delete( DBResponse $oResponse ) {
 			$nID = Params::get('nID');
 			$oDBPatruls = new DBPatruls();
 			$oDBPatruls->detachAllPatrulsFromOffice( $nID );
+			$oResponse->printResponse();
 		}
 	}
 	

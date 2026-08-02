@@ -122,6 +122,7 @@
 			
 			$oPatrulParking = new DBPatrulParking();
 			$oPatrulParking->update( $aData );
+			$oResponse->printResponse();
 		}
 			
 	}

@@ -2,6 +2,7 @@
 
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		
 		var child_window;
 		
@@ -215,7 +216,7 @@
 						<td>
 							<input type="text" name="sDocDate" id="sDocDate" style="width:70px;" value="{$smarty.now|date_format:'%d.%m.%Y'}" onkeypress="return formatDate(event, '.');" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editDocDate" />
+							<button type="button" class="ui-inline-calendar-trigger" id="editDocDate" title="Избор на дата" aria-label="Избор на дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 							<span style="font-weight:bold;color:red;margin-left:2px;"><sup>*</sup></span>
 						</td>
 					</tr>
@@ -270,7 +271,7 @@
 							За месец&nbsp;
 						</td>
 						<td>
-							<img src="images/mleft.gif" onclick="nextMonth('prev','dateDDS');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-left ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('prev','dateDDS');" title="Предходен месец"></span>
 							<input 
 								style="width:50px;" 
 								id="dateDDS" 
@@ -282,7 +283,7 @@
 								title="ММ.ГГГГ" 
 								value={$smarty.now|date_format:'%m.%Y'}
 							>
-							<img src="images/mright.gif" onclick="nextMonth('next','dateDDS');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-right ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('next','dateDDS');" title="Следващ месец"></span>
 						</td>
 					</tr>
 					<tr class="odd">
@@ -297,7 +298,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="right">
-							<button onclick="loadXMLDoc2('loadInventoryDDS');" style="width:50px;"><img src="images/confirm.gif">Опис</button>
+							<button onclick="loadXMLDoc2('loadInventoryDDS');" class="ui-final-action"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Опис</button>
 						</td>
 					</tr>
 				</table>
@@ -340,7 +341,7 @@
 							</select>
 						</td>
 						<td align="center">
-							<img src="images/mleft.gif" onclick="nextMonth('prev','dateSalary');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-left ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('prev','dateSalary');" title="Предходен месец"></span>
 							<input 
 								style="width:50px;" 
 								id="dateSalary" 
@@ -352,7 +353,7 @@
 								title="ММ.ГГГГ" 
 								value={$smarty.now|date_format:'%m.%Y'}
 							>
-							<img src="images/mright.gif" onclick="nextMonth('next','dateSalary');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-right ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('next','dateSalary');" title="Следващ месец"></span>
 						</td>
 						<td>
 							&nbsp;
@@ -412,7 +413,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="right">
-							<button style="width:50px;" onclick="loadXMLDoc2('loadInventory');"><img src="images/confirm.gif">Опис</button>
+							<button class="ui-final-action" onclick="loadXMLDoc2('loadInventory');"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Опис</button>
 						</td>
 					</tr>
 				</table>
@@ -427,13 +428,13 @@
 						<td align="left">
 							<input type="text" name="sFromDate" id="sFromDate" style="width:70px;" onkeypress="return formatDate(event, '.');" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editFromDate" />
+							<button type="button" class="ui-inline-calendar-trigger" id="editFromDate" title="Избор на начална дата" aria-label="Избор на начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 						<td>До</td>
 						<td align="left">
 							<input type="text" name="sToDate" id="sToDate" style="width:70px;" onkeypress="return formatDate(event, '.');" />
 							&nbsp;
-							<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editToDate" />
+							<button type="button" class="ui-inline-calendar-trigger" id="editToDate" title="Избор на крайна дата" aria-label="Избор на крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 						</td>
 					</tr>
 					<tr class="odd">
@@ -465,7 +466,7 @@
 					</tr>
 					<tr>
 						<td colspan="4" align="right">
-							<button style="width:50px;"><img src="images/confirm.gif">Опис</button>
+							<button class="ui-final-action"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Опис</button>
 						</td>
 					</tr>
 				</table>
@@ -485,7 +486,7 @@
 					</tr>
 					<tr class="odd">
 						<td align="center">
-							<img src="images/mleft.gif" onclick="nextMonth('prev','dateGSM');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-left ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('prev','dateGSM');" title="Предходен месец"></span>
 							<input 
 								style="width:50px;" 
 								id="dateGSM" 
@@ -497,7 +498,7 @@
 								title="ММ.ГГГГ" 
 								value={$smarty.now|date_format:'%m.%Y'}
 							>
-							<img src="images/mright.gif" onclick="nextMonth('next','dateGSM');" style="cursor:pointer;">
+							<span class="ui-icon ui-icon-right ui-clickable-icon" role="button" tabindex="0" onclick="nextMonth('next','dateGSM');" title="Следващ месец"></span>
 						</td>
 						<td style="width:50px;">
 							&nbsp;
@@ -505,7 +506,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="right">
-							<button onclick="loadXMLDoc2('loadInventoryGSM');" style="width:50px;"><img src="images/confirm.gif">Опис</button>
+							<button onclick="loadXMLDoc2('loadInventoryGSM');" class="ui-final-action"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Опис</button>
 						</td>
 					</tr>
 				</table>
@@ -536,17 +537,17 @@
 							> лв.
 						</td>
 						<td>
-							<button onclick="loadXMLDoc2('edit_inventory')"><img src="images/confirm.gif">Коригирай описа</button>
+							<button onclick="loadXMLDoc2('edit_inventory')" class="ui-final-action"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span>Коригирай описа</button>
 						</td>
 						<td align="right">
-							<button onclick="editRow(0);" class="input"><img src="images/confirm.gif">Добави</button>
+							<button onclick="editRow(0);" class="input ui-final-action"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span>Добави</button>
 						</td>
 					</tr>
 				</table>
 				<table class="input">
 					<tr>
 						<td>
-							<div id="result" rpc_excel_panel="off" rpc_resize="off" style="height:300px;width:985px;overflow:auto;"></div>
+							<div id="result" class="ui-final-result" rpc_excel_panel="off" rpc_resize="off" style="height:300px;width:100%;overflow:auto;"></div>
 						</td>
 					</tr>
 				</table>
@@ -554,11 +555,11 @@
 			</td>
 		</tr>
 	</table>
-	<table class="input" style="margin-top:10px;">
+	<table class="input ui-final-actions" style="margin-top:10px;">
 		<tr>
 			<td align="right">
-				<button onclick="confirmBuy();" class="search"><img src="images/confirm.gif">Потвърди</button>
-				<button onclick="parent.window.close();"><img src="images/cancel.gif">Затвори</button>
+				<button onclick="confirmBuy();" class="search ui-final-action"><span class="ui-icon ui-icon-check" aria-hidden="true"></span>Потвърди</button>
+				<button onclick="parent.window.close();" class="ui-final-action"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 			</td>
 		</tr>
 	</table>

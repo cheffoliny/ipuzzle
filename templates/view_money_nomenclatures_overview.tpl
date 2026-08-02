@@ -1,6 +1,7 @@
 {literal}
 	<script>
 		rpc_debug = true;
+		rpc_html_debug = true;
 		rpc_method = 'POST';
 			
 		InitSuggestForm = function() {
@@ -237,14 +238,14 @@
 									От:&nbsp;
 									<input type="text" name="sFromDate" id="sFromDate" class="inp100" onkeypress="return formatDate( event, '.' );" />
 									&nbsp;
-									<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editFromDate" />
+										<button type="button" class="ui-inline-calendar-trigger" id="editFromDate" title="Избор на начална дата" aria-label="Избор на начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 									
 									&nbsp;&nbsp;
 									
 									До:
 									<input type="text" name="sToDate" id="sToDate" class="inp100" onkeypress="return formatDate( event, '.' );" />
 									&nbsp;
-									<img src="images/cal.gif" border="0" align="absmiddle" style="cursor: pointer;" width="16" height="16" id="editToDate" />
+										<button type="button" class="ui-inline-calendar-trigger" id="editToDate" title="Избор на крайна дата" aria-label="Избор на крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
 								</td>
 								
 								<td colspan="3">&nbsp;</td>
@@ -342,15 +343,15 @@
 					<td style="width: 100%">&nbsp;</td>
 					
 					<td valign="bottom" align="right" style="width: 180px;">
-						<a href="#" onclick="onPrint('export_to_xls');"><img src="images/excel.gif" border="0" /></a>&nbsp;&nbsp;
+							<a href="#" onclick="onPrint('export_to_xls');" title="Експорт в Excel"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span></a>&nbsp;&nbsp;
 					</td>
 					
 					<td valign="bottom" align="center" style="width: 180px;">
-						<a href="#" onclick="onPrint('export_to_pdf');"><img src="images/pdf2.gif" border="0" /></a>&nbsp;&nbsp;
+							<a href="#" onclick="onPrint('export_to_pdf');" title="Експорт в PDF"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span></a>&nbsp;&nbsp;
 					</td>
 							
 					<td valign="top" align="right" style="width: 150px;">
-						<button id="b100" onClick="window.close();"><img src="images/cancel.gif" />Затвори</button>
+							<button id="b100" class="ui-final-action" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span>Затвори</button>
 					</td>
 				</tr>
 			</table>

@@ -96,7 +96,8 @@ operationalAssert(strpos($request, "document.getElementById( 'add' ).disabled") 
 
 $techPrice = file_get_contents($root . '/templates/set_setup_tech_price.tpl');
 operationalAssert(strpos($techPrice, 'click_element_id="editPriceListDate"') !== false, 'technical price calendar binding changed');
-operationalAssert(strpos($techPrice, 'ui-icon ui-icon-calendar ui-inline-calendar-trigger') !== false, 'technical price calendar icon is missing');
+operationalAssert(strpos($techPrice, 'id="editPriceListDate" class="ui-inline-calendar-trigger"') !== false, 'technical price calendar trigger is missing');
+operationalAssert(strpos($techPrice, 'class="ui-icon ui-icon-calendar"') !== false, 'technical price calendar icon is missing');
 
 foreach (array('.ui-operational-dialog', '.ui-tech-prices-summary', '.ui-request-items-toolbar', '.ui-inline-calendar-trigger') as $selector) {
     operationalAssert(strpos($css, $selector) !== false, 'missing operational style ' . $selector);

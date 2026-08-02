@@ -99,16 +99,16 @@
 {/literal}
 
 
-<form action="" name="form1" id="form1" onsubmit="return false;">
+<form action="" name="form1" id="form1" class="ui-client-report ui-client-admin" onsubmit="return false;">
 
     {include file='tabs_setup_objects.tpl'}
 
-    <div>
-        <div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary">
+    <div class="ui-client-report-shell">
+        <div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary ui-client-report-filter">
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="far fa-handshake fa-fw" data-fa-transform="right-22 down-10" title="Тип на контрагента..."></span>
+                        <span class="ui-icon ui-icon-handshake" aria-hidden="true" title="Тип на контрагента..."></span>
                     </div>
                     <select class="form-control"  name="client_type" id="client_type">
                         <option value="0"> - Всички -   </option>
@@ -121,7 +121,7 @@
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         {*Администрация:&nbsp;*}
-                        <span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Име на контрагент"></span>
+                        <span class="ui-icon ui-icon-tag" aria-hidden="true" title="Име на контрагент"></span>
                     </div>
                     <input class="form-control" type="text" id="sName" name="sName" onkeypress="onBasicFilterChange();" onkeyup="enterConfirm();" placeholder="Име на контрагент..."/>
                 </div>
@@ -129,7 +129,7 @@
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-tags fa-fw" data-fa-transform="right-22 down-10" title="ЕИН/ЕГН на контрагент..."></span>
+                        <span class="ui-icon ui-icon-tags" aria-hidden="true" title="ЕИН/ЕГН на контрагент..."></span>
                     </div>
                     <input class="form-control" type="text" id="sEIN" name="sEIN" onkeypress="onBasicFilterChange();" onkeyup="enterConfirm();" placeholder="ЕИН/ЕГН на контрагент..." />
                 </div>
@@ -137,29 +137,29 @@
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-home fa-fw" data-fa-transform="right-20 down-10" title="Клиентски номер..."></span>
+                        <span class="ui-icon ui-icon-code" aria-hidden="true" title="Клиентски номер..."></span>
                     </div>
                     <input class="form-control" type="text" id="nID" name="nID" onkeypress="onBasicFilterChange();" onkeyup="enterConfirm();" placeholder="Клиентски номер..." />
                 </div>
             </div>
             <div class="col-6 col-sm-8 col-lg-4 pl-3">
                 <div class="input-group input-group-sm">
-                    <button type="button" id="hide"  onclick="hideDiv(0);" class="btn btn-sm btn-light mr-2"  style="display: none;"><i class="fa fa-compress fa-lg"></i></button>
-                    <button type="button" id="show"  onclick="fixFilter();" class="btn btn-sm btn-light mr-2"><i class="fa fa-expand fa-lg"></i></button>
+                    <button type="button" id="hide" onclick="hideDiv(0);" class="btn btn-sm btn-light mr-2" style="display: none;" title="Скрий разширения филтър"><span class="ui-icon ui-icon-compress" aria-hidden="true"></span></button>
+                    <button type="button" id="show" onclick="fixFilter();" class="btn btn-sm btn-light mr-2" title="Покажи разширения филтър"><span class="ui-icon ui-icon-expand" aria-hidden="true"></span></button>
                     {if $right_edit}
-                        <button class="btn btn-sm btn-success mr-2" onclick="viewClient( 0 );"><i class="fa fa-plus fa-lg"></i> Добави </button>
+                        <button type="button" class="btn btn-sm btn-success mr-2" onclick="viewClient( 0 );"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави </button>
                     {else}
                     {/if}
-                    <button class="btn btn-sm btn-primary" type="button" name="Button" onClick="loadXMLDoc2( 'result' );"><i class="fa fa-search fa-lg"></i> Търси &nbsp;</button> <!--onclick="hideDiv(1);"-->
+                    <button class="btn btn-sm btn-primary" type="button" name="Button" onClick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси</button> <!--onclick="hideDiv(1);"-->
                 </div>
             </div>
         </div>
-        <div id="filter" style="display: none;" class="pl-3 pb-1 table-secondary">
+        <div id="filter" style="display: none;" class="pl-3 pb-1 table-secondary ui-client-report-filter ui-client-advanced-filter">
             <div class="row clearfix mb-1">
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-user-circle fa-fw" data-fa-transform="right-22 down-10" title="МОЛ..."></span>
+                            <span class="ui-icon ui-icon-user" aria-hidden="true" title="МОЛ..."></span>
                         </div>
                         <input class="form-control" type="text" name="sMOL" id="sMOL" placeholder="МОЛ..."/>
                     </div>
@@ -167,7 +167,7 @@
                 <div class="col-6 col-sm-4 col-lg-2 pl-0">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-map-marker fa-fw" data-fa-transform="right-22 down-10" title="Адрес по регистрация..."></span>
+                            <span class="ui-icon ui-icon-location" aria-hidden="true" title="Адрес по регистрация..."></span>
                         </div>
                         <input class="form-control" type="text" name="sInvoiceAddress" id="sInvoiceAddress" placeholder="Адрес..."/>
                     </div>
@@ -175,7 +175,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-at fa-fw" data-fa-transform="right-22 down-10" title="E-mail..."></span>
+                            <span class="ui-icon ui-icon-at" aria-hidden="true" title="E-mail..."></span>
                         </div>
                         <input class="form-control" type="text" name="sEmail" id="sEmail" placeholder="E-mail..."/>
                     </div>
@@ -183,7 +183,7 @@
                 <div class="col-6 col-sm-4 col-lg-2">
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
-                            <span class="fas fa-at fa-fw" data-fa-transform="right-22 down-10" title="Телефон за контакт..."></span>
+                            <span class="ui-icon ui-icon-phone" aria-hidden="true" title="Телефон за контакт..."></span>
                         </div>
                         <input class="form-control" type="text" name="sPhone" id="sPhone" placeholder="Телефон..."/>
                     </div>
@@ -192,18 +192,19 @@
                     <div class="input-group input-group-sm">
                     <div class="btn-group input-group-sm" role="group">
                         <div class="input-group-prepend">
-                            <span class="fas fa-filter fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></span>
+                            <span class="ui-icon ui-icon-filter" aria-hidden="true" title="Филтър"></span>
                         </div>
                         <select class="form-control" name="schemes" id="schemes" onchange="onFilterChange();"></select>
                         <button id="btnGroupDrop1" type="button" class="btn btn-compact btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item dropdown-item-menu" name="Button5"	id="b25" title="Нов филтър" 			onClick="openFilter( 1 );" 			>Добави</a>
-                            <a class="dropdown-item dropdown-item-menu"   name="Button4"	id="b25" title="Редактиране на филтър" 	onClick="openFilter( 2 );"			>Редактирай</a>
-                            <a class="dropdown-item dropdown-item-menu"  name="Button3"	id="b25" title="Премахване на филтър"	onClick="deleteFilter( schemes );"	>Изтрий</a>
+                            <a class="dropdown-item dropdown-item-menu" name="Button5" title="Нов филтър" onClick="openFilter( 1 );">Добави</a>
+                            <a class="dropdown-item dropdown-item-menu" name="Button4" title="Редактиране на филтър" onClick="openFilter( 2 );">Редактирай</a>
+                            <a class="dropdown-item dropdown-item-menu" name="Button3" title="Премахване на филтър" onClick="deleteFilter( schemes );">Изтрий</a>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="col-0 col-sm-0 col-lg-1"></div>
                 <div class="col-0 col-sm-0 col-lg-1"></div>
@@ -211,7 +212,7 @@
         </div>
     </div>
 
-    <div id="result"></div>
+    <div id="result" class="ui-client-result"></div>
 </form>
 
 <script>

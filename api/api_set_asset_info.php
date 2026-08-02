@@ -72,7 +72,8 @@
  				$oSalary->update($aPerson);
  				
  			}
- 		 
+
+		$oResponse->printResponse();
  	}
  }
 ?>

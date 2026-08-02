@@ -15,16 +15,16 @@
 	</script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-client-core ui-client-info" onsubmit="return false;">
 
     {include file='client_tabs.tpl'}
 
-    <div class="container-fluid mb-4">
+    <div class="container-fluid mb-4 ui-client-info-fields">
         <div class="row mx-1 my-2">
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fab fa-slack fa-fw" data-fa-transform="right-22 down-10" title="Клиентски номер..."></span>
+                        <span class="ui-icon ui-icon-code" aria-hidden="true" title="Клиентски номер..."></span>
                     </div>
                     <input class="form-control form-control" type="text" id="nID" name="nID" value="{$nID|default:0}" placeholder="Клиентски номер..." readonly />
                 </div>
@@ -32,7 +32,7 @@
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-user fa-fw" data-fa-transform="right-22 down-10" title="Име на клиент..."></span>
+                        <span class="ui-icon ui-icon-user" aria-hidden="true" title="Име на клиент..."></span>
                     </div>
                     <input class="form-control" type="text" id="sName" name="sName" placeholder="Име на клиент..." />
                 </div>
@@ -43,7 +43,7 @@
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-at fa-fw" data-fa-transform="right-22 down-10" title="E-mail..."></span>
+                        <span class="ui-icon ui-icon-at" aria-hidden="true" title="E-mail..."></span>
                     </div>
                     <input class="form-control form-control" type="email" id="sEmail" name="sEmail" placeholder="E-mail..." />
                 </div>
@@ -51,7 +51,7 @@
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-envelope-square fa-fw" data-fa-transform="right-22 down-10" title="Адрес за кореспонденция..."></span>
+                        <span class="ui-icon ui-icon-mail" aria-hidden="true" title="Адрес за кореспонденция..."></span>
                     </div>
                     <input class="form-control" type="text" id="sAddress" name="sAddress" placeholder="Адрес за кореспонденция..." />
                 </div>
@@ -62,7 +62,7 @@
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fab fa-viber fa-fw" data-fa-transform="right-22 down-10" title="Телефон..."></span>
+                        <span class="ui-icon ui-icon-phone" aria-hidden="true" title="Телефон..."></span>
                     </div>
                     <input class="form-control form-control" type="phone" id="sPhone" name="sPhone" placeholder="Телефон..." />
                 </div>
@@ -70,14 +70,14 @@
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="far fa-comment-alt fa-fw" data-fa-transform="right-22 down-7" title="Допълнителна информация..."></span>
+                        <span class="ui-icon ui-icon-comment" aria-hidden="true" title="Допълнителна информация..."></span>
                     </div>
-                    <textarea class="form-control py-0" row="2" id="sNote" name="sNote" placeholder="Допълнителна информация..." ></textarea>
+                    <textarea class="form-control py-0" rows="2" id="sNote" name="sNote" placeholder="Допълнителна информация..." ></textarea>
                 </div>
             </div>
         </div>
 
-        <nav id="navbar-example" class="navbar navbar-light bg-primary text-white my-3">
+        <nav id="navbar-example" class="navbar navbar-light bg-primary text-white my-3 ui-client-section-title">
             <h6 class="py-2">Информация за фактура</h6>
         </nav>
 
@@ -85,17 +85,17 @@
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН..."></span>
+                        <span class="ui-icon ui-icon-barcode" aria-hidden="true" title="ЕИН..."></span>
                     </div>
-                    <input class="form-control form-control" type="email" id="sInvoiceEIN" name="sInvoiceEIN" placeholder="ЕИН..." />
+                    <input class="form-control form-control" type="text" id="sInvoiceEIN" name="sInvoiceEIN" placeholder="ЕИН..." />
                 </div>
             </div>
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-map-marker fa-fw" data-fa-transform="right-22 down-10" title="Адрес за фактура..."></span>
+                        <span class="ui-icon ui-icon-location" aria-hidden="true" title="Адрес за фактура..."></span>
                     </div>
-                    <input class="form-control" type="phone" id="sInvoiceAddress" name="sInvoiceAddress" placeholder="Адрес за фактура..." />
+                    <input class="form-control" type="text" id="sInvoiceAddress" name="sInvoiceAddress" placeholder="Адрес за фактура..." />
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
             <div class="col-3 col-sm-3 col-lg-3 pl-0">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-barcode fa-fw" data-fa-transform="right-22 down-10" title="ЕИН ДДС..."></span>
+                        <span class="ui-icon ui-icon-barcode" aria-hidden="true" title="ЕИН ДДС..."></span>
                     </div>
                     <input class="form-control form-control" type="text" id="sInvoiceEINDDS" name="sInvoiceEINDDS" placeholder="ЕИН ДДС..." />
                 </div>
@@ -112,7 +112,7 @@
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-user-circle fa-fw" data-fa-transform="right-22 down-10" title="МОЛ..."></span>
+                        <span class="ui-icon ui-icon-user" aria-hidden="true" title="МОЛ..."></span>
                     </div>
                     <input class="form-control" type="text" id="sInvoiceMOL" name="sInvoiceMOL" placeholder="МОЛ..." />
                 </div>
@@ -128,7 +128,7 @@
             <div class="col-9 col-sm-9 col-lg-9">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-user-circle fa-fw" data-fa-transform="right-22 down-10" title="МОЛ..."></span>
+                        <span class="ui-icon ui-icon-user" aria-hidden="true" title="Получател..."></span>
                     </div>
                     <input class="form-control" type="text" id="sInvoiceRecipient" name="sInvoiceRecipient" placeholder="Получател..." />
                 </div>
@@ -145,7 +145,7 @@
             <div class="col-4 col-sm-4 col-lg-4">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-envelope-square fa-fw" data-fa-transform="right-22 down-10" title="Изглед на фактура..."></span>
+                        <span class="ui-icon ui-icon-layout" aria-hidden="true" title="Изглед на фактура..."></span>
                     </div>
                     <select class="form-control" id="sInvoiceLayout" name="sInvoiceLayout">
                         <option value="single">Едноредов печат</option>
@@ -159,7 +159,7 @@
             <div class="col-4 col-sm-4 col-lg-4">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="fas fa-envelope-square fa-fw" data-fa-transform="right-22 down-10" title="Предпочитание за плащане..."></span>
+                        <span class="ui-icon ui-icon-card" aria-hidden="true" title="Предпочитание за плащане..."></span>
                     </div>
                     <select class="form-control" id="sInvoicePayment" name="sInvoicePayment">
                         <option value="bank">Фактура по банка</option>
@@ -180,7 +180,7 @@
             {*<div class="col-4 col-sm-4 col-lg-4">*}
                 {*<div class="input-group input-group-sm" id="bankInvoiceEmailData">*}
                     {*<div class="input-group-prepend">*}
-                        {*<span class="fas fa-envelope-square fa-fw" data-fa-transform="right-22 down-10" title="Изглед на фактура..."></span>*}
+                        {*<span class="ui-icon ui-icon-mail" aria-hidden="true" title="Изглед на фактура..."></span>*}
                     {*</div>*}
                     {*<input class="form-control" type="email" id="sInvoiceEmail" name="sInvoiceEmail" />*}
                 {*</div>*}
@@ -194,7 +194,7 @@
 
     </div>
 
-    <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg mb-1" id="search">
+    <nav class="navbar fixed-bottom flex-row pt-1 py-md-0 navbar-expand-lg mb-1 ui-client-actions" id="search">
         <div class="col-6 col-sm-8 col-lg-8 pl-0">
             <div class="input-group input-group-sm">
                 &nbsp;
@@ -202,14 +202,13 @@
         </div>
         <div class="col-6 col-sm-4 col-lg-4">
             <div class="input-group input-group-sm ml-1">
-                <button class="btn btn-sm btn-success mr-1"	onClick="formSubmit();"         ><i class="fas fa-check" ></i> Запиши </button>
-                <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+                <button type="button" class="btn btn-sm btn-success mr-1" onClick="formSubmit();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
+                <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
             </div>
         </div>
     </nav>
 
 </form>
-</div>
 
 <script>
 	onInit();

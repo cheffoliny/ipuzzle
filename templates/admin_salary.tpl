@@ -4,7 +4,8 @@
 
 		rpc_on_exit = function()
 		{
-			$('uplaoded_file').value="";
+			$('uplaoded_file_name').value="";
+			$('uplaoded_file_type').value="";
 		}
 		
 		InitSuggestForm = function  ()
@@ -90,21 +91,21 @@
 	</script>
 {/literal}
 
-<form action="" name="form1" id="form1" onSubmit="return loadXMLDoc('result')">
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-salary-report ui-salary-admin-report" onSubmit="return loadXMLDoc('result')">
 	<input type="hidden" id="id_object" name="id_object" value="0" />
-	<input type="hidden" id="uplaoded_file" name="uplaoded_file_name" value="" />
-	<input type="hidden" id="uplaoded_file" name="uplaoded_file_type" value="" />
+	<input type="hidden" id="uplaoded_file_name" name="uplaoded_file_name" value="" />
+	<input type="hidden" id="uplaoded_file_type" name="uplaoded_file_type" value="" />
 	<input type="hidden" id="id" name="id" value="0">
 	<input type="hidden" id="year_month" name="year_month" value="0">
 
 	{include file='tabs_setup_personnel.tpl'}
 
-	<div>
-		<div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary">
+	<div class="ui-salary-report-filters">
+		<div class="row justify-content-start table-secondary ui-salary-report-toolbar">
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-tag" title="Фирма на административно обслужване" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="firm" id="firm" onchange="onFirmChange()" ></select>&nbsp;&nbsp;
 				</div>
@@ -112,7 +113,7 @@
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Фирма на административно обслужване"></i>
+						<span class="ui-icon ui-icon-tags" title="Регион" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" name="region" id="region" onchange="onRegionChange()"></select>
 				</div>
@@ -120,7 +121,7 @@
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Тип..."></i>
+						<span class="ui-icon ui-icon-home" title="Обект" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" name="region_object" id="region_object" type="text" suggest="suggest" queryType="region_object" queryParams="firm;region" onchange="onRegionObjectChange()" onpast="onRegionObjectChange()" placeholder="Обект..."/>
 				</div>
@@ -128,7 +129,7 @@
 			<div class="col-6 col-sm-4 col-lg-2 pl-4-5">
 				<div class="input-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-users fa-fw" data-fa-transform="right-22 down-10" title="Тип..."></i>
+						<span class="ui-icon ui-icon-users" title="Тип" aria-hidden="true"></span>
 					</div>
 					<select class="form-control" id="type" name="type">
 						<option value="1">Служители от</option>
@@ -139,11 +140,11 @@
 			<div class="col-12 col-sm-8 col-lg-4">
 				<div class="btn-group input-group-sm">
 					<div class="input-group-prepend">
-						<i class="fas fa-calendar fa-fw" data-fa-transform="right-22 down-10" title="Филтър"></i>
+						<span class="ui-icon ui-icon-calendar" title="Период" aria-hidden="true"></span>
 					</div>
 					<input class="form-control" size="2" onkeypress="return formatDigits(event);" name="month" id="month" type="number" min="1" max="12" step="1" value="{$month}"/>
 					<input class="form-control mr-3" size="4" onkeypress="return formatDigits(event);" name="year" id="year" type="number" min="2016" max="2040" step="1" value="{$year}"/>
-					<button class="btn btn-sm btn-primary" type="submit" name="Button"><i class="far fa-search"></i> Търси</button>
+					<button class="btn btn-sm btn-primary" type="submit" name="Button"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси</button>
 				</div>
 			</div>
 		</div>
@@ -156,7 +157,7 @@
 		</div>
 	</div>
 
-	<div id="result"></div>
+	<div id="result" class="ui-salary-report-result"></div>
 	
 </form>
 

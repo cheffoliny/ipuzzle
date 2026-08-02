@@ -33,7 +33,7 @@ class ApiSetSetupObjectSector
             throw new Exception( "Въведете наименование!", DBAPI_ERR_INVALID_PARAM );
 
         if( empty( $nSector ) )
-            throw new Exception( "Въведете номер на зона!", DBAPI_ERR_INVALID_PARAM );
+            throw new Exception( "Въведете номер на сектор!", DBAPI_ERR_INVALID_PARAM );
 
         $aData = array();
         $aData['id']   = Params::get( 'nID', 0 );
@@ -43,6 +43,7 @@ class ApiSetSetupObjectSector
 
         $oSignalSector = new DBSignalSectors();
         $oSignalSector->update( $aData );
+        $oResponse->printResponse();
     }
 }
 

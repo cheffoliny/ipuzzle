@@ -186,7 +186,7 @@
 <dlcalendar click_element_id="editFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="editToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form name="form1" id="form1" onsubmit="return false;" class="mb-5">
+<form name="form1" id="form1" onsubmit="return false;" class="mb-5 ui-money-detail-report">
 	<input type="hidden" id="nIDObject" name="nIDObject" value="0" />
 	<input type="hidden" id="nIDPerson" name="nIDPerson" value="0" />
 	<input type="hidden" id="nRefreshTotals" name="nRefreshTotals" value="0" />
@@ -255,17 +255,21 @@
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend" id="editFromDate" title="Изберете дата" style="cursor: pointer;"><i class="far fa-calendar-alt"></i></div>
-					<input class="form-control inp50" type="text" name="sFromDate" id="sFromDate" onkeypress="return formatDate( event, '.' );" />
-					<span class="input-group-append"><i class="far fa-arrows-h"></i></span>
-					<input class="form-control inp50" type="text" name="sToDate" id="sToDate" onkeypress="return formatDate( event, '.' );" />
-					<span class="input-group-append mr-2" id="editToDate" title="Изберете дата" style="cursor: pointer;"><i class="far fa-calendar-alt"></i></span>
+				<div class="input-group input-group-sm ui-money-detail-period">
+					<div class="ui-money-detail-date-field">
+						<button type="button" id="editFromDate" class="ui-money-detail-calendar" title="Изберете начална дата" aria-label="Изберете начална дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
+						<input class="form-control inp50" type="text" name="sFromDate" id="sFromDate" onkeypress="return formatDate( event, '.' );" />
+					</div>
+					<span class="ui-money-detail-separator" aria-hidden="true"><span class="ui-icon ui-icon-exchange"></span></span>
+					<div class="ui-money-detail-date-field">
+						<button type="button" id="editToDate" class="ui-money-detail-calendar" title="Изберете крайна дата" aria-label="Изберете крайна дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
+						<input class="form-control inp50" type="text" name="sToDate" id="sToDate" onkeypress="return formatDate( event, '.' );" />
+					</div>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm">
-					<div class="input-group-prepend" id="editFromDate" title="Изберете дата" style="cursor: pointer;"><i class="far fa-calendar-alt"></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></div>
 					<select class="form-control select200" name="sMonth" id="sMonth" ></select>
 				</div>
             </div>

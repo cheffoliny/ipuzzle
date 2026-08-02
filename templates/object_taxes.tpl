@@ -67,7 +67,7 @@
 </script>
 {/literal}
 
-<form name="form1" id="form1" onsubmit="return false;">
+<form name="form1" id="form1" class="ui-object-core ui-object-taxes" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
     <input type="hidden" id="nIDClient" name="nIDClient" value="0" />
     <input type="hidden" id="nIDRecord" name="nIDRecord" value="0" />
@@ -76,43 +76,43 @@
 
     {include file='object_tabs.tpl'}
 
-    <div id="accordion">
+    <div id="accordion" class="ui-object-taxes-accordion">
         <div class="">
             <div class="nav nav-tabs navbar-dark bg-faded mb-1" id="headingOne">
                 <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						<i class="fa fa-expand fa-lg mr-2 ml-2"></i>Абонаментни такси
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<span class="ui-icon ui-icon-expand" aria-hidden="true"></span>Абонаментни такси
                     </button>
                 </h5>
             </div>
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:350px; overflow: auto;"></div>
+                <div id="result" class="ui-object-result ui-object-taxes-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
             </div>
         </div>
         <div class="">
             <div class="nav nav-tabs navbar-dark bg-faded mb-1" id="headingTwo">
                 <h5 class="mb-0">
-					<button class="btn btn-link collapsed float-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						<i class="fa fa-expand fa-lg mr-2 ml-2"></i>Други задължения
+					<button type="button" class="btn btn-link collapsed float-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						<span class="ui-icon ui-icon-expand" aria-hidden="true"></span>Други задължения
 					</button>
                 </h5>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div id="result2" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"  style="height:350px; overflow: auto;"></div>
+                <div id="result2" class="ui-object-result ui-object-taxes-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
             </div>
         </div>
     </div>
 
-    <nav class="navbar fixed-bottom flex-row pt-3 pb-2 navbar-expand-lg" id="search">
+    <nav class="navbar fixed-bottom flex-row pt-3 pb-2 navbar-expand-lg ui-object-actions ui-object-taxes-actions" id="search">
         <div class="col-7 col-sm-7 col-lg-7 pl-0">
             <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <span class="fa fa-file fa-fw" data-fa-transform="right-22 down-10" itle="Клиент..."></span>
+                    <span class="ui-icon ui-icon-file" title="Клиент" aria-hidden="true"></span>
                 </div>
                 <input class="form-control" type="text" name="sClient" id="sClient" readonly />
                 {if $edit.object_taxes_add_client}
-                    <button class="btn btn-sm btn-dark" onClick="addClient();" title="Задай клиент..."><i class="fa fa-plus"></i> Клиент </button>
+                    <button type="button" class="btn btn-sm btn-dark" onClick="addClient();" title="Задай клиент..."><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Клиент </button>
                 {/if}
 
             </div>
@@ -120,13 +120,13 @@
         <div class="col-5 col-sm-5 col-lg-5">
             <div class="input-group input-group-sm ml-0">
                 {if $edit.object_taxes_month_obligations_edit}
-                    <button id="b100" class="btn btn-sm btn-success mr-1" onClick="editService(0);" title="Добави абонамент!"><i class="fa fa-plus"></i> Абонамент </button>
+                    <button type="button" class="btn btn-sm btn-success mr-1" onClick="editService(0);" title="Добави абонамент!"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Абонамент </button>
                 {/if}
 
                 {if $edit.object_taxes_single_obligations_edit}
-                    <button id="b100" class="btn btn-sm btn-success mr-1" onClick="editService2(0);" title="Добави задължение!"><i class="fa fa-plus"></i> Задължение </button>
+                    <button type="button" class="btn btn-sm btn-success mr-1" onClick="editService2(0);" title="Добави задължение!"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Задължение </button>
                 {/if}
-                <button class="btn btn-sm btn-danger"	    onClick="parent.window.close();"><i class="far fa-window-close" ></i> Затвори </button>
+                <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
             </div>
         </div>
     </nav>

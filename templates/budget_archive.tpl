@@ -24,21 +24,14 @@
 </script>
 {/literal}
 
-<div>
-	<form name="form1" id="form1" onsubmit="return false;" >
+<div class="ui-finance-budget-archive">
+	<form name="form1" id="form1" class="ui-finance-summary-report ui-budget-archive-report" onsubmit="return false;">
 		<input type="hidden" id="hg" name="hg" value="0" />
 		<input type="hidden" id="nIDBudget" name="nIDBudget" value="0" />
 
 		<div class="page_caption" id="capt" name="capt">Списък - БЮДЖЕТИ</div>
 
-		<table border="0" width="100%" class="input">
-			<tr>
-				<td colspan="6">
-					<hr>		
-					<div id="result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="on" style="overflow: auto;"></div>
-				</td>
-			</tr>
-		</table>
+		<div id="result" class="ui-finance-summary-result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="on"></div>
 	</form>
 </div>
 

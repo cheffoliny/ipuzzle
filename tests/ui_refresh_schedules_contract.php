@@ -69,6 +69,10 @@ $objectPersonnel = file_get_contents($root . '/templates/object_personnel_schedu
 foreach (array("loadXMLDoc2('addPerson')", "loadXMLDoc2('sortNow', 1)", 'openSchedule()', 'nextMonth(') as $behaviour) {
     schedulesAssert(strpos($objectPersonnel, $behaviour) !== false, 'object personnel behaviour changed: ' . $behaviour);
 }
+schedulesAssert(strpos($objectPersonnel, 'ui-object-personnel-result') !== false, 'object personnel result layout marker is missing');
+schedulesAssert(strpos($objectPersonnel, 'style="width:780px; height:360px;') === false, 'object personnel result retains fixed dimensions');
+schedulesAssert(substr_count($objectPersonnel, 'id="b100"') === 0, 'object personnel retains duplicate action ids');
+schedulesAssert(strpos($objectPersonnel, '{if $mobile}</div>{/if}') !== false, 'object personnel mobile wrapper is not balanced');
 
 $scheduleHours = file_get_contents($root . '/templates/schedule_hours.tpl');
 schedulesAssert(strpos($scheduleHours, "onPrint('export_to_xls')") !== false, 'schedule Excel export changed');
@@ -89,6 +93,8 @@ foreach (array('function setDutyButton(', 'if (!button) return;', 'id="Validate"
 }
 schedulesAssert(strpos($objectDuty, "setDutyButton(butt, 'Изтрий', 'ui-icon-delete')") !== false, 'object duty delete state icon changed');
 schedulesAssert(strpos($objectDuty, "setDutyButton(butt, 'Смяна', 'ui-icon-plus')") !== false, 'object duty add state icon changed');
+schedulesAssert(strpos($objectDuty, 'ui-object-duty-result') !== false, 'object duty result layout marker is missing');
+schedulesAssert(strpos($objectDuty, 'style="overflow: auto;"') === false, 'object duty retains inline result scrolling');
 
 $dialogs = file_get_contents($root . '/js/common_dialogs.js');
 schedulesAssert(strpos($dialogs, "dialog_win('set_setup_object_shifts&id='+id+'&obj='+obj, 390, 440") !== false, 'shift editor popup is too short for the refreshed form');
@@ -106,6 +112,10 @@ foreach (array(
 ) as $selector) {
     schedulesAssert(strpos($css, $selector) !== false, 'missing schedule style ' . $selector);
 }
+schedulesAssert(preg_match('/\.ui-object-duty-dialog \.fixed-bottom\s*\{[^}]*position:\s*fixed/s', $css) === 1, 'object duty action bar is not fixed to the viewport bottom');
+schedulesAssert(preg_match('/\.ui-object-duty-result\s*\{[^}]*max-height:\s*none\s*!important/s', $css) === 1, 'object duty result is still constrained by legacy max-height');
+schedulesAssert(preg_match('/\.ui-object-personnel-result\s*\{[^}]*max-height:\s*none\s*!important/s', $css) === 1, 'object personnel result is still constrained by legacy max-height');
+schedulesAssert(strpos($css, '.ui-object-personnel-actions-wrap') !== false, 'object personnel bottom action layout is missing');
 
 $iconAssets = array(
     'ui-icon-code' => 'hashtag.svg',
@@ -123,9 +133,9 @@ $iconAssets = array(
 foreach ($iconAssets as $iconClass => $asset) {
     schedulesAssert(strpos($icons, '.' . $iconClass) !== false, 'icon mapping is missing: ' . $iconClass);
     schedulesAssert(strpos($icons, $asset) !== false, 'icon asset mapping changed: ' . $asset);
-    schedulesAssert(is_file($root . '/css/fa7/regular/' . $asset), 'icon asset is missing: ' . $asset);
+    schedulesAssert(is_file($root . '/css/fa7/solid/' . $asset), 'icon asset is missing: ' . $asset);
 }
 
-schedulesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=14') !== false, 'schedule stylesheet cache version is stale');
+schedulesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'schedule stylesheet cache version is stale');
 
 echo 'UI_REFRESH_SCHEDULES=PASS' . PHP_EOL;

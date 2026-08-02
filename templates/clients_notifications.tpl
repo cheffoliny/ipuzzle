@@ -121,9 +121,7 @@
 <dlcalendar click_element_id="sDateTo" input_element_id="sDateTo" tool_tip="Изберете дата"></dlcalendar>
 
 
-{*<dlcalendar click_element_id="sFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>*}
-{*<dlcalendar click_element_id="sToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>*}
-<form id="form1" name="form1" onsubmit="return false;" >
+<form id="form1" name="form1" class="ui-client-report ui-client-notifications" onsubmit="return false;" >
     <select onblur="hideStatusSelect(); onselect();" onchange="onselect();" style="display: none; position: absolute;" class="select200" name="aStatus[]" size="8" id="aStatus" multiple>
         <option value="0">-Всички статуси-</option>
         <option value="wait">изчакване</option>
@@ -139,12 +137,12 @@
     <input type="hidden" name="sPhone" id="sPhone" />
     {include file='tabs_setup_objects.tpl'}
 
-    <div>
-        <div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary">
+    <div class="ui-client-report-shell">
+        <div class="row justify-content-start pl-3 pb-1 pt-2 table-secondary ui-client-report-filter">
             <div class="col">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="far fa-handshake fa-fw" data-fa-transform="right-22 down-10" title="Тип на контрагента..."></span>
+                        <span class="ui-icon ui-icon-handshake" aria-hidden="true" title="Събитие"></span>
                     </div>
                     <select class="form-control"  id="nNotificationsEvents" name="nNotificationsEvents">
                         <option value="0">-Всички събития-</option>
@@ -158,7 +156,7 @@
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         {*Администрация:&nbsp;*}
-                        <span class="fas fa-tag fa-fw" data-fa-transform="right-22 down-10" title="Име на контрагент"></span>
+                        <span class="ui-icon ui-icon-tag" aria-hidden="true" title="Име на контрагент"></span>
                     </div>
                     <input class="form-control" type="text" name="sClientName" id="sClientName" placeholder="Име на контрагент..."/>
                 </div>
@@ -166,9 +164,9 @@
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <i class="fa fa-home fa-fw"  data-fa-transform="right-22 down-10" title="Номер на обект"></i>
+                        <span class="ui-icon ui-icon-home" aria-hidden="true" title="Номер на обект"></span>
                     </div>
-                    <input class="form-control suggest" name="sObjName" id="sObjName" suggest="suggest"  querytype="objByNumWithStatus" queryparams="" onchange="resetObject()" placeholder=" № на обект..." ">
+                    <input class="form-control suggest" name="sObjName" id="sObjName" suggest="suggest" querytype="objByNumWithStatus" queryparams="" onchange="resetObject()" placeholder="№ на обект...">
 
                 </div>
             </div>
@@ -176,51 +174,25 @@
                 <div class="input-group input-group-sm" title="Период на стартиране на обекта">
                     <div class="input-group-prepend">
                         {*Администрация:&nbsp;*}
-                        <span id="editFromDate" id="editToDate" class="fas fa-calendar-alt fa-fw" data-fa-transform="right-22 down-10" ></span>
+                        <span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
                     </div>
                     <input type="text" name="sDateFrom" id="sDateFrom" class="form-control" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sFromDate}" />
                     <input type="text" name="sDateTo" id="sDateTo" class="form-control input-group-addon" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
                     {*<div class="input-group-append-r">*}
-                    {*<span id="editToDate" class="fa fa-calendar-plus-o" title="Край на периода"></span>*}
+                    {*<span class="ui-icon ui-icon-calendar" aria-hidden="true" title="Край на периода"></span>*}
                     {*</div>*}
                 </div>
             </div>
 
             <div class="col-12 col-sm-8 col-lg-4">
                 <div class="input-group input-group-sm">
-                    <button name="button" class="btn btn-sm btn-info" onclick="loadXMLDoc2( 'result' );"><i class="far fa-search"></i>&nbsp;Търси</button>
-{*                    <button name="button" class="btn btn-sm btn-success" onclick="dialogAddNotification()"><i class="far fa-plus"></i>&nbsp;Добави</button>*}
+                    <button type="button" name="button" class="btn btn-sm btn-info" onclick="loadXMLDoc2( 'result' );"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси</button>
+{*                    <button type="button" name="button" class="btn btn-sm btn-success" onclick="dialogAddNotification()"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>*}
                 </div>
-            </div>
-        </div>
-        <div class="row clearfix mb-1">
-{*            <div class="col">*}
-{*                <div class="input-group input-group-sm">*}
-{*                    <div class="input-group-prepend">*}
-{*                        <span class="far fa-handshake fa-fw" data-fa-transform="right-22 down-10" title="Тип на контрагента..."></span>*}
-{*                    </div>*}
-{*                    <select class="form-control" id="sChannel" name="sChannel">*}
-{*                        <option value="0">-- Всички канали --</option>*}
-{*                        <option value="sms">SMS</option>*}
-{*                        <option value="mail">email</option>*}
-{*                        <option value="tel">телефон</option>*}
-{*                        <option value="system">система</option>*}
-{*                    </select>*}
-{*                </div>*}
-{*            </div>*}
-            <div class="col">
-                <div class="input-group-prepend">
-                    {*Администрация:&nbsp;*}
-                    <span class="fas fa-home fa-fw" data-fa-transform="right-22 down-10" title="Телефон"></span>
-                </div>
-                </div>
-
-            <div class="col">
-
             </div>
         </div>
     </div>
-    <div id="result"></div>
+    <div id="result" class="ui-client-result"></div>
 </form>
 
 {literal}

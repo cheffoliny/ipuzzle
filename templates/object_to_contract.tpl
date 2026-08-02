@@ -81,8 +81,8 @@
 	</script>
 {/literal}
 
-<div class="content">
-	<form action="" name="form1" id="form1" onSubmit="return false;">
+<div class="content ui-object-link-shell">
+	<form action="" name="form1" id="form1" class="ui-nomenclature-dialog ui-object-link-dialog" onSubmit="return false;">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="id_object" name="id_object" value="">
 		<input type="hidden" id="id_limit_card" name="id_limit_card" value="">
@@ -90,22 +90,22 @@
 		
 		<div class="page_caption">Обект към Електроннен договор № {$nNum}</div>
 	
-		<table>
+		<table class="ui-object-link-mode">
 			<tr>
 				<td>
-					<button onClick="newObject();"> Нов Обект </button>
+					<button type="button" class="btn btn-sm btn-primary" onClick="newObject();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Нов Обект </button>
 				</td>
 				<td>
-					<button onClick="existingObject();"> Съществуващ </button>
+					<button type="button" class="btn btn-sm btn-light" onClick="existingObject();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Съществуващ </button>
 				</td>
 			</tr>
 		</table>
 		
 		
-		<div id="new_object">
-			<fieldset>
+		<div id="new_object" class="ui-object-link-panel">
+			<fieldset class="ui-nomenclature-fieldset">
 			<legend>Нов Обект</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form ui-object-link-fields">
 				<tr class="odd">
 					<td align="right">Номер:</td>
 					<td>
@@ -113,35 +113,35 @@
 					</td>
 					<td align="right">Сигнали:</td>
 					<td>
-						<select name="nIDTemplets" id="nIDTemplets" class="select150" />
+						<select name="nIDTemplets" id="nIDTemplets" class="select150"></select>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">Име:</td>
 					<td colspan="3">
-						<input type="text" name="sNameNew" id="sNameNew" style="width:270px;"/>
+						<input type="text" name="sNameNew" id="sNameNew" class="ui-object-link-name" />
 					</td>
 				</tr>
 			</table>
 			</fieldset>
 	
 		
-			<table class="input">
+			<table class="input ui-nomenclature-actions ui-object-link-actions">
 				<tr class="odd">
 	
 					<td style="text-align:right;">
-						<button onClick="attachNewObject();" class="search"> Привържи </button>
-						<button onClick="parent.window.close();"> Затвори </button>
+						<button type="button" onClick="attachNewObject();" class="search"><span class="ui-icon ui-icon-check" aria-hidden="true"></span> Привържи </button>
+						<button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 					</td>
 				</tr>
 			</table>
 		</div>
 		
 		
-		<div id="existing_object">
-			<fieldset>
+		<div id="existing_object" class="ui-object-link-panel">
+			<fieldset class="ui-nomenclature-fieldset">
 			<legend>Съществуващ Обект</legend>
-			<table class="input">
+			<table class="input ui-nomenclature-form ui-object-link-fields">
 				<tr class="odd">
 					<td align="right">Номер:</td>
 					<td>
@@ -151,19 +151,19 @@
 				<tr>
 					<td align="right">Име:</td>
 					<td colspan="3">
-						<input type="text" name="sName" id="sName" style="width:270px;"  suggest="suggest" queryType="objByName"/>
+						<input type="text" name="sName" id="sName" class="ui-object-link-name" suggest="suggest" queryType="objByName"/>
 					</td>
 				</tr>
 			</table>
 			</fieldset>
 	
 		
-			<table class="input">
+			<table class="input ui-nomenclature-actions ui-object-link-actions">
 				<tr class="odd">
 	
 					<td style="text-align:right;">
-						<button onClick="attachExistingObject();" class="search"> Привържи </button>
-						<button onClick="parent.window.close();"> Затвори </button>
+						<button type="button" onClick="attachExistingObject();" class="search"><span class="ui-icon ui-icon-check" aria-hidden="true"></span> Привържи </button>
+						<button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 					</td>
 				</tr>
 			</table>

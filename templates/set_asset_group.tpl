@@ -1,63 +1,41 @@
-{if $nID eq 0}
-	<div class="page_caption">
-		
-				Добавяне на нова група
-			
-	</div>
-{else}
-	<div class="page_caption">
-		
-				Редакция на група
-			
-	</div>
-	
-{/if}
-
-<script>
 {literal}
-
-	rpc_debug= true;
-	function updateGroup()
-	{
-		loadXMLDoc2('update',3);
-	}
-	
-	
-
-{/literal}
-</script>
-
-<form id="form1">
-<input type="hidden" name="id" id="id" value="{$nID}">
-<input type="hidden" name="offset" id="offset"/>
-	<table class="input">
-			<tr class="odd">
-				<td width="200">Наименование:</td>
-				<td>
-					<input type="text" name="name" id="name" class="inp250" />
-				</td>
-			</tr>
-			<tr class="even">
-				<td width="200">Подчинен на:</td>
-				<td>
-					<select name="parent_id" id="parent_id" class="select250" ></select> 
-				</td>
-			</tr>
-		</table>
-		
-		<br />
-		<table class="input">
-			<tr class="odd">
-				<td width="250">&nbsp;</td>
-				<td style="text-align:right;">
-					<button class="search"onclick="updateGroup();"> Запиши </button>
-					<button onclick="window.close();"> Затвори </button>
-				</td>
-			</tr>
-		</table>
-</form>
 <script>
-	
+	rpc_debug = true;
+	rpc_html_debug = true;
+
+	function updateGroup() {
+		loadXMLDoc2('update', 3);
+	}
+</script>
+{/literal}
+
+<form id="form1" class="ui-asset-editor ui-asset-group-editor" onsubmit="updateGroup(); return false;">
+	<input type="hidden" name="id" id="id" value="{$nID|default:0}">
+	<input type="hidden" name="offset" id="offset">
+
+	<div class="modal-content ui-asset-editor-content">
+		<div class="modal-header">
+			<strong>{if $nID eq 0}Добавяне на нова група{else}Редакция на група{/if}</strong>
+			<button type="button" class="close" onclick="window.close();" aria-label="Затвори">×</button>
+		</div>
+		<div class="modal-body ui-asset-editor-body">
+			<div class="input-group input-group-sm mb-2">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-name" aria-hidden="true" title="Наименование"></span></div>
+				<input type="text" name="name" id="name" class="form-control" placeholder="Наименование на групата..." />
+			</div>
+			<div class="input-group input-group-sm">
+				<div class="input-group-prepend"><span class="ui-icon ui-icon-branch" aria-hidden="true" title="Подчинена на"></span></div>
+				<select name="parent_id" id="parent_id" class="form-control"></select>
+			</div>
+		</div>
+	</div>
+
+	<nav class="modal-footer fixed-bottom ui-asset-editor-actions" aria-label="Действия с групата">
+		<button type="submit" class="btn btn-success"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+		<button type="button" class="btn btn-danger" onclick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори</button>
+	</nav>
+</form>
+
+<script>
 	loadXMLDoc2('result');
-	
 </script>

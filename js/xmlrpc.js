@@ -52,8 +52,8 @@
 // Дали да се визуализира номерация в резултата
 	var rpc_autonumber = "on";
 	
-// Legacy име на stylesheet-а; използва се само като ключ за DOM renderer profile
-	var rpc_xsl = "xsl/general_result.xsl";
+// Профил на DOM renderer-а. Не се зарежда или изпълнява XSLT.
+	var rpc_renderer_profile = "general";
 
 // Метод за обръщение към API функция
 	var rpc_method = "POST";
@@ -441,14 +441,14 @@ function form2POST()
 										var domRenderError = null;
 										if (
 											typeof RpcResultRenderer != 'undefined' &&
-											RpcResultRenderer.isSupportedStylesheet(rpc_xsl) &&
+											RpcResultRenderer.isSupportedProfile(rpc_renderer_profile) &&
 											(_rpc_result != null) &&
 											(!_rpc_error_value) &&
 											(_rpc_play_result)
 										) {
 											try {
 												var renderOptions = RpcResultRenderer.getOptions(_rpc_result, {
-													profile: RpcResultRenderer.getStylesheetProfile(rpc_xsl),
+													profile: RpcResultRenderer.getProfile(rpc_renderer_profile),
 													prefix: rpc_prefix,
 													resultArea: rpc_result_area,
 													resize: rpc_resize,
@@ -472,17 +472,17 @@ function form2POST()
 											FormProcessing_action(xml);
 											DisableLoader();
 										}
-										// DOM-only runtime: browser XSLT fallback is intentionally removed.
-										else if ( rpc_xsl && (_rpc_result != null) && (!_rpc_error_value) && (_rpc_play_result) ){
+										// DOM-only runtime.
+										else if ( rpc_renderer_profile && (_rpc_result != null) && (!_rpc_error_value) && (_rpc_play_result) ){
 											var domRenderMessage;
 											if (typeof RpcResultRenderer == 'undefined') {
 												domRenderMessage = "DOM renderer is not loaded.";
-											} else if (!RpcResultRenderer.isSupportedStylesheet(rpc_xsl)) {
-												domRenderMessage = "No DOM renderer profile is registered for " + rpc_xsl + ".";
+											} else if (!RpcResultRenderer.isSupportedProfile(rpc_renderer_profile)) {
+												domRenderMessage = "No DOM renderer profile is registered for " + rpc_renderer_profile + ".";
 											} else if (domRenderError) {
 												domRenderMessage = domRenderError.message || String(domRenderError);
 											} else {
-												domRenderMessage = "The DOM renderer did not render " + rpc_xsl + ".";
+												domRenderMessage = "The DOM renderer did not render profile " + rpc_renderer_profile + ".";
 											}
 
 											_rpc_result.innerHTML = "";
