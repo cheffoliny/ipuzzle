@@ -1,0 +1,171 @@
+/*
+ * Final compatibility layer for the last legacy Smarty routes.
+ *
+ * Route-specific classes are attached by ui_final_migration.js. Keeping this
+ * opt-in avoids changing old print/export documents and inactive fragments.
+ */
+body.ui-refresh-content.ui-final-migrated {
+    min-width: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--ip-content-bg, #edf3f7);
+}
+
+body.ui-final-migrated .ui-final-screen {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body.ui-final-migrated .ui-final-report {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 7px;
+    padding: 7px 8px;
+}
+
+body.ui-final-migrated .ui-final-workspace,
+body.ui-final-migrated .ui-final-editor {
+    min-height: 100vh;
+    padding: 7px 8px 70px;
+}
+
+body.ui-final-migrated .ui-final-heading,
+body.ui-final-migrated .page_caption {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0 0 7px;
+    padding: 8px 13px;
+    border: 1px solid #21445f;
+    border-radius: 6px;
+    background: #284f6d;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: left;
+}
+
+body.ui-final-migrated .ui-final-filter,
+body.ui-final-migrated table.search {
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #c3d3df;
+    border-radius: 6px;
+    background: #edf4f9;
+}
+
+body.ui-final-migrated .ui-final-page-data {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+body.ui-final-migrated .ui-final-result {
+    min-width: 0;
+    max-width: 100%;
+    overflow: auto;
+    border: 1px solid #b9cbd8;
+    border-radius: 6px;
+    background: #202529;
+}
+
+body.ui-final-migrated .ui-final-report > .ui-final-result {
+    min-height: 220px;
+    flex: 1 1 auto;
+    height: auto !important;
+}
+
+body.ui-final-migrated .ui-final-workspace .ui-final-result {
+    max-height: calc(100vh - 180px);
+}
+
+body.ui-final-migrated .ui-final-actions {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 9px 14px !important;
+    border-top: 1px solid #b8cad8;
+    background: rgba(241, 247, 251, .98);
+    box-shadow: 0 -3px 12px rgba(20, 46, 67, .1);
+}
+
+body.ui-final-migrated table.ui-final-actions {
+    display: table;
+    width: 100%;
+}
+
+body.ui-final-migrated table.ui-final-actions > tbody > tr > td {
+    text-align: right;
+}
+
+body.ui-final-migrated .ui-final-actions button,
+body.ui-final-migrated button.ui-final-action {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+body.ui-final-migrated .ui-clickable-icon {
+    cursor: pointer;
+}
+
+body.ui-final-migrated .ui-icon[role="button"] {
+    width: 26px;
+    height: 26px;
+    padding: 5px;
+    border: 1px solid #c4d4e0;
+    border-radius: 5px;
+    background-color: #f7fafc;
+    color: #1769aa;
+}
+
+body.ui-final-migrated .ui-icon[role="button"]:hover,
+body.ui-final-migrated .ui-icon[role="button"]:focus {
+    border-color: #0b7de3;
+    background-color: #e3f1fd;
+    outline: 2px solid rgba(11, 125, 227, .2);
+    outline-offset: 1px;
+}
+
+body.ui-final-migrated input,
+body.ui-final-migrated select,
+body.ui-final-migrated textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+    body.ui-final-migrated .ui-final-report,
+    body.ui-final-migrated .ui-final-workspace,
+    body.ui-final-migrated .ui-final-editor {
+        padding-right: 4px;
+        padding-left: 4px;
+    }
+
+    body.ui-final-migrated .ui-final-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    body.ui-final-migrated .ui-final-heading,
+    body.ui-final-migrated .page_caption {
+        font-size: 15px;
+    }
+}

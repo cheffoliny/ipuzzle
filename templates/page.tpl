@@ -34,7 +34,7 @@
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
-<link href="css/ui-fa7-icons.css?version=16" rel="stylesheet" type="text/css">
+<link href="css/ui-fa7-icons.css?version=17" rel="stylesheet" type="text/css">
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
