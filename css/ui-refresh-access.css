@@ -266,8 +266,10 @@ body.ui-refresh-content .ui-current-user-password-dialog .ui-access-dialog-body 
 }
 
 body.ui-refresh-content .ui-current-user-password-table {
+    width: 100%;
     max-width: 430px;
     margin: 0 auto;
+    table-layout: fixed;
 }
 
 body.ui-refresh-content .ui-current-user-password-table label {
@@ -280,10 +282,11 @@ body.ui-refresh-content .ui-current-user-password-table .input-group {
     width: 100%;
     min-width: 0;
     align-items: stretch;
+    flex-wrap: nowrap !important;
 }
 
 body.ui-refresh-content .ui-current-user-password-dialog .input-group > .input-group-prepend {
-    position: static;
+    position: static !important;
     z-index: auto;
     display: inline-flex;
     box-sizing: border-box;
@@ -301,8 +304,11 @@ body.ui-refresh-content .ui-current-user-password-dialog .input-group > .input-g
 }
 
 body.ui-refresh-content .ui-current-user-password-table .input-group > .form-control {
+    display: block;
+    width: calc(100% - 34px) !important;
+    max-width: calc(100% - 34px);
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 1 1 0 !important;
 }
 
 body.ui-refresh-content .ui-current-user-password-dialog .input-group > .input-group-prepend + .form-control {

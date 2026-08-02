@@ -151,6 +151,68 @@ body.ui-final-migrated textarea {
     box-sizing: border-box;
 }
 
+/* Stock-transfer (PPP) report toolbar. */
+body.ui-final-page-setup-ppp .ui-setup-ppp {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-report {
+    padding-top: 0;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-filter {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #c3d3df;
+    border-radius: 6px;
+    background: #e4eef6;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-filter > .row {
+    margin-right: -4px;
+    margin-left: -4px;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-filter > .row > [class*="col-"] {
+    min-width: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-filter .input-group:not(.ui-calendar-input-period) {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+    flex-wrap: nowrap !important;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-filter .input-group > .form-control {
+    min-width: 0;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-actions .input-group {
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-actions .btn {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 0 !important;
+}
+
+body.ui-final-page-setup-ppp .ui-setup-ppp-report > .ui-final-result {
+    min-height: 260px;
+}
+
 @media (max-width: 720px) {
     body.ui-final-migrated .ui-final-report,
     body.ui-final-migrated .ui-final-workspace,
@@ -167,5 +229,13 @@ body.ui-final-migrated textarea {
     body.ui-final-migrated .ui-final-heading,
     body.ui-final-migrated .page_caption {
         font-size: 15px;
+    }
+
+    body.ui-final-page-setup-ppp .ui-setup-ppp-filter > .row > [class*="col-"] {
+        margin-bottom: 6px;
+    }
+
+    body.ui-final-page-setup-ppp .ui-setup-ppp-actions .input-group {
+        justify-content: flex-start;
     }
 }

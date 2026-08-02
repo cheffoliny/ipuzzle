@@ -26,7 +26,7 @@ $accountDialog = file_get_contents($root . '/templates/admin_set_setup_access_ac
 $profileDialog = file_get_contents($root . '/templates/set_setup_access_profile.tpl');
 $patterns = auditUiLegacyPatterns($root);
 
-accessUiAssert(strpos($page, 'css/ui-refresh-access.css?version=2') !== false, 'access stylesheet is not loaded');
+accessUiAssert(strpos($page, 'css/ui-refresh-access.css?version=3') !== false, 'access stylesheet is not loaded');
 accessUiAssert(strpos($css, 'body.ui-refresh-content .ui-access-list') !== false, 'list styles are not scoped');
 accessUiAssert(strpos($css, 'body.ui-refresh-content .ui-access-dialog') !== false, 'dialog styles are not scoped');
 
@@ -84,6 +84,8 @@ accessUiAssert(substr_count($currentPassword, 'id="search"') === 1, 'duplicate s
 accessUiAssert(strpos($currentPassword, 'type="button" class="ui-current-password-close"') !== false, 'close button still submits current password form');
 accessUiAssert(strpos($index, "dialog_win('set_curent_user_password',400,300,1,'set_curent_user_password')") !== false, 'current password dialog size is stale');
 accessUiAssert(strpos($index, 'ui-icon ui-icon-key') !== false, 'current password menu icon is not migrated');
+accessUiAssert(strpos($css, 'flex-wrap: nowrap !important') !== false, 'password input groups may still wrap in Bootstrap/Edge');
+accessUiAssert(strpos($css, 'width: calc(100% - 34px) !important') !== false, 'password input width does not reserve the icon slot');
 accessUiAssert(strpos($accountDialog, "select_all_options('account_regions')") !== false, 'account regions are no longer submitted');
 accessUiAssert(strpos($accountDialog, "loadXMLDoc('save', 3)") !== false, 'account save RPC changed');
 accessUiAssert(strpos($profileDialog, "loadXMLDoc('update', 3)") !== false, 'profile update RPC changed');
