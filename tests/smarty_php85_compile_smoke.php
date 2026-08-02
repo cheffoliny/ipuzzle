@@ -104,6 +104,27 @@ foreach ($tabTemplates as $template) {
 }
 
 $objectInfo = $smarty->compileTemplate('object_info.tpl');
+$objectGeo = $smarty->compileTemplate('object_geo.tpl');
+
+$smarty->assign('page', 'object_geo');
+$smarty->assign('nID', 690);
+$smarty->assign('mapCenter', array('lat' => 42.7339, 'lng' => 25.4858, 'zoom' => 14));
+$smarty->assign('pov', '{}');
+$smarty->assign('object', 'PHP 8.5 geo smoke');
+$smarty->assign('num', 690);
+$smarty->assign('mobile', 0);
+$smarty->assign('isService', 0);
+$smarty->assign('bEditStatuses', 0);
+$objectGeoOutput = $smarty->executeCompiled($objectGeo);
+
+if (
+    strpos($objectGeoOutput, 'id="map_canvas"') === false ||
+    strpos($objectGeoOutput, 'initialize(') === false ||
+    strpos($objectGeoOutput, '42.7339') === false
+) {
+    fwrite(STDERR, "object_geo.tpl did not render its Leaflet map contract.\n");
+    exit(1);
+}
 
 $objectLayoutTemplates = array(
     'object_contract.tpl',
@@ -173,4 +194,4 @@ if (in_array('--write-cache', $argv, true)) {
     echo "SMARTY_CACHE_RECOMPILE=PASS\n";
 }
 
-echo 'SMARTY_PHP85_COMPILE=PASS (' . (count($tabTemplates) + count($objectLayoutTemplates) + 1) . " templates)\n";
+echo 'SMARTY_PHP85_COMPILE=PASS (' . (count($tabTemplates) + count($objectLayoutTemplates) + 2) . " templates)\n";

@@ -3532,21 +3532,20 @@ body.ui-refresh-content .ui-object-contract-summary {
     flex: 0 0 auto;
     width: calc(100% - 16px);
     margin: 0 8px 7px;
-    padding: 0;
+    padding: 0 15px;
 }
 
 body.ui-refresh-content .ui-object-contract-details {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
+    gap: 8px;
     box-sizing: border-box;
     width: 100% !important;
     max-width: none;
-    margin-top: 7px;
-    padding: 6px;
-    border: 1px solid #c3d2df;
-    border-radius: 6px;
-    background: #f7fafc;
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
 }
 
 body.ui-refresh-content .ui-object-contract-details .input-group {

@@ -66,6 +66,11 @@ foreach (array('img_date_from' => 'date_from', 'img_date_to' => 'date_to') as $t
 }
 
 $objectContract = file_get_contents($root . '/templates/object_contract.tpl');
+contractProfilesAssert(strpos($objectContract, 'class="ui-object-core ui-object-contract"') !== false, 'object contract still inherits legacy dialog padding');
+contractProfilesAssert(strpos($objectContract, 'ui-nomenclature-dialog ui-contract-dialog') === false, 'legacy object contract dialog classes remain');
+contractProfilesAssert(strpos($objectContract, 'ui-object-actions ui-object-contract-actions') !== false, 'object contract action bar is not aligned with object screens');
+contractProfilesAssert(strpos($objectContract, 'rpc_html_debug = true;') !== false, 'object contract XML debug window is disabled');
+contractProfilesAssert(strpos($objectContract, 'class="ui-object-result ui-contract-result"') !== false, 'object contract result does not inherit object result styling');
 contractProfilesAssert(strpos($objectContract, "loadXMLDoc2('save')") !== false, 'object contract save action changed');
 contractProfilesAssert(strpos($objectContract, "loadXMLDoc2('result')") !== false, 'object contract result action changed');
 contractProfilesAssert(substr_count($objectContract, 'id="tech_info"') === 1, 'object contract retains duplicate tech_info fields');
@@ -122,6 +127,7 @@ foreach (array(
 }
 contractProfilesAssert(preg_match('/\.ui-object-contract \.fixed-bottom,[^{]+\{[^}]*position:\s*fixed/s', $css) === 1, 'contract/profile action bars are not fixed to the viewport bottom');
 contractProfilesAssert(preg_match('/\.ui-object-contract-details\s*\{[^}]*display:\s*grid/s', $css) === 1, 'object contract details are not responsive grid content');
+contractProfilesAssert(preg_match('/\.ui-object-contract-details\s*\{[^}]*padding:\s*0\s*;/s', $css) === 1, 'object contract details still add legacy inner padding');
 contractProfilesAssert(preg_match('/\.ui-object-contract-result-shell\s*\{[^}]*overflow:\s*hidden\s*!important/s', $css) === 1, 'object contract result shell still creates a second scrollbar');
 contractProfilesAssert(preg_match('/\.ui-object-contract-result-shell > \.ui-contract-result\s*\{[^}]*max-height:\s*none\s*!important/s', $css) === 1, 'legacy result max-height still collapses object contract');
 contractProfilesAssert(strpos($css, '.ui-object-contract #result_data.body-content') !== false, 'object contract RPC result layout override is missing');
@@ -144,6 +150,6 @@ foreach ($iconAssets as $iconClass => $asset) {
 }
 
 contractProfilesAssert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon cache version is stale');
-contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=46') !== false, 'contract/profile stylesheet cache version is stale');
+contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=47') !== false, 'contract/profile stylesheet cache version is stale');
 
 echo 'UI_REFRESH_CONTRACT_PROFILES=PASS' . PHP_EOL;

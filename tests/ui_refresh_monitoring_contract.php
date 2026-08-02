@@ -102,6 +102,6 @@ monitoringAssert(is_file($root . '/css/fa7/solid/radar.svg'), 'monitor icon asse
 
 $page = file_get_contents($root . '/templates/page.tpl');
 monitoringAssert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon cache version is stale');
-monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=46') !== false, 'monitor stylesheet cache version is stale');
+monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=47') !== false, 'monitor stylesheet cache version is stale');
 
 echo 'UI_REFRESH_MONITORING=PASS' . PHP_EOL;

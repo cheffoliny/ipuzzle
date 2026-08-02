@@ -12,7 +12,7 @@ $root = dirname(__DIR__);
 $page = file_get_contents($root . '/templates/page.tpl');
 $css = file_get_contents($root . '/css/ui-refresh-nomenclatures.css');
 
-nomenclatureAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=46') !== false, 'stylesheet is not loaded');
+nomenclatureAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=47') !== false, 'stylesheet is not loaded');
 nomenclatureAssert(strpos($css, 'body.ui-refresh-content .ui-nomenclature-list') !== false, 'list styles are not scoped');
 nomenclatureAssert(strpos($css, 'body.ui-refresh-content .ui-nomenclature-dialog') !== false, 'dialog styles are not scoped');
 
