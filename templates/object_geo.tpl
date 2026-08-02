@@ -1,489 +1,117 @@
 {literal}
 <script>
     rpc_debug = true;
+    rpc_html_debug = true;
 
-    var map;
-    var panorama;
-    var astorPlace;
-    var drag = false;
-    var ppov;
-    var coor;
-    var clicktogo = false;
-    var clicktopoint = false;
-    var dragablecontrol = false;
-    var toggle;
-    var autocomplete;
-    var countryRestrict = {'country': 'bg'};
-    var marker;
+    var map = null;
+    var marker = null;
 
-    var onPlaceChanged = function () {
+    function showMapError(message) {
+        var error = document.getElementById('map_error');
+        var saveButton = document.getElementById('save_geo');
 
-//        console.log('address');
-//
-        var place = autocomplete.getPlace();
-        alert(place);
-        if (place.geometry) {
-            marker.setPosition(place.geometry.location);
-            map.panTo(place.geometry.location);
-        } else {
-//                document.getElementById('locationAddress').placeholder = 'Изберете адрес!';
-            //document.getElementById('pac-input').placeholder = 'Изберете адрес!';
+        if (error) {
+            error.textContent = message;
+            error.style.display = 'flex';
         }
 
-
+        if (saveButton) {
+            saveButton.disabled = true;
+        }
     }
 
-    jQuery(document).ready(function () {
-        jQuery('input[type="text"]').keypress(function (e) {
-            var code = e.keyCode || e.which;
-            if (code === 13)
-                e.preventDefault();
-        });
-    });
+    function initialize(mapConfig) {
+        var objectId = parseInt(mapConfig.objectId, 10);
+        var latitude = parseFloat(mapConfig.lat);
+        var longitude = parseFloat(mapConfig.lng);
+        var zoom = parseInt(mapConfig.zoom, 10);
 
+        if (!isFinite(objectId) || objectId <= 0) {
+            showMapError('Няма привързан обект.');
+            return;
+        }
 
-    jQuery('#form1').on('submit', function () {
-        event.preventDefault();
-        return false;
-    });
+        if (typeof L === 'undefined') {
+            showMapError('Картата не може да бъде заредена. Проверете интернет връзката и опитайте отново.');
+            return;
+        }
 
-    function initialize(povv) {
-        var diva = $('map_canvas');
+        if (!isFinite(latitude) || !isFinite(longitude)) {
+            showMapError('Липсват валидни координати за центриране на картата.');
+            return;
+        }
 
-        {/literal}
+        if (!isFinite(zoom)) {
+            zoom = 14;
+        }
 
-        {if $nID <= 0 }
-        alert("Няма привързан обект");
-        {else}
-        ppov = povv;
-
-        {if $aObject.geo_lat != 0 }
-        coor = new google.maps.LatLng({$aObject.geo_lat}, {$aObject.geo_lan});
-        {elseif $aCities.geo_lat != 0}
-        coor = new google.maps.LatLng({$aCities.geo_lat}, {$aCities.geo_lan});
-        {elseif $aOffices.geo_lat != 0}
-        coor = new google.maps.LatLng({$aOffices.geo_lat}, {$aOffices.geo_lan});
-        {else}
-        coor = new google.maps.LatLng({$aObject.geo_lat}, {$aObject.geo_lan});
-        {/if}
-
-        {/if}
-
-        {literal}
-
-        map = new google.maps.Map(diva, {
-            zoom: 14,
-//            maxZoom: 17,
-            //mapTypeId: google.maps.MapTypeId.ROADMAP,
-            //ROADMAP (normal, default 2D map)
-            //SATELLITE (photographic map)
-            //HYBRID (photographic map + roads and city names)
-            //TERRAIN (map with mountains, rivers, etc.)
-            disableDoubleClickZoom: true,
-            panControl: true,
+        map = L.map('map_canvas', {
+            doubleClickZoom: false,
             zoomControl: true,
+            scrollWheelZoom: true
+        }).setView([latitude, longitude], zoom);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        marker = L.marker([latitude, longitude], {
             draggable: true,
-            disableDefaultUI: true,
-            scrollwheel: true,
-            center: coor,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
-            streetViewControl: false
-        });
+            title: 'Преместете маркера до точната позиция на обекта'
+        }).addTo(map);
 
-       // if ($('savePov').disabled) {
-            // autocomplete = new google.maps.places.Autocomplete(
-            //     (  document.getElementById('pac-input')), {
-            //         types: ['address'],
-            //         componentRestrictions: countryRestrict
-            //     });
-            // autocomplete.bindTo('bounds', map);
-            // autocomplete.addListener('place_changed', onPlaceChanged);
-            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('pac-input'));
-      //  }
-
-        marker = new google.maps.Marker({
-            position: coor,
-            map: map,
-            icon: 'https://maps.google.com/mapfiles/marker.png',
-            clickable: true,
-            flat: true,
-            draggable: true,
-            visible: true,
-            zIndex: 5000
-        });
-        // var btnObjects = document.createElement("button");
-        //  btnObjects.setAttribute('class', 'controls btn btn-info');
-        //   btnObjects.innerHTML = "Запиши";
-
-       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(divObjects);
-
-        if (!empty(ppov) && !empty(ppov.lat)) {
-            astorPlace = new google.maps.LatLng(ppov.lat, ppov.lng);
-        } else {
-            astorPlace = coor;
-        }
-
-        panorama = map.getStreetView();
-        panorama.setPosition(astorPlace);
-
-        if (!empty(ppov.heading)) {
-            //astorPlace  = new google.maps.LatLng(ppov.lat, ppov.lng);
-
-            panorama.setPov(({
-                heading: ppov.heading, //59.249168,
-                pitch: ppov.pitch, //19,
-                zoom: ppov.zoom     // 2.5
-            }));
-        } else {
-            astorPlace = coor;
-        }
-
-        //google.maps.event.addDomListener(diva, 'click', showAlert);
-        google.maps.event.addListener(diva, 'click', function (event) {
-            if (clicktopoint) {
-                var x = event.x - 32;
-                var y = event.y - 135;
-
-                var canvas = jQuery(diva);
-                var div = jQuery('<div/>', {name: 'marker'});
-                var img = jQuery('<img>').attr('src', 'images/marker1_red.png').appendTo(div);
-                div.css({top: y + 'px', left: x + 'px', position: 'absolute', zIndex: 999});
-                canvas.append(div);
-            }
-            //console.log(y);
-        });
-
-        google.maps.event.addListener(panorama, 'pov_changed', function () {
-            var pov = {};
-            var poss = panorama.getPosition();
-
-            pov.heading = panorama.getPov().heading;
-            pov.pitch = panorama.getPov().pitch;
-            pov.zoom = panorama.getPov().zoom;
-            pov.lng = poss.lng();
-            pov.lat = poss.lat();
-
-            var json = JSON.stringify(pov);
-            $('new_pov').value = json;
-            // $('savePov').disabled = false;
-        });
-
-        if (typeof ppov.left == 'object' && toggle) {
-            jQuery('div[name=marker]').remove();
-
-            var aX = ppov.left;
-            var aY = ppov.top;
-            var length = aX.length;
-
-            for (var i = 0; i < length; i++) {
-                var x = aX[i];
-                var y = aY[i];
-
-                var canvas = jQuery(diva);
-                var div = jQuery('<div/>', {name: 'marker'});
-                var img = jQuery('<img>').attr('src', 'images/marker1_red.png').appendTo(div);
-                div.css({top: y + 'px', left: x + 'px', position: 'absolute', zIndex: 999});
-                canvas.append(div);
-            }
-        }
-    }
-
-    function toggleStreetView(toggleParam) {
-
-        toggle = (typeof(toggleParam) != 'undefined')? toggleParam : panorama.getVisible();
-        //   $('savePov').disabled = true;
-
-        if (toggle == false) {
-            disableMovement(false);
-            panorama.setVisible(true);
-            // $('savePov').style.visibility = 'visible';
-            // $('clearPov').style.visibility = 'visible';
-//            $('saveCoords').style.visibility = 'visible';
-//            jQuery('.save-pos').show();
-//            $('movePov').style.visibility = 'visible';
-            var diva = $('map_canvas');
-
-            if (typeof ppov.left == 'object') {
-                jQuery('div[name=marker]').remove();
-
-                var aX = ppov.left;
-                var aY = ppov.top;
-                var length = aX.length;
-
-                for (var i = 0; i < length; i++) {
-                    var x = aX[i];
-                    var y = aY[i];
-
-                    var canvas = jQuery(diva);
-                    var div = jQuery('<div/>', {name: 'marker'});
-                    var img = jQuery('<img>').attr('src', 'images/marker1_red.png').appendTo(div);
-                    div.css({top: y + 'px', left: x + 'px', position: 'absolute', zIndex: 999});
-                    canvas.append(div);
-                }
-            }
-        } else {
-            disableMovement(false);
-            panorama.setVisible(false);
-            // $('savePov').style.visibility = 'hidden';
-            // $('clearPov').style.visibility = 'hidden';
-            // $('saveCoords').style.visibility = 'hidden';
-            // jQuery('.save-pos').hide();
-//            $('movePov').style.visibility = 'hidden';
-
-            jQuery('div[name=marker]').remove();
-        }
-    }
-
-    function disableMovement(dragable) {
-        var mapOptions;
-
-        if (!dragable) {
-            mapOptions = {
-                //draggable: false,
-                //scrollwheel: false,
-                //disableDoubleClickZoom: true,
-                //zoomControl: false,
-                //disableDefaultUI: true,
-                //streetViewControl: false,
-
-                addressControl: false,
-                enableCloseButton: false,
-                navigationControl: false,
-                draggable: false,
-                panControl: dragablecontrol,
-                disableDefaultUI: true,
-                zoomControl: dragablecontrol,
-                rotateControl: false,
-                linksControl: false,
-                clickToGo: clicktogo,
-                imageDateControl: false,
-                disableDoubleClickZoom: true
-            };
-        } else {
-            mapOptions = {
-                draggable: true,
-                scrollwheel: true,
-                disableDoubleClickZoom: true,
-                zoomControl: true,
-                disableDefaultUI: true
-            };
-        }
-
-        panorama.setOptions(mapOptions);
-    }
-
-    function saveLastPov() {
-        if ( confirm('Наистина ли желаете да запазите изгледа?') ) {
-            var arrLeft = new Array();
-            var arrTop = new Array();
-            alert($('new_pov').value);
-            alert($('ppov').value);
-
-            $('ppov').value = $('new_pov').value;
-            ppov = jQuery.parseJSON($('ppov').value);
-            alert(ppov);
-            jQuery('div[name=marker]').each(function() {
-
-
-                var xx = parseInt(jQuery(this).css('left'), 10);
-                var yy = parseInt(jQuery(this).css('top'), 10);
-
-                arrLeft.push(xx);
-                arrTop.push(yy);
-
-
-                ppov.left = arrLeft;
-                ppov.top = arrTop;
-
-                var json = JSON.stringify(ppov);
-                $('new_pov').value = json;
-            });
-
-            loadXMLDoc2('saveLastPov');
-            // $('savePov').disabled = true;
-
-            rpc_on_exit = function() {
-                clicktogo = false;
-                clicktopoint = false;
-
-                alert('Промените бяха запазени!');
-
-                var p = $('new_pov').value;
-                ppov = jQuery.parseJSON(p);
-
-                initialize(ppov);
-                disableMovement(false);
-                panorama.setVisible(true);
-            }
-        }
-    }
-
-    // function clearLastPov() {
-    //
-    //     if ( confirm('Наистина ли желаете да рестартирате изгледа?') ) {
-    //         loadXMLDoc2('clearPov');
-    //
-    //         rpc_on_exit = function() {
-    //             jQuery('div[name=marker]').remove();
-    //             var p = $('ppov').value;
-    //             ppov = jQuery.parseJSON(p);
-    //
-    //             initialize(ppov);
-    //             disableMovement(false);
-    //             panorama.setVisible(true);
-    //         }
-    //     }
-    // }
-
-    function moveLastPov() {
-        if ( confirm('Наистина ли желаете да редактирате изгледа? Всички точки ще бъдат изтрити!') ) {
-            clicktogo = true;
-            clicktopoint = true;
-
-            jQuery('div[name=marker]').remove();
-            var p = $('ppov').value;
-            ppov = jQuery.parseJSON(p);
-            // $('savePov').disabled = false;
-
-            initialize(ppov);
-            //disableMovement(false);
-            panorama.setVisible(true);
-        }
+        window.setTimeout(function () {
+            map.invalidateSize();
+        }, 0);
     }
 
     function setGeoLatLan() {
-        var pos = marker.getPosition();
-        jQuery('#new_lan').val(pos.lng());
-        jQuery('#new_lat').val(pos.lat());
+        var position;
+
+        if (!marker) {
+            showMapError('Картата все още не е готова за запис.');
+            return false;
+        }
+
+        position = marker.getLatLng();
+        jQuery('#new_lan').val(position.lng);
+        jQuery('#new_lat').val(position.lat);
 
         loadXMLDoc2('save');
-        rpc_on_exit = function() {
+        rpc_on_exit = function () {
             window.location.reload();
-        }
+        };
+
+        return false;
     }
-
-    function switchTab(e) {
-
-        var jEl = jQuery(e);
-        jQuery('.dropdown').find('.active').removeClass('active');
-        jEl.addClass('active');
-        jQuery('#dropdown_text').html(jEl.find('a').html());
-
-        var sAction = jEl.attr('id');
-
-        switch(sAction) {
-//             case "map_view" :
-//                 toggleStreetView(true);
-//                 jQuery('#points').hide();
-//                 break;
-//             case "street_view" :
-//                 toggleStreetView(false);
-//                 jQuery('#points').hide();
-//                 $('savePov').style.visibility = 'hidden';
-//                 $('clearPov').style.visibility = 'hidden';
-//                 break;
-//             case "edit":
-//                 moveLastPov();
-//                 jQuery('#points').hide();
-//                 $('savePov').style.visibility = 'visible';
-//                 $('clearPov').style.visibility = 'visible';
-//                 $('clearPov').style.display = 'inline';
-//                 break;
-//
-//             case 'pointsEdit':
-//                 toggleStreetView(false);
-//                 jQuery('#points').show();
-//                 $('savePov').style.visibility = 'visible';
-//                 jQuery('#savePov').removeAttr('disabled');
-//                 $('clearPov').style.display = 'none';
-// //                jQuery('#clearPov').removeAttr('disabled');
-//                 break;
-
-
-        }
-//        console.log(sAction);
-    }
-
-    //google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 {/literal}
+
 <form name="form1" id="form1" class="ui-object-core ui-object-geo" onsubmit="return false;">
-    <input type="hidden" name="nID" id="nID" value="{$nID|default:0}"/>
-    <input type="hidden" name="ppov" id="ppov" value="{$pov|escape}">
+    <input type="hidden" name="nID" id="nID" value="{$nID|default:0}" />
+    <input type="hidden" name="ppov" id="ppov" value="{$pov|escape}" />
     <input type="hidden" name="new_lan" id="new_lan" value="0" />
     <input type="hidden" name="new_lat" id="new_lat" value="0" />
     <input type="hidden" name="new_pov" id="new_pov" value="" />
 
     {include file="object_tabs.tpl"}
 
-    <div id="map_canvas" class="ui-object-map" style="width:100%; height: 450px;"></div>
+    <div id="map_error" class="ui-object-map-error" role="alert" style="display:none;"></div>
+    <div id="map_canvas" class="ui-object-map" style="width:100%; height:450px;"></div>
+
     <div class="fixed-bottom w-100 text-center ui-object-actions ui-object-geo-actions">
-        <button type="button" class="btn btn-sm btn-success px-5" onclick="setGeoLatLan(); return false;"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази </button>
+        <button type="button" id="save_geo" class="btn btn-sm btn-success px-5" onclick="return setGeoLatLan();">
+            <span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази
+        </button>
     </div>
-
-    {*    <div class="position-relative">*}
-{*        <input id="pac-input" class="controls" type="text" placeholder="Въведете адрес" value="{$objAddress}" />*}
-
-
-
-{*                    <div class="dropup">*}
-{*                     <span class="dropdown">*}
-{*                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">*}
-{*                            <span class="btn btn-sm btn-default">*}
-{*                                <span id="dropdown_text">*}
-{*                                    <span class="ui-icon ui-icon-map" aria-hidden="true"></span> Карта*}
-{*                                </span>*}
-{*                                <b class="caret"></b>*}
-{*                            </span>*}
-{*                        </a>*}
-{*                        <ul class="dropdown-menu" role="menu" style="text-align: left;">*}
-{*                        <li onclick="switchTab(this);" id="map_view" class="active"><a href="#"><span class="ui-icon ui-icon-map" aria-hidden="true"></span> Карта</a></li>*}
-{*                        <li onclick="switchTab(this);" id="street_view"><a href="#"><span class="ui-icon ui-icon-eye" aria-hidden="true"></span> Изглед</a></li>*}
-{*                        <li onclick="switchTab(this);" id="edit"><a href="#"><span class="ui-icon ui-icon-edit" aria-hidden="true"></span> Редакция</a></li>*}
-{*                        <li onclick="switchTab(this);" id="pointsEdit"><a href="#"><span class="ui-icon ui-icon-location" aria-hidden="true"></span> Точки</a></li>*}
-{*                        </ul>*}
-{*                    </span>*}
-
-                        {*<input type="radio" id="toMap" name="typeMap" value="toMap" checked="checked"*}
-                        {*onchange="toggleStreetView();"/> Карта*}
-                        {*<input type="radio" id="toStreet" name="typeMap" value="toStreet" onchange="toggleStreetView();"/>*}
-                        {*Снимка*}
-{*                        <button type="button" id="savePov" name="savePov" disabled="disabled" style="visibility: hidden;" class="btn btn-sm btn-success" onclick="saveLastPov(); return false;">*}
-{*                            <span class="ui-icon ui-icon-save" aria-hidden="true"></span>*}
-{*                            Запази*}
-{*                        </button>*}
-
-{*                        <button type="button" id="clearPov" name="clearPov" class="btn btn-sm btn-danger" style="visibility: hidden;" onclick="clearLastPov(); return false;" >*}
-{*                            <span class="ui-icon ui-icon-close" aria-hidden="true"></span>*}
-{*                            Изчисти*}
-{*                        </button>*}
-                        {*&nbsp;&nbsp;&nbsp;&nbsp;*}
-                        {*<button type="button" id="movePov" name="movePov" onclick="moveLastPov(); return false;"*}
-                        {*style="visibility: hidden;">Редакция*}
-                        {*</button>*}
-{*                        <span id="points" style="display: none;">*}
-{*                    <button type="button" id="clearPoints" name="clearPoints" class="btn btn-sm btn-danger" onclick="clearAsPoints(); return false;">*}
-{*                        <span class="ui-icon ui-icon-close" aria-hidden="true"></span>*}
-{*                        Изтриване на точки*}
-{*                    </button>*}
-
-{*                    <button type="button" id="addPoints" name="addPoints" class="btn btn-sm btn-success" onclick="addAsPoints(); return false;">*}
-{*                        <span class="ui-icon ui-icon-plus" aria-hidden="true"></span>*}
-{*                        Добавяне на точки*}
-{*                    </button>*}
-{*                </span>*}
-
-{*                        <span class="save-pos" style="display: none;">*}
-
-{*                    <input type="checkbox" id="saveCoords" checked="checked" name="saveCoords" style="visibility: hidden; "/> Запазване на позиция*}
-{*                </span>*}
-{*                    </div>*}
-
-
-{*    </div>*}
-
 </form>
 
 <script>
-    initialize({$pov});
+    initialize({
+        objectId: {$nID|default:0},
+        lat: {$mapCenter.lat|default:42.7339},
+        lng: {$mapCenter.lng|default:25.4858},
+        zoom: {$mapCenter.zoom|default:7}
+    });
 </script>

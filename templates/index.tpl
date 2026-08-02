@@ -14,7 +14,6 @@
     <script src="js/autoselect.js"			type="text/javascript"></script>
     <script src="js/framework.js"			type="text/javascript"></script>
     {*<script src="js/performance.js"			type="text/javascript"></script>*}
-    {*<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAgMeepfn7LP4uw75BUQ8Q79tfuBs4ouKw"></script>*}
     <script type="text/javascript" language="javascript" src="js/bowser.min.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">

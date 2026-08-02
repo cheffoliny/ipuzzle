@@ -675,7 +675,7 @@ class InvoicePDF extends PDFC
         $this->SetDrawColor($this->aOptions['BorderColor']);
         $this->SetLineWidth($this->aOptions['BorderWidth']);
         $this->SetFont('FreeSans', '', $this->aOptions['FontSize']);
-        $this->Cell($width / 3, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
+        $this->Cell($width / 2.8, $this->aOptions['RowHeight'], "Дата на данъчно събитие : " . $this->sDocDate, 1, 0, 'L', 1);
 
         $this->SetFont('FreeSans', 'B', $this->aOptions['FontSize']);
         $this->Cell($width, $this->aOptions['RowHeight'],  'Словом: '. slovom($this->document['total_sum_bgn'], $_currency, $_currency_100."          " ), 1, 0, 'R', 1);

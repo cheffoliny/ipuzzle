@@ -4756,6 +4756,33 @@ body.ui-refresh-content .ui-object-map {
     background: #e8eef3;
 }
 
+body.ui-refresh-content .ui-object-map.leaflet-container {
+    position: relative;
+    z-index: 1;
+    font-family: inherit;
+}
+
+body.ui-refresh-content .ui-object-map .leaflet-control-attribution {
+    max-width: calc(100% - 12px);
+    padding: 2px 5px;
+    background: rgba(255, 255, 255, .9);
+    color: #334b60;
+    font-size: 10px;
+}
+
+body.ui-refresh-content .ui-object-map-error {
+    min-height: 42px;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0 0 6px;
+    padding: 8px 12px;
+    border: 1px solid #d7a5a9;
+    border-radius: 6px;
+    background: #fbe9ea;
+    color: #8f2931;
+    font-weight: 600;
+}
+
 body.ui-refresh-content .ui-object-geo-actions {
     margin: 6px 0 0 !important;
 }

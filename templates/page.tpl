@@ -11,7 +11,10 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
-	<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCJCSAQPKRrx7XlFccO_EkFqzZ74-EcA8o&libraries=places async"></script>
+	{if $page eq 'object_geo'}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	{/if}
 	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -46,7 +49,7 @@
     <link href="css/ui-refresh-actions.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=3" rel="stylesheet" type="text/css">
-<link href="css/ui-refresh-nomenclatures.css?version=45" rel="stylesheet" type="text/css">
+<link href="css/ui-refresh-nomenclatures.css?version=46" rel="stylesheet" type="text/css">
     <link href="css/ui-final-migration.css?version=3" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 

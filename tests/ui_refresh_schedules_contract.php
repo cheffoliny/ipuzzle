@@ -136,6 +136,6 @@ foreach ($iconAssets as $iconClass => $asset) {
     schedulesAssert(is_file($root . '/css/fa7/solid/' . $asset), 'icon asset is missing: ' . $asset);
 }
 
-schedulesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=45') !== false, 'schedule stylesheet cache version is stale');
+schedulesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=46') !== false, 'schedule stylesheet cache version is stale');
 
 echo 'UI_REFRESH_SCHEDULES=PASS' . PHP_EOL;

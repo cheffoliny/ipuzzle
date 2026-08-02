@@ -90,8 +90,6 @@ if (eregi("msie",$sUserAgent)) {
 
 $_SESSION['userdata']['user_agent'] = $sUserAgent;
 $template->assign("agent",$sUserAgent);
-$template->assign("GOOGLE_MAP_KEY",GOOGLE_MAP_KEY);
-
 if ( in_array($page, ["sale_new", "buy_new"]) ) {
 	die();
 }

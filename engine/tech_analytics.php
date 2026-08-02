@@ -2,12 +2,6 @@
 	DEFINE( 'GRID_LEN', 50 );
 	
 	$aColotGradient = array( '#00FF00', '#2AFF00', '#55FF00', '#7FFF00', '#AAFF00', '#D4FF00', '#FFFF00', '#FFD400', '#FFAA00', '#FF7F00', '#FF5500', '#FF2A00', '#FF0000' );
-	// google maps
-	$aGoogleKey['telepol.net']		= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xRv7QWxkr-3IKJEXfTogZixrXvNrxTFUqzQfNBIIEf8T4kg00Wf1-SGFw";
-	$aGoogleKey['telenet1.telepol.com']	= "ABQIAAAAvogtsTYeCCn9bb52RPbh-xQgXI407SWkrCxD7M_O9RWeWzWn6RSNTfQvxkRbeE7SAJbtK4I5-WfXOQ";
-	$aGoogleKey['telenet2.telepol.com']	= "ABQIAAAAdouWIVeqAFAeslBKto6N4BShAnn75XYqscKnPf6_hzGF3TrSxhRTvQJKhEDsGJpITp3aF0FMhCQF5g";
-	$aGoogleKey['test']			= "ABQIAAAAdouWIVeqAFAeslBKto6N4BRbZHnKkPiOgFOiUuTNWhFQ49yrExRhejihQkQuG_BNLFEVRHwgqxuYfw";
-	
 
 	$aParams = array_merge( $_GET, $_POST );
 	
@@ -35,22 +29,6 @@
 	$template -> assign("nType"				, !empty($aParams['nType']) ? $aParams['nType'] : 0		);
 	
 
-	
-	switch( $_SERVER["HTTP_HOST"] )
-	{
-		case '213.91.252.135' : 
-			$template -> assign("GoogleKey"			, $aGoogleKey['telenet1.telepol.com']		);
-			break;
-		case '213.91.252.162' : 
-			$template -> assign("GoogleKey"			, $aGoogleKey['telenet2.telepol.com']		);
-			break;
-		case '213.91.252.129' :
-			$template -> assign("GoogleKey"			, $aGoogleKey['test']				);
-			break;			
-		default:
-			$template -> assign("GoogleKey"			, $aGoogleKey['telepol.net']			);
-			
-	}
 	
 	if( empty( $aParams['nType'] ) )
 		return;
