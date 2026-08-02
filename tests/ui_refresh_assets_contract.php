@@ -196,6 +196,6 @@ foreach (array('.ui-asset-tabs', '.ui-asset-subview', '.ui-asset-subview-result'
     assetsAssert(strpos($css, $selector) !== false, 'missing modern asset detail style ' . $selector);
 }
 
-assetsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'asset stylesheet cache version is stale');
+assetsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=45') !== false, 'asset stylesheet cache version is stale');
 
 echo 'UI_REFRESH_ASSETS=PASS' . PHP_EOL;

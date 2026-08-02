@@ -12,6 +12,7 @@ function accessUiAssert($condition, $message)
 
 $root = dirname(__DIR__);
 $page = file_get_contents($root . '/templates/page.tpl');
+$index = file_get_contents($root . '/templates/index.tpl');
 $css = file_get_contents($root . '/css/ui-refresh-access.css');
 $admin = file_get_contents($root . '/templates/admin_access_level.tpl');
 $level = file_get_contents($root . '/templates/set_setup_access_level.tpl');
@@ -20,11 +21,12 @@ $profiles = file_get_contents($root . '/templates/setup_access_profiles.tpl');
 $accounts = file_get_contents($root . '/templates/admin_setup_access_accounts.tpl');
 $rights = file_get_contents($root . '/templates/access_rights.tpl');
 $password = file_get_contents($root . '/templates/admin_access_account_pass.tpl');
+$currentPassword = file_get_contents($root . '/templates/set_curent_user_password.tpl');
 $accountDialog = file_get_contents($root . '/templates/admin_set_setup_access_account.tpl');
 $profileDialog = file_get_contents($root . '/templates/set_setup_access_profile.tpl');
 $patterns = auditUiLegacyPatterns($root);
 
-accessUiAssert(strpos($page, 'css/ui-refresh-access.css?version=1') !== false, 'access stylesheet is not loaded');
+accessUiAssert(strpos($page, 'css/ui-refresh-access.css?version=2') !== false, 'access stylesheet is not loaded');
 accessUiAssert(strpos($css, 'body.ui-refresh-content .ui-access-list') !== false, 'list styles are not scoped');
 accessUiAssert(strpos($css, 'body.ui-refresh-content .ui-access-dialog') !== false, 'dialog styles are not scoped');
 
@@ -55,11 +57,33 @@ accessUiAssert(strpos($group, 'ui-access-group-dialog') !== false, 'access group
 accessUiAssert(strpos($profiles, 'ui-access-list') !== false, 'access profiles list was not migrated');
 accessUiAssert(strpos($accounts, 'ui-access-list') !== false, 'access accounts list was not migrated');
 accessUiAssert(strpos($password, 'ui-access-password-dialog') !== false, 'password dialog was not migrated');
+foreach (array(
+    'ui-access-dialog',
+    'ui-access-password-dialog',
+    'ui-current-user-password-dialog',
+    'ui-access-form-table',
+    'ui-access-dialog-actions',
+    'ui-current-password-save',
+    'ui-current-password-close',
+) as $marker) {
+    accessUiAssert(strpos($currentPassword, $marker) !== false, 'current user password dialog misses ' . $marker);
+}
 accessUiAssert(strpos($accountDialog, 'ui-access-account-dialog') !== false, 'account dialog was not migrated');
 accessUiAssert(strpos($profileDialog, 'ui-access-profile-dialog') !== false, 'profile dialog was not migrated');
 accessUiAssert(strpos($rights, 'ui-access-rights') !== false, 'access rights report was not migrated');
 
 accessUiAssert(strpos($password, "loadXMLDoc('update', 3)") !== false, 'password update RPC changed');
+accessUiAssert(strpos($currentPassword, "loadXMLDoc( 'update', 3 )") !== false, 'current password update RPC changed');
+foreach (array('password', 'new_password', 'confirm_password') as $field) {
+    accessUiAssert(
+        preg_match('/\b(?:id|name)\s*=\s*(["\'])' . preg_quote($field, '/') . '\1/', $currentPassword) === 1,
+        'current password field changed: ' . $field
+    );
+}
+accessUiAssert(substr_count($currentPassword, 'id="search"') === 1, 'duplicate search id remains in current password dialog');
+accessUiAssert(strpos($currentPassword, 'type="button" class="ui-current-password-close"') !== false, 'close button still submits current password form');
+accessUiAssert(strpos($index, "dialog_win('set_curent_user_password',400,300,1,'set_curent_user_password')") !== false, 'current password dialog size is stale');
+accessUiAssert(strpos($index, 'ui-icon ui-icon-key') !== false, 'current password menu icon is not migrated');
 accessUiAssert(strpos($accountDialog, "select_all_options('account_regions')") !== false, 'account regions are no longer submitted');
 accessUiAssert(strpos($accountDialog, "loadXMLDoc('save', 3)") !== false, 'account save RPC changed');
 accessUiAssert(strpos($profileDialog, "loadXMLDoc('update', 3)") !== false, 'profile update RPC changed');

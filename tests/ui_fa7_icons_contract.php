@@ -15,7 +15,7 @@ $page = file_get_contents($root . '/templates/page.tpl');
 $css = file_get_contents($root . '/css/ui-fa7-icons.css');
 $map = legacyIconMap();
 
-fa7Assert(strpos($page, 'css/ui-fa7-icons.css?version=17') !== false, 'FA7 icon stylesheet is not loaded');
+fa7Assert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon stylesheet is not loaded');
 fa7Assert(strpos($css, '-webkit-mask-image: var(--ui-icon-source)') !== false, 'SVG icons are not color-aware masks');
 fa7Assert(strpos($css, 'fa7/solid/') !== false, 'FA7 solid icon package is not used');
 fa7Assert(strpos($css, 'fa7/regular/') === false, 'FA7 regular icon reference remains active');

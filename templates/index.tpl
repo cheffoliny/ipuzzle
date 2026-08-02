@@ -93,7 +93,7 @@
                     <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-item dropdown-item-menu" href="#" onClick="dialog_win('set_curent_user_password',400,200,1,'set_curent_user_password');" title="Парола"> <i class="fa fa-key fa-lg"></i> &nbsp; Смяна на парола</a></li>
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-item dropdown-item-menu" href="#" onClick="dialog_win('set_curent_user_password',400,300,1,'set_curent_user_password');" title="Парола"> <span class="ui-icon ui-icon-key" aria-hidden="true"></span> &nbsp; Смяна на парола</a></li>
                         <li class="divider"></li>
                         <li class="nav-item dropdown"><a class="nav-link dropdown-item dropdown-item-menu" href="#" onClick="document.location.href='logout.php'" title="Изход"> <i class="fas fa-sign-out-alt fa-lg"></i> &nbsp; Изход </a></li>
                     </ul>

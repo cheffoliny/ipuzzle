@@ -34,7 +34,7 @@
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
-<link href="css/ui-fa7-icons.css?version=17" rel="stylesheet" type="text/css">
+<link href="css/ui-fa7-icons.css?version=18" rel="stylesheet" type="text/css">
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
@@ -45,8 +45,8 @@
     <link href="css/ui-refresh-feedback.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-actions.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-access.css?version=1" rel="stylesheet" type="text/css">
-<link href="css/ui-refresh-nomenclatures.css?version=43" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-access.css?version=2" rel="stylesheet" type="text/css">
+<link href="css/ui-refresh-nomenclatures.css?version=45" rel="stylesheet" type="text/css">
     <link href="css/ui-final-migration.css?version=2" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 

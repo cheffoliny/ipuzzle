@@ -6,15 +6,16 @@
     <title>Access administration UI harness</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/fa5/css/all.css">
-    <link rel="stylesheet" href="../css/ui-fa7-icons.css">
+    <link rel="stylesheet" href="../css/ui-fa7-icons.css?version=17">
     <link rel="stylesheet" href="../css/bootstrap-intelli.css">
     <link rel="stylesheet" href="../css/ui-refresh-content.css">
     <link rel="stylesheet" href="../css/ui-refresh-results.css">
     <link rel="stylesheet" href="../css/ui-refresh-actions.css">
-    <link rel="stylesheet" href="../css/ui-refresh-access.css">
+    <link rel="stylesheet" href="../css/ui-refresh-access.css?version=2">
     <style>
         html, body { width: 100%; min-height: 100%; margin: 0; }
         .harness-dialog { box-sizing: border-box; width: 850px; max-width: 100%; margin: 18px auto; border: 1px solid #aebfd0; background: #fff; }
+        .harness-password { width: 400px; }
         #result table { width: 100%; border-collapse: collapse; }
         #result th, #result td { padding: 6px 10px; }
     </style>
@@ -69,6 +70,23 @@
             <button type="button" onclick="update()"><span class="ui-icon ui-icon-check"></span>Потвърди</button>
             <button type="button" onclick="window.close()"><span class="ui-icon ui-icon-close"></span>Затвори</button>
         </td></tr></table></div>
+    </form>
+</section>
+
+<section class="harness-dialog harness-password">
+    <form class="ui-access-dialog ui-access-password-dialog ui-current-user-password-dialog">
+        <div class="page_caption"><span class="ui-icon ui-icon-key"></span> Промяна на парола за lubo</div>
+        <div id="search-password" class="ui-access-dialog-body">
+            <fieldset class="ui-access-selection">
+                <legend>Данни за достъп</legend>
+                <table class="input ui-access-form-table ui-current-user-password-table">
+                    <tr><td><label>Стара парола</label></td><td><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-key"></span></div><input class="form-control" type="password"></div></td></tr>
+                    <tr><td><label>Нова парола</label></td><td><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-lock"></span></div><input class="form-control" type="password"></div></td></tr>
+                    <tr><td><label>Повтори новата парола</label></td><td><div class="input-group input-group-sm"><div class="input-group-prepend"><span class="ui-icon ui-icon-check"></span></div><input class="form-control" type="password"></div></td></tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="ui-access-dialog-actions"><button class="ui-current-password-save"><span class="ui-icon ui-icon-save"></span> Запиши</button><button type="button" class="ui-current-password-close"><span class="ui-icon ui-icon-close"></span> Затвори</button></div>
     </form>
 </section>
 </body>

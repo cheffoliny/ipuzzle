@@ -204,35 +204,35 @@
 	{include file="finance_operations_tabs.tpl"}
 
 	<div>
-		<div class="row justify-content-start pl-3 pt-2 table-secondary">
+		<div class="row justify-content-start pl-3 pt-2 table-secondary ui-money-detail-toolbar ui-money-detail-toolbar-primary">
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
-					<div class="input-group-prepend"><i class="far fa-building"></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-building" aria-hidden="true"></span></div>
 					<select class="form-control select200" name="nIDFirm" id="nIDFirm" onchange="loadXMLDoc2( 'loadOffices' );" ></select>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm">
-					<div class="input-group-prepend"><i class="far fa-file-alt"></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-document" aria-hidden="true"></span></div>
 					<select class="form-control select200" name="nIDOffice" id="nIDOffice" ></select>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm"><!-- Новото за Техн. обсл.  -->
-					<div class="input-group-prepend"><i class="far fa-arrow-alt-from-left "></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-arrow-right" aria-hidden="true"></span></div>
 					<select class="form-control form-control-select200" name="nIDDirection" id="nIDDirection" ></select>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend"><i class="far fa-home"></i></div>
+				<div class="input-group input-group-sm ui-money-detail-object-filter">
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-home" aria-hidden="true"></span></div>
 					<input class="form-control inp50" type="text" id="nObjectNum" name="nObjectNum" suggest="suggest" queryType="objByNum" onkeypress="formatDigits( event );" onchange="onChangeObjectNum();" maxlength="12" placeholder=" №..." />
 					<input class="form-control inp150" type="text" id="sObjectName" name="sObjectName" suggest="suggest" queryType="objByName" onchange="onChangeObject();" placeholder=" Име на обект..." />
 				</div>
 			</div>
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="input-group input-group-sm">
-                    <div class="input-group-prepend"><i class="far fa-list"></i></div>
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-list" aria-hidden="true"></span></div>
                     <select class="form-control select200" name="sOrderType" id="sOrderType" onchange="loadXMLDoc2( 'loadNomenclatures' );">
                         <option value="">-- Всички ордери --</option>
                         <option value="earning">Само Приходни</option>
@@ -241,16 +241,16 @@
                 </div>
             </div>
 		</div>
-		<div class="row justify-content-start pl-3 py-1 table-secondary">
+		<div class="row justify-content-start pl-3 py-1 table-secondary ui-money-detail-toolbar ui-money-detail-toolbar-secondary">
 			<div class="col-6 col-sm-4 col-lg-2">
 				<div class="input-group input-group-sm">
-					<div class="input-group-prepend"><i class="fas fa-credit-card"></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-card" aria-hidden="true"></span></div>
 					<select class="form-control form-control-select200" name="nIDBankAccount" id="nIDBankAccount" ></select>
 				</div>
 			</div>
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
 				<div class="input-group input-group-sm"><!-- Новото за Техн. обсл.  -->
-					<div class="input-group-prepend"><i class="far fa-user-tag"></i></div>
+					<div class="input-group-prepend"><span class="ui-icon ui-icon-user" aria-hidden="true"></span></div>
 					<input class="form-control form-control-inp200" type="text" id="sPersonName" name="sPersonName" suggest="suggest" queryType="personByName"  onchange="onChangePerson();" placeholder=" Касиер..." />
 				</div>
 			</div>
@@ -275,31 +275,31 @@
             </div>
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="input-group input-group-sm">
-                    <div class="input-group-prepend"><i class="far fa-list-alt"></i></div>
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-list" aria-hidden="true"></span></div>
                     <select class="form-control select200" name="nIDNomenclature" id="nIDNomenclature" ></select>
                 </div>
             </div>
 		</div>
-		<div class="row justify-content-start pl-3 pb-2 table-secondary">
+		<div class="row justify-content-start pl-3 pb-2 table-secondary ui-money-detail-toolbar ui-money-detail-toolbar-totals">
             <div class="col-6 col-sm-4 col-lg-2">
                 <div class="input-group input-group-sm">
-                    <div class="input-group-prepend"><i class="far fa-chart-line-down"></i></div>
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-chart" aria-hidden="true"></span></div>
                     <input class="form-control inp50" type="text" id="nTotalExpense" name="nTotalExpense" disabled />
-                    <span class="input-group-append"><i class="far fa-minus-circle text-danger"></i></span>
+                    <span class="input-group-append text-danger"><span class="ui-icon ui-icon-minus" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="input-group input-group-sm">
-                    <div class="input-group-prepend bg-success text-white"><i class="far fa-chart-line"></i></div>
+                    <div class="input-group-prepend bg-success text-white"><span class="ui-icon ui-icon-chart" aria-hidden="true"></span></div>
                     <input class="form-control inp50" type="text" id="nTotalEarning" name="nTotalEarning" disabled />
-                    <span class="input-group-append"><i class="far fa-plus-circle text-success"></i></span>
+                    <span class="input-group-append text-success"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="input-group input-group-sm">
-                    <div class="input-group-prepend bg-info text-white"><i class="far fa-chart-area fa-fw" data-fa-transform="right-22 down-10"></i></div>
+                    <div class="input-group-prepend bg-info text-white"><span class="ui-icon ui-icon-chart" aria-hidden="true"></span></div>
                     <input class="form-control inp50" type="text" id="nTotalChange" name="nTotalChange" disabled />
-                    <span class="input-group-append"><i class="far fa-equals"></i></span>
+                    <span class="input-group-append"><span class="ui-icon ui-icon-equals" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="col-6 col-sm-4 col-lg-2 pl-0">
@@ -308,15 +308,15 @@
 			<div class="col-6 col-sm-4 col-lg-2 pl-0">
                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-compact btn-light mr-2" title=" без ДДС">
-                        <input type="checkbox" name="cDDS" id="cDDS" autocomplete="off" /><i class="fas fa-euro-sign fa-lg"></i>
+                        <input type="checkbox" name="cDDS" id="cDDS" autocomplete="off" /><span class="ui-icon ui-icon-money" aria-hidden="true"></span>
                     </label>
                     <label class="btn btn-compact btn-light mr-2" title=" без ДДС">
-                        <input type="checkbox" name="cTransfer" id="cTransfer" /><i class="fas fa-upload fa-lg"></i>
+                        <input type="checkbox" name="cTransfer" id="cTransfer" /><span class="ui-icon ui-icon-upload" aria-hidden="true"></span>
                     </label>
 
-					{*{if $button}<button class="btn btn-sm btn-success" type="button" onClick="openIncomings();"><i class="far fa-plus" ></i> Постъпления </button>{/if}*}
-					{if $button}<button class="btn btn-sm btn-primary" type="button" onClick="openOverview();"><i class="far fa-abacus" ></i> Обобщена </button>{/if} &nbsp;
-					<button class="btn btn-sm btn-info" type="button" name="Button" onClick="getResult();"><i class="far fa-search" ></i> Търси &nbsp; &nbsp; </button>
+					{*{if $button}<button class="btn btn-sm btn-success" type="button" onClick="openIncomings();"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Постъпления </button>{/if}*}
+					{if $button}<button class="btn btn-sm btn-primary" type="button" onClick="openOverview();"><span class="ui-icon ui-icon-calculator" aria-hidden="true"></span> Обобщена </button>{/if} &nbsp;
+					<button class="btn btn-sm btn-info" type="button" name="Button" onClick="getResult();"><span class="ui-icon ui-icon-search" aria-hidden="true"></span> Търси &nbsp; &nbsp; </button>
 
 				</div>
 			</div>
@@ -328,10 +328,10 @@
 		<div id="result" rpc_excel_panel="off" rpc_paging="on" rpc_resize="off" class="pb-5 mb-5"></div>
 
 		<div id="search" class="w-100 fixed-bottom text-right p-2">
-			<button class="btn btn-sm btn-danger" id="b100" onClick="window.close();"><i class="far fa-times"></i> Затвори </button>
+			<button class="btn btn-sm btn-danger" id="b100" onClick="window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 
-			<button type="button" class="btn btn-sm btn-danger" onclick="onPrint('export_to_pdf');"><i class="far fa-file-pdf-o"></i> &nbsp;PDF </button>
-			<button type="button" class="btn btn-sm btn-success" onclick="onPrint('export_to_xls');"><i class="far fa-file-excel-o"></i> EXCEL </button>
+			<button type="button" class="btn btn-sm btn-danger" onclick="onPrint('export_to_pdf');"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> &nbsp;PDF </button>
+			<button type="button" class="btn btn-sm btn-success" onclick="onPrint('export_to_xls');"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span> EXCEL </button>
 		</div>
 	{/if}
 

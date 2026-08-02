@@ -107,6 +107,9 @@
 .ui-icon-chart { --ui-icon-source: url("fa7/solid/chart-line.svg"); }
 .ui-icon-arrow-left { --ui-icon-source: url("fa7/solid/arrow-left.svg"); }
 .ui-icon-arrow-right { --ui-icon-source: url("fa7/solid/arrow-right.svg"); }
+.ui-icon-equals { --ui-icon-source: url("fa7/solid/equals.svg"); }
+.ui-icon-upload { --ui-icon-source: url("fa7/solid/upload.svg"); }
+.ui-icon-calculator { --ui-icon-source: url("fa7/solid/calculator.svg"); }
 
 button > .ui-icon:first-child,
 a > .ui-icon:first-child {

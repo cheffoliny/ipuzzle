@@ -6649,6 +6649,97 @@ body.ui-refresh-content .ui-online-payment-period-separator {
     color: #145d9c;
 }
 
+body.ui-refresh-content .ui-money-detail-toolbar {
+    box-sizing: border-box;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 8px;
+    padding-left: 8px !important;
+    gap: 4px 0;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar > [class*="col-"] {
+    min-width: 0;
+    padding-right: 4px;
+    padding-left: 4px !important;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group {
+    display: flex !important;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .input-group-prepend,
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .input-group-append {
+    position: static !important;
+    z-index: auto;
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 34px;
+    min-width: 34px;
+    height: 32px;
+    flex: 0 0 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c7d5e2;
+    background: #edf4f9;
+    color: #145d9c;
+    pointer-events: none;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .input-group-prepend {
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .input-group-append {
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .form-control {
+    box-sizing: border-box;
+    width: auto !important;
+    min-width: 0;
+    height: 32px !important;
+    flex: 1 1 auto;
+    padding: 5px 8px !important;
+    border-color: #c7d5e2;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .input-group > .input-group-prepend + .form-control {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+body.ui-refresh-content .ui-money-detail-object-filter > #nObjectNum {
+    width: 76px !important;
+    flex: 0 0 76px !important;
+    border-radius: 0 !important;
+}
+
+body.ui-refresh-content .ui-money-detail-object-filter > #sObjectName {
+    width: auto !important;
+    min-width: 0;
+    flex: 1 1 auto !important;
+    border-left: 0;
+    border-radius: 0 5px 5px 0 !important;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar-totals .input-group > .form-control {
+    border-radius: 0 !important;
+}
+
+body.ui-refresh-content .ui-money-detail-toolbar .btn,
+body.ui-refresh-content .ui-money-detail-toolbar label.btn {
+    box-sizing: border-box;
+    min-height: 32px;
+    align-items: center;
+}
+
 body.ui-refresh-content .ui-money-detail-period {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
@@ -6667,8 +6758,8 @@ body.ui-refresh-content .ui-money-detail-date-field > .form-control {
     box-sizing: border-box;
     width: 100% !important;
     min-width: 0;
-    height: 30px !important;
-    padding: 4px 6px 4px 34px !important;
+    height: 32px !important;
+    padding: 4px 6px 4px 36px !important;
     border: 1px solid #c7d5e2 !important;
     border-radius: 4px !important;
     background: rgba(255, 255, 255, .96) !important;
@@ -6682,7 +6773,7 @@ body.ui-refresh-content .ui-money-detail-calendar {
     left: 0;
     z-index: 4;
     display: inline-flex;
-    width: 30px;
+    width: 32px;
     height: auto !important;
     min-height: 0 !important;
     margin: 0;
@@ -6708,7 +6799,7 @@ body.ui-refresh-content .ui-money-detail-calendar:focus {
 body.ui-refresh-content .ui-money-detail-separator {
     display: inline-flex;
     width: 24px;
-    height: 30px;
+    height: 32px;
     align-items: center;
     justify-content: center;
     color: #145d9c;

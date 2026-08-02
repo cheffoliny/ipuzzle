@@ -101,7 +101,7 @@ monitoringAssert(strpos($icons, 'radar.svg') !== false, 'monitor icon asset mapp
 monitoringAssert(is_file($root . '/css/fa7/solid/radar.svg'), 'monitor icon asset is missing');
 
 $page = file_get_contents($root . '/templates/page.tpl');
-monitoringAssert(strpos($page, 'css/ui-fa7-icons.css?version=17') !== false, 'FA7 icon cache version is stale');
-monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'monitor stylesheet cache version is stale');
+monitoringAssert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon cache version is stale');
+monitoringAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=45') !== false, 'monitor stylesheet cache version is stale');
 
 echo 'UI_REFRESH_MONITORING=PASS' . PHP_EOL;

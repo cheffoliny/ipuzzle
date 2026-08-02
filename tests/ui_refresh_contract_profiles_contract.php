@@ -143,7 +143,7 @@ foreach ($iconAssets as $iconClass => $asset) {
     contractProfilesAssert(is_file($root . '/css/fa7/solid/' . $asset), 'icon asset is missing: ' . $asset);
 }
 
-contractProfilesAssert(strpos($page, 'css/ui-fa7-icons.css?version=17') !== false, 'FA7 icon cache version is stale');
-contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'contract/profile stylesheet cache version is stale');
+contractProfilesAssert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon cache version is stale');
+contractProfilesAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=45') !== false, 'contract/profile stylesheet cache version is stale');
 
 echo 'UI_REFRESH_CONTRACT_PROFILES=PASS' . PHP_EOL;

@@ -142,7 +142,7 @@ technicalCardsAssert(strpos($css, '.ui-technical-planning-toolbar .form-control-
 technicalCardsAssert(strpos($icons, '.ui-icon-document') !== false, 'document icon mapping is missing');
 technicalCardsAssert(strpos($icons, 'file-lines.svg') !== false, 'document icon asset mapping changed');
 technicalCardsAssert(is_file($root . '/css/fa7/solid/file-lines.svg'), 'document icon asset is missing');
-technicalCardsAssert(strpos($page, 'css/ui-fa7-icons.css?version=17') !== false, 'FA7 icon cache version is stale');
-technicalCardsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=43') !== false, 'technical stylesheet cache version is stale');
+technicalCardsAssert(strpos($page, 'css/ui-fa7-icons.css?version=18') !== false, 'FA7 icon cache version is stale');
+technicalCardsAssert(strpos($page, 'css/ui-refresh-nomenclatures.css?version=45') !== false, 'technical stylesheet cache version is stale');
 
 echo 'UI_REFRESH_TECHNICAL_CARDS=PASS' . PHP_EOL;

@@ -256,6 +256,93 @@ body.ui-refresh-content .ui-access-password-dialog .ui-access-selection {
     margin: 0 auto;
 }
 
+body.ui-refresh-content .ui-current-user-password-dialog .page_caption {
+    gap: 8px;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-access-dialog-body {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.ui-refresh-content .ui-current-user-password-table {
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+body.ui-refresh-content .ui-current-user-password-table label {
+    margin: 0;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-current-user-password-table .input-group {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .input-group > .input-group-prepend {
+    position: static;
+    z-index: auto;
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 34px;
+    min-width: 34px;
+    height: 30px;
+    flex: 0 0 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #b8c8d8;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+    background: #edf4f9;
+    color: #245f8a;
+}
+
+body.ui-refresh-content .ui-current-user-password-table .input-group > .form-control {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .input-group > .input-group-prepend + .form-control {
+    padding-left: 8px;
+    border-radius: 0 5px 5px 0;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-access-dialog-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-save {
+    border-color: #198a4a;
+    background: #209653;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-save:hover,
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-save:focus {
+    border-color: #14763e;
+    background: #187e45;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-close {
+    border-color: #bd3c49;
+    background: #cf4855;
+    color: #fff;
+}
+
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-close:hover,
+body.ui-refresh-content .ui-current-user-password-dialog .ui-current-password-close:focus {
+    border-color: #a52f3b;
+    background: #b83945;
+    color: #fff;
+}
+
 body.ui-refresh-content .ui-access-account-dialog .ui-access-form-table {
     max-width: 820px;
     margin: 0 auto;
@@ -450,5 +537,25 @@ body.ui-refresh-content .ui-access-rights #result {
 
     body.ui-refresh-content .ui-access-rights-layout {
         min-width: 780px;
+    }
+
+}
+
+@media (max-width: 340px) {
+    body.ui-refresh-content .ui-current-user-password-table,
+    body.ui-refresh-content .ui-current-user-password-table > tbody,
+    body.ui-refresh-content .ui-current-user-password-table > tbody > tr,
+    body.ui-refresh-content .ui-current-user-password-table > tbody > tr > td {
+        display: block;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    body.ui-refresh-content .ui-current-user-password-table > tbody > tr {
+        margin-bottom: 7px;
+    }
+
+    body.ui-refresh-content .ui-current-user-password-table > tbody > tr > td {
+        padding: 2px 0;
     }
 }
