@@ -1,5 +1,6 @@
 :root {
-    --ip-font-sans: "Segoe UI", Roboto, Arial, sans-serif;
+    --ip-font-sans: ;
+    --ip-font-sans: 'Jura', "Segoe UI", Roboto, Arial, sans-serif;
     --ip-color-primary: #1769c2;
     --ip-color-primary-hover: #0f56a3;
     --ip-color-primary-soft: #e8f2fc;
