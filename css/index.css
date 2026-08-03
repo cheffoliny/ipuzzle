@@ -33,7 +33,7 @@ body{
     color:#333333 !important;
     background-color:#fff;
     background-image:
-            linear-gradient(rgba(231, 238, 245, 0.46), rgba(210, 222, 233, 0.58)),
+            linear-gradient(rgba(231, 238, 245, 0.77), rgba(210, 222, 233, 0.97)),
             url("../images/clouds.jpg") !important;
     background-repeat:no-repeat;
     background-size: 100% 100%;
