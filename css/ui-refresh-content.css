@@ -18,7 +18,7 @@ body.ui-refresh-content {
     font-family: var(--ip-content-font) !important;
     color: var(--ip-content-text) !important;
     background-color: var(--ip-content-surface-soft) !important;
-    background-image: none !important;
+    /*background-image: none !important;*/
 }
 
 body.ui-refresh-content input,
