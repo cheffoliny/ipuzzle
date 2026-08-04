@@ -6,6 +6,7 @@ $xmlrpc = file_get_contents($root . '/js/xmlrpc.js');
 $stateTemplate = file_get_contents($root . '/templates/object_store_state.tpl');
 $pppTemplate = file_get_contents($root . '/templates/object_store_ppp.tpl');
 $mainTemplate = file_get_contents($root . '/templates/object_store.tpl');
+$layoutCss = file_get_contents($root . '/css/ui-refresh-nomenclatures.css');
 $stateApi = file_get_contents($root . '/api/api_object_store_state.php');
 $database = file_get_contents($root . '/db_api/DBPPP.class.php');
 $activeObjectStorageReferences = array();
@@ -23,7 +24,7 @@ foreach (array('api', 'classes', 'db_api', 'engine', 'js', 'templates') as $sour
     }
 }
 
-if (in_array(false, array($renderer, $xmlrpc, $stateTemplate, $pppTemplate, $mainTemplate, $stateApi, $database), true)) {
+if (in_array(false, array($renderer, $xmlrpc, $stateTemplate, $pppTemplate, $mainTemplate, $layoutCss, $stateApi, $database), true)) {
     fwrite(STDERR, "Unable to read object-store migration files.\n");
     exit(1);
 }
@@ -34,6 +35,8 @@ $checks = array(
     strpos($renderer, 'copyAttributes(cells[cellIndex], cell)') !== false,
     strpos($stateTemplate, 'rpc_excel_panel="off" rpc_paging="off"') !== false,
     strpos($pppTemplate, 'rpc_excel_panel="off" rpc_paging="off"') !== false,
+    strpos($stateTemplate, 'rpc_resize="on"') !== false,
+    strpos($pppTemplate, 'rpc_resize="on"') !== false,
     strpos($stateTemplate, "var oParentID = parent.document.getElementById( 'nID' )") !== false,
     strpos($pppTemplate, "var oParentID = parent.document.getElementById( 'nID' )") !== false,
     strpos($pppTemplate, 'value="6005553"') === false,
@@ -43,8 +46,13 @@ $checks = array(
     strpos($mainTemplate, 'class="ui-object-core ui-object-store"') !== false,
     strpos($mainTemplate, 'src="page.php?page=object_store_ppp"') !== false,
     strpos($mainTemplate, 'ui-object-store-frame') !== false,
+    strpos($layoutCss, 'data-page="object_store_state"') !== false,
+    strpos($layoutCss, 'data-page="object_store_ppp"') !== false,
+    strpos($layoutCss, '.ui-object-store-result #result_data.body-content') !== false,
     strpos($mainTemplate, '<i class=') === false,
     strpos($mainTemplate, 'ui-icon-expand') !== false,
+    strpos($renderer, 'installGeneralResultResizer') !== false,
+    strpos($renderer, 'rpc-result-scroll-host') !== false,
     strpos($stateApi, "array_key_exists( 'row_limit', \$_SESSION['userdata'] )") !== false,
     strpos($stateApi, 'finally') !== false,
     strpos($stateApi, "unset( \$_SESSION['userdata']['row_limit'] )") !== false,

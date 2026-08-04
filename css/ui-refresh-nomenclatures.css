@@ -2770,6 +2770,40 @@ body.ui-refresh-content .ui-object-store-result {
     background: var(--ip-content-result);
 }
 
+body.ui-refresh-content[data-page="object_store_state"],
+body.ui-refresh-content[data-page="object_store_ppp"] {
+    box-sizing: border-box;
+    height: 100vh;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+body.ui-refresh-content[data-page="object_store_state"] .ui-object-store-frame-form,
+body.ui-refresh-content[data-page="object_store_ppp"] .ui-object-store-frame-form {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+    min-height: 0;
+    overflow: hidden;
+}
+
+body.ui-refresh-content[data-page="object_store_state"] .ui-object-store-result,
+body.ui-refresh-content[data-page="object_store_ppp"] .ui-object-store-result {
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+    max-height: 100% !important;
+    overflow: auto !important;
+}
+
+body.ui-refresh-content[data-page="object_store_state"] .ui-object-store-result #result_data.body-content,
+body.ui-refresh-content[data-page="object_store_ppp"] .ui-object-store-result #result_data.body-content {
+    height: auto !important;
+    min-height: 0;
+    overflow: visible !important;
+}
+
 body.ui-refresh-content .ui-object-store-actions {
     min-height: 56px;
 }

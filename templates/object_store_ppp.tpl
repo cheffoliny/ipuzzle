@@ -13,7 +13,7 @@
 <form name="form1" id="form1" onsubmit="return false;" class="w-100 h-100 p-0 m-0 ui-object-store-frame-form">
 	<input type="hidden" id="nID" name="nID" value="0" />
 
-	<div class="w-100 ui-object-store-result" id="result" rpc_excel_panel="off" rpc_paging="off"></div>
+	<div class="w-100 ui-object-store-result" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="on"></div>
 </form>
 
 <script>

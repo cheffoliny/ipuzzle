@@ -232,6 +232,13 @@
             check("EXCEL и PDF бутоните изпращат legacy export действията", directCalls.length === 2 && directCalls[0].action === "export_to_xls" && directCalls[1].action === "export_to_pdf");
             check("export действията възстановяват RPC контекста на справката", directCalls[0].prefix === "export_only_" && directCalls[0].resultArea === "export_only_result" && directCalls[0].actionScript === "api/export_probe.php");
             check("rpc_resize=off не презаписва размерите на result контейнера", offContainer.style.height === "365px");
+            check("DOM renderer добавя универсалния scroll host", defaultContainer.classList.contains("rpc-result-scroll-host") && offContainer.classList.contains("rpc-result-scroll-host"));
+            check("rpc_resize=on ограничава дългата справка спрямо viewport", defaultContainer.style.maxHeight !== "" && defaultContainer.style.overflow === "auto");
+            check("rpc_resize=off не налага автоматична max-height", offContainer.style.maxHeight === "");
+            check("вътрешната data зона е маркирана без втори scrollbar", defaultContainer.querySelector("#default_result_data").classList.contains("rpc-result-scroll-content") && defaultContainer.querySelector("#default_result_data").style.overflow === "");
+            check("редът с имената на колоните е маркиран за sticky поведение", defaultContainer.querySelector("#default_main").classList.contains("rpc-result-column-header"));
+            check("sticky стилът е приложен върху header клетките", getComputedStyle(defaultContainer.querySelector("#default_main th")).position === "sticky" && getComputedStyle(defaultContainer.querySelector("#default_main th")).top === "0px");
+            check("специализираните графици също получават sticky header", techScheduleContainer.querySelector("#tech_schedule_main").classList.contains("rpc-result-column-header"));
             check("обикновените справки зареждат без светъл inline фон", defaultInitialBackground === "");
             check("hover цветът е видим и mouseout възстановява тъмната тема", defaultHoverBackground === "rgb(53, 92, 125)" && defaultRestoredBackground === "");
             check("tech planning редът записва реалното id_request при клик", document.getElementById("id_request").value === "17");

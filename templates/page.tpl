@@ -31,8 +31,8 @@
     <script type="text/javascript" language="javascript" src="js/framework_general.js"></script>
     <script type="text/javascript" language="javascript" src="js/common_dialogs.js?version=2"></script>
     <script type="text/javascript" language="javascript" src="js/autoselect.js"></script>
-      <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=8"></script>
-      <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=4"></script>
+      <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=10"></script>
+      <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=5"></script>
     <script type="text/javascript" language="javascript" src="js/format.js"></script>
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
@@ -42,7 +42,7 @@
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-content.css?version=1" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-results.css?version=1" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-results.css?version=3" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-report-controls.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-dialogs.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-feedback.css?version=1" rel="stylesheet" type="text/css">

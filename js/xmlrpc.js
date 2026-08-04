@@ -417,8 +417,16 @@ function form2POST()
 									{
 										var oTarget = $( rpc_result_area );
 										
-										if( oTarget && oTarget.innerHTML )
+										if( oTarget )
+										{
 											oTarget.innerHTML = xmlhttp.responseText;
+											if (
+												typeof RpcResultRenderer != 'undefined' &&
+												typeof RpcResultRenderer.prepareStickyHeaders == 'function'
+											) {
+												RpcResultRenderer.prepareStickyHeaders(oTarget);
+											}
+										}
 											
 										DisableLoader();
 										return;

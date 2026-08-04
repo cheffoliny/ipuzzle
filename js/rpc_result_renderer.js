@@ -1166,10 +1166,155 @@
 
     function removeResizeListener(options) {
         var key = resizeListenerKey(options);
-        if (resizeListeners[key] && global.removeEventListener) {
-            global.removeEventListener("resize", resizeListeners[key], false);
+        var listener = resizeListeners[key];
+        var handler = listener && listener.handler ? listener.handler : listener;
+
+        if (handler && global.removeEventListener) {
+            global.removeEventListener("resize", handler, false);
+        }
+        if (listener && listener.observer && typeof listener.observer.disconnect === "function") {
+            listener.observer.disconnect();
         }
         delete resizeListeners[key];
+    }
+
+    function markResultColumnHeaders(result) {
+        if (!result || !result.getElementsByTagName) {
+            return 0;
+        }
+
+        var tables = result.getElementsByTagName("table");
+        var marked = 0;
+
+        for (var tableIndex = 0; tableIndex < tables.length; tableIndex++) {
+            var table = tables[tableIndex];
+            if (table.getAttribute("data-rpc-sticky-header") === "off") {
+                continue;
+            }
+
+            var rows = table.rows || [];
+            var columnHeader = null;
+
+            // DBResponse may emit one or more report-title rows before the real
+            // column captions. The last consecutive row containing TH cells is
+            // the column header; totals and data rows start with TD cells.
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var cells = rows[rowIndex].cells || [];
+                var hasHeaderCell = false;
+                for (var cellIndex = 0; cellIndex < cells.length; cellIndex++) {
+                    if (cells[cellIndex].nodeName.toLowerCase() === "th") {
+                        hasHeaderCell = true;
+                        break;
+                    }
+                }
+
+                if (hasHeaderCell) {
+                    columnHeader = rows[rowIndex];
+                } else if (columnHeader) {
+                    break;
+                }
+            }
+
+            if (columnHeader && columnHeader.classList) {
+                columnHeader.classList.add("rpc-result-column-header");
+                marked++;
+            }
+        }
+
+        return marked;
+    }
+
+    function markResultScrollContainer(result, options) {
+        var resultData = document.getElementById(options.prefix + "result_data");
+
+        if (result && result.classList) {
+            result.classList.add("rpc-result-scroll-host");
+        }
+        if (resultData && resultData.classList) {
+            resultData.classList.add("rpc-result-scroll-content");
+        }
+        markResultColumnHeaders(result);
+
+        return resultData;
+    }
+
+    function resultViewportBottom(result, viewportHeight) {
+        var resultTop = result.getBoundingClientRect ? result.getBoundingClientRect().top : result.offsetTop;
+        var bottom = viewportHeight;
+        var fixedElements = document.querySelectorAll ? document.querySelectorAll(".fixed-bottom, .rpc-result-toolbar") : [];
+
+        for (var i = 0; i < fixedElements.length; i++) {
+            var element = fixedElements[i];
+            if (element === result || !element.getBoundingClientRect) {
+                continue;
+            }
+
+            var rect = element.getBoundingClientRect();
+            if (rect.height > 0 && rect.top > resultTop && rect.top < bottom && rect.bottom >= viewportHeight - 2) {
+                bottom = rect.top;
+            }
+        }
+
+        return bottom;
+    }
+
+    function installGeneralResultResizer(options) {
+        removeResizeListener(options);
+
+        var result = document.getElementById(options.resultArea);
+        if (!result) {
+            return;
+        }
+
+        markResultScrollContainer(result, options);
+
+        // Migrated screens with rpc_resize="off" have their own bounded flex or
+        // fixed-height result area. Keep that sizing and only provide the common
+        // overflow classes above.
+        if (options.resize === "off") {
+            if (result.getAttribute("data-rpc-auto-resized") === "1") {
+                result.style.removeProperty("max-height");
+                result.style.removeProperty("overflow");
+                result.removeAttribute("data-rpc-auto-resized");
+            }
+            return;
+        }
+
+        var resize = function () {
+            var currentResult = document.getElementById(options.resultArea);
+            if (!currentResult) {
+                return true;
+            }
+
+            markResultScrollContainer(currentResult, options);
+
+            var viewportHeight = global.innerHeight || document.documentElement.clientHeight || document.body.offsetHeight;
+            var resultRect = currentResult.getBoundingClientRect ? currentResult.getBoundingClientRect() : null;
+            var resultTop = resultRect ? resultRect.top : currentResult.offsetTop;
+            var availableBottom = resultViewportBottom(currentResult, viewportHeight);
+            var availableHeight = availableBottom - Math.max(resultTop, 0) - 2;
+
+            if (isFinite(availableHeight) && availableHeight > 0) {
+                // max-height keeps short reports compact and gives long reports a
+                // single automatic vertical/horizontal scrollbar only when needed.
+                currentResult.style.setProperty("max-height", Math.max(availableHeight, 30) + "px", "important");
+                currentResult.style.setProperty("overflow", "auto", "important");
+                currentResult.setAttribute("data-rpc-auto-resized", "1");
+            }
+            return true;
+        };
+
+        resize();
+        if (global.addEventListener) {
+            var listener = { handler: resize, observer: null };
+            global.addEventListener("resize", resize, false);
+
+            if (typeof global.ResizeObserver === "function") {
+                listener.observer = new global.ResizeObserver(resize);
+                listener.observer.observe(document.documentElement);
+            }
+            resizeListeners[resizeListenerKey(options)] = listener;
+        }
     }
 
     function installTechPlanningRequestResizer(options) {
@@ -1181,6 +1326,8 @@
             if (!result || !resultData) {
                 return true;
             }
+
+            markResultScrollContainer(result, options);
 
             var footer = document.getElementById(options.prefix + "result_foother");
             var paging = document.getElementById(options.prefix + "paging");
@@ -1228,11 +1375,16 @@
         installReportFunctions(options);
         removeResizeListener(options);
         container.innerHTML = "";
+        if (container.classList) {
+            container.classList.add("rpc-result-scroll-host");
+        }
         container.appendChild(createElement("input", { type: "hidden" }));
 
         var limitCardPersons = options.profile === "limitCardPersons";
         if (options.profile === "personSchedule") {
-            return renderPersonSchedule(xml, result, container, options);
+            var personScheduleRendered = renderPersonSchedule(xml, result, container, options);
+            installGeneralResultResizer(options);
+            return personScheduleRendered;
         }
 
         if (!data || !nodeText(data)) {
@@ -1240,12 +1392,14 @@
                 var emptySchedule = createElement("div", { "class": "text-center" });
                 emptySchedule.appendChild(createElement("p", { style: "color: red; font-weight: bold;" }, "\u0420\u0435\u0437\u0443\u043b\u0442\u0430\u0442\u044a\u0442 \u0435 \u043f\u0440\u0430\u0437\u0435\u043d!"));
                 container.appendChild(emptySchedule);
+                installGeneralResultResizer(options);
                 return true;
             }
             if (limitCardPersons) {
                 container.appendChild(createElement("div", { id: options.prefix + "divTitle" }));
                 container.appendChild(createElement("hr"));
                 container.appendChild(renderTable(xml, result, options));
+                installGeneralResultResizer(options);
                 return true;
             }
             var message = createElement("div", { "class": "alert alert-danger alert-dismissable col-sm-11 transparent-half ml-4" });
@@ -1254,6 +1408,7 @@
             message.appendChild(createElement("h5", null, " Съобщение: "));
             message.appendChild(document.createTextNode("Няма намерени резултати по зададените критерии за търсене."));
             container.appendChild(message);
+            installGeneralResultResizer(options);
             return true;
         }
 
@@ -1293,6 +1448,11 @@
                 container.appendChild(nav);
             }
             container.appendChild(renderTable(xml, result, options));
+            installGeneralResultResizer(options);
+        }
+
+        if (limitCardPersons) {
+            installGeneralResultResizer(options);
         }
         return true;
     }
@@ -1301,6 +1461,7 @@
         getOptions: getOptions,
         getProfile: getProfile,
         isSupportedProfile: isSupportedProfile,
+        prepareStickyHeaders: markResultColumnHeaders,
         render: render
     };
 }(window));
