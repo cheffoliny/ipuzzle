@@ -1,3 +1,5 @@
+<script type="text/javascript" src="js/setup_objects_multiselect.js?version=1"></script>
+
 {literal}
 	<script>
 		rpc_debug = true;
@@ -147,6 +149,7 @@
 			var e = document.getElementById("filter");
 			var h = document.getElementById("hide");
 			var s = document.getElementById("show");
+			hideStatusSelect();
 
 			e.style.display	= "none";
 			h.style.display = "none";
@@ -212,8 +215,14 @@
 			}
 		}
 
-		function getKeyTest() {
-			if ( event.keyCode == '13' ) {
+		function getKeyTest( e ) {
+			e = e || window.event;
+			var statusControl = document.getElementById('nStatusTd');
+			if ( !e || e.keyCode != 13 || (statusControl && statusControl.contains(e.target)) ) {
+				return true;
+			}
+
+			if ( e.keyCode == 13 ) {
 
 				if ( filterVisible ) {
 					hideDiv(1);
@@ -248,65 +257,24 @@
 
         function onStatSelect()
         {
-            var arSelected = new Array();
-            //var selectElem = document.form1.elements["nStatus"];
-            //var selectVal = selectElem[selectElem.selectedIndex];
-            var Length = document.form1.aStatus.length;
-
-            for(i=0;i<Length;i++)
-            {
-
-                if(document.form1.aStatus.options[i].selected )
-                {
-
-                    arSelected.push($('aStatus').options[i].innerHTML);
-                }
-            }
-            if( $('nStatusInp') ) $('nStatusInp').innerHTML = arSelected.toString();
-
-            return true;
+            return SetupObjectsStatusMultiselect.refresh();
         }
 
-		function getAbsoluteTop(obj) {
-	     	var top = obj.offsetTop;
+		function showStatusSelect()
+		{
+			SetupObjectsStatusMultiselect.toggle();
+			return false;
+		}
 
-	     	if( typeof( obj.offsetParent ) != "undefined" && obj.offsetParent != null )
-	     	{
-				var parent = obj.offsetParent;
+		function hideStatusSelect()
+		{
+			SetupObjectsStatusMultiselect.close(false);
+		}
 
-		     	while (parent != document.body)
-		     	{
-		     		top += parent.offsetTop;
-		     		top -= parent.scrollTop;
-		     		parent = parent.offsetParent;
-		     	}
-	     	}
-
-	     	return top;
-	     }
-
-	     function getAbsoluteLeft(obj) {
-
-             var left = obj.offsetLeft;
-             var parent = obj.offsetParent;
-             while (parent != document.body) {
-                 left += parent.offsetLeft;
-                 parent = parent.offsetParent;
-             }
-             return left;
-	     }
-
-	     function showStatusSelect()
-	     {
-	     	statusSelect.style.display='';
-	     	statusSelect.focus();
-	     	
-	     }
-
-	     function hideStatusSelect()
-	     {
-	     	statusSelect.style.display='none';
-	     }
+		function selectAllStatuses()
+		{
+			SetupObjectsStatusMultiselect.selectAll();
+		}
 
 		function select_none( id )
 		{
@@ -328,8 +296,8 @@
 <dlcalendar click_element_id="sFromDate" 	input_element_id="sFromDate" 	tool_tip="Изберете дата"></dlcalendar>
 <dlcalendar click_element_id="sToDate" 		input_element_id="sToDate" 		tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-setup-objects" onSubmit="return false;" onkeyup="getKeyTest();">
-    <select onblur="hideStatusSelect(); onStatSelect();" onchange="onStatSelect();" class="ui-setup-objects-status-select" name="aStatus[]" size="8" id="aStatus" multiple></select>
+<form action="" name="form1" id="form1" class="ui-nomenclature-list ui-setup-objects" onSubmit="return false;" onkeyup="getKeyTest(event);">
+    <select class="ui-setup-objects-status-select" name="aStatus[]" id="aStatus" multiple tabindex="-1" aria-hidden="true"></select>
     <input type="hidden" name="id" 			id="id" 		value="0"				/>
     {*<input type="hidden" name="nType" id="nType" value="0">*}
     <input type="hidden" name="nIDClient" 	id="nIDClient" 	value="0"				/>
@@ -418,8 +386,21 @@
                     </div>
                 </div>
                 <div class="col-6 col-sm-4 col-lg-2 pl-4-5">
-                    <div class="input-group input-group-sm"  data-fa-transform="right-22 down-10" id="nStatusTd" onclick="showStatusSelect();">
-                        <div class="form-control suggest" id="nStatusInp"></div>
+                    <div class="input-group input-group-sm ui-setup-objects-status-control" id="nStatusTd">
+                        <div class="input-group-prepend">
+                            <span class="ui-icon ui-icon-list" title="Състояние на обекта" aria-hidden="true"></span>
+                        </div>
+                        <button type="button" class="form-control suggest ui-setup-objects-status-trigger" id="nStatusTrigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="nStatusPanel">
+                            <span id="nStatusInp">Всички състояния</span>
+                            <span class="ui-setup-objects-status-caret" aria-hidden="true"></span>
+                        </button>
+                        <div class="ui-setup-objects-status-panel" id="nStatusPanel" role="dialog" aria-label="Избор на състояния" hidden>
+                            <div class="ui-setup-objects-status-options" id="nStatusOptions" role="group" aria-label="Състояния"></div>
+                            <div class="ui-setup-objects-status-actions">
+                                <button type="button" class="btn btn-sm btn-light" onclick="selectAllStatuses();">Всички</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="hideStatusSelect();">Готово</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-8 col-lg-4">
@@ -555,6 +536,15 @@
 
 {literal}
 	<script>
+		SetupObjectsStatusMultiselect.init({
+			selectId: 'aStatus',
+			controlId: 'nStatusTd',
+			triggerId: 'nStatusTrigger',
+			summaryId: 'nStatusInp',
+			panelId: 'nStatusPanel',
+			optionsId: 'nStatusOptions'
+		});
+
 		rpc_on_exit = function()
 		{
 			{
@@ -570,16 +560,6 @@
             hideDiv(1);
         }
 
-        var statusSelect = document.getElementById('aStatus');
-        var statusSelectTD = document.getElementById('nStatusInp');
-        //
-        // $( "*", document.body ).click(function( event ) {
-        //     var offset = $( this ).offset();
-        //     event.stopPropagation();
-        //     $( "#nStatusInp" ).text( this.tagName +
-        //         " coords ( " + offset.left + ", " + offset.top + " )" );
-        // });
-
         function deleteObject( id )
         {
             if( confirm( 'Наистина ли желаете да премахнете записа?' ) )
@@ -588,19 +568,5 @@
                 loadXMLDoc( 'delete' );
             }
         }
-
-        if( statusSelectTD )
-        {
-           // statusSelect.style.top =(statusSelectTD.clientHeight +  getAbsoluteTop(statusSelectTD))+'px' ;
-           // statusSelect.style.left =(getAbsoluteLeft(statusSelectTD))+'px' ;
-        }
-		//nStatus
-
-        var sel = $('aStatus');
-        sel.addEventListener('change', function (e) {
-			onStatSelect();
-
-            e.preventDefault();
-        }, false);
     </script>
 {/literal}
