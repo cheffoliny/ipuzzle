@@ -269,7 +269,10 @@
         <div class="row clearfix mt-2">
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
-                    <input readonly class="form-control-plaintext" name="start_time" id="start_time" />
+                    <div class="input-group-prepend">
+                        <span class="ui-icon ui-icon-play" title="Стартиран на дата..." aria-hidden="true"></span>
+                    </div>
+                    <input class="form-control" readonly name="start_time" id="start_time" />
                 </div>
             </div>
             <div class="col-7 pr-0">
