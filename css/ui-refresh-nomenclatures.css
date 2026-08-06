@@ -4124,6 +4124,15 @@ body.ui-refresh-content .input-group > .input-group-addon + textarea {
     padding-left: 40px;
 }
 
+/* Some legacy templates put the Bootstrap grid column and input-group on
+ * the same element. Its column padding shifts an absolutely positioned icon
+ * outside the SELECT. Remove only that left padding so the icon stays inside
+ * the control and the existing 40px field padding remains intact. */
+body.ui-refresh-content .input-group[class*="col-"]:has(> .input-group-prepend + select),
+body.ui-refresh-content .input-group[class*="col-"]:has(> .input-group-addon + select) {
+    padding-left: 0 !important;
+}
+
 body.ui-refresh-content .ui-object-info-fields {
     box-sizing: border-box;
     width: calc(100% - 16px);

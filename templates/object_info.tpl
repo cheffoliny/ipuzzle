@@ -269,11 +269,11 @@
         <div class="row clearfix mt-2">
             <div class="col-2 px-1">
                 <div class="input-group input-group-sm">
-                    <input readonly class="form-control-plaintext text-white" name="start_time" id="start_time" />
+                    <input readonly class="form-control-plaintext" name="start_time" id="start_time" />
                 </div>
             </div>
-            <div class="col-7 px-1">
-                <div class="row clearfix">
+            <div class="col-7 pr-0">
+                <div class="row clearfix px-1">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
                             <span class="ui-icon ui-icon-location" title="Населено място" aria-hidden="true"></span>
@@ -333,8 +333,8 @@
                     <input class="form-control" type=text name="work_time_alert" id="work_time_alert" onkeypress="return formatTimeS(event);" placeholder="00:00:00" />
                 </div>
             </div>
-            <div class="col-7 px-1">
-                <div class="row clearfix">
+            <div class="col-7 pr-0">
+                <div class="row clearfix px-1">
                     <div class="input-group input-group-sm col-sm-6">
                         <div class="input-group-prepend">
                             <span class="ui-icon ui-icon-tag" title="Административна фирма" aria-hidden="true"></span>
@@ -369,8 +369,8 @@
                     </label>
                 </div>
             </div>
-            <div class="col-7 px-1">
-                <div class="row clearfix">
+            <div class="col-7 pr-0">
+                <div class="row clearfix px-1">
                     <div class="input-group input-group-sm col-sm-6">
                          <div class="input-group-prepend">
                             <span class="ui-icon ui-icon-tags" title="Администрация от" aria-hidden="true"></span>
