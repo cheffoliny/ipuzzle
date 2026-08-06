@@ -564,17 +564,17 @@
 
                 $sBackgroundColor = "";
                 if(in_array($value['doc_type'],$aDocTypes)){
-                    $sBackgroundColor = 'border-bottom: 2px solid #088536';
+                    $sBackgroundColor = 'border-bottom: 2px solid #088536; color: #2dc22f;';
 
                     $oResponse->setRowAttributes($value['id'], array('style'=> $sBackgroundColor));
                 }
 
 				if ($value['doc_status'] == 'canceled'){
-					$oResponse->setDataAttributes( $key, 'doc_date', array( 'style' => 'color:#FF0000;' ) );
+					$oResponse->setDataAttributes( $key, 'doc_date', array( 'style' => 'color:#fc5858;' ) );
 					$oResponse->setDataAttributes( $key, 'doc_num', array( 'title' => 'анулиран' ) );
-					$oResponse->setDataAttributes( $key, 'total_sum', array( 'style' => 'color:#FF0000;' ) );
-					$oResponse->setDataAttributes( $key, 'orders_sum', array( 'style' => 'color:#FF0000;' ) );
-					$oResponse->setDataAttributes( $key, 'orders_remain', array( 'style' => 'color:#FF0000;' ) );
+					$oResponse->setDataAttributes( $key, 'total_sum', array( 'style' => 'color:#fc5858;' ) );
+					$oResponse->setDataAttributes( $key, 'orders_sum', array( 'style' => 'color:#fc5858;' ) );
+					$oResponse->setDataAttributes( $key, 'orders_remain', array( 'style' => 'color:#fc5858;' ) );
 				}
 
                 $paid_type_icon = "";
