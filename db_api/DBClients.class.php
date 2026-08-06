@@ -564,7 +564,7 @@
 
                 $sBackgroundColor = "";
                 if(in_array($value['doc_type'],$aDocTypes)){
-                    $sBackgroundColor = 'background:#F2D8C9';
+                    $sBackgroundColor = 'border-bottom: 2px solid #088536';
 
                     $oResponse->setRowAttributes($value['id'], array('style'=> $sBackgroundColor));
                 }
