@@ -1,5 +1,15 @@
 <?php
 	class ApiObjectArchiv {
+		private function normalizeTime($value, $default) {
+			$value = trim((string) $value);
+			if (preg_match('/^([01][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9]))?$/', $value, $matches)) {
+				$seconds = isset($matches[3]) ? $matches[3] : '00';
+				return $matches[1].':'.$matches[2].':'.$seconds;
+			}
+
+			return $default;
+		}
+
 		public function result(DBResponse $oResponse) {
 			global $db_sod, $db_sod_name;
 			
@@ -16,8 +26,8 @@
 			
 			$periodFrom = !empty($periodFrom) ? date("Y-m-d", jsDateToTimestamp($periodFrom)) : date("Y-m")."-01";
 			$periodTo	= !empty($periodTo) ? date("Y-m-d", jsDateToTimestamp($periodTo)) : date("Y-m")."-31";
-			$periodFromH= !empty($periodFromH) ? $periodFromH : "00:00:00";
-			$periodToH	= !empty($periodToH) ? $periodToH : "23:59:00";
+			$periodFromH= $this->normalizeTime($periodFromH, "00:00:00");
+			$periodToH	= $this->normalizeTime($periodToH, "23:59:59");
 
 			$from	= $periodFrom." ".$periodFromH;
 			$to		= $periodTo." ".$periodToH;

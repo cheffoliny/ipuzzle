@@ -35,14 +35,121 @@
 	}
 
 	function formRefresh() {
+		if ( !validateArchivePeriod() ) {
+			return false;
+		}
 		$('noTest').value = 0;
 		loadXMLDoc2('result');
+		return true;
 	}
 	
 	function onPrint(type) {
+		if ( !validateArchivePeriod() ) {
+			return false;
+		}
 		$('noTest').value = 1;
 		loadDirect(type);
+		return true;
 	}	
+
+	function normalizeArchiveTimeInput(input) {
+		input = typeof input == 'string' ? $(input) : input;
+		if ( !input ) {
+			return false;
+		}
+
+		var value = input.value.replace(/\s+/g, '');
+		var match = value.match(/^(\d{1,2})(?::(\d{1,2}))?$/);
+		var error = 'Използвайте 24-часов формат ЧЧ:ММ (00:00–23:59).';
+
+		if ( !match ) {
+			input.setCustomValidity(error);
+			return false;
+		}
+
+		var hours = parseInt(match[1], 10);
+		var minutes = match[2] === undefined ? 0 : parseInt(match[2], 10);
+		if ( hours > 23 || minutes > 59 ) {
+			input.setCustomValidity(error);
+			return false;
+		}
+
+		input.value = (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+		input.setCustomValidity('');
+		return true;
+	}
+
+	function initArchiveTimeOptions() {
+		var list = $('objectArchiveTimeOptions');
+		if ( !list || list.options.length ) {
+			return;
+		}
+
+		for ( var totalMinutes = 0; totalMinutes < 24 * 60; totalMinutes += 30 ) {
+			var hours = Math.floor(totalMinutes / 60);
+			var minutes = totalMinutes % 60;
+			var option = document.createElement('option');
+			option.value = (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+			list.appendChild(option);
+		}
+	}
+
+	function archiveDateTimeValue(dateId, timeId) {
+		var dateInput = $(dateId);
+		var timeInput = $(timeId);
+		if ( !normalizeArchiveTimeInput(timeInput) ) {
+			return null;
+		}
+		var dateMatch = dateInput.value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+		var timeMatch = timeInput.value.match(/^([01]\d|2[0-3]):([0-5]\d)$/);
+
+		if ( !dateMatch || !timeMatch ) {
+			return null;
+		}
+
+		var value = new Date(
+			parseInt(dateMatch[3], 10),
+			parseInt(dateMatch[2], 10) - 1,
+			parseInt(dateMatch[1], 10),
+			parseInt(timeMatch[1], 10),
+			parseInt(timeMatch[2], 10),
+			0,
+			0
+		);
+
+		if ( value.getFullYear() != parseInt(dateMatch[3], 10) ||
+			 value.getMonth() != parseInt(dateMatch[2], 10) - 1 ||
+			 value.getDate() != parseInt(dateMatch[1], 10) ) {
+			return null;
+		}
+
+		return value;
+	}
+
+	function validateArchivePeriod() {
+		var from = archiveDateTimeValue('sPeriodFrom', 'sPeriodFromH');
+		var to = archiveDateTimeValue('sPeriodTo', 'sPeriodToH');
+
+		if ( !from ) {
+			alert('Моля, въведете валидни начална дата и час.');
+			$('sPeriodFrom').focus();
+			return false;
+		}
+
+		if ( !to ) {
+			alert('Моля, въведете валидни крайна дата и час.');
+			$('sPeriodTo').focus();
+			return false;
+		}
+
+		if ( from.getTime() > to.getTime() ) {
+			alert('Началото на периода трябва да бъде преди края му.');
+			$('sPeriodFrom').focus();
+			return false;
+		}
+
+		return true;
+	}
 	
 	function techSupport() {
 		var id = $('nID').value;
@@ -52,8 +159,8 @@
 </script>
 {/literal}
 
-<dlcalendar click_element_id="sPeriodFrom" input_element_id="sPeriodFrom" tool_tip="Изберете дата"></dlcalendar>
-<dlcalendar click_element_id="sPeriodTo" input_element_id="sPeriodTo" tool_tip="Изберете дата"></dlcalendar>
+<dlcalendar click_element_id="objectArchiveFromDate" input_element_id="sPeriodFrom" tool_tip="Изберете начална дата"></dlcalendar>
+<dlcalendar click_element_id="objectArchiveToDate" input_element_id="sPeriodTo" tool_tip="Изберете крайна дата"></dlcalendar>
 
 <form name="form1" id="form1" class="ui-object-core ui-object-archive" onsubmit="return false;">
     <input type="hidden" id="nID" name="nID" value="{$nID|default:0}" />
@@ -68,24 +175,36 @@
     <div id="result" class="ui-object-result ui-object-archive-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off"></div>
 
     <nav class="navbar fixed-bottom flex-row mb-0 py-0 navbar-expand-lg py-md ui-object-actions ui-object-archive-actions" id="search">
-        <div class="col-4 col-sm-4 col-lg-4" title="">
+        <div class="col-3 col-sm-3 col-lg-3" title="">
             <div class="input-group input-group-sm ml-1">
                 <button type="button" class="btn btn-sm btn-success ml-1" onclick="onPrint('export_to_xls');"><span class="ui-icon ui-icon-file-excel" aria-hidden="true"></span> Excel</button>
                 <button type="button" class="btn btn-sm btn-danger" onclick="onPrint('export_to_pdf');"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> PDF</button>
             </div>
         </div>
-        <div id="filter_result" class="col-5 col-sm-5 col-lg-5" title="">
-
-            <div class="input-group input-group-sm" title="Период на стартиране на обекта">
-                <div class="input-group input-group-sm" title="Период на стартиране на обекта">
-                    <div class="input-group-prepend">
-						<span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
+        <div id="filter_result" class="col-6 col-sm-6 col-lg-6" title="Период на архива">
+            <div class="ui-object-archive-period-range" role="group" aria-label="Период на архива">
+                <div class="ui-object-archive-period-endpoint">
+                    <span class="ui-object-archive-period-label">ОТ</span>
+                    <div class="ui-object-archive-datetime">
+                        <button type="button" class="ui-object-archive-calendar-trigger" id="objectArchiveFromDate" title="Изберете начална дата" aria-label="Изберете начална дата">
+                            <span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
+                        </button>
+                        <input class="form-control ui-object-archive-date" type="text" name="sPeriodFrom" id="sPeriodFrom" maxlength="10" placeholder="__.__.____" onkeypress="return formatDate(event, '.');" value="{$date_first}" aria-label="Начална дата" />
+                        <input class="form-control ui-object-archive-time" type="text" inputmode="numeric" name="sPeriodFromH" id="sPeriodFromH" value="00:00" maxlength="5" pattern="(?:[01][0-9]|2[0-3]):[0-5][0-9]" placeholder="ЧЧ:ММ" list="objectArchiveTimeOptions" autocomplete="off" onkeypress="return formatTime(event);" onblur="normalizeArchiveTimeInput(this);" title="Начален час, 24-часов формат ЧЧ:ММ" aria-label="Начален час, 24-часов формат" />
                     </div>
-                    <input class="form-control"                   type="text" name="sPeriodFromH" id="sPeriodFromH"  onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" placeholder="00:00" />
-                    <input class="form-control input-group-addon pl-1" type="text" name="sPeriodFrom" id="sPeriodFrom" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );"  value="{$date_first}" />
+                </div>
 
-                    <input class="form-control input-group-addon pl-1 ml-1" type="text" name="sPeriodToH" id="sPeriodToH" onkeypress="return formatTime(event);" maxlength="5" title="ЧЧ:ММ" value="{$time_now}" placeholder="00:00" />
-                    <input class="form-control input-group-addon pl-1" type="text" name="sPeriodTo" id="sPeriodTo" maxlength="9" placeholder="__.__.____" onkeypress="return formatDate( event, '.' );" value="{$sToDate}" />
+                <span class="ui-object-archive-period-separator" aria-hidden="true"><span class="ui-icon ui-icon-right"></span></span>
+
+                <div class="ui-object-archive-period-endpoint">
+                    <span class="ui-object-archive-period-label">ДО</span>
+                    <div class="ui-object-archive-datetime">
+                        <button type="button" class="ui-object-archive-calendar-trigger" id="objectArchiveToDate" title="Изберете крайна дата" aria-label="Изберете крайна дата">
+                            <span class="ui-icon ui-icon-calendar" aria-hidden="true"></span>
+                        </button>
+                        <input class="form-control ui-object-archive-date" type="text" name="sPeriodTo" id="sPeriodTo" maxlength="10" placeholder="__.__.____" onkeypress="return formatDate(event, '.');" value="{$date_now}" aria-label="Крайна дата" />
+                        <input class="form-control ui-object-archive-time" type="text" inputmode="numeric" name="sPeriodToH" id="sPeriodToH" value="{$time_now}" maxlength="5" pattern="(?:[01][0-9]|2[0-3]):[0-5][0-9]" placeholder="ЧЧ:ММ" list="objectArchiveTimeOptions" autocomplete="off" onkeypress="return formatTime(event);" onblur="normalizeArchiveTimeInput(this);" title="Краен час, 24-часов формат ЧЧ:ММ" aria-label="Краен час, 24-часов формат" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,6 +216,8 @@
         </div>
     </nav>
 
+    <datalist id="objectArchiveTimeOptions"></datalist>
+
 </form>
 
 
@@ -107,6 +228,9 @@
 
 <script>
 	$('noTest').value = 0;
+	initArchiveTimeOptions();
+	normalizeArchiveTimeInput('sPeriodFromH');
+	normalizeArchiveTimeInput('sPeriodToH');
 	loadXMLDoc2('result');
 	
 {literal}
