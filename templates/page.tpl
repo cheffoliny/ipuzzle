@@ -49,7 +49,7 @@
     <link href="css/ui-refresh-actions.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=3" rel="stylesheet" type="text/css">
-<link href="css/ui-refresh-nomenclatures.css?version=52" rel="stylesheet" type="text/css">
+<link href="css/ui-refresh-nomenclatures.css?version=53" rel="stylesheet" type="text/css">
     <link href="css/ui-final-migration.css?version=3" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 

@@ -314,6 +314,33 @@
 			return $this->select( $sQuery );
 		}
 
+		/**
+		 * Връща банковите сметки, които се отпечатват във фактурите.
+		 */
+		public function getInvoiceAccounts( $nIDFirm = 0 ) {
+			global $db_name_finance;
+
+			$nIDFirm = is_numeric( $nIDFirm ) ? (int) $nIDFirm : 0;
+			$fnd = $nIDFirm > 0
+				? " AND FIND_IN_SET({$nIDFirm}, ids_typical_firms) "
+				: '';
+
+			$sQuery = "
+				SELECT
+					name_bank AS name,
+					iban,
+					bic
+				FROM {$db_name_finance}.bank_accounts
+				WHERE to_arc = 0
+					AND cash = 0
+					AND is_on_invoice = 1
+					{$fnd}
+				LIMIT 5
+			";
+
+			return $this->select( $sQuery );
+		}
+
         public function getTypeAccoutById( $nID ) {
             global $db_name_finance;
 

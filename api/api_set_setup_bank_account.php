@@ -24,6 +24,7 @@
 				$oResponse->setFormElement( 'form1', 'sNameBank', 		array( 'value' => $aBankAccount['name_bank'] ) 		);
 				$oResponse->setFormElement( 'form1', 'sIBAN', 			array( 'value' => $aBankAccount['iban'] ) 			);
 				$oResponse->setFormElement( 'form1', 'sBIC', 			array( 'value' => $aBankAccount['bic'] ) 			);
+				$oResponse->setFormElementAttribute( 'form1', 'is_on_invoice', 'checked', !empty( $aBankAccount['is_on_invoice'] ) ? 'checked' : '' );
 				
 				//Set Firms
 				$aIDs = explode( ",", $aBankAccount['ids_typical_firms'] );
@@ -78,7 +79,7 @@
 			$sBIC 			= Params::get( "sBIC" );
 			$aFirms 		= Params::get( "firms_current", array() );
 			$sBank	 		= Params::get( "bank", "" );
-			APILog::Log(0, "Bla: ".$sBank);
+			$nIsOnInvoice	= Params::get( "is_on_invoice", 0 ) == 1 ? 1 : 0;
 			//Validate
 			if ( empty($sNameAccount) ) {
 				throw new Exception( "Въведете наименование на сметката!", DBAPI_ERR_INVALID_PARAM );
@@ -111,6 +112,7 @@
 			$aData['iban'] 				= $sBank ? $sIBAN 		: "";
 			$aData['bic'] 				= $sBank ? $sBIC 		: "";
 			$aData['ids_typical_firms'] = $sBank ? implode( ",", $aFirms ) : "";
+			$aData['is_on_invoice'] 	= $sBank ? $nIsOnInvoice : 0;
 			
 			$oBankAccounts->update( $aData );
 		}

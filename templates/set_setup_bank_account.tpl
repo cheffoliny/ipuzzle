@@ -88,41 +88,40 @@
 {/literal}
 
 <div class="content ui-nomenclature-dialog-shell">
-	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog" onsubmit="return update();">
+	<form action="" method="POST" name="form1" id="form1" class="ui-nomenclature-dialog ui-organization-dialog ui-bank-account-dialog" onsubmit="return update();">
 		<input type="hidden" id="nID" name="nID" value="{$nID}">
 		<input type="hidden" id="cash" name="cash" value="0">
 		
 		<div class="page_caption">{if $nID}Редакция на{else}Нова{/if} <span id="sCapt">банкова</span> сметка</div>
-		<br />
 		
 		<table class="input ui-nomenclature-form">
 			<tr class="odd">
-				<td width="200">Наименование:</td>
+				<td>Наименование:</td>
 				<td>
-					<input type="text" name="sNameAccount" id="sNameAccount" class="inp250" />
+					<input type="text" name="sNameAccount" id="sNameAccount" />
 				</td>
 			</tr>
 			
 			<tbody id="sBank">
 			
 				<tr class="odd">
-					<td width="200">Име на банката:</td>
+					<td>Име на банката:</td>
 					<td>
-						<input type="text" name="sNameBank" id="sNameBank" class="inp250" />
+						<input type="text" name="sNameBank" id="sNameBank" />
 					</td>
 				</tr>
 				
 				<tr class="odd">
-					<td width="200">IBAN:</td>
+					<td>IBAN:</td>
 					<td>
-						<input type="text" name="sIBAN" id="sIBAN" class="inp250" />
+						<input type="text" name="sIBAN" id="sIBAN" />
 					</td>
 				</tr>
 				
 				<tr class="odd">
-					<td width="200">BIC:</td>
+					<td>BIC:</td>
 					<td>
-						<input type="text" name="sBIC" id="sBIC" class="inp250" />
+						<input type="text" name="sBIC" id="sBIC" />
 					</td>
 				</tr>
 			
@@ -130,40 +129,34 @@
 		</table>
 		
 		<div id="sBank2">
-			<br />
-			
 			<fieldset class="ui-nomenclature-fieldset">
 			<legend>Фирми, за които е характерна сметката:</legend>
-				<table class="ui-nomenclature-transfer">
-					<tr>
-						<td>
-							<select name="firms_all" id="firms_all" style="width:200px" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'right' );" multiple="multiple">
-							</select>
-						</td>
-						<td>
-							<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Добави Фирма" onClick="copy_option_to( 'firms_all', 'firms_current', 'right' ); return false;"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button></br>
-							<button id=b25 name="button" class="ui-nomenclature-transfer-button" title="Премахни Фирма" onClick="copy_option_to( 'firms_all', 'firms_current', 'left' ); return false;"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
-						</td>
-						<td>
-							<select name="firms_current[]" id="firms_current" style="width:200px" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'left' );" multiple="multiple">
-							</select>
-						</td>
-					</tr>
-				</table>
+				<div class="ui-bank-account-transfer">
+					<select name="firms_all" id="firms_all" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'right' );" multiple="multiple"></select>
+					<div class="ui-bank-account-transfer-controls">
+						<button type="button" class="ui-nomenclature-transfer-button" title="Добави фирма" onclick="copy_option_to( 'firms_all', 'firms_current', 'right' );"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
+						<button type="button" class="ui-nomenclature-transfer-button" title="Премахни фирма" onclick="copy_option_to( 'firms_all', 'firms_current', 'left' );"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
+					</div>
+					<select name="firms_current[]" id="firms_current" size="10" ondblclick="copy_option_to( 'firms_all', 'firms_current', 'left' );" multiple="multiple"></select>
+				</div>
 			</fieldset>
+
+			<div class="ui-bank-account-invoice-option">
+				<input type="checkbox" id="is_on_invoice" name="is_on_invoice" value="1" class="ui-nomenclature-checkbox" />
+				<label for="is_on_invoice">Показвай сметката във фактура</label>
+			</div>
 			
 		</div>
 		
-		<br />
-		
 		<table class="input ui-nomenclature-actions">
 			<tr class="odd">
-				<td width="250">
-					<input type="checkbox" id="bank" name="bank" class="clear ui-nomenclature-checkbox" onclick="changeType();" checked />&nbsp; Банкова сметка
+				<td class="ui-bank-account-type-cell">
+					<input type="checkbox" id="bank" name="bank" value="1" class="clear ui-nomenclature-checkbox" onclick="changeType();" checked />
+					<label for="bank">Банкова сметка</label>
 				</td>
-				<td style="text-align:right;">
+				<td class="ui-nomenclature-actions-buttons">
 					<button type="submit" class="search"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши </button>
-					<button onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
+					<button type="button" onclick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
 				</td>
 			</tr>
 		</table>

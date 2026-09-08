@@ -6631,6 +6631,66 @@ body.ui-refresh-content .ui-patrol-transfer-actions .btn {
     }
 }
 
+/* Bank account editor: keep both firm lists usable at every dialog width. */
+body.ui-refresh-content .ui-bank-account-dialog .ui-nomenclature-form td:first-child {
+    width: 150px;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .ui-bank-account-dialog .ui-nomenclature-form input:not([type="hidden"]):not([type="checkbox"]) {
+    width: 100%;
+    max-width: none;
+}
+
+body.ui-refresh-content .ui-bank-account-dialog .ui-nomenclature-fieldset {
+    overflow-x: hidden;
+}
+
+body.ui-refresh-content .ui-bank-account-transfer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+}
+
+body.ui-refresh-content .ui-bank-account-transfer select {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0;
+    height: 190px;
+}
+
+body.ui-refresh-content .ui-bank-account-transfer-controls {
+    display: grid;
+    gap: 6px;
+}
+
+body.ui-refresh-content .ui-bank-account-invoice-option,
+body.ui-refresh-content .ui-bank-account-type-cell {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+body.ui-refresh-content .ui-bank-account-invoice-option {
+    margin: 8px 2px 0;
+    color: #354b61;
+    font-weight: 600;
+}
+
+body.ui-refresh-content .ui-bank-account-dialog .ui-nomenclature-actions-buttons {
+    text-align: right;
+    white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+    body.ui-refresh-content .ui-bank-account-dialog .ui-bank-account-transfer {
+        min-width: 0;
+    }
+}
+
 /* Asset file tabs, subordinate reports and compact editors. */
 body.ui-refresh-content .ui-asset-tabs {
     display: flex;
