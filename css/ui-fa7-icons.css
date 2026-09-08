@@ -110,6 +110,35 @@
 .ui-icon-equals { --ui-icon-source: url("fa7/solid/equals.svg"); }
 .ui-icon-upload { --ui-icon-source: url("fa7/solid/upload.svg"); }
 .ui-icon-calculator { --ui-icon-source: url("fa7/solid/calculator.svg"); }
+.ui-icon-external-link { --ui-icon-source: url("fa7/solid/arrow-up-right-from-square.svg"); }
+
+.ui-sale-client-link {
+    display: inline-flex;
+    flex: 0 0 28px;
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #245f8a;
+    cursor: pointer;
+}
+
+.ui-sale-client-link:hover,
+.ui-sale-client-link:focus-visible {
+    background: #e7f1fb;
+    color: #0d79bb;
+    outline: 0;
+}
+
+.ui-sale-client-link:disabled {
+    color: #9aabb9;
+    cursor: default;
+}
 
 button > .ui-icon:first-child,
 a > .ui-icon:first-child {

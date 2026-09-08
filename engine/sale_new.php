@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
     <link href="css/fa5/css/all.min.css" rel="stylesheet">
+    <link href="css/ui-fa7-icons.css?version=2" rel="stylesheet">
     <link href="<?php echo $manifest['/css/finance/app.css']; ?>" rel="stylesheet">
     <title>Продажба приход</title>
 </head>
@@ -21,5 +22,5 @@
 </body>
 <script src="js/framework_general.js"></script>
 <script src="js/common_dialogs.js"></script>
-<script src="<?php echo $manifest['/js/finance/app.js']; ?>"></script>
+<script src="<?php echo $manifest['/js/finance/app.js']; ?>&version=2"></script>
 </html>

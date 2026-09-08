@@ -39328,7 +39328,7 @@ var render = function() {
                                 },
                                 [
                                   _c("i", {
-                                    staticClass: "fad fa-external-link fa-fw"
+                                  staticClass: "fad fa-external-link fa-fw"
                                   })
                                 ]
                               )
@@ -42005,7 +42005,7 @@ var render = function() {
                     : _c(
                         "div",
                         {
-                          staticClass:
+                            staticClass:
                             "flex items-center custom-input col-start-2 col-end-5",
                           attrs: { id: "client" }
                         },
@@ -42024,12 +42024,16 @@ var render = function() {
                             ? _c(
                                 "button",
                                 {
-                                  staticClass: "pl-2 focus:outline-none",
+                                  staticClass: "ml-2 ui-sale-client-link focus:outline-none",
+                                  attrs: {
+                                    type: "button",
+                                    title: "Отвори картона на клиента"
+                                  },
                                   on: { click: _vm.openClient }
                                 },
                                 [
                                   _c("i", {
-                                    staticClass: "fad fa-external-link fa-fw"
+                                    staticClass: "ui-icon ui-icon-external-link"
                                   })
                                 ]
                               )
@@ -47923,8 +47927,9 @@ var render = function() {
                 "{ trigger : 'mouseenter', placement : 'bottom',arrow : true}"
             }
           ],
-          staticClass: "ml-2 focus:outline-none focus:shadow-outline",
+          staticClass: "ml-2 ui-sale-client-link focus:outline-none focus:shadow-outline",
           attrs: {
+            type: "button",
             disabled: !_vm.result_id,
             title: "Отвори картона на клиента"
           },
@@ -47943,7 +47948,7 @@ var render = function() {
               ])
             : !_vm.performing_query && _vm.result_id
             ? _c("span", [
-                _c("i", { staticClass: "fad fa-external-link fa-fw" })
+                _c("i", { staticClass: "ui-icon ui-icon-external-link" })
               ])
             : _c("span", [_c("i", { staticClass: "fad fa-search fa-fw" })])
         ]

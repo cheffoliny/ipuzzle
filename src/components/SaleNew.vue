@@ -42,10 +42,12 @@
           ></div>
           <button
             v-if="client.id"
-            class="pl-2 focus:outline-none"
+            type="button"
+            class="ml-2 ui-sale-client-link focus:outline-none"
             @click="openClient"
+            title="Отвори картона на клиента"
           >
-            <i class="fad fa-external-link fa-fw"></i>
+            <i class="ui-icon ui-icon-external-link" aria-hidden="true"></i>
           </button>
         </div>
 

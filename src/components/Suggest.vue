@@ -23,8 +23,9 @@
       @keydown.tab.prevent="suggestMarkNext()"
     />
     <button
+      type="button"
       :disabled="!result_id"
-      class="ml-2 focus:outline-none focus:shadow-outline"
+      class="ml-2 ui-sale-client-link focus:outline-none focus:shadow-outline"
       @click="openClient()"
       title="Отвори картона на клиента"
       v-tippy="{ trigger : 'mouseenter', placement : 'bottom',arrow : true}"
@@ -33,7 +34,7 @@
         <i class="fad fa-circle-notch fa-spin fa-fw text-blue-500"></i>
       </span>
       <span v-else-if="!performing_query && result_id">
-        <i class="fad fa-external-link fa-fw"></i>
+        <i class="ui-icon ui-icon-external-link" aria-hidden="true"></i>
       </span>
       <span v-else>
         <i class="fad fa-search fa-fw"></i>
