@@ -57,7 +57,7 @@ var dlcalendar_oCalendarDefaults =
         othermonthdate_style : "",
 
         use_webdings : false,
-        nav_images : "fa-angle-double-left,fa-angle-left,fa-angle-right,fa-angle-double-right",
+        nav_images : "ui-icon ui-icon-angles-left,ui-icon ui-icon-left,ui-icon ui-icon-right,ui-icon ui-icon-angles-right",
 
         hide_selects : true,
         hide_onselection : true,
@@ -630,7 +630,7 @@ function dlcalendar_buildNavigationCell( nDirection )
         eNavCell.className = 'dlcalendar_navImages';
         var eImage = document.createElement( 'i' );
 //        eImage.src = "images/"+sNavChar;
-        eImage.className = "fa "+sNavChar+"";
+        eImage.className = sNavChar;
         eNavCell.appendChild( eImage );
     }
     eNavCell.onmousedown = this.aNavHandlers[ nDirection ];

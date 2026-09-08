@@ -24,6 +24,8 @@
 .ui-icon-close { --ui-icon-source: url("fa7/solid/xmark.svg"); }
 .ui-icon-left { --ui-icon-source: url("fa7/solid/chevron-left.svg"); }
 .ui-icon-right { --ui-icon-source: url("fa7/solid/chevron-right.svg"); }
+.ui-icon-angles-left { --ui-icon-source: url("fa7/solid/angles-left.svg"); }
+.ui-icon-angles-right { --ui-icon-source: url("fa7/solid/angles-right.svg"); }
 .ui-icon-exchange { --ui-icon-source: url("fa7/solid/right-left.svg"); }
 .ui-icon-up { --ui-icon-source: url("fa7/solid/chevron-up.svg"); }
 .ui-icon-down { --ui-icon-source: url("fa7/solid/chevron-down.svg"); }
