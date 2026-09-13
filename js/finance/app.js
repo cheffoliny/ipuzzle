@@ -39617,8 +39617,9 @@ var render = function() {
                               on: { click: _vm.addDebitBuyDoc }
                             },
                             [
-                              _c("i", {
-                                staticClass: "fad fa-layer-plus fa-lg fa-fw"
+                              _c("span", {
+                                staticClass: "ui-icon ui-icon-layer-plus",
+                                attrs: { "aria-hidden": "true" }
                               })
                             ]
                           )
@@ -39647,8 +39648,9 @@ var render = function() {
                               on: { click: _vm.addCreditBuyDoc }
                             },
                             [
-                              _c("i", {
-                                staticClass: "fad fa-layer-minus fa-lg fa-fw"
+                              _c("span", {
+                                staticClass: "ui-icon ui-icon-layer-minus",
+                                attrs: { "aria-hidden": "true" }
                               })
                             ]
                           )
@@ -39680,7 +39682,12 @@ var render = function() {
                                 }
                               }
                             },
-                            [_c("i", { staticClass: "far fa-fw fa-plus" })]
+                            [
+                              _c("span", {
+                                staticClass: "ui-icon ui-icon-plus",
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
                           )
                         : _vm._e(),
                       _vm._v(" "),
@@ -39711,11 +39718,11 @@ var render = function() {
                               on: { click: _vm.toggleIsHide }
                             },
                             [
-                              _c("i", {
-                                staticClass: "fad fa-eye fa-lg fa-fw",
+                              _c("span", {
                                 class: _vm.document_data.is_hide
-                                  ? "fa-low-vision"
-                                  : "fa-eye"
+                                  ? "ui-icon ui-icon-eye-off"
+                                  : "ui-icon ui-icon-eye",
+                                attrs: { "aria-hidden": "true" }
                               })
                             ]
                           )
@@ -39749,10 +39756,11 @@ var render = function() {
                           }
                         },
                         [
-                          _c("i", {
+                          _c("span", {
                             class: _vm.headerCollapse
-                              ? "fal fa-arrows-v fa-fw"
-                              : "fal fa-arrow-to-top fa-fw"
+                              ? "ui-icon ui-icon-expand"
+                              : "ui-icon ui-icon-compress",
+                            attrs: { "aria-hidden": "true" }
                           })
                         ]
                       )

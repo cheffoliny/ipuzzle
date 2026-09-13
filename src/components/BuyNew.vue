@@ -312,7 +312,7 @@
           @click="addDebitBuyDoc"
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
         >
-          <i class="fad fa-layer-plus fa-lg fa-fw"></i>
+          <span class="ui-icon ui-icon-layer-plus" aria-hidden="true"></span>
         </button>
 
         <button
@@ -322,7 +322,7 @@
           @click="addCreditBuyDoc"
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:bg-indigo-400 hover:text-white focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
         >
-          <i class="fad fa-layer-minus fa-lg fa-fw"></i>
+          <span class="ui-icon ui-icon-layer-minus" aria-hidden="true"></span>
         </button>
 
         <button
@@ -332,7 +332,7 @@
           @click="showFreeSaleComponent = true"
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 text-sm"
         >
-          <i class="far fa-fw fa-plus"></i>
+          <span class="ui-icon ui-icon-plus" aria-hidden="true"></span>
         </button>
         
         <button
@@ -343,7 +343,10 @@
           
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
         >
-          <i :class="document_data.is_hide ? 'fa-low-vision' : 'fa-eye'" class="fad fa-eye fa-lg fa-fw"></i>
+          <span
+            :class="document_data.is_hide ? 'ui-icon ui-icon-eye-off' : 'ui-icon ui-icon-eye'"
+            aria-hidden="true"
+          ></span>
        </button>
 
         <button
@@ -352,13 +355,10 @@
           class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 text-sm"
           @click="headerCollapse = !headerCollapse"
         >
-          <i
-            :class="
-              headerCollapse
-                ? 'fal fa-arrows-v fa-fw'
-                : 'fal fa-arrow-to-top fa-fw'
-            "
-          ></i>
+          <span
+            :class="headerCollapse ? 'ui-icon ui-icon-expand' : 'ui-icon ui-icon-compress'"
+            aria-hidden="true"
+          ></span>
         </button>
       </div>
     </div>

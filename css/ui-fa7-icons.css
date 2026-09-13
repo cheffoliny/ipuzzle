@@ -17,6 +17,8 @@
 }
 
 .ui-icon-plus { --ui-icon-source: url("fa7/solid/plus.svg"); }
+.ui-icon-layer-plus { --ui-icon-source: url("fa7/solid/layer-plus.svg"); }
+.ui-icon-layer-minus { --ui-icon-source: url("fa7/solid/layer-minus.svg"); }
 .ui-icon-search { --ui-icon-source: url("fa7/solid/magnifying-glass.svg"); }
 .ui-icon-edit { --ui-icon-source: url("fa7/solid/pen-to-square.svg"); }
 .ui-icon-delete { --ui-icon-source: url("fa7/solid/trash-can.svg"); }
@@ -74,6 +76,7 @@
 .ui-icon-certificate { --ui-icon-source: url("fa7/solid/certificate.svg"); }
 .ui-icon-monitor { --ui-icon-source: url("fa7/solid/radar.svg"); }
 .ui-icon-eye { --ui-icon-source: url("fa7/solid/eye.svg"); }
+.ui-icon-eye-off { --ui-icon-source: url("fa7/solid/eye-slash.svg"); }
 .ui-icon-map { --ui-icon-source: url("fa7/solid/map.svg"); }
 .ui-icon-crop { --ui-icon-source: url("fa7/solid/crop.svg"); }
 .ui-icon-road { --ui-icon-source: url("fa7/solid/road.svg"); }
