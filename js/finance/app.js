@@ -43006,8 +43006,9 @@ var render = function() {
                           on: { click: _vm.addDebitSaleDoc }
                         },
                         [
-                          _c("i", {
-                            staticClass: "fad fa-layer-plus fa-lg fa-fw"
+                          _c("span", {
+                            staticClass: "ui-icon ui-icon-layer-plus",
+                            attrs: { "aria-hidden": "true" }
                           })
                         ]
                       )
@@ -43036,8 +43037,9 @@ var render = function() {
                           on: { click: _vm.addCreditSaleDoc }
                         },
                         [
-                          _c("i", {
-                            staticClass: "fad fa-layer-minus fa-lg fa-fw"
+                          _c("span", {
+                            staticClass: "ui-icon ui-icon-layer-minus",
+                            attrs: { "aria-hidden": "true" }
                           })
                         ]
                       )
@@ -43069,7 +43071,12 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("i", { staticClass: "far fa-fw fa-plus" })]
+                        [
+                          _c("span", {
+                            staticClass: "ui-icon ui-icon-plus",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -43116,10 +43123,11 @@ var render = function() {
                       }
                     },
                     [
-                      _c("i", {
+                      _c("span", {
                         class: _vm.headerCollapse
-                          ? "fal fa-arrows-v fa-fw"
-                          : "fal fa-arrow-to-top fa-fw"
+                          ? "ui-icon ui-icon-expand"
+                          : "ui-icon ui-icon-compress",
+                        attrs: { "aria-hidden": "true" }
                       })
                     ]
                   )
@@ -43140,7 +43148,10 @@ var render = function() {
                   _c("div", { staticClass: "grid-row headers shadow" }, [
                     !_vm.urlParams.id
                       ? _c("div", { staticClass: "grid-cell check" }, [
-                          _c("i", { staticClass: "fal fa-square fa-fw" })
+                          _c("span", {
+                            staticClass: "ui-icon ui-icon-square",
+                            attrs: { "aria-hidden": "true" }
+                          })
                         ])
                       : _vm._e(),
                     _vm._v(" "),
@@ -43632,13 +43643,14 @@ var render = function() {
                                                     }
                                                 },
                                                 [
-                                                    _c("i", {
+                                                    _c("span", {
                                                         class: service.id_object
-                                                            ? "fad fa-external-link fa-fw"
+                                                            ? "ui-icon ui-icon-external-link"
                                                             : !_vm.urlParams.id ||
                                                             _vm.is_new_relative_doc
-                                                                ? "fad fa-edit fa-fw"
-                                                                : "hidden"
+                                                                ? "ui-icon ui-icon-edit"
+                                                                : "hidden",
+                                                        attrs: { "aria-hidden": "true" }
                                                     })
                                                 ]
                                             )
@@ -44022,12 +44034,13 @@ var render = function() {
                                                             }
                                                         },
                                                         [
-                                                            _c("i", {
+                                                            _c("span", {
                                                                 class: object.id_object
-                                                                    ? "fad fa-external-link fa-fw"
+                                                                    ? "ui-icon ui-icon-external-link"
                                                                     : !_vm.urlParams.id
-                                                                        ? "fad fa-edit fa-fw"
-                                                                        : "hidden"
+                                                                        ? "ui-icon ui-icon-edit"
+                                                                        : "hidden",
+                                                                attrs: { "aria-hidden": "true" }
                                                             })
                                                         ]
                                                     )
@@ -44056,9 +44069,10 @@ var render = function() {
                                                             }
                                                         },
                                                         [
-                                                            _c("i", {
+                                                            _c("span", {
                                                                 staticClass:
-                                                                    "fad fa-folder-tree fa-fw text-indigo-400"
+                                                                    "ui-icon ui-icon-folder-tree text-indigo-400",
+                                                                attrs: { "aria-hidden": "true" }
                                                             })
                                                         ]
                                                     ),
@@ -44161,9 +44175,10 @@ var render = function() {
                                                             }
                                                         },
                                                         [
-                                                            _c("i", {
+                                                            _c("span", {
                                                                 staticClass:
-                                                                    "fad fa-folder-tree fa-fw text-indigo-400"
+                                                                    "ui-icon ui-icon-folder-tree text-indigo-400",
+                                                                attrs: { "aria-hidden": "true" }
                                                             })
                                                         ]
                                                     ),
@@ -44593,13 +44608,14 @@ var render = function() {
                                                     }
                                                 },
                                                 [
-                                                    _c("i", {
+                                                    _c("span", {
                                                         class:
                                                             object.id_object || object.services
-                                                                ? "fad fa-external-link fa-fw"
+                                                                ? "ui-icon ui-icon-external-link"
                                                                 : !_vm.urlParams.id
-                                                                ? "fad fa-edit fa-fw"
-                                                                : "hidden"
+                                                                ? "ui-icon ui-icon-edit"
+                                                                : "hidden",
+                                                        attrs: { "aria-hidden": "true" }
                                                     })
                                                 ]
                                             )
@@ -44996,12 +45012,13 @@ var render = function() {
                                             }
                                         },
                                         [
-                                            _c("i", {
+                                            _c("span", {
                                                 class: object.id_object
-                                                    ? "fad fa-external-link fa-fw"
+                                                    ? "ui-icon ui-icon-external-link"
                                                     : !_vm.urlParams.id
-                                                    ? "fad fa-edit fa-fw"
-                                                    : "hidden"
+                                                    ? "ui-icon ui-icon-edit"
+                                                    : "hidden",
+                                                attrs: { "aria-hidden": "true" }
                                             })
                                         ]
                                         )
@@ -45223,7 +45240,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_c("i", { staticClass: "fal fa-times fa-fw" })]
+                                [
+                                  _c("span", {
+                                    staticClass: "ui-icon ui-icon-close",
+                                    attrs: { "aria-hidden": "true" }
+                                  })
+                                ]
                               )
                             ]
                           )
@@ -45487,13 +45509,13 @@ var render = function() {
                                                       }
                                                     },
                                                     [
-                                                      _c("i", {
-                                                        staticClass: "fa fa-fw",
+                                                      _c("span", {
                                                         class:
                                                           _vm.objectMonthlyDetailIndex ===
                                                           index
-                                                            ? "fa-chevron-up"
-                                                            : "fa-chevron-down"
+                                                            ? "ui-icon ui-icon-up"
+                                                            : "ui-icon ui-icon-down",
+                                                        attrs: { "aria-hidden": "true" }
                                                       })
                                                     ]
                                                   )
@@ -45817,11 +45839,11 @@ var render = function() {
                                                       }
                                                     },
                                                     [
-                                                      _c("i", {
-                                                        staticClass: "fa fa-fw",
+                                                      _c("span", {
                                                         class: _vm.objectDiscountDetail
-                                                          ? "fa-chevron-up"
-                                                          : "fa-chevron-down"
+                                                          ? "ui-icon ui-icon-up"
+                                                          : "ui-icon ui-icon-down",
+                                                        attrs: { "aria-hidden": "true" }
                                                       })
                                                     ]
                                                   )
@@ -46228,7 +46250,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_c("i", { staticClass: "fal fa-times fa-fw" })]
+                                [
+                                  _c("span", {
+                                    staticClass: "ui-icon ui-icon-close",
+                                    attrs: { "aria-hidden": "true" }
+                                  })
+                                ]
                               )
                             ]
                           )
@@ -46492,13 +46519,13 @@ var render = function() {
                                                       }
                                                     },
                                                     [
-                                                      _c("i", {
-                                                        staticClass: "fa fa-fw",
+                                                      _c("span", {
                                                         class:
                                                           _vm.objectMonthlyDetailIndex ===
                                                           index
-                                                            ? "fa-chevron-up"
-                                                            : "fa-chevron-down"
+                                                            ? "ui-icon ui-icon-up"
+                                                            : "ui-icon ui-icon-down",
+                                                        attrs: { "aria-hidden": "true" }
                                                       })
                                                     ]
                                                   )
@@ -46822,11 +46849,11 @@ var render = function() {
                                                       }
                                                     },
                                                     [
-                                                      _c("i", {
-                                                        staticClass: "fa fa-fw",
+                                                      _c("span", {
                                                         class: _vm.objectDiscountDetail
-                                                          ? "fa-chevron-up"
-                                                          : "fa-chevron-down"
+                                                          ? "ui-icon ui-icon-up"
+                                                          : "ui-icon ui-icon-down",
+                                                        attrs: { "aria-hidden": "true" }
                                                       })
                                                     ]
                                                   )
@@ -47606,9 +47633,10 @@ var render = function() {
                         "flex flex-shrink-0 h-8 items-center text-indigo-500 truncate mr-2"
                     },
                     [
-                      _c("i", {
+                      _c("span", {
                         staticClass:
-                          "fad fa-info-circle text-2xl mr-2 cursor-pointer",
+                          "ui-icon ui-icon-info text-2xl mr-2 cursor-pointer",
+                        attrs: { "aria-hidden": "true" },
                         on: {
                           click: function($event) {
                             _vm.showClientNote = !_vm.showClientNote

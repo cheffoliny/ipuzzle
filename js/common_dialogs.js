@@ -489,7 +489,9 @@ function dialogScheme(id)
 }
 
 function dialogPPP2( params ) {
-	dialog_win('ppp&'+params, 800, 680, 1, 'ppp');
+	var width = Math.max(680, Math.min(1180, window.screen.availWidth - 48));
+	var height = Math.max(620, Math.min(860, window.screen.availHeight - 72));
+	dialog_win('ppp&'+params, width, height, 1, 'ppp', 1);
 }
 
 function dialogPPPElement( params ) {

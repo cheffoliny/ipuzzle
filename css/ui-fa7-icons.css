@@ -19,6 +19,7 @@
 .ui-icon-plus { --ui-icon-source: url("fa7/solid/plus.svg"); }
 .ui-icon-layer-plus { --ui-icon-source: url("fa7/solid/layer-plus.svg"); }
 .ui-icon-layer-minus { --ui-icon-source: url("fa7/solid/layer-minus.svg"); }
+.ui-icon-square { --ui-icon-source: url("fa7/solid/square.svg"); }
 .ui-icon-search { --ui-icon-source: url("fa7/solid/magnifying-glass.svg"); }
 .ui-icon-edit { --ui-icon-source: url("fa7/solid/pen-to-square.svg"); }
 .ui-icon-delete { --ui-icon-source: url("fa7/solid/trash-can.svg"); }
@@ -82,6 +83,7 @@
 .ui-icon-road { --ui-icon-source: url("fa7/solid/road.svg"); }
 .ui-icon-car { --ui-icon-source: url("fa7/solid/car.svg"); }
 .ui-icon-file { --ui-icon-source: url("fa7/solid/file.svg"); }
+.ui-icon-folder-tree { --ui-icon-source: url("fa7/solid/folder-tree.svg"); }
 .ui-icon-expand { --ui-icon-source: url("fa7/solid/expand.svg"); }
 .ui-icon-signal { --ui-icon-source: url("fa7/solid/signal.svg"); }
 .ui-icon-cube { --ui-icon-source: url("fa7/solid/cube.svg"); }
@@ -114,6 +116,7 @@
 .ui-icon-arrow-right { --ui-icon-source: url("fa7/solid/arrow-right.svg"); }
 .ui-icon-equals { --ui-icon-source: url("fa7/solid/equals.svg"); }
 .ui-icon-upload { --ui-icon-source: url("fa7/solid/upload.svg"); }
+.ui-icon-download { --ui-icon-source: url("fa7/solid/download.svg"); }
 .ui-icon-calculator { --ui-icon-source: url("fa7/solid/calculator.svg"); }
 .ui-icon-external-link { --ui-icon-source: url("fa7/solid/arrow-up-right-from-square.svg"); }
 

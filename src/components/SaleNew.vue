@@ -390,7 +390,7 @@
         @click="addDebitSaleDoc"
         class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2 ml-auto"
       >
-        <i class="fad fa-layer-plus fa-lg fa-fw"></i>
+        <span class="ui-icon ui-icon-layer-plus" aria-hidden="true"></span>
       </button>
 
       <button
@@ -400,7 +400,7 @@
         @click="addCreditSaleDoc"
         class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:bg-indigo-400 hover:text-white focus:outline-none focus:shadow-outline transition ease-in-out duration-200 mr-2"
       >
-        <i class="fad fa-layer-minus fa-lg fa-fw"></i>
+        <span class="ui-icon ui-icon-layer-minus" aria-hidden="true"></span>
       </button>
 
       <button
@@ -410,7 +410,7 @@
         @click="showFreeSaleComponent = true"
         class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 text-sm mr-2 ml-auto"
       >
-        <i class="far fa-fw fa-plus"></i>
+        <span class="ui-icon ui-icon-plus" aria-hidden="true"></span>
       </button>
       
       <button
@@ -427,13 +427,10 @@
         class="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white rounded-sm text-indigo-400 shadow-custom hover:text-white hover:bg-indigo-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-200 text-sm"
         @click="headerCollapse = !headerCollapse"
       >
-        <i
-          :class="
-            headerCollapse
-              ? 'fal fa-arrows-v fa-fw'
-              : 'fal fa-arrow-to-top fa-fw'
-          "
-        ></i>
+        <span
+          :class="headerCollapse ? 'ui-icon ui-icon-expand' : 'ui-icon ui-icon-compress'"
+          aria-hidden="true"
+        ></span>
       </button>
     </div>
     <!-- grid -->
@@ -445,7 +442,7 @@
       <!-- headers -->
       <div class="grid-row headers shadow">
         <div v-if="!urlParams.id" class="grid-cell check">
-          <i class="fal fa-square fa-fw"></i>
+          <span class="ui-icon ui-icon-square" aria-hidden="true"></span>
         </div>
         <div
           :class="urlParams.id ? 'col-span-2' : ''"
@@ -604,15 +601,16 @@
                 class="obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
                 @click="handleLinkAction(service)"
               >
-                <i
+                <span
                   :class="
                     service.id_object
-                      ? 'fad fa-external-link fa-fw'
+                      ? 'ui-icon ui-icon-external-link'
                       : !urlParams.id || is_new_relative_doc
-                        ? 'fad fa-edit fa-fw'
-                         : 'hidden'
+                        ? 'ui-icon ui-icon-edit'
+                        : 'hidden'
                   "
-                ></i>
+                  aria-hidden="true"
+                ></span>
               </button>
             </div>
             <div class="secondary-info truncate">
@@ -721,15 +719,16 @@
                 class="obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
                 @click="handleLinkAction(object)"
               >
-                <i
+                <span
                   :class="
                     object.id_object
-                      ? 'fad fa-external-link fa-fw'
+                      ? 'ui-icon ui-icon-external-link'
                       : !urlParams.id
-                        ? 'fad fa-edit fa-fw'
-                         : 'hidden'
+                        ? 'ui-icon ui-icon-edit'
+                        : 'hidden'
                   "
-                ></i>
+                  aria-hidden="true"
+                ></span>
               </button>
             </div>
             <div v-if="object.id_object" class="flex secondary-info truncate">
@@ -737,7 +736,7 @@
                 class="focus:outline-none mr-2"
                 @click="showObjectPricing(object)"
               >
-                <i class="fad fa-folder-tree fa-fw text-indigo-400"></i>
+                <span class="ui-icon ui-icon-folder-tree text-indigo-400" aria-hidden="true"></span>
               </button>
               <span v-if="object.monthly" class="truncate"
                 >[ месечни такси:
@@ -758,7 +757,7 @@
                 @click="handleLinkAction(object)"
                 class="focus:outline-none mr-2"
               >
-                <i class="fad fa-folder-tree fa-fw text-indigo-400"></i>
+                <span class="ui-icon ui-icon-folder-tree text-indigo-400" aria-hidden="true"></span>
               </button>
               <span class="truncate"
                 >[ {{ object.service_name }} {{ object.quantity }}
@@ -899,15 +898,16 @@
                 class="obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
                 @click="handleLinkAction(object)"
               >
-                <i
+                <span
                   :class="
                     object.id_object || object.services
-                      ? 'fad fa-external-link fa-fw'
+                      ? 'ui-icon ui-icon-external-link'
                       : !urlParams.id
-                        ? 'fad fa-edit fa-fw'
-                         : 'hidden'
+                        ? 'ui-icon ui-icon-edit'
+                        : 'hidden'
                   "
-                ></i>
+                  aria-hidden="true"
+                ></span>
               </button>
             </div>
             <div class="secondary-info truncate">
@@ -1085,15 +1085,16 @@
                 class="obj-link invisible ml-auto mr-2 focus:outline-none focus:shadow-outline transition ease-in-out duration-200"
                 @click="handleLinkAction(object)"
               >
-                <i
+                <span
                   :class="
                     object.id_object
-                      ? 'fad fa-external-link fa-fw'
+                      ? 'ui-icon ui-icon-external-link'
                       : !urlParams.id
-                        ? 'fad fa-edit fa-fw'
-                         : 'hidden'
+                        ? 'ui-icon ui-icon-edit'
+                        : 'hidden'
                   "
-                ></i>
+                  aria-hidden="true"
+                ></span>
               </button>
             </div>
             <div
@@ -1163,7 +1164,7 @@
             €
           </div>
           <button @click="closeObjectPricingModal()" class="p-2 text-xs">
-            <i class="fal fa-times fa-fw"></i>
+            <span class="ui-icon ui-icon-close" aria-hidden="true"></span>
           </button>
         </div>
       </template>
@@ -1237,14 +1238,10 @@
                     @click="toggleObjectDetailMonthlyPricing(index)"
                     class="w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500"
                   >
-                    <i
-                      :class="
-                        objectMonthlyDetailIndex === index
-                          ? 'fa-chevron-up'
-                          : 'fa-chevron-down'
-                      "
-                      class="fa fa-fw"
-                    ></i>
+                    <span
+                      :class="objectMonthlyDetailIndex === index ? 'ui-icon ui-icon-up' : 'ui-icon ui-icon-down'"
+                      aria-hidden="true"
+                    ></span>
                   </button>
                 </div>
 
@@ -1339,12 +1336,10 @@
                   @click="objectDiscountDetail = !objectDiscountDetail"
                   class="w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500"
                 >
-                  <i
-                    :class="
-                      objectDiscountDetail ? 'fa-chevron-up' : 'fa-chevron-down'
-                    "
-                    class="fa fa-fw"
-                  ></i>
+                  <span
+                    :class="objectDiscountDetail ? 'ui-icon ui-icon-up' : 'ui-icon ui-icon-down'"
+                    aria-hidden="true"
+                  ></span>
                 </button>
               </div>
               <template v-if="objectDiscountDetail">
@@ -1444,7 +1439,7 @@
             ...
           </div>
           <button @click="closeObjectsPricingModal()" class="p-2 text-xs">
-            <i class="fal fa-times fa-fw"></i>
+            <span class="ui-icon ui-icon-close" aria-hidden="true"></span>
           </button>
         </div>
       </template>
@@ -1501,14 +1496,10 @@
                     @click="toggleObjectsPricingIndex(index)"
                     class="w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500"
                   >
-                    <i
-                      :class="
-                        objectsPricingTreeIndex === index
-                          ? 'fa-chevron-up'
-                          : 'fa-chevron-down'
-                      "
-                      class="fa fa-fw"
-                    ></i>
+                    <span
+                      :class="objectsPricingTreeIndex === index ? 'ui-icon ui-icon-up' : 'ui-icon ui-icon-down'"
+                      aria-hidden="true"
+                    ></span>
                   </button>
                 </div>
                 <div
@@ -1589,14 +1580,10 @@
                             @click="toggleObjectDetailMonthlyPricing(index)"
                             class="w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500"
                           >
-                            <i
-                              :class="
-                                objectMonthlyDetailIndex === index
-                                  ? 'fa-chevron-up'
-                                  : 'fa-chevron-down'
-                              "
-                              class="fa fa-fw"
-                            ></i>
+                            <span
+                              :class="objectMonthlyDetailIndex === index ? 'ui-icon ui-icon-up' : 'ui-icon ui-icon-down'"
+                              aria-hidden="true"
+                            ></span>
                           </button>
                         </div>
 
@@ -1702,14 +1689,10 @@
                           @click="objectDiscountDetail = !objectDiscountDetail"
                           class="w-6 h-6 flex flex-none items-center justify-center text-xs text-black focus:outline-none hover:text-blue-500"
                         >
-                          <i
-                            :class="
-                              objectDiscountDetail
-                                ? 'fa-chevron-up'
-                                : 'fa-chevron-down'
-                            "
-                            class="fa fa-fw"
-                          ></i>
+                          <span
+                            :class="objectDiscountDetail ? 'ui-icon ui-icon-up' : 'ui-icon ui-icon-down'"
+                            aria-hidden="true"
+                          ></span>
                         </button>
                       </div>
                       <template v-if="objectDiscountDetail">
@@ -1946,10 +1929,11 @@
       <div
         class="flex flex-shrink-0 h-8 items-center text-indigo-500 truncate mr-2"
       >
-        <i
+        <span
           @click="showClientNote = !showClientNote"
-          class="fad fa-info-circle text-2xl mr-2 cursor-pointer"
-        ></i>
+          class="ui-icon ui-icon-info text-2xl mr-2 cursor-pointer"
+          aria-hidden="true"
+        ></span>
         <div class="text-xs truncate">{{ clientPrefferedInvoicePayment }}</div>
       </div>
       <div

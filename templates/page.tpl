@@ -29,7 +29,7 @@
     <script type="text/javascript" language="javascript" src="js/suggest.js?version=1"></script>
     <script type="text/javascript" language="javascript" src="js/framework.js"></script>
     <script type="text/javascript" language="javascript" src="js/framework_general.js"></script>
-    <script type="text/javascript" language="javascript" src="js/common_dialogs.js?version=2"></script>
+    <script type="text/javascript" language="javascript" src="js/common_dialogs.js?version=3"></script>
     <script type="text/javascript" language="javascript" src="js/autoselect.js"></script>
       <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=10"></script>
       <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=5"></script>
@@ -37,7 +37,7 @@
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
 
 	<link href="css/fa5/css/all.css" rel="stylesheet" type="text/css" />
-<link href="css/ui-fa7-icons.css?version=19" rel="stylesheet" type="text/css">
+<link href="css/ui-fa7-icons.css?version=22" rel="stylesheet" type="text/css">
     {*<link href="css/bs3/iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" type="text/css">*}
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
@@ -50,7 +50,7 @@
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=3" rel="stylesheet" type="text/css">
 <link href="css/ui-refresh-nomenclatures.css?version=53" rel="stylesheet" type="text/css">
-    <link href="css/ui-final-migration.css?version=3" rel="stylesheet" type="text/css">
+    <link href="css/ui-final-migration.css?version=4" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 
     <script type="text/javascript" language="javascript">

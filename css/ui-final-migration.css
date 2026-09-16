@@ -213,6 +213,242 @@ body.ui-final-page-setup-ppp .ui-setup-ppp-report > .ui-final-result {
     min-height: 260px;
 }
 
+/* PPP editor: the protocol is a workspace, not a narrow legacy popup. */
+body.ui-final-page-ppp .ui-ppp-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
+body.ui-final-page-ppp .ui-ppp-editor {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 10px 12px;
+    background: #edf3f7;
+}
+
+body.ui-final-page-ppp .ui-ppp-header,
+body.ui-final-page-ppp .ui-ppp-transfer,
+body.ui-final-page-ppp .ui-ppp-details,
+body.ui-final-page-ppp .ui-ppp-footer {
+    border: 1px solid #c3d3df;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+body.ui-final-page-ppp .ui-ppp-header {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    background: #315c7d;
+    color: #ffffff;
+}
+
+body.ui-final-page-ppp .ui-ppp-title,
+body.ui-final-page-ppp .ui-ppp-section-heading,
+body.ui-final-page-ppp .ui-ppp-actions,
+body.ui-final-page-ppp .ui-ppp-status-actions,
+body.ui-final-page-ppp .ui-ppp-primary-actions,
+body.ui-final-page-ppp .ui-ppp-document-meta {
+    display: flex;
+    align-items: center;
+}
+
+body.ui-final-page-ppp .ui-ppp-title {
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+body.ui-final-page-ppp .ui-ppp-document-meta {
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+body.ui-final-page-ppp .ui-ppp-document-meta label,
+body.ui-final-page-ppp .ui-ppp-audit label {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    color: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+body.ui-final-page-ppp .ui-ppp-document-meta .form-control {
+    width: 58px;
+    min-height: 28px;
+    padding: 3px 6px;
+    border: 0;
+    background: rgba(255, 255, 255, .96);
+    color: #243447;
+    font-size: 12px;
+    text-align: center;
+}
+
+body.ui-final-page-ppp .ui-ppp-document-meta label:first-child .form-control {
+    width: 70px;
+}
+
+body.ui-final-page-ppp .ui-ppp-date-separator {
+    padding-top: 12px;
+    font-weight: 700;
+}
+
+body.ui-final-page-ppp .ui-ppp-transfer,
+body.ui-final-page-ppp .ui-ppp-details {
+    padding: 10px 12px;
+}
+
+body.ui-final-page-ppp .ui-ppp-field-label {
+    display: block;
+    margin: 0 0 3px;
+    color: #4b6175;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+body.ui-final-page-ppp .ui-ppp-transfer .row,
+body.ui-final-page-ppp .ui-ppp-details .row {
+    margin-right: -4px;
+    margin-left: -4px;
+}
+
+body.ui-final-page-ppp .ui-ppp-transfer [class*="col-"],
+body.ui-final-page-ppp .ui-ppp-details [class*="col-"] {
+    padding: 4px;
+}
+
+body.ui-final-page-ppp .ui-ppp-transfer .input-group {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+}
+
+body.ui-final-page-ppp .ui-ppp-transfer .input-group > .form-control,
+body.ui-final-page-ppp .ui-ppp-details .form-control {
+    min-width: 0;
+    border-color: #b8c8d8;
+}
+
+body.ui-final-page-ppp .ui-ppp-inventory {
+    display: flex;
+    min-height: 270px;
+    flex: 1 1 270px;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #b9cbd8;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+body.ui-final-page-ppp .ui-ppp-section-heading {
+    min-height: 34px;
+    gap: 7px;
+    padding: 6px 10px;
+    border-bottom: 1px solid #c3d3df;
+    background: #e4eef6;
+    color: #315c7d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.ui-final-page-ppp .ui-ppp-result-frame,
+body.ui-final-page-ppp .ui-ppp-result {
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+}
+
+body.ui-final-page-ppp .ui-final-workspace #result.ui-ppp-result {
+    height: auto !important;
+    max-height: none !important;
+    overflow: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+}
+
+body.ui-final-page-ppp .ui-ppp-result #result_data,
+body.ui-final-page-ppp .ui-ppp-result #result_data.body-content {
+    max-height: none !important;
+    overflow: auto !important;
+}
+
+body.ui-final-page-ppp .ui-ppp-footer {
+    overflow: hidden;
+}
+
+body.ui-final-page-ppp .ui-ppp-actions {
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #d3dfe8;
+    background: #f5f8fb;
+}
+
+body.ui-final-page-ppp .ui-ppp-status-actions,
+body.ui-final-page-ppp .ui-ppp-primary-actions {
+    gap: 6px;
+}
+
+body.ui-final-page-ppp .ui-ppp-actions .btn {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 0;
+}
+
+body.ui-final-page-ppp .ui-ppp-confirm {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    gap: 6px;
+    margin: 0 6px 0 0;
+    color: #315c7d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+body.ui-final-page-ppp .ui-ppp-confirm input {
+    width: 16px;
+    height: 16px;
+    accent-color: #1769c2;
+}
+
+body.ui-final-page-ppp .ui-ppp-audit {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 7px 10px;
+    background: #ffffff;
+}
+
+body.ui-final-page-ppp .ui-ppp-audit label {
+    color: #66788a;
+}
+
+body.ui-final-page-ppp .ui-ppp-audit .form-control {
+    min-width: 0;
+    height: 27px;
+    padding: 3px 6px;
+    border-color: #d5e0e8;
+    background: #f4f8fb;
+    color: #465a6d;
+    font-size: 12px;
+}
+
 @media (max-width: 720px) {
     body.ui-final-migrated .ui-final-report,
     body.ui-final-migrated .ui-final-workspace,
@@ -237,5 +473,26 @@ body.ui-final-page-setup-ppp .ui-setup-ppp-report > .ui-final-result {
 
     body.ui-final-page-setup-ppp .ui-setup-ppp-actions .input-group {
         justify-content: flex-start;
+    }
+
+    body.ui-final-page-ppp .ui-ppp-editor {
+        padding: 4px;
+    }
+
+    body.ui-final-page-ppp .ui-ppp-header,
+    body.ui-final-page-ppp .ui-ppp-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body.ui-final-page-ppp .ui-ppp-document-meta,
+    body.ui-final-page-ppp .ui-ppp-status-actions,
+    body.ui-final-page-ppp .ui-ppp-primary-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    body.ui-final-page-ppp .ui-ppp-audit {
+        grid-template-columns: 1fr;
     }
 }

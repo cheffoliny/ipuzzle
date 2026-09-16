@@ -161,49 +161,6 @@
 			document.getElementById( 'nIDDestName' ).value = 0;
 		}
 		
-		function getWindowWidth() {
-			var ww = 0;
-			if( self.innerWidth )
-				ww = self.innerWidth;
-			else if( document.documentElement && document.documentElement.clientWidth )
-				ww = document.documentElement.clientWidth;
-			else if( document.body )
-				ww = document.body.clientWidth;
-			
-			return ww;
-		}
-		
-		function getWindowHeight()
-		{
-			var wh = 0;
-			if( self.innerHeight )
-				wh = self.innerHeight;
-			else if( document.documentElement && document.documentElement.clientHeight )
-				wh = document.documentElement.clientHeight;
-			else if( document.body )
-				wh = document.body.clientHeight;
-			
-			return wh;
-		}
-		
-		function resizeHandler()
-		{
-			var winHeight = getWindowHeight();
-			var winWidth = getWindowWidth();
-			
-			if( document.getElementById( 'content' ) )
-			{
-				if( winWidth != 0 && winHeight != 0 )
-				{
-					if( winWidth >= 150 && winHeight >= 150 )
-					{
-						document.getElementById( 'content' ).style.height = winHeight + "px";
-						document.getElementById( 'content' ).style.width = ( winWidth - 50 ) + "px";
-					}
-				}
-			}
-		}
-		
 		function cancelPPP()
 		{
 			if( confirm( 'Наистина ли желаете да анулирате?' ) )
@@ -252,19 +209,10 @@
 		}
 		
 	</script>
-	<style>
-		#result_data {
-            overflow: hidden !important;
-			max-height: 55% !important;
-        }
-	</style>
-
 {/literal}
 
-<body onresize="resizeHandler();" onload="resizeHandler();">
-
-<div class="content">
-<form action="" method="POST" name="form1" id="form1" onsubmit="return submit_form();">
+<main class="ui-ppp-page">
+<form action="" method="POST" name="form1" id="form1" class="ui-ppp-editor" onsubmit="return submit_form();">
 	
 	<input type="hidden" name="sActiceElement" id="sActiveElement" value=""> 				<!-- Активен Елемент -->
 	<input type="hidden" name="sErrorElement" id="sErrorElement" value=""> 					<!-- Елемент, върнат при грешка -->
@@ -288,127 +236,106 @@
 	<input type="hidden" name="nIDPerson" id="nIDPerson" value="{$nIDPerson}" />
 	<input type="hidden" name="hash" id="hash" value="" />
 
-	<div class="row nav-tabs nav-intelli py-1">
-		<div class="col pt-2 px-5">
-			<h6 class="text-white">ПРИЕМО-ПРЕДАВАТЕЛЕН ПРОТОКОЛ</h6>
-		</div>
-		<div class="col">
-			<div class="input-group">
-				<span class="input-group-addon">#</span>
-				<span class="input-group-addon mr-3">
-					<input type="text" name="nID" id="nID"	 size="5" class="form-control" value="{$nID|default:''}" readonly="readonly" />
-				</span>
-				<span class="input-group-addon text-white mx-3"> / </span>
-				<span class="input-group-addon">
-					<input type="text" name="nDay"	 id="nDay"	 size="2" class="form-control in" readonly="readonly" />
-				</span>
-				<span class="input-group-addon">
-					<input type="text" name="nMonth" id="nMonth" size="2" class="form-control" readonly="readonly" />
-				</span>
-				<span class="input-group-addon">
-					<input type="text" name="nYear"  id="nYear"  size="4" class="form-control" readonly="readonly" />
-				</span>
-			</div>
-		</div>
-	</div>
-	<div class="container-fluid bg-light">
-		<div class="row pt-2">
-			<div class="col">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend">
-						<span class="far fa-upload fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
-					</div>
-					<select class="form-control" name="sSendType" id="sSendType" onchange="nullSentType();">
-						<option value="">-- Тип Предаващ --</option>
-						<option value="object">Обект</option>
-						<option value="storagehouse">Склад</option>
-						<option value="person">Служител</option>
-						<option value="client">Доставчик</option>
-					</select>
-				</div>
-			</div>
-			<div class="col">
-				<div class="input-group input-group-sm">
-					<div class="input-group-prepend">
-						<span class="far fa-download fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
-					</div>
-					<select name="sReceiveType" id="sReceiveType" class="form-control" onchange="nullReceivedType();">
-						<option value="">-- Тип Получаващ --</option>
-						<option value="object">Обект</option>
-						<option value="storagehouse">Склад</option>
-						<option value="person">Служител</option>
-						<option value="client">Доставчик</option>
-					</select>
-				</div>
-			</div>
-		</div>
-		<div class="row py-1">
-			<div class="col">
-				<div class="input-group input-group-sm suggest">
-					<div class="input-group-prepend">
-						<span class="fas fa-upload fa-fw" data-fa-transform="right-22 down-10" title="Тип Предаващ...."></span>
-					</div>
-					<input type="text" name="sSourceName" id="sSourceName" class="form-control suggest" suggest="suggest" queryType="pppSourceName" queryParams="sSendType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на предаващия..." />
-				</div>
-			</div>
-			<div class="col">
-				<div class="input-group input-group-sm suggest">
-					<div class="input-group-prepend">
-						<span class="fas fa-download fa-fw" data-fa-transform="right-22 down-10" title="Тип Приемащ..."></span>
-					</div>
-					<input type="text" name="sDestName" id="sDestName" class="form-control bg-aqua-active" suggest="suggest"  queryType="pppDestName" queryParams="sReceiveType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на приемащия..." />
-				</div>
-			</div>
-		</div>
+    <header class="ui-ppp-header">
+        <div class="ui-ppp-title"><span class="ui-icon ui-icon-document" aria-hidden="true"></span> Приемо-предавателен протокол</div>
+        <div class="ui-ppp-document-meta" aria-label="Данни за протокола">
+            <label>№<input type="text" name="nID" id="nID" class="form-control" value="{$nID|default:''}" readonly="readonly" /></label>
+            <span class="ui-ppp-date-separator" aria-hidden="true">/</span>
+            <label>Ден<input type="text" name="nDay" id="nDay" class="form-control" readonly="readonly" /></label>
+            <label>Месец<input type="text" name="nMonth" id="nMonth" class="form-control" readonly="readonly" /></label>
+            <label>Година<input type="text" name="nYear" id="nYear" class="form-control" readonly="readonly" /></label>
+        </div>
+    </header>
 
-		<div class="row w-100 pt-2 text-primary"><div class="col px-4 py-1">Списък на материални запаси</div></div>
+    <section class="ui-ppp-transfer" aria-label="Данни за предаване">
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sSendType">Предаващ</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-upload" aria-hidden="true"></span></div>
+                    <select class="form-control" name="sSendType" id="sSendType" onchange="nullSentType();">
+                        <option value="">-- Тип предаващ --</option>
+                        <option value="object">Обект</option>
+                        <option value="storagehouse">Склад</option>
+                        <option value="person">Служител</option>
+                        <option value="client">Доставчик</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sReceiveType">Получаващ</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-download" aria-hidden="true"></span></div>
+                    <select name="sReceiveType" id="sReceiveType" class="form-control" onchange="nullReceivedType();">
+                        <option value="">-- Тип получаващ --</option>
+                        <option value="object">Обект</option>
+                        <option value="storagehouse">Склад</option>
+                        <option value="person">Служител</option>
+                        <option value="client">Доставчик</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sSourceName">Име на предаващия</label>
+                <div class="input-group input-group-sm suggest">
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-upload" aria-hidden="true"></span></div>
+                    <input type="text" name="sSourceName" id="sSourceName" class="form-control suggest" suggest="suggest" queryType="pppSourceName" queryParams="sSendType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на предаващия" />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sDestName">Име на получаващия</label>
+                <div class="input-group input-group-sm suggest">
+                    <div class="input-group-prepend"><span class="ui-icon ui-icon-download" aria-hidden="true"></span></div>
+                    <input type="text" name="sDestName" id="sDestName" class="form-control bg-aqua-active" suggest="suggest" queryType="pppDestName" queryParams="sReceiveType" onchange="rememberErrorElement(); setTimeout( 'refreshMOL()', 500 );" placeholder="ID или име на получаващия" />
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="ui-ppp-inventory" aria-labelledby="pppInventoryTitle">
+        <div class="ui-ppp-section-heading" id="pppInventoryTitle"><span class="ui-icon ui-icon-cubes" aria-hidden="true"></span> Материални запаси</div>
+        <div class="ui-ppp-result-frame">
+            <div id="result" class="ui-ppp-result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" rpc_autonumber="on"></div>
+        </div>
+    </section>
 
-		<div class="row px-0 bg-light" id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 380px; overflow: auto;"></div>
-{*		<div class="w-100 px-0 py-1" style="height: 350px !important; border: 1px solid yellow; overflow: hidden;">*}
-{*			<div id="result" rpc_excel_panel="off" rpc_paging="off" rpc_resize="off" style="height: 350px !important;"></div>*}
-{*		</div>*}
+    <section class="ui-ppp-details" aria-label="Допълнителни данни">
+        <div class="row g-2">
+            <div class="col-12">
+                <label class="ui-ppp-field-label" for="sNote">Допълнителна информация</label>
+                <textarea class="form-control" rows="2" id="sNote" name="sNote" placeholder="Бележка към протокола"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sSentBy">Предал</label>
+                <input type="text" name="sSentBy" id="sSentBy" class="form-control" placeholder="Име на предаващия" />
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="ui-ppp-field-label" for="sReceivedBy">Получил</label>
+                <input type="text" name="sReceivedBy" id="sReceivedBy" class="form-control" placeholder="Име на получаващия" />
+            </div>
+        </div>
+    </section>
 
-		<div class="row py-1">
-			<div class="col py-0 ">
-				<textarea class="w-100" rows="2" id="sNote" name="sNote" placeholder=" Допълнителна информация..." ></textarea>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col"><input type="text" name="sSentBy" id="sSentBy" class="form-control" placeholder="Предаващ..." /></div>
-			<div class="col"><input type="text" name="sReceivedBy" id="sReceivedBy" class="form-control" placeholder="Получил..." /></div>
-		</div>
-
-		<div class="row py-2" id="search">
-			<div class="col">
-				<input type="checkbox" name="nClosed" id="nClosed" class="clear" /> Потвърди
-				<button class="btn btn-sm btn-danger" id="cancelRecord" name="cancelRecord" onclick="return cancelPPP();" title="Анулиране на ППП"><i class="far fa-times"></i> Анулирай</button>
-			</div>
-			<div class="col text-right">
-				<button class="btn btn-sm btn-success"	onclick="setPPPElement( 0 );" id="addnom" name="addnom" type="button"><i class="far fa-plus"></i> Добави </button>
-				<button class="btn btn-sm btn-info" type="submit" id="send"><i class="far fa-save"></i> Запиши </button>
-{*				<button class="btn btn-sm btn-danger"	onClick="loadXMLDoc2( 'purgeDatabase', 3 );"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>*}
-				<button class="btn btn-sm btn-primary"	onClick="printPDF();"><i class="far fa-file-pdf"></i> Разпечатай </button>
-			</div>
-		</div>
-
-		<div class="row fixed-bottom bg-light mx-2 mb-2">
-			<div class="col px-1">
-				<input type="text" name="sCreatedBy" id="sCreatedBy"	class="form-control" readonly="readonly" title="Създал"	placeholder="Създал..." />
-			</div>
-			<div class="col px-0">
-				<input type="text" name="sEditedBy"	id="sEditedBy" class="form-control" readonly="readonly" title="Редактирал"	placeholder="Редактирал..." />
-			</div>
-			<div class="col px-1">
-				<input type="text" name="sConfirmedBy" id="sConfirmedBy" class="form-control" readonly="readonly" title="Потвърдил"	placeholder="Потвърдил..." />
-			</div>
-		</div>
-	</div>
+    <footer class="ui-ppp-footer">
+        <div class="ui-ppp-actions" id="search">
+            <div class="ui-ppp-status-actions">
+                <label class="ui-ppp-confirm"><input type="checkbox" name="nClosed" id="nClosed" class="clear" /> <span>Потвърди</span></label>
+                <button class="btn btn-sm btn-danger" id="cancelRecord" name="cancelRecord" type="button" onclick="return cancelPPP();" title="Анулиране на ППП"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Анулирай</button>
+            </div>
+            <div class="ui-ppp-primary-actions">
+                <button class="btn btn-sm btn-success" onclick="setPPPElement( 0 );" id="addnom" name="addnom" type="button"><span class="ui-icon ui-icon-plus" aria-hidden="true"></span> Добави</button>
+                <button class="btn btn-sm btn-info" type="submit" id="send"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запиши</button>
+                <button class="btn btn-sm btn-primary" type="button" onclick="printPDF();"><span class="ui-icon ui-icon-file-pdf" aria-hidden="true"></span> Разпечатай</button>
+            </div>
+        </div>
+        <div class="ui-ppp-audit" aria-label="История на протокола">
+            <label>Създал<input type="text" name="sCreatedBy" id="sCreatedBy" class="form-control" readonly="readonly" placeholder="Не е посочен" /></label>
+            <label>Редактирал<input type="text" name="sEditedBy" id="sEditedBy" class="form-control" readonly="readonly" placeholder="Не е посочен" /></label>
+            <label>Потвърдил<input type="text" name="sConfirmedBy" id="sConfirmedBy" class="form-control" readonly="readonly" placeholder="Не е посочен" /></label>
+        </div>
+    </footer>
 </form>
-
-</div>
-</body>
+</main>
 
 {literal}
 	<script>
