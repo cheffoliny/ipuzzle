@@ -12,6 +12,7 @@
 
 
 	{if $page eq 'object_geo'}
+	<script src="js/google_maps_loader.js?version=1"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 	{/if}
@@ -25,7 +26,7 @@
     {/literal}
 	</script>
     {*<script src="js/dropdown.js"			type="text/javascript"></script>*}
-    <script type="text/javascript" language="javascript" src="js/suggest_prototype.js"></script>
+    <script type="text/javascript" language="javascript" src="js/suggest_prototype.js?version=2"></script>
     <script type="text/javascript" language="javascript" src="js/suggest.js?version=1"></script>
     <script type="text/javascript" language="javascript" src="js/framework.js"></script>
     <script type="text/javascript" language="javascript" src="js/framework_general.js"></script>
@@ -49,7 +50,7 @@
     <link href="css/ui-refresh-actions.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=3" rel="stylesheet" type="text/css">
-<link href="css/ui-refresh-nomenclatures.css?version=54" rel="stylesheet" type="text/css">
+<link href="css/ui-refresh-nomenclatures.css?version=55" rel="stylesheet" type="text/css">
     <link href="css/ui-final-migration.css?version=5" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 

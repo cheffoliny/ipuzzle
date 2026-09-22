@@ -20,14 +20,7 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 //	$aGoogleKey['misho_ruse']				= "ABQIAAAA_HX4nq6cEtwYxoZOoHwsoRQXbLfHs64ZxiPj7gaGyb9LYpEnFxTLl7idOPXVifL2BLSsj2GRoz4A4Q";
 		
 	
-	switch( $_SERVER["HTTP_HOST"] ) {
-		case '213.91.252.171' : 
-			$GoogleKey = $aGoogleKey['me'];
-			break;
-		default:
-			$GoogleKey = $aGoogleKey['telepol.net'];
-			break;
-	}
+	$googleMapsConfig = require __DIR__ . '/../config/google_maps.inc.php';
 
 //	$nLanMin		= !isset($_GET['nLanMin']) ? 0 : $_GET['nLanMin'];
 //	$nLanMax		= !isset($_GET['nLanMax']) ? 0 : $_GET['nLanMax'];
@@ -65,12 +58,12 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 
 		GROUP BY p.id
 	";
-	echo $sQuery;
 	$aObjects = $oBase->select($sQuery);
         //RAZMENENI SA NA REALNATA
-	$nCenterLat = $aObjects[0]['office_geo_lan'];
-	$nCenterLan = $aObjects[0]['office_geo_lat'];	
-	switch ($_GET['tType']) {
+	$nCenterLat = (float) ($aObjects[0]['office_geo_lan'] ?? 25.4858);
+	$nCenterLan = (float) ($aObjects[0]['office_geo_lat'] ?? 42.7339);
+	$sObjects = '';
+	switch ($tType) {
 		case "known":		
 			$sObjects = $aObjects[0]['known_objects'];
 		break;
@@ -91,15 +84,25 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 		$sObjects = implode("@",$aObjects);			
 	}
 ?>
+<script src="../js/google_maps_loader.js?version=1"></script>
 <script>
-	var bgMaps;
+	var bgMap;
+	var googleMapsConfig = <?=json_encode($googleMapsConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR); ?>;
 	var markers=[];
+	var stopWaitingForTiles = function () {};
+	function mapError(message) {
+		stopWaitingForTiles();
+		var error = document.getElementById('map_error');
+		error.textContent = message;
+		error.hidden = false;
+	}
 	var bShowAllObjects = false;
 	var gMaps			= function() {      
 		var nCenterLat	= document.getElementById("nCenterLat").value;
 		var nCenterLan	= document.getElementById("nCenterLan").value;
         var latlng  = new google.maps.LatLng(nCenterLan,nCenterLat);
-        var myOptions = {
+		var myOptions = {
+			mapId: googleMapsConfig.mapId || 'DEMO_MAP_ID',
 			zoom: 12,
 			zoomControl: true,
 			panControl: false,
@@ -109,24 +112,22 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 			center: latlng,			
 			mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        bgMap = new google.maps.Map(document.getElementById('map_canvas'),myOptions);                                            
+        bgMap = new google.maps.Map(document.getElementById('map_canvas'),myOptions);
+		stopWaitingForTiles = IpuzzleGoogleMaps.waitForTiles(bgMap, function () {}, mapError);
         //google.maps.event.trigger(bgMap,'resize');     
 		google.maps.event.addListener(bgMap, 'idle', loadObjects);
 	}
 	var init = function() {
-		var script = document.createElement("script");
-		script.type = "text/javascript";
-		script.src = "https://maps.google.com/maps/api/js?sensor=false&callback=gMaps&key=<?=$GoogleKey; ?>";
-		document.body.appendChild(script);		
+		IpuzzleGoogleMaps.load(googleMapsConfig, gMaps, mapError);
 	}
 	
 	var showSelectedObjects = function(e) {		
-		var sel = e.target.parentNode;						
+		var sel = e.currentTarget;
 		for (var i=0; i<sel.options.length; i++) {			
 			if (markers[sel.options[i].value] && sel.options[i].selected) {
-				markers[sel.options[i].value].setVisible(true);
+				markers[sel.options[i].value].map = bgMap;
 			} else if(markers[sel.options[i].value] && !sel.options[i].selected) {
-				markers[sel.options[i].value].setVisible(false);
+				markers[sel.options[i].value].map = null;
 			} else if(!markers[sel.options[i].value]) {
 				//alert("Не са въведени гео-координати за обекта!");
 			}
@@ -174,7 +175,7 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 					bShowAllObjects=true;
 				}
 				for (var i in markers) {
-					if (markers.hasOwnProperty(i)) markers[i].setVisible(bShowAllObjects);					
+					if (markers.hasOwnProperty(i)) markers[i].map = bShowAllObjects ? bgMap : null;
 				}
 				for(i=0;i<listObjects.options.length;i++) {
 					listObjects.options[i].selected = bShowAllObjects;											
@@ -189,14 +190,12 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 			var title   = "[" +aObjects[i].split('::')[0]+"] "+aObjects[i].split('::')[1];
 			var id		= parseInt(aObjects[i].split('::')[4]);
 			if (geo_lat!=0 && geo_lan!=0) {
-				markers[id] = new google.maps.Marker({
+				markers[id] = new google.maps.marker.AdvancedMarkerElement({
 										position: new google.maps.LatLng(geo_lat,geo_lan), 							
-										draggable:false,
+										gmpDraggable:false,
 										title:title,
-										map:bgMap,
-										id:id										
+										map:null
 									});	
-				markers[id].setVisible(false);
 			}
 			
 			var optObjects = document.createElement("option");
@@ -225,17 +224,13 @@ global $db_personnel, $db_name_personnel, $db_sod, $db_name_sod;
 <html>	 
 	<body   style="margin:0; padding:0;" onload="init();"> 
 		<form id="mapData" name="mapdata" onsubmit="return( false );" >
-			<input type="hidden" value="<?=$nLanMin; ?>" 	id="nLanMin"  name="nLanMin"/>
-			<input type="hidden" value="<?=$nLanMax; ?>" 	id="nLanMax"   name="nLanMax"/>
-			<input type="hidden" value="<?=$nLatMin; ?>"	id="nLatMin"   name="nLatMin"/>
-			<input type="hidden" value="<?=$nLatMax; ?>" 	id="nLatMax"   name="nLatMax"/>
 			<input type="hidden" value="<?=$nCenterLat; ?>" id="nCenterLat"  name="nCenterLat"/>
 			<input type="hidden" value="<?=$nCenterLan; ?>" id="nCenterLan"  name="nCenterLan" />
-			<input type="hidden" value="<?=$GoogleKey; ?>" 	id="GoogleKey"  name="GoogleKey" />
-			<input type="hidden" value="<?=$sObjects; ?>"	id="sObjects"  name="sObjects" />			
+			<input type="hidden" value="<?=htmlspecialchars($sObjects, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?>"	id="sObjects"  name="sObjects" />
 			<input type="hidden" id="lat" name="lat" />
 			<input type="hidden" id="lon" name="lon" />		
 		 </form>		
-		<div id="map_canvas" style="width:100%; height: 650px;" ></div>	
+		<div id="map_error" role="alert" hidden></div>
+		<div id="map_canvas" style="width:100%; height: 650px;" ></div>
 	</body>
 </html>

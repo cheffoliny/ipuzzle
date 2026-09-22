@@ -23,6 +23,16 @@
 			$periodToH	= Params::get("sPeriodToH", "");
 			$noTest		= Params::get("noTest", 0);
 			$nNum		= Params::get("num", 0);
+			$live = (string) Params::get('archiveLive', '0') === '1'
+				&& Params::get('api_action', 'result') === 'result';
+			if ($live) {
+				// The server clock also handles a day/month rollover in an open popup.
+				$now = time();
+				$periodTo = date('d.m.Y', $now);
+				$periodToH = date('H:i:s', $now);
+				$oResponse->setFormElement('form1', 'sPeriodTo', array(), $periodTo);
+				$oResponse->setFormElement('form1', 'sPeriodToH', array(), date('H:i', $now));
+			}
 			
 			$periodFrom = !empty($periodFrom) ? date("Y-m-d", jsDateToTimestamp($periodFrom)) : date("Y-m")."-01";
 			$periodTo	= !empty($periodTo) ? date("Y-m-d", jsDateToTimestamp($periodTo)) : date("Y-m")."-31";

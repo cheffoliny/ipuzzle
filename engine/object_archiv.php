@@ -55,6 +55,7 @@
 	
 	$sDateFrom = isset($_GET['sDateFrom']) ? $_GET['sDateFrom'] : '';
 	$sDateTo = isset($_GET['sDateTo']) ? $_GET['sDateTo'] : '';
+	$template->assign('archive_live', empty($sDateFrom) && empty($sDateTo));
 	
 	if(!empty($sDateFrom) && !empty($sDateTo)) {
 		$date_first = $sDateFrom;

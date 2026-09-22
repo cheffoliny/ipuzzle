@@ -222,9 +222,11 @@
 							IF (m.is_phone, 'телефон', 'радио') as channel,
 							'Prichinata ne se zapazva nikade!' as reason,
 							arh.alarm as alarm,
-							arh.pass
+							arh.pass,
+							s.play_alarm AS play_alarm
 						FROM {$tables[$i]} arh
 						LEFT JOIN messages m ON m.id = arh.id_msg
+						LEFT JOIN signals s ON s.id = m.id_sig
 						WHERE 1
 							{$where1}
 							{$where}
@@ -245,9 +247,11 @@
 						IF (m.is_phone, 'телефон', 'радио') as channel,
 						'Prichinata ne se zapazva nikade!' as reason,
 						arh.alarm as alarm,
-						arh.pass
+						arh.pass,
+						s.play_alarm AS play_alarm
 					FROM {$tables[$i]} arh
 					LEFT JOIN messages m ON m.id = arh.id_msg
+					LEFT JOIN signals s ON s.id = m.id_sig
 					WHERE 1
 						{$where1}
 						{$where}

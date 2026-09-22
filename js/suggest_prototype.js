@@ -24,10 +24,13 @@ var Class = {
 
 var Abstract = new Object();
 
-Function.prototype.bind = function(object) {
-  var method = this;
-  return function() {
-    method.apply(object, arguments);
+// Modern SDKs rely on native bind's return values and constructor semantics.
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function(object) {
+    var method = this;
+    return function() {
+      return method.apply(object, arguments);
+    }
   }
 }
 
@@ -464,7 +467,8 @@ document.getElementsByClassName = function(className) {
 
 /*--------------------------------------------------------------------------*/
 
-var Element = {
+// Keep the native DOM constructor; legacy callers still use Element.show/hide.
+jQuery.extend(Element, {
   toggle: function() {
     for (var i = 0; i < arguments.length; i++) {
       var element = $(arguments[i]);
@@ -496,7 +500,7 @@ var Element = {
     element = $(element);
     return element.offsetHeight; 
   }
-}
+});
 
 var Toggle = new Object();
 Toggle.display = Element.toggle;

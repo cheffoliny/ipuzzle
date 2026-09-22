@@ -87,6 +87,11 @@
 	$template->assign('pov',$pov);
 	$template->assign('aObject',$aObject);
 	$template->assign('mapCenter', $mapCenter);
+	$googleMapsConfig = require __DIR__ . '/../config/google_maps.inc.php';
+	$template->assign('googleMapsConfigJson', json_encode(
+		$googleMapsConfig,
+		JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR
+	));
 	/* added by Me 25.09.2013 */
 	$template->assign( "isSOD", $isSOD );
 	$template->assign( "isFO", $isFO );

@@ -1,6 +1,55 @@
 {literal}
 <script>
 	rpc_debug = true;
+	var archiveRefreshTimer = null;
+	var archiveRefreshScroll = null;
+
+	function stopArchiveRefresh() {
+		window.clearTimeout(archiveRefreshTimer);
+		archiveRefreshTimer = null;
+	}
+
+	function scheduleArchiveRefresh() {
+		stopArchiveRefresh();
+		if ( !$('archiveLive').checked ) {
+			return;
+		}
+		archiveRefreshTimer = window.setTimeout(function () {
+			// Keep one timer, including while another RPC is still running.
+			scheduleArchiveRefresh();
+			if ( document.hidden || _rpc_blocked ) {
+				return;
+			}
+			var result = $('result');
+			archiveRefreshScroll = { top: result.scrollTop, left: result.scrollLeft };
+			_rpc_focused_element = document.activeElement;
+			$('noTest').value = 0;
+			loadXMLDoc2('result');
+		}, 30000);
+	}
+
+	function pauseArchiveRefresh() {
+		$('archiveLive').checked = false;
+		$('max').value = '';
+		stopArchiveRefresh();
+	}
+
+	function initArchiveRefresh() {
+		['sPeriodFrom', 'sPeriodFromH', 'sPeriodTo', 'sPeriodToH'].forEach(function (id) {
+			$(id).addEventListener('input', pauseArchiveRefresh);
+			// The legacy calendar calls onchange directly rather than dispatching it.
+			$(id).onchange = pauseArchiveRefresh;
+		});
+		$('archiveLive').addEventListener('change', function () {
+			if ( this.checked && !formRefresh() ) {
+				this.checked = false;
+			}
+			scheduleArchiveRefresh();
+		});
+		window.addEventListener('pagehide', stopArchiveRefresh);
+		window.addEventListener('pageshow', scheduleArchiveRefresh);
+		scheduleArchiveRefresh();
+	}
 	
 	function images() {
 		var alarm = $('alarm').value;
@@ -15,7 +64,7 @@
 			}
 			img = img+'&nbsp;&nbsp;';
 			var span = $('images');
-			span.innerHTML = img;			
+			if ( span ) span.innerHTML = img;
 		}
 
 		if ( warn.length > 0 ) {
@@ -26,18 +75,22 @@
 				var img2 = img2+'&nbsp;&nbsp;<img class="ui-signal-image" src="signal_images/'+sig2[0]+'.bmp" alt="" title="'+sig2[2]+'\n'+sig2[1]+'" />';
 			}
 			var span2 = $('images2');
-			span2.innerHTML = img2;
+			if ( span2 ) span2.innerHTML = img2;
 		}
 	}
 	
 	function load() {
-		loadXMLDoc2('result');
+		return formRefresh();
 	}
 
 	function formRefresh() {
+		if ( _rpc_blocked ) {
+			return false;
+		}
 		if ( !validateArchivePeriod() ) {
 			return false;
 		}
+		stopArchiveRefresh();
 		$('noTest').value = 0;
 		loadXMLDoc2('result');
 		return true;
@@ -48,7 +101,11 @@
 			return false;
 		}
 		$('noTest').value = 1;
-		loadDirect(type);
+		try {
+			loadDirect(type);
+		} finally {
+			$('noTest').value = 0;
+		}
 		return true;
 	}	
 
@@ -210,6 +267,7 @@
         </div>
         <div class="col-3 col-sm-3 col-lg-3">
             <div class="input-group input-group-sm ml-1">
+                <input type="checkbox" class="form-check-input position-static align-self-center mx-2" name="archiveLive" id="archiveLive" value="1" {if $archive_live|default:false}checked{/if} title="Автоматично обновяване през 30 секунди до текущия момент" aria-label="Автоматично обновяване през 30 секунди до текущия момент" />
                 <button type="button" class="btn btn-sm btn-success ml-1" onClick="formRefresh();"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
                 <button type="button" class="btn btn-sm btn-danger" onClick="parent.window.close();"><span class="ui-icon ui-icon-close" aria-hidden="true"></span> Затвори </button>
             </div>
@@ -231,12 +289,22 @@
 	initArchiveTimeOptions();
 	normalizeArchiveTimeInput('sPeriodFromH');
 	normalizeArchiveTimeInput('sPeriodToH');
-	loadXMLDoc2('result');
 	
 {literal}
 	rpc_on_exit = function() {
-		images();
+		try {
+			images();
+			if ( archiveRefreshScroll ) {
+				$('result').scrollTop = archiveRefreshScroll.top;
+				$('result').scrollLeft = archiveRefreshScroll.left;
+				archiveRefreshScroll = null;
+			}
+		} finally {
+			scheduleArchiveRefresh();
+		}
 	}
+	initArchiveRefresh();
+	loadXMLDoc2('result');
 {/literal}
 
 	{if !$edit.object_archiv_edit}{literal}

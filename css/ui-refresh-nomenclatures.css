@@ -5019,6 +5019,7 @@ body.ui-refresh-content .ui-object-map .leaflet-control-attribution {
 }
 
 body.ui-refresh-content .ui-object-map-error {
+    display: flex;
     min-height: 42px;
     align-items: center;
     box-sizing: border-box;
