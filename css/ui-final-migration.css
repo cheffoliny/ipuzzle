@@ -449,6 +449,162 @@ body.ui-final-page-ppp .ui-ppp-audit .form-control {
     font-size: 12px;
 }
 
+/* Technical planning keeps two live views open. Give both iframes a real,
+ * bounded workspace so their percentages do not depend on document height. */
+body.ui-final-page-tech-planning .ui-tech-planning-shell {
+    display: block;
+    width: 100%;
+    height: 100vh;
+}
+
+body.ui-final-page-tech-planning .ui-tech-planning-layout {
+    display: grid;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    grid-template-rows: minmax(330px, 1.1fr) minmax(280px, .9fr);
+    gap: 8px;
+    padding: 6px 8px;
+    overflow: hidden;
+}
+
+body.ui-final-page-tech-planning .ui-tech-planning-pane {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid #b9cbd8;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+body.ui-final-page-tech-planning .ui-tech-planning-pane iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* The request listing is used both inside the planning workspace and directly.
+ * Its table owns scrolling; the toolbar never consumes unbounded document height. */
+body.ui-final-page-tech-planning-requests .ui-tech-planning-requests {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    overflow: hidden;
+    background: #edf3f7;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 8px;
+    padding: 7px 9px;
+    border: 1px solid #b9cbd8;
+    border-radius: 6px;
+    background: #e4eef6;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-title,
+body.ui-final-page-tech-planning-requests .ui-tech-request-actions {
+    display: flex;
+    min-height: 32px;
+    align-items: center;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-title {
+    gap: 7px;
+    color: #315c7d;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-controls {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 6px;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-field {
+    min-width: 0;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-field > label {
+    display: block;
+    margin: 0 0 3px;
+    color: #4b6175;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-field .input-group {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-field .form-control {
+    min-width: 0;
+    border-color: #b8c8d8;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-actions {
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-request-actions .btn {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+body.ui-final-page-tech-planning-requests #result.ui-tech-planning-requests-result {
+    position: relative;
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    height: auto !important;
+    max-height: none !important;
+    flex: 1 1 auto;
+    overflow: hidden !important;
+    border: 1px solid #b9cbd8;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+body.ui-final-page-tech-planning-requests #result.ui-tech-planning-requests-result > #result_data.body-content {
+    position: relative !important;
+    inset: auto !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    overflow: auto !important;
+}
+
+body.ui-final-page-tech-planning-requests .ui-tech-planning-requests-result table {
+    min-width: max-content;
+    margin-bottom: 0;
+}
+
 @media (max-width: 720px) {
     body.ui-final-migrated .ui-final-report,
     body.ui-final-migrated .ui-final-workspace,
@@ -494,5 +650,29 @@ body.ui-final-page-ppp .ui-ppp-audit .form-control {
 
     body.ui-final-page-ppp .ui-ppp-audit {
         grid-template-columns: 1fr;
+    }
+
+    body.ui-final-page-tech-planning .ui-tech-planning-layout {
+        grid-template-rows: minmax(300px, 1fr) minmax(260px, .9fr);
+        gap: 4px;
+        padding: 4px;
+    }
+
+    body.ui-final-page-tech-planning-requests .ui-tech-request-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    body.ui-final-page-tech-planning-requests .ui-tech-request-controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.ui-final-page-tech-planning-requests .ui-tech-request-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-height: 720px) {
+    body.ui-final-page-tech-planning .ui-tech-planning-layout {
+        grid-template-rows: minmax(280px, 1fr) minmax(240px, .85fr);
     }
 }

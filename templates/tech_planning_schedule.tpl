@@ -157,6 +157,10 @@
             }
         }
 
+        function planningRowColor(rowNumber) {
+            return rowNumber % 2 ? 'var(--rpc-result-row-odd)' : 'var(--rpc-result-row-even)';
+        }
+
         function planning(person,col,row_num) {
             var id_this = person + ',' + col + ',' +row_num;
             var id;
@@ -164,7 +168,7 @@
 
             if( $('start').value == '0' ) {     // Ако за пръв път маркирваме квадратче
 
-                setPlanningCellColor(id_this, '#612c2c');
+                setPlanningCellColor(id_this, 'var(--rpc-result-selection)');
                 $('start').value = id_this;
                 $('end').value = id_this;
             } else {
@@ -179,10 +183,10 @@
                     if( aStart[0] == aEnd[0] && aStart[1] != aEnd[1]  ) {      // Ако вече имаме повече от едно маркирано квадратче,
                         for( i = aStart[1] ; i <= aEnd[1] ; i++ ) { 			//изчистваме ги,
                             id = aStart[0] + ',' + i + ',' + row_num;
-                            var row_color = row_num % 2 ? '#FFFFFF' : '#F0F0F0';
+                            var row_color = planningRowColor(row_num);
                             setPlanningCellColor(id, row_color);
                         }
-                        setPlanningCellColor(id_this, '#612c2c');         // и маркираме само едно квадратче
+                        setPlanningCellColor(id_this, 'var(--rpc-result-selection)');         // и маркираме само едно квадратче
                         $('start').value = id_this;
                         $('end').value = id_this;
 
@@ -211,24 +215,24 @@
                         if( bad == 0 ) {			// ако е свободно чертая
                             for( i = start ; i <= end ; i++ ) {
                                 id = person + ',' + i + ',' + row_num;
-                                setPlanningCellColor(id, '#612c2c');
+                                setPlanningCellColor(id, 'var(--rpc-result-selection)');
                             }
                         } else { 					// ако не е, изтривам старото и маркирам само новото
-                            var row_color = row_num % 2 ? '#FFFFFF' : '#F0F0F0';
+                            var row_color = planningRowColor(row_num);
                             setPlanningCellColor(aStart.join(','), row_color);
 
                             $('start').value = $('end').value = id_this;
-                            setPlanningCellColor(id_this, '#612c2c');
+                            setPlanningCellColor(id_this, 'var(--rpc-result-selection)');
                         }
                     }
                 } else {			// ако маркираме квадратче на друг ред от реда на последната маркировка
 
                     for( i = aStart[1] ; i <= aEnd[1] ; i++ ) {			// изчистваме последната маркировка
                         id = aStart[0] + ',' + i + ',' + aStart[2];
-                        var row_color = aStart[2] % 2 ? '#FFFFFF' : '#F0F0F0';
+                        var row_color = planningRowColor(aStart[2]);
                         setPlanningCellColor(id, row_color);
                     }
-                    setPlanningCellColor(id_this, '#612c2c');      // и маркираме квадратчето
+                    setPlanningCellColor(id_this, 'var(--rpc-result-selection)');      // и маркираме квадратчето
                     $('start').value = id_this;
                     $('end').value = id_this;
                 }
@@ -531,7 +535,7 @@
 
 <dlcalendar click_element_id="imgDate" input_element_id="date" tool_tip="Изберете дата"></dlcalendar>
 
-<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal ui-nomenclature-list ui-technical-list ui-tech-planning-schedule" role="form">
+<form action="" name="form1" id="form1" onSubmit="return false;" class="form-horizontal ui-nomenclature-list ui-technical-list ui-tech-planning-schedule ui-result-workspace" role="form">
     <input type="hidden" name="start" id="start" value="0" />
     <input type="hidden" name="end" id="end" value="0" />
     <input type="hidden" name="id_request" id="id_request" value="0" />
@@ -558,17 +562,17 @@
                 </select>
             </div>
         </div>
-        <div class="col-auto " id="pDay">
+        <div class="col-auto" id="pDay">
 
-            <div class="input-group input-group-sm">
+            <div class="input-group input-group-sm ui-input-group-inline">
                 <button type="button" class="input-group-addon ui-technical-addon-button" onclick="nextDate('prev');" title="Предишен ден"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
                 <button type="button" class="input-group-addon ui-technical-addon-button" id="imgDate" title="Изберете дата"><span class="ui-icon ui-icon-calendar" aria-hidden="true"></span></button>
                 <input class="form-control form-control-inp75" id="date" name="date" type="text" onkeypress="return formatDate(event, '.');" maxlength="10" readonly title="ДД.ММ.ГГГГ" />
                 <button type="button" class="input-group-append ui-technical-addon-button" onclick="nextDate('next');" title="Следващ ден"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
             </div>
         </div>
-        <div class="col-auto "  id="pMonth">
-            <div class="input-group input-group-sm">
+        <div class="col-auto" id="pMonth">
+            <div class="input-group input-group-sm ui-input-group-inline">
                 <button type="button" class="input-group-addon ui-technical-addon-button" onclick="nextMonth('prev');" title="Предишен месец"><span class="ui-icon ui-icon-left" aria-hidden="true"></span></button>
                 <input class="form-control form-control-inp75" id="dateM" name="dateM" type="text" onkeypress="return formatDate(event, '.');" maxlength="7" readonly title="ММ.ГГГГ" />
                 <button type="button" class="input-group-append ui-technical-addon-button" onclick="nextMonth('next');" title="Следващ месец"><span class="ui-icon ui-icon-right" aria-hidden="true"></span></button>
@@ -576,19 +580,19 @@
 
         </div>
         <div class="col-auto">
-            <div class="input-group input-group-sm">
+            <div class="input-group input-group-sm ui-input-group-inline">
                 <span class="input-group-addon" title="Само техници"><span class="ui-icon ui-icon-users" aria-hidden="true"></span></span>
                 <span class="input-group-append">
-                    <input type="checkbox" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick="getResult();" placeholder="Само техници.." />
+                    <input type="checkbox" checked="checked" name="OnlyTecnicks" id="OnlyTecnicks" onClick="getResult();" title="Само техници" aria-label="Само техници" />
                 </span>
             </div>
         </div>
-        <div class="col-auto text-right pr-3">
+        <div class="col-auto ui-toolbar-actions-end">
             {if $right_edit}
-                <button class="btn btn-sm btn-info" type="button" name="button" onClick="save();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази &nbsp;</button>
+                <button class="btn btn-sm btn-info" type="button" name="button" onClick="save();"><span class="ui-icon ui-icon-save" aria-hidden="true"></span> Запази</button>
             {else}
             {/if}
-            <button class="btn btn-sm btn-info" type="button" onClick="open_tech_teams();"><span class="ui-icon ui-icon-users" aria-hidden="true"></span> Екипи &nbsp; </button>
+            <button class="btn btn-sm btn-info" type="button" onClick="open_tech_teams();"><span class="ui-icon ui-icon-users" aria-hidden="true"></span> Екипи</button>
             <button class="btn btn-sm btn-success" type="button" onClick="getResult();"><span class="ui-icon ui-icon-refresh" aria-hidden="true"></span> Обнови </button>
 
             {* INFO: 26.07.2016 - Скриваме временно бутона за да видим дали ще липсва на някой :) *}
@@ -602,7 +606,7 @@
         </div>
     </div>
 
-    <div id="result" class="ui-technical-result ui-tech-planning-result" style="height: 90%;" rpc_excel_panel="off" rpc_resize="off"></div>
+    <div id="result" class="ui-technical-result ui-tech-planning-result ui-result-fill-host" rpc_excel_panel="off" rpc_resize="off"></div>
 
     {if $nIDRequest}
         {if $nPicNum}

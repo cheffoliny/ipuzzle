@@ -129,12 +129,18 @@ class ApiTechPlanningRequests {
     public function delRequest( DBResponse $oResponse )
     {
 
-        $nID = Params::get( 'id_request', 0 );
+        $sIDs = (string) Params::get('id_request', '');
+        $aIDs = array();
+        foreach (explode(',', $sIDs) as $sID) {
+            $sID = trim($sID);
+            if (ctype_digit($sID) && (int) $sID > 0) {
+                $aIDs[(int) $sID] = (int) $sID;
+            }
+        }
 
         $oDBTechRequests = new DBTechRequests();
 
-        if( $nID > 0 )
-        {
+        foreach ($aIDs as $nID) {
             $aTechRequest = $oDBTechRequests->getRecord($nID);
 
             if(!empty($aTechRequest['id_contract'])) {

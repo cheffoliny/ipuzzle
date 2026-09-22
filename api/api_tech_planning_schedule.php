@@ -555,12 +555,23 @@ class ApiTechPlanningSchedule {
 
     public function planning(DBResponse $oResponse) {
 
-        $nIDRequest = (int) Params::get('id_request', 0);
+        $sRequestIds = trim((string) Params::get('id_request', ''));
+        $aRequestIds = array();
+        foreach (explode(',', $sRequestIds) as $sRequestId) {
+            $sRequestId = trim($sRequestId);
+            if ($sRequestId === '') {
+                continue;
+            }
+            if (!ctype_digit($sRequestId) || (int) $sRequestId <= 0) {
+                throw new Exception('Невалиден избор на заявка');
+            }
+            $aRequestIds[(int) $sRequestId] = (int) $sRequestId;
+        }
         $sData = trim((string) Params::get('date', ''));
         $sStart = trim((string) Params::get('start', ''));
         $sEnd = trim((string) Params::get('end', ''));
 
-        if (empty($nIDRequest)) {
+        if (empty($aRequestIds)) {
             throw new Exception('Изберете заявка');
         }
         if (empty($sStart)) {
@@ -599,11 +610,12 @@ class ApiTechPlanningSchedule {
 
 
 
-        $aRequest = $oDBTechRequests->getRecord($nIDRequest);
-        if (empty($aRequest)) {
-            throw new Exception('Избраната заявка не е намерена');
-        }
-        $nIDObject = isset($aRequest['id_object']) ? (int) $aRequest['id_object'] : 0;
+        foreach ($aRequestIds as $nIDRequest) {
+            $aRequest = $oDBTechRequests->getRecord($nIDRequest);
+            if (empty($aRequest)) {
+                throw new Exception('Избраната заявка не е намерена');
+            }
+            $nIDObject = isset($aRequest['id_object']) ? (int) $aRequest['id_object'] : 0;
 
 
         // ako zaqvkata e ot dogovor i se znae obekta, proverqvame dali obekta ima zadyljeniq
@@ -796,6 +808,8 @@ class ApiTechPlanningSchedule {
 //            }
 //        }
 //  ДА НЕ СЪСТЯВА ППП ИСКАНЕ НА НЕЙКО 17.12.2015 ПРИ СНЕМАНЕ!
+
+        }
 
         $this->result($oResponse);
     }

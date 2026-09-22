@@ -8,7 +8,7 @@
     <link href="css/buttons.css" rel="stylesheet" type="text/css" />
     {*<link href="css/cal.css" rel="stylesheet" type="text/css" />*}
 
-    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css?version=2" rel="stylesheet" type="text/css" />
 
     <script src="js/framework_general.js"	type="text/javascript"></script>
     <script src="js/autoselect.js"			type="text/javascript"></script>

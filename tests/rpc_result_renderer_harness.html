@@ -221,6 +221,19 @@
             check("default export панелът съдържа EXCEL и PDF", defaultContainer.querySelectorAll("#default_result_foother button").length === 2);
             check("default paging панелът е показан", !!defaultContainer.querySelector("#default_paging"));
             check("default autonumber добавя колона #", defaultContainer.querySelectorAll("#default_main th").length === 3);
+            [640, 960, 1920].forEach(function (width) {
+                var previousWidth = techRequestContainer.style.width;
+                techRequestContainer.style.width = width + "px";
+                check("autonumber stays 40px at report width " + width,
+                    Math.abs(techRequestContainer.querySelector("th.rpc-result-index-column").getBoundingClientRect().width - 40) < 1 &&
+                    Math.abs(techRequestRow.cells[0].getBoundingClientRect().width - 40) < 1);
+                techRequestContainer.style.width = previousWidth;
+            });
+            [defaultContainer, offContainer, techRequestContainer].forEach(function (container) {
+                var toolRow = container.querySelector(".rpc-result-bulk-actions").closest("tr");
+                check("bulk actions span the actual columns in " + container.id,
+                    toolRow.cells.length === 1 && toolRow.cells[0].colSpan === container.querySelectorAll("th").length);
+            });
             check("rpc_excel_panel=off скрива и двата export бутона", offContainer.querySelectorAll("#off_result_foother button").length === 0);
             check("rpc_paging=off не създава paging панел", !offContainer.querySelector("#off_paging"));
             check("rpc_autonumber=off премахва колоната #", offContainer.querySelectorAll("#off_main th").length === 2);
@@ -245,7 +258,7 @@
             check("tech planning избраният ред запазва legacy маркирането", techRequestRow.style.backgroundColor === "rgb(44, 44, 97)" && techRequestRow.cells[0].style.color === "rgb(255, 255, 255)");
             check("tech planning rpc_excel_panel=off и rpc_paging=off скриват двата панела", !techRequestContainer.querySelector("#tech_request_result_foother") && !techRequestContainer.querySelector("#tech_request_paging"));
             check("tech planning rpc_resize=off оразмерява data зоната спрямо result контейнера", techRequestContainer.querySelector("#tech_request_result_data").style.height !== "" && techRequestContainer.querySelector("#tech_request_result_data").style.overflow === "auto");
-            check("schedule DOM profile запазва специализираните table класове", techScheduleContainer.querySelector("#tech_schedule_tbl_result").className === "result table-sm w-100 table-borderless mt-1");
+            check("schedule DOM profile запазва специализираните table класове", ["result", "table-sm", "w-100", "table-borderless", "mt-1", "rpc-result-schedule-grid"].every(function (name) { return techScheduleContainer.querySelector("#tech_schedule_tbl_result").classList.contains(name); }));
             check("schedule редовете не получават generic row-selection handlers", techScheduleContainer.querySelector('[data-rpc-report-row="1"]').onmousedown === null);
             check("schedule клетките запазват planning onclick и id атрибутите", schedulePlanningCall && schedulePlanningCall.join(",") === "17,16,1");
             check("schedule избраната клетка получава видимия legacy цвят с приоритет", techScheduleCell.style.backgroundColor === "rgb(97, 44, 44)" && techScheduleCell.style.getPropertyPriority("background-color") === "important");

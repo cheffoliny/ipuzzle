@@ -1,4 +1,45 @@
-/* Filter/action buttons only. Report cells and specialized toolbars are excluded. */
+/* Reusable toolbar alignment and in-flow compound controls. */
+body.ui-refresh-content .ui-toolbar-actions-end {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.ui-refresh-content .ui-toolbar-actions-end > .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .input-group.ui-input-group-inline {
+    flex-wrap: nowrap;
+}
+
+body.ui-refresh-content .input-group.ui-input-group-inline > .input-group-addon,
+body.ui-refresh-content .input-group.ui-input-group-inline > .input-group-append {
+    position: static;
+    flex: 0 0 auto;
+    min-width: 30px;
+    width: auto;
+    pointer-events: auto;
+}
+
+body.ui-refresh-content .input-group.ui-input-group-inline > .form-control {
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+/* Filter/action button appearance. */
 body.ui-refresh-content .table-secondary .btn:not(.btn-link) {
     display: inline-flex;
     min-height: 30px;

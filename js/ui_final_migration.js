@@ -22,6 +22,7 @@
         sales: true,
         setup_ppp: true,
         setup_schedule_month_norms: true,
+        tech_planning_requests: true,
         tech_settings: true,
         tech_timing: true,
         view_money_nomenclatures_overview: true,
@@ -79,6 +80,8 @@
         order_inventory: true,
         ppp: true,
         sales: true,
+        tech_planning: true,
+        tech_planning_requests: true,
         view_money_nomenclatures_overview: true,
         view_states2: true
     };

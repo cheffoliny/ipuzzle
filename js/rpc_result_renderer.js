@@ -70,8 +70,10 @@
         } else if (backgroundColor) {
             cell.style.setProperty("background-color", backgroundColor, "important");
         } else {
-            cell.style.setProperty("background-color", rowIndex % 2 === 0 ? "#FFFFFF" : "#F0F0F0", "important");
+            cell.style.setProperty("background-color", rowIndex % 2 === 0 ? "var(--rpc-result-row-odd)" : "var(--rpc-result-row-even)", "important");
         }
+
+        cell.className = (cell.className ? cell.className + " " : "") + "rpc-schedule-cell";
 
         if (/^\s*planning\s*\(/i.test(planningCall) && planningCellId.length === 3) {
             cell.className = (cell.className ? cell.className + " " : "") + "planning-slot";
@@ -602,10 +604,10 @@
     }
 
     function renderOperation(title, options) {
-        var wrapper = createElement("div", { "class": "col-12 col-sm-12 col-lg-12 my-1 pl-0", id: options.prefix + "operations" });
-        var group = createElement("div", { "class": "btn-group input-group-sm" });
+        var wrapper = createElement("div", { "class": "rpc-result-bulk-actions", id: options.prefix + "operations" });
+        var group = createElement("div", { "class": "input-group input-group-sm" });
         var prepend = createElement("div", { "class": "input-group-prepend" });
-        var select = createElement("select", { "class": options.prefix + "form-control", id: options.prefix + "sel", name: options.prefix + "sel" });
+        var select = createElement("select", { "class": "form-control " + options.prefix + "form-control", id: options.prefix + "sel", name: options.prefix + "sel", "aria-label": title || "Операции" });
         var button = createElement("button", {
             "class": "btn btn-sm btn-dark",
             id: options.prefix + "rpc_btn_action",
@@ -613,12 +615,12 @@
             type: "button"
         });
 
-        prepend.appendChild(createElement("span", { "class": "far fa-check-square fa-fw", "data-fa-transform": "right-22 down-10" }));
+        prepend.appendChild(createElement("span", { "class": "ui-icon ui-icon-check", "aria-hidden": "true" }));
         group.appendChild(prepend);
-        group.appendChild(document.createTextNode(title));
+        group.appendChild(createElement("span", { "class": "rpc-result-bulk-actions-label" }, title || "Операции"));
         select.appendChild(createElement("option", { value: " " }, " "));
         group.appendChild(select);
-        appendIcon(button, "fa fa-check");
+        appendIcon(button, "ui-icon ui-icon-check");
         button.appendChild(document.createTextNode(" Изпълни"));
         button.onclick = function () {
             var handler = global[options.prefix + "just_do_it"];
@@ -697,16 +699,21 @@
     }
 
     function appendToolRows(tbody, fields, options) {
+        var colspan = options.autonumber === "on" ? 1 : 0;
+        for (var fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
+            if (fields[fieldIndex].getAttribute("type") !== "hidden") {
+                colspan++;
+            }
+        }
+        colspan = Math.max(1, colspan);
         for (var i = 0; i < fields.length; i++) {
             var input = firstChild(firstChild(fields[i], "data"), "input");
             if (!input || input.getAttribute("type") !== "checkbox") {
                 continue;
             }
 
-            var colspan = fields.length + 1;
             if (input.getAttribute("exception") !== "true") {
                 var operationRow = createElement("tr");
-                operationRow.appendChild(createElement("td"));
                 var operationCell = createElement("td", { colspan: colspan });
                 operationCell.appendChild(renderOperation(childText(fields[i], "title"), options));
                 operationRow.appendChild(operationCell);
@@ -721,7 +728,6 @@
             for (var toolbarIndex = 0; toolbarIndex < toolbarKinds.length; toolbarIndex++) {
                 if (toolbarKinds[toolbarIndex][0] === "on") {
                     var toolbarRow = createElement("tr");
-                    toolbarRow.appendChild(createElement("td"));
                     var toolbarCell = createElement("td", { colspan: colspan });
                     toolbarCell.appendChild(renderInvoiceToolbar(toolbarKinds[toolbarIndex][1], options));
                     toolbarRow.appendChild(toolbarCell);
@@ -997,8 +1003,8 @@
         var specializedPlanning = options.profile === "techPlanningRequest";
         var planningSchedule = options.profile === "techPlanningSchedule";
         var limitCardPersons = options.profile === "limitCardPersons";
-        var containerClass = planningSchedule ? "w-100 pt-1 result_data" : (limitCardPersons ? "result_data" : (specializedPlanning ? "container-fluid body-content" : "container-fluid body-content pb-5"));
-        var tableClass = planningSchedule ? "result table-sm w-100 table-borderless mt-1" : (limitCardPersons ? "result" : (specializedPlanning ? "table table-sm table-striped table-dark" : "table table-sm table-striped table-dark mb-5"));
+        var containerClass = planningSchedule ? "w-100 pt-1 result_data rpc-result-fill" : (limitCardPersons ? "result_data" : (specializedPlanning ? "container-fluid body-content" : "container-fluid body-content pb-5"));
+        var tableClass = planningSchedule ? "result table-sm w-100 table-borderless mt-1 rpc-result-schedule-grid" : (limitCardPersons ? "result" : (specializedPlanning ? "table table-sm table-striped table-dark" : "table table-sm table-striped table-dark mb-5"));
         var containerId = limitCardPersons ? prefix + "container" : prefix + "result_data";
         var tableId = limitCardPersons ? prefix + "tableResult" : (planningSchedule ? prefix + "tbl_result" : null);
         var container = createElement("div", { id: containerId, "class": containerClass });
@@ -1029,7 +1035,7 @@
 
         var header = createElement("tr", { id: limitCardPersons ? null : prefix + "main", "class": planningSchedule || limitCardPersons ? null : "bg-primary intelliheader" });
         if (options.autonumber === "on" && !limitCardPersons) {
-            header.appendChild(createElement("th", null, "#"));
+            header.appendChild(createElement("th", { "class": "rpc-result-index-column" }, "#"));
         }
         var sortFieldValue = childText(paging, "sfield");
         var sortTypeValue = childText(paging, "stype");
@@ -1092,7 +1098,7 @@
         for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
             var rowNode = rows[rowIndex];
             var rowId = rowNode.getAttribute("id") || "";
-            var row = createElement("tr");
+            var row = createElement("tr", { "class": planningSchedule ? (rowIndex % 2 === 0 ? "rpc-result-row-odd" : "rpc-result-row-even") : null });
             copyAttributes(rowNode, row);
             row.setAttribute("data-rpc-report-row", "1");
             if (planningSchedule) {
@@ -1106,7 +1112,10 @@
             }
 
             if (options.autonumber === "on" && !limitCardPersons) {
-                var numberCell = createElement("td", { align: "right" }, String(rowIndex + 1 + pageStart));
+                var numberCell = createElement("td", { align: "right", "class": "rpc-result-index-column" }, String(rowIndex + 1 + pageStart));
+                if (planningSchedule) {
+                    prepareTechPlanningScheduleCell(numberCell, rowIndex);
+                }
                 if (options.editReport === "on") {
                     numberCell.appendChild(createElement("input", { type: "hidden", value: "old", name: prefix + "status[" + rowId + "]" }));
                 }

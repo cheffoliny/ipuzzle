@@ -14,7 +14,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
     <link href="css/login.css" 				        type="text/css" rel="stylesheet" />
-    <link href="css/index.css" 				        type="text/css" rel="stylesheet" />
+    <link href="css/index.css?version=2" 				        type="text/css" rel="stylesheet" />
 
     <link href="css/bootstrap-intelli.css"  rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-shell.css?version=1" rel="stylesheet" type="text/css">

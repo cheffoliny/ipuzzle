@@ -400,6 +400,7 @@ class DBTechRequests extends DBBase2 {
                     (
                     SELECT
                         tr.id,
+                        0 AS planning_f,
                         tr.id AS btn_delete,
                         tr.id AS num,
                         DATE_FORMAT(tr.created_time, '%d.%m.%Y') AS created_time_,
@@ -507,6 +508,7 @@ class DBTechRequests extends DBBase2 {
                     (
                     SELECT
                         tr.id,
+                        0 AS planning_f,
                         tr.id AS btn_delete,
                         tr.id AS num,
                         DATE_FORMAT(tr.created_time, '%d.%m.%Y') AS created_time_,
@@ -752,6 +754,9 @@ class DBTechRequests extends DBBase2 {
 
 
 
+        $oResponse->setField('planning_f', 'Пл.', 'Маркирай за планиране', NULL, NULL, NULL, array('style' => 'width: 42px;'));
+        $oResponse->setFieldData('planning_f', 'input', array('type' => 'checkbox', 'exception' => 'false'));
+
         $oResponse->setField('created_time_', 'дата', 'сортирай по дата', NULL, NULL, NULL, array('style' => 'width: 70px;'));
         $oResponse->setField('name_', 'обект', 'сортирай по име на обект', NULL, NULL, NULL, array('style' => 'width: 300px;'));
         $oResponse->setField('num', 'номер', 'сортирай по номер на заявка', NULL, NULL, NULL, array('style' => 'width: 100px;'));
@@ -779,6 +784,12 @@ class DBTechRequests extends DBBase2 {
 //            $oResponse->setField("btn_delete", "", NULL, "images/cancel.gif", "delRequest", "Анулирай");
 //            $oResponse->setField('btn_delete', 'оферт2а', 'сортирай по оферта', NULL, NULL , NULL);
         }
+
+        $oResponse->setFormElement('form1', 'sel', array(), '');
+        $oResponse->setFormElementChild('form1', 'sel', array('value' => 'mark_all'), '--- Маркирай всички ---');
+        $oResponse->setFormElementChild('form1', 'sel', array('value' => 'unmark_all'), '--- Отмаркирай всички ---');
+        $oResponse->setFormElementChild('form1', 'sel', array('value' => ''), '-----------------------------------------');
+        $oResponse->setFormElementChild('form1', 'sel', array('value' => 'del'), 'Анулирай маркираните записи');
     }
 
     public function getInfoForPersonCard($nID) {

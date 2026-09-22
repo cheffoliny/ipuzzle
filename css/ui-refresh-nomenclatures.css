@@ -3448,7 +3448,7 @@ body.ui-refresh-content .ui-technical-planning-toolbar .input-group-append {
     color: #315c7d;
 }
 
-body.ui-refresh-content .ui-tech-planning-result {
+body.ui-refresh-content .ui-tech-planning-result:not(.ui-result-fill-host) {
     min-height: 360px;
     overflow: auto;
 }

@@ -27,6 +27,97 @@ body.ui-refresh-content .rpc-result-scroll-content {
     min-width: 100%;
 }
 
+/* Reusable full-height report contract for result areas inside a bounded
+ * workspace. The report data, rather than the page, owns both scrollbars. */
+body.ui-refresh-content .ui-result-workspace {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    flex-direction: column;
+}
+
+body.ui-refresh-content .ui-result-workspace > .ui-result-fill-host {
+    display: flex;
+    min-height: 0;
+    height: auto !important;
+    flex: 1 1 auto;
+    overflow: hidden !important;
+}
+
+body.ui-refresh-content .ui-result-fill-host > .rpc-result-fill {
+    min-height: 0;
+    height: 100%;
+    flex: 1 1 auto;
+    overflow: auto !important;
+}
+
+/* A schedule is a reusable report type: alternating row colours remain
+ * legible while per-cell states supplied by the server keep priority. */
+body.ui-refresh-content .rpc-result-schedule-grid {
+    --rpc-result-row-odd: #ffffff;
+    --rpc-result-row-even: #eef3f7;
+    --rpc-result-selection: #612c2c;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+body.ui-refresh-content .rpc-result-schedule-grid > tbody > tr.rpc-result-row-odd > td.rpc-schedule-cell {
+    background-color: var(--rpc-result-row-odd) !important;
+}
+
+body.ui-refresh-content .rpc-result-schedule-grid > tbody > tr.rpc-result-row-even > td.rpc-schedule-cell {
+    background-color: var(--rpc-result-row-even) !important;
+}
+
+body.ui-refresh-content .rpc-result-index-column {
+    box-sizing: border-box;
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    padding-right: 4px;
+    padding-left: 4px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .rpc-result-bulk-actions {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 4px 6px;
+    border-top: 1px solid var(--ip-content-border, #cbd6e2);
+    background: var(--ip-content-surface-soft, #eef3f8);
+}
+
+body.ui-refresh-content .rpc-result-bulk-actions .input-group {
+    width: min(100%, 430px);
+}
+
+body.ui-refresh-content .rpc-result-bulk-actions-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 7px;
+    border: 1px solid var(--ip-content-border, #cbd6e2);
+    border-right: 0;
+    background: #ffffff;
+    color: var(--ip-content-muted, #66788a);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+body.ui-refresh-content .rpc-result-bulk-actions .input-group-prepend {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    border: 1px solid var(--ip-content-border, #cbd6e2);
+    border-right: 0;
+    background: #ffffff;
+    color: var(--ip-content-primary, #1769c2);
+}
+
 /*
  * DBResponse keeps its caption rows in TBODY instead of THEAD. The renderer
  * marks the actual column-caption row so it remains visible in every bounded
