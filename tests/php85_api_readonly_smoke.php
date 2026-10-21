@@ -132,6 +132,11 @@ $salesParams = array(
     'current_page' => 1,
     'api_action' => 'result'
 );
+$latestFinanceMonthTimestamp = strtotime($latestBudgetMonth . '-01');
+$salesExistingMonthParams = array_replace($salesParams, array(
+    'sFromDate' => date('01.m.Y', $latestFinanceMonthTimestamp),
+    'sToDate' => date('t.m.Y', $latestFinanceMonthTimestamp)
+));
 
 $buyParams = array(
     'subm' => 'no',
@@ -223,6 +228,12 @@ $cases = array(
         'class' => 'ApiSalesDocs',
         'method' => 'result',
         'params' => $salesParams
+    ),
+    'sales_docs_result_existing_month' => array(
+        'file' => 'api/api_sales_docs.php',
+        'class' => 'ApiSalesDocs',
+        'method' => 'result',
+        'params' => $salesExistingMonthParams
     ),
     'tech_planning_requests_load' => array(
         'file' => 'api/api_tech_planning_requests.php',

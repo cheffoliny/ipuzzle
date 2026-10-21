@@ -515,10 +515,26 @@
 //				}
 			}
 			// край на промяна за дата на генериране
+
+			// Справката работи само с месечните sales_docs_YYYYMM
+			// таблици. DBMonthTable::makeUnionSelect() по подразбиране
+			// замества липсващ месец с sales_docs_origin, но това не е
+			// валиден източник за тази справка. При липсваща месечна
+			// таблица връщаме валиден празен резултат.
+			$aSalesTables = array();
+			$oDBSalesDocs->getTables( $aSalesTables, $nTimeFrom, $nTimeTo );
+
+			if ( empty($aSalesTables) ) {
+				if ( $TotalQuery == 1 ) {
+					return "SELECT 0 AS total_sum, 0 AS total_orders WHERE 1 = 0";
+				}
+
+				return "SELECT SQL_CALC_FOUND_ROWS NULL AS id WHERE 1 = 0";
+			}
 			
 			//Orders Union
 			$aTablesRaw = array();
-			$oDBOrders->getTables( $aTablesRaw, $nTimeFrom );
+			$oDBOrders->getTables( $aTablesRaw, $nTimeFrom, $nTimeTo );
 			
 			$aTables = array();
 			foreach( $aTablesRaw as $nKey => $sTable )
@@ -528,7 +544,11 @@
 				";
 			}
 			
-			$sOrdersUnion = implode( " UNION ALL ", $aTables );
+			// Запазваме формата на JOIN-а и когато липсва
+			// orders_YYYYMM таблица, без да се обръщаме към orders_origin.
+			$sOrdersUnion = empty($aTables)
+				? "SELECT NULL AS id, NULL AS account_type, NULL AS bank_account_id"
+				: implode( " UNION ALL ", $aTables );
 			//End Orders Union
 			
 			if( $TotalQuery == 1 )
@@ -620,7 +640,7 @@
 			}
 
             if ( $nHideDocs > 0 ) {
-                $sQuery .= " AND t.paid_type = 'cash' OR ( t.paid_type = 'bank' AND t.id_bank_epayment > 0 ) ";
+                $sQuery .= " AND ( t.paid_type = 'cash' OR ( t.paid_type = 'bank' AND t.id_bank_epayment > 0 ) ) ";
             }
 
 			if ( !empty($nIDFirm) ) {

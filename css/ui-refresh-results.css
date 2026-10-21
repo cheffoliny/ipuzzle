@@ -27,6 +27,13 @@ body.ui-refresh-content .rpc-result-scroll-content {
     min-width: 100%;
 }
 
+/* The renderer applies the decisive inline resets because the legacy
+ * #result_data.body-content declarations use !important and an ID selector.
+ * This class documents and exposes the single-scroll ownership contract. */
+body.ui-refresh-content .rpc-result-single-scroll {
+    overflow: auto;
+}
+
 /* Reusable full-height report contract for result areas inside a bounded
  * workspace. The report data, rather than the page, owns both scrollbars. */
 body.ui-refresh-content .ui-result-workspace {

@@ -32,7 +32,7 @@
     <script type="text/javascript" language="javascript" src="js/framework_general.js"></script>
     <script type="text/javascript" language="javascript" src="js/common_dialogs.js?version=3"></script>
     <script type="text/javascript" language="javascript" src="js/autoselect.js"></script>
-       <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=12"></script>
+       <script type="text/javascript" language="javascript" src="js/rpc_result_renderer.js?version=13"></script>
       <script type="text/javascript" language="javascript" src="js/xmlrpc.js?version=5"></script>
     <script type="text/javascript" language="javascript" src="js/format.js"></script>
     <script type="text/javascript" language="javascript" src="js/misc.js?version=1"></script>
@@ -43,7 +43,7 @@
 	<link href="css/bootstrap-intelli.css" rel="stylesheet" type="text/css">
     <link href="css/menu.css" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-content.css?version=1" rel="stylesheet" type="text/css">
-    <link href="css/ui-refresh-results.css?version=5" rel="stylesheet" type="text/css">
+    <link href="css/ui-refresh-results.css?version=6" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-report-controls.css?version=1" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-dialogs.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-feedback.css?version=1" rel="stylesheet" type="text/css">
@@ -51,7 +51,7 @@
     <link href="css/ui-refresh-legacy-reports.css?version=2" rel="stylesheet" type="text/css">
     <link href="css/ui-refresh-access.css?version=3" rel="stylesheet" type="text/css">
 <link href="css/ui-refresh-nomenclatures.css?version=55" rel="stylesheet" type="text/css">
-    <link href="css/ui-final-migration.css?version=5" rel="stylesheet" type="text/css">
+    <link href="css/ui-final-migration.css?version=7" rel="stylesheet" type="text/css">
     <title>.: iPuzzle - Order It... :.</title>
 
     <script type="text/javascript" language="javascript">

@@ -1235,12 +1235,31 @@
 
     function markResultScrollContainer(result, options) {
         var resultData = document.getElementById(options.prefix + "result_data");
+        var singleScrollOwner = options.profile === "general";
 
         if (result && result.classList) {
             result.classList.add("rpc-result-scroll-host");
+            if (singleScrollOwner) {
+                result.classList.add("rpc-result-single-scroll");
+            } else {
+                result.classList.remove("rpc-result-single-scroll");
+            }
         }
         if (resultData && resultData.classList) {
             resultData.classList.add("rpc-result-scroll-content");
+
+            // bootstrap-intelli.css still gives #result_data.body-content its
+            // own absolute positioning, max-height and !important overflow.
+            // Standard reports already scroll on #result, so neutralize those
+            // legacy declarations inline and avoid two adjacent scrollbars.
+            // Specialized profiles keep their dedicated inner sizing.
+            if (singleScrollOwner) {
+                resultData.style.setProperty("position", "static", "important");
+                resultData.style.setProperty("max-height", "none", "important");
+                resultData.style.setProperty("overflow", "visible", "important");
+                resultData.style.setProperty("margin-bottom", "0", "important");
+                resultData.setAttribute("data-rpc-scroll-content-reset", "1");
+            }
         }
         markResultColumnHeaders(result);
 

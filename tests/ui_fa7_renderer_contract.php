@@ -13,7 +13,7 @@ $page = file_get_contents($root . '/templates/page.tpl');
 $renderer = file_get_contents($root . '/js/rpc_result_renderer.js');
 $xmlrpc = file_get_contents($root . '/js/xmlrpc.js');
 
-rendererIconAssert(strpos($page, 'js/rpc_result_renderer.js?version=8') !== false, 'renderer cache version was not advanced');
+rendererIconAssert(strpos($page, 'js/rpc_result_renderer.js?version=13') !== false, 'renderer cache version was not advanced');
 
 foreach (array(
     'ui-icon-file-pdf', 'ui-icon-mail', 'ui-icon-check', 'ui-icon-delete', 'ui-icon-edit',

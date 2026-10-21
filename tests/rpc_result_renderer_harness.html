@@ -248,7 +248,16 @@
             check("DOM renderer добавя универсалния scroll host", defaultContainer.classList.contains("rpc-result-scroll-host") && offContainer.classList.contains("rpc-result-scroll-host"));
             check("rpc_resize=on ограничава дългата справка спрямо viewport", defaultContainer.style.maxHeight !== "" && defaultContainer.style.overflow === "auto");
             check("rpc_resize=off не налага автоматична max-height", offContainer.style.maxHeight === "");
-            check("вътрешната data зона е маркирана без втори scrollbar", defaultContainer.querySelector("#default_result_data").classList.contains("rpc-result-scroll-content") && defaultContainer.querySelector("#default_result_data").style.overflow === "");
+            check("вътрешната data зона е маркирана без втори scrollbar",
+                defaultContainer.classList.contains("rpc-result-single-scroll") &&
+                defaultContainer.querySelector("#default_result_data").classList.contains("rpc-result-scroll-content") &&
+                defaultContainer.querySelector("#default_result_data").style.overflow === "visible" &&
+                defaultContainer.querySelector("#default_result_data").style.getPropertyPriority("overflow") === "important" &&
+                defaultContainer.querySelector("#default_result_data").style.maxHeight === "none" &&
+                defaultContainer.querySelector("#default_result_data").style.position === "static");
+            check("специализираните справки запазват собственото си scroll оразмеряване",
+                !techRequestContainer.classList.contains("rpc-result-single-scroll") &&
+                techRequestContainer.querySelector("#tech_request_result_data").style.overflow === "auto");
             check("редът с имената на колоните е маркиран за sticky поведение", defaultContainer.querySelector("#default_main").classList.contains("rpc-result-column-header"));
             check("sticky стилът е приложен върху header клетките", getComputedStyle(defaultContainer.querySelector("#default_main th")).position === "sticky" && getComputedStyle(defaultContainer.querySelector("#default_main th")).top === "0px");
             check("специализираните графици също получават sticky header", techScheduleContainer.querySelector("#tech_schedule_main").classList.contains("rpc-result-column-header"));
